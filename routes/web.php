@@ -16,9 +16,6 @@ use App\Http\Controllers\App\PageController;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
 
 // Админ панель
 Route::group(["namespace" => "Admin"], function () {
@@ -84,55 +81,56 @@ Route::group(["namespace" => "Admin"], function () {
 Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
     Route::group(['prefix' => '{lang}'], function () {
         Route::get("/", "PageController@index");
-        // Профиль пользователя
-        Route::get("/profile", "UserController@profile")->middleware('auth')->middleware('verified');
-        Route::get("/edit_profile", "UserController@edit_profile")->middleware('auth')->middleware('verified');
-        Route::post("/update_profile", "UserController@update_profile")->middleware('auth');
-        Route::get("/change_password", "UserController@change_password")->middleware('auth')->middleware('verified');
-        Route::post("/update_password", "UserController@update_password")->middleware('auth');
-        Route::get("/profile_pay_information", "UserController@profile_pay_information")->middleware('auth')->middleware('verified');
-        Route::post("/profile_pay_information", "UserController@update_profile_pay_information")->middleware('auth')->middleware('verified');
-        Route::get("/profile-author-information", "UserController@author_data_show")->middleware('auth')->middleware('verified');
-        Route::post("/update_author_data_profile", "UserController@update_author_data_profile")->middleware('auth')->middleware('verified');
-        Route::group(['middleware' => 'check.activate'], static function () {
-            Route::group(['middleware' => 'check.role:author'], static function () {
-                // Мои курсы
-                Route::get("/my-courses", "CourseController@myCourses")->middleware('auth')->middleware('verified');
-                Route::get("/create-course", "CourseController@createCourse")->middleware('auth')->middleware('verified');
-                // Курс
-                Route::post("/create-course", "CourseController@storeCourse")->middleware('auth')->middleware('verified');
-                Route::post("/publish-course/{item}", "CourseController@publishCourse")->middleware('auth')->middleware('verified');
-                Route::post("/my-courses/edit-course/{item}", "CourseController@updateCourse")->middleware('auth')->middleware('verified');
-                Route::post("/edit-course-{item}-{lesson}", "CourseController@updateLesson")->middleware('auth')->middleware('verified');
-                Route::get("/my-courses/edit-course/{item}", "CourseController@editCourse")->middleware('auth')->middleware('verified');
-                Route::post("/my-courses/edit-course/{item}", "CourseController@updateCourse")->middleware('auth')->middleware('verified');
-                Route::post("/my-courses/delete-course/{item}", "CourseController@deleteCourse")->middleware('auth')->middleware('verified');
-                Route::post("/my-courses/quota-confirm-course/{item}", "CourseController@quotaConfirm")->middleware('auth')->middleware('verified');
-
-                // Тема
-                Route::post("/create-theme", "ThemeController@createTheme")->middleware('auth')->middleware('verified');
-                Route::post("/edit-theme/{item}", "ThemeController@editTheme")->middleware('auth')->middleware('verified');
-                Route::delete("/delete-theme/{item}", "ThemeController@deleteTheme")->middleware('auth')->middleware('verified');
-                Route::post("/moveup-theme/{item}", "ThemeController@moveupTheme")->middleware('auth')->middleware('verified');
-                Route::post("/movedown-theme/{item}", "ThemeController@movedownTheme")->middleware('auth')->middleware('verified');
-                // Урок
-                Route::get("/my-courses/course/{item}/theme-{theme}/create-lesson", "LessonController@createLesson")->middleware('auth')->middleware('verified');
-                Route::get("/my-courses/theme-{theme}/edit-lesson-{lesson}", "LessonController@editLesson")->middleware('auth')->middleware('verified');
-                Route::post("/create-lesson", "LessonController@storeLesson")->middleware('auth')->middleware('verified');
-                Route::post("/edit-lesson-{item}", "LessonController@updateLesson")->middleware('auth')->middleware('verified');
-                Route::delete("/delete-lesson/{item}", "LessonController@deleteLesson")->middleware('auth')->middleware('verified');
-                Route::post("/moveup-lesson/{item}", "LessonController@moveupLesson")->middleware('auth')->middleware('verified');
-                Route::post("/movedown-lesson/{item}", "LessonController@movedownLesson")->middleware('auth')->middleware('verified');
-                // Черновики
-                Route::get("/my-courses/drafts", "CourseController@myDrafts")->middleware('auth')->middleware('verified');
-                // Неопубликованные курсы
-                Route::get("/my-courses/unpublished", "CourseController@myUnpublishedCourses")->middleware('auth')->middleware('verified');
-                // На проверке
-                Route::get("/my-courses/on-check", "CourseController@myOnCheckCourses")->middleware('auth')->middleware('verified');
-                // Удаленные курсы
-                Route::get("/my-courses/deleted", "CourseController@myDeletedCourses")->middleware('auth')->middleware('verified');
-                // Редактирование курса
-                Route::get("/my-courses/course/{item}", "CourseController@courseShow")->middleware('auth')->middleware('verified');
+        Route::group(['middleware' => ["auth", "verified"]], static function () {
+            // Профиль пользователя
+            Route::get("/profile", "UserController@profile");
+            Route::get("/edit_profile", "UserController@edit_profile");
+            Route::post("/update_profile", "UserController@update_profile");
+            Route::get("/change_password", "UserController@change_password");
+            Route::post("/update_password", "UserController@update_password");
+            Route::get("/profile_pay_information", "UserController@profile_pay_information");
+            Route::post("/profile_pay_information", "UserController@update_profile_pay_information");
+            Route::get("/profile-author-information", "UserController@author_data_show");
+            Route::post("/update_author_data_profile", "UserController@update_author_data_profile");
+            Route::group(['middleware' => 'check.activate'], static function () {
+                Route::group(['middleware' => 'check.role:author'], static function () {
+                    // Мои курсы
+                    Route::get("/my-courses", "CourseController@myCourses");
+                    Route::get("/create-course", "CourseController@createCourse");
+                    // Курс
+                    Route::post("/create-course", "CourseController@storeCourse");
+                    Route::post("/publish-course/{item}", "CourseController@publishCourse");
+                    Route::post("/my-courses/edit-course/{item}", "CourseController@updateCourse");
+                    Route::post("/edit-course-{item}-{lesson}", "CourseController@updateLesson");
+                    Route::get("/my-courses/edit-course/{item}", "CourseController@editCourse");
+                    Route::post("/my-courses/edit-course/{item}", "CourseController@updateCourse");
+                    Route::post("/my-courses/delete-course/{item}", "CourseController@deleteCourse");
+                    Route::post("/my-courses/quota-confirm-course/{item}", "CourseController@quotaConfirm");
+                    // Тема
+                    Route::post("/create-theme", "ThemeController@createTheme");
+                    Route::post("/edit-theme/{item}", "ThemeController@editTheme");
+                    Route::delete("/delete-theme/{item}", "ThemeController@deleteTheme");
+                    Route::post("/moveup-theme/{item}", "ThemeController@moveupTheme");
+                    Route::post("/movedown-theme/{item}", "ThemeController@movedownTheme");
+                    // Урок
+                    Route::get("/my-courses/course/{item}/theme-{theme}/create-lesson", "LessonController@createLesson");
+                    Route::get("/my-courses/theme-{theme}/edit-lesson-{lesson}", "LessonController@editLesson");
+                    Route::post("/create-lesson", "LessonController@storeLesson");
+                    Route::post("/edit-lesson-{item}", "LessonController@updateLesson");
+                    Route::delete("/delete-lesson/{item}", "LessonController@deleteLesson");
+                    Route::post("/moveup-lesson/{item}", "LessonController@moveupLesson");
+                    Route::post("/movedown-lesson/{item}", "LessonController@movedownLesson");
+                    // Черновики
+                    Route::get("/my-courses/drafts", "CourseController@myDrafts");
+                    // Неопубликованные курсы
+                    Route::get("/my-courses/unpublished", "CourseController@myUnpublishedCourses");
+                    // На проверке
+                    Route::get("/my-courses/on-check", "CourseController@myOnCheckCourses");
+                    // Удаленные курсы
+                    Route::get("/my-courses/deleted", "CourseController@myDeletedCourses");
+                    // Редактирование курса
+                    Route::get("/my-courses/course/{item}", "CourseController@courseShow");
+                });
             });
         });
     });
