@@ -81,18 +81,26 @@ Route::group(["namespace" => "Admin"], function () {
 Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
     Route::group(['prefix' => '{lang}'], function () {
         Route::get("/", "PageController@index");
+        Route::get("/login_student", "UserController@studentAuth");
+        Route::post("/login_student", "UserController@studentLogin");
         Route::group(['middleware' => ["auth", "verified"]], static function () {
-            // Профиль пользователя
-            Route::get("/profile", "UserController@profile");
-            Route::get("/edit_profile", "UserController@edit_profile");
-            Route::post("/update_profile", "UserController@update_profile");
-            Route::get("/change_password", "UserController@change_password");
-            Route::post("/update_password", "UserController@update_password");
-            Route::get("/profile_pay_information", "UserController@profile_pay_information");
-            Route::post("/profile_pay_information", "UserController@update_profile_pay_information");
-            Route::get("/profile-author-information", "UserController@author_data_show");
-            Route::post("/update_author_data_profile", "UserController@update_author_data_profile");
+            Route::group(['middleware' => 'check.role:author'], static function () {
+                // Профиль автора
+                Route::get("/profile", "UserController@profile");
+                Route::get("/edit_profile", "UserController@edit_profile");
+                Route::post("/update_profile", "UserController@update_profile");
+                Route::get("/change_password", "UserController@change_password");
+                Route::post("/update_password", "UserController@update_password");
+                Route::get("/profile_pay_information", "UserController@profile_pay_information");
+                Route::post("/profile_pay_information", "UserController@update_profile_pay_information");
+                Route::get("/profile-author-information", "UserController@author_data_show");
+                Route::post("/update_author_data_profile", "UserController@update_author_data_profile");
+            });
             Route::group(['middleware' => 'check.activate'], static function () {
+                Route::group(['middleware' => 'check.role:student'], static function () {
+                    Route::get("/student-profile", "UserController@student_profile");
+                    Route::post("/update_student_profile", "UserController@update_student_profile");
+                });
                 Route::group(['middleware' => 'check.role:author'], static function () {
                     // Мои курсы
                     Route::get("/my-courses", "CourseController@myCourses");

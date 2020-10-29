@@ -16,7 +16,7 @@ class AuthorActivate
     {
 
         if(Auth::user()->is_activate == 0){
-            return redirect('/'.app()->getLocale().'/profile-author-information')->with('status', 'У вас недостаточно прав для доступа к выбранному разделу');
+            return redirect('/'.app()->getLocale().'/')->with('status', 'У вас недостаточно прав для доступа к выбранному разделу');
         }
 
         return $next($request);

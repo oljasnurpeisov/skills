@@ -16,7 +16,7 @@ class CheckRole
     {
 
         if(Auth::user()->roles()->first()->slug != $role_slug){
-            return redirect('/'.app()->getLocale().'/profile-author-information')->with('status', 'У вас недостаточно прав для доступа к выбранному разделу');
+            return redirect('/'.app()->getLocale().'/')->with('status', 'У вас недостаточно прав для доступа к выбранному разделу');
         }
 
         return $next($request);

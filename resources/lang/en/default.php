@@ -15,6 +15,9 @@ return [
             'course_materials' => 'Материалы курса',
             'course_description' => 'Описание курса'
         ],
+        'profile' => [
+            'save_success_message' => 'Изменения успешно сохранены'
+        ],
     ],
 
 ];
