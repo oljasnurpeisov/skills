@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Models/StudentInformation.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/app/pages/page/profile/student_profile.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/auth/login_student.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Console/Commands/RemoveUnconfirmedEmailUsers.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Console/Commands/SkillsUpdate.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/AuthorActivate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/AuthorActivate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/CheckRole.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/CheckRole.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +35,7 @@
           <entry key="html" value="4" />
           <entry key="json" value="18" />
           <entry key="lock" value="7" />
-          <entry key="php" value="433" />
+          <entry key="php" value="437" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -52,7 +44,7 @@
           <entry key="Blade" value="142" />
           <entry key="HTML" value="4" />
           <entry key="JSON" value="25" />
-          <entry key="PHP" value="291" />
+          <entry key="PHP" value="295" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -60,7 +52,7 @@
         <counts>
           <entry key="env" value="5" />
           <entry key="json" value="54" />
-          <entry key="php" value="20232" />
+          <entry key="php" value="20351" />
           <entry key="txt" value="36" />
         </counts>
       </usages-collector>
@@ -70,7 +62,7 @@
           <entry key="Blade" value="7576" />
           <entry key="HTML" value="14" />
           <entry key="JSON" value="54" />
-          <entry key="PHP" value="12642" />
+          <entry key="PHP" value="12761" />
           <entry key="PLAIN_TEXT" value="36" />
         </counts>
       </usages-collector>
@@ -93,44 +85,38 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/App/CourseController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="79" column="28" selection-start-line="79" selection-start-column="24" selection-end-line="79" selection-end-column="28" />
-              <folding>
-                <element signature="e#44#80#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/App/UserController.php">
+        <entry file="file://$PROJECT_DIR$/app/Console/Kernel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="337" column="18" lean-forward="true" selection-start-line="337" selection-start-column="18" selection-end-line="337" selection-end-column="18" />
+            <state relative-caret-position="408">
+              <caret line="24" column="41" lean-forward="true" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
               <folding>
-                <element signature="e#44#80#0#PHP" expanded="true" />
+                <element signature="e#31#69#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Models/User.php">
+        <entry file="file://$PROJECT_DIR$/app/Console/Commands/SkillsUpdate.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+            <state relative-caret-position="255">
+              <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="41" />
+              <folding>
+                <element signature="e#40#61#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/app/pages/page/profile/student_profile.blade.php">
+        <entry file="file://$PROJECT_DIR$/app/Console/Commands/RemoveUnconfirmedEmailUsers.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="431" column="14" selection-start-line="431" selection-start-column="14" selection-end-line="431" selection-end-column="14" />
+            <state relative-caret-position="232">
+              <caret line="15" column="40" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
+              <folding>
+                <element signature="e#40#60#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -165,10 +151,10 @@
       <find>-&gt;with('status', __('admin.notifications.record_stored')</find>
       <find>сохр</find>
       <find>успешно</find>
-      <find>pay</find>
       <find>update_student_profile</find>
-      <find>sync</find>
       <find>stude</find>
+      <find>sync</find>
+      <find>pay</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -177,8 +163,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/resources/views/admin/v2/pages/authors/index.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/App/PageController.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/v2/layout/default/components/navigation/left.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Admin/CoursesController.php" />
         <option value="$PROJECT_DIR$/app/Models/Course.php" />
@@ -198,7 +182,6 @@
         <option value="$PROJECT_DIR$/resources/views/app/pages/page/courses/edit_course.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/app/pages/page/courses/edit_lesson.blade.php" />
         <option value="$PROJECT_DIR$/app/Models/Skill.php" />
-        <option value="$PROJECT_DIR$/app/Console/Kernel.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Admin/AuthorController.php" />
         <option value="$PROJECT_DIR$/resources/views/app/pages/page/profile/author_data_profile.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Kernel.php" />
@@ -228,6 +211,9 @@
         <option value="$PROJECT_DIR$/app/Models/StudentInformation.php" />
         <option value="$PROJECT_DIR$/app/Models/User.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/App/UserController.php" />
+        <option value="$PROJECT_DIR$/app/Console/Commands/RemoveUnconfirmedEmailUsers.php" />
+        <option value="$PROJECT_DIR$/app/Console/Commands/SkillsUpdate.php" />
+        <option value="$PROJECT_DIR$/app/Console/Kernel.php" />
       </list>
     </option>
   </component>
@@ -410,6 +396,19 @@
               <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
               <item name="enbek" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Console" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Console" type="462c0819:PsiDirectoryNode" />
+              <item name="Commands" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="Http" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -482,7 +481,7 @@
       <workItem from="1603129953677" duration="16633000" />
       <workItem from="1603193077783" duration="36534000" />
       <workItem from="1603285781485" duration="132300000" />
-      <workItem from="1603785156712" duration="80795000" />
+      <workItem from="1603785156712" duration="82949000" />
     </task>
     <task id="LOCAL-00001" summary="- update routes">
       <created>1603898521230</created>
@@ -491,11 +490,18 @@
       <option name="project" value="LOCAL" />
       <updated>1603898521230</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="- add student auth">
+      <created>1604005003568</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1604005003630</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="266262000" />
+    <option name="totallyTimeSpent" value="268416000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -537,20 +543,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="- add student auth" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/app/pages/page/courses/edit_course.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-80">
-          <caret line="422" column="48" selection-start-line="422" selection-start-column="48" selection-end-line="422" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="24" column="42" lean-forward="true" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Middleware/CheckPermission.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="384">
@@ -715,16 +707,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Console/Kernel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="52" column="21" lean-forward="true" selection-start-line="52" selection-start-column="21" selection-end-line="52" selection-end-column="21" />
-          <folding>
-            <element signature="e#31#52#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Middleware/AuthorActivate.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -812,13 +794,6 @@
         <state relative-caret-position="-1128" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="101" column="97" selection-start-line="101" selection-start-column="97" selection-end-line="101" selection-end-column="97" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/app/pages/page/profile/edit_profile.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="259">
@@ -867,13 +842,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Models/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Models/Skill.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -911,12 +879,56 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Models/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/App/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="205">
           <caret line="337" column="18" lean-forward="true" selection-start-line="337" selection-start-column="18" selection-end-line="337" selection-end-column="18" />
           <folding>
             <element signature="e#44#80#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="101" column="97" selection-start-line="101" selection-start-column="97" selection-end-line="101" selection-end-column="97" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Console/Commands/RemoveUnconfirmedEmailUsers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="15" column="40" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
+          <folding>
+            <element signature="e#40#60#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Console/Commands/SkillsUpdate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="41" />
+          <folding>
+            <element signature="e#40#61#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Console/Kernel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="41" lean-forward="true" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
+          <folding>
+            <element signature="e#31#69#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
