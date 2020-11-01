@@ -388,9 +388,15 @@
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
     <style>
         body {
             font-family: 'Nunito';
@@ -400,58 +406,95 @@
 <body class="antialiased">
 <div class="container">
     <br>
+    <nav class="nav nav-pills nav-justified">
+        <a class="nav-link" href="/{{$lang}}/profile-author-information">Данные об авторе</a>
+        <a class="nav-link" href="/{{$lang}}/profile_pay_information">Платежная информация</a>
+        <a class="nav-link" href="/{{$lang}}/edit_profile">Регистрационные данные</a>
+        <a class="nav-link active" href="/{{$lang}}/change_password">Пароль</a>
+    </nav>
+    <br>
+    @if (Route::has('login'))
+        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+            @auth
+                <a href="/{{$lang}}/my-courses" class="text-sm text-gray-700 underline">Мои курсы</a>|
+                <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
+            @else
+                <a href="/{{$lang}}/login" class="text-sm text-gray-700 underline">Login</a>
+
+                @if (Route::has('register'))
+                    <a href="/{{$lang}}/login" class="ml-4 text-sm text-gray-700 underline">Register</a>
+                @endif
+            @endif
+        </div>
+    @endif
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+    @if (session('failed'))
+        <div class="alert alert-danger">
+            {{ session('failed') }}
+        </div>
+    @endif
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li>{!! $error !!}</li>
                 @endforeach
             </ul>
         </div>
     @endif
-    <form action="/register" method="POST">
-        {{ csrf_field() }}
-        <div class="form-group">
-            <label for="Email">Эл.почта</label>
-            <input type="email" class="form-control" name="email"
-                   placeholder="Введите email">
+    <div class="row my-2">
+        <div class="col-lg-8 order-lg-2">
+            <br>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{!! $error !!}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            {{--<ul class="nav nav-tabs">--}}
+            {{--<li class="nav-item">--}}
+            {{--<a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>--}}
+            {{--</li>--}}
+            {{--</ul>--}}
+            <div class="tab-content py-4">
+                <div class="tab-pane active" id="profile">
+                    <h5 class="mb-3">Смена пароля {{$user->name}}</h5>
+                    <form action="/{{$lang}}/update_password" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <b><label for="old_password">Введите текущий пароль</label></b>
+                                    <input type="password" class="form-control" name="old_password"
+                                           placeholder="Введите текущий пароль">
+                                </div>
+                                <div class="form-group">
+                                    <b><label for="password">Введите новый пароль</label></b>
+                                    <input type="password" class="form-control" name="password"
+                                           placeholder="Введите новый пароль">
+                                </div>
+                                <div class="form-group">
+                                    <b><label for="password_confirmation">Повторите новый пароль</label></b>
+                                    <input type="password" class="form-control" name="password_confirmation"
+                                           placeholder="Повторите новый пароль">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--/row-->
+                        <button type="submit" class="btn btn-primary">Сменить пароль</button>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="name">ФИО</label>
-            <input type="text" class="form-control" name="name"
-                   placeholder="Введите ФИО">
-        </div>
-        <div class="form-group">
-            <label for="iin">ИИН/БИН</label>
-            <input type="number" class="form-control" name="iin"
-                   placeholder="Введите ИИН/БИН">
-        </div>
-        <div class="form-group">
-            <label for="exampleFormControlSelect1">Форма собственности</label>
-            <select class="form-control" name="type_of_ownership">
-                <option>Индивидуальный предприниматель</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="iin">Наименование организации</label>
-            <input type="text" class="form-control" name="company_name"
-                   placeholder="Наименование организации">
-        </div>
-        <div class="form-group">
-            <label for="iin">Логотип компании</label>
-            <input type="text" class="form-control" name="company_logo"
-                   placeholder="Логотип компании">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Пароль</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Пароль">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Повторите пароль</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" name="password_confirmation" placeholder="Пароль">
-        </div>
-        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-    </form>
+        </form>
+    </div>
 </div>
 </body>
 </html>

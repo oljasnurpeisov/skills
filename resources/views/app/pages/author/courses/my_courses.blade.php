@@ -407,16 +407,20 @@
 <div class="container">
     <br>
     <nav class="nav nav-pills nav-justified">
-        <a class="nav-link" href="/{{$lang}}/profile-author-information">Данные об авторе</a>
-        <a class="nav-link" href="/{{$lang}}/profile_pay_information">Платежная информация</a>
-        <a class="nav-link" href="/{{$lang}}/edit_profile">Регистрационные данные</a>
-        <a class="nav-link active" href="/{{$lang}}/change_password">Пароль</a>
+        <a class="nav-link" href="/{{$lang}}/my-courses">{{__('default.pages.courses.my_courses')}}</a>
+        <a class="nav-link"
+           href="/{{$lang}}/my-courses/unpublished">{{__('default.pages.courses.my_courses_unpublished')}}</a>
+        <a class="nav-link" href="/{{$lang}}/my-courses/on-check">{{__('default.pages.courses.my_courses_onCheck')}}</a>
+        <a class="nav-link" href="/{{$lang}}/my-courses/drafts">{{__('default.pages.courses.drafts')}}</a>
+        <a class="nav-link" href="/{{$lang}}/my-courses/deleted">{{__('default.pages.courses.my_courses_deleted')}}</a>
     </nav>
     <br>
+    <br>
+    <a class="btn btn-warning" href="/{{$lang}}/create-course">Создать курс</a>
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
-                <a href="/{{$lang}}/my-courses" class="text-sm text-gray-700 underline">Мои курсы</a>|
+                <a href="/{{$lang}}/edit_profile" class="text-sm text-gray-700 underline">Профиль</a>|
                 <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
             @else
                 <a href="/{{$lang}}/login" class="text-sm text-gray-700 underline">Login</a>
@@ -427,55 +431,44 @@
             @endif
         </div>
     @endif
-    <div class="row my-2">
-        <div class="col-lg-8 order-lg-2">
-            <br>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{!! $error !!}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            {{--<ul class="nav nav-tabs">--}}
-            {{--<li class="nav-item">--}}
-            {{--<a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>--}}
-            {{--</li>--}}
-            {{--</ul>--}}
-            <div class="tab-content py-4">
-                <div class="tab-pane active" id="profile">
-                    <h5 class="mb-3">Смена пароля {{$user->name}}</h5>
-                    <form action="/{{$lang}}/update_password" method="POST" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <b><label for="old_password">Введите текущий пароль</label></b>
-                                    <input type="password" class="form-control" name="old_password"
-                                           placeholder="Введите текущий пароль">
-                                </div>
-                                <div class="form-group">
-                                    <b><label for="password">Введите новый пароль</label></b>
-                                    <input type="password" class="form-control" name="password"
-                                           placeholder="Введите новый пароль">
-                                </div>
-                                <div class="form-group">
-                                    <b><label for="password_confirmation">Повторите новый пароль</label></b>
-                                    <input type="password" class="form-control" name="password_confirmation"
-                                           placeholder="Повторите новый пароль">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!--/row-->
-                        <button type="submit" class="btn btn-primary">Сменить пароль</button>
+    <br>
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+    <br>
+    <h2>{{__($page_name)}}</h2>
+    <br>
+    <div class="row">
+        @foreach($items as $item)
+            <div class="col-sm-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="{{$item->image}}" alt="" style="width: 200px">
+                    <div class="card-body">
+                        <h5 class="card-title">{{$item->name}}</h5>
+                        <p class="card-text">{!!$item->teaser!!}</p>
+                        {{--@if($item->status == 0)--}}
+                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}" class="btn btn-primary">Редактировать</a>
+                        {{--@endif--}}
+                    </div>
                 </div>
             </div>
-        </div>
-        </form>
+        @endforeach
     </div>
 </div>
 </body>
+<script>
+    $('document').ready(function () {
+        $("#company_logo").change(function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#company_logo_img').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    });
+</script>
 </html>

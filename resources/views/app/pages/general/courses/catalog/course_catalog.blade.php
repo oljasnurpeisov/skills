@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
     <title>Laravel</title>
 
@@ -388,9 +389,7 @@
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
@@ -404,16 +403,23 @@
     </style>
 </head>
 <body class="antialiased">
-<div class="container">
+{{--<div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">--}}
+<div id="course_data">
+<div class="container" >
     <br>
     <nav class="nav nav-pills nav-justified">
-        <a class="nav-link active" href="/{{$lang}}/student_profile">Профиль обучающегося</a>
+        <a class="nav-link active" href="/{{$lang}}/course-catalog">Каталог курсов</a>
     </nav>
     <br>
+
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
-                <a href="/{{$lang}}/my-courses" class="text-sm text-gray-700 underline">Мои курсы</a>|
+                @if(Auth::user()->roles()->first()->id == 5)
+                    <a href="/{{$lang}}/student-profile" class="text-sm text-gray-700 underline">Профиль</a>
+                @elseif(Auth::user()->roles()->first()->id == 4)
+                    <a href="/{{$lang}}/edit_profile" class="text-sm text-gray-700 underline">Профиль</a>
+                @endif
                 <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
             @else
                 <a href="/{{$lang}}/login" class="text-sm text-gray-700 underline">Login</a>
@@ -423,26 +429,192 @@
                 @endif
             @endif
         </div>
+
     @endif
-    <div class="row my-2">
-        @if (session('status'))
-            <div class="alert alert-success">
-                {{ session('status') }}
+    @if (\Session::has('status'))
+        <div class="alert alert-success">
+            <ul>
+                <li>{!! \Session::get('status') !!}</li>
+            </ul>
+        </div>
+    @endif
+</div>
+<div class="container">
+    <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Поиск" id="term" name="term" aria-label="Поиск"
+               value="{{ $term ?? '' }}">
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Поиск</button>
+        <br><br><br>
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="row">
+                    @foreach($items as $item)
+                        <div class="col-sm-3" style="margin-right: 55px;margin-bottom: 25px">
+                            <div class="card" style="width: 15rem;">
+                                <img class="card-img-top" src="{{$item->image}}" alt="image" height="200px">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{$item->name}}</h5>
+                                    <p class="card-text" style="color:#828282;">{{$item->teaser}}</p>
+
+                                    @if($item->cost > 0)
+                                        <p class="card-text" style="color:#828282;"><span class="badge badge-info">{{$item->cost}}
+                                                тг</span></p>
+                                    @else
+                                        <p class="card-text"><span class="badge badge-success">Бесплатно</span></p>
+                                    @endif
+
+                                    <a href="/{{$lang}}/course-catalog/course/{{$item->id}}" class="btn btn-primary">Перейти</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
-        @endif
-        <form method="POST" action="/{{$lang}}/update_student_profile" enctype="multipart/form-data">
-            {{ csrf_field() }}
-            <div class="col-lg-4 order-lg-1 text-center">
-                <img src="{!! $item->avatar ?? '/images/img/default.png' !!}" class="mx-auto img-fluid img-circle d-block" alt="">
+            <div class="col-sm-2">
+                {{--<div class="col-sm-3">--}}
+                <div class="form-group">
+                    <br>
+                    <label for="sel1">{{__('default.pages.courses.profession')}}: </label>
+                    <select class="form-control" id="professions" style="width:200px;">
+                        @foreach($professions as $profession)
+                            {{--@foreach($profession as $i)--}}
+                            <option value="{{$profession->id}}">{{$profession->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru')}}</option>
+                                {{--@endforeach--}}
+                        @endforeach
+                    </select>
+                </div>
                 <br>
                 <div class="form-group">
-                    <label for="company_logo">Фото профиля:</label>
-                    <input type="file" id="avatar" name="avatar" accept="image/*">
+                    <label for="sel1">{{__('default.pages.courses.skill')}}: </label>
+                    <select class="form-control" id="skills" name="choosed_skills">
+                        <option> </option>
+                        @foreach($skills as $skill)
+                            {{--@foreach($profession as $i)--}}
+                            <option value="{{$skill->id}}">{{$skill->getAttribute('name_'.$lang) ??  $skill->getAttribute('name_ru')}}</option>
+                            {{--@endforeach--}}
+                        @endforeach
+                    </select>
                 </div>
-                <button type="submit" class="btn btn-primary stretched-link">Сохранить изменения</button>
+                <br>
+                <p>{{__('default.pages.courses.language_education')}}</p>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="choosed_lang_kk" name="choosed_lang" value="0">
+                    <label class="form-check-label" for="inlineCheckbox1">Казахский</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="choosed_lang_kk" name="choosed_lang" value="1">
+                    <label class="form-check-label" for="inlineCheckbox2">Русский</label>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="sel1">{{__('default.pages.courses.rating_from')}}:</label>
+                    <input type="number" class="form-control" placeholder="">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="sel1">{{__('default.pages.courses.students_complete_course')}}:</label>
+                    <input type="number" class="form-control" placeholder="">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="course_type_label">{{__('default.pages.courses.course_type')}}: </label>
+                    <select class="form-control" id="course_type" name="course_type">
+                        <option> </option>
+                        <option value="1">{{__('default.pages.courses.paid_type')}}</option>
+                        <option value="0">{{__('default.pages.courses.free_type')}}</option>
+                    </select>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="sel1">{{__('default.pages.courses.sorting')}}: </label>
+                    <select class="form-control" id="sel1">
+                        <option>Не выбран</option>
+                    </select>
+                </div>
+                <br><br><br><br>
+                {{--</div>--}}
             </div>
-        </form>
-    </div>
+
+        </div>
+    </form>
 </div>
+</div>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('#professions').on('change', function() {
+        $profession_id = $( "#professions").val();
+        $term = $( "#term").val();
+        $.ajax({
+            type: 'GET',
+            url: 'https://dev3.panama.kz/ru/course-catalog?choosed_profession='+$profession_id ,
+            success: function (data) {
+                console.log(1);
+                // $('#course_data').empty();
+                // $('#course_data').replaceWith(data);
+                $('#course_data').html(data);
+
+            },
+            error: function() {
+                console.log(data);
+            }
+        });
+    });
+    $('#skills').on('change', function() {
+        $skill_id = $( "#skills").val();
+        $.ajax({
+            type: 'GET',
+            url: 'https://dev3.panama.kz/ru/course-catalog?choosed_skills='+$skill_id+'&term='+$term,
+            success: function (data) {
+                console.log(1);
+                // $('#course_data').empty();
+                $('#course_data').html(data);
+            },
+            error: function() {
+                console.log(data);
+            }
+        });
+    });
+
+    $('#course_type').on('change', function() {
+        $course_type = $("#course_type").val();
+        $.ajax({
+            type: 'GET',
+            url: 'https://dev3.panama.kz/ru/course-catalog?course_type='+$course_type,
+            success: function (data) {
+                console.log(1);
+                // $('#course_data').empty();
+                $('#course_data').html(data);
+                console.log(data);
+
+            },
+            error: function() {
+                console.log(data);
+            }
+        });
+    });
+
+    $("[name='choosed_lang']").on('change', function() {
+        $choosed_lang = $("[name='choosed_lang']").val();
+        $.ajax({
+            type: 'GET',
+            url: 'https://dev3.panama.kz/ru/course-catalog?course_type='+$choosed_lang,
+            success: function (data) {
+                console.log(1);
+                // $('#course_data').empty();
+                $('#course_data').html(data);
+                console.log(data);
+
+            },
+            error: function() {
+                console.log(data);
+            }
+        });
+    });
+
+</script>
 </body>
 </html>

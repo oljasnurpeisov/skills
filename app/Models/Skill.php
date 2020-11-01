@@ -13,4 +13,15 @@ class Skill extends Model
 
     public $timestamps = true;
 
+    public function professions() {
+
+        return $this->belongsToMany(Professions::class,'profession_skills', 'skill_id', 'profession_id');
+
+    }
+
+    public function courses() {
+
+        return $this->belongsToMany(Course::class,'course_skill', 'skill_id', 'course_id');
+
+    }
 }

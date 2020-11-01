@@ -409,13 +409,47 @@
     <nav class="nav nav-pills nav-justified">
         <a class="nav-link" href="/{{$lang}}/profile-author-information">Данные об авторе</a>
         <a class="nav-link" href="/{{$lang}}/profile_pay_information">Платежная информация</a>
-        <a class="nav-link active" href="/{{$lang}}/profile">Регистрационные данные</a>
+        <a class="nav-link active" href="/{{$lang}}/edit_profile">Регистрационные данные</a>
         <a class="nav-link" href="/{{$lang}}/change_password">Пароль</a>
     </nav>
     <br>
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
+                <a class="text-sm text-gray-700 underline" href="#" role="button" id="dropdownMenuLink"
+                   data-toggle="dropdown">Уведомления
+                    <span class="badge badge-primary">{{count(Auth::user()->notifications()->get())}}</span></a>|
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    @php($notifications = Auth::user()->notifications()->get())
+                    @foreach($notifications as $notification)
+                        @if($notification->type == 1)
+                            <form method="POST" action="/{{$lang}}/my-courses/quota-confirm-course/{{json_decode($notification->name)[1]}}"
+                                  id="quota_confirm_form">
+                                {{ csrf_field() }}
+                                <div style="margin: 15px">
+                                    <p>{!! trans(json_decode($notification->name)[0], ['course_name' => '"'.\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->name.'"']) !!}</p>
+                                    @if(\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->quota_status == 1)
+                                        <button class="btn btn-success"
+                                                style="color: white;"
+                                                name="action" value="confirm">{{__('notifications.confirm_btn_title')}}</button>
+                                        &nbsp;&nbsp;
+                                        <button class="btn btn-danger"
+                                                style="color: white;"
+                                                name="action" value="reject">{{__('notifications.reject_btn_title')}}</button>
+                                    @endif
+                                </div>
+                            </form>
+                            <hr>
+                        @else
+                            <div style="margin: 15px">
+
+                                <p>{{trans(json_decode($notification->name)[0], ['course_name' => '"'.\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->name.'"'])}}</p>
+                            </div>
+                            <hr>
+                        @endif
+                        {{--<a class="dropdown-item" href="#">{{$notification->name}}</a>--}}
+                    @endforeach
+                </div>
                 <a href="/{{$lang}}/my-courses" class="text-sm text-gray-700 underline">Мои курсы</a>|
                 <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
             @else
@@ -427,178 +461,91 @@
             @endif
         </div>
     @endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{!! $error !!}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="row my-2">
         <div class="col-lg-8 order-lg-2">
             {{--<ul class="nav nav-tabs">--}}
-                {{--<li class="nav-item">--}}
-                    {{--<a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>--}}
-                {{--</li>--}}
+            {{--<li class="nav-item">--}}
+            {{--<a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>--}}
+            {{--</li>--}}
             {{--</ul>--}}
             <div class="tab-content py-4">
                 <div class="tab-pane active" id="profile">
-                    <h5 class="mb-3">Профиль пользователя</h5>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6><b>ФИО:</b> {{$user->name}}</h6>
-                            <h6><b>E-mail:</b> {{$user->email}}</h6>
-                            <h6><b>ИИН/БИН:</b> {{$user->iin}}</h6>
-                            <h6><b>Форма собственности:</b> {{$user->type_ownership->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru')}}</h6>
-                            <h6><b>Название организации:</b> {{$user->company_name}}</h6>
-                        </div>
-                    </div>
-                    <!--/row-->
-                </div>
-                <div class="tab-pane" id="messages">
-                    <div class="alert alert-info alert-dismissable">
-                        <a class="panel-close close" data-dismiss="alert">×</a> This is an <strong>.alert</strong>. Use
-                        this to show important messages to the user.
-                    </div>
-                    <table class="table table-hover table-striped">
-                        <tbody>
-                        <tr>
-                            <td>
-                                <span class="float-right font-weight-bold">3 hrs ago</span> Here is your a link to the
-                                latest summary report from the..
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="float-right font-weight-bold">Yesterday</span> There has been a request on
-                                your account since that was..
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="float-right font-weight-bold">9/10</span> Porttitor vitae ultrices quis,
-                                dapibus id dolor. Morbi venenatis lacinia rhoncus.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="float-right font-weight-bold">9/4</span> Vestibulum tincidunt ullamcorper
-                                eros eget luctus.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="float-right font-weight-bold">9/4</span> Maxamillion ais the fix for
-                                tibulum tincidunt ullamcorper eros.
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tab-pane" id="edit">
-                    <form role="form">
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">First name</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="text" value="Jane">
+                    <h5 class="mb-3">Редактирование профиля</h5>
+                    <form action="/{{$lang}}/update_profile" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <b><label for="Email">E-mail</label></b>
+                                    <input type="email" class="form-control" name="email"
+                                           placeholder="Введите email" value="{{$user->email}}">
+                                </div>
+                                <div class="form-group">
+                                    <b><label for="iin">ИИН/БИН</label></b>
+                                    <input type="text" class="form-control" name="iin"
+                                           placeholder="Введите ИИН/БИН" value="{{$user->iin}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Форма собственности</label>
+                                    <select class="form-control" name="type_of_ownership">
+                                        @foreach($types_of_ownership as $type)
+                                            <option value="{{ $type->id }}"
+                                                    @if($type->id==$user->type_ownership->id) selected='selected' @endif >{{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <b><label for="company_name">Название организации</label></b>
+                                    <input type="text" class="form-control" name="company_name"
+                                           placeholder="Введите название организации" value="{{$user->company_name}}">
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Last name</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="text" value="Bishop">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Email</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="email" value="email@gmail.com">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Company</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="text" value="">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Website</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="url" value="">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Address</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="text" value="" placeholder="Street">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label"></label>
-                            <div class="col-lg-6">
-                                <input class="form-control" type="text" value="" placeholder="City">
-                            </div>
-                            <div class="col-lg-3">
-                                <input class="form-control" type="text" value="" placeholder="State">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Time Zone</label>
-                            <div class="col-lg-9">
-                                <select id="user_time_zone" class="form-control" size="0">
-                                    <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                                    <option value="Alaska">(GMT-09:00) Alaska</option>
-                                    <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp;
-                                        Canada)
-                                    </option>
-                                    <option value="Arizona">(GMT-07:00) Arizona</option>
-                                    <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp;
-                                        Canada)
-                                    </option>
-                                    <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00)
-                                        Central Time (US &amp; Canada)
-                                    </option>
-                                    <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp;
-                                        Canada)
-                                    </option>
-                                    <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Username</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="text" value="janeuser">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Password</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="password" value="11111122333">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="password" value="11111122333">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label"></label>
-                            <div class="col-lg-9">
-                                <input type="reset" class="btn btn-secondary" value="Cancel">
-                                <input type="button" class="btn btn-primary" value="Save Changes">
-                            </div>
-                        </div>
-                    </form>
+                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        <!--/row-->
                 </div>
             </div>
         </div>
         <div class="col-lg-4 order-lg-1 text-center">
-            <img src="{!! $user->company_logo !!}" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+            <img src="{!! $user->company_logo !!}" class="mx-auto img-fluid img-circle d-block" alt="avatar"
+                 id="company_logo_img" width="200" height="100">
             <br>
-            <a href="/{{$lang}}/edit_profile" class="btn btn-primary stretched-link">Редактировать профиль</a>
-            <br><br>
+            <div class="form-group">
+                <label for="company_logo">Логотип компании:</label>
+                <input type="file" id="company_logo" name="company_logo" accept="image/*">
+            </div>
+            {{--<a href="/{{$lang}}/edit_profile" class="btn btn-primary stretched-link">Сохранить изменения</a>--}}
             {{--<h6 class="mt-2">Upload a different photo</h6>--}}
             {{--<label class="custom-file">--}}
-                {{--<input type="file" id="file" class="custom-file-input">--}}
-                {{--<span class="custom-file-control">Choose file</span>--}}
+            {{--<input type="file" id="file" class="custom-file-input">--}}
+            {{--<span class="custom-file-control">Choose file</span>--}}
             {{--</label>--}}
         </div>
+        </form>
     </div>
 </div>
 </body>
+<script>
+    $('document').ready(function () {
+        $("#company_logo").change(function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#company_logo_img').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    });
+</script>
 </html>

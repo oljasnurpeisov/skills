@@ -13,15 +13,21 @@ class Course extends Model
     public $timestamps = true;
 
 
-    public function users() {
+    public function user() {
 
-        return $this->belongsToMany(User::class,'course_user');
+        return $this->hasOne(User::class, 'id', 'author_id');
 
     }
 
     public function themes() {
 
         return $this->belongsToMany(Theme::class,'course_theme');
+
+    }
+
+    public function skills() {
+
+        return $this->belongsToMany(Skill::class,'course_skill', 'course_id', 'skill_id');
 
     }
 }

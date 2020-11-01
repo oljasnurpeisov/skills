@@ -75,7 +75,7 @@
 {{--</div>--}}
 {{--</div>--}}
 {{--@endsection--}}
-    <!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -482,32 +482,38 @@
 </head>
 <body class="antialiased">
 <div class="container">
-    <br>
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{!! $error !!}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    {{--<br>--}}
+    {{--@if ($errors->any())--}}
+        {{--<div class="alert alert-danger">--}}
+            {{--<ul>--}}
+                {{--@foreach ($errors->all() as $error)--}}
+                    {{--<li>{!! $error !!}</li>--}}
+                {{--@endforeach--}}
+            {{--</ul>--}}
+        {{--</div>--}}
+    {{--@endif--}}
     <form action="/{{$lang}}/register" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="form-group">
             <label for="Email">Эл.почта</label>
             <input type="email" class="form-control" name="email"
                    placeholder="Введите email">
+            {!! $errors->first('email', '<div style="margin-top: 10px" class="alert alert-danger">
+                :message
+            </div>') !!}
         </div>
         {{--<div class="form-group">--}}
-            {{--<label for="name">ФИО</label>--}}
-            {{--<input type="text" class="form-control" name="name"--}}
-                   {{--placeholder="Введите ФИО">--}}
+        {{--<label for="name">ФИО</label>--}}
+        {{--<input type="text" class="form-control" name="name"--}}
+        {{--placeholder="Введите ФИО">--}}
         {{--</div>--}}
         <div class="form-group">
             <label for="iin">ИИН/БИН</label>
             <input type="number" class="form-control" name="iin"
                    placeholder="Введите ИИН/БИН">
+            {!! $errors->first('iin', '<div style="margin-top: 10px" class="alert alert-danger">
+                :message
+            </div>') !!}
         </div>
         <div class="form-group">
             <label for="exampleFormControlSelect1">Форма собственности</label>
@@ -516,29 +522,44 @@
                     <option value="{{ $type->id }}">{{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru')}}</option>
                 @endforeach
             </select>
+
         </div>
         <div class="form-group">
             <label for="iin">Наименование организации</label>
             <input type="text" class="form-control" name="company_name"
                    placeholder="Наименование организации">
+
+            {!! $errors->first('company_name', '<div style="margin-top: 10px" class="alert alert-danger">
+                :message
+            </div>') !!}
+
         </div>
         {{--<div class="form-group">--}}
-            {{--<label for="iin">Логотип компании</label>--}}
-            {{--<input type="text" class="form-control" name="company_logo"--}}
-                   {{--placeholder="Логотип компании">--}}
+        {{--<label for="iin">Логотип компании</label>--}}
+        {{--<input type="text" class="form-control" name="company_logo"--}}
+        {{--placeholder="Логотип компании">--}}
         {{--</div>--}}
         <div class="form-group">
             <label for="company_logo">Логотип компании:</label>
             <input type="file" id="company_logo" name="company_logo" accept="image/*">
+            {!! $errors->first('company_logo', '<div style="margin-top: 10px" class="alert alert-danger">
+                :message
+            </div>') !!}
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Пароль</label>
             <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Пароль">
+            {!! $errors->first('password', '<div style="margin-top: 10px" class="alert alert-danger">
+                :message
+            </div>') !!}
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Повторите пароль</label>
             <input type="password" class="form-control" id="exampleInputPassword1" name="password_confirmation"
                    placeholder="Пароль">
+            {!! $errors->first('password_confirmation', '<div style="margin-top: 10px" class="alert alert-danger">
+                :message
+            </div>') !!}
         </div>
         <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
     </form>

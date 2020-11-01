@@ -44,6 +44,9 @@
                     <i class="icon-reports"></i> {{ __('admin.pages.courses.title') }}
                 </a>
                 <ul>
+                    <li><a href="/{{$lang}}/admin/courses/wait_verification">{{ __('admin.pages.courses.wait_publish_list') }}</a></li>
+                    <li><a href="/{{$lang}}/admin/courses/unpublished">{{ __('admin.pages.courses.unpublish_list') }}</a></li>
+                    <li><a href="/{{$lang}}/admin/courses/published">{{ __('admin.pages.courses.publish_list') }}</a></li>
                     <li><a href="/{{$lang}}/admin/courses/index">{{ __('admin.pages.courses.list') }}</a></li>
                 </ul>
             </li>

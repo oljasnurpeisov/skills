@@ -408,8 +408,8 @@
     <br>
     <nav class="nav nav-pills nav-justified">
         <a class="nav-link" href="/{{$lang}}/profile-author-information">Данные об авторе</a>
-        <a class="nav-link active" href="/{{$lang}}/profile_pay_information">Платежная информация</a>
-        <a class="nav-link" href="/{{$lang}}/edit_profile">Регистрационные данные</a>
+        <a class="nav-link" href="/{{$lang}}/profile_pay_information">Платежная информация</a>
+        <a class="nav-link active" href="/{{$lang}}/profile">Регистрационные данные</a>
         <a class="nav-link" href="/{{$lang}}/change_password">Пароль</a>
     </nav>
     <br>
@@ -427,65 +427,23 @@
             @endif
         </div>
     @endif
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
     <div class="row my-2">
         <div class="col-lg-8 order-lg-2">
-            {{--<ul class="nav nav-tabs">--}}
-            {{--<li class="nav-item">--}}
-            {{--<a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>--}}
-            {{--</li>--}}
-            {{--</ul>--}}
             <div class="tab-content py-4">
                 <div class="tab-pane active" id="profile">
-                    {{--<h5>Платежная информация</h5>--}}
-                    <div class="tab-content py-4">
-                        <div class="tab-pane active" id="profile">
-                            <form action="/{{$lang}}/profile_pay_information" method="POST" enctype="multipart/form-data">
-                                {{ csrf_field() }}
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <b><label for="merchant_certificate_id">ID сертификата продавца *</label></b>
-                                            <input type="text" class="form-control" name="merchant_certificate_id"
-                                                   placeholder="" value="{{$pay_information->merchant_certificate_id ?? ''}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <b><label for="merchant_name">Наименование продавца *</label></b>
-                                            <input type="text" class="form-control" name="merchant_name"
-                                                   placeholder="" value="{{$pay_information->merchant_name ?? ''}}">
-                                        </div>
-                                        {{--<div class="form-group">--}}
-                                            {{--<b><label for="private_key_path">Загрузить секретный электронный ключ</label></b>--}}
-                                            {{--<input type="text" class="form-control" name="private_key_path"--}}
-                                                   {{--placeholder="" value="{{$pay_information->	private_key_path ?? ''}}">--}}
-                                        {{--</div>--}}
-                                        <div class="form-group">
-                                            <label for="private_key_path">Загрузить секретный электронный ключ</label>
-                                            <input type="file" id="private_key_path" name="private_key_path">
-                                        </div>
-                                        <div class="form-group">
-                                            <b><label for="private_key_pass">Пароль от секретного ключа *</label></b>
-                                            <input type="password" class="form-control" name="private_key_pass"
-                                                   placeholder="" value="{{$pay_information->	private_key_pass ?? ''}}">
-                                        </div>
-                                        {{--<div class="form-group">--}}
-                                            {{--<b><label for="public_key_path">Загрузить публичный электронный ключ</label></b>--}}
-                                            {{--<input type="text" class="form-control" name="public_key_path"--}}
-                                                   {{--placeholder="" value="{{$pay_information->	public_key_path ?? ''}}">--}}
-                                        {{--</div>--}}
-                                        <div class="form-group">
-                                            <label for="public_key_path">Загрузить публичный электронный ключ</label>
-                                            <input type="file" id="public_key_path" name="public_key_path">
-                                        </div>
-                                        <div class="form-group">
-                                            <b><label for="merchant_id">ID продавца</label></b>
-                                            <input type="text" class="form-control" name="merchant_id"
-                                                   placeholder="" value="{{$pay_information->	merchant_id ?? ''}}">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Сохранить</button>
-                                    </div>
-                                </div>
-
-                                <!--/row-->
+                    <h5 class="mb-3">Профиль пользователя</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6><b>ФИО:</b> {{$user->name}}</h6>
+                            <h6><b>E-mail:</b> {{$user->email}}</h6>
+                            <h6><b>ИИН/БИН:</b> {{$user->iin}}</h6>
+                            <h6><b>Форма собственности:</b> {{$user->type_ownership->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru')}}</h6>
+                            <h6><b>Название организации:</b> {{$user->company_name}}</h6>
                         </div>
                     </div>
                     <!--/row-->
@@ -628,6 +586,17 @@
                     </form>
                 </div>
             </div>
+        </div>
+        <div class="col-lg-4 order-lg-1 text-center">
+            <img src="{!! $user->company_logo !!}" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+            <br>
+            <a href="/{{$lang}}/edit_profile" class="btn btn-primary stretched-link">Редактировать профиль</a>
+            <br><br>
+            {{--<h6 class="mt-2">Upload a different photo</h6>--}}
+            {{--<label class="custom-file">--}}
+                {{--<input type="file" id="file" class="custom-file-input">--}}
+                {{--<span class="custom-file-control">Choose file</span>--}}
+            {{--</label>--}}
         </div>
     </div>
 </div>

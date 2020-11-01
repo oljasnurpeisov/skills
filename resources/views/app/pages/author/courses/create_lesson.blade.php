@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <title>Laravel</title>
 
     <!-- Fonts -->
@@ -388,9 +388,7 @@
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
@@ -407,50 +405,17 @@
 <div class="container">
     <br>
     <nav class="nav nav-pills nav-justified">
-        <a class="nav-link" href="/{{$lang}}/profile-author-information">Данные об авторе</a>
-        <a class="nav-link" href="/{{$lang}}/profile_pay_information">Платежная информация</a>
-        <a class="nav-link active" href="/{{$lang}}/edit_profile">Регистрационные данные</a>
-        <a class="nav-link" href="/{{$lang}}/change_password">Пароль</a>
+        <a class="nav-link" href="/{{$lang}}/my-courses">{{__('default.pages.courses.my_courses')}}</a>
+        <a class="nav-link"
+           href="/{{$lang}}/my-courses/unpublished">{{__('default.pages.courses.my_courses_unpublished')}}</a>
+        <a class="nav-link" href="/{{$lang}}/my-courses/on-check">{{__('default.pages.courses.my_courses_onCheck')}}</a>
+        <a class="nav-link" href="/{{$lang}}/my-courses/drafts">{{__('default.pages.courses.drafts')}}</a>
+        <a class="nav-link" href="/{{$lang}}/my-courses/deleted">{{__('default.pages.courses.my_courses_deleted')}}</a>
     </nav>
-    <br>
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
-                <a class="text-sm text-gray-700 underline" href="#" role="button" id="dropdownMenuLink"
-                   data-toggle="dropdown">Уведомления
-                    <span class="badge badge-primary">{{count(Auth::user()->notifications()->get())}}</span></a>|
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    @php($notifications = Auth::user()->notifications()->get())
-                    @foreach($notifications as $notification)
-                        @if($notification->type == 1)
-                            <form method="POST" action="/{{$lang}}/my-courses/quota-confirm-course/{{json_decode($notification->name)[1]}}"
-                                  id="quota_confirm_form">
-                                {{ csrf_field() }}
-                                <div style="margin: 15px">
-                                    <p>{!! trans(json_decode($notification->name)[0], ['course_name' => '"'.\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->name.'"']) !!}</p>
-                                    @if(\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->quota_status == 1)
-                                        <button class="btn btn-success"
-                                                style="color: white;"
-                                                name="action" value="confirm">{{__('notifications.confirm_btn_title')}}</button>
-                                        &nbsp;&nbsp;
-                                        <button class="btn btn-danger"
-                                                style="color: white;"
-                                                name="action" value="reject">{{__('notifications.reject_btn_title')}}</button>
-                                    @endif
-                                </div>
-                            </form>
-                            <hr>
-                        @else
-                            <div style="margin: 15px">
-
-                                <p>{{trans(json_decode($notification->name)[0], ['course_name' => '"'.\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->name.'"'])}}</p>
-                            </div>
-                            <hr>
-                        @endif
-                        {{--<a class="dropdown-item" href="#">{{$notification->name}}</a>--}}
-                    @endforeach
-                </div>
-                <a href="/{{$lang}}/my-courses" class="text-sm text-gray-700 underline">Мои курсы</a>|
+                <a href="/{{$lang}}/edit_profile" class="text-sm text-gray-700 underline">Профиль</a>|
                 <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
             @else
                 <a href="/{{$lang}}/login" class="text-sm text-gray-700 underline">Login</a>
@@ -463,80 +428,121 @@
     @endif
     <div class="row my-2">
         <div class="col-lg-8 order-lg-2">
-            {{--<ul class="nav nav-tabs">--}}
-            {{--<li class="nav-item">--}}
-            {{--<a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>--}}
-            {{--</li>--}}
-            {{--</ul>--}}
             <div class="tab-content py-4">
                 <div class="tab-pane active" id="profile">
-                    <h5 class="mb-3">Редактирование профиля</h5>
-                    <form action="/{{$lang}}/update_profile" method="POST" enctype="multipart/form-data">
+                    <form action="/{{$lang}}/create-lesson" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        <div class="row">
-                            <div class="col-md-6">
-
-                                <div class="form-group">
-                                    <b><label for="Email">E-mail</label></b>
-                                    <input type="email" class="form-control" name="email"
-                                           placeholder="Введите email" value="{{$user->email}}">
+                        <div class="tab-content py-4">
+                            <div class="tab-pane active" id="profile">
+                                <input name="course_id" value="{{$item->id}}" hidden>
+                                <input name="theme_id" value="{{$theme->id}}" hidden>
+                                <h3>Создание урока</h3>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="name">Название урока *</label>
+                                            <input type="text" class="form-control" name="name"
+                                                   placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Тип урока</label>
+                                            <select class="form-control" name="type" id="type">
+                                                @foreach($lessons_type as $type)
+                                                    <option value="{{ $type->id }}">{{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div id="end_lesson_type_block" style="display: none">
+                                            <div class="form-check form-check-inline" id="test_type_block">
+                                                <input class="form-check-input" type="radio" name="end_lesson_type" id="test_lesson_type"
+                                                       value="0">
+                                                <label class="form-check-label" for="inlineRadio1">Тест</label>
+                                            </div>
+                                            <div class="form-check form-check-inline" id="homework_type_block">
+                                                <input class="form-check-input" type="radio" name="end_lesson_type" id="homework_lesson_type"
+                                                       value="1">
+                                                <label class="form-check-label" for="inlineRadio2">Домашнее
+                                                    задание</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="duration">Продолжительность урока, минуты *</label>
+                                            <input type="text" class="form-control" name="duration"
+                                                   placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="image">Картинка урока</label>
+                                            <input type="file" id="image" name="image" accept="image/*">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="profit_desc">Теория *</label>
+                                            <textarea class="form-control" name="theory" id="theory"
+                                                      rows="3"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <b><label for="name">Ссылка на видео урока</label></b>
+                                            <input type="text" class="form-control" name="youtube_link[]"
+                                                   placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="video">Видео файл с устройства</label>
+                                            <input type="file" id="video" name="video[]" multiple accept="video/*">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="audio">Аудио урока</label>
+                                            <input type="file" id="audio" name="audio[]" multiple accept="audio/*">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="another_files">Другие материалы урока</label>
+                                            <input type="file" name="another_files">
+                                        </div>
+                                        <div class="form-group" id="test_block" style="display: none">
+                                            <label for="test">Тест</label>
+                                            <textarea class="form-control" name="test"
+                                                      rows="3"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <b><label for="iin">ИИН/БИН</label></b>
-                                    <input type="text" class="form-control" name="iin"
-                                           placeholder="Введите ИИН/БИН" value="{{$user->iin}}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Форма собственности</label>
-                                    <select class="form-control" name="type_of_ownership">
-                                        @foreach($types_of_ownership as $type)
-                                            <option value="{{ $type->id }}"
-                                                    @if($type->id==$user->type_ownership->id) selected='selected' @endif >{{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <b><label for="company_name">Название организации</label></b>
-                                    <input type="text" class="form-control" name="company_name"
-                                           placeholder="Введите название организации" value="{{$user->company_name}}">
-                                </div>
+                                <button type="submit" class="btn btn-primary">Создать</button>
+                                <!--/row-->
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-                        <!--/row-->
                 </div>
+                </form>
             </div>
         </div>
-        <div class="col-lg-4 order-lg-1 text-center">
-            <img src="{!! $user->company_logo !!}" class="mx-auto img-fluid img-circle d-block" alt="avatar"
-                 id="company_logo_img" width="200" height="100">
-            <br>
-            <div class="form-group">
-                <label for="company_logo">Логотип компании:</label>
-                <input type="file" id="company_logo" name="company_logo" accept="image/*">
-            </div>
-            {{--<a href="/{{$lang}}/edit_profile" class="btn btn-primary stretched-link">Сохранить изменения</a>--}}
-            {{--<h6 class="mt-2">Upload a different photo</h6>--}}
-            {{--<label class="custom-file">--}}
-            {{--<input type="file" id="file" class="custom-file-input">--}}
-            {{--<span class="custom-file-control">Choose file</span>--}}
-            {{--</label>--}}
-        </div>
-        </form>
+
     </div>
 </div>
-</body>
 <script>
-    $('document').ready(function () {
-        $("#company_logo").change(function () {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#company_logo_img').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(this.files[0]);
+    $(document).ready(function () {
+        $('#type').on('change', function () {
+            if (this.value == '0' || this.value == '2') {
+                $("#end_lesson_type_block").hide();
+                $('#test_lesson_type').attr('checked',false);
+                $("#test_block").hide();
+            }
+            else {
+                $("#end_lesson_type_block").show();
+                $('#test_lesson_type').attr('checked',true);
+                $("#test_block").show();
             }
         });
     });
+    $('#test_lesson_type').on("change", function() {
+        if($('#test_lesson_type').attr('checked',true)) {
+            $('#homework_lesson_type').attr('checked',false);
+            $("#test_block").show();
+        }
+    });
+    $('#homework_lesson_type').on("change", function() {
+        if($('#homework_lesson_type').attr('checked',true)) {
+            $('#test_lesson_type').attr('checked',false);
+            $("#test_block").hide();
+        }
+    });
+
 </script>
+</body>
 </html>

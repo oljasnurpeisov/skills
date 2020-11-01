@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" xmlns="http://www.w3.org/1999/html">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -407,20 +407,16 @@
 <div class="container">
     <br>
     <nav class="nav nav-pills nav-justified">
-        <a class="nav-link" href="/{{$lang}}/my-courses">{{__('default.pages.courses.my_courses')}}</a>
-        <a class="nav-link"
-           href="/{{$lang}}/my-courses/unpublished">{{__('default.pages.courses.my_courses_unpublished')}}</a>
-        <a class="nav-link" href="/{{$lang}}/my-courses/on-check">{{__('default.pages.courses.my_courses_onCheck')}}</a>
-        <a class="nav-link" href="/{{$lang}}/my-courses/drafts">{{__('default.pages.courses.drafts')}}</a>
-        <a class="nav-link" href="/{{$lang}}/my-courses/deleted">{{__('default.pages.courses.my_courses_deleted')}}</a>
+        <a class="nav-link active" href="/{{$lang}}/profile-author-information">Данные об авторе</a>
+        <a class="nav-link" href="/{{$lang}}/profile_pay_information">Платежная информация</a>
+        <a class="nav-link" href="/{{$lang}}/edit_profile">Регистрационные данные</a>
+        <a class="nav-link" href="/{{$lang}}/change_password">Пароль</a>
     </nav>
     <br>
-    <br>
-    <h2>Создание курса</h2>
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
-                <a href="/{{$lang}}/edit_profile" class="text-sm text-gray-700 underline">Профиль</a>|
+                <a href="/{{$lang}}/my-courses" class="text-sm text-gray-700 underline">Мои курсы</a>|
                 <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
             @else
                 <a href="/{{$lang}}/login" class="text-sm text-gray-700 underline">Login</a>
@@ -431,97 +427,109 @@
             @endif
         </div>
     @endif
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{!! $error !!}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="row my-2">
         <div class="col-lg-8 order-lg-2">
+            {{--<ul class="nav nav-tabs">--}}
+            {{--<li class="nav-item">--}}
+            {{--<a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>--}}
+            {{--</li>--}}
+            {{--</ul>--}}
             <div class="tab-content py-4">
                 <div class="tab-pane active" id="profile">
-            <form action="/{{$lang}}/create-course" method="POST" enctype="multipart/form-data">
-                {{ csrf_field() }}
-            <div class="tab-content py-4">
-                <div class="tab-pane active" id="profile">
+                    <h5 class="mb-3">Данные об авторе</h5>
+                    <form action="/{{$lang}}/update_author_data_profile" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <b><label for="name">Название курса *</label></b>
+                                    <b><label for="name">Имя</label></b>
                                     <input type="text" class="form-control" name="name"
-                                           placeholder="">
+                                           placeholder="Введите имя" value="{{$item->name ?? ''}}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Навыки (мин. 1 навык)</label>
-                                    <select class="form-control" name="skills[]">
-                                        @foreach($skills as $skill)
-                                            <option value="{{ $skill->id }}">{{ $skill->getAttribute('name_'.$lang) ?? $skill->getAttribute('name_ru')}}</option>
+                                    <b><label for="surname">Фамилия</label></b>
+                                    <input type="text" class="form-control" name="surname"
+                                           placeholder="Введите фамилию" value="{{$item->surname ?? ''}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="avatar">Аватар</label>
+                                    @if(!empty($item->avatar))
+                                        <img src="{!! $item->avatar !!}" class="mx-auto img-fluid img-circle d-block"
+                                             alt="avatar" id="company_logo_img" width="200" height="100">
+                                        <br>
+                                    @endif
+                                    <input type="file" id="avatar" name="avatar" accept="image/*">
+                                </div>
+                                <div class="form-group">
+                                    <b><label for="specialization">Специализация</label></b>
+                                    <input type="text" class="form-control" name="specialization"
+                                           placeholder="Введите специализацию" value="{{$item->specialization ?? ''}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="about">Расскажите о себе</label>
+                                    <textarea class="form-control" name="about" id="about" rows="3">{{$item->about ?? ''}}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <b><label for="phone_1">Контактный номер (мобильный)</label></b>
+                                    <input type="text" class="form-control" name="phone_1"
+                                           placeholder="Введите контактный номер (мобильный)"
+                                           value="{{$item->phone_1 ?? ''}}">
+                                </div>
+                                <div class="form-group">
+                                    <b><label for="phone_2">Контактный номер (городской)</label></b>
+                                    <input type="text" class="form-control" name="phone_2"
+                                           placeholder="Введите контактный номер (городской)"
+                                           value="{{$item->phone_2 ?? ''}}">
+                                </div>
+                                <div class="form-group">
+                                    <b><label for="site_url">Адрес сайта</label></b>
+                                    <input type="text" class="form-control" name="site_url"
+                                           placeholder="Вставьте ссылку на сайт" value="{{$item->site_url ?? ''}}">
+                                </div>
+                                <div class="form-group">
+                                    <b><label for="vk_link">VK</label></b>
+                                    <input type="text" class="form-control" name="vk_link"
+                                           placeholder="Вставьте ссылку на аккаунт vk" value="{{$item->vk_link ?? ''}}">
+                                </div>
+                                <div class="form-group">
+                                    <b><label for="fb_link">Facebook</label></b>
+                                    <input type="text" class="form-control" name="fb_link"
+                                           placeholder="Вставьте ссылку на аккаунт facebook"
+                                           value="{{$item->fb_link ?? ''}}">
+                                </div>
+                                <div class="form-group">
+                                    <b><label for="instagram_link">Instagram</label></b>
+                                    <input type="text" class="form-control" name="instagram_link"
+                                           placeholder="Вставьте ссылку на аккаунт instagram"
+                                           value="{{$item->instagram_link ?? ''}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="files">Сертификаты</label>
+                                    <input type="file" id="certificates" name="certificates[]" multiple><br><br>
+                                    @if(!empty($item->certificates))
+                                        @foreach(json_decode($item->certificates) as $certificate)
+                                            <img src="{{$certificate}}" class="mx-auto img-fluid img-circle d-block"
+                                                 alt="certificate" id="certificate" width="200" height="100">
                                         @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Язык курса *</label>
-                                    <select class="form-control" name="lang">
-                                        <option value="ru">Русский</option>
-                                        <option value="kk">Қазақша</option>
-                                        <option value="en">English</option>
-                                    </select>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="is_paid"
-                                           name="is_paid">
-                                    <label class="form-check-label" for="is_paid">Платный</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="is_access_all"
-                                           name="is_access_all">
-                                    <label class="form-check-label" for="is_access_all">Все уроки доступны
-                                        сразу</label>
-                                </div>
-                                <div class="form-group">
-                                    <b><label for="name">Стоимость, тг *</label></b>
-                                    <input type="text" class="form-control" name="cost"
-                                           placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="profit_desc">Чему научит курс *</label>
-                                    <textarea class="form-control" name="profit_desc" id="profit_desc" rows="3"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="teaser">Краткое описание</label>
-                                    <textarea class="form-control" name="teaser" id="teaser" rows="3"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="description">Описание</label>
-                                    <textarea class="form-control" name="description" id="description" rows="3"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="course_includes">В курс входит</label>
-                                    <textarea class="form-control" name="course_includes" id="course_includes" rows="3"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="image">Картинка курса</label>
-                                    <input type="file" id="company_logo" name="image" accept="image/*">
-                                </div>
-                                <div class="form-group">
-                                    <b><label for="name">Ссылка на видео курса</label></b>
-                                    <input type="text" class="form-control" name="youtube_link"
-                                           placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="video">Видео файл с устройства</label>
-                                    <input type="file" id="company_logo" name="video">
-                                </div>
-                                <div class="form-group">
-                                    <label for="audio">Аудио курса</label>
-                                    <input type="file" id="company_logo" name="audio">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Выберите сертификат</label>
-                                    <select class="form-control" name="certificate_id">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Создать</button>
+                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
                         <!--/row-->
                 </div>
             </div>

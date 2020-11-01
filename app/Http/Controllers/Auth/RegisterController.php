@@ -63,9 +63,17 @@ class RegisterController extends Controller
 
     protected function validator(array $data)
     {
+//        $attributes = [
+//            'iin' => 'ИИН/БИН'
+//        ];
+//
+//        $messages = [
+//            'numeric' => 'The :attribute may not be greater than :max.',
+//        ];
+
         return Validator::make($data, [
             'email' => 'required|unique:users|max:255',
-            'iin' => 'required|unique:users|max:12',
+            'iin' => 'required|unique:users|min:12|max:12',
             'company_name' => 'required|max:255',
             'company_logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
             'password' => ['required',
@@ -85,8 +93,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $imageName = time() . '.' . $data['company_logo']->getClientOriginalExtension();
-        $data['company_logo']->move(public_path('images/profile_images'), $imageName);
+
 
 
         $user = User::create([
@@ -96,8 +103,15 @@ class RegisterController extends Controller
             'iin' => $data['iin'],
             'type_of_ownership' => $data['type_of_ownership'],
             'company_name' => $data['company_name'],
-            'company_logo' => '/images/profile_images/' . $imageName,
+//            'company_logo' => '/images/profile_images/' . $imageName,
         ]);
+
+        $imageName = time() . '.' . $data['company_logo']->getClientOriginalExtension();
+        $user->company_logo = '/users/user_' . $user->id . '/profile/image/' . $imageName;
+        $data['company_logo']->move(public_path('users/user_' . $user->id . '/profile/image'), $imageName);
+
+//        $user->company_logo = $imageName;
+        $user->save();
 
         $user->roles()->sync([4]);
 

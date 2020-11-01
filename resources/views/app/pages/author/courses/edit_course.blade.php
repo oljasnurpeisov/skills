@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+
     <title>Laravel</title>
 
     <!-- Fonts -->
@@ -388,7 +388,9 @@
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
@@ -412,6 +414,9 @@
         <a class="nav-link" href="/{{$lang}}/my-courses/drafts">{{__('default.pages.courses.drafts')}}</a>
         <a class="nav-link" href="/{{$lang}}/my-courses/deleted">{{__('default.pages.courses.my_courses_deleted')}}</a>
     </nav>
+    <br>
+    <br>
+    <h2>Редактирование курса</h2>
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
@@ -430,81 +435,126 @@
         <div class="col-lg-8 order-lg-2">
             <div class="tab-content py-4">
                 <div class="tab-pane active" id="profile">
-                    <form action="/{{$lang}}/create-lesson" method="POST" enctype="multipart/form-data">
+                    <form action="/{{$lang}}/my-courses/edit-course/{{$item->id}}" method="POST"
+                          enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="tab-content py-4">
                             <div class="tab-pane active" id="profile">
-                                <input name="course_id" value="{{$item->id}}" hidden>
-                                <input name="theme_id" value="{{$theme->id}}" hidden>
-                                <h3>Создание урока</h3>
-                                <br>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="name">Название урока *</label>
+                                            <b><label for="name">Название курса *</label></b>
                                             <input type="text" class="form-control" name="name"
-                                                   placeholder="">
+                                                   placeholder="" value="{{$item->name}}">
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Тип урока</label>
-                                            <select class="form-control" name="type" id="type">
-                                                @foreach($lessons_type as $type)
-                                                    <option value="{{ $type->id }}">{{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}</option>
+                                            <label for="exampleFormControlSelect1">Навыки (мин. 1 навык)</label>
+                                            @foreach($current_skills as $current_skill)
+                                                <select class="form-control" name="skills[]">
+                                                    @foreach($skills as $skill)
+                                                        <option value="{{ $skill->id }}"
+                                                                @if($skill->id==$current_skill->id) selected='selected' @endif >{{ $skill->getAttribute('name_'.$lang) ?? $skill->getAttribute('name_ru')}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <br>
+                                            @endforeach
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Язык курса *</label>
+                                            <select class="form-control" name="lang">
+                                                @php($languages = [["Қазақша","0"], ["Русский","1"]])
+                                                @foreach($languages as $key => $language)
+                                                    <option value="{{ $language[1] }}"
+                                                            @if($language[1]==$item->lang) selected='selected' @endif >{{ $language[0] }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div id="end_lesson_type_block" style="display: none">
-                                            <div class="form-check form-check-inline" id="test_type_block">
-                                                <input class="form-check-input" type="radio" name="end_lesson_type" id="test_lesson_type"
-                                                       value="0">
-                                                <label class="form-check-label" for="inlineRadio1">Тест</label>
-                                            </div>
-                                            <div class="form-check form-check-inline" id="homework_type_block">
-                                                <input class="form-check-input" type="radio" name="end_lesson_type" id="homework_lesson_type"
-                                                       value="1">
-                                                <label class="form-check-label" for="inlineRadio2">Домашнее
-                                                    задание</label>
-                                            </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="is_paid"
+                                                   name="is_paid" @if($item->is_paid == 1) checked @endif>
+                                            <label class="form-check-label" for="is_paid">Платный</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="is_access_all"
+                                                   name="is_access_all" @if($item->is_access_all == 1) checked @endif>
+                                            <label class="form-check-label" for="is_access_all">Все уроки доступны
+                                                сразу</label>
                                         </div>
                                         <div class="form-group">
-                                            <label for="duration">Продолжительность урока, минуты *</label>
-                                            <input type="text" class="form-control" name="duration"
-                                                   placeholder="">
+                                            <b><label for="name">Стоимость, тг *</label></b>
+                                            <input type="text" class="form-control" name="cost"
+                                                   value="{{$item->cost}}">
                                         </div>
                                         <div class="form-group">
-                                            <label for="image">Картинка урока</label>
+                                            <label for="profit_desc">Чему научит курс *</label>
+                                            <textarea class="form-control" name="profit_desc" id="profit_desc"
+                                                      rows="3">{!! $item->profit_desc !!}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="teaser">Краткое описание</label>
+                                            <textarea class="form-control" name="teaser" id="teaser"
+                                                      rows="3">{!! $item->teaser !!}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Описание</label>
+                                            <textarea class="form-control" name="description" id="description"
+                                                      rows="3">{!! $item->description !!}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="course_includes">В курс входит</label>
+                                            <textarea class="form-control" name="course_includes" id="course_includes"
+                                                      rows="3">{!! $item->course_includes !!}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="image">Картинка курса</label>
                                             <input type="file" id="image" name="image" accept="image/*">
                                         </div>
                                         <div class="form-group">
-                                            <label for="profit_desc">Теория *</label>
-                                            <textarea class="form-control" name="theory" id="theory"
-                                                      rows="3"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="youtube_link">Ссылка на видео урока</label>
-                                            <input type="text" class="form-control" name="youtube_link"
-                                                   placeholder="">
+                                            <b><label for="name">Ссылка на видео курса</label></b>
+                                            @if(!empty($item->youtube_link))
+                                                @foreach(json_decode($item->youtube_link) as $link)
+                                                    <input type="text" class="form-control" name="youtube_link[]"
+                                                           value="{{$link}}">
+                                                    <br>
+                                                @endforeach
+                                                @else
+                                                <input type="text" class="form-control" name="youtube_link[]"
+                                                       value="">
+                                            @endif
+
                                         </div>
                                         <div class="form-group">
                                             <label for="video">Видео файл с устройства</label>
-                                            <input type="file" name="video">
+                                            @if(!empty($item->video))
+                                                @foreach(json_decode($item->video) as $video)
+                                                    <input type="file" id="video" name="video[]" multiple accept="video/*">
+                                                    <video width="400" controls>
+                                                        <source src="{{$video}}" type="video/mp4">
+                                                        Your browser does not support HTML video.
+                                                    </video>
+                                                @endforeach
+                                            @else
+                                                <input type="file" id="video" name="video[]" multiple accept="video/*">
+                                            @endif
+
                                         </div>
                                         <div class="form-group">
-                                            <label for="audio">Аудио урока</label>
-                                            <input type="file" name="audio">
+                                            <label for="audio">Аудио курса</label>
+                                            <input type="file" id="audio" name="audio[]" multiple accept="audio/*">
                                         </div>
                                         <div class="form-group">
-                                            <label for="another_files">Другие материалы урока</label>
-                                            <input type="file" name="another_files">
-                                        </div>
-                                        <div class="form-group" id="test_block" style="display: none">
-                                            <label for="test">Тест</label>
-                                            <textarea class="form-control" name="test"
-                                                      rows="3"></textarea>
+                                            <label for="exampleFormControlSelect1">Выберите сертификат</label>
+                                            <select class="form-control" name="certificate_id">
+                                                @php($certificates = ["1", "2", "3"])
+                                                @foreach($certificates as $certificate)
+                                                    <option value="{{ $certificate }}"
+                                                            @if($certificate==$item->certificate_id) selected='selected' @endif >{{ $certificate }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Создать</button>
+                                <button type="submit" class="btn btn-primary">Сохранить</button>
                                 <!--/row-->
                             </div>
                         </div>
@@ -512,37 +562,18 @@
                 </form>
             </div>
         </div>
-
-    </div>
-</div>
+</body>
 <script>
-    $(document).ready(function () {
-        $('#type').on('change', function () {
-            if (this.value == '0' || this.value == '2') {
-                $("#end_lesson_type_block").hide();
-                $('#test_lesson_type').attr('checked',false);
-                $("#test_block").hide();
-            }
-            else {
-                $("#end_lesson_type_block").show();
-                $('#test_lesson_type').attr('checked',true);
-                $("#test_block").show();
+    $('document').ready(function () {
+        $("#company_logo").change(function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#company_logo_img').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
             }
         });
     });
-    $('#test_lesson_type').on("change", function() {
-        if($('#test_lesson_type').attr('checked',true)) {
-            $('#homework_lesson_type').attr('checked',false);
-            $("#test_block").show();
-        }
-    });
-    $('#homework_lesson_type').on("change", function() {
-        if($('#homework_lesson_type').attr('checked',true)) {
-            $('#test_lesson_type').attr('checked',false);
-            $("#test_block").hide();
-        }
-    });
-
 </script>
-</body>
 </html>

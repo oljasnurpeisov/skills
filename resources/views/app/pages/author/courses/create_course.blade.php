@@ -416,7 +416,7 @@
     </nav>
     <br>
     <br>
-    <h2>Редактирование курса</h2>
+    <h2>Создание курса</h2>
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
@@ -435,113 +435,99 @@
         <div class="col-lg-8 order-lg-2">
             <div class="tab-content py-4">
                 <div class="tab-pane active" id="profile">
-                    <form action="/{{$lang}}/my-courses/edit-course/{{$item->id}}" method="POST"
-                          enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="tab-content py-4">
-                            <div class="tab-pane active" id="profile">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <b><label for="name">Название курса *</label></b>
-                                            <input type="text" class="form-control" name="name"
-                                                   placeholder="" value="{{$item->name}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Навыки (мин. 1 навык)</label>
-                                            @foreach($current_skills as $current_skill)
-                                                <select class="form-control" name="skills[]">
-                                                    @foreach($skills as $skill)
-                                                        <option value="{{ $skill->id }}"
-                                                                @if($skill->id==$current_skill) selected='selected' @endif >{{ $skill->getAttribute('name_'.$lang) ?? $skill->getAttribute('name_ru')}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <br>
-                                            @endforeach
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Язык курса *</label>
-                                            <select class="form-control" name="lang">
-                                                @php($languages = [["Русский","ru"], ["Қазақша","kk"], ["English","en"]])
-                                                @foreach($languages as $key => $language)
-                                                    <option value="{{ $language[1] }}"
-                                                            @if($language[1]==$item->lang) selected='selected' @endif >{{ $language[0] }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id="is_paid"
-                                                   name="is_paid" @if($item->is_paid == 1) checked @endif>
-                                            <label class="form-check-label" for="is_paid">Платный</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id="is_access_all"
-                                                   name="is_access_all" @if($item->is_access_all == 1) checked @endif>
-                                            <label class="form-check-label" for="is_access_all">Все уроки доступны
-                                                сразу</label>
-                                        </div>
-                                        <div class="form-group">
-                                            <b><label for="name">Стоимость, тг *</label></b>
-                                            <input type="text" class="form-control" name="cost"
-                                                   value="{{$item->cost}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="profit_desc">Чему научит курс *</label>
-                                            <textarea class="form-control" name="profit_desc" id="profit_desc"
-                                                      rows="3">{!! $item->profit_desc !!}</textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="teaser">Краткое описание</label>
-                                            <textarea class="form-control" name="teaser" id="teaser"
-                                                      rows="3">{!! $item->teaser !!}</textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="description">Описание</label>
-                                            <textarea class="form-control" name="description" id="description"
-                                                      rows="3">{!! $item->description !!}</textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="course_includes">В курс входит</label>
-                                            <textarea class="form-control" name="course_includes" id="course_includes"
-                                                      rows="3">{!! $item->course_includes !!}</textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="image">Картинка курса</label>
-                                            <input type="file" id="image" name="image" accept="image/*">
-                                        </div>
-                                        <div class="form-group">
-                                            <b><label for="name">Ссылка на видео курса</label></b>
-                                            <input type="text" class="form-control" name="youtube_link"
-                                                   value="{{$item->youtube_link}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="video">Видео файл с устройства</label>
-                                            <input type="file" id="video" name="video">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="audio">Аудио курса</label>
-                                            <input type="file" id="audio" name="audio">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Выберите сертификат</label>
-                                            <select class="form-control" name="certificate_id">
-                                                @php($certificates = ["1", "2", "3"])
-                                                @foreach($certificates as $certificate)
-                                                    <option value="{{ $certificate }}"
-                                                            @if($certificate==$item->certificate_id) selected='selected' @endif >{{ $certificate }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
+            <form action="/{{$lang}}/create-course" method="POST" enctype="multipart/form-data">
+                {{ csrf_field() }}
+            <div class="tab-content py-4">
+                <div class="tab-pane active" id="profile">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <b><label for="name">Название курса *</label></b>
+                                    <input type="text" class="form-control" name="name"
+                                           placeholder="">
                                 </div>
-                                <button type="submit" class="btn btn-primary">Сохранить</button>
-                                <!--/row-->
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Навыки (мин. 1 навык)</label>
+                                    <select class="form-control" name="skills[]">
+                                        @foreach($skills as $skill)
+                                            <option value="{{ $skill->id }}">{{ $skill->getAttribute('name_'.$lang) ?? $skill->getAttribute('name_ru')}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Язык курса *</label>
+                                    <select class="form-control" name="lang">
+                                        <option value="0">Қазақша</option>
+                                        <option value="1">Русский</option>
+                                    </select>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="is_paid"
+                                           name="is_paid">
+                                    <label class="form-check-label" for="is_paid">Платный</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="is_access_all"
+                                           name="is_access_all">
+                                    <label class="form-check-label" for="is_access_all">Все уроки доступны
+                                        сразу</label>
+                                </div>
+                                <div class="form-group">
+                                    <b><label for="name">Стоимость, тг *</label></b>
+                                    <input type="text" class="form-control" name="cost"
+                                           placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profit_desc">Чему научит курс *</label>
+                                    <textarea class="form-control" name="profit_desc" id="profit_desc" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="teaser">Краткое описание</label>
+                                    <textarea class="form-control" name="teaser" id="teaser" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Описание</label>
+                                    <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="course_includes">В курс входит</label>
+                                    <textarea class="form-control" name="course_includes" id="course_includes" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="image">Картинка курса</label>
+                                    <input type="file" id="company_logo" name="image" accept="image/*">
+                                </div>
+                                <div class="form-group">
+                                    <b><label for="name">Ссылка на видео курса</label></b>
+                                    <input type="text" class="form-control" name="youtube_link[]"
+                                           placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="video">Видео файл с устройства</label>
+                                    <input type="file" id="video" name="video[]" multiple accept="video/*">
+                                </div>
+                                <div class="form-group">
+                                    <label for="audio">Аудио курса</label>
+                                    <input type="file" id="audio" name="audio[]" multiple accept="audio/*">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Выберите сертификат</label>
+                                    <select class="form-control" name="certificate_id">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
+                        <button type="submit" class="btn btn-primary">Создать</button>
+                        <!--/row-->
                 </div>
-                </form>
             </div>
         </div>
+        </form>
+    </div>
+</div>
 </body>
 <script>
     $('document').ready(function () {

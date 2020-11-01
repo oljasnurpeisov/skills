@@ -44,6 +44,8 @@ class CourseController extends Controller
         if ($term) {
             $query = $query->where('name', 'like', '%' . $term . '%');
         }
+
+        $query = $query->where('name', 'like', '%' . $term . '%');
         $items = $query->paginate();
 
         return view('admin.v2.pages.courses.index', [
@@ -51,6 +53,61 @@ class CourseController extends Controller
             'term' => $term,
         ]);
     }
+
+    public function wait_verification(Request $request)
+    {
+        $term = $request->term ? $request->term : '';
+
+        $query = Course::orderBy('id', 'desc')->where('status', '=', 1);
+        if ($term) {
+            $query = $query->where('name', 'like', '%' . $term . '%');
+        }
+
+        $query = $query->where('name', 'like', '%' . $term . '%');
+        $items = $query->paginate();
+
+        return view('admin.v2.pages.courses.index', [
+            'items' => $items,
+            'term' => $term,
+        ]);
+    }
+
+    public function unpublished_index(Request $request)
+    {
+        $term = $request->term ? $request->term : '';
+
+        $query = Course::orderBy('id', 'desc')->where('status', '=', 2);
+        if ($term) {
+            $query = $query->where('name', 'like', '%' . $term . '%');
+        }
+
+        $query = $query->where('name', 'like', '%' . $term . '%');
+        $items = $query->paginate();
+
+        return view('admin.v2.pages.courses.index', [
+            'items' => $items,
+            'term' => $term,
+        ]);
+    }
+
+    public function published_index(Request $request)
+    {
+        $term = $request->term ? $request->term : '';
+
+        $query = Course::orderBy('id', 'desc')->where('status', '=', 3);
+        if ($term) {
+            $query = $query->where('name', 'like', '%' . $term . '%');
+        }
+
+        $query = $query->where('name', 'like', '%' . $term . '%');
+        $items = $query->paginate();
+
+        return view('admin.v2.pages.courses.index', [
+            'items' => $items,
+            'term' => $term,
+        ]);
+    }
+
 
     public function view($lang, Course $item)
     {
@@ -60,13 +117,13 @@ class CourseController extends Controller
                 'item' => $item
             ]);
         }
-        return redirect('/'.$lang.'/admin/courses/index');
+        return redirect('/' . $lang . '/admin/courses/index');
     }
 
     public function publish($lang, Course $item, Request $request)
     {
         if ($item->status == 1 or $item->status == 2 or $item->status == 3) {
-            $user = $item->users()->first();
+            $user = $item->user()->first();
             switch ($request->input('action')) {
                 case 'reject':
                     $item->status = 2;
@@ -81,7 +138,7 @@ class CourseController extends Controller
                         $message->to($user->email, 'Receiver')->subject('');
                     });
 
-                    return redirect()->back()->with('status', trans('admin.pages.courses.course_reject', [ 'course_name' => $item->name, 'rejectMessage' => $request->rejectMessage ]));
+                    return redirect()->back()->with('status', trans('admin.pages.courses.course_reject', ['course_name' => $item->name, 'rejectMessage' => $request->rejectMessage]));
                     break;
 
             }
@@ -90,9 +147,9 @@ class CourseController extends Controller
             $item->save();
 
 
-            return redirect()->back()->with('status', trans('admin.pages.courses.course_published', [ 'course_name' => $item->name]));
+            return redirect()->back()->with('status', trans('admin.pages.courses.course_published', ['course_name' => $item->name]));
         }
-        return redirect('/'.$lang.'/admin/courses/index');
+        return redirect('/' . $lang . '/admin/courses/index');
     }
 
     public function unpublish($lang, Course $item)
@@ -101,17 +158,17 @@ class CourseController extends Controller
             $item->status = 2;
             $item->save();
 
-            return redirect()->back()->with('status', trans('admin.pages.courses.course_unpublished', [ 'course_name' => $item->name]));
+            return redirect()->back()->with('status', trans('admin.pages.courses.course_unpublished', ['course_name' => $item->name]));
         }
-        return redirect('/'.$lang.'/admin/courses/index');
+        return redirect('/' . $lang . '/admin/courses/index');
     }
 
     public function quota_request($lang, Course $item)
     {
         if ($item->status == 1 or $item->status == 2 or $item->status == 3) {
-            $author_course = $item->users()->first()->id;
+            $author_course = $item->user()->first()->id;
 
-            if($item->quota_status != 1 and $item->cost > 0){
+            if ($item->quota_status != 1 and $item->cost > 0) {
                 $notification = new Notification;
                 $notification->name = json_encode(array("notifications.quota_request_description", $item->id));
                 $notification->type = 1;
@@ -128,7 +185,7 @@ class CourseController extends Controller
 
             return redirect()->back()->with('status', __('admin.pages.courses.course_quote_request'));
         }
-        return redirect('/'.$lang.'/admin/courses/index');
+        return redirect('/' . $lang . '/admin/courses/index');
     }
 
     public function quota_contract($lang, Course $item, Request $request)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\App;
+namespace App\Http\Controllers\App\Author;
 
 use App\Http\Controllers\Controller;
 use App\Models\PayInformation;
@@ -27,47 +27,18 @@ class UserController extends Controller
     public function profile()
     {
         $user = User::where('id', '=', Auth::user()->getAuthIdentifier())->with('type_ownership')->first();
-        return view("app.pages.page.profile.profile", [
+        return view("app.pages.author.profile.profile", [
             "user" => $user,
         ]);
     }
 
-    public function student_profile()
-    {
-        $user = User::where('id', '=', Auth::user()->getAuthIdentifier())->with('type_ownership')->first();
-        $item = StudentInformation::where('user_id', '=', $user->id)->first();
-        return view("app.pages.page.profile.student_profile", [
-            "user" => $user,
-            "item" => $item
-        ]);
-    }
-
-    public function update_student_profile(Request $request)
-    {
-        $request->validate([
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
-        ]);
-        $item = StudentInformation::where('user_id', '=', Auth::user()->getAuthIdentifier())->first();
-
-        if (!empty($request->avatar)) {
-            File::delete(public_path($item->avatar));
-
-            $imageName = time() . '.' . $request['avatar']->getClientOriginalExtension();
-            $request['avatar']->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/profile/image'), $imageName);
-            $item->avatar = '/users/user_' . Auth::user()->getAuthIdentifier() . '/profile/image/' . $imageName;
-            $item->save();
-
-        }
-
-        return redirect()->back()->with('status', __('default.pages.profile.save_success_message'));
-    }
 
     public function edit_profile()
     {
         $user = User::where('id', '=', Auth::user()->getAuthIdentifier())->with('type_ownership')->first();
         $types_of_ownership = Type_of_ownership::all();
 
-        return view("app.pages.page.profile.edit_profile", [
+        return view("app.pages.author.profile.edit_profile", [
             "user" => $user,
             "types_of_ownership" => $types_of_ownership
         ]);
@@ -79,6 +50,7 @@ class UserController extends Controller
             'email' => ['required', Rule::unique('users')->ignore($request->user()->id), 'max:255'],
             'iin' => ['required', Rule::unique('users')->ignore($request->user()->id), 'max:12'],
             'company_logo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'company_name' => 'required|max:255',
         ]);
 
 
@@ -99,19 +71,23 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect("/" . app()->getLocale() . "/profile");
+        return redirect("/" . app()->getLocale() . "/profile")->with('status', __('default.pages.profile.save_success_message'));
     }
 
     public function change_password()
     {
         $user = Auth::user();
-        return view("app.pages.page.profile.change_password", [
+        return view("app.pages.author.profile.change_password", [
             "user" => $user,
         ]);
     }
 
     public function update_password(Request $request)
     {
+        $messages = [
+            'different' => __('default.pages.profile.different_password')
+        ];
+
         $request->validate([
             'old_password' => 'required',
             'password' => ['required',
@@ -120,26 +96,27 @@ class UserController extends Controller
                 'confirmed',
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/',
                 'different:old_password'],
-        ]);
+        ], $messages);
 
-        $user = $request->user();
+        $user = Auth::user();
 
         if (Hash::check($request->old_password, $user->password)) {
 
             $user->password = Hash::make($request['password']);
             $user->save();
+
+            return redirect("/" . app()->getLocale() . "/profile-author-information")->with('status', __('default.pages.profile.password_update_success'));
+
         }
 
-        return view("app.pages.page.profile.profile", [
-            "user" => $user,
-        ]);
+        return redirect()->back()->with('failed', __('default.pages.profile.password_update_failed'));
     }
 
     public function profile_pay_information()
     {
         $user = User::where('id', '=', Auth::user()->getAuthIdentifier())->with('type_ownership')->first();
         $pay_information = PayInformation::where('user_id', '=', $user->id)->first();
-        return view("app.pages.page.profile.profile_pay_information", [
+        return view("app.pages.author.profile.profile_pay_information", [
             "user" => $user,
             "pay_information" => $pay_information
         ]);
@@ -147,6 +124,27 @@ class UserController extends Controller
 
     public function update_profile_pay_information(Request $request)
     {
+
+        $messages = [
+            'max' => [
+                'string' => 'Поле :attribute не должно привышать :max символов.',
+            ]
+        ];
+
+        $attributes = [
+            'merchant_certificate_id' => __('default.pages.profile.merchant_certificate_id'),
+            'merchant_name' => __('default.pages.profile.merchant_name'),
+            'private_key_pass' => __('private_key_pass'),
+            'merchant_id' => __('merchant_id'),
+        ];
+
+        $request->validate([
+            'merchant_certificate_id' => 'required|max:255',
+            'merchant_name' => 'required|max:255',
+            'private_key_pass' => 'required|max:255',
+            'merchant_id' => 'required|max:255',
+        ], $messages, $attributes);
+
         $information = PayInformation::where('user_id', '=', Auth::user()->getAuthIdentifier())->first();
 
         if (empty($information)) {
@@ -172,7 +170,7 @@ class UserController extends Controller
             $item->save();
 
 
-            return redirect("/" . app()->getLocale() . "/profile_pay_information");
+            return redirect("/" . app()->getLocale() . "/profile_pay_information")->with('status', __('default.pages.profile.save_success_message'));
         } else {
 
             if (!empty($request->public_key_path)) {
@@ -201,7 +199,7 @@ class UserController extends Controller
             $item->merchant_id = $request->merchant_id;
             $item->save();
 
-            return redirect("/" . app()->getLocale() . "/profile_pay_information");
+            return redirect("/" . app()->getLocale() . "/profile_pay_information")->with('status', __('default.pages.profile.save_success_message'));
         }
 
     }
@@ -210,7 +208,7 @@ class UserController extends Controller
     {
         $item = UserInformation::where('user_id', '=', Auth::user()->id)->first();
 //        $certificates = json_decode($item->certificates);
-        return view("app.pages.page.profile.author_data_profile", [
+        return view("app.pages.author.profile.author_data_profile", [
             'item' => $item,
 //            'certificates' => $certificates,
         ]);
@@ -218,6 +216,39 @@ class UserController extends Controller
 
     public function update_author_data_profile(Request $request)
     {
+        $messages = [
+            'max' => [
+                'string' => 'Поле :attribute не должно привышать :max символов.',
+            ]
+        ];
+
+        $attributes = [
+            'name' => __('default.pages.profile.name'),
+            'surname' => __('default.pages.profile.surname'),
+            'avatar' => __('default.pages.profile.avatar'),
+            'specialization' => __('default.pages.profile.specialization'),
+            'about' => __('default.pages.profile.about'),
+            'phone_1' => __('default.pages.profile.phone_1'),
+            'phone_2' => __('default.pages.profile.phone_2'),
+            'site_url' => __('default.pages.profile.site_url'),
+            'vk_link' => __('default.pages.profile.vk_link'),
+            'fb_link' => __('default.pages.profile.fb_link'),
+            'instagram_link' => __('default.pages.profile.instagram_link'),
+        ];
+
+        $request->validate([
+            'name' => 'max:255',
+            'surname' => 'max:255',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'specialization' => 'max:255',
+            'phone_1' => 'max:255',
+            'phone_2' => 'max:255',
+            'site_url' => 'max:255',
+            'vk_link' => 'max:255',
+            'fb_link' => 'max:255',
+            'instagram_link' => 'max:255',
+        ], $messages, $attributes);
+
         $information = UserInformation::where('user_id', '=', Auth::user()->getAuthIdentifier())->first();
 
         if (empty($information)) {
@@ -289,120 +320,8 @@ class UserController extends Controller
             $item->save();
         }
 
-        return redirect("/" . app()->getLocale() . "/profile-author-information");
+        return redirect("/" . app()->getLocale() . "/profile-author-information")->with('status', __('default.pages.profile.save_success_message'));
 
     }
 
-    public function studentAuth()
-    {
-        if (Auth::check()) {
-            return redirect("/" . app()->getLocale() . "/student-profile");
-        }
-        return view("auth.login_student", [
-
-        ]);
-    }
-
-    public function studentLogin(Request $request)
-    {
-        $client = new Client(['verify' => false]);
-
-        try {
-            $body = array("login" => $request->email, "password" => $request->password);
-            $response = $client->request('POST', 'https://btest.enbek.kz/ru/api/auth/login', [
-                'body' => json_encode($body),
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                ]
-            ]);
-        } catch (BadResponseException $e) {
-            return redirect()->back()->with('status', __('Неверный логин или пароль'));
-        }
-
-        $token = json_decode($response->getBody(), true);
-        $token = $token["response"]["token"];
-        $student_resume = json_decode($this->getStudentResume($token), true);
-        $student_unemployed_status = json_decode($this->getUnemployedStatus($token), true);
-
-        $user = User::where('email', '=', $request->email)->first();
-        $student_role = 5;
-
-        if (empty($user)) {
-
-            $item = new User;
-            $item->email = $request->email;
-            $item->is_activate = 1;
-            $item->email_verified_at = Carbon::now()->toDateTimeString();
-            $item->save();
-
-            $item->roles()->sync([$student_role]);
-
-            $item_information = new StudentInformation;
-            $item_information->user_id = $item->id;
-            $item_information->uid = $student_resume[0]["uid"];
-            $item_information->profession_code = $student_resume[0]["uozcodprof"];
-            if ($student_unemployed_status["response"] == null) {
-                $item_information->unemployed_status = 0;
-            } else {
-                $item_information->unemployed_status = 1;
-            }
-            $item_information->save();
-
-            $user_skills = array();
-            foreach ($student_resume[0]["compSpecList"] as $skill) {
-                array_push($user_skills, $skill["codcomp"]);
-            }
-            $skills = Skill::whereIn('code_skill', $user_skills)->pluck('id')->toArray();
-            $item->skills()->sync($skills);
-
-            Session::put('student_token', $token);
-            Auth::login($item);
-
-        } else {
-            if ($user->roles()->first()->id != $student_role) {
-                return redirect()->back()->with('status', __('Аккаунт с этой почтой уже зарегистрирован как автор'));
-            }
-            Session::put('student_token', $token);
-            Auth::login($user);
-        }
-
-        return redirect("/" . app()->getLocale() . "/student-profile");
-
-    }
-
-    public function getStudentResume($token)
-    {
-        $client = new Client(['verify' => false]);
-
-        try {
-            $response = $client->request('GET', 'https://btest.enbek.kz/ru/api/resume-for-obuch', [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'token' => $token
-                ]
-            ]);
-        } catch (BadResponseException $e) {
-            return 404;
-        }
-
-        return $response->getBody();
-    }
-
-    public function getUnemployedStatus($token)
-    {
-        $client = new Client(['verify' => false]);
-
-        try {
-            $response = $client->request('GET', 'http://btest.enbek.kz/ru/api/bezrab-for-obuch', [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'token' => $token
-                ]
-            ]);
-        } catch (BadResponseException $e) {
-            return 404;
-        }
-
-        return $response->getBody();
-    }
 }

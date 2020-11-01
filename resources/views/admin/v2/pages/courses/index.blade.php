@@ -68,7 +68,7 @@
                             <td>{{ $item->id }}</td>
                             {{--                            <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>--}}
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->users()->first()->email }}</td>
+                            <td>{{ $item->user()->first()->email }}</td>
                             <td>
                                 @if($item->status == 1)
                                     <div class="alert alert-warning" style="margin: 0;">

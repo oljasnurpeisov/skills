@@ -36,7 +36,11 @@ class SkillsUpdate extends Command
         ]);
 
         foreach (array_values($skills)[0] as $skill) {
-
+            if($skill['fl_check'] == 'x'){
+                $skill['fl_check'] = 0;
+            }else{
+                $skill['fl_check'] = 1;
+            }
             $user = Skill::updateOrCreate([
                 'code_skill' => $skill['codskill']
             ], [

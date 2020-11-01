@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ProfessionSkillRelation;
+use App\Console\Commands\ProfessionsUpdate;
 use App\Console\Commands\SkillsUpdate;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -16,7 +18,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         RemoveUnconfirmedEmailUsers::class,
-        SkillsUpdate::class
+        SkillsUpdate::class,
+        ProfessionsUpdate::class,
+        ProfessionSkillRelation::class
     ];
 
     /**
@@ -31,6 +35,12 @@ class Kernel extends ConsoleKernel
             ->everySixHours();
 
         $schedule->command('update:skills')
+            ->daily();
+
+        $schedule->command('update:professions')
+            ->daily();
+
+        $schedule->command('update:profession_skill_relation')
             ->daily();
 
     }

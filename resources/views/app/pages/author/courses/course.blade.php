@@ -431,6 +431,11 @@
             @endif
         </div>
     @endif
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
     <div class="row my-2">
         <div class="col-lg-8 order-lg-2">
             <div class="tab-content py-4">

@@ -56,7 +56,7 @@ return [
         'string' => 'The :attribute must be greater than or equal :value characters.',
         'array' => 'The :attribute must have :value items or more.',
     ],
-    'image' => 'The :attribute must be an image.',
+    'image' => 'Логотип компании должен быть изображением',
     'in' => 'The selected :attribute is invalid.',
     'in_array' => 'The :attribute field does not exist in :other.',
     'integer' => 'The :attribute must be an integer.',
@@ -82,8 +82,8 @@ return [
         'string' => 'The :attribute may not be greater than :max characters.',
         'array' => 'The :attribute may not have more than :max items.',
     ],
-    'mimes' => 'The :attribute must be a file of type: :values.',
-    'mimetypes' => 'The :attribute must be a file of type: :values.',
+    'mimes' => 'Логотип компании должен быть файлом типа: :values.',
+    'mimetypes' => 'Логотип компании должен быть файлом типа: :values.',
     'min' => [
         'numeric' => 'The :attribute must be at least :min.',
         'file' => 'The :attribute must be at least :min kilobytes.',
@@ -96,7 +96,7 @@ return [
     'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
-    'required' => 'The :attribute field is required.',
+    'required' => 'Данное поле обязательно для заполнения.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
@@ -135,6 +135,7 @@ return [
         ],
         'email' => [
             'unique' => 'Для введенного E-MAIL уже зарегистрирована учетная запись',
+            'exists' => 'Учетная запись не зарегистрирована',
         ],
         'password' => [
             'regex' => '<p>пароль должен соответствовать следующим критериям:</p>
@@ -147,7 +148,12 @@ return [
         ],
         'iin' => [
             'unique' => 'Учетная запись с данным ИИН/БИН уже зарегистрирована',
+            
         ],
+
+        'image' => 'Логотип компании должен быть изображением',
+        'mimes' => 'Логотип компании должен быть файлом типа: :values.',
+        'mimetypes' => 'Логотип компании должен быть файлом типа: :values.',
 
     ],
 

@@ -75,6 +75,9 @@ return [
         'courses' => [
             'title' => 'Курсы',
             'list' => 'Список курсов',
+            'wait_publish_list' => 'Ожидающие проверки',
+            'unpublish_list' => 'Неопубликованные курсы',
+            'publish_list' => 'Опубликованные курсы',
             'course_name' => 'Название курса',
             'author_email' => 'Email автора',
             'preview' => 'Предварительный просмотр',

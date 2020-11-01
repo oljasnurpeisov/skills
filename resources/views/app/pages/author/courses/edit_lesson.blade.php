@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <title>Laravel</title>
 
     <!-- Fonts -->
@@ -388,9 +388,7 @@
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
@@ -414,9 +412,6 @@
         <a class="nav-link" href="/{{$lang}}/my-courses/drafts">{{__('default.pages.courses.drafts')}}</a>
         <a class="nav-link" href="/{{$lang}}/my-courses/deleted">{{__('default.pages.courses.my_courses_deleted')}}</a>
     </nav>
-    <br>
-    <br>
-    <a class="btn btn-warning" href="/{{$lang}}/create-course">Создать курс</a>
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
@@ -431,39 +426,155 @@
             @endif
         </div>
     @endif
-    <br>
-    <br>
-    <h2>{{__($page_name)}}</h2>
-    <br>
-    <div class="row">
-        @foreach($items as $item)
-            <div class="col-sm-4">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="{{$item->image}}" alt="" style="width: 200px">
-                    <div class="card-body">
-                        <h5 class="card-title">{{$item->name}}</h5>
-                        <p class="card-text">{!!$item->teaser!!}</p>
-                        {{--@if($item->status == 0)--}}
-                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}" class="btn btn-primary">Редактировать</a>
-                        {{--@endif--}}
-                    </div>
+    <div class="row my-2">
+        <div class="col-lg-8 order-lg-2">
+            <div class="tab-content py-4">
+                <div class="tab-pane active" id="profile">
+                    <form action="/{{$lang}}/edit-lesson-{{$item->id}}" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="tab-content py-4">
+                            <div class="tab-pane active" id="profile">
+                                <input name="course_id" value="{{$course->id}}" hidden>
+                                <h3>Редактирование урока</h3>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="name">Название урока *</label>
+                                            <input type="text" class="form-control" name="name"
+                                                   placeholder="" value="{{$item->name}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Тип урока</label>
+                                            <select class="form-control" name="type" id="type">
+                                                {{--<option value="0">Теория</option>--}}
+                                                {{--<option value="1">Теория с практическим заданием</option>--}}
+                                                {{--<option value="2">Курсовая работа</option>--}}
+                                                {{--<option value="3">Финальное тестирование</option>--}}
+                                                @foreach($lessons_type as $type)
+                                                    <option value="{{ $type->id }}"
+                                                            @if($type->id==$item->type) selected='selected' @endif >{{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div id="end_lesson_type_block" style="display: none">
+                                            <div class="form-check form-check-inline" id="test_type_block">
+                                                <input class="form-check-input" type="radio" name="end_lesson_type"
+                                                       id="test_lesson_type"
+                                                       value="0">
+                                                <label class="form-check-label" for="inlineRadio1">Тест</label>
+                                            </div>
+                                            <div class="form-check form-check-inline" id="homework_type_block">
+                                                <input class="form-check-input" type="radio" name="end_lesson_type"
+                                                       id="homework_lesson_type"
+                                                       value="1">
+                                                <label class="form-check-label" for="inlineRadio2">Домашнее
+                                                    задание</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="duration">Продолжительность урока, минуты *</label>
+                                            <input type="text" class="form-control" name="duration"
+                                                   placeholder="" value="{{$item->duration}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="image">Картинка урока</label>
+                                            <input type="file" id="image" name="image" accept="image/*">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="profit_desc">Теория *</label>
+                                            <textarea class="form-control" name="theory" id="theory"
+                                                      rows="3">{{$item->theory}}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <b><label for="name">Ссылка на видео урока</label></b>
+                                            @if(!empty($item->youtube_link))
+                                                @foreach(json_decode($item->youtube_link) as $link)
+                                                    <input type="text" class="form-control" name="youtube_link[]"
+                                                           value="{{$link}}">
+                                                    <br>
+                                                @endforeach
+                                            @else
+                                                <input type="text" class="form-control" name="youtube_link[]"
+                                                       value="">
+                                            @endif
+
+                                            <br>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="video">Видео файл с устройства</label>
+                                            @if(!empty($item->video))
+                                                @foreach(json_decode($item->video) as $video)
+                                                    <input type="file" id="video" name="video[]" multiple accept="video/*">
+                                                    <video width="400" controls>
+                                                        <source src="{{$video}}" type="video/mp4">
+                                                        Your browser does not support HTML video.
+                                                    </video>
+                                                @endforeach
+                                            @else
+                                                <input type="file" id="video" name="video[]" multiple accept="video/*">
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="audio">Аудио урока</label>
+                                            <input type="file" id="audio" name="audio[]" multiple accept="audio/*">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="another_files">Другие материалы урока</label>
+                                            <input type="file" name="another_files">
+                                        </div>
+
+                                        <div class="form-group" id="test_block"
+                                             @if($item->type == 2 or $item->type == 4) style="display: block"
+                                             @else style="display: none" @endif>
+                                            <label for="test">Тест</label>
+                                            <textarea class="form-control" name="test"
+                                                      rows="3">{{$item->test}}</textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Сохранить</button>
+                                <!--/row-->
+                            </div>
+                        </div>
+                    </form>
                 </div>
+
+
             </div>
-        @endforeach
+        </div>
+
     </div>
 </div>
-</body>
 <script>
-    $('document').ready(function () {
-        $("#company_logo").change(function () {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#company_logo_img').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(this.files[0]);
+    $(document).ready(function () {
+        $('#type').on('change', function () {
+            if (this.value == '0' || this.value == '2') {
+                $("#end_lesson_type_block").hide();
+                $('#test_lesson_type').attr('checked', false);
+                $("#test_block").hide();
+            }
+            else {
+                $("#end_lesson_type_block").show();
+                $('#test_lesson_type').attr('checked', true);
+                $("#test_block").show();
             }
         });
     });
+    $('#test_lesson_type').on("change", function () {
+        if ($('#test_lesson_type').attr('checked', true)) {
+            $('#homework_lesson_type').attr('checked', false);
+            $("#test_block").show();
+        }
+    });
+    $('#homework_lesson_type').on("change", function () {
+        if ($('#homework_lesson_type').attr('checked', true)) {
+            $('#test_lesson_type').attr('checked', false);
+            $("#test_block").hide();
+        }
+    });
+
 </script>
+</body>
 </html>

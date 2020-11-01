@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\App;
+namespace App\Http\Controllers\App\Author;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
@@ -22,8 +22,8 @@ class LessonController extends Controller
     public function createLesson($lang, Course $item, Theme $theme)
     {
         $lessons_type = LessonsType::all();
-        if ($item->users()->first()->id == Auth::user()->id) {
-            return view("app.pages.page.courses.create_lesson", [
+        if ($item->author_id == Auth::user()->id) {
+            return view("app.pages.author.courses.create_lesson", [
                 "item" => $item,
                 "theme" => $theme,
                 "lessons_type" => $lessons_type
@@ -35,6 +35,7 @@ class LessonController extends Controller
 
     public function storeLesson(Request $request)
     {
+
         $last_id = Lesson::whereHas('themes', function($q) use ($request){
             $q->where('themes.id', '=', $request->theme_id);
         })->orderBy('index_number', 'desc')->latest()->first()->index_number ?? 0;
@@ -52,7 +53,9 @@ class LessonController extends Controller
         $item->end_lesson_type = $request->end_lesson_type;
         $item->duration = $request->duration;
         $item->theory = $request->theory;
-        $item->youtube_link = $request->youtube_link;
+        if($request->youtube_link != [null]) {
+            $item->youtube_link = json_encode($request->youtube_link);
+        }
         $item->files = $request->another_files;
         $item->test = $request->test;
 
@@ -60,24 +63,32 @@ class LessonController extends Controller
             File::delete(public_path($item->image));
 
             $imageName = time() . '.' . $request['image']->getClientOriginalExtension();
-            $request['image']->move(public_path('images/courses_images'), $imageName);
-            $item->image = '/images/courses_images/' . $imageName;
+            $request['image']->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/images'), $imageName);
+
+            $item->image = '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/images/' . $imageName;
+
         }
 
         if (!empty($request->video)) {
             File::delete(public_path($item->video));
-
-            $videoName = time() . '.' . $request['video']->getClientOriginalExtension();
-            $request['video']->move(public_path('files/courses_videos'), $videoName);
-            $item->video = '/files/courses_videos/' . $videoName;
+            $videos = [];
+            foreach ($request->video as $video) {
+                $videoName = time() . '.' . $video->getClientOriginalExtension();
+                $video->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/videos'), $videoName);
+                array_push($videos, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/videos/' . $videoName);
+            }
+            $item->video = json_encode($videos);
         }
 
         if (!empty($request->audio)) {
             File::delete(public_path($item->audio));
-
-            $audioName = time() . '.' . $request['audio']->getClientOriginalExtension();
-            $request['audio']->move(public_path('files/courses_audio'), $audioName);
-            $item->audio = '/files/courses_audio/' . $audioName;
+            $audios = [];
+            foreach ($request->audio as $audio) {
+                $audioName = time() . '.' . $audio->getClientOriginalExtension();
+                $audio->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/audios'), $audioName);
+                array_push($audios, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/audios/' . $audioName);
+            }
+            $item->audio = json_encode($audios);
         }
 
         if ($request->hasFile('another_files')) {
@@ -85,8 +96,8 @@ class LessonController extends Controller
             foreach ($request->file('another_files') as $key => $file) {
                 File::delete(public_path($file));
                 $filename = time() . $key . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('files/lesson_files'), $filename);
-                array_push($names, '/files/lesson_files/' . $filename);
+                $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files'), $filename);
+                array_push($names, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files/' . $filename);
 
             }
             $item->files = json_encode($names);
@@ -96,7 +107,7 @@ class LessonController extends Controller
 
         $item->themes()->sync([$request->theme_id]);
 
-        return redirect("/" . app()->getLocale() . "/my-courses/course/" . $request->course_id);
+        return redirect("/" . app()->getLocale() . "/my-courses/course/" . $request->course_id)->with('status', __('default.pages.lessons.create_request_message'));
     }
 
     public function editLesson($lang, Theme $theme, Lesson $lesson)
@@ -114,11 +125,12 @@ class LessonController extends Controller
         $course = Course::where('id', '=', $course_theme->pivot->course_id)->first();
         $lessons_type = LessonsType::all();
 
-        if (($course->users()->first()->id == Auth::user()->id) and (!empty($lesson_theme->lessons->first()->id) == $lesson->id)) {
-            return view("app.pages.page.courses.edit_lesson", [
+        if (($course->author_id == Auth::user()->id) and (!empty($lesson_theme->lessons->first()->id) == $lesson->id)) {
+            return view("app.pages.author.courses.edit_lesson", [
                 "theme" => $theme,
                 "item" => $lesson,
-                "lessons_type" => $lessons_type
+                "lessons_type" => $lessons_type,
+                "course" => $course
             ]);
         } else {
             return redirect("/" . app()->getLocale() . "/my-courses");
@@ -157,7 +169,9 @@ class LessonController extends Controller
         $item->end_lesson_type = $request->end_lesson_type;
         $item->duration = $request->duration;
         $item->theory = $request->theory;
-        $item->youtube_link = $request->youtube_link;
+        if($request->youtube_link != [null]) {
+            $item->youtube_link = json_encode($request->youtube_link);
+        }
         $item->files = $request->another_files;
         $item->test = $request->test;
 
@@ -165,24 +179,32 @@ class LessonController extends Controller
             File::delete(public_path($item->image));
 
             $imageName = time() . '.' . $request['image']->getClientOriginalExtension();
-            $request['image']->move(public_path('images/courses_images'), $imageName);
-            $item->image = '/images/courses_images/' . $imageName;
+            $request['image']->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/images'), $imageName);
+
+            $item->image = '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/images/' . $imageName;
+
         }
 
         if (!empty($request->video)) {
             File::delete(public_path($item->video));
-
-            $videoName = time() . '.' . $request['video']->getClientOriginalExtension();
-            $request['video']->move(public_path('files/courses_videos'), $videoName);
-            $item->video = '/files/courses_videos/' . $videoName;
+            $videos = [];
+            foreach ($request->video as $video) {
+                $videoName = time() . '.' . $video->getClientOriginalExtension();
+                $video->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/videos'), $videoName);
+                array_push($videos, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/videos/' . $videoName);
+            }
+            $item->video = json_encode($videos);
         }
 
         if (!empty($request->audio)) {
             File::delete(public_path($item->audio));
-
-            $audioName = time() . '.' . $request['audio']->getClientOriginalExtension();
-            $request['audio']->move(public_path('files/courses_audio'), $audioName);
-            $item->audio = '/files/courses_audio/' . $audioName;
+            $audios = [];
+            foreach ($request->audio as $audio) {
+                $audioName = time() . '.' . $audio->getClientOriginalExtension();
+                $audio->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/audios'), $audioName);
+                array_push($audios, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/audios/' . $audioName);
+            }
+            $item->audio = json_encode($audios);
         }
 
         if ($request->hasFile('another_files')) {
@@ -190,8 +212,8 @@ class LessonController extends Controller
             foreach ($request->file('another_files') as $key => $file) {
                 File::delete(public_path($file));
                 $filename = time() . $key . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('files/lesson_files'), $filename);
-                array_push($names, '/files/lesson_files/' . $filename);
+                $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files'), $filename);
+                array_push($names, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files/' . $filename);
 
             }
             $item->files = json_encode($names);
