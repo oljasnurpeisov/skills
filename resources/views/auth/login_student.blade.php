@@ -504,6 +504,11 @@
         </div>
         <button type="submit" class="btn btn-primary">Войти</button>
     </form>
+<br><br><br>
+    {{--<form action="/kassa_login" method="POST">--}}
+    {{--{{ csrf_field() }}--}}
+        {{--<button type="submit" class="btn btn-primary">Касса</button>--}}
+    {{--</form>--}}
 </div>
 </body>
 </html>

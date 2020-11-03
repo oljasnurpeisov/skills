@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
+    const draft = 0;
+    const onCheck = 1;
+    const unpublished = 2;
+    const published = 3;
+    const deleted = 4;
 
     protected $table = 'courses';
 

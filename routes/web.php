@@ -81,7 +81,15 @@ Route::group(["namespace" => "Admin"], function () {
     });
 });
 
+
 Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
+    Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
+        Route::get("/", "PageController@index");
+        // Оплата курса
+        Route::post("/kassa_login", "PaymentController@createPaymentOrder");
+        Route::post("/callbackPaymentOrder", "PaymentController@callbackPaymentOrder");
+    });
+    
     Route::group(['prefix' => '{lang}'], function () {
 
         Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
@@ -89,6 +97,13 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             // Каталог курсов
             Route::get("/course-catalog", "PageController@courseCatalog");
             Route::get("/course-catalog/course/{item}", "PageController@courseView");
+        });
+        Route::group(["middleware" => ["web"], "namespace" => "Student"], function () {
+            Route::get("/login_student", "UserController@studentAuth");
+            Route::post("/login_student", "UserController@studentLogin");
+            // Оплата курса
+            Route::post("/kassa_login", "PaymentController@createPaymentOrder");
+            Route::post("/callbackPaymentOrder", "PaymentController@callbackPaymentOrder");
         });
         Route::group(['middleware' => ["auth", "verified"]], static function () {
             Route::group(['middleware' => 'check.role:author'], static function () {
@@ -111,8 +126,6 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                         // Профиль обучающегося
                         Route::get("/student-profile", "UserController@student_profile");
                         Route::post("/update_student_profile", "UserController@update_student_profile");
-                        Route::get("/login_student", "UserController@studentAuth");
-                        Route::post("/login_student", "UserController@studentLogin");
                     });
                 });
                 Route::group(['middleware' => 'check.role:author'], static function () {
@@ -128,6 +141,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                         Route::get("/my-courses/edit-course/{item}", "CourseController@editCourse");
                         Route::post("/my-courses/edit-course/{item}", "CourseController@updateCourse");
                         Route::post("/my-courses/delete-course/{item}", "CourseController@deleteCourse");
+                        Route::post("/my-courses/reestablish-course/{item}", "CourseController@reestablishCourse");
                         Route::post("/my-courses/quota-confirm-course/{item}", "CourseController@quotaConfirm");
                         // Тема
                         Route::post("/create-theme", "ThemeController@createTheme");
@@ -159,7 +173,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             });
         });
     });
-    Route::get("/", "PageController@index");
+//    Route::get("/", "PageController@index");
 });
 
 Route::group(["middleware" => ["web"], "namespace" => "Auth"], function () {

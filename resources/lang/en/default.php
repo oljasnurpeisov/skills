@@ -25,6 +25,7 @@ return [
             'free_type' => 'Бесплатные',
             'publish_request_message' => 'Курс направлен на рассмотрение модератору',
             'delete_request_message' => 'Курс был успешно удален',
+            'reestablish_request_message' => 'Курс был успешно восстановлен',
             'create_request_message' => 'Курс успешно создан'
         ],
         'lessons' => [

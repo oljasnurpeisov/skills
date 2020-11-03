@@ -550,9 +550,11 @@
         $term = $( "#term").val();
         $.ajax({
             type: 'GET',
-            url: 'https://dev3.panama.kz/ru/course-catalog?choosed_profession='+$profession_id ,
+            url: 'https://dev3.panama.kz/ru/course-catalog?choosed_profession='+$profession_id+'&term='+$term ,
             success: function (data) {
-                console.log(1);
+                console.log(data);
+                // $('#skills_data').html(data);
+
                 // $('#course_data').empty();
                 // $('#course_data').replaceWith(data);
                 $('#course_data').html(data);
@@ -581,9 +583,10 @@
 
     $('#course_type').on('change', function() {
         $course_type = $("#course_type").val();
+        $term = $("#term").val();
         $.ajax({
             type: 'GET',
-            url: 'https://dev3.panama.kz/ru/course-catalog?course_type='+$course_type,
+            url: 'https://dev3.panama.kz/ru/course-catalog?course_type='+$course_type+'&term='+$term,
             success: function (data) {
                 console.log(1);
                 // $('#course_data').empty();
@@ -596,24 +599,24 @@
             }
         });
     });
-
-    $("[name='choosed_lang']").on('change', function() {
-        $choosed_lang = $("[name='choosed_lang']").val();
-        $.ajax({
-            type: 'GET',
-            url: 'https://dev3.panama.kz/ru/course-catalog?course_type='+$choosed_lang,
-            success: function (data) {
-                console.log(1);
-                // $('#course_data').empty();
-                $('#course_data').html(data);
-                console.log(data);
-
-            },
-            error: function() {
-                console.log(data);
-            }
-        });
-    });
+    //
+    // $("[name='choosed_lang']").on('change', function() {
+    //     $choosed_lang = $("[name='choosed_lang']").val();
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: 'https://dev3.panama.kz/ru/course-catalog?course_type='+$choosed_lang,
+    //         success: function (data) {
+    //             console.log(1);
+    //             // $('#course_data').empty();
+    //             $('#course_data').html(data);
+    //             console.log(data);
+    //
+    //         },
+    //         error: function() {
+    //             console.log(data);
+    //         }
+    //     });
+    // });
 
 </script>
 </body>

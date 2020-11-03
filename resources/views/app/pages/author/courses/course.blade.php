@@ -535,6 +535,10 @@
                             <a style="color: white" class="btn btn-danger"
                                href="/{{$lang}}/my-courses/delete-course/{{$item->id}}" data-toggle="modal"
                                data-target="#rejectModal">Удалить курс</a>
+                        @else
+                            <a style="color: white" class="btn btn-warning"
+                               href="/{{$lang}}/my-courses/delete-course/{{$item->id}}" data-toggle="modal"
+                               data-target="#reestablishModal">Восстановить курс</a>
                         @endif
 
                         <div class="modal fade" id="publishModal" tabindex="-1" role="dialog"
@@ -578,6 +582,31 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-danger">Да</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form action="/{{$lang}}/my-courses/reestablish-course/{{$item->id}}" id="reestablish_form" method="POST">
+                        {{ csrf_field() }}
+
+                        <div class="modal fade" id="reestablishModal" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Восстановление курса</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Вы уверены, что хотите восстановить курс?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Да</button>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена
                                         </button>
                                     </div>

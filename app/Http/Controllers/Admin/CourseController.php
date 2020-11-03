@@ -178,6 +178,19 @@ class CourseController extends Controller
                 $item->save();
 
                 $notification->users()->sync([$author_course]);
+
+                $data = [
+                    'email' => $item->user()->first()->email,
+                    'description' => 'notifications.quota_request_description',
+                    'course_id' => $item->id,
+                    'course_name' => $item->name,
+                    'user_id' => $item->user()->first()->id
+                ];
+
+                Mail::send('app.pages.page.emails.quota_confirm', ['data' => $data], function ($message) use ($item) {
+                    $message->from(env("MAIL_USERNAME"), 'Enbek');
+                    $message->to($item->user()->first()->email, 'Receiver')->subject('');
+                });
             }
 
             $logger = new Log;

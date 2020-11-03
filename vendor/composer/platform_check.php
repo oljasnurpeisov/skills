@@ -17,6 +17,7 @@ extension_loaded('libxml') || $missingExtensions[] = 'libxml';
 extension_loaded('mbstring') || $missingExtensions[] = 'mbstring';
 extension_loaded('openssl') || $missingExtensions[] = 'openssl';
 extension_loaded('pcre') || $missingExtensions[] = 'pcre';
+extension_loaded('pdo') || $missingExtensions[] = 'pdo';
 extension_loaded('phar') || $missingExtensions[] = 'phar';
 extension_loaded('simplexml') || $missingExtensions[] = 'simplexml';
 extension_loaded('tokenizer') || $missingExtensions[] = 'tokenizer';
