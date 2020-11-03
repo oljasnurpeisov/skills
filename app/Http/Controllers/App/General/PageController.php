@@ -18,27 +18,33 @@ class PageController extends Controller
     public function index(Request $request, $lang = "ru")
     {
         if (Auth::check()) {
+            // Получить навыки пользователя и записать их в массив
             $user_skills = User::where('id', '=', Auth::user()->id)->with('skills')->first();
 
             $skill_ids = array();
             foreach ($user_skills->skills as $skill){
                 array_push($skill_ids, $skill->id);
             }
+            // Получить список профессий из навыков пользователя
             $profession_skills = Professions::whereHas('skills', function ($query) use ($skill_ids) {
 
-                $query->whereIn('skill_id', [2]);
-            })->get('id');
-
-            $items = Course::where('status', '=', Course::published)->whereHas('skills', function ($query) use ($skill_ids) {
-
                 $query->whereIn('skill_id', $skill_ids);
+            })->pluck('id')->toArray();
+            // Получить список навыков из списка профессий
+            $skills_professions = Skill::whereHas('professions', function ($query) use ($profession_skills) {
+
+                $query->whereIn('profession_id', $profession_skills);
+            })->pluck('id')->toArray();
+            // Получить список курсов из списка навыков профессий
+            $items = Course::where('status', '=', Course::published)->whereHas('skills', function ($query) use ($skills_professions) {
+
+                $query->whereIn('skill_id', $skills_professions);
             })->limit(12)->get();
         }
 
         return view("welcome", [
             "items" => $items ?? [],
         ]);
-//        return $profession_skills[0]->id;
     }
 
     public function courseCatalog(Request $request, $lang)
