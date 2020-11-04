@@ -446,25 +446,43 @@
                 <div class="col-sm-12">
                     <h2>Рекомендованные курсы</h2>
                     <div class="row">
-                        @foreach($items as $item)
-                            <div class="col-sm-3" style="margin-right: 55px;margin-bottom: 25px">
-                                <div class="card" style="width: 15rem;">
-                                    <img class="card-img-top" src="{{$item->image}}" alt="image" height="200px">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{$item->name}}</h5>
-                                        <p class="card-text" style="color:#828282;">{{$item->teaser}}</p>
+                        @if(count($courses)>0)
+                            @foreach($courses as $course)
+                                <div class="col-sm-3" style="margin-right: 55px;margin-bottom: 25px">
+                                    <div class="card" style="width: 15rem;">
+                                        <img class="card-img-top" src="{{$course->image}}" alt="image" height="200px">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{$course->name}}</h5>
+                                            <p class="card-text" style="color:#828282;">{{$course->teaser}}</p>
 
-                                        @if($item->cost > 0)
-                                            <p class="card-text" style="color:#828282;"><span class="badge badge-info">{{$item->cost}}
-                                                    тг</span></p>
-                                        @else
-                                            <p class="card-text"><span class="badge badge-success">Бесплатно</span></p>
-                                        @endif
+                                            @if($course->cost > 0)
+                                                <p class="card-text" style="color:#828282;"><span
+                                                            class="badge badge-info">{{$course->cost}}
+                                                        тг</span></p>
+                                            @else
+                                                <p class="card-text"><span class="badge badge-success">Бесплатно</span>
+                                                </p>
+                                            @endif
 
-                                        <a href="/{{$lang}}/course-catalog/course/{{$item->id}}"
-                                           class="btn btn-primary">Перейти</a>
+                                            <a href="/{{$lang}}/course-catalog/course/{{$course->id}}"
+                                               class="btn btn-primary">Перейти</a>
+                                        </div>
                                     </div>
                                 </div>
+                            @endforeach
+                            @else
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>Рекомендованные навыки</h2>
+                    <div class="row">
+                        @foreach($skills as $skill)
+                            <div class="col-sm-1" style="margin-right: 55px;margin-bottom: 25px">
+                                <span class="badge badge-primary">{{$skill->getAttribute('name_'.$lang) ?? $skill->name_ru}}</span>
                             </div>
                         @endforeach
                     </div>

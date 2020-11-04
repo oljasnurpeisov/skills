@@ -86,7 +86,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
     Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
         Route::get("/", "PageController@index");
         // Оплата курса
-        Route::post("/kassa_login", "PaymentController@createPaymentOrder");
+        Route::post("/createPaymentOrder/{item}", "PaymentController@createPaymentOrder");
         Route::post("/callbackPaymentOrder", "PaymentController@callbackPaymentOrder");
     });
     
@@ -97,13 +97,15 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             // Каталог курсов
             Route::get("/course-catalog", "PageController@courseCatalog");
             Route::get("/course-catalog/course/{item}", "PageController@courseView");
+
+            Route::post("/course-catalog-filter", "PageController@courseCatalogFilter");
         });
         Route::group(["middleware" => ["web"], "namespace" => "Student"], function () {
             Route::get("/login_student", "UserController@studentAuth");
             Route::post("/login_student", "UserController@studentLogin");
             // Оплата курса
-            Route::post("/kassa_login", "PaymentController@createPaymentOrder");
-            Route::post("/callbackPaymentOrder", "PaymentController@callbackPaymentOrder");
+//            Route::post("/createPaymentOrder/{item}", "PaymentController@createPaymentOrder");
+//            Route::post("/callbackPaymentOrder", "PaymentController@callbackPaymentOrder");
         });
         Route::group(['middleware' => ["auth", "verified"]], static function () {
             Route::group(['middleware' => 'check.role:author'], static function () {

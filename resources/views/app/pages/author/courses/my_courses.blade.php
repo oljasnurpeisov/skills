@@ -437,6 +437,11 @@
             {{ session('status') }}
         </div>
     @endif
+    @if (session('error'))
+        <div class="alert alert-error">
+            {{ session('error') }}
+        </div>
+    @endif
     <br>
     <h2>{{__($page_name)}}</h2>
     <br>

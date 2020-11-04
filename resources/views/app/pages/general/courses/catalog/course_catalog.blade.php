@@ -440,7 +440,8 @@
     @endif
 </div>
 <div class="container">
-    <form class="form-inline my-2 my-lg-0">
+    <form class="form-inline my-2 my-lg-0" id="courses_form">
+        @csrf
         <input class="form-control mr-sm-2" type="search" placeholder="Поиск" id="term" name="term" aria-label="Поиск"
                value="{{ $term ?? '' }}">
         <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Поиск</button>
@@ -475,7 +476,7 @@
                 <div class="form-group">
                     <br>
                     <label for="sel1">{{__('default.pages.courses.profession')}}: </label>
-                    <select class="form-control" id="professions" style="width:200px;">
+                    <select class="form-control" id="professions" style="width:200px;" name="professions">
                         @foreach($professions as $profession)
                             {{--@foreach($profession as $i)--}}
                             <option value="{{$profession->id}}">{{$profession->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru')}}</option>
@@ -498,22 +499,22 @@
                 <br>
                 <p>{{__('default.pages.courses.language_education')}}</p>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="choosed_lang_kk" name="choosed_lang" value="0">
+                    <input class="form-check-input" type="checkbox" id="choosed_lang_kk" name="choosed_lang_kk" value="0">
                     <label class="form-check-label" for="inlineCheckbox1">Казахский</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="choosed_lang_kk" name="choosed_lang" value="1">
+                    <input class="form-check-input" type="checkbox" id="choosed_lang_ru" name="choosed_lang_ru" value="1">
                     <label class="form-check-label" for="inlineCheckbox2">Русский</label>
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="sel1">{{__('default.pages.courses.rating_from')}}:</label>
-                    <input type="number" class="form-control" placeholder="">
+                    <input type="number" class="form-control" placeholder="" name="rating_from">
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="sel1">{{__('default.pages.courses.students_complete_course')}}:</label>
-                    <input type="number" class="form-control" placeholder="">
+                    <input type="number" class="form-control" placeholder="" name="students_count">
                 </div>
                 <br>
                 <div class="form-group">
@@ -527,7 +528,7 @@
                 <br>
                 <div class="form-group">
                     <label for="sel1">{{__('default.pages.courses.sorting')}}: </label>
-                    <select class="form-control" id="sel1">
+                    <select class="form-control" id="sel1" name="sorting">
                         <option>Не выбран</option>
                     </select>
                 </div>
@@ -545,19 +546,16 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
     $('#professions').on('change', function() {
-        $profession_id = $( "#professions").val();
-        $term = $( "#term").val();
+        var formdata = $('#courses_form').serializeArray();
         $.ajax({
-            type: 'GET',
-            url: 'https://dev3.panama.kz/ru/course-catalog?choosed_profession='+$profession_id+'&term='+$term ,
+            type: 'POST',
+            url: 'https://dev3.panama.kz/ru/course-catalog-filter' ,
+            data: formdata,
             success: function (data) {
                 console.log(data);
-                // $('#skills_data').html(data);
-
-                // $('#course_data').empty();
-                // $('#course_data').replaceWith(data);
-                $('#course_data').html(data);
+                // $('#course_data').html(data);
 
             },
             error: function() {
@@ -565,40 +563,63 @@
             }
         });
     });
-    $('#skills').on('change', function() {
-        $skill_id = $( "#skills").val();
-        $.ajax({
-            type: 'GET',
-            url: 'https://dev3.panama.kz/ru/course-catalog?choosed_skills='+$skill_id+'&term='+$term,
-            success: function (data) {
-                console.log(1);
-                // $('#course_data').empty();
-                $('#course_data').html(data);
-            },
-            error: function() {
-                console.log(data);
-            }
-        });
-    });
 
-    $('#course_type').on('change', function() {
-        $course_type = $("#course_type").val();
-        $term = $("#term").val();
-        $.ajax({
-            type: 'GET',
-            url: 'https://dev3.panama.kz/ru/course-catalog?course_type='+$course_type+'&term='+$term,
-            success: function (data) {
-                console.log(1);
-                // $('#course_data').empty();
-                $('#course_data').html(data);
-                console.log(data);
 
-            },
-            error: function() {
-                console.log(data);
-            }
-        });
-    });
+
+    // $('#professions').on('change', function() {
+    //     $profession_id = $( "#professions").val();
+    //     $term = $( "#term").val();
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: 'https://dev3.panama.kz/ru/course-catalog?choosed_profession='+$profession_id+'&term='+$term ,
+    //         success: function (data) {
+    //             console.log(data);
+    //             // $('#skills_data').html(data);
+    //
+    //             // $('#course_data').empty();
+    //             // $('#course_data').replaceWith(data);
+    //             $('#course_data').html(data);
+    //
+    //         },
+    //         error: function() {
+    //             console.log(data);
+    //         }
+    //     });
+    // });
+    // $('#skills').on('change', function() {
+    //     $skill_id = $( "#skills").val();
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: 'https://dev3.panama.kz/ru/course-catalog?choosed_skills='+$skill_id+'&term='+$term,
+    //         success: function (data) {
+    //             console.log(1);
+    //             // $('#course_data').empty();
+    //             $('#course_data').html(data);
+    //         },
+    //         error: function() {
+    //             console.log(data);
+    //         }
+    //     });
+    // });
+    //
+    // $('#course_type').on('change', function() {
+    //     $course_type = $("#course_type").val();
+    //     $term = $("#term").val();
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: 'https://dev3.panama.kz/ru/course-catalog?course_type='+$course_type+'&term='+$term,
+    //         success: function (data) {
+    //             console.log(1);
+    //             // $('#course_data').empty();
+    //             $('#course_data').html(data);
+    //             console.log(data);
+    //
+    //         },
+    //         error: function() {
+    //             console.log(data);
+    //         }
+    //     });
+    // });
     //
     // $("[name='choosed_lang']").on('change', function() {
     //     $choosed_lang = $("[name='choosed_lang']").val();

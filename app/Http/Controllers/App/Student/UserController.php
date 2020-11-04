@@ -27,10 +27,8 @@ class UserController extends Controller
 
     public function student_profile()
     {
-        $user = User::where('id', '=', Auth::user()->getAuthIdentifier())->with('type_ownership')->first();
-        $item = StudentInformation::where('user_id', '=', $user->id)->first();
+        $item = StudentInformation::where('user_id', '=', Auth::user()->id)->first();
         return view("app.pages.student.profile.student_profile", [
-            "user" => $user,
             "item" => $item
         ]);
     }
@@ -102,13 +100,13 @@ class UserController extends Controller
 
             $item_information = new StudentInformation;
             $item_information->user_id = $item->id;
-            $item_information->quota_count = 3;
             $item_information->uid = $student_resume[0]["uid"];
             $item_information->profession_code = $student_resume[0]["uozcodprof"];
             if ($student_unemployed_status["response"] == null) {
                 $item_information->unemployed_status = 0;
             } else {
                 $item_information->unemployed_status = 1;
+                $item_information->quota_count = 3;
             }
             $item_information->save();
 
@@ -118,6 +116,7 @@ class UserController extends Controller
             }
             $skills = Skill::whereIn('code_skill', $user_skills)->pluck('id')->toArray();
             $item->skills()->sync($skills);
+
 
             Session::put('student_token', $token);
             Auth::login($item);

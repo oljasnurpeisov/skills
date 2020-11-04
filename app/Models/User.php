@@ -62,6 +62,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     }
 
+    public function student_info()
+    {
+        return $this->belongsTo(StudentInformation::class, 'id', 'user_id');
+    }
+
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmail);

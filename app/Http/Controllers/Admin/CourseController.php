@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 //use App\Models\Card;
 //use App\Models\Company;
 use App\Extensions\RandomStringGenerator;
+use App\Mail\QuotaMessage;
 use App\Models\Course;
 use App\Models\Notification;
 use App\Models\PayInformation;
@@ -133,10 +134,12 @@ class CourseController extends Controller
                         'message_text' => $request->rejectMessage,
                     ];
 
+
                     Mail::send('app.pages.page.emails.course_reject', ['data' => $data], function ($message) use ($request, $item, $user) {
                         $message->from(env("MAIL_USERNAME"), 'Enbek');
                         $message->to($user->email, 'Receiver')->subject('');
                     });
+
 
                     return redirect()->back()->with('status', trans('admin.pages.courses.course_reject', ['course_name' => $item->name, 'rejectMessage' => $request->rejectMessage]));
                     break;
@@ -187,10 +190,11 @@ class CourseController extends Controller
                     'user_id' => $item->user()->first()->id
                 ];
 
-                Mail::send('app.pages.page.emails.quota_confirm', ['data' => $data], function ($message) use ($item) {
-                    $message->from(env("MAIL_USERNAME"), 'Enbek');
-                    $message->to($item->user()->first()->email, 'Receiver')->subject('');
-                });
+//                Mail::send('app.pages.page.emails.quota_confirm', ['data' => $data], function ($message) use ($item) {
+//                    $message->from(env("MAIL_USERNAME"), 'Enbek');
+//                    $message->to($item->user()->first()->email, 'Receiver')->subject('');
+//                });
+                Mail::to($item->user()->first()->email)->send(new QuotaMessage($data));
             }
 
             $logger = new Log;

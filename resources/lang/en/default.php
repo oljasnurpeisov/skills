@@ -26,7 +26,10 @@ return [
             'publish_request_message' => 'Курс направлен на рассмотрение модератору',
             'delete_request_message' => 'Курс был успешно удален',
             'reestablish_request_message' => 'Курс был успешно восстановлен',
-            'create_request_message' => 'Курс успешно создан'
+            'create_request_message' => 'Курс успешно создан',
+            'course_quota_activate_error' => 'Вы не можете активировать этот курс по квоте',
+            'course_quota_activate_success' => 'Вы успешно активировали курс по квоте',
+            'pay_course_error' => 'Ошибка платежного шлюза, попробуйте позже'
         ],
         'lessons' => [
             'create_request_message' => 'Урок успешно создан'

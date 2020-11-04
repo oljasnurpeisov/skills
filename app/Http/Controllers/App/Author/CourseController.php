@@ -306,9 +306,16 @@ class CourseController extends Controller
             $notification->type = 0;
             $notification->save();
 
+            $notification = new Notification;
+            $notification->name = json_encode(array('notifications.course_quota_access', $item->id));
+            $notification->type = 0;
+            $notification->save();
+
             array_push($recipients_array, $author_course);
 
             $notification->users()->sync($recipients_array);
+
+            return redirect("/" . app()->getLocale() . "/my-courses")->with('status',__('notifications.confirm_quota_description'));
         }else{
             $item->quota_status = 3;
             $item->save();
@@ -319,10 +326,10 @@ class CourseController extends Controller
             $notification->save();
 
             $notification->users()->sync($recipients_array);
+            return redirect("/" . app()->getLocale() . "/my-courses")->with('error',__('notifications.course_quota_access_denied'));
         }
 
 
-        return redirect()->back();
     }
 
     public function reestablishCourse($lang, Course $item)

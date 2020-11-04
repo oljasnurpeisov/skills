@@ -436,124 +436,130 @@
             </ul>
         </div>
     @endif
+    @if (\Session::has('error'))
+        <div class="alert alert-danger">
+            <ul>
+                <li>{!! \Session::get('error') !!}</li>
+            </ul>
+        </div>
+    @endif
     <div class="row my-2">
         <div class="col-lg-8 order-lg-2">
             <div class="tab-content py-4">
                 <div class="tab-pane active" id="profile">
-                    <form id="themes_form" action="/{{$lang}}/publish-course/{{$item->id}}" method="POST"
-                          enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <h3><b>{{$item->name}}</b></h3>
-                        <p>{!! $item->teaser !!}</p>
-                        <br>
-                        <h4><b>{{__('default.pages.courses.profit_title')}}</b></h4>
-                        <p>{!! $item->profit_desc !!}</p>
-                        <br>
-                        <h4><b>{{__('default.pages.courses.course_materials')}}</b></h4>
-                        <p>Уроков {{$lessons_count}}</p>
-                        <table class="table table-striped" id="themes_table">
-                            <tbody>
-                            @foreach($themes as $key => $theme)
+                    {{--<form id="themes_form" action="/{{$lang}}/publish-course/{{$item->id}}" method="POST"--}}
+                    {{--enctype="multipart/form-data">--}}
+                    {{--{{ csrf_field() }}--}}
+                    <h3><b>{{$item->name}}</b>@if(!empty($student_course))&nbsp;&nbsp;<span class="badge badge-primary">Оплачен</span>@endif</h3>
+                    <p>{!! $item->teaser !!}</p>
+                    <br>
+                    <h4><b>{{__('default.pages.courses.profit_title')}}</b></h4>
+                    <p>{!! $item->profit_desc !!}</p>
+                    <br>
+                    <h4><b>{{__('default.pages.courses.course_materials')}}</b></h4>
+                    <p>Уроков {{$lessons_count}}</p>
+                    <table class="table table-striped" id="themes_table">
+                        <tbody>
+                        @foreach($themes as $key => $theme)
 
+                            <tr>
+                                <td>{{$theme->name}}</td>
+                                @switch(!($item->status))
+                                    @case(1)
+                                    @case(3)
+                                    <td>
+                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/theme-{{$theme->id}}/create-lesson"
+                                           class="btn btn-primary">+</a>
+                                        <button type="button" theme-id="{{$theme->id}}"
+                                                theme-name="{{$theme->name}}"
+                                                class="btn btn-warning" data-toggle="modal"
+                                                data-target=".editThemeModal"><i class="fa fa-pencil"></i></button>
+                                        <button type="button" class="btn btn-danger deleteThemeBtn"><i
+                                                    class="fa fa-trash"></i></button>
+                                        <button type="button" class="btn btn-info moveUpThemeBtn"><i
+                                                    class="fa fa-arrow-up"></i></button>
+                                        <button type="button" class="btn btn-info moveDownThemeBtn"><i
+                                                    class="fa fa-arrow-down"></i></button>
+                                    </td>
+                                    @break
+                                @endswitch
+                                <td hidden>{{$theme->id}}</td>
+                                <td hidden>{{$theme->index_number}}</td>
+                            </tr>
+                            @foreach($theme->lessons()->orderBy('index_number', 'asc')->get() as $key => $lesson)
                                 <tr>
-                                    <td>{{$theme->name}}</td>
-                                    @switch(!($item->status))
-                                        @case(1)
-                                        @case(3)
-                                        <td>
-                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/theme-{{$theme->id}}/create-lesson"
-                                               class="btn btn-primary">+</a>
-                                            <button type="button" theme-id="{{$theme->id}}"
-                                                    theme-name="{{$theme->name}}"
-                                                    class="btn btn-warning" data-toggle="modal"
-                                                    data-target=".editThemeModal"><i class="fa fa-pencil"></i></button>
-                                            <button type="button" class="btn btn-danger deleteThemeBtn"><i
+                                    <td></td>
+                                    <td>{{$lesson->name}}&nbsp;&nbsp;
+                                        @switch(!($item->status))
+                                            @case(1)
+                                            @case(3)
+                                            <a href="/{{$lang}}/my-courses/theme-{{$theme->id}}/edit-lesson-{{$lesson->id}}"
+                                               class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                                            <button type="button" class="btn btn-danger deleteLessonBtn"><i
                                                         class="fa fa-trash"></i></button>
-                                            <button type="button" class="btn btn-info moveUpThemeBtn"><i
+                                            <button type="button" class="btn btn-info moveUpLessonBtn"><i
                                                         class="fa fa-arrow-up"></i></button>
-                                            <button type="button" class="btn btn-info moveDownThemeBtn"><i
+                                            <button type="button" class="btn btn-info moveDownLessonBtn"><i
                                                         class="fa fa-arrow-down"></i></button>
-                                        </td>
-                                        @break
-                                    @endswitch
+                                            @break
+                                        @endswitch
+                                    </td>
+                                    <td hidden>{{$lesson->id}}</td>
+                                    <td hidden>{{$lesson->index_number}}</td>
                                     <td hidden>{{$theme->id}}</td>
-                                    <td hidden>{{$theme->index_number}}</td>
                                 </tr>
-                                @foreach($theme->lessons()->orderBy('index_number', 'asc')->get() as $key => $lesson)
-                                    <tr>
-                                        <td></td>
-                                        <td>{{$lesson->name}}&nbsp;&nbsp;
-                                            @switch(!($item->status))
-                                                @case(1)
-                                                @case(3)
-                                                <a href="/{{$lang}}/my-courses/theme-{{$theme->id}}/edit-lesson-{{$lesson->id}}"
-                                                   class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                <button type="button" class="btn btn-danger deleteLessonBtn"><i
-                                                            class="fa fa-trash"></i></button>
-                                                <button type="button" class="btn btn-info moveUpLessonBtn"><i
-                                                            class="fa fa-arrow-up"></i></button>
-                                                <button type="button" class="btn btn-info moveDownLessonBtn"><i
-                                                            class="fa fa-arrow-down"></i></button>
-                                                @break
-                                            @endswitch
-                                        </td>
-                                        <td hidden>{{$lesson->id}}</td>
-                                        <td hidden>{{$lesson->index_number}}</td>
-                                        <td hidden>{{$theme->id}}</td>
-                                    </tr>
-                                @endforeach
                             @endforeach
-                            </tbody>
-                        </table>
-                        @switch(!($item->status))
-                            @case(1)
-                            @case(3)
-                            <br>
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#createThemeModal">
-                                Создать тему
-                            </button>
-                            @break
-                        @endswitch
-                        <br><br>
-                        <h4><b>{{__('default.pages.courses.course_description')}}</b></h4>
-                        <p>{!! $item->description !!}</p>
-                        <div class="modal-footer">
-                        </div>
-                        {{--@if($item->status != 3 or $item->status != 1)--}}
-                        @switch(!($item->status))
-                            @case(1)
-                            @case(3)
-                            <a style="color: white" class="btn btn-primary" data-toggle="modal"
-                               data-target="#publishModal">Опубликовать</a>
-                            <a style="color: white" class="btn btn-warning"
-                               href="/{{$lang}}/my-courses/edit-course/{{$item->id}}">Редактировать</a>
-                            @break
-                        @endswitch
+                        @endforeach
+                        </tbody>
+                    </table>
+                    <br><br>
+                    <h4><b>{{__('default.pages.courses.course_description')}}</b></h4>
+                    <p>{!! $item->description !!}</p>
+                    <div class="modal-footer">
+                    </div>
+                    @auth
+                        @if(empty($student_course))
+                            <form action="/createPaymentOrder/{{$item->id}}" method="POST">
+                                {{ csrf_field() }}
 
-                        <div class="modal fade" id="publishModal" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Курс создан</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Вы уверены, что хотите опубликовать курс?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Да</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена
-                                        </button>
+                                <a style="color: white" class="btn btn-primary" data-toggle="modal"
+                                   data-target="#publishModal">Купить</a>
+                                {{--<button type="submit" class="btn btn-primary">Купить</button>--}}
+                                <div class="modal fade" id="publishModal" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Подтверждение</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Вы уверены, что хотите записаться на выбранный курс?</p>
+
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="quota_check"
+                                                           name="quota_check">
+                                                    <label class="form-check-label" for="quota_check">Воспользоваться
+                                                        квотой <b>Осталось
+                                                            квот: {{Auth::user()->student_info()->first()->quota_count}}</b></label>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Да</button>
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Нет
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                    </form>
+                            </form>
+                        @endif
+                    @endauth
                     <form action="/{{$lang}}/my-courses/delete-course/{{$item->id}}" id="delete_form" method="POST">
                         {{ csrf_field() }}
 

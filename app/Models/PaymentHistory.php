@@ -12,4 +12,5 @@ class PaymentHistory extends Model
 
     public $timestamps = true;
 
+
 }

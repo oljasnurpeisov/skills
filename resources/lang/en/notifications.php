@@ -11,5 +11,7 @@ return [
     'reject_btn_title' => 'Не согласен',
     'confirm_quota_description' => 'Автор курса :course_name согласен сделать его доступным по квоте.',
     'reject_quota_description' => 'Автор курса :course_name отказывается сделать его доступным по квоте.',
+    'course_quota_access' => 'Курс :course_name теперь доступен по квоте',
+    'course_quota_access_denied' => 'Вы отказались от квоты на курс :course_name',
 
     ];
