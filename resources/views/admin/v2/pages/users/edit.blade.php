@@ -196,6 +196,7 @@
                     fileUploadPlaceholder.attr('src', obj.location);
                     el.removeClass('disabled').removeClass('error').addClass('success');
                     up.refresh();
+                    console.log(obj.location);
                 });
 
                 uploader.bind("Error", function (up, err) {

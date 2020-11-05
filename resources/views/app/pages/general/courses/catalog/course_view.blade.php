@@ -416,6 +416,7 @@
 
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+            <a href="/{{$lang}}/" class="text-sm text-gray-700 underline">Главная </a>|
             @auth
                 <a href="/{{$lang}}/edit_profile" class="text-sm text-gray-700 underline">Профиль</a>
                 <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
@@ -450,7 +451,8 @@
                     {{--<form id="themes_form" action="/{{$lang}}/publish-course/{{$item->id}}" method="POST"--}}
                     {{--enctype="multipart/form-data">--}}
                     {{--{{ csrf_field() }}--}}
-                    <h3><b>{{$item->name}}</b>@if(!empty($student_course))&nbsp;&nbsp;<span class="badge badge-primary">Оплачен</span>@endif</h3>
+                    <h3><b>{{$item->name}}</b>@if(!empty($student_course))&nbsp;&nbsp;<span class="badge badge-primary">Оплачен</span>@endif
+                    </h3>
                     <p>{!! $item->teaser !!}</p>
                     <br>
                     <h4><b>{{__('default.pages.courses.profit_title')}}</b></h4>
@@ -518,46 +520,50 @@
                     <div class="modal-footer">
                     </div>
                     @auth
-                        @if(empty($student_course))
-                            <form action="/createPaymentOrder/{{$item->id}}" method="POST">
-                                {{ csrf_field() }}
+                        @if(Auth::user()->roles()->first()->id == 5)
+                            @if(empty($student_course))
+                                <form action="/createPaymentOrder/{{$item->id}}" method="POST">
+                                    {{ csrf_field() }}
 
-                                <a style="color: white" class="btn btn-primary" data-toggle="modal"
-                                   data-target="#publishModal">Купить</a>
-                                {{--<button type="submit" class="btn btn-primary">Купить</button>--}}
-                                <div class="modal fade" id="publishModal" tabindex="-1" role="dialog"
-                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Подтверждение</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Вы уверены, что хотите записаться на выбранный курс?</p>
-
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="quota_check"
-                                                           name="quota_check">
-                                                    <label class="form-check-label" for="quota_check">Воспользоваться
-                                                        квотой <b>Осталось
-                                                            квот: {{Auth::user()->student_info()->first()->quota_count}}</b></label>
+                                    <a style="color: white" class="btn btn-primary" data-toggle="modal"
+                                       data-target="#publishModal">Купить</a>
+                                    {{--<button type="submit" class="btn btn-primary">Купить</button>--}}
+                                    <div class="modal fade" id="publishModal" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Подтверждение</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
                                                 </div>
-                                            </div>
+                                                <div class="modal-body">
+                                                    <p>Вы уверены, что хотите записаться на выбранный курс?</p>
 
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">Да</button>
-                                                <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Нет
-                                                </button>
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" id="quota_check"
+                                                               name="quota_check">
+                                                        {{--@if(!empty(Auth::user()->student_info()->first()->quota_count))--}}
+                                                        <label class="form-check-label" for="quota_check">Воспользоваться
+                                                            квотой <b>Осталось
+                                                                квот: {{Auth::user()->student_info()->first()->quota_count}}</b></label>
+                                                        {{--@endif--}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Да</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Нет
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            @endif
                         @endif
                     @endauth
                     <form action="/{{$lang}}/my-courses/delete-course/{{$item->id}}" id="delete_form" method="POST">

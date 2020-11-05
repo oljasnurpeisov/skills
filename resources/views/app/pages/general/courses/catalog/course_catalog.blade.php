@@ -415,6 +415,7 @@
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
+                <a href="/{{$lang}}/" class="text-sm text-gray-700 underline">Главная </a>|
                 @if(Auth::user()->roles()->first()->id == 5)
                     <a href="/{{$lang}}/student-profile" class="text-sm text-gray-700 underline">Профиль</a>
                 @elseif(Auth::user()->roles()->first()->id == 4)

@@ -24,6 +24,8 @@ Route::group(["namespace" => "Admin"], function () {
 
     Route::post('/ajaxUploadImage', 'AjaxUploadController@ajaxUploadPic');
     Route::post('/ajaxUploadFile', 'AjaxUploadController@ajaxUploadFile');
+    //
+    Route::post('/ajaxUploadImageTest', 'AjaxUploadController@ajaxUploadPicTest');
     Route::group(['prefix' => '{lang}'], function () {
         Route::group(["prefix" => "admin"], function () {
             Route::get("/login", "LoginController@showLoginForm");

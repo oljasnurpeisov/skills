@@ -116,4 +116,24 @@ class AjaxUploadController extends Controller
             'location' => config('APP_URL') . '/files/' . $imageName
         ));
     }
+
+    //
+    public function ajaxUploadPicTest(Request $request)
+    {
+        if ($request->header('Origin') !== env('APP_URL')) {
+            return Response::json(array('success' => false));
+        }
+
+        $this->validate($request, [
+            "file" => "image|required|max:$this->imageMaxSize|mimes:png,jpg,jpeg"
+        ]);
+
+        $file = $request->file;
+        $imageName = time() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('images/test/'), $imageName);
+
+//        Buffet::log('upload_img', '', '', $imageName);
+
+        return Response::json(array('location' => config('APP_URL') . '/images/test/' . $imageName));
+    }
 }

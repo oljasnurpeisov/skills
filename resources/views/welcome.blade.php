@@ -477,12 +477,12 @@
             </div>
             <br><br>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-1">
                     <h2>Рекомендованные навыки</h2>
                     <div class="row">
                         @foreach($skills as $skill)
                             <div class="col-sm-1" style="margin-right: 55px;margin-bottom: 25px">
-                                <span class="badge badge-primary">{{$skill->getAttribute('name_'.$lang) ?? $skill->name_ru}}</span>
+                                <a href="/{{$lang}}/course-catalog?choosed_skills={{$skill->id}}" class="badge badge-primary">{{$skill->getAttribute('name_'.$lang) ?? $skill->name_ru}}</a>
                             </div>
                         @endforeach
                     </div>
