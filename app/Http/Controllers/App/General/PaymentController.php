@@ -18,12 +18,16 @@ class PaymentController extends Controller
     public function createPaymentOrder(Request $request, Course $item)
     {
         if (empty($request->quota_check)) {
+
+            $payment = new PaymentHistory;
+            $payment->save();
+
             $data = array("merchantId" => config('payment.merchantId'),
                 "callbackUrl" => config('payment.callbackUrl'),
                 "description" => config('payment.description'),
                 "returnUrl" => config('payment.returnUrl'),
                 "amount" => $item->cost,
-                "orderId" => 'order-' . $item->id . '-' . Auth::user()->id . '-'.Carbon::now()->timestamp.'',
+                "orderId" => $payment->id,
                 "metadata" => array("course_id" => $item->id,
                     "student_id" => Auth::user()->id),
                 "demo" => config('payment.demo'));
@@ -103,10 +107,9 @@ class PaymentController extends Controller
         header('HTTP/1.1 200 OK');
         if (gettype($out) == "boolean") {
 
-            $item = new PaymentHistory;
+            $item = PaymentHistory::where('id', '=', $json->orderId)->first();
             $item->amount = $json->amount / 100;
             $item->order_id = $json->id;
-            $item->course_order_id = $json->orderId;
             $item->status = $json->status;
             $item->save();
 

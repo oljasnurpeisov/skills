@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CORS;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\App\PageController;
@@ -24,8 +25,11 @@ Route::group(["namespace" => "Admin"], function () {
 
     Route::post('/ajaxUploadImage', 'AjaxUploadController@ajaxUploadPic');
     Route::post('/ajaxUploadFile', 'AjaxUploadController@ajaxUploadFile');
-    //
+
+    // Тест для Айтана
     Route::post('/ajaxUploadImageTest', 'AjaxUploadController@ajaxUploadPicTest');
+
+
     Route::group(['prefix' => '{lang}'], function () {
         Route::group(["prefix" => "admin"], function () {
             Route::get("/login", "LoginController@showLoginForm");
@@ -91,7 +95,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
         Route::post("/createPaymentOrder/{item}", "PaymentController@createPaymentOrder");
         Route::post("/callbackPaymentOrder", "PaymentController@callbackPaymentOrder");
     });
-    
+
     Route::group(['prefix' => '{lang}'], function () {
 
         Route::group(["middleware" => ["web"], "namespace" => "General"], function () {

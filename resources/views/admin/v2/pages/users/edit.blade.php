@@ -169,7 +169,7 @@
                     browse_button: button,
                     drop_element: button,
                     max_file_size: '1mb',
-                    url: "/ajaxUploadImage?_token={{ csrf_token() }}",
+                    url: "/ajaxUploadImageTest?_token={{ csrf_token() }}",
                     flash_swf_url: '/assets/admin/libs/plupload/js/Moxie.swf',
                     silverlight_xap_url: '/assets/admin/libs/plupload/js/Moxie.xap',
                     filters: [
