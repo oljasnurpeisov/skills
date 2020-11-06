@@ -29,7 +29,8 @@ return [
             'create_request_message' => 'Курс успешно создан',
             'course_quota_activate_error' => 'Вы не можете активировать этот курс по квоте',
             'course_quota_activate_success' => 'Вы успешно активировали курс по квоте',
-            'pay_course_error' => 'Ошибка платежного шлюза, попробуйте позже'
+            'pay_course_error' => 'Ошибка платежного шлюза, попробуйте позже',
+            'pay_course_success' => 'Вы успешно активировали курс'
         ],
         'lessons' => [
             'create_request_message' => 'Урок успешно создан'

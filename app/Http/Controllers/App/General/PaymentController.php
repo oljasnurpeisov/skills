@@ -19,60 +19,71 @@ class PaymentController extends Controller
     {
         if (empty($request->quota_check)) {
 
-            $payment = new PaymentHistory;
-            $payment->save();
+            if ($item->is_paid == 0) {
+                $student_course = new StudentCourse;
+                $student_course->paid_status = 1;
+                $student_course->course_id = $item->id;
+                $student_course->student_id = Auth::user()->id;
+                $student_course->save();
 
-            $data = array("merchantId" => config('payment.merchantId'),
-                "callbackUrl" => config('payment.callbackUrl'),
-                "description" => config('payment.description'),
-                "returnUrl" => config('payment.returnUrl'),
-                "amount" => $item->cost,
-                "orderId" => $payment->id,
-                "metadata" => array("course_id" => $item->id,
-                    "student_id" => Auth::user()->id),
-                "demo" => config('payment.demo'));
-
-            $dataArray = array(
-                "merchantId" => strval($data["merchantId"]),
-                "callbackUrl" => strval($data["callbackUrl"]),
-                "orderId" => strval($data['orderId']),
-                "description" => strval($data['description']),
-                "demo" => $data['demo'] === 'false' ? false : true,
-                "returnUrl" => strval($data['returnUrl']),
-                "amount" => (int)$data["amount"] * 100,
-                "metadata" => $data["metadata"]
-            );
-
-            if (isset($data['email']) || isset($data['phone'])) {
-                $dataArray['customerData'] = array(
-                    "email" => isset($data['email']) ? $data['email'] : "",
-                    "phone" => isset($data['phone']) ? $data['phone'] : ""
-                );
-            }
-            if (isset($data['metadata'])) {
-                $dataArray["metadata"] = $data['metadata'];
-            }
-
-            $data_string = json_encode($dataArray, JSON_UNESCAPED_UNICODE);
-            $curl = curl_init("https://ecommerce.pult24.kz/payment/create");
-            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
-            $headers = array(
-                "Content-Type: application/json",
-                "Authorization: Basic " . base64_encode(config('payment.login').':'.config('payment.password')),
-                'Content-Length: ' . strlen($data_string)
-            );
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-
-            $result = curl_exec($curl);
-            curl_close($curl);
-            $result = json_decode($result, true);
-
-            if (!empty($result["url"])) {
-                return redirect($result["url"]);
+                return redirect()->back()->with('status', __('default.pages.courses.pay_course_success'));
             } else {
-                return redirect()->back()->with('error', __('default.pages.courses.pay_course_error'));
+
+                $payment = new PaymentHistory;
+                $payment->save();
+
+                $data = array("merchantId" => config('payment.merchantId'),
+                    "callbackUrl" => config('payment.callbackUrl'),
+                    "description" => config('payment.description'),
+                    "returnUrl" => config('payment.returnUrl'),
+                    "amount" => $item->cost,
+                    "orderId" => $payment->id,
+                    "metadata" => array("course_id" => $item->id,
+                        "student_id" => Auth::user()->id),
+                    "demo" => config('payment.demo'));
+
+                $dataArray = array(
+                    "merchantId" => strval($data["merchantId"]),
+                    "callbackUrl" => strval($data["callbackUrl"]),
+                    "orderId" => strval($data['orderId']),
+                    "description" => strval($data['description']),
+                    "demo" => $data['demo'] === 'false' ? false : true,
+                    "returnUrl" => strval($data['returnUrl']),
+                    "amount" => (int)$data["amount"] * 100,
+                    "metadata" => $data["metadata"]
+                );
+
+                if (isset($data['email']) || isset($data['phone'])) {
+                    $dataArray['customerData'] = array(
+                        "email" => isset($data['email']) ? $data['email'] : "",
+                        "phone" => isset($data['phone']) ? $data['phone'] : ""
+                    );
+                }
+                if (isset($data['metadata'])) {
+                    $dataArray["metadata"] = $data['metadata'];
+                }
+
+                $data_string = json_encode($dataArray, JSON_UNESCAPED_UNICODE);
+                $curl = curl_init("https://ecommerce.pult24.kz/payment/create");
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+                $headers = array(
+                    "Content-Type: application/json",
+                    "Authorization: Basic " . base64_encode(config('payment.login') . ':' . config('payment.password')),
+                    'Content-Length: ' . strlen($data_string)
+                );
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+                $result = curl_exec($curl);
+                curl_close($curl);
+                $result = json_decode($result, true);
+
+                if (!empty($result["url"])) {
+                    return redirect($result["url"]);
+                } else {
+                    return redirect()->back()->with('error', __('default.pages.courses.pay_course_error'));
+                }
             }
         } else {
             $student_info = Auth::user()->student_info()->first();

@@ -522,7 +522,7 @@
                     @auth
                         @if(Auth::user()->roles()->first()->id == 5)
                             @if(empty($student_course))
-                                @if($item->cost > 0)
+                                @if($item->is_paid == 1)
                                     <form action="/createPaymentOrder/{{$item->id}}" method="POST">
                                         {{ csrf_field() }}
 
@@ -554,6 +554,40 @@
                                                                     квот: {{Auth::user()->student_info()->first()->quota_count}}</b></label>
                                                             {{--@endif--}}
                                                         </div>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Да</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Нет
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    @else
+                                    <form action="/createPaymentOrder/{{$item->id}}" method="POST">
+                                        {{ csrf_field() }}
+
+                                        <a style="color: white" class="btn btn-primary" data-toggle="modal"
+                                           data-target="#publishModal">Получить бесплатно</a>
+                                        {{--<button type="submit" class="btn btn-primary">Купить</button>--}}
+                                        <div class="modal fade" id="publishModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                            Подтверждение</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Вы уверены, что хотите записаться на выбранный курс?</p>
+
                                                     </div>
 
                                                     <div class="modal-footer">

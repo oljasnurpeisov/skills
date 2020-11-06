@@ -3,15 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/AjaxUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AjaxUploadController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/PaymentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bootstrap/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/cors.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/cors.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/users/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/users/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,16 +43,16 @@
           <entry key="html" value="5" />
           <entry key="json" value="20" />
           <entry key="lock" value="7" />
-          <entry key="php" value="726" />
+          <entry key="php" value="728" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key=".env file" value="1" />
-          <entry key="Blade" value="243" />
+          <entry key="Blade" value="244" />
           <entry key="HTML" value="5" />
           <entry key="JSON" value="27" />
-          <entry key="PHP" value="483" />
+          <entry key="PHP" value="484" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -67,18 +61,18 @@
           <entry key="env" value="5" />
           <entry key="html" value="5" />
           <entry key="json" value="54" />
-          <entry key="php" value="31806" />
-          <entry key="txt" value="246" />
+          <entry key="php" value="31924" />
+          <entry key="txt" value="257" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="5" />
-          <entry key="Blade" value="10630" />
+          <entry key="Blade" value="10667" />
           <entry key="HTML" value="19" />
           <entry key="JSON" value="54" />
-          <entry key="PHP" value="21162" />
-          <entry key="PLAIN_TEXT" value="246" />
+          <entry key="PHP" value="21243" />
+          <entry key="PLAIN_TEXT" value="257" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.php.composer.actions">
@@ -106,11 +100,32 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/App/General/PaymentController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="454">
-              <caret line="107" column="41" lean-forward="true" selection-start-line="107" selection-start-column="41" selection-end-line="107" selection-end-column="41" />
+            <state relative-caret-position="476">
+              <caret line="28" column="102" selection-start-line="28" selection-start-column="102" selection-end-line="28" selection-end-column="102" />
               <folding>
                 <element signature="e#52#88#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="320">
+              <caret line="589" lean-forward="true" selection-start-line="589" selection-end-line="589" />
+              <folding>
+                <element signature="e#20585#20592#1#HTML" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/lang/en/default.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="544">
+              <caret line="32" column="31" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -119,7 +134,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cata</find>
       <find>$choosed_profession = $request-&gt;choosed_profession ? $request-&gt;choosed_profession : '';</find>
       <find>$choosed_profession</find>
       <find>$skills</find>
@@ -149,6 +163,7 @@
       <find>dev</find>
       <find>post</find>
       <find>middleware</find>
+      <find>купи</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Виталий\PhpstormProjects\enbek\resources\views\app\pages\general</dir>
@@ -218,12 +233,10 @@
         <option value="$PROJECT_DIR$/app/Models/User.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/App/General/PageController.php" />
         <option value="$PROJECT_DIR$/app/Models/StudentInformation.php" />
-        <option value="$PROJECT_DIR$/resources/lang/en/default.php" />
         <option value="$PROJECT_DIR$/config/payment.php" />
         <option value="$PROJECT_DIR$/resources/views/app/pages/student/profile/student_profile.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_catalog.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/welcome.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php" />
         <option value="$PROJECT_DIR$/bootstrap/app.php" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/CORS.php" />
         <option value="$PROJECT_DIR$/public/index.php" />
@@ -236,6 +249,8 @@
         <option value="$USER_HOME$/Desktop/Новая папка/author-profile-personal.html" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Admin/AjaxUploadController.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
+        <option value="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php" />
+        <option value="$PROJECT_DIR$/resources/lang/en/default.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/App/General/PaymentController.php" />
       </list>
     </option>
@@ -459,6 +474,75 @@
             <path>
               <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
               <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="lang" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="lang" type="462c0819:PsiDirectoryNode" />
+              <item name="en" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="general" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="general" type="462c0819:PsiDirectoryNode" />
+              <item name="courses" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="general" type="462c0819:PsiDirectoryNode" />
+              <item name="courses" type="462c0819:PsiDirectoryNode" />
+              <item name="catalog" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -475,19 +559,19 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Виталий\PhpstormProjects\enbek\app\Http\Controllers\App\Student" />
-      <recent name="C:\Users\Виталий\PhpstormProjects\enbek\app\Http\Controllers\App\General" />
-      <recent name="C:\Users\Виталий\PhpstormProjects\enbek\app\Http\Controllers\App\Author" />
-      <recent name="C:\Users\Виталий\PhpstormProjects\enbek\app\Http\Controllers\App" />
-      <recent name="C:\Users\Виталий\PhpstormProjects\enbek\resources\views\app\pages\general" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Виталий\PhpstormProjects\enbek\app\Http\Controllers\App\General" />
       <recent name="C:\Users\Виталий\PhpstormProjects\enbek\app\Http\Controllers\App" />
       <recent name="C:\Users\Виталий\PhpstormProjects\enbek\app\Http\Controllers\App\Student" />
       <recent name="C:\Users\Виталий\PhpstormProjects\enbek\resources\views\app\pages\general" />
       <recent name="C:\Users\Виталий\PhpstormProjects\enbek\resources\views\admin\v2\pages\courses" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Виталий\PhpstormProjects\enbek\app\Http\Controllers\App\Student" />
+      <recent name="C:\Users\Виталий\PhpstormProjects\enbek\app\Http\Controllers\App\General" />
+      <recent name="C:\Users\Виталий\PhpstormProjects\enbek\app\Http\Controllers\App\Author" />
+      <recent name="C:\Users\Виталий\PhpstormProjects\enbek\app\Http\Controllers\App" />
+      <recent name="C:\Users\Виталий\PhpstormProjects\enbek\resources\views\app\pages\general" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -522,7 +606,7 @@
       <workItem from="1604397333732" duration="30291000" />
       <workItem from="1604499171132" duration="23296000" />
       <workItem from="1604532772640" duration="1299000" />
-      <workItem from="1604552934844" duration="12644000" />
+      <workItem from="1604552934844" duration="13904000" />
     </task>
     <task id="LOCAL-00001" summary="- update routes">
       <created>1603898521230</created>
@@ -580,11 +664,18 @@
       <option name="project" value="LOCAL" />
       <updated>1604556933831</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="- payment fix">
+      <created>1604636854603</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1604636854603</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="459553000" />
+    <option name="totallyTimeSpent" value="460813000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -629,7 +720,8 @@
     <MESSAGE value="- add recommended courses" />
     <MESSAGE value="- add course payment" />
     <MESSAGE value="- add skills link to catalog" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add skills link to catalog" />
+    <MESSAGE value="- payment fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="- payment fix" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/Http/Middleware/TrustProxies.php">
@@ -804,13 +896,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/lang/en/default.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="29" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Models/StudentInformation.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -861,13 +946,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/admin/v2/pages/users/index.blade.php">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-615">
-          <caret line="568" column="38" selection-start-line="568" selection-start-column="38" selection-end-line="568" selection-end-column="38" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/index.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -966,10 +1044,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="589" lean-forward="true" selection-start-line="589" selection-end-line="589" />
+          <folding>
+            <element signature="e#20585#20592#1#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/lang/en/default.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="32" column="31" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/App/General/PaymentController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="107" column="41" lean-forward="true" selection-start-line="107" selection-start-column="41" selection-end-line="107" selection-end-column="41" />
+        <state relative-caret-position="476">
+          <caret line="28" column="102" selection-start-line="28" selection-start-column="102" selection-end-line="28" selection-end-column="102" />
           <folding>
             <element signature="e#52#88#0#PHP" expanded="true" />
           </folding>
