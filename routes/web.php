@@ -28,6 +28,7 @@ Route::group(["namespace" => "Admin"], function () {
 
     // Тест для Айтана
     Route::post('/ajaxUploadImageTest', 'AjaxUploadController@ajaxUploadPicTest');
+    Route::post('/ajaxUploadFilesTest', 'AjaxUploadController@ajaxUploadFilesTest');
 
 
     Route::group(['prefix' => '{lang}'], function () {
@@ -103,15 +104,15 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             // Каталог курсов
             Route::get("/course-catalog", "PageController@courseCatalog");
             Route::get("/course-catalog/course/{item}", "PageController@courseView");
+            // Урок
+            Route::get("/course-catalog/course/{course}/theme-{theme}/lesson-{lesson}", "LessonController@lessonView");
+            Route::post("/course_{course}/theme-{theme}/student_lesson_finished_{lesson}", "LessonController@lessonFinished");
 
             Route::post("/course-catalog-filter", "PageController@courseCatalogFilter");
         });
         Route::group(["middleware" => ["web"], "namespace" => "Student"], function () {
             Route::get("/login_student", "UserController@studentAuth");
             Route::post("/login_student", "UserController@studentLogin");
-            // Оплата курса
-//            Route::post("/createPaymentOrder/{item}", "PaymentController@createPaymentOrder");
-//            Route::post("/callbackPaymentOrder", "PaymentController@callbackPaymentOrder");
         });
         Route::group(['middleware' => ["auth", "verified"]], static function () {
             Route::group(['middleware' => 'check.role:author'], static function () {

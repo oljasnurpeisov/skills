@@ -33,7 +33,8 @@ return [
             'pay_course_success' => 'Вы успешно активировали курс'
         ],
         'lessons' => [
-            'create_request_message' => 'Урок успешно создан'
+            'create_request_message' => 'Урок успешно создан',
+            'access_denied_message' => 'У вас нет доступа к выбранному уроку',
         ],
         'profile' => [
             'name' => 'Имя',

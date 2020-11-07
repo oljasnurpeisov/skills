@@ -4,9 +4,12 @@ namespace App\Http\Controllers\App\General;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\Lesson;
 use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCourse;
+use App\Models\StudentLesson;
+use App\Models\Theme;
 use App\Models\Type_of_ownership;
 use App\Models\User;
 use Illuminate\Http\Request;

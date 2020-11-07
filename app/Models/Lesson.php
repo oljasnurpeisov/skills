@@ -21,6 +21,11 @@ class Lesson extends Model
 
     public function lesson_type()
     {
-        return $this->belongsTo(LessonsType::class, 'lessons_type', 'id');
+        return $this->belongsTo(LessonsType::class, 'type', 'id');
+    }
+
+    public function lesson_student()
+    {
+        return $this->hasOne(StudentLesson::class, 'lesson_id', 'id');
     }
 }

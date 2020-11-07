@@ -492,19 +492,21 @@
                                 <tr>
                                     <td></td>
                                     <td>{{$lesson->name}}&nbsp;&nbsp;
-                                        @switch(!($item->status))
-                                            @case(1)
-                                            @case(3)
-                                            <a href="/{{$lang}}/my-courses/theme-{{$theme->id}}/edit-lesson-{{$lesson->id}}"
-                                               class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                            <button type="button" class="btn btn-danger deleteLessonBtn"><i
-                                                        class="fa fa-trash"></i></button>
-                                            <button type="button" class="btn btn-info moveUpLessonBtn"><i
-                                                        class="fa fa-arrow-up"></i></button>
-                                            <button type="button" class="btn btn-info moveDownLessonBtn"><i
-                                                        class="fa fa-arrow-down"></i></button>
-                                            @break
-                                        @endswitch
+                                        @auth
+                                            @if(Auth::user()->roles()->first()->id == 5)
+                                                @if(!empty($lesson->lesson_student))
+                                                    {{--{{$lesson}}--}}
+                                                    @if($lesson->lesson_student->is_finished != true)
+                                                        <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}"
+                                                           class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                                                    @else
+                                                        <button
+                                                                class="btn btn-success" disabled><i
+                                                                    class="fa fa-check"></i></button>
+                                                    @endif
+                                                @endif
+                                            @endif
+                                        @endauth
                                     </td>
                                     <td hidden>{{$lesson->id}}</td>
                                     <td hidden>{{$lesson->index_number}}</td>
@@ -544,16 +546,18 @@
                                                     <div class="modal-body">
                                                         <p>Вы уверены, что хотите записаться на выбранный курс?</p>
 
-                                                        <div class="form-check">
-                                                            <input type="checkbox" class="form-check-input"
-                                                                   id="quota_check"
-                                                                   name="quota_check">
-                                                            {{--@if(!empty(Auth::user()->student_info()->first()->quota_count))--}}
-                                                            <label class="form-check-label" for="quota_check">Воспользоваться
-                                                                квотой <b>Осталось
-                                                                    квот: {{Auth::user()->student_info()->first()->quota_count}}</b></label>
-                                                            {{--@endif--}}
-                                                        </div>
+                                                        @if($item->quota_status == 3)
+                                                            <div class="form-check">
+                                                                <input type="checkbox" class="form-check-input"
+                                                                       id="quota_check"
+                                                                       name="quota_check">
+
+                                                                <label class="form-check-label" for="quota_check">Воспользоваться
+                                                                    квотой <b>Осталось
+                                                                        квот: {{Auth::user()->student_info()->first()->quota_count}}</b></label>
+
+                                                            </div>
+                                                        @endif
                                                     </div>
 
                                                     <div class="modal-footer">
@@ -566,7 +570,7 @@
                                             </div>
                                         </div>
                                     </form>
-                                    @else
+                                @else
                                     <form action="/createPaymentOrder/{{$item->id}}" method="POST">
                                         {{ csrf_field() }}
 

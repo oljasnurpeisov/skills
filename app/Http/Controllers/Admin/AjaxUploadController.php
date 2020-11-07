@@ -126,9 +126,9 @@ class AjaxUploadController extends Controller
 //            return Response::json(array('success' => false));
 //        }
 
-        $this->validate($request, [
-            "file" => "image|required|max:$this->imageMaxSize|mimes:png,jpg,jpeg"
-        ]);
+//        $this->validate($request, [
+//            "file" => "image|required|max:$this->imageMaxSize|mimes:png,jpg,jpeg"
+//        ]);
 
         $file = $request->file;
         $imageName = time() . '.' . $file->getClientOriginalExtension();
@@ -137,6 +137,22 @@ class AjaxUploadController extends Controller
 //        Buffet::log('upload_img', '', '', $imageName);
 
         return Response::json(array('location' => config('APP_URL') . '/images/test/' . $imageName));
+    }
+
+    public function ajaxUploadFilesTest(Request $request)
+    {
+
+//        if($request->hasfile('filenames'))
+//        {
+        $data = [];
+            foreach($request->file('files') as $file)
+            {
+                $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+                $file->move(public_path('images/test/files/'), $name);
+                array_push($data, $name);
+            }
+
+        return Response::json(array('filenames' => $data));
     }
 
 

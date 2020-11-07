@@ -4,6 +4,7 @@ namespace App\Http\Controllers\App\General;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\Lesson;
 use App\Models\PaymentHistory;
 use App\Models\StudentCourse;
 use App\Models\User;
@@ -25,6 +26,8 @@ class PaymentController extends Controller
                 $student_course->course_id = $item->id;
                 $student_course->student_id = Auth::user()->id;
                 $student_course->save();
+
+                $this->syncUserLessons($item->id);
 
                 return redirect()->back()->with('status', __('default.pages.courses.pay_course_success'));
             } else {
@@ -97,11 +100,15 @@ class PaymentController extends Controller
                 $student_info->quota_count = $student_info->quota_count - 1;
                 $student_info->save();
 
+                $this->syncUserLessons($item->id);
+
                 return redirect()->back()->with('status', __('default.pages.courses.course_quota_activate_success'));
             } else {
                 return redirect()->back()->with('error', __('default.pages.courses.course_quota_activate_error'));
             }
         }
+
+
 
     }
 
@@ -134,7 +141,32 @@ class PaymentController extends Controller
                     $student_course->payment_id = $item->id;
                     $student_course->student_id = $json->metadata->student_id;
                     $student_course->save();
+
                 }
+
+                $student = User::where('id', '=', $json->metadata->student_id)->first();
+                $course_themes = Course::where('id', '=', $json->metadata->course_id)->with('themes')->first();
+                $theme_ids = $course_themes->themes->pluck('id')->toArray();
+                $lessons = Lesson::whereHas('themes', function ($q) use ($theme_ids) {
+                    $q->whereIn('themes.id', $theme_ids);
+                })->get();
+
+                $lesson_ids = [];
+
+                foreach ($lessons as $key => $lesson) {
+                    if ($course_themes->is_access_all == false) {
+                        if ($key == 0) {
+                            $lesson_ids[$lesson->id] = ['is_access' => true];
+                        } else {
+                            $lesson_ids[$lesson->id] = ['is_access' => false];
+                        }
+                    } else {
+                        $lesson_ids[$lesson->id] = ['is_access' => true];
+                    }
+                }
+
+                $student->student_lesson()->sync($lesson_ids, false);
+
 
             }
 
@@ -145,6 +177,31 @@ class PaymentController extends Controller
             return 0;
         }
 
+    }
+
+    public function syncUserLessons(Int $course_id){
+
+        $course_themes = Course::where('id', '=', $course_id)->with('themes')->first();
+        $theme_ids = $course_themes->themes->pluck('id')->toArray();
+        $lessons = Lesson::whereHas('themes', function ($q) use ($theme_ids) {
+            $q->whereIn('themes.id', $theme_ids);
+        })->get();
+
+        $lesson_ids = [];
+
+        foreach ($lessons as $key => $lesson) {
+            if ($course_themes->is_access_all == false) {
+                if ($key == 0) {
+                    $lesson_ids[$lesson->id] = ['is_access' => true];
+                } else {
+                    $lesson_ids[$lesson->id] = ['is_access' => false];
+                }
+            } else {
+                $lesson_ids[$lesson->id] = ['is_access' => true];
+            }
+        }
+
+        Auth::user()->student_lesson()->sync($lesson_ids, false);
     }
 
 }
