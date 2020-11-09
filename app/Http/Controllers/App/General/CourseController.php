@@ -4,9 +4,11 @@ namespace App\Http\Controllers\App\General;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\CourseRate;
 use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCourse;
+use App\Models\StudentLesson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -70,7 +72,7 @@ class CourseController extends Controller
 
     public function courseView($lang, Course $item)
     {
-        if ($item->status == 3) {
+        if ($item->status == Course::published) {
             $themes = $item->themes()->orderBy('index_number', 'asc')->get();
             $lessons_count = 0;
             foreach ($themes as $theme) {
@@ -80,13 +82,17 @@ class CourseController extends Controller
             }
             if (Auth::check()) {
                 $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $item->id)->first();
+//                $student_lessons = StudentLesson::where('id', '=', Auth::user()->id)->get();
+                $student_rate = CourseRate::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $item->id)->first();
+
             }
 
             return view("app.pages.general.courses.catalog.course_view", [
                 "item" => $item,
                 "themes" => $themes,
                 "lessons_count" => $lessons_count,
-                "student_course" => $student_course ?? []
+                "student_course" => $student_course ?? [],
+                "student_rate" => $student_rate ?? []
             ]);
         } else {
             return redirect("/" . app()->getLocale() . "/course-catalog");
@@ -178,4 +184,5 @@ class CourseController extends Controller
         $items = $query->where('status', '=', Course::published)->paginate();
         return $items;
     }
+
 }

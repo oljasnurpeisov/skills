@@ -500,9 +500,8 @@
                                                         <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}"
                                                            class="btn btn-warning"><i class="fa fa-eye"></i></a>
                                                     @else
-                                                        <button
-                                                                class="btn btn-success" disabled><i
-                                                                    class="fa fa-check"></i></button>
+                                                        <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}"
+                                                           class="btn btn-success"><i class="fa fa-check"></i></a>
                                                     @endif
                                                 @endif
                                             @endif
@@ -607,92 +606,42 @@
                                 @endif
                             @endif
                         @endif
+                        @if(empty($student_rate) and $student_course->is_finished == true)
+                            <form id="rate_form" action="/{{$lang}}/course-{{$student_course->course_id}}/saveCourseRate" method="POST">
+                                {{ csrf_field() }}
+                            <div class="modal fade" id="rateModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title"
+                                                id="exampleModalLabel">{{__('default.pages.courses.course_rate_title')}}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <input type="number" class="form-control" id="rate" name="rate"
+                                                       placeholder="от 1 до 5">
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" name="rate_description"
+                                                          id="rate_description" rows="3"
+                                                          placeholder="{{__('default.pages.courses.course_rate_description')}}"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit"
+                                                    class="btn btn-primary">{{__('default.pages.courses.send_rate_button_title')}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        @endif
                     @endauth
-                    <form action="/{{$lang}}/my-courses/delete-course/{{$item->id}}" id="delete_form" method="POST">
-                        {{ csrf_field() }}
 
-                        <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Удаление курса</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Вы уверены, что хотите удалить курс?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-danger">Да</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <form id="course_form">
-                        {{ csrf_field() }}
-                        <input name="course_id" value="{{$item->id}}" hidden>
-                        <div class="modal fade" id="createThemeModal" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Название темы</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="theme_name">Название темы</label>
-                                            <input type="text" class="form-control" id="theme_name" name="theme_name"
-                                                   aria-describedby="emailHelp" placeholder="Введите название темы">
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" id="createThemeBtn" class="btn btn-primary">Создать
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-                    <form id="edit_course_form">
-                        {{ csrf_field() }}
-                        <input name="course_id" value="{{$item->id}}" hidden>
-                        <div class="modal fade editThemeModal" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Название темы</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="theme_name">Название темы</label>
-                                            <input type="text" class="form-control" id="edit_theme_name"
-                                                   name="edit_theme_name"
-                                                   aria-describedby="emailHelp" placeholder="Введите название темы"
-                                                   value="">
-                                            <input name="theme_id" value="" hidden>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" id="editThemeBtn" class="btn btn-primary">Сохранить
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -700,5 +649,8 @@
 
 </div>
 </div>
+<script>
+    $('#rateModal').modal('show')
+</script>
 </body>
 </html>

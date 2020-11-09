@@ -101,23 +101,18 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
 
         Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
             Route::get("/", "PageController@index");
-            // Каталог курсов
+            // Курсы
             Route::get("/course-catalog", "CourseController@courseCatalog");
             Route::get("/course-catalog/course/{item}", "CourseController@courseView");
             Route::post("/course-catalog-filter", "CourseController@courseCatalogFilter");
-            // Урок
-            Route::get("/course-catalog/course/{course}/theme-{theme}/lesson-{lesson}", "LessonController@lessonView");
-            Route::post("/course_{course}/theme-{theme}/student_lesson_finished_{lesson}", "LessonController@lessonFinished");
-            // Домашняя и Курсовая работа
-            Route::get("/course-catalog/course/{course}/theme-{theme}/lesson-{lesson}/homework", "LessonController@homeworkView");
-            Route::get("/course-catalog/course/{course}/theme-{theme}/lesson-{lesson}/coursework", "LessonController@courseworkView");
-            Route::post("/course-{course}/theme-{theme}/lesson-{lesson}/textwork", "LessonController@answerSend");
+
 
 
         });
         Route::group(["middleware" => ["web"], "namespace" => "Student"], function () {
             Route::get("/login_student", "UserController@studentAuth");
             Route::post("/login_student", "UserController@studentLogin");
+
         });
         Route::group(['middleware' => ["auth", "verified"]], static function () {
             Route::group(['middleware' => 'check.role:author'], static function () {
@@ -140,6 +135,16 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                         // Профиль обучающегося
                         Route::get("/student-profile", "UserController@student_profile");
                         Route::post("/update_student_profile", "UserController@update_student_profile");
+                        // Курсы
+                        Route::get("/student/my-courses", "CourseController@studentCourses");
+                        Route::post("/course-{course}/saveCourseRate", "CourseController@saveCourseRate");
+                        // Урок
+                        Route::get("/course-catalog/course/{course}/theme-{theme}/lesson-{lesson}", "LessonController@lessonView");
+                        Route::post("/course_{course}/theme-{theme}/student_lesson_finished_{lesson}", "LessonController@lessonFinished");
+                        // Домашняя и Курсовая работа
+                        Route::get("/course-catalog/course/{course}/theme-{theme}/lesson-{lesson}/homework", "LessonController@homeworkView");
+                        Route::get("/course-catalog/course/{course}/theme-{theme}/lesson-{lesson}/coursework", "LessonController@courseworkView");
+                        Route::post("/course-{course}/theme-{theme}/lesson-{lesson}/textwork", "LessonController@answerSend");
                     });
                 });
                 Route::group(['middleware' => 'check.role:author'], static function () {

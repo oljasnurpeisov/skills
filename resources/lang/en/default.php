@@ -30,7 +30,11 @@ return [
             'course_quota_activate_error' => 'Вы не можете активировать этот курс по квоте',
             'course_quota_activate_success' => 'Вы успешно активировали курс по квоте',
             'pay_course_error' => 'Ошибка платежного шлюза, попробуйте позже',
-            'pay_course_success' => 'Вы успешно активировали курс'
+            'pay_course_success' => 'Вы успешно активировали курс',
+            'course_rate_title' => 'Оцените курс',
+            'course_rate_description' => 'Отзыв о курсе...',
+            'send_rate_button_title' => 'Отправить',
+
         ],
         'lessons' => [
             'create_request_message' => 'Урок успешно создан',
