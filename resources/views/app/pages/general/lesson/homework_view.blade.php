@@ -445,7 +445,7 @@
         </div>
     @endif
     <form id="lesson_form"
-          action="/{{$lang}}/course-{{$course->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}/homework"
+          action="/{{$lang}}/course-{{$course->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}/textwork"
           method="POST">
         {{ csrf_field() }}
         <div class="row my-2">
@@ -470,7 +470,7 @@
 
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">{{__('default.pages.lessons.send_answer_title')}}</button>
+                <button name="action" value="homework" type="submit" class="btn btn-primary">{{__('default.pages.lessons.send_answer_title')}}</button>
                 <a href="{{ url()->previous() }}"
                    class="btn btn-default">{{__('default.pages.lessons.cancel_title')}}</a>
             </div>

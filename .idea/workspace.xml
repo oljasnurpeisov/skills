@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Models/StudentLessonAnswer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/app/pages/general/lesson/homework_view.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/app/pages/general/lesson/coursework_view.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/LessonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/LessonController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/lesson/homework_view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/lesson/homework_view.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/lesson/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/lesson/view.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -48,7 +48,7 @@
           <entry key="html" value="7" />
           <entry key="json" value="20" />
           <entry key="lock" value="7" />
-          <entry key="php" value="782" />
+          <entry key="php" value="783" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -57,7 +57,7 @@
           <entry key="Blade" value="255" />
           <entry key="HTML" value="7" />
           <entry key="JSON" value="27" />
-          <entry key="PHP" value="527" />
+          <entry key="PHP" value="528" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -66,18 +66,18 @@
           <entry key="env" value="5" />
           <entry key="html" value="5" />
           <entry key="json" value="54" />
-          <entry key="php" value="35630" />
-          <entry key="txt" value="346" />
+          <entry key="php" value="35757" />
+          <entry key="txt" value="364" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="5" />
-          <entry key="Blade" value="11459" />
+          <entry key="Blade" value="11509" />
           <entry key="HTML" value="19" />
           <entry key="JSON" value="54" />
-          <entry key="PHP" value="24157" />
-          <entry key="PLAIN_TEXT" value="346" />
+          <entry key="PHP" value="24234" />
+          <entry key="PLAIN_TEXT" value="364" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.php.composer.actions">
@@ -94,7 +94,7 @@
         <entry file="file://$PROJECT_DIR$/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="412">
-              <caret line="111" column="111" selection-start-line="111" selection-start-column="111" selection-end-line="111" selection-end-column="111" />
+              <caret line="111" column="96" selection-start-line="111" selection-start-column="86" selection-end-line="111" selection-end-column="96" />
               <folding>
                 <element signature="e#7#36#0#PHP" expanded="true" />
               </folding>
@@ -105,8 +105,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/App/General/LessonController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="120" column="33" selection-start-line="120" selection-start-column="33" selection-end-line="120" selection-end-column="33" />
+            <state relative-caret-position="374">
+              <caret line="52" column="152" selection-start-line="52" selection-start-column="152" selection-end-line="52" selection-end-column="152" />
               <folding>
                 <element signature="e#52#88#0#PHP" expanded="true" />
               </folding>
@@ -117,8 +117,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/app/pages/general/lesson/homework_view.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="447" column="18" selection-start-line="447" selection-start-column="18" selection-end-line="447" selection-end-column="104" />
+            <state relative-caret-position="575">
+              <caret line="470" column="26" lean-forward="true" selection-start-line="470" selection-start-column="26" selection-end-line="470" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/app/pages/general/lesson/coursework_view.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="538">
+              <caret line="472" column="24" lean-forward="true" selection-start-line="472" selection-start-column="24" selection-end-line="472" selection-end-column="56" />
             </state>
           </provider>
         </entry>
@@ -126,8 +135,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/app/pages/general/lesson/view.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
-              <caret line="467" column="95" selection-start-line="467" selection-start-column="95" selection-end-line="467" selection-end-column="95" />
+            <state relative-caret-position="458">
+              <caret line="466" column="77" lean-forward="true" selection-start-line="466" selection-start-column="77" selection-end-line="466" selection-end-column="77" />
             </state>
           </provider>
         </entry>
@@ -135,8 +144,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/lang/en/default.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="42" column="25" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="25" />
+            <state relative-caret-position="208">
+              <caret line="38" column="29" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -172,8 +181,8 @@
       <find>eye</find>
       <find>sync(</find>
       <find>multiple</find>
-      <find>Отмена</find>
       <find>/lesson</find>
+      <find>Отмена</find>
       <find>lessonFinished</find>
     </findStrings>
     <dirStrings>
@@ -212,7 +221,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Http/Controllers/App/Author/ThemeController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/App/Author/UserController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/App/PageController.php" />
@@ -256,11 +264,12 @@
         <option value="$PROJECT_DIR$/app/Models/Lesson.php" />
         <option value="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/App/General/PaymentController.php" />
-        <option value="$PROJECT_DIR$/resources/views/app/pages/general/lesson/view.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/app/pages/general/lesson/text_work_view.blade.php" />
-        <option value="$PROJECT_DIR$/resources/lang/en/default.php" />
         <option value="$PROJECT_DIR$/app/Models/StudentLessonAnswer.php" />
+        <option value="$PROJECT_DIR$/resources/lang/en/default.php" />
+        <option value="$PROJECT_DIR$/resources/views/app/pages/general/lesson/coursework_view.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/app/pages/general/lesson/homework_view.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/app/pages/general/lesson/view.blade.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/App/General/LessonController.php" />
       </list>
@@ -481,6 +490,51 @@
               <item name="App" type="462c0819:PsiDirectoryNode" />
               <item name="Author" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="general" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="enbek" type="b2602c69:ProjectViewProjectNode" />
+              <item name="enbek" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="general" type="462c0819:PsiDirectoryNode" />
+              <item name="lesson" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -495,6 +549,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -546,7 +601,7 @@
       <workItem from="1604532772640" duration="1299000" />
       <workItem from="1604552934844" duration="30708000" />
       <workItem from="1604722339016" duration="19316000" />
-      <workItem from="1604891941274" duration="7044000" />
+      <workItem from="1604891941274" duration="8929000" />
     </task>
     <task id="LOCAL-00001" summary="- update routes">
       <created>1603898521230</created>
@@ -625,17 +680,24 @@
       <option name="project" value="LOCAL" />
       <updated>1604746620227</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="- add homework">
+      <created>1604901010989</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1604901010989</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="503977000" />
+    <option name="totallyTimeSpent" value="505862000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29395974" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29395974" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -677,16 +739,10 @@
     <MESSAGE value="- payment fix" />
     <MESSAGE value="- add free course payment" />
     <MESSAGE value="- add theory lesson &#10;- add access function in payment" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add theory lesson &#10;- add access function in payment" />
+    <MESSAGE value="- add homework" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add homework" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/auth/login_student.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="507" column="20" selection-start-line="507" selection-start-column="20" selection-end-line="510" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/App/Student/PaymentController.php" />
     <entry file="file://$PROJECT_DIR$/app/Models/PayInformation.php">
       <provider selected="true" editor-type-id="text-editor" />
@@ -935,13 +991,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/lang/en/default.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="42" column="25" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Models/Course.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -990,24 +1039,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/app/pages/general/lesson/view.blade.php">
+    <entry file="file://$PROJECT_DIR$/resources/lang/en/default.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="467" column="95" selection-start-line="467" selection-start-column="95" selection-end-line="467" selection-end-column="95" />
+        <state relative-caret-position="208">
+          <caret line="38" column="29" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/app/pages/general/lesson/coursework_view.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="538">
+          <caret line="472" column="24" lean-forward="true" selection-start-line="472" selection-start-column="24" selection-end-line="472" selection-end-column="56" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/app/pages/general/lesson/homework_view.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="447" column="18" selection-start-line="447" selection-start-column="18" selection-end-line="447" selection-end-column="104" />
+        <state relative-caret-position="575">
+          <caret line="470" column="26" lean-forward="true" selection-start-line="470" selection-start-column="26" selection-end-line="470" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/app/pages/general/lesson/view.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="458">
+          <caret line="466" column="77" lean-forward="true" selection-start-line="466" selection-start-column="77" selection-end-line="466" selection-end-column="77" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="412">
-          <caret line="111" column="111" selection-start-line="111" selection-start-column="111" selection-end-line="111" selection-end-column="111" />
+          <caret line="111" column="96" selection-start-line="111" selection-start-column="86" selection-end-line="111" selection-end-column="96" />
           <folding>
             <element signature="e#7#36#0#PHP" expanded="true" />
           </folding>
@@ -1016,8 +1079,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/App/General/LessonController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="120" column="33" selection-start-line="120" selection-start-column="33" selection-end-line="120" selection-end-column="33" />
+        <state relative-caret-position="374">
+          <caret line="52" column="152" selection-start-line="52" selection-start-column="152" selection-end-line="52" selection-end-column="152" />
           <folding>
             <element signature="e#52#88#0#PHP" expanded="true" />
           </folding>

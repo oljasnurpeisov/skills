@@ -444,33 +444,35 @@
             </ul>
         </div>
     @endif
-    <form id="lesson_form" action="/{{$lang}}/course_{{$course->id}}/theme-{{$theme->id}}/student_lesson_finished_{{$lesson->id}}" method="POST">
+    <form id="lesson_form"
+          action="/{{$lang}}/course-{{$course->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}/textwork"
+          method="POST">
         {{ csrf_field() }}
         <div class="row my-2">
             <div class="col-lg-8 order-lg-2">
                 <div class="tab-content py-4">
                     <div class="tab-pane active" id="profile">
-                        <h3><b>{{$lesson->name}}</b>
+                        <h3><b>{{__('default.pages.lessons.coursework_title')}}</b>
                         </h3>
-                        <p>
-                            <b>{{$lesson->lesson_type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru')}}</b>.
-                            Продолжительность <b>{!! $lesson->duration !!}</b>
-                            минут(ы)</p>
-                        <br>
-                        <p>{!! $lesson->theory !!}</p>
+                        <p>{!! $lesson->text_work_description !!}</p>
                         <div class="modal-footer">
                         </div>
+                        <h5><b>{{__('default.pages.lessons.answer_title')}}</b></h5>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">{{__('default.pages.lessons.answer_text_title')}}
+                                *</label>
+                            <textarea class="form-control" name="text_answer" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="audio">{{__('default.pages.lessons.attachments_title')}}</label>
+                            <input type="file" id="files" name="files[]" multiple>
+                        </div>
+
                     </div>
                 </div>
-                @if($lesson->type == 1)
-                    <button type="submit" class="btn btn-primary" name="action" value="next_lesson">Следующий урок</button>
-                @elseif($lesson->type == 2 and $lesson->end_lesson_type == 1)
-                    <button type="submit" class="btn btn-primary" name="action" value="homework">Перейти к заданию</button>
-                @elseif($lesson->type == 3)
-                    <button type="submit" class="btn btn-primary" name="action" value="coursework">Перейти к заданию</button>
-                @elseif($lesson->type == 4)
-                    <button type="submit" class="btn btn-primary">Пройти тест</button>
-                @endif
+                <button name="action" value="coursework" type="submit" class="btn btn-primary">{{__('default.pages.lessons.send_answer_title')}}</button>
+                <a href="{{ url()->previous() }}"
+                   class="btn btn-default">{{__('default.pages.lessons.cancel_title')}}</a>
             </div>
         </div>
     </form>

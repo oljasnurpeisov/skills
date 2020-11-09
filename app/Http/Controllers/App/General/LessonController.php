@@ -49,6 +49,9 @@ class LessonController extends Controller
             case 'homework':
                 return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/theme-' . $theme->id . '/lesson-' . $lesson->id . '/homework');
                 break;
+            case 'coursework':
+                return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/theme-' . $theme->id . '/lesson-' . $lesson->id . '/coursework');
+                break;
         }
 
         return redirect()->back();
@@ -73,6 +76,25 @@ class LessonController extends Controller
 
     }
 
+    public function courseworkView($lang, Course $course, Theme $theme, Lesson $lesson)
+    {
+
+        if (!empty($lesson->lesson_student)) {
+            if ($lesson->lesson_student->is_access == true) {
+                return view("app.pages.general.lesson.coursework_view", [
+                    "course" => $course,
+                    "lesson" => $lesson,
+                    "theme" => $theme
+                ]);
+            } else {
+                return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
+            }
+        } else {
+            return redirect('/' . $lang . '/course-catalog')->with('error', __('default.pages.lessons.access_denied_message'));
+        }
+
+    }
+
     public function answerSend($lang, Request $request, Course $course, Theme $theme, Lesson $lesson)
     {
         if (!empty($lesson->lesson_student)) {
@@ -82,7 +104,11 @@ class LessonController extends Controller
                 $answer = new StudentLessonAnswer;
                 $answer->student_id = Auth::user()->id;
                 $answer->lesson_id = $lesson->id;
-                $answer->type = 0;
+                if($request->input('action') == 'homework'){
+                    $answer->type = 0;
+                }else{
+                    $answer->type = 1;
+                }
                 $answer->text_answer = $request->text_answer;
 
                 if (!empty($request->files)) {

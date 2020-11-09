@@ -36,6 +36,7 @@ return [
             'create_request_message' => 'Урок успешно создан',
             'access_denied_message' => 'У вас нет доступа к выбранному уроку',
             'homework_title' => 'Домашнее задание',
+            'coursework_title' => 'Курсовая работа',
             'answer_title' => 'Ответ на задание',
             'answer_text_title' => 'Текст ответа',
             'attachments_title' => 'Вложения',
