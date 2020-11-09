@@ -102,8 +102,9 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
         Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
             Route::get("/", "PageController@index");
             // Каталог курсов
-            Route::get("/course-catalog", "PageController@courseCatalog");
-            Route::get("/course-catalog/course/{item}", "PageController@courseView");
+            Route::get("/course-catalog", "CourseController@courseCatalog");
+            Route::get("/course-catalog/course/{item}", "CourseController@courseView");
+            Route::post("/course-catalog-filter", "CourseController@courseCatalogFilter");
             // Урок
             Route::get("/course-catalog/course/{course}/theme-{theme}/lesson-{lesson}", "LessonController@lessonView");
             Route::post("/course_{course}/theme-{theme}/student_lesson_finished_{lesson}", "LessonController@lessonFinished");
@@ -112,7 +113,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::get("/course-catalog/course/{course}/theme-{theme}/lesson-{lesson}/coursework", "LessonController@courseworkView");
             Route::post("/course-{course}/theme-{theme}/lesson-{lesson}/textwork", "LessonController@answerSend");
 
-            Route::post("/course-catalog-filter", "PageController@courseCatalogFilter");
+
         });
         Route::group(["middleware" => ["web"], "namespace" => "Student"], function () {
             Route::get("/login_student", "UserController@studentAuth");
