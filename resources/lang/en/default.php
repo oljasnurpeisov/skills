@@ -35,6 +35,12 @@ return [
         'lessons' => [
             'create_request_message' => 'Урок успешно создан',
             'access_denied_message' => 'У вас нет доступа к выбранному уроку',
+            'homework_title' => 'Домашнее задание',
+            'answer_title' => 'Ответ на задание',
+            'answer_text_title' => 'Текст ответа',
+            'attachments_title' => 'Вложения',
+            'send_answer_title' => 'Отправить ответ',
+            'cancel_title' => 'Отмена'
         ],
         'profile' => [
             'name' => 'Имя',
