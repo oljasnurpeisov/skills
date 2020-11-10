@@ -161,7 +161,13 @@ class PaymentController extends Controller
                             $lesson_ids[$lesson->id] = ['is_access' => false];
                         }
                     } else {
-                        $lesson_ids[$lesson->id] = ['is_access' => true];
+                        if(!in_array($lesson->type, [3,4])) {
+                            $lesson_ids[$lesson->id] = ['is_access' => true];
+                        }else if(in_array($lesson->type, [3,4]) and $key == 0){
+                            $lesson_ids[$lesson->id] = ['is_access' => true];
+                        }else{
+                            $lesson_ids[$lesson->id] = ['is_access' => false];
+                        }
                     }
                 }
 

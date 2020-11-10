@@ -45,7 +45,9 @@ return [
             'answer_text_title' => 'Текст ответа',
             'attachments_title' => 'Вложения',
             'send_answer_title' => 'Отправить ответ',
-            'cancel_title' => 'Отмена'
+            'cancel_title' => 'Отмена',
+            'coursework_count_error_message' => 'Курс может содержать только один урок с типом "Курсовая работа"',
+            'lesson_update_success' => 'Изменения успешно сохранены'
         ],
         'profile' => [
             'name' => 'Имя',

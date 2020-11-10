@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
+    // Статусы курса
     const draft = 0;
     const onCheck = 1;
     const unpublished = 2;
@@ -36,9 +37,20 @@ class Course extends Model
 //
 //    }
 
+    public function lessons() {
+
+        return $this->hasMany(Lesson::class,'course_id', 'id');
+
+    }
+
     public function skills() {
 
         return $this->belongsToMany(Skill::class,'course_skill', 'course_id', 'skill_id');
 
     }
+
+//    public function getRouteKeyName()
+//    {
+//        return 'name';
+//    }
 }

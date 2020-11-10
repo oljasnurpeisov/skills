@@ -160,12 +160,7 @@ class CourseController extends Controller
     {
         if ($item->author_id == Auth::user()->id) {
             $themes = $item->themes()->orderBy('index_number', 'asc')->get();
-            $lessons_count = 0;
-            foreach ($themes as $theme){
-                foreach($theme->lessons()->get() as $lesson){
-                    $lessons_count++;
-                }
-            }
+            $lessons_count = count(Lesson::where('course_id', '=', $item->id)->get());
             return view("app.pages.author.courses.course", [
                 "item" => $item,
                 "themes" => $themes,

@@ -436,6 +436,11 @@
             {{ session('status') }}
         </div>
     @endif
+    @if (session('error'))
+        <div class="alert alert-success">
+            {{ session('error') }}
+        </div>
+    @endif
     <div class="row my-2">
         <div class="col-lg-8 order-lg-2">
             <div class="tab-content py-4">
@@ -503,6 +508,24 @@
                                     </tr>
                                 @endforeach
                             @endforeach
+                            @php($coursework = $item->lessons()->orderBy('index_number', 'asc')->first())
+                            @if(!empty($coursework))
+                                <tr>
+                                    <td></td>
+                                    <td>{{$coursework->name}}&nbsp;&nbsp;
+                                        @switch(!($item->status))
+                                            @case(1)
+                                            @case(3)
+                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
+                                               class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                                            <button type="button" class="btn btn-danger deleteLessonBtn"><i
+                                                        class="fa fa-trash"></i></button>
+                                            @break
+                                        @endswitch
+                                    </td>
+                                    <td hidden>{{$coursework->id}}</td>
+                                </tr>
+                            @endif
                             </tbody>
                         </table>
                         @switch(!($item->status))
@@ -513,6 +536,9 @@
                                     data-target="#createThemeModal">
                                 Создать тему
                             </button>
+                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-coursework"
+                               class="btn btn-warning" style="color: white">Создать курсовую работу</a>
+                            <a href="#" class="btn btn-warning" style="color: white">Создать финальное тестирование</a>
                             @break
                         @endswitch
                         <br><br>
@@ -589,7 +615,8 @@
                             </div>
                         </div>
                     </form>
-                    <form action="/{{$lang}}/my-courses/reestablish-course/{{$item->id}}" id="reestablish_form" method="POST">
+                    <form action="/{{$lang}}/my-courses/reestablish-course/{{$item->id}}" id="reestablish_form"
+                          method="POST">
                         {{ csrf_field() }}
 
                         <div class="modal fade" id="reestablishModal" tabindex="-1" role="dialog"
