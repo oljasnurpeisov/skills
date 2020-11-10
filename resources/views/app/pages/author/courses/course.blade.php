@@ -508,7 +508,8 @@
                                     </tr>
                                 @endforeach
                             @endforeach
-                            @php($coursework = $item->lessons()->orderBy('index_number', 'asc')->first())
+                            @php($coursework = $item->lessons()->where('type', '=', 3)->first())
+                            @php($final_test = $item->lessons()->where('type', '=', 4)->first())
                             @if(!empty($coursework))
                                 <tr>
                                     <td></td>
@@ -526,6 +527,23 @@
                                     <td hidden>{{$coursework->id}}</td>
                                 </tr>
                             @endif
+                            @if(!empty($final_test))
+                                <tr>
+                                    <td></td>
+                                    <td>{{$final_test->name}}&nbsp;&nbsp;
+                                        @switch(!($item->status))
+                                            @case(1)
+                                            @case(3)
+                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final_test"
+                                               class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                                            <button type="button" class="btn btn-danger deleteLessonBtn"><i
+                                                        class="fa fa-trash"></i></button>
+                                            @break
+                                        @endswitch
+                                    </td>
+                                    <td hidden>{{$final_test->id}}</td>
+                                </tr>
+                            @endif
                             </tbody>
                         </table>
                         @switch(!($item->status))
@@ -538,7 +556,7 @@
                             </button>
                             <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-coursework"
                                class="btn btn-warning" style="color: white">Создать курсовую работу</a>
-                            <a href="#" class="btn btn-warning" style="color: white">Создать финальное тестирование</a>
+                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-final-test" class="btn btn-warning" style="color: white">Создать финальное тестирование</a>
                             @break
                         @endswitch
                         <br><br>

@@ -180,11 +180,13 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                         Route::delete("/delete-lesson/{item}", "LessonController@deleteLesson");
                         Route::post("/moveup-lesson/{item}", "LessonController@moveupLesson");
                         Route::post("/movedown-lesson/{item}", "LessonController@movedownLesson");
-                        // Курсовая работа и Финальное тестирование
+                        // Курсовая работа
                         Route::get("/my-courses/course/{item}/create-coursework", "LessonController@createCoursework");
                         Route::post("/create-coursework", "LessonController@storeCoursework");
                         Route::get("/my-courses/course/{course}/edit-coursework", "LessonController@editCoursework");
                         Route::post("/my-courses/course/{course}/edit-coursework", "LessonController@updateCoursework");
+                        // Финальное тестирование
+                        Route::get("/my-courses/course/{item}/create-final-test", "LessonController@createFinalTest");
                         // Черновики
                         Route::get("/my-courses/drafts", "CourseController@myDrafts");
                         // Неопубликованные курсы

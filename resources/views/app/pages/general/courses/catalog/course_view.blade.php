@@ -518,6 +518,52 @@
                                 </tr>
                             @endforeach
                         @endforeach
+                        @php($coursework = $item->lessons()->where('type', '=', 3)->first())
+                        @php($final_test = $item->lessons()->where('type', '=', 4)->first())
+                        @if(!empty($coursework))
+                            <tr>
+                                <td></td>
+                                <td>{{$coursework->name}}&nbsp;&nbsp;
+                                    @auth
+                                        @if(Auth::user()->roles()->first()->id == 5)
+                                            @if(!empty($lesson->lesson_student))
+                                                {{--{{$lesson}}--}}
+                                                @if($lesson->lesson_student->is_finished != true)
+                                                    <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$coursework->id}}"
+                                                       class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                                                @else
+                                                    <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$coursework->id}}"
+                                                       class="btn btn-success"><i class="fa fa-check"></i></a>
+                                                @endif
+                                            @endif
+                                        @endif
+                                    @endauth
+                                </td>
+                                <td hidden>{{$coursework->id}}</td>
+                            </tr>
+                        @endif
+                        @if(!empty($final_test))
+                            <tr>
+                                <td></td>
+                                <td>{{$final_test->name}}&nbsp;&nbsp;
+                                    @auth
+                                        @if(Auth::user()->roles()->first()->id == 5)
+                                            @if(!empty($lesson->lesson_student))
+                                                {{--{{$lesson}}--}}
+                                                @if($lesson->lesson_student->is_finished != true)
+                                                    <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$final_test->id}}"
+                                                       class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                                                @else
+                                                    <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$final_test->id}}"
+                                                       class="btn btn-success"><i class="fa fa-check"></i></a>
+                                                @endif
+                                            @endif
+                                        @endif
+                                    @endauth
+                                </td>
+                                <td hidden>{{$final_test->id}}</td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                     <br><br>

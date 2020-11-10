@@ -97,10 +97,10 @@ class PaymentController extends Controller
                 $student_course->student_id = Auth::user()->id;
                 $student_course->save();
 
+                $this->syncUserLessons($item->id);
+
                 $student_info->quota_count = $student_info->quota_count - 1;
                 $student_info->save();
-
-                $this->syncUserLessons($item->id);
 
                 return redirect()->back()->with('status', __('default.pages.courses.course_quota_activate_success'));
             } else {
@@ -145,16 +145,16 @@ class PaymentController extends Controller
                 }
 
                 $student = User::where('id', '=', $json->metadata->student_id)->first();
-                $course_themes = Course::where('id', '=', $json->metadata->course_id)->with('themes')->first();
-                $theme_ids = $course_themes->themes->pluck('id')->toArray();
-                $lessons = Lesson::whereHas('themes', function ($q) use ($theme_ids) {
-                    $q->whereIn('themes.id', $theme_ids);
-                })->get();
+
+                $course = Course::where('id', '=', $json->metadata->course_id)->first();
+                $lessons = Lesson::where('theme_id','!=', null)->orderBy('index_number', 'asc')->where('course_id', '=', $course->id)->get();
+                $lessons_tests = Lesson::whereIn('type', [3,4])->orderBy('index_number', 'asc')->where('course_id', '=', $course->id)->get();
+                $lessons = $lessons->concat($lessons_tests);
 
                 $lesson_ids = [];
 
                 foreach ($lessons as $key => $lesson) {
-                    if ($course_themes->is_access_all == false) {
+                    if ($course->is_access_all == false) {
                         if ($key == 0) {
                             $lesson_ids[$lesson->id] = ['is_access' => true];
                         } else {
@@ -187,16 +187,15 @@ class PaymentController extends Controller
 
     public function syncUserLessons(Int $course_id){
 
-        $course_themes = Course::where('id', '=', $course_id)->with('themes')->first();
-        $theme_ids = $course_themes->themes->pluck('id')->toArray();
-        $lessons = Lesson::orderBy('index_number', 'asc')->whereHas('themes', function ($q) use ($theme_ids) {
-            $q->whereIn('themes.id', $theme_ids);
-        })->get();
+        $course = Course::where('id', '=', $course_id)->first();
+        $lessons = Lesson::where('theme_id','!=', null)->orderBy('index_number', 'asc')->where('course_id', '=', $course->id)->get();
+        $lessons_tests = Lesson::whereIn('type', [3,4])->orderBy('index_number', 'asc')->where('course_id', '=', $course->id)->get();
+        $lessons = $lessons->concat($lessons_tests);
 
         $lesson_ids = [];
 
         foreach ($lessons as $key => $lesson) {
-            if ($course_themes->is_access_all == false) {
+            if ($course->is_access_all == false) {
                 if ($key == 0) {
                     $lesson_ids[$lesson->id] = ['is_access' => true];
                 } else {

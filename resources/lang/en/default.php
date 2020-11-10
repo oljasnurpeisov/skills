@@ -47,6 +47,7 @@ return [
             'send_answer_title' => 'Отправить ответ',
             'cancel_title' => 'Отмена',
             'coursework_count_error_message' => 'Курс может содержать только один урок с типом "Курсовая работа"',
+            'final_test_count_error_message' => 'Курс может содержать только один урок с типом "Финальный тест"',
             'lesson_update_success' => 'Изменения успешно сохранены'
         ],
         'profile' => [

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App\General;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseRate;
+use App\Models\Lesson;
 use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCourse;
@@ -74,12 +75,7 @@ class CourseController extends Controller
     {
         if ($item->status == Course::published) {
             $themes = $item->themes()->orderBy('index_number', 'asc')->get();
-            $lessons_count = 0;
-            foreach ($themes as $theme) {
-                foreach ($theme->lessons()->get() as $lesson) {
-                    $lessons_count++;
-                }
-            }
+            $lessons_count = count(Lesson::where('course_id', '=', $item->id)->get());
             if (Auth::check()) {
                 $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $item->id)->first();
 //                $student_lessons = StudentLesson::where('id', '=', Auth::user()->id)->get();
