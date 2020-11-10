@@ -152,10 +152,14 @@ class LessonController extends Controller
 //            $next_lesson = Lesson::where('id', '>', $lesson->id)->whereHas('themes', function ($q) use ($theme) {
 //                $q->where('themes.id', '=', $theme->id);
 //            })->first();
-            $next_lesson_theme = Lesson::where('id', '>', $lesson->id)->where('theme_id', '=', $theme->id)->first();
-            $next_theme = Theme::where('course_id', '=', $course->id)->where('id', '>', $theme->id)->first();
-            $next_lesson = Lesson::where('theme_id', '=', $next_theme->id)->orderBy('index_number', 'asc')->first();
+            $next_lesson_theme = Lesson::where('index_number', '>', $lesson->index_number)->where('theme_id', '=', $theme->id)->first();
+            $next_theme = Theme::where('course_id', '=', $course->id)->where('index_number', '>', $theme->index_number)->first();
+            if (!empty($next_theme)) {
+                $next_lesson = Lesson::where('theme_id', '=', $next_theme->id)->orderBy('index_number', 'asc')->first();
+            }
+
             // Переход к следующему уроку
+
             if (!empty($next_lesson_theme)) {
                 // Установка доступа к следующему уроку
                 $next_lesson_theme->lesson_student->is_access = true;
@@ -164,18 +168,34 @@ class LessonController extends Controller
                 return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/theme-' . $theme->id . '/lesson-' . $next_lesson_theme->id);
 
             } else {
-                if (!empty($next_lesson)) {
+                if (!empty($next_lesson) and $next_lesson->lesson_student->is_finished == false) {
                     // Установка доступа к следующему уроку
                     $next_lesson->lesson_student->is_access = true;
                     $next_lesson->lesson_student->save();
 
-                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/theme-' . $theme->id . '/lesson-' . $next_lesson->id);
+                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/theme-' . $next_theme->id . '/lesson-' . $next_lesson->id);
+
                     // Если следующего урока нет
                 } else {
+                    $coursework = $course->lessons->where('type', '=', 3)->first();
+                    $final_test = $course->lessons->where('type', '=', 4)->first();
+                    if (!empty($coursework->lesson_student)) {
+                        $coursework->lesson_student->is_access = true;
+                        $coursework->lesson_student->save();
+                    } else if (!empty($final_test->lesson_student) and empty($coursework->lesson_student)) {
+                        $final_test->lesson_student->is_access = true;
+                        $final_test->lesson_student->save();
+                    }
+                    if (!empty($final_test->lesson_student) and !empty($coursework->lesson_student->is_finished == true)) {
+                        $final_test->lesson_student->is_access = true;
+                        $final_test->lesson_student->save();
+                    }
+
                     return redirect('/' . $lang . '/course-catalog/course/' . $course->id);
                 }
 
             }
+
         } else {
             return redirect('/' . $lang . '/course-catalog/course/' . $course->id);
         }
@@ -188,17 +208,30 @@ class LessonController extends Controller
 //            $q->where('courses.id', '=', $course->id);
 //        })->get();
         $course_themes = Theme::where('course_id', '=', $course->id)->get();
-        // Получить все уроки тем данного курса
+        // Получить все уроки данного курса
         $lessons = array();
-        foreach ($course_themes as $theme) {
-            foreach ($theme->lessons as $lesson) {
-                array_push($lessons, $lesson->id);
-            }
+//        foreach ($course_themes as $theme) {
+        foreach ($course->lessons as $lesson) {
+            array_push($lessons, $lesson->id);
+//            }
         }
         // Получить все незавершенные уроки данного курса
         $student_unfinished_lessons = StudentLesson::where('student_id', '=', Auth::user()->id)->whereIn('lesson_id', $lessons)->where('is_finished', '=', false)->get();
         // Если незавершенных уроков нет, изменить статус курса как завершенный
         if (count($student_unfinished_lessons) == 0) {
+//            $coursework = $course->lessons->where('type', '=', 3)->first();
+//            $final_test = $course->lessons->where('type', '=', 4)->first();
+//            if(!empty($coursework->lesson_student)){
+//                $coursework->lesson_student->is_access = true;
+//                $coursework->lesson_student->save();
+//            }else if(!empty($final_test->lesson_student) and empty($coursework->lesson_student)){
+//                $final_test->lesson_student->is_access = true;
+//                $final_test->lesson_student->save();
+//            }else if(empty($final_test->lesson_student) and empty($coursework->lesson_student)){
+//                $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $course->id)->first();
+//                $student_course->is_finished = true;
+//                $student_course->save();
+//            }
             $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $course->id)->first();
             $student_course->is_finished = true;
             $student_course->save();

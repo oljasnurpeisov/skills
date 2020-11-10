@@ -518,52 +518,48 @@
                                 </tr>
                             @endforeach
                         @endforeach
-                        @php($coursework = $item->lessons()->where('type', '=', 3)->first())
-                        @php($final_test = $item->lessons()->where('type', '=', 4)->first())
-                        @if(!empty($coursework))
-                            <tr>
-                                <td></td>
-                                <td>{{$coursework->name}}&nbsp;&nbsp;
+
+                        <tr>
+                            <td></td>
+                            <td>{{$coursework->name}}&nbsp;&nbsp;
+                                @if(!empty($coursework->lesson_student))
                                     @auth
                                         @if(Auth::user()->roles()->first()->id == 5)
-                                            @if(!empty($lesson->lesson_student))
-                                                {{--{{$lesson}}--}}
-                                                @if($lesson->lesson_student->is_finished != true)
-                                                    <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$coursework->id}}"
-                                                       class="btn btn-warning"><i class="fa fa-eye"></i></a>
-                                                @else
-                                                    <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$coursework->id}}"
-                                                       class="btn btn-success"><i class="fa fa-check"></i></a>
-                                                @endif
+                                            @if(!empty($coursework->lesson_student->is_finished) != true)
+                                                <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$coursework->id}}"
+                                                   class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                                            @else
+                                                <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$coursework->id}}"
+                                                   class="btn btn-success"><i class="fa fa-check"></i></a>
                                             @endif
                                         @endif
                                     @endauth
-                                </td>
-                                <td hidden>{{$coursework->id}}</td>
-                            </tr>
-                        @endif
-                        @if(!empty($final_test))
-                            <tr>
-                                <td></td>
-                                <td>{{$final_test->name}}&nbsp;&nbsp;
+                                @endif
+                            </td>
+                            <td hidden>{{$coursework->id}}</td>
+                        </tr>
+
+
+                        <tr>
+                            <td></td>
+                            <td>{{$final_test->name}}&nbsp;&nbsp;
+                                @if(!empty($final_test->lesson_student))
                                     @auth
                                         @if(Auth::user()->roles()->first()->id == 5)
-                                            @if(!empty($lesson->lesson_student))
-                                                {{--{{$lesson}}--}}
-                                                @if($lesson->lesson_student->is_finished != true)
-                                                    <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$final_test->id}}"
-                                                       class="btn btn-warning"><i class="fa fa-eye"></i></a>
-                                                @else
-                                                    <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$final_test->id}}"
-                                                       class="btn btn-success"><i class="fa fa-check"></i></a>
-                                                @endif
+                                            @if($final_test->lesson_student->is_finished != true)
+                                                <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$final_test->id}}"
+                                                   class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                                            @else
+                                                <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$final_test->id}}"
+                                                   class="btn btn-success"><i class="fa fa-check"></i></a>
                                             @endif
                                         @endif
                                     @endauth
-                                </td>
-                                <td hidden>{{$final_test->id}}</td>
-                            </tr>
-                        @endif
+                                @endif
+                            </td>
+                            <td hidden>{{$final_test->id}}</td>
+                        </tr>
+
                         </tbody>
                     </table>
                     <br><br>
@@ -659,37 +655,40 @@
                             @endif
                         @endif
                         @if(empty($student_rate) and !empty($student_course->is_finished) == true)
-                            <form id="rate_form" action="/{{$lang}}/course-{{$student_course->course_id}}/saveCourseRate" method="POST">
+                            <form id="rate_form"
+                                  action="/{{$lang}}/course-{{$student_course->course_id}}/saveCourseRate"
+                                  method="POST">
                                 {{ csrf_field() }}
-                            <div class="modal fade" id="rateModal" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title"
-                                                id="exampleModalLabel">{{__('default.pages.courses.course_rate_title')}}</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <input type="number" class="form-control" id="rate" name="rate"
-                                                       placeholder="от 1 до 5">
+                                <div class="modal fade" id="rateModal" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title"
+                                                    id="exampleModalLabel">{{__('default.pages.courses.course_rate_title')}}</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" id="rate" name="rate"
+                                                           placeholder="от 1 до 5">
+                                                </div>
+                                                <div class="form-group">
                                                 <textarea class="form-control" name="rate_description"
                                                           id="rate_description" rows="3"
                                                           placeholder="{{__('default.pages.courses.course_rate_description')}}"></textarea>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit"
-                                                    class="btn btn-primary">{{__('default.pages.courses.send_rate_button_title')}}</button>
+                                            <div class="modal-footer">
+                                                <button type="submit"
+                                                        class="btn btn-primary">{{__('default.pages.courses.send_rate_button_title')}}</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             </form>
                         @endif
                     @endauth

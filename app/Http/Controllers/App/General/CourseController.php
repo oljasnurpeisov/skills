@@ -78,7 +78,8 @@ class CourseController extends Controller
             $lessons_count = count(Lesson::where('course_id', '=', $item->id)->get());
             if (Auth::check()) {
                 $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $item->id)->first();
-//                $student_lessons = StudentLesson::where('id', '=', Auth::user()->id)->get();
+                $coursework = $item->lessons->where('type', '=', 3)->first();
+                $final_test = $item->lessons->where('type', '=', 4)->first();
                 $student_rate = CourseRate::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $item->id)->first();
 
             }
@@ -88,7 +89,9 @@ class CourseController extends Controller
                 "themes" => $themes,
                 "lessons_count" => $lessons_count,
                 "student_course" => $student_course ?? [],
-                "student_rate" => $student_rate ?? []
+                "student_rate" => $student_rate ?? [],
+                "coursework" => $coursework,
+                "final_test" => $final_test
             ]);
         } else {
             return redirect("/" . app()->getLocale() . "/course-catalog");
