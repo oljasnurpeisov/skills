@@ -14,13 +14,24 @@ class Theme extends Model
 
     public function courses() {
 
-        return $this->belongsToMany(Course::class,'course_theme');
+        return $this->belongsTo(Course::class,'course_id', 'id');
 
     }
+//    public function courses() {
+//
+//        return $this->belongsToMany(Course::class,'course_theme');
+//
+//    }
 
     public function lessons() {
 
-        return $this->belongsToMany(Lesson::class,'theme_lesson');
+        return $this->hasMany(Lesson::class,'theme_id', 'id');
 
     }
+
+//    public function lessons() {
+//
+//        return $this->belongsToMany(Lesson::class,'theme_lesson');
+//
+//    }
 }

@@ -26,9 +26,15 @@ class Course extends Model
 
     public function themes() {
 
-        return $this->belongsToMany(Theme::class,'course_theme');
+        return $this->hasMany(Theme::class,'course_id', 'id');
 
     }
+
+//    public function themes() {
+//
+//        return $this->belongsToMany(Theme::class,'course_theme');
+//
+//    }
 
     public function skills() {
 

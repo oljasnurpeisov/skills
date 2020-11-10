@@ -47,6 +47,8 @@ class LessonController extends Controller
         }
 
         $item = new Lesson;
+        $item->theme_id = $request->theme_id;
+        $item->course_id = $request->course_id;
         $item->name = $request->name;
         $item->index_number = $last_id;
         $item->type = $request->type;
@@ -105,7 +107,7 @@ class LessonController extends Controller
 
         $item->save();
 
-        $item->themes()->sync([$request->theme_id]);
+//        $item->themes()->sync([$request->theme_id]);
 
         return redirect("/" . app()->getLocale() . "/my-courses/course/" . $request->course_id)->with('status', __('default.pages.lessons.create_request_message'));
     }

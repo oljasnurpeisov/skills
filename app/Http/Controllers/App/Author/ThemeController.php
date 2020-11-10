@@ -32,11 +32,12 @@ class ThemeController extends Controller
         }
 
         $theme = new Theme;
+        $theme->course_id = $request->course_id;
         $theme->name = $request->theme_name;
         $theme->index_number = $last_id;
         $theme->save();
 
-        $theme->courses()->sync([$request->course_id]);
+//        $theme->courses()->sync([$request->course_id]);
 
         $course = Course::where('id', '=', $request->course_id)->first();
         $themes = $course->themes()->orderBy('index_number', 'asc')->get();

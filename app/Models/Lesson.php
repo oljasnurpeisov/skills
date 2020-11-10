@@ -13,10 +13,15 @@ class Lesson extends Model
     public $timestamps = true;
 
 
-    public function themes() {
+//    public function themes() {
+//
+//        return $this->belongsToMany(Theme::class,'theme_lesson');
+//
+//    }
 
-        return $this->belongsToMany(Theme::class,'theme_lesson');
-
+    public function themes()
+    {
+        return $this->hasOne(Theme::class, 'id', 'theme_id');
     }
 
     public function lesson_type()
