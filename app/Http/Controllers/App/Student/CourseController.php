@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Auth;
 class CourseController extends Controller
 {
 
-    public function saveCourseRate($lang, Request $request, Course $course){
+    public function saveCourseRate($lang, Request $request, Course $course)
+    {
         $request->validate([
             'rate' => 'required|min:1|max:1',
             'rate_description' => 'required|max:255',
@@ -29,13 +30,40 @@ class CourseController extends Controller
         $item->description = $request->rate_description;
         $item->save();
 
-        return redirect('/'.$lang.'/student/my-courses');
+        return redirect('/' . $lang . '/student/my-courses');
     }
 
-    public function studentCourses(){
+    public function studentCourses(Request $request, $lang)
+    {
+        // Получить все курсы обучающегося
+        $query = StudentCourse::where('student_id', '=', Auth::user()->id)->whereHas('course', function($q){
+            $q->where('status', '=', Course::published);
+        });
+        $items = $query->paginate();
+
+        foreach ($items as $key => $item){
+            // Получить все темы из курса
+            $themes = $item->course->themes()->orderBy('index_number', 'asc')->get();
+            $lessons_count = 0;
+            $finished_lessons_count = 0;
+            foreach ($themes as $theme){
+                foreach($theme->lessons()->get() as $lesson){
+                    // Инкремент общего количества уроков
+                    $lessons_count++;
+                    // Инкремент выполненых уроков
+                    $confirm_lessons = StudentLesson::where('lesson_id', '=', $lesson->id)->where('is_finished', '=', true)->first();
+                    if(!empty($confirm_lessons)) {
+                        $finished_lessons_count++;
+                    }
+                }
+            }
+            // Добавление новых полей в коллекцию
+            $item->lessons_count = $lessons_count;
+            $item->finished_lessons_count = $finished_lessons_count;
+        }
 
         return view("app.pages.student.courses.my_courses", [
-
+            "items" => $items
         ]);
     }
 }

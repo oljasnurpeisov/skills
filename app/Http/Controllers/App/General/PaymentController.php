@@ -183,7 +183,7 @@ class PaymentController extends Controller
 
         $course_themes = Course::where('id', '=', $course_id)->with('themes')->first();
         $theme_ids = $course_themes->themes->pluck('id')->toArray();
-        $lessons = Lesson::whereHas('themes', function ($q) use ($theme_ids) {
+        $lessons = Lesson::orderBy('index_number', 'asc')->whereHas('themes', function ($q) use ($theme_ids) {
             $q->whereIn('themes.id', $theme_ids);
         })->get();
 
@@ -197,7 +197,15 @@ class PaymentController extends Controller
                     $lesson_ids[$lesson->id] = ['is_access' => false];
                 }
             } else {
-                $lesson_ids[$lesson->id] = ['is_access' => true];
+                if(!in_array($lesson->type, [3,4])) {
+                    $lesson_ids[$lesson->id] = ['is_access' => true];
+                }else if(in_array($lesson->type, [3,4]) and $key == 0){
+                    $lesson_ids[$lesson->id] = ['is_access' => true];
+                }else{
+                    $lesson_ids[$lesson->id] = ['is_access' => false];
+                }
+
+
             }
         }
 

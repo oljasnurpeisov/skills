@@ -411,6 +411,11 @@
     <br>
     <nav class="nav nav-pills nav-justified">
         <a class="nav-link active" href="/{{$lang}}/course-catalog">Каталог курсов</a>
+        @auth
+            @if(Auth::user()->roles()->first()->id == 5)
+                <a class="nav-link" href="/{{$lang}}/student/my-courses">Мои курсы</a>
+            @endif
+        @endauth
     </nav>
     <br>
 
@@ -518,6 +523,7 @@
                     <br><br>
                     <h4><b>{{__('default.pages.courses.course_description')}}</b></h4>
                     <p>{!! $item->description !!}</p>
+
                     <div class="modal-footer">
                     </div>
                     @auth
@@ -606,7 +612,7 @@
                                 @endif
                             @endif
                         @endif
-                        @if(empty($student_rate) and $student_course->is_finished == true)
+                        @if(empty($student_rate) and !empty($student_course->is_finished) == true)
                             <form id="rate_form" action="/{{$lang}}/course-{{$student_course->course_id}}/saveCourseRate" method="POST">
                                 {{ csrf_field() }}
                             <div class="modal fade" id="rateModal" tabindex="-1" role="dialog"
