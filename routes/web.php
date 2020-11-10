@@ -104,8 +104,12 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             // Курсы
             Route::get("/course-catalog", "CourseController@courseCatalog");
             Route::get("/course-catalog/course/{item}", "CourseController@courseView");
+            // Фильтр
             Route::post("/course-catalog-filter", "CourseController@courseCatalogFilter");
-
+            // Тестовый фильтр
+            Route::post("/getProfessionsByName", "CourseController@getProfessionsByName");
+            Route::post("/getSkillsByProfessions", "CourseController@getSkillsByProfessions");
+            Route::post("/getSkillsByName", "CourseController@getSkillsByName");
 
 
         });

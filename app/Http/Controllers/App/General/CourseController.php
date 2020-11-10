@@ -153,12 +153,16 @@ class CourseController extends Controller
 
     public function courseCatalogFilter(Request $request, $lang)
     {
+        $skills = collect();
 
         $term = $request->term ? $request->term : '';
-        $choosed_profession = $request->choosed_profession ?? '';
+        $choosed_profession = $request->professions ?? '';
         $choosed_lang_ru = $request->choosed_lang_ru ?? null;
         $choosed_lang_kk = $request->choosed_lang_kk ?? null;
         $course_type = $request->course_type;
+        $choosed_skills = $request->choosed_skills;
+
+
 
         // Создание массив из языков
         $languages = array();
@@ -181,8 +185,41 @@ class CourseController extends Controller
         if ($course_type != null) {
             $query = $query->where('is_paid', '=', $course_type);
         }
+        if ($choosed_profession) {
+            $skills = Skill::whereHas('professions', function ($q) use ($choosed_profession) {
+                $q->where('professions.id', '=', $choosed_profession);
+            })->get();
+        }
         $items = $query->where('status', '=', Course::published)->paginate();
-        return $items;
+//        return [$items, $skills];
+        return $skills;
     }
 
+
+
+    public function getProfessionsByName(Request $request, $lang){
+        $profession_name = $request->profession_name ?? '';
+
+        $professions = Professions::where('name_'.$lang, 'like', '%' . $profession_name . '%')->get();
+
+        return $professions;
+    }
+
+    public function getSkillsByProfessions(Request $request){
+        $professions = $request->professions ?? null;
+
+        $skills = $skills = Skill::whereHas('professions', function ($q) use ($professions) {
+            $q->whereIn('professions.id', $professions);
+        })->get();
+
+        return $skills;
+    }
+
+    public function getSkillsByName(Request $request, $lang){
+        $skill_name = $request->skill_name ?? '';
+
+        $skills = Skill::where('name_'.$lang, 'like', '%' . $skill_name . '%')->get();
+
+        return $skills;
+    }
 }

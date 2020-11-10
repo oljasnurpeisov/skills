@@ -565,7 +565,6 @@
             data: formdata,
             success: function (data) {
                 console.log(data);
-                // $('#course_data').html(data);
 
             },
             error: function () {
@@ -573,80 +572,56 @@
             }
         });
     });
+    // Тест для Айтана
+    // Получить список профессий по имени
+    // $('#term').on('change', function () {
+    //     var profession_name = $('#term').val();
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: 'https://dev3.panama.kz/ru/getProfessionsByName',
+    //         data: {"profession_name": profession_name},
+    //         success: function (data) {
+    //             console.log(data);
+    //
+    //         },
+    //         error: function () {
+    //             console.log(data);
+    //         }
+    //     });
+    // });
+    // // Получить список скиллов по выбранным профессиям
+    // $('#term').on('change', function () {
+    //     var professions = [16630];
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: 'https://dev3.panama.kz/ru/getSkillsByProfessions',
+    //         data: {"professions": professions},
+    //         success: function (data) {
+    //             console.log(data);
+    //
+    //         },
+    //         error: function () {
+    //             console.log(data);
+    //         }
+    //     });
+    // });
+    // // Получить список скиллов по имени
+    // $('#term').on('change', function () {
+    //     var skill_name = $('#term').val();
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: 'https://dev3.panama.kz/ru/getSkillsByName',
+    //         data: {"skill_name": skill_name},
+    //         success: function (data) {
+    //             console.log(data);
+    //
+    //         },
+    //         error: function () {
+    //             console.log(data);
+    //         }
+    //     });
+    // });
 
-
-    // $('#professions').on('change', function() {
-    //     $profession_id = $( "#professions").val();
-    //     $term = $( "#term").val();
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: 'https://dev3.panama.kz/ru/course-catalog?choosed_profession='+$profession_id+'&term='+$term ,
-    //         success: function (data) {
-    //             console.log(data);
-    //             // $('#skills_data').html(data);
-    //
-    //             // $('#course_data').empty();
-    //             // $('#course_data').replaceWith(data);
-    //             $('#course_data').html(data);
-    //
-    //         },
-    //         error: function() {
-    //             console.log(data);
-    //         }
-    //     });
-    // });
-    // $('#skills').on('change', function() {
-    //     $skill_id = $( "#skills").val();
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: 'https://dev3.panama.kz/ru/course-catalog?choosed_skills='+$skill_id+'&term='+$term,
-    //         success: function (data) {
-    //             console.log(1);
-    //             // $('#course_data').empty();
-    //             $('#course_data').html(data);
-    //         },
-    //         error: function() {
-    //             console.log(data);
-    //         }
-    //     });
-    // });
-    //
-    // $('#course_type').on('change', function() {
-    //     $course_type = $("#course_type").val();
-    //     $term = $("#term").val();
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: 'https://dev3.panama.kz/ru/course-catalog?course_type='+$course_type+'&term='+$term,
-    //         success: function (data) {
-    //             console.log(1);
-    //             // $('#course_data').empty();
-    //             $('#course_data').html(data);
-    //             console.log(data);
-    //
-    //         },
-    //         error: function() {
-    //             console.log(data);
-    //         }
-    //     });
-    // });
-    //
-    // $("[name='choosed_lang']").on('change', function() {
-    //     $choosed_lang = $("[name='choosed_lang']").val();
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: 'https://dev3.panama.kz/ru/course-catalog?course_type='+$choosed_lang,
-    //         success: function (data) {
-    //             console.log(1);
-    //             // $('#course_data').empty();
-    //             $('#course_data').html(data);
-    //             console.log(data);
-    //
-    //         },
-    //         error: function() {
-    //             console.log(data);
-    //         }
-    //     });
-    // });
 
 </script>
 </body>
