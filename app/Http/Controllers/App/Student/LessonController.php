@@ -219,19 +219,6 @@ class LessonController extends Controller
         $student_unfinished_lessons = StudentLesson::where('student_id', '=', Auth::user()->id)->whereIn('lesson_id', $lessons)->where('is_finished', '=', false)->get();
         // Если незавершенных уроков нет, изменить статус курса как завершенный
         if (count($student_unfinished_lessons) == 0) {
-//            $coursework = $course->lessons->where('type', '=', 3)->first();
-//            $final_test = $course->lessons->where('type', '=', 4)->first();
-//            if(!empty($coursework->lesson_student)){
-//                $coursework->lesson_student->is_access = true;
-//                $coursework->lesson_student->save();
-//            }else if(!empty($final_test->lesson_student) and empty($coursework->lesson_student)){
-//                $final_test->lesson_student->is_access = true;
-//                $final_test->lesson_student->save();
-//            }else if(empty($final_test->lesson_student) and empty($coursework->lesson_student)){
-//                $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $course->id)->first();
-//                $student_course->is_finished = true;
-//                $student_course->save();
-//            }
             $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $course->id)->first();
             $student_course->is_finished = true;
             $student_course->save();

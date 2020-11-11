@@ -199,7 +199,7 @@ class CourseController extends Controller
     public function getProfessionsByName(Request $request, $lang){
         $profession_name = $request->profession_name ?? '';
 
-        $professions = Professions::where('name_'.$lang, 'like', '%' . $profession_name . '%')->get();
+        $professions = Professions::where('name_'.$lang, 'like', '%' . $profession_name . '%')->limit(50)->get();
 
         return $professions;
     }
@@ -209,7 +209,7 @@ class CourseController extends Controller
 
         $skills = $skills = Skill::whereHas('professions', function ($q) use ($professions) {
             $q->whereIn('professions.id', $professions);
-        })->get();
+        })->limit(50)->get();
 
         return $skills;
     }
@@ -217,7 +217,7 @@ class CourseController extends Controller
     public function getSkillsByName(Request $request, $lang){
         $skill_name = $request->skill_name ?? '';
 
-        $skills = Skill::where('name_'.$lang, 'like', '%' . $skill_name . '%')->get();
+        $skills = Skill::where('name_'.$lang, 'like', '%' . $skill_name . '%')->limit(50)->get();
 
         return $skills;
     }

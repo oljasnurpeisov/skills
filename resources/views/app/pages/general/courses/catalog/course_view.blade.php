@@ -521,6 +521,7 @@
 
                         <tr>
                             <td></td>
+                            @if(!empty($coursework))
                             <td>{{$coursework->name}}&nbsp;&nbsp;
                                 @if(!empty($coursework->lesson_student))
                                     @auth
@@ -534,13 +535,16 @@
                                             @endif
                                         @endif
                                     @endauth
-                                @endif
+
                             </td>
+                            @endif
                             <td hidden>{{$coursework->id}}</td>
+                            @endif
                         </tr>
 
 
                         <tr>
+                            @if(!empty($final_test))
                             <td></td>
                             <td>{{$final_test->name}}&nbsp;&nbsp;
                                 @if(!empty($final_test->lesson_student))
@@ -557,7 +561,9 @@
                                     @endauth
                                 @endif
                             </td>
+
                             <td hidden>{{$final_test->id}}</td>
+                            @endif
                         </tr>
 
                         </tbody>
