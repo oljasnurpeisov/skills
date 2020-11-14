@@ -16,7 +16,7 @@ class VerifyCsrfToken extends Middleware
         '/ajaxUploadImageTest',
         '/ajaxUploadFilesTest',
         '/ru/getProfessionsByName',
-        '/ru/getSkillsByProfessions',
-        '/ru/getSkillsByName',
+        '/ru/getSkillsByData',
+//        '/ru/getSkillsByName',
     ];
 }

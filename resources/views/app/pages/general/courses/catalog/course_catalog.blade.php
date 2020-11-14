@@ -557,21 +557,21 @@
         }
     });
 
-    $('#professions').on('change', function () {
-        var formdata = $('#courses_form').serializeArray();
-        $.ajax({
-            type: 'POST',
-            url: 'https://dev3.panama.kz/ru/course-catalog-filter',
-            data: formdata,
-            success: function (data) {
-                console.log(data);
-
-            },
-            error: function () {
-                console.log(data);
-            }
-        });
-    });
+    // $('#professions').on('change', function () {
+    //     var formdata = $('#courses_form').serializeArray();
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: 'https://dev3.panama.kz/ru/course-catalog-filter',
+    //         data: formdata,
+    //         success: function (data) {
+    //             console.log(data);
+    //
+    //         },
+    //         error: function () {
+    //             console.log(data);
+    //         }
+    //     });
+    // });
     // Тест для Айтана
     // Получить список профессий по имени
     $('#term').on('change', function () {
@@ -579,7 +579,7 @@
         $.ajax({
             type: 'POST',
             url: 'https://dev3.panama.kz/ru/getProfessionsByName',
-            data: {"profession_name": profession_name},
+            data: {"name": profession_name},
             success: function (data) {
                 console.log(data);
 
@@ -590,21 +590,22 @@
         });
     });
     // // Получить список скиллов по выбранным профессиям
-    // $('#term').on('change', function () {
-    //     var professions = [16630];
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: 'https://dev3.panama.kz/ru/getSkillsByProfessions',
-    //         data: {"professions": professions},
-    //         success: function (data) {
-    //             console.log(data);
-    //
-    //         },
-    //         error: function () {
-    //             console.log(data);
-    //         }
-    //     });
-    // });
+    $('#term').on('change', function () {
+        var professions = [];
+        var skill_name = $('#term').val();
+        $.ajax({
+            type: 'POST',
+            url: 'https://dev3.panama.kz/ru/getSkillsByData',
+            data: {"professions": professions, "name": skill_name},
+            success: function (data) {
+                console.log(data);
+
+            },
+            error: function () {
+                console.log(data);
+            }
+        });
+    });
     // // Получить список скиллов по имени
     // $('#term').on('change', function () {
     //     var skill_name = $('#term').val();

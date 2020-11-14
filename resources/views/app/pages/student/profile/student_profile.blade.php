@@ -407,14 +407,16 @@
 <div class="container">
     <br>
     <nav class="nav nav-pills nav-justified">
-        <a class="nav-link active" href="/{{$lang}}/student_profile">Профиль обучающегося</a>
+        <a class="nav-link active" href="/{{$lang}}/student-profile">Профиль обучающегося</a>
+
+        <a class="nav-link" href="/{{$lang}}/dialogs">Диалоги</a>
     </nav>
     <br>
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
                 <a href="/{{$lang}}/" class="text-sm text-gray-700 underline">Главная </a>|
-                <a href="/{{$lang}}/my-courses" class="text-sm text-gray-700 underline">Мои курсы</a>|
+                <a href="/{{$lang}}/student/my-courses" class="text-sm text-gray-700 underline">Мои курсы</a>|
                 <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
             @else
                 <a href="/{{$lang}}/login" class="text-sm text-gray-700 underline">Login</a>

@@ -73,6 +73,14 @@ return [
             'password_update_failed' => 'Неверный текущий пароль',
             'different_password' => 'Новый пароль должен отличаться от текущего',
         ],
+        'calendar' => [
+            'today' => 'Сегодня',
+            'yesterday' => 'Вчера',
+        ],
+
+        'dialogs' => [
+            'you_title' => 'Вы'
+        ],
     ],
 
 ];

@@ -67,6 +67,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(StudentInformation::class, 'id', 'user_id');
     }
 
+    public function author_info()
+    {
+        return $this->belongsTo(UserInformation::class, 'id', 'user_id');
+    }
+
     public function student_lesson()
     {
         return $this->belongsToMany(Lesson::class,'student_lesson','student_id', 'lesson_id');
@@ -76,5 +81,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new VerifyEmail);
     }
+
+    public function dialogs()
+    {
+        return $this->belongsToMany(Dialog::class, "dialog_members", "user_id", "dialog_id");
+    }
+
 
 }

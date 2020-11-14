@@ -162,7 +162,6 @@ class CourseController extends Controller
         $choosed_skills = $request->choosed_skills;
 
 
-
         // Создание массив из языков
         $languages = array();
         if ($choosed_lang_ru != null) {
@@ -195,30 +194,34 @@ class CourseController extends Controller
     }
 
 
+    public function getProfessionsByName(Request $request, $lang)
+    {
+        $profession_name = $request->name ?? '';
 
-    public function getProfessionsByName(Request $request, $lang){
-        $profession_name = $request->profession_name ?? '';
-
-        $professions = Professions::where('name_'.$lang, 'like', '%' . $profession_name . '%')->limit(50)->get();
+        $professions = Professions::where('name_' . $lang, 'like', '%' . $profession_name . '%')->orderBy('name_' . $lang, 'asc')->limit(50)->get();
 
         return $professions;
     }
 
-    public function getSkillsByProfessions(Request $request){
-        $professions = $request->professions ?? null;
+    public function getSkillsByData(Request $request, $lang)
+    {
+        $professions = $request->professions;
+        $skill_name = $request->name ?? '';
 
-        $skills = $skills = Skill::whereHas('professions', function ($q) use ($professions) {
-            $q->whereIn('professions.id', $professions);
-        })->limit(50)->get();
-
-        return $skills;
-    }
-
-    public function getSkillsByName(Request $request, $lang){
-        $skill_name = $request->skill_name ?? '';
-
-        $skills = Skill::where('name_'.$lang, 'like', '%' . $skill_name . '%')->limit(50)->get();
+        $skills = $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->whereHas('professions', function ($q) use ($professions) {
+            if ($professions != []) {
+                $q->whereIn('professions.id', $professions);
+            }
+        })->where('fl_check', '=', '1')->where('fl_show', '=', '1')->limit(50)->get();
 
         return $skills;
     }
+
+//    public function getSkillsByName(Request $request, $lang){
+//        $skill_name = $request->name ?? '';
+//
+//        $skills = Skill::where('name_'.$lang, 'like', '%' . $skill_name . '%')->limit(50)->get();
+//
+//        return $skills;
+//    }
 }

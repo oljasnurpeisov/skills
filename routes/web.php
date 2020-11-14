@@ -108,8 +108,12 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::post("/course-catalog-filter", "CourseController@courseCatalogFilter");
             // Тестовый фильтр
             Route::post("/getProfessionsByName", "CourseController@getProfessionsByName");
-            Route::post("/getSkillsByProfessions", "CourseController@getSkillsByProfessions");
-            Route::post("/getSkillsByName", "CourseController@getSkillsByName");
+            Route::post("/getSkillsByData", "CourseController@getSkillsByData");
+//            Route::post("/getSkillsByName", "CourseController@getSkillsByName");
+            // Диалоги
+            Route::get("/dialogs", "DialogController@index");
+            Route::get('/dialog/opponent-{id}', 'DialogController@view');
+            Route::post('/dialog-{dialog}/message/create', 'DialogController@save');
 
 
         });

@@ -385,6 +385,11 @@
                 color: rgba(203, 213, 224, var(--text-opacity))
             }
         }
+
+        .darker {
+            border-color: #ccc;
+            background-color: #ddd;
+        }
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -407,50 +412,16 @@
 <div class="container">
     <br>
     <nav class="nav nav-pills nav-justified">
-        <a class="nav-link" href="/{{$lang}}/profile-author-information">Данные об авторе</a>
-        <a class="nav-link" href="/{{$lang}}/profile_pay_information">Платежная информация</a>
-        <a class="nav-link active" href="/{{$lang}}/edit_profile">Регистрационные данные</a>
-        <a class="nav-link" href="/{{$lang}}/change_password">Пароль</a>
+        <a class="nav-link " href="/{{$lang}}/student-profile">Профиль обучающегося</a>
+
+        <a class="nav-link active" href="/{{$lang}}/dialogs">Диалоги</a>
     </nav>
     <br>
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
-                <a class="text-sm text-gray-700 underline" href="#" role="button" id="dropdownMenuLink"
-                   data-toggle="dropdown">Уведомления
-                    <span class="badge badge-primary">{{count(Auth::user()->notifications()->get())}}</span></a>|
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    {{--@php($notifications = Auth::user()->notifications()->get())--}}
-                    {{--@foreach($notifications as $notification)--}}
-                        {{--@if($notification->type == 1)--}}
-                            {{--<form method="POST" action="/{{$lang}}/my-courses/quota-confirm-course/{{json_decode($notification->name)[1]}}"--}}
-                                  {{--id="quota_confirm_form">--}}
-                                {{--{{ csrf_field() }}--}}
-                                {{--<div style="margin: 15px">--}}
-                                    {{--<p>{!! trans(json_decode($notification->name)[0], ['course_name' => '"'.\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->name.'"']) !!}</p>--}}
-                                    {{--@if(\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->quota_status == 1)--}}
-                                        {{--<button class="btn btn-success"--}}
-                                                {{--style="color: white;"--}}
-                                                {{--name="action" value="confirm">{{__('notifications.confirm_btn_title')}}</button>--}}
-                                        {{--&nbsp;&nbsp;--}}
-                                        {{--<button class="btn btn-danger"--}}
-                                                {{--style="color: white;"--}}
-                                                {{--name="action" value="reject">{{__('notifications.reject_btn_title')}}</button>--}}
-                                    {{--@endif--}}
-                                {{--</div>--}}
-                            {{--</form>--}}
-                            {{--<hr>--}}
-                        {{--@else--}}
-                            {{--<div style="margin: 15px">--}}
-
-                                {{--<p>{{trans(json_decode($notification->name)[0], ['course_name' => '"'.\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->name.'"'])}}</p>--}}
-                            {{--</div>--}}
-                            {{--<hr>--}}
-                        {{--@endif--}}
-                        {{--<a class="dropdown-item" href="#">{{$notification->name}}</a>--}}
-                    {{--@endforeach--}}
-                </div>
-                <a href="/{{$lang}}/my-courses" class="text-sm text-gray-700 underline">Мои курсы</a>|
+                <a href="/{{$lang}}/" class="text-sm text-gray-700 underline">Главная </a>|
+                <a href="/{{$lang}}/student/my-courses" class="text-sm text-gray-700 underline">Мои курсы</a>|
                 <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
             @else
                 <a href="/{{$lang}}/login" class="text-sm text-gray-700 underline">Login</a>
@@ -461,91 +432,39 @@
             @endif
         </div>
     @endif
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{!! $error !!}</li>
-                @endforeach
-            </ul>
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
         </div>
     @endif
     <div class="row my-2">
-        <div class="col-lg-8 order-lg-2">
-            {{--<ul class="nav nav-tabs">--}}
-            {{--<li class="nav-item">--}}
-            {{--<a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>--}}
-            {{--</li>--}}
-            {{--</ul>--}}
-            <div class="tab-content py-4">
-                <div class="tab-pane active" id="profile">
-                    <h5 class="mb-3">Редактирование профиля</h5>
-                    <form action="/{{$lang}}/update_profile" method="POST" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="row">
-                            <div class="col-md-6">
+        <h2>Диалог</h2>
 
-                                <div class="form-group">
-                                    <b><label for="Email">E-mail</label></b>
-                                    <input type="email" class="form-control" name="email"
-                                           placeholder="Введите email" value="{{$user->email}}">
-                                </div>
-                                <div class="form-group">
-                                    <b><label for="iin">ИИН/БИН</label></b>
-                                    <input type="text" class="form-control" name="iin"
-                                           placeholder="Введите ИИН/БИН" value="{{$user->iin}}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Форма собственности</label>
-                                    <select class="form-control" name="type_of_ownership">
-                                        @foreach($types_of_ownership as $type)
-                                            <option value="{{ $type->id }}"
-                                                    @if($type->id==$user->type_ownership->id) selected='selected' @endif >{{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <b><label for="company_name">Название организации</label></b>
-                                    <input type="text" class="form-control" name="company_name"
-                                           placeholder="Введите название организации" value="{{$user->company_name}}">
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-                        <!--/row-->
-                </div>
+        @foreach($messages as $message)
+
+            <div @if(Auth::user()->id == $message->sender_id)class="container darker" @else class="container"@endif>
+                {{--<img src="" alt="Avatar" class="right" style="width:100px; height: 100px">--}}
+                @if($message->sender->roles()->first()->slug == 'author')
+                    <p><b>{{$message->sender->author_info->name}}</b></p>
+                @elseif($message->sender->roles()->first()->slug == 'student')
+                    <p><b>Обучающийся</b></p>
+                @endif
+                <p>{{ json_decode('"'.str_replace('"','\"',$message->message).'"') }}</p>
+                <span class="time-left">{{\App\Extensions\FormatDate::formatDate($message->created_at->format("Y-m-d, H:i"))}}</span>
+
             </div>
-        </div>
-        <div class="col-lg-4 order-lg-1 text-center">
-            <img src="{!! $user->company_logo !!}" class="mx-auto img-fluid img-circle d-block" alt="avatar"
-                 id="company_logo_img" width="200" height="100">
-            <br>
+
+        @endforeach
+        <form action="/{{$lang}}/dialog-{{$item->id}}/message/create" method="POST">
+            @csrf
             <div class="form-group">
-                <label for="company_logo">Логотип компании:</label>
-                <input type="file" id="company_logo" name="company_logo" accept="image/*">
+                <br><br>
+                <input type="text" class="form-control" placeholder="Введите сообщение" name="message">
+                <br>
+                <button type="submit" class="btn btn-primary">Отправить</button>
             </div>
-            {{--<a href="/{{$lang}}/edit_profile" class="btn btn-primary stretched-link">Сохранить изменения</a>--}}
-            {{--<h6 class="mt-2">Upload a different photo</h6>--}}
-            {{--<label class="custom-file">--}}
-            {{--<input type="file" id="file" class="custom-file-input">--}}
-            {{--<span class="custom-file-control">Choose file</span>--}}
-            {{--</label>--}}
-        </div>
         </form>
     </div>
 </div>
 </body>
-<script>
-    $('document').ready(function () {
-        $("#company_logo").change(function () {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#company_logo_img').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
-    });
-</script>
 </html>
