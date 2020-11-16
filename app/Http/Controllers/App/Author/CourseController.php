@@ -329,9 +329,9 @@ class CourseController extends Controller
 
     public function reestablishCourse($lang, Course $item)
     {
-        $item->status = 0;
+        $item->status = Course::onCheck;
         $item->save();
 
-        return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('default.pages.courses.delete_request_message'));
+        return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('default.pages.courses.publish_request_message'));
     }
 }

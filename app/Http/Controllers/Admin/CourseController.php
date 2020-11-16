@@ -41,7 +41,7 @@ class CourseController extends Controller
     {
         $term = $request->term ? $request->term : '';
 
-        $query = Course::orderBy('id', 'desc')->where('status', '!=', 0)->where('status', '!=', 4);
+        $query = Course::orderBy('id', 'desc')->where('status', '!=', Course::draft)->where('status', '!=', Course::deleted);
         if ($term) {
             $query = $query->where('name', 'like', '%' . $term . '%');
         }
@@ -59,7 +59,7 @@ class CourseController extends Controller
     {
         $term = $request->term ? $request->term : '';
 
-        $query = Course::orderBy('id', 'desc')->where('status', '=', 1);
+        $query = Course::orderBy('id', 'desc')->where('status', '=', Course::onCheck);
         if ($term) {
             $query = $query->where('name', 'like', '%' . $term . '%');
         }
@@ -77,7 +77,7 @@ class CourseController extends Controller
     {
         $term = $request->term ? $request->term : '';
 
-        $query = Course::orderBy('id', 'desc')->where('status', '=', 2);
+        $query = Course::orderBy('id', 'desc')->where('status', '=', Course::unpublished);
         if ($term) {
             $query = $query->where('name', 'like', '%' . $term . '%');
         }
@@ -95,7 +95,7 @@ class CourseController extends Controller
     {
         $term = $request->term ? $request->term : '';
 
-        $query = Course::orderBy('id', 'desc')->where('status', '=', 3);
+        $query = Course::orderBy('id', 'desc')->where('status', '=', Course::published);
         if ($term) {
             $query = $query->where('name', 'like', '%' . $term . '%');
         }
@@ -109,6 +109,41 @@ class CourseController extends Controller
         ]);
     }
 
+    public function drafts_index(Request $request)
+    {
+        $term = $request->term ? $request->term : '';
+
+        $query = Course::orderBy('id', 'desc')->where('status', '=', Course::draft);
+        if ($term) {
+            $query = $query->where('name', 'like', '%' . $term . '%');
+        }
+
+        $query = $query->where('name', 'like', '%' . $term . '%');
+        $items = $query->paginate();
+
+        return view('admin.v2.pages.courses.index', [
+            'items' => $items,
+            'term' => $term,
+        ]);
+    }
+
+    public function deleted_index(Request $request)
+    {
+        $term = $request->term ? $request->term : '';
+
+        $query = Course::orderBy('id', 'desc')->where('status', '=', Course::deleted);
+        if ($term) {
+            $query = $query->where('name', 'like', '%' . $term . '%');
+        }
+
+        $query = $query->where('name', 'like', '%' . $term . '%');
+        $items = $query->paginate();
+
+        return view('admin.v2.pages.courses.index', [
+            'items' => $items,
+            'term' => $term,
+        ]);
+    }
 
     public function view($lang, Course $item)
     {

@@ -77,6 +77,8 @@ Route::group(["namespace" => "Admin"], function () {
                 Route::get('/courses/index', 'CourseController@index');
                 Route::get('/courses/wait_verification', 'CourseController@wait_verification');
                 Route::get('/courses/unpublished', 'CourseController@unpublished_index');
+                Route::get("/courses/drafts", "CourseController@drafts_index");
+                Route::get("/courses/deleted", "CourseController@deleted_index");
                 Route::get('/courses/published', 'CourseController@published_index');
                 Route::get('/course/{item}', 'CourseController@view');
                 Route::post('/course/publish/{item}', 'CourseController@publish');
@@ -110,11 +112,12 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::post("/getProfessionsByName", "CourseController@getProfessionsByName");
             Route::post("/getSkillsByData", "CourseController@getSkillsByData");
 //            Route::post("/getSkillsByName", "CourseController@getSkillsByName");
-            // Диалоги
-            Route::get("/dialogs", "DialogController@index");
-            Route::get('/dialog/opponent-{id}', 'DialogController@view');
-            Route::post('/dialog-{dialog}/message/create', 'DialogController@save');
-
+            Route::group(['middleware' => ["auth", "verified"]], static function () {
+                // Диалоги
+                Route::get("/dialogs", "DialogController@index");
+                Route::get('/dialog/opponent-{id}', 'DialogController@view');
+                Route::post('/dialog-{dialog}/message/create', 'DialogController@save');
+            });
 
         });
         Route::group(["middleware" => ["web"], "namespace" => "Student"], function () {
@@ -228,8 +231,8 @@ Route::group(['prefix' => '{lang}'], function () {
 
 Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
 Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
-Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
-Route::post('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+//Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+//Route::post('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 //Auth::routes();
 
 

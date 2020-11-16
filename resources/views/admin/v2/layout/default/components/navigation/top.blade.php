@@ -63,19 +63,19 @@
                 <a> <i class="fa fa-bell" aria-hidden="true"></i>{{count(Auth::user()->notifications()->get())}}</a>
             </div>
             <div class="dropdown-content" style="margin: 15px">
-                @php($notifications = Auth::user()->notifications()->get())
-                @foreach($notifications as $notification)
-                    {{--{{$notification->name[0]}}--}}
-                    @if(count(json_decode($notification->name)) == 2)
-                        @if(!empty(\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->name))
-                        <p>{{trans(json_decode($notification->name)[0], ['course_name' => '"'.\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->name.'"'])}}</p>
-                        @endif
-                        <hr>
-                    @else
-                        <p>{{trans(json_decode($notification->name)[0])}}</p>
-                        <hr>
-                    @endif
-                @endforeach
+{{--                @php($notifications = Auth::user()->notifications()->get())--}}
+{{--                @foreach($notifications as $notification)--}}
+{{--                    --}}{{--{{$notification->name[0]}}--}}
+{{--                    @if(count(json_decode($notification->name)) == 2)--}}
+{{--                        @if(!empty(\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->name))--}}
+{{--                        <p>{{trans(json_decode($notification->name)[0], ['course_name' => '"'.\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->name.'"'])}}</p>--}}
+{{--                        @endif--}}
+{{--                        <hr>--}}
+{{--                    @else--}}
+{{--                        <p>{{trans(json_decode($notification->name)[0])}}</p>--}}
+{{--                        <hr>--}}
+{{--                    @endif--}}
+{{--                @endforeach--}}
             </div>
         </div>
     </div>
