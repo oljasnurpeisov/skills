@@ -338,15 +338,35 @@ class CourseController extends Controller
     public function statisticsCourse()
     {
 
+        $items = Auth::user()->courses()->get();
 
-        return 1;
+        return view("app.pages.author.courses.statistics", [
+            'items' => $items
+        ]);
     }
 
-    public function reportingCourse()
+    public function reportingCourse(Request $request)
     {
+        $date_from = $request->date_from;
+        $date_to = $request->date_to;
 
+        $query = Auth::user()->courses();
 
-        return 2;
+        if (empty($date_to)) {
+            $query = $query->where('updated_at', '>=', date('Y-m-d', strtotime($date_from)));
+        } else if (empty($date_from)) {
+            $query = $query->where('updated_at', '<=', date('Y-m-d', strtotime($date_to)));
+        }
+
+        if (!empty($data_from) and !empty($date_to)) {
+            $query = $query->whereBetween('updated_at', [$data_from, $date_to]);
+        }
+
+        $items = $query->paginate();
+
+        return view("app.pages.author.courses.reporting", [
+            'items' => $items
+        ]);
     }
 
 }

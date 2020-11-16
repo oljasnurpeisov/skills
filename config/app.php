@@ -164,6 +164,7 @@ return [
         Orchestra\Parser\XmlServiceProvider::class,
         App\Providers\PermissionsServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+//        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Package Service Providers...

@@ -3,6 +3,8 @@
 return [
 
     'site_name' => 'Enbek',
+    'yes_title' => 'Да',
+    'no_title' => 'Нет',
 
     'pages' => [
         'courses' => [
@@ -80,6 +82,32 @@ return [
 
         'dialogs' => [
             'you_title' => 'Вы'
+        ],
+
+        'statistics' => [
+            'title' => 'Статистика',
+            'total_earn' => 'Общий заработок',
+            'earn_quota' => 'Заработано по квотам'
+        ],
+
+        'reporting' => [
+            'title' => 'Отчетность',
+            'date_from_title' => 'Дата начала отчетного периода',
+            'date_to_title' => 'Дата окончания отчетного периода',
+            'id_course_title' => 'ID курса',
+            'author_name' => 'Автор',
+            'course_name' => 'Наименование курса',
+            'is_paid' => 'Платный',
+            'is_quota' => 'Доступна квота',
+            'course_cost' => 'Цена курса',
+            'course_members_count' => 'Записавшихся',
+            'members_quota_count' => 'По квоте',
+            'finished_course_members_count' => 'Изучивших',
+            'got_certificate_members_count' => 'Получили сертификат',
+            'rates_count' => 'Количество оценок',
+            'average_rate' => 'Средняя оценка',
+            'export' => 'Экспорт'
+
         ],
     ],
 

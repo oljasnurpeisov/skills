@@ -49,6 +49,18 @@ class Course extends Model
 
     }
 
+    public function course_members() {
+
+        return $this->hasMany(StudentCourse::class,'course_id', 'id');
+
+    }
+
+    public function rate() {
+
+        return $this->hasMany(CourseRate::class,'course_id', 'id');
+
+    }
+
 //    public function getRouteKeyName()
 //    {
 //        return 'name';
