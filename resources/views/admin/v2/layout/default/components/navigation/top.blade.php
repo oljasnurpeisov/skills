@@ -59,23 +59,15 @@
             </div>
         </div>
         <div class="dropdown_notification">
+            @php($notifications = Auth::user()->notifications()->get())
             <div class="hidden-sm hidden-xs" style="margin-top: 20px; margin-left: 25px;">
-                <a> <i class="fa fa-bell" aria-hidden="true"></i>{{count(Auth::user()->notifications()->get())}}</a>
+                <a> <i class="fa fa-bell" aria-hidden="true"></i>{{count($notifications)}}</a>
             </div>
             <div class="dropdown-content" style="margin: 15px">
-{{--                @php($notifications = Auth::user()->notifications()->get())--}}
-{{--                @foreach($notifications as $notification)--}}
-{{--                    --}}{{--{{$notification->name[0]}}--}}
-{{--                    @if(count(json_decode($notification->name)) == 2)--}}
-{{--                        @if(!empty(\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->name))--}}
-{{--                        <p>{{trans(json_decode($notification->name)[0], ['course_name' => '"'.\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->name.'"'])}}</p>--}}
-{{--                        @endif--}}
-{{--                        <hr>--}}
-{{--                    @else--}}
-{{--                        <p>{{trans(json_decode($notification->name)[0])}}</p>--}}
-{{--                        <hr>--}}
-{{--                    @endif--}}
-{{--                @endforeach--}}
+                @foreach($notifications as $notification)
+                        <p>{{trans($notification->name, ['course_name' => '"'.$notification->course->name.'"'])}}</p>
+                        <hr>
+                @endforeach
             </div>
         </div>
     </div>

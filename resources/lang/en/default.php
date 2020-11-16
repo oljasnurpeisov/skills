@@ -36,6 +36,7 @@ return [
             'course_rate_title' => 'Оцените курс',
             'course_rate_description' => 'Отзыв о курсе...',
             'send_rate_button_title' => 'Отправить',
+            'report_title' => 'Отчет'
 
         ],
         'lessons' => [
@@ -87,7 +88,9 @@ return [
         'statistics' => [
             'title' => 'Статистика',
             'total_earn' => 'Общий заработок',
-            'earn_quota' => 'Заработано по квотам'
+            'earn_quota' => 'Заработано по квотам',
+            'your_rating' => 'Ваш рейтинг',
+            'course_members_count' => 'Общее число записавшихся на курсы'
         ],
 
         'reporting' => [

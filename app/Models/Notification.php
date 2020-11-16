@@ -38,4 +38,10 @@ class Notification extends Model
         return $this->belongsToMany(User::class,'user_notifications');
 
     }
+
+    public function course() {
+
+        return $this->hasOne(Course::class, 'id', 'course_id');
+
+    }
 }

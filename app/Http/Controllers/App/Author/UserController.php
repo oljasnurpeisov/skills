@@ -37,10 +37,12 @@ class UserController extends Controller
     {
         $user = User::where('id', '=', Auth::user()->getAuthIdentifier())->with('type_ownership')->first();
         $types_of_ownership = Type_of_ownership::all();
+        $notifications = Auth::user()->notifications()->get();
 
         return view("app.pages.author.profile.edit_profile", [
             "user" => $user,
-            "types_of_ownership" => $types_of_ownership
+            "types_of_ownership" => $types_of_ownership,
+            "notifications" => $notifications
         ]);
     }
 

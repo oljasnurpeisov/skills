@@ -448,8 +448,8 @@
     <h2>{{__('default.pages.statistics.title')}}</h2>
     <br>
     <div class="row">
-        <h5><b>Ваш рейтинг: 5</b></h5>
-        <h5 style="margin-left: 100px"><b>Общее число записавшихся на курсы: 5</b></h5>
+        <h5><b>{{__('default.pages.statistics.your_rating')}}: 5</b></h5>
+        <h5 style="margin-left: 100px"><b>{{__('default.pages.statistics.course_members_count')}}: 5</b></h5>
     </div>
     <br>
     <div class="row">

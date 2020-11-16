@@ -300,12 +300,14 @@ class CourseController extends Controller
             $item->save();
 
             $notification = new Notification;
-            $notification->name = json_encode(array('notifications.confirm_quota_description', $item->id));
+            $notification->name = 'notifications.confirm_quota_description';
+            $notification->course_id = $item->id;
             $notification->type = 0;
             $notification->save();
 
             $notification = new Notification;
-            $notification->name = json_encode(array('notifications.course_quota_access', $item->id));
+            $notification->name = 'notifications.course_quota_access';
+            $notification->course_id = $item->id;
             $notification->type = 0;
             $notification->save();
 
@@ -319,7 +321,8 @@ class CourseController extends Controller
             $item->save();
 
             $notification = new Notification;
-            $notification->name = json_encode(array('notifications.reject_quota_description', $item->id));
+            $notification->name = 'notifications.reject_quota_description';
+            $notification->course_id = $item->id;
             $notification->type = 0;
             $notification->save();
 
@@ -402,8 +405,7 @@ class CourseController extends Controller
         }
 
         asort($ar);
-        return Excel::download(new ReportingExport($ar), 'Отчет.xlsx');
-//        return $query[0]->user->author_info->name;
+        return Excel::download(new ReportingExport($ar), ''.__('default.pages.courses.report_title').'.xlsx');
     }
 
 }

@@ -208,7 +208,8 @@ class CourseController extends Controller
 
             if ($item->quota_status != 1 and $item->cost > 0) {
                 $notification = new Notification;
-                $notification->name = json_encode(array("notifications.quota_request_description", $item->id));
+                $notification->name = "notifications.quota_request_description";
+                $notification->course_id = $item->id;
                 $notification->type = 1;
                 $notification->save();
 

@@ -420,35 +420,34 @@
                    data-toggle="dropdown">Уведомления
                     <span class="badge badge-primary">{{count(Auth::user()->notifications()->get())}}</span></a>|
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    {{--@php($notifications = Auth::user()->notifications()->get())--}}
-                    {{--@foreach($notifications as $notification)--}}
-                        {{--@if($notification->type == 1)--}}
-                            {{--<form method="POST" action="/{{$lang}}/my-courses/quota-confirm-course/{{json_decode($notification->name)[1]}}"--}}
-                                  {{--id="quota_confirm_form">--}}
-                                {{--{{ csrf_field() }}--}}
-                                {{--<div style="margin: 15px">--}}
-                                    {{--<p>{!! trans(json_decode($notification->name)[0], ['course_name' => '"'.\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->name.'"']) !!}</p>--}}
-                                    {{--@if(\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->quota_status == 1)--}}
-                                        {{--<button class="btn btn-success"--}}
-                                                {{--style="color: white;"--}}
-                                                {{--name="action" value="confirm">{{__('notifications.confirm_btn_title')}}</button>--}}
-                                        {{--&nbsp;&nbsp;--}}
-                                        {{--<button class="btn btn-danger"--}}
-                                                {{--style="color: white;"--}}
-                                                {{--name="action" value="reject">{{__('notifications.reject_btn_title')}}</button>--}}
-                                    {{--@endif--}}
-                                {{--</div>--}}
-                            {{--</form>--}}
-                            {{--<hr>--}}
-                        {{--@else--}}
-                            {{--<div style="margin: 15px">--}}
+                    @foreach($notifications as $notification)
+                        @if($notification->type == 1)
+                            <form method="POST" action="/{{$lang}}/my-courses/quota-confirm-course/{{$notification->course->id}}"
+                                  id="quota_confirm_form">
+                                {{ csrf_field() }}
+                                <div style="margin: 15px">
+                                    <p>{!! trans($notification->name, ['course_name' => '"'.$notification->course->name.'"']) !!}</p>
+                                    @if($notification->course->quota_status == 1)
+                                        <button class="btn btn-success"
+                                                style="color: white;"
+                                                name="action" value="confirm">{{__('notifications.confirm_btn_title')}}</button>
+                                        &nbsp;&nbsp;
+                                        <button class="btn btn-danger"
+                                                style="color: white;"
+                                                name="action" value="reject">{{__('notifications.reject_btn_title')}}</button>
+                                    @endif
+                                </div>
+                            </form>
+                            <hr>
+                        @else
+                            <div style="margin: 15px">
 
-                                {{--<p>{{trans(json_decode($notification->name)[0], ['course_name' => '"'.\App\Models\Course::where('id', '=', (json_decode($notification->name)[1]))->first()->name.'"'])}}</p>--}}
-                            {{--</div>--}}
-                            {{--<hr>--}}
-                        {{--@endif--}}
-                        {{--<a class="dropdown-item" href="#">{{$notification->name}}</a>--}}
-                    {{--@endforeach--}}
+                                <p>{{trans($notification->name, ['course_name' => '"'.$notification->course->name.'"'])}}</p>
+                            </div>
+                            <hr>
+                        @endif
+{{--                        <a class="dropdown-item" href="#">{{$notification->name}}</a>--}}
+                    @endforeach
                 </div>
                 <a href="/{{$lang}}/my-courses" class="text-sm text-gray-700 underline">Мои курсы</a>|
                 <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
