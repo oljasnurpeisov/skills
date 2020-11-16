@@ -163,6 +163,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                         // Мои курсы
                         Route::get("/my-courses", "CourseController@myCourses");
                         Route::get("/create-course", "CourseController@createCourse");
+                        Route::get("/my-courses/statistics", "CourseController@statisticsCourse");
+                        Route::get("/my-courses/reporting", "CourseController@reportingCourse");
                         // Курс
                         Route::post("/create-course", "CourseController@storeCourse");
                         Route::post("/publish-course/{item}", "CourseController@publishCourse");

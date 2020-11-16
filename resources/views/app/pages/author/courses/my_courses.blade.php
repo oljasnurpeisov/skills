@@ -417,6 +417,8 @@
     <br>
     <br>
     <a class="btn btn-warning" href="/{{$lang}}/create-course">Создать курс</a>
+    <a class="btn btn-info" href="/{{$lang}}/my-courses/statistics">Статистика</a>
+    <a class="btn btn-info" href="/{{$lang}}/my-courses/reporting">Отчетность</a>
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth

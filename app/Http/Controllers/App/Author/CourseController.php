@@ -334,4 +334,19 @@ class CourseController extends Controller
 
         return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('default.pages.courses.publish_request_message'));
     }
+
+    public function statisticsCourse()
+    {
+
+
+        return 1;
+    }
+
+    public function reportingCourse()
+    {
+
+
+        return 2;
+    }
+
 }
