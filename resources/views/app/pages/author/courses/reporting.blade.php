@@ -459,7 +459,7 @@
             </div>
             <br>
             <button type="submit" class="btn btn-info">Найти</button>
-            <button type="button" class="btn btn-info">{{__('default.pages.reporting.export')}}</button>
+            <a style="color:white" href="/{{$lang}}/export-reporting" class="btn btn-info">{{__('default.pages.reporting.export')}}</a>
         </form>
         <table class="table table-striped">
             <thead>

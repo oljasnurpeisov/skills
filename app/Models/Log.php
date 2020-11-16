@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Storage;
  * Class Log
  *
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|Log newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Log newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Log query()
  */
 class Log extends Model
 {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App\Author;
 
+use App\Exports\ReportingExport;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Lesson;
@@ -10,9 +11,11 @@ use App\Models\Skill;
 use App\Models\Theme;
 use App\Models\Type_of_ownership;
 use App\Models\User;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class CourseController extends Controller
@@ -364,9 +367,43 @@ class CourseController extends Controller
 
         $items = $query->paginate();
 
+        Session::put('export_reporting', $query->get());
+
         return view("app.pages.author.courses.reporting", [
             'items' => $items
         ]);
+    }
+
+    public function exportReporting(Request $request)
+    {
+        $query = Session::get('export_reporting');
+        $ar = [[]];
+        foreach ($query as $i) {
+            // Платный
+            if($i->is_paid == true){
+                $i->is_paid = __('default.yes_title');
+            }else{
+                $i->is_paid = __('default.no_title');
+            }
+            // Квота
+            if($i->quota_status == 2){
+                $i->quota_status = __('default.yes_title');
+            }else{
+                $i->quota_status = __('default.no_title');
+            }
+
+            $newElement = ['id' => $i['id'], 'author_name' => $i->user->author_info->name, 'name' => $i->name,
+                'is_paid' => $i->is_paid, 'quota_status' => $i->quota_status, 'cost' => $i->cost, 'course_members' => count($i->course_members),
+                'course_members_quota' => count($i->course_members->where('paid_status', '=', 2)), 'course_members_finished' => count($i->course_members->where('is_finished', '=', true)),
+                'course_members_certificate' => count($i->course_members->where('is_finished', '=', true)), 'rate' => count($i->rate),
+                'average_rate' => $i->rate->pluck('rate')->avg(), 'count_rate_1' => count($i->rate->where('rate', '=', 1)), 'count_rate_2' => count($i->rate->where('rate', '=', 2)),
+                'count_rate_3' => count($i->rate->where('rate', '=', 3)), 'count_rate_4' => count($i->rate->where('rate', '=', 4)), 'count_rate_5' => count($i->rate->where('rate', '=', 5))];
+            array_push($ar, $newElement);
+        }
+
+        asort($ar);
+        return Excel::download(new ReportingExport($ar), 'Отчет.xlsx');
+//        return $query[0]->user->author_info->name;
     }
 
 }

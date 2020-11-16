@@ -5,6 +5,40 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Skill
+ *
+ * @property int $id
+ * @property string|null $code_skill
+ * @property int|null $fl_check
+ * @property string|null $name_ru
+ * @property string|null $name_kk
+ * @property string|null $name_en
+ * @property int|null $fl_show
+ * @property int|null $uid
+ * @property int $is_published
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Course[] $courses
+ * @property-read int|null $courses_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Professions[] $professions
+ * @property-read int|null $professions_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Skill newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Skill newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Skill query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Skill whereCodeSkill($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skill whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skill whereFlCheck($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skill whereFlShow($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skill whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skill whereIsPublished($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skill whereNameEn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skill whereNameKk($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skill whereNameRu($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skill whereUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skill whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Skill extends Model
 {
     protected $guarded = [];
