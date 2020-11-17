@@ -92,12 +92,6 @@ class Course extends Model
 
     }
 
-//    public function themes() {
-//
-//        return $this->belongsToMany(Theme::class,'course_theme');
-//
-//    }
-
     public function lessons() {
 
         return $this->hasMany(Lesson::class,'course_id', 'id');
@@ -122,8 +116,4 @@ class Course extends Model
 
     }
 
-//    public function getRouteKeyName()
-//    {
-//        return 'name';
-//    }
 }

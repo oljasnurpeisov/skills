@@ -491,7 +491,7 @@
                                             @switch(!($item->status))
                                                 @case(1)
                                                 @case(3)
-                                                <a href="/{{$lang}}/my-courses/theme-{{$theme->id}}/edit-lesson-{{$lesson->id}}"
+                                                <a href="/{{$lang}}/my-courses/course/{{$item->id}}/theme-{{$theme->id}}/edit-lesson-{{$lesson->id}}"
                                                    class="btn btn-warning"><i class="fa fa-pencil"></i></a>
                                                 <button type="button" class="btn btn-danger deleteLessonBtn"><i
                                                             class="fa fa-trash"></i></button>

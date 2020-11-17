@@ -102,7 +102,7 @@ class CourseController extends Controller
 
     public function myCourses()
     {
-        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::published)->get();
+        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::published)->paginate(6);
         $page_name = 'default.pages.courses.my_courses';
         return view("app.pages.author.courses.my_courses", [
             "items" => $items,
@@ -112,10 +112,7 @@ class CourseController extends Controller
 
     public function myDrafts()
     {
-//        $items = Course::whereHas('users', function ($query) {
-//            $query->where('users.id', '=', Auth::user()->id);
-//        })->where('status', '=', 0)->get();
-        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::draft)->get();
+        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::draft)->paginate(6);
         $page_name = 'default.pages.courses.drafts';
         return view("app.pages.author.courses.my_courses", [
             "items" => $items,
@@ -128,7 +125,7 @@ class CourseController extends Controller
 //        $items = Course::whereHas('users', function ($query) {
 //            $query->where('users.id', '=', Auth::user()->id);
 //        })->where('status', '=', 2)->get();
-        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::unpublished)->get();
+        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::unpublished)->paginate(6);
         $page_name = 'default.pages.courses.my_courses_unpublished';
         return view("app.pages.author.courses.my_courses", [
             "items" => $items,
@@ -141,7 +138,7 @@ class CourseController extends Controller
 //        $items = Course::whereHas('users', function ($query) {
 //            $query->where('users.id', '=', Auth::user()->id);
 //        })->where('status', '=', 1)->get();
-        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::onCheck)->get();
+        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::onCheck)->paginate(6);
         $page_name = 'default.pages.courses.my_courses_onCheck';
         return view("app.pages.author.courses.my_courses", [
             "items" => $items,
@@ -151,7 +148,7 @@ class CourseController extends Controller
 
     public function myDeletedCourses()
     {
-        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::deleted)->get();
+        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::deleted)->paginate(6);
         $page_name = 'default.pages.courses.my_courses_deleted';
         return view("app.pages.author.courses.my_courses", [
             "items" => $items,

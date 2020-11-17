@@ -39,9 +39,10 @@
                                                         </p>
                                                         <p>{!! trans($data['description'], ['course_name' => $data['course_name']])!!}
                                                         </p>
-                                                        {{--@component('mail::button', ['url' => env('APP_URL').'/ru/my-courses/quota-confirm-course-mail/'.$data['course_id']])--}}
-                                                            {{--{{__('notifications.confirm_btn_title')}}--}}
-                                                        {{--@endcomponent--}}
+{{--                                                        <a href="{{env('APP_URL')}}/ru/my-courses/quota-confirm-course/{{$data['course_id']}}?_token={{ csrf_token() }}">Одобрить</a>--}}
+{{--                                                        @component('mail::button', ['url' => env('APP_URL').'/ru/my-courses/quota-confirm-course/'.$data['course_id'].'?_token='.csrf_token().''])--}}
+{{--                                                            {{__('notifications.confirm_btn_title')}}--}}
+{{--                                                        @endcomponent--}}
                                                         {{--<a href="{{env('APP_URL')}}/ru/my-courses/quota-confirm-course/{{$data['course_id']}}">{{__('notifications.confirm_btn_title')}}</a>--}}
                                                         {{--<button class="btn btn-success"--}}
                                                                 {{--style="color: white;"--}}

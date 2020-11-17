@@ -1,26 +1,26 @@
 @if ($paginator->hasPages())
-    <ul class="pag">
+    <ul class="pagination">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
-            <li><a href="#"><span class="icon-arrow-left"></span></a></li>
+            <li class="previous_page disabled"><span><i class="icon-chevron-left"> </i></span></li>
         @else
-            <li><a href="{{ $paginator->previousPageUrl() }}" rel="prev"><span class="icon-arrow-left"></span></a></li>
+            <li class="previous_page"><a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev"><i class="icon-chevron-left"> </i></a></li>
         @endif
 
         {{-- Pagination Elements --}}
         @foreach ($elements as $element)
             {{-- "Three Dots" Separator --}}
             @if (is_string($element))
-                <li><a href="#"><span>{{ $element }}</span></a></li>
+                <li class="page-item disabled"><span class="page-link">{{ $element }}</span></li>
             @endif
 
             {{-- Array Of Links --}}
             @if (is_array($element))
                 @foreach ($element as $page => $url)
                     @if ($page == $paginator->currentPage())
-                        <li class="active"><a href="#"><span>{{ $page }}</span></a></li>
+                        <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
                     @else
-                        <li><a href="{{ $url }}">{{ $page }}</a></li>
+                        <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
                     @endif
                 @endforeach
             @endif
@@ -28,10 +28,9 @@
 
         {{-- Next Page Link --}}
         @if ($paginator->hasMorePages())
-            <li><a href="{{ $paginator->nextPageUrl() }}"><span class="icon-arrow-right"></span></a></li>
-            {{--<li><a href="" rel="next">&raquo;</a></li>--}}
+            <li class="next_page"><a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next"><i class="icon-chevron-right"> </i></a></li>
         @else
-            <li><a href="#"><span class="icon-arrow-right"></span></a></li>
+            <li class="next_page disabled"><a class="page-link" rel="next"><i class="icon-chevron-right"> </i></a></li>
         @endif
     </ul>
 @endif

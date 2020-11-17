@@ -5,11 +5,14 @@ return [
     'site_name' => 'Enbek',
     'yes_title' => 'Да',
     'no_title' => 'Нет',
+    'tenge_title' => 'тг',
 
     'pages' => [
         'courses' => [
             'drafts' => 'Черновики',
-            'my_courses' => 'Опубликованные курсы',
+            'my_courses_title' => 'Мои курсы',
+            'create_course' => 'Создать курс',
+            'my_courses' => 'Опубликованные',
             'my_courses_unpublished' => 'Неопубликованные курсы',
             'my_courses_onCheck' => 'На проверке',
             'my_courses_deleted' => 'Удаленные курсы',
@@ -36,7 +39,10 @@ return [
             'course_rate_title' => 'Оцените курс',
             'course_rate_description' => 'Отзыв о курсе...',
             'send_rate_button_title' => 'Отправить',
-            'report_title' => 'Отчет'
+            'report_title' => 'Отчет',
+            'free_title' => 'Бесплатно',
+            'access_by_quota' => 'Доступен по квоте'
+
 
         ],
         'lessons' => [
@@ -54,6 +60,8 @@ return [
             'lesson_update_success' => 'Изменения успешно сохранены'
         ],
         'profile' => [
+            'title' => 'Профиль',
+            'logout_title' => 'Выйти',
             'name' => 'Имя',
             'surname' => 'Фамилия',
             'avatar' => 'Аватар',
@@ -82,7 +90,8 @@ return [
         ],
 
         'dialogs' => [
-            'you_title' => 'Вы'
+            'title' => 'Мои диалоги',
+            'you_title' => 'Вы',
         ],
 
         'statistics' => [

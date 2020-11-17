@@ -112,7 +112,7 @@ class LessonController extends Controller
         return redirect("/" . app()->getLocale() . "/my-courses/course/" . $request->course_id)->with('status', __('default.pages.lessons.create_request_message'));
     }
 
-    public function editLesson($lang, Theme $theme, Lesson $lesson)
+    public function editLesson($lang, Course $course, Theme $theme, Lesson $lesson)
     {
 //        $xml = XmlParser::load(url('https://iac2:Iac2007RBD@www.enbek.kz/feed/resume/cl_hard_skills.xml'));
 //
@@ -124,7 +124,7 @@ class LessonController extends Controller
         $lesson_theme = $theme->with(["lessons" => function ($q) use ($lesson) {
             $q->where('lessons.id', '=', $lesson->id);
         }])->where('id', '=', $theme->id)->first();
-        $course = Course::where('id', '=', $course_theme->pivot->course_id)->first();
+//        $course = Course::where('id', '=', $course_theme->pivot->course_id)->first();
         $lessons_type = LessonsType::all();
 
         if (($course->author_id == Auth::user()->id) and (!empty($lesson_theme->lessons->first()->id) == $lesson->id)) {

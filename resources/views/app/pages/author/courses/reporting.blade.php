@@ -497,7 +497,7 @@
                     <td>{{count($item->course_members->where('is_finished', '=', true))}}</td>
                     <td>{{count($item->course_members->where('is_finished', '=', true))}}</td>
                     <td>{{count($item->rate)}}</td>
-                    <td>{{$item->rate->pluck('rate')->avg()}}</td>
+                    <td>{{$item->rate->pluck('rate')->avg() ?? 0}}</td>
                     <td>{{count($item->rate->where('rate', '=', 1))}}</td>
                     <td>{{count($item->rate->where('rate', '=', 2))}}</td>
                     <td>{{count($item->rate->where('rate', '=', 3))}}</td>

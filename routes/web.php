@@ -184,7 +184,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                         Route::post("/movedown-theme/{item}", "ThemeController@movedownTheme");
                         // Урок
                         Route::get("/my-courses/course/{item}/theme-{theme}/create-lesson", "LessonController@createLesson");
-                        Route::get("/my-courses/theme-{theme}/edit-lesson-{lesson}", "LessonController@editLesson");
+                        Route::get("/my-courses/course/{course}/theme-{theme}/edit-lesson-{lesson}", "LessonController@editLesson");
                         Route::post("/create-lesson", "LessonController@storeLesson");
                         Route::post("/edit-lesson-{item}", "LessonController@updateLesson");
                         Route::delete("/delete-lesson/{item}", "LessonController@deleteLesson");
