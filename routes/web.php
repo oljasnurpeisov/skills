@@ -90,13 +90,17 @@ Route::group(["namespace" => "Admin"], function () {
     });
 });
 
-
 Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
     Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
         Route::get("/", "PageController@index");
         // Оплата курса
         Route::post("/createPaymentOrder/{item}", "PaymentController@createPaymentOrder");
         Route::post("/callbackPaymentOrder", "PaymentController@callbackPaymentOrder");
+    });
+    Route::group(["middleware" => ["web"], "namespace" => "Author"], function () {
+        // Сохранение файлов
+        Route::post('/ajax_upload_image', 'AjaxUploadController@ajax_upload_image');
+
     });
 
     Route::group(['prefix' => '{lang}'], function () {

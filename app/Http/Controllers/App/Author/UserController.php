@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App\Author;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\PayInformation;
 use App\Models\Skill;
 use App\Models\StudentInformation;
@@ -28,7 +29,7 @@ class UserController extends Controller
     {
         $user = User::where('id', '=', Auth::user()->getAuthIdentifier())->with('type_ownership')->first();
         return view("app.pages.author.profile.profile", [
-            "user" => $user,
+            "user" => $user
         ]);
     }
 
@@ -210,9 +211,42 @@ class UserController extends Controller
     {
         $item = UserInformation::where('user_id', '=', Auth::user()->id)->first();
 //        $certificates = json_decode($item->certificates);
+        $courses = Auth::user()->courses()->get();
+        // Все оценки всех курсов
+        $rates = [];
+        foreach ($courses as $course) {
+            foreach ($course->rate as $rate) {
+                array_push($rates, $rate->rate);
+            }
+        }
+        // Оценка автора исходя из всех оценок
+        if (count($rates) == 0) {
+            $average_rates = 0;
+        } else {
+            $average_rates = array_sum($rates) / count($rates);
+        }
+        // Все ученики автора
+        $author_students = [];
+        foreach ($courses->unique('student_id') as $course){
+            foreach ($course->course_members as $member){
+                array_push($author_students, $member);
+            }
+        }
+        // Все ученики закончившие курс
+        $author_students_finished = [];
+        foreach ($courses as $course){
+            foreach ($course->course_members->where('is_finished', '=', true) as $member){
+                array_push($author_students_finished, $member);
+            }
+        }
         return view("app.pages.author.profile.author_data_profile", [
             'item' => $item,
 //            'certificates' => $certificates,
+            "courses" => $courses,
+            "rates" => $rates,
+            "average_rates" => $average_rates,
+            "author_students" => $author_students,
+            "author_students_finished" => $author_students_finished
         ]);
     }
 
@@ -241,7 +275,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'max:255',
             'surname' => 'max:255',
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+//            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
             'specialization' => 'max:255',
             'phone_1' => 'max:255',
             'phone_2' => 'max:255',
@@ -258,7 +292,7 @@ class UserController extends Controller
             $item->user_id = Auth::user()->getAuthIdentifier();
             $item->name = $request->name;
             $item->surname = $request->surname;
-            $item->specialization = $request->specialization;
+            $item->specialization = json_encode($request->specialization);
             $item->about = $request->about;
             $item->phone_1 = $request->phone_1;
             $item->phone_2 = $request->phone_2;
@@ -270,9 +304,7 @@ class UserController extends Controller
             if (!empty($request->avatar)) {
                 File::delete(public_path($item->avatar));
 
-                $imageName = time() . '.' . $request['avatar']->getClientOriginalExtension();
-                $request['avatar']->move(public_path('images/profile_images'), $imageName);
-                $item->avatar = '/images/profile_images/' . $imageName;
+                $item->avatar = $request->avatar;
             }
 
             if ($request->hasFile('certificates')) {
@@ -293,7 +325,7 @@ class UserController extends Controller
             $item->user_id = Auth::user()->getAuthIdentifier();
             $item->name = $request->name;
             $item->surname = $request->surname;
-            $item->specialization = $request->specialization;
+            $item->specialization = json_encode($request->specialization);
             $item->about = $request->about;
             $item->phone_1 = $request->phone_1;
             $item->phone_2 = $request->phone_2;
@@ -301,13 +333,13 @@ class UserController extends Controller
             $item->vk_link = $request->vk_link;
             $item->fb_link = $request->fb_link;
             $item->instagram_link = $request->instagram_link;
+
             if (!empty($request->avatar)) {
                 File::delete(public_path($item->avatar));
 
-                $imageName = time() . '.' . $request['avatar']->getClientOriginalExtension();
-                $request['avatar']->move(public_path('images/profile_images'), $imageName);
-                $item->avatar = '/images/profile_images/' . $imageName;
+                $item->avatar = $request->avatar;
             }
+
             if ($request->hasFile('certificates')) {
                 $names = [];
                 foreach ($request->file('certificates') as $key => $certificate) {

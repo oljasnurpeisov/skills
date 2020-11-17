@@ -1,151 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- change payment config">
-      <change afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Black.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Black.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Black.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Black.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-BlackItalic.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-BlackItalic.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-BlackItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-BlackItalic.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Bold.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Bold.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Bold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-BoldItalic.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-BoldItalic.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-BoldItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-BoldItalic.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Italic.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Italic.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Italic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Italic.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Light.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Light.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Light.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-LightItalic.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-LightItalic.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-LightItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-LightItalic.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Medium.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Medium.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Medium.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Medium.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-MediumItalic.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-MediumItalic.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-MediumItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-MediumItalic.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Regular.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Regular.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Regular.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Thin.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Thin.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Thin.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Roboto/Roboto-Thin.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/icoMoon/enbek.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/icoMoon/icomoon.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/icoMoon/icomoon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/icoMoon/icomoon.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/icoMoon/icomoon.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/appstore.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/author-certificates/1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/author-certificates/2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/author-certificates/3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/author-certificates/4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/author-thumbnail.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/author.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/author.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/authors-banner.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/authors.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/authors/1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/authors/2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/authors/3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/authors/4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/avatar.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/avatar2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/banner.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/budget.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/certificates/1-thumbnail.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/certificates/1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/certificates/2-thumbnail.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/certificates/2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/certificates/3-thumbnail.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/certificates/3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/course-thumbnail.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/courses.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/courses/1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/courses/2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/courses/3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/courses/4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/gift.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/logo-thumbnail.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/playmarket.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/slider.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/student.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/students.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/js/ajax-select-old.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/js/ajax-select.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/js/avatar-dropzone.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/js/dropzone.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/js/scripts.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/js/service.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/amcharts4/charts.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/amcharts4/core.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/amcharts4/lang/ru_RU.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/amcharts4/lang/ru_RU.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/amcharts4/themes/animated.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/chosen/chosen-sprite.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/chosen/chosen.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/chosen/chosen.jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/dropzone/dropzone.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/dropzone/dropzone.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/dropzone/locale.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/fancybox/dist/jquery.fancybox.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/fancybox/dist/jquery.fancybox.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/jquery/dist/jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/maskedinput/maskedinput.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/nouislider/distribute/nouislider.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/nouislider/distribute/nouislider.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/object-fit-images/dist/ofi.browser.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/selectize/selectize.default.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/selectize/selectize.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/simplebar/simplebar.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/simplebar/simplebar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/simplebar/simplebar.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/simplebar/simplebar.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/slick-carousel/slick/slick.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/slick-carousel/slick/slick.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/slick-carousel/slick/slick.less" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/libs/slick-carousel/slick/slick.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/footer.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/head.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/header.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/modals.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/pagination.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/scripts.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/app/layout/default/template.blade.php" afterDir="false" />
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/AjaxUploadController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/favicon/android-chrome-192x192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/favicon/android-chrome-512x512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/favicon/apple-touch-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/favicon/browserconfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/favicon/favicon-16x16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/favicon/favicon-32x32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/favicon/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/favicon/mstile-150x150.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/favicon/safari-pinned-tab.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/favicon/site.webmanifest" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/LessonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/LessonController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Course.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Course.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/AjaxUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AjaxUploadController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/notifications.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/notifications.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/my_courses.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/my_courses.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/reporting.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/reporting.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/page/emails/quota_confirm.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/page/emails/quota_confirm.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/passwords/confirm.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/passwords/confirm.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/passwords/email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/passwords/email.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/passwords/reset.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/passwords/reset.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/verify.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/verify.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/layout/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/pagination/default.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/pagination/default.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/layout/default/components/head.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/head.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/layout/default/components/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/header.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/profile/author_data_profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/profile/author_data_profile.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
@@ -384,7 +259,7 @@
       <workItem from="1605191307454" duration="499000" />
       <workItem from="1605268357179" duration="18024000" />
       <workItem from="1605518681133" duration="22131000" />
-      <workItem from="1605564413935" duration="27386000" />
+      <workItem from="1605564413935" duration="44291000" />
     </task>
     <task id="LOCAL-00001" summary="- update routes">
       <created>1603898521230</created>
@@ -568,7 +443,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605574205123</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="- add main template &#10;- update author courses page">
+      <created>1605627761818</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1605627761819</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TodoView">
@@ -584,7 +466,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add student auth" />
     <MESSAGE value="- cron tasks update" />
     <MESSAGE value="- update directories&#10;- add course catalog&#10;- add messages&#10;- minor fix" />
     <MESSAGE value="- add student auth&#10;- add course catalog" />
@@ -609,7 +490,8 @@
     <MESSAGE value="- add ide helper&#10;- add export reporting" />
     <MESSAGE value="- notifications fix" />
     <MESSAGE value="- change payment config" />
-    <option name="LAST_COMMIT_MESSAGE" value="- change payment config" />
+    <MESSAGE value="- add main template &#10;- update author courses page" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add main template &#10;- update author courses page" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -624,18 +506,18 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="509" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1605616029762" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1605619857776">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1605627752441">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605619857776" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605627752441" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1605559122928">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605559122928" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1605567978336">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1605627783448">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1605567978336" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1605627783448" />
     <state x="572" y="146" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1605561054285">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -644,9 +526,9 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="478" y="11" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1605575327761" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1605531371719">
+    <state x="425" y="187" key="run.anything.popup" timestamp="1605629356521">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605531371719" />
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605629356521" />
   </component>
 </project>
