@@ -6,7 +6,6 @@ return [
     "password" => 'h51tYQck9QN2m15xfHce',
 
     "callbackUrl" => "https://dev3.panama.kz/callbackPaymentOrder",
-    "description" => "Описание",
-    "returnUrl" => "https://dev3.panama.kz/",
+    "description" => "",
     "demo" => true
 ];
