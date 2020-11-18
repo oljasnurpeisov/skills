@@ -1,472 +1,139 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Laravel</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Styles -->
-    <style>
-        /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
-        html {
-            line-height: 1.15;
-            -webkit-text-size-adjust: 100%
-        }
-
-        body {
-            margin: 0
-        }
-
-        a {
-            background-color: transparent
-        }
-
-        [hidden] {
-            display: none
-        }
-
-        html {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-            line-height: 1.5
-        }
-
-        *, :after, :before {
-            box-sizing: border-box;
-            border: 0 solid #e2e8f0
-        }
-
-        a {
-            color: inherit;
-            text-decoration: inherit
-        }
-
-        svg, video {
-            display: block;
-            vertical-align: middle
-        }
-
-        video {
-            max-width: 100%;
-            height: auto
-        }
-
-        .bg-white {
-            --bg-opacity: 1;
-            background-color: #fff;
-            background-color: rgba(255, 255, 255, var(--bg-opacity))
-        }
-
-        .bg-gray-100 {
-            --bg-opacity: 1;
-            background-color: #f7fafc;
-            background-color: rgba(247, 250, 252, var(--bg-opacity))
-        }
-
-        .border-gray-200 {
-            --border-opacity: 1;
-            border-color: #edf2f7;
-            border-color: rgba(237, 242, 247, var(--border-opacity))
-        }
-
-        .border-t {
-            border-top-width: 1px
-        }
-
-        .flex {
-            display: flex
-        }
-
-        .grid {
-            display: grid
-        }
-
-        .hidden {
-            display: none
-        }
-
-        .items-center {
-            align-items: center
-        }
-
-        .justify-center {
-            justify-content: center
-        }
-
-        .font-semibold {
-            font-weight: 600
-        }
-
-        .h-5 {
-            height: 1.25rem
-        }
-
-        .h-8 {
-            height: 2rem
-        }
-
-        .h-16 {
-            height: 4rem
-        }
-
-        .text-sm {
-            font-size: .875rem
-        }
-
-        .text-lg {
-            font-size: 1.125rem
-        }
-
-        .leading-7 {
-            line-height: 1.75rem
-        }
-
-        .mx-auto {
-            margin-left: auto;
-            margin-right: auto
-        }
-
-        .ml-1 {
-            margin-left: .25rem
-        }
-
-        .mt-2 {
-            margin-top: .5rem
-        }
-
-        .mr-2 {
-            margin-right: .5rem
-        }
-
-        .ml-2 {
-            margin-left: .5rem
-        }
-
-        .mt-4 {
-            margin-top: 1rem
-        }
-
-        .ml-4 {
-            margin-left: 1rem
-        }
-
-        .mt-8 {
-            margin-top: 2rem
-        }
-
-        .ml-12 {
-            margin-left: 3rem
-        }
-
-        .-mt-px {
-            margin-top: -1px
-        }
-
-        .max-w-6xl {
-            max-width: 72rem
-        }
-
-        .min-h-screen {
-            min-height: 100vh
-        }
-
-        .overflow-hidden {
-            overflow: hidden
-        }
-
-        .p-6 {
-            padding: 1.5rem
-        }
-
-        .py-4 {
-            padding-top: 1rem;
-            padding-bottom: 1rem
-        }
-
-        .px-6 {
-            padding-left: 1.5rem;
-            padding-right: 1.5rem
-        }
-
-        .pt-8 {
-            padding-top: 2rem
-        }
-
-        .fixed {
-            position: fixed
-        }
-
-        .relative {
-            position: relative
-        }
-
-        .top-0 {
-            top: 0
-        }
-
-        .right-0 {
-            right: 0
-        }
-
-        .shadow {
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)
-        }
-
-        .text-center {
-            text-align: center
-        }
-
-        .text-gray-200 {
-            --text-opacity: 1;
-            color: #edf2f7;
-            color: rgba(237, 242, 247, var(--text-opacity))
-        }
-
-        .text-gray-300 {
-            --text-opacity: 1;
-            color: #e2e8f0;
-            color: rgba(226, 232, 240, var(--text-opacity))
-        }
-
-        .text-gray-400 {
-            --text-opacity: 1;
-            color: #cbd5e0;
-            color: rgba(203, 213, 224, var(--text-opacity))
-        }
-
-        .text-gray-500 {
-            --text-opacity: 1;
-            color: #a0aec0;
-            color: rgba(160, 174, 192, var(--text-opacity))
-        }
-
-        .text-gray-600 {
-            --text-opacity: 1;
-            color: #718096;
-            color: rgba(113, 128, 150, var(--text-opacity))
-        }
-
-        .text-gray-700 {
-            --text-opacity: 1;
-            color: #4a5568;
-            color: rgba(74, 85, 104, var(--text-opacity))
-        }
-
-        .text-gray-900 {
-            --text-opacity: 1;
-            color: #1a202c;
-            color: rgba(26, 32, 44, var(--text-opacity))
-        }
-
-        .underline {
-            text-decoration: underline
-        }
-
-        .antialiased {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale
-        }
-
-        .w-5 {
-            width: 1.25rem
-        }
-
-        .w-8 {
-            width: 2rem
-        }
-
-        .w-auto {
-            width: auto
-        }
-
-        .grid-cols-1 {
-            grid-template-columns: repeat(1, minmax(0, 1fr))
-        }
-
-        @media (min-width: 640px) {
-            .sm\:rounded-lg {
-                border-radius: .5rem
-            }
-
-            .sm\:block {
-                display: block
-            }
-
-            .sm\:items-center {
-                align-items: center
-            }
-
-            .sm\:justify-start {
-                justify-content: flex-start
-            }
-
-            .sm\:justify-between {
-                justify-content: space-between
-            }
-
-            .sm\:h-20 {
-                height: 5rem
-            }
-
-            .sm\:ml-0 {
-                margin-left: 0
-            }
-
-            .sm\:px-6 {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem
-            }
-
-            .sm\:pt-0 {
-                padding-top: 0
-            }
-
-            .sm\:text-left {
-                text-align: left
-            }
-
-            .sm\:text-right {
-                text-align: right
-            }
-        }
-
-        @media (min-width: 768px) {
-            .md\:border-t-0 {
-                border-top-width: 0
-            }
-
-            .md\:border-l {
-                border-left-width: 1px
-            }
-
-            .md\:grid-cols-2 {
-                grid-template-columns: repeat(2, minmax(0, 1fr))
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .lg\:px-8 {
-                padding-left: 2rem;
-                padding-right: 2rem
-            }
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .dark\:bg-gray-800 {
-                --bg-opacity: 1;
-                background-color: #2d3748;
-                background-color: rgba(45, 55, 72, var(--bg-opacity))
-            }
-
-            .dark\:bg-gray-900 {
-                --bg-opacity: 1;
-                background-color: #1a202c;
-                background-color: rgba(26, 32, 44, var(--bg-opacity))
-            }
-
-            .dark\:border-gray-700 {
-                --border-opacity: 1;
-                border-color: #4a5568;
-                border-color: rgba(74, 85, 104, var(--border-opacity))
-            }
-
-            .dark\:text-white {
-                --text-opacity: 1;
-                color: #fff;
-                color: rgba(255, 255, 255, var(--text-opacity))
-            }
-
-            .dark\:text-gray-400 {
-                --text-opacity: 1;
-                color: #cbd5e0;
-                color: rgba(203, 213, 224, var(--text-opacity))
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <style>
-        body {
-            font-family: 'Nunito';
-        }
-    </style>
-</head>
-<body class="antialiased">
-<div class="container">
-    <br>
-    <nav class="nav nav-pills nav-justified">
-        <a class="nav-link" href="/{{$lang}}/my-courses">{{__('default.pages.courses.my_courses')}}</a>
-        <a class="nav-link"
-           href="/{{$lang}}/my-courses/unpublished">{{__('default.pages.courses.my_courses_unpublished')}}</a>
-        <a class="nav-link" href="/{{$lang}}/my-courses/on-check">{{__('default.pages.courses.my_courses_onCheck')}}</a>
-        <a class="nav-link" href="/{{$lang}}/my-courses/drafts">{{__('default.pages.courses.drafts')}}</a>
-        <a class="nav-link" href="/{{$lang}}/my-courses/deleted">{{__('default.pages.courses.my_courses_deleted')}}</a>
-    </nav>
-    <br>
-    <br>
-    <a class="btn btn-warning" href="/{{$lang}}/create-course">Создать курс</a>
-    <a class="btn btn-info" href="/{{$lang}}/my-courses/statistics">Статистика</a>
-    <a class="btn btn-info" href="/{{$lang}}/my-courses/reporting">Отчетность</a>
-    @if (Route::has('login'))
-        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-            @auth
-                <a href="/{{$lang}}/edit_profile" class="text-sm text-gray-700 underline">Профиль</a>|
-                <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
-            @else
-                <a href="/{{$lang}}/login" class="text-sm text-gray-700 underline">Login</a>
-
-                @if (Route::has('register'))
-                    <a href="/{{$lang}}/login" class="ml-4 text-sm text-gray-700 underline">Register</a>
-                @endif
-            @endif
-        </div>
-    @endif
-    <br>
-    @if (session('status'))
-        <div class="alert alert-success">
-            {{ session('status') }}
-        </div>
-    @endif
-    @if (session('error'))
-        <div class="alert alert-error">
-            {{ session('error') }}
-        </div>
-    @endif
-    <br>
-    <h2>{{__('default.pages.statistics.title')}}</h2>
-    <br>
-    <div class="row">
-        <h5><b>{{__('default.pages.statistics.your_rating')}}: 5</b></h5>
-        <h5 style="margin-left: 100px"><b>{{__('default.pages.statistics.course_members_count')}}: 5</b></h5>
-    </div>
-    <br>
-    <div class="row">
-        <div class="card col-md-6">
-            <div class="card-body">
-                <p>{{__('default.pages.statistics.total_earn')}}</p>
-                <p style="color: #00C608"><b>{{$items->sum('cost')}}</b></p>
+@extends('app.layout.default.template')
+
+@section('content')
+    <main class="main">
+        <section class="plain">
+            <div class="container">
+                <h1 class="title-primary">{{__('default.pages.statistics.title')}}</h1>
+                <div class="row row--multiline align-items-center">
+                    <div class="col-auto">
+                        <div class="author-stat">
+                            <span class="author-stat__label">{{__('default.pages.statistics.your_rating')}}</span>
+                            <span class="rating">
+                    <span class="rating__number">{{round($average_rates, 1)}}</span>
+                                <span class="rating__stars">
+                                        <?php
+                                    for ($x = 1; $x <= $average_rates; $x++) {
+                                        echo '<i class="icon-star-full"> </i>';
+                                    }
+                                    if (strpos($average_rates, '.')) {
+                                        echo '<i class="icon-star-half"> </i>';
+                                        $x++;
+                                    }
+                                    while ($x <= 5) {
+                                        echo '<i class="icon-star-empty"> </i>';
+                                        $x++;
+                                    }
+                                    ?>
+                                    </span>
+                </span>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="author-stat">
+                            <span class="author-stat__label">{{__('default.pages.statistics.course_members_count')}}:</span>
+                            <span class="author-stat__value">{{count($author_students)}}</span>
+                        </div>
+                    </div>
+                </div>
+                <row class="row row--multiline">
+                    <div class="col-md-6">
+                        <div class="income">
+                            <div class="income__label">{{__('default.pages.statistics.total_earn')}}</div>
+                            <div class="income__value green">{{number_format(array_sum($all_cost_courses), 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                            <img src="/assets/img/budget.svg" alt="" class="income__icon">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="income">
+                            <div class="income__label">{{__('default.pages.statistics.earn_quota')}}</div>
+                            <div class="income__value yellow">{{number_format(array_sum($quota_cost_courses), 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                            <img src="/assets/img/gift.svg" alt="" class="income__icon">
+                        </div>
+                    </div>
+                </row>
+                <div id="chartdiv" class="income-diagram" data-url="/{{$lang}}/my-courses/statistics/statisticForChart"></div>
             </div>
-        </div>
-        <div class="card col-md-6">
-            <div class="card-body">
-                <p>{{__('default.pages.statistics.earn_quota')}}</p>
-                <p style="color: #F2C94C"><b>{{$items->where('quota_status', '=', 2)->sum('cost')}}</b></p>
-            </div>
-        </div>
-    </div>
-</div>
-</body>
+        </section>
 
-</html>
+        <section class="plain">
+            <div class="container">
+                <div class="title-block">
+                    <div class="row row--multiline align-items-center justify-space-between">
+                        <div class="col-md-8 col-sm-7">
+                            <h2 class="title-primary">{{__('default.pages.courses.my_courses_title')}}</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-5">
+                            <form action="">
+                                @php($filters = array('sort_by_default','sort_by_rate_low',
+                                    'sort_by_rate_high', 'sort_by_members_count_low',
+                                    'sort_by_members_count_high'))
+                                <select name="sort_by" class="selectize-regular no-search"
+                                        placeholder="{{__('default.pages.statistics.sort_by_title')}}" onchange="$(this).closest('form').submit()">
+                                    @foreach($filters as $filter)
+                                        <option value="{{ $filter }}"
+                                                @if($request->sort_by == $filter) selected @endif >
+                                            {{ __('default.pages.statistics.'.$filter) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row row--multiline">
+                    @foreach($courses as $course)
+                        <div class="col-sm-6 col-md-3">
+                            <a href="/{{$lang}}/my-courses/course/{{$course->id}}" title="" class="card">
+                                @if($course->quota_status == 2)
+                                    <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
+                                @endif
+                                <div class="card__image">
+                                    <img src="{{$course->image}}" alt="">
+                                </div>
+                                <div class="card__desc">
+                                    <div class="card__top">
+                                        @if($course->is_paid == true)
+                                            <div class="card__price mark mark--blue">{{number_format($course->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                                        @else
+                                            <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
+                                        @endif
+                                        <h3 class="card__title">{{$course->name}}</h3>
+                                        <div class="card__author">{{$course->user->company_name}}</div>
+                                    </div>
+                                    <div class="card__bottom">
+                                        <div class="card__attribute">
+                                            <i class="icon-user"> </i><span>{{count($course->course_members)}}</span>
+                                        </div>
+                                        <div class="card__attribute">
+                                            <i class="icon-star-full"> </i><span>{{$course->rate->pluck('rate')->avg() ?? 0}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="text-center">
+                    {{ $courses->links('vendor.pagination.default') }}
+                </div>
+            </div>
+        </section>
+
+    </main>
+@endsection
+
+@section('scripts')
+    <!--Only this page's scripts-->
+    <script src="/assets/libs/amcharts4/core.js"></script>
+    <script src="/assets/libs/amcharts4/charts.js"></script>
+    <script src="/assets/libs/amcharts4/themes/animated.js"></script>
+    <script src="/assets/libs/amcharts4/lang/ru_RU.js"></script>
+    <script>
+        renderAuthorStats(document.querySelector('#chartdiv'));
+    </script>
+    <!---->
+@endsection
+

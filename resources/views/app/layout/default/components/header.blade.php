@@ -2,10 +2,19 @@
     <div class="container">
         <a href="/{{$lang}}" title="Главная" class="logo"><img src="/assets/img/logo.svg" alt=""></a>
         <ul class="menu">
-            <li><a href="#" title="{{__('default.pages.profile.title')}}">{{__('default.pages.profile.title')}}</a></li>
-            <li @if(basename(request()->path()) == 'my-courses')class="active"@endif><a href="/{{$lang}}/my-courses"
-                                                                                        title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
-            </li>
+            <li><a href="/{{$lang}}/profile-author-information"
+                   title="{{__('default.pages.profile.title')}}">{{__('default.pages.profile.title')}}</a></li>
+            @if(Auth::user()->roles()->first()->slug == 'author')
+                <li @if(basename(request()->path()) == 'my-courses')class="active"@endif><a href="/{{$lang}}/my-courses"
+                                                                                            title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
+
+                </li>
+            @elseif(Auth::user()->roles()->first()->slug == 'student')
+                <li class="active"><a href="/{{$lang}}/student/my-courses"
+                                            title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
+
+                </li>
+            @endif
         </ul>
         <div class="buttons-group">
             <!--<a href="#" title="Помощь" class="ghost-btn ghost-btn&#45;&#45;blue small">Помощь</a>-->
@@ -44,12 +53,18 @@
                         <li><a href="/{{$lang}}/my-courses/statistics"
                                title="{{__('default.pages.statistics.title')}}">{{__('default.pages.statistics.title')}}</a>
                         </li>
-                        <li><a href="#"
+                        <li><a href="/{{$lang}}/profile-author-information"
                                title="{{__('default.pages.profile.title')}}">{{__('default.pages.profile.title')}}</a>
                         </li>
-                        <li><a href="/{{$lang}}/my-courses"
-                               title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
-                        </li>
+                        @if(Auth::user()->roles()->first()->slug == 'author')
+                            <li><a href="/{{$lang}}/my-courses"
+                                   title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
+                            </li>
+                        @elseif(Auth::user()->roles()->first()->slug == 'student')
+                            <li><a href="/{{$lang}}/student/my-courses"
+                                   title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
+                            </li>
+                        @endif
                         <li><a href="#"
                                title="{{__('default.pages.dialogs.title')}}">{{__('default.pages.dialogs.title')}}</a>
                         </li>

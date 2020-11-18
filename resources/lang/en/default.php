@@ -125,7 +125,13 @@ return [
             'total_earn' => 'Общий заработок',
             'earn_quota' => 'Заработано по квотам',
             'your_rating' => 'Ваш рейтинг',
-            'course_members_count' => 'Общее число записавшихся на курсы'
+            'course_members_count' => 'Общее число записавшихся на курсы',
+            'sort_by_title' => 'Сортировать по',
+            'sort_by_default' => 'По умолчанию',
+            'sort_by_rate_low' => 'Рейтинг - по возрастанию',
+            'sort_by_rate_high' => 'Рейтинг - по убыванию',
+            'sort_by_members_count_low' => 'Количество обучающихся - по возрастанию',
+            'sort_by_members_count_high' => 'Количество обучающихся - по убыванию'
         ],
 
         'reporting' => [

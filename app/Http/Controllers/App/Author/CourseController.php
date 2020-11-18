@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Notification;
 use App\Models\Skill;
+use App\Models\StudentCourse;
 use App\Models\Theme;
 use App\Models\Type_of_ownership;
 use App\Models\User;
@@ -23,7 +24,7 @@ class CourseController extends Controller
 
     public function createCourse($lang)
     {
-        $skills = Skill::where('fl_show', '=', 1)->where('fl_check', '=', 1)->orderBy('name_'.$lang, 'asc')->get();
+        $skills = Skill::where('fl_show', '=', 1)->where('fl_check', '=', 1)->orderBy('name_' . $lang, 'asc')->get();
         return view("app.pages.author.courses.create_course", [
             "items" => [],
             "skills" => $skills
@@ -54,7 +55,7 @@ class CourseController extends Controller
         $item->teaser = $request->teaser;
         $item->description = $request->description;
         $item->course_includes = $request->course_includes;
-        if($request->youtube_link != [null]) {
+        if ($request->youtube_link != [null]) {
             $item->youtube_link = json_encode($request->youtube_link);
         }
         $item->certificate_id = $request->certificate_id;
@@ -102,7 +103,8 @@ class CourseController extends Controller
 
     public function myCourses()
     {
-        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::published)->paginate(6);
+        $items = Course::where('author_id', '=', Auth::user()->id)
+            ->where('status', '=', Course::published)->orderBy('created_at', 'desc')->paginate(6);
         $page_name = 'default.pages.courses.my_courses';
         return view("app.pages.author.courses.my_courses", [
             "items" => $items,
@@ -112,7 +114,8 @@ class CourseController extends Controller
 
     public function myDrafts()
     {
-        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::draft)->paginate(6);
+        $items = Course::where('author_id', '=', Auth::user()->id)
+            ->where('status', '=', Course::draft)->orderBy('created_at', 'desc')->paginate(6);
         $page_name = 'default.pages.courses.drafts';
         return view("app.pages.author.courses.my_courses", [
             "items" => $items,
@@ -125,7 +128,8 @@ class CourseController extends Controller
 //        $items = Course::whereHas('users', function ($query) {
 //            $query->where('users.id', '=', Auth::user()->id);
 //        })->where('status', '=', 2)->get();
-        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::unpublished)->paginate(6);
+        $items = Course::where('author_id', '=', Auth::user()->id)
+            ->where('status', '=', Course::unpublished)->orderBy('created_at', 'desc')->paginate(6);
         $page_name = 'default.pages.courses.my_courses_unpublished';
         return view("app.pages.author.courses.my_courses", [
             "items" => $items,
@@ -138,7 +142,8 @@ class CourseController extends Controller
 //        $items = Course::whereHas('users', function ($query) {
 //            $query->where('users.id', '=', Auth::user()->id);
 //        })->where('status', '=', 1)->get();
-        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::onCheck)->paginate(6);
+        $items = Course::where('author_id', '=', Auth::user()->id)
+            ->where('status', '=', Course::onCheck)->orderBy('created_at', 'desc')->paginate(6);
         $page_name = 'default.pages.courses.my_courses_onCheck';
         return view("app.pages.author.courses.my_courses", [
             "items" => $items,
@@ -148,7 +153,8 @@ class CourseController extends Controller
 
     public function myDeletedCourses()
     {
-        $items = Course::where('author_id', '=', Auth::user()->id)->where('status', '=', Course::deleted)->paginate(6);
+        $items = Course::where('author_id', '=', Auth::user()->id)
+            ->where('status', '=', Course::deleted)->orderBy('created_at', 'desc')->paginate(6);
         $page_name = 'default.pages.courses.my_courses_deleted';
         return view("app.pages.author.courses.my_courses", [
             "items" => $items,
@@ -219,7 +225,7 @@ class CourseController extends Controller
         $item->teaser = $request->teaser;
         $item->description = $request->description;
         $item->course_includes = $request->course_includes;
-        if($request->youtube_link != [null]) {
+        if ($request->youtube_link != [null]) {
             $item->youtube_link = json_encode($request->youtube_link);
         }
         $item->certificate_id = $request->certificate_id;
@@ -280,19 +286,20 @@ class CourseController extends Controller
         return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('default.pages.courses.delete_request_message'));
     }
 
-    public function quotaConfirm($lang, Course $item, Request $request){
+    public function quotaConfirm($lang, Course $item, Request $request)
+    {
 
-        $recipients = User::whereHas('roles', function($q){
+        $recipients = User::whereHas('roles', function ($q) {
             $q->whereIn('role_id', [1, 6]);
         })->get();
         $author_course = $item->author_id;
 
         $recipients_array = array();
-        foreach ($recipients as $recipient){
+        foreach ($recipients as $recipient) {
             array_push($recipients_array, $recipient->id);
         }
 
-        if ($request->input('action') == 'confirm'){
+        if ($request->input('action') == 'confirm') {
             $item->quota_status = 2;
             $item->save();
 
@@ -312,8 +319,8 @@ class CourseController extends Controller
 
             $notification->users()->sync($recipients_array);
 
-            return redirect("/" . app()->getLocale() . "/my-courses")->with('status',__('notifications.confirm_quota_description'));
-        }else{
+            return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('notifications.confirm_quota_description'));
+        } else {
             $item->quota_status = 3;
             $item->save();
 
@@ -324,7 +331,7 @@ class CourseController extends Controller
             $notification->save();
 
             $notification->users()->sync($recipients_array);
-            return redirect("/" . app()->getLocale() . "/my-courses")->with('error',__('notifications.course_quota_access_denied'));
+            return redirect("/" . app()->getLocale() . "/my-courses")->with('error', __('notifications.course_quota_access_denied'));
         }
 
 
@@ -338,14 +345,104 @@ class CourseController extends Controller
         return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('default.pages.courses.publish_request_message'));
     }
 
-    public function statisticsCourse()
+    public function statisticsCourse(Request $request)
     {
 
         $items = Auth::user()->courses()->get();
 
+        // Все оценки всех курсов
+        $rates = [];
+        foreach ($items as $course) {
+            foreach ($course->rate as $rate) {
+                array_push($rates, $rate->rate);
+            }
+        }
+
+        // Оценка автора исходя из всех оценок
+        if (count($rates) == 0) {
+            $average_rates = 0;
+        } else {
+            $average_rates = array_sum($rates) / count($rates);
+        }
+        // Все ученики автора
+        $author_students = [];
+        foreach ($items->unique('student_id') as $course) {
+            foreach ($course->course_members as $member) {
+                array_push($author_students, $member);
+            }
+        }
+        // Цена купленных курсов
+        $all_cost_courses = [];
+        $quota_cost_courses = [];
+        foreach ($items as $course) {
+            foreach ($course->course_members as $member) {
+                array_push($all_cost_courses, $member->course->cost);
+            }
+            foreach ($course->course_members->where('paid_status', '=', '2') as $member) {
+                array_push($quota_cost_courses, $member->course->cost);
+            }
+        }
+
+        $query = Auth::user()->courses()->where('status', '=', Course::published);
+        // Сортировка Рейтинг - по возрастанию
+        if ($request->sort_by == 'sort_by_rate_low') {
+            $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
+                ->select('course_rate.rate as course_rate', 'courses.*')
+                ->orderBy('course_rate.rate', 'asc');
+        // Сортировка Рейтинг - по убыванию
+        }else if ($request->sort_by == 'sort_by_rate_high') {
+            $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
+                ->select('course_rate.rate as course_rate', 'courses.*')
+                ->orderBy('course_rate.rate', 'desc');
+        // Сортировка Количество обучающихся - по возрастанию
+        }else if ($request->sort_by == 'sort_by_members_count_low') {
+            $query->withCount('course_members')->orderBy('course_members_count', 'asc');
+        // Сортировка Количество обучающихся - по убыванию
+        }else if ($request->sort_by == 'sort_by_members_count_high') {
+            $query->withCount('course_members')->orderBy('course_members_count', 'desc');
+       // Сортировка По умолчанию
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $courses = $query->paginate(8);
+
         return view("app.pages.author.courses.statistics", [
-            'items' => $items
+            'items' => $items,
+            'average_rates' => $average_rates,
+            'author_students' => $author_students,
+            'all_cost_courses' => $all_cost_courses,
+            'quota_cost_courses' => $quota_cost_courses,
+            'courses' => $courses,
+            'request' => $request
         ]);
+    }
+
+    public function statisticForChart()
+    {
+
+        $items = StudentCourse::whereHas('course', function ($q) {
+            $q->where('courses.author_id', '=', Auth::user()->id);
+        })->where('paid_status', '!=', 0)->get();
+
+        $data = [];
+        foreach ($items as $d) {
+//            if($d->paid_status == 2) {
+//                array_push($data, ["date" => $d->created_at, "value1" => $d->course->cost, "value2" => $d->course->cost]);
+//            }else if ($d->paid_status == 1){
+//                array_push($data, ["date" => $d->created_at, "value1" => $d->course->cost, "value2" => null]);
+//            }
+            array_push($data, ["date" => $d->created_at, "value1" => $d->course->cost, "value2" => $d->course->cost]);
+        }
+
+        $json = '{
+  "title1": "Общий заработок",
+  "title2": "Заработано по квотам",
+  "color1": "#00C608",
+  "color2": "#F2C94C",
+  "data": ' . json_encode($data) . '
+}';
+        return json_decode($json, true);
     }
 
     public function reportingCourse(Request $request)
@@ -380,15 +477,15 @@ class CourseController extends Controller
         $ar = [[]];
         foreach ($query as $i) {
             // Платный
-            if($i->is_paid == true){
+            if ($i->is_paid == true) {
                 $i->is_paid = __('default.yes_title');
-            }else{
+            } else {
                 $i->is_paid = __('default.no_title');
             }
             // Квота
-            if($i->quota_status == 2){
+            if ($i->quota_status == 2) {
                 $i->quota_status = __('default.yes_title');
-            }else{
+            } else {
                 $i->quota_status = __('default.no_title');
             }
 
@@ -402,7 +499,7 @@ class CourseController extends Controller
         }
 
         asort($ar);
-        return Excel::download(new ReportingExport($ar), ''.__('default.pages.courses.report_title').'.xlsx');
+        return Excel::download(new ReportingExport($ar), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
 }
