@@ -2,22 +2,6 @@
 
 @section('content')
     <main class="main">
-
-        {{--        @if (session('status'))--}}
-        {{--            <div class="alert alert-success">--}}
-        {{--                {{ session('status') }}--}}
-        {{--            </div>--}}
-        {{--        @endif--}}
-        {{--        @if ($errors->any())--}}
-        {{--            <div class="alert alert-danger">--}}
-        {{--                <ul>--}}
-        {{--                    @foreach ($errors->all() as $error)--}}
-        {{--                        <li>{!! $error !!}</li>--}}
-        {{--                    @endforeach--}}
-        {{--                </ul>--}}
-        {{--            </div>--}}
-        {{--        @endif--}}
-
         <section class="plain">
             <div class="container">
                 <h1 class="title-primary">{{__('default.pages.profile.title')}}</h1>
@@ -28,13 +12,13 @@
                             <li class="active"><a href="/{{$lang}}/profile-author-information"
                                                   title="{{__('default.pages.profile.organization_data')}}">{{__('default.pages.profile.organization_data')}}</a>
                             </li>
-                            <li><a href="/author-profile-payment.html"
+                            <li><a href="/{{$lang}}/profile-pay-information"
                                    title="{{__('default.pages.profile.payment_information')}}">{{__('default.pages.profile.payment_information')}}</a>
                             </li>
-                            <li><a href="author-profile-registration-data.html"
+                            <li><a href="/{{$lang}}/edit-profile"
                                    title="{{__('default.pages.profile.registration_data')}}">{{__('default.pages.profile.registration_data')}}</a>
                             </li>
-                            <li><a href="/author-profile-password.html"
+                            <li><a href="/{{$lang}}/change-password"
                                    title="{{__('default.pages.profile.password_title')}}">{{__('default.pages.profile.password_title')}}</a>
                             </li>
                         </ul>
@@ -44,6 +28,22 @@
                 <form class="author-personal" action="/{{$lang}}/update_author_data_profile" method="POST"
                       enctype="multipart/form-data">
                     {{ csrf_field() }}
+
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{!! $error !!}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <div class="row row--multiline">
                         <div class="col-sm-4">
                             <div class="author-personal__left">
@@ -63,7 +63,7 @@
                                                data-dz-remove>{{__('default.pages.profile.delete')}}</a>
                                         </div>
                                     </div>
-                                    <input type="hidden" name="avatar" class="avatar-path">
+                                    <input type="hidden" name="avatar" class="avatar-path" value="{{$item->avatar}}">
                                 </div>
                                 <div class="rating">
                                     <div class="rating__number">{{round($average_rates, 1)}}</div>

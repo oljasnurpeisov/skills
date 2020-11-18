@@ -134,11 +134,11 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                 Route::group(["middleware" => ["web"], "namespace" => "Author"], function () {
                     // Профиль автора
                     Route::get("/profile", "UserController@profile");
-                    Route::get("/edit_profile", "UserController@edit_profile");
+                    Route::get("/edit-profile", "UserController@edit_profile");
                     Route::post("/update_profile", "UserController@update_profile");
-                    Route::get("/change_password", "UserController@change_password");
+                    Route::get("/change-password", "UserController@change_password");
                     Route::post("/update_password", "UserController@update_password");
-                    Route::get("/profile_pay_information", "UserController@profile_pay_information");
+                    Route::get("/profile-pay-information", "UserController@profile_pay_information");
                     Route::post("/profile_pay_information", "UserController@update_profile_pay_information");
                     Route::get("/profile-author-information", "UserController@author_data_show");
                     Route::post("/update_author_data_profile", "UserController@update_author_data_profile");
@@ -189,6 +189,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                         // Урок
                         Route::get("/my-courses/course/{item}/theme-{theme}/create-lesson", "LessonController@createLesson");
                         Route::get("/my-courses/course/{course}/theme-{theme}/edit-lesson-{lesson}", "LessonController@editLesson");
+                        Route::get("/my-courses/course/{course}/theme-{theme}/view-lesson-{lesson}", "LessonController@editLesson");
                         Route::post("/create-lesson", "LessonController@storeLesson");
                         Route::post("/edit-lesson-{item}", "LessonController@updateLesson");
                         Route::delete("/delete-lesson/{item}", "LessonController@deleteLesson");

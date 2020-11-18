@@ -99,6 +99,12 @@ return [
             'password_update_success' => 'Пароль успешно изменен',
             'password_update_failed' => 'Неверный текущий пароль',
             'different_password' => 'Новый пароль должен отличаться от текущего',
+
+            'email_title' => 'Электронная почта',
+            'iin_title' => 'ИИН/БИН',
+            'type_of_ownership' => 'Форма собственности',
+            'company_name' => 'Наименование организации'
+
         ],
         'calendar' => [
             'today' => 'Сегодня',

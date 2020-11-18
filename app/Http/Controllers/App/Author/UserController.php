@@ -52,7 +52,7 @@ class UserController extends Controller
         $request->validate([
             'email' => ['required', Rule::unique('users')->ignore($request->user()->id), 'max:255'],
             'iin' => ['required', Rule::unique('users')->ignore($request->user()->id), 'max:12'],
-            'company_logo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'company_logo' => 'required|max:255',
             'company_name' => 'required|max:255',
         ]);
 
@@ -64,17 +64,15 @@ class UserController extends Controller
         $user->company_name = $request->company_name;
         $user->type_of_ownership = $request->type_of_ownership;
 
-        if (!empty($request->company_logo)) {
+        if ($request->company_logo != $user->company_logo) {
             File::delete(public_path($user->company_logo));
 
-            $imageName = time() . '.' . $request['company_logo']->getClientOriginalExtension();
-            $request['company_logo']->move(public_path('images/profile_images'), $imageName);
-            $user->company_logo = '/images/profile_images/' . $imageName;
+            $user->company_logo = $request->company_logo;
         }
 
         $user->save();
 
-        return redirect("/" . app()->getLocale() . "/profile")->with('status', __('default.pages.profile.save_success_message'));
+        return redirect("/" . app()->getLocale() . "/edit-profile")->with('status', __('default.pages.profile.save_success_message'));
     }
 
     public function change_password()
@@ -275,7 +273,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'max:255',
             'surname' => 'max:255',
-//            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'avatar' => 'max:255',
             'specialization' => 'max:255',
             'phone_1' => 'max:255',
             'phone_2' => 'max:255',
@@ -301,11 +299,13 @@ class UserController extends Controller
             $item->fb_link = $request->fb_link;
             $item->instagram_link = $request->instagram_link;
 
-            if (!empty($request->avatar)) {
+            if (($request->avatar != $item->avatar)) {
                 File::delete(public_path($item->avatar));
 
                 $item->avatar = $request->avatar;
             }
+
+
 
             if ($request->hasFile('certificates')) {
                 $names = [];
