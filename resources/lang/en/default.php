@@ -103,7 +103,11 @@ return [
             'email_title' => 'Электронная почта',
             'iin_title' => 'ИИН/БИН',
             'type_of_ownership' => 'Форма собственности',
-            'company_name' => 'Наименование организации'
+            'company_name' => 'Наименование организации',
+
+            'old_password' => 'Старый пароль',
+            'new_password' => 'Новый пароль',
+            'confirm_new_password' => 'Повторите новый пароль'
 
         ],
         'calendar' => [

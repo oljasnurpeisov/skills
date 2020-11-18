@@ -108,9 +108,10 @@ class UserController extends Controller
 
             return redirect("/" . app()->getLocale() . "/profile-author-information")->with('status', __('default.pages.profile.password_update_success'));
 
+        }else{
+            return redirect()->back()->with('failed', __('default.pages.profile.password_update_failed'));
         }
 
-        return redirect()->back()->with('failed', __('default.pages.profile.password_update_failed'));
     }
 
     public function profile_pay_information()
