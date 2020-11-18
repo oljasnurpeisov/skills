@@ -116,10 +116,8 @@ class UserController extends Controller
 
     public function profile_pay_information()
     {
-        $user = User::where('id', '=', Auth::user()->getAuthIdentifier())->with('type_ownership')->first();
-        $pay_information = PayInformation::where('user_id', '=', $user->id)->first();
+        $pay_information = PayInformation::where('user_id', '=', Auth::user()->id)->first();
         return view("app.pages.author.profile.profile_pay_information", [
-            "user" => $user,
             "pay_information" => $pay_information
         ]);
     }
@@ -134,74 +132,36 @@ class UserController extends Controller
         ];
 
         $attributes = [
-            'merchant_certificate_id' => __('default.pages.profile.merchant_certificate_id'),
-            'merchant_name' => __('default.pages.profile.merchant_name'),
-            'private_key_pass' => __('private_key_pass'),
-            'merchant_id' => __('merchant_id'),
+            'merchant_login' => __('default.pages.profile.merchant_login'),
+            'merchant_password' => __('default.pages.profile.merchant_password'),
         ];
 
         $request->validate([
-            'merchant_certificate_id' => 'required|max:255',
-            'merchant_name' => 'required|max:255',
-            'private_key_pass' => 'required|max:255',
-            'merchant_id' => 'required|max:255',
+            'merchant_login' => 'required|max:255',
+            'merchant_password' => 'required|max:255',
         ], $messages, $attributes);
 
-        $information = PayInformation::where('user_id', '=', Auth::user()->getAuthIdentifier())->first();
+        $information = PayInformation::where('user_id', '=', Auth::user()->id)->first();
 
         if (empty($information)) {
 
             $item = new PayInformation;
             $item->user_id = Auth::user()->getAuthIdentifier();
-            $item->merchant_certificate_id = $request->merchant_certificate_id;
-            $item->merchant_name = $request->merchant_name;
-            $item->private_key_pass = $request->private_key_pass;
-            $item->merchant_id = $request->merchant_id;
-
-            if (!empty($request->public_key_path)) {
-                $public_key_path_name = time() . '_pbk' . '.' . $request['public_key_path']->getClientOriginalExtension();
-                $item->public_key_path = '/files/payment_certificates/' . $public_key_path_name;
-                $request['public_key_path']->move(public_path('files/payment_certificates'), $public_key_path_name);
-            }
-            if (!empty($request->private_key_path)) {
-                $private_key_path_name = time() . '_prk' . '.' . $request['private_key_path']->getClientOriginalExtension();
-                $item->private_key_path = '/files/payment_certificates/' . $public_key_path_name;
-                $request['private_key_path']->move(public_path('files/payment_certificates'), $private_key_path_name);
-            }
+            $item->merchant_login = $request->merchant_login;
+            $item->merchant_password = $request->merchant_password;
 
             $item->save();
 
 
-            return redirect("/" . app()->getLocale() . "/profile_pay_information")->with('status', __('default.pages.profile.save_success_message'));
+            return redirect("/" . app()->getLocale() . "/profile-pay-information")->with('status', __('default.pages.profile.save_success_message'));
         } else {
 
-            if (!empty($request->public_key_path)) {
-                File::delete(public_path($information->public_key_path));
-
-                $public_key_path_name = time() . '_pbk' . '.' . $request['public_key_path']->getClientOriginalExtension();
-                $request['public_key_path']->move(public_path('files/payment_certificates'), $public_key_path_name);
-                $information->public_key_path = '/files/payment_certificates/' . $public_key_path_name;
-            }
-
-            if (!empty($request->private_key_path)) {
-                File::delete(public_path($information->private_key_path));
-
-                $private_key_path_name = time() . '_prk' . '.' . $request['private_key_path']->getClientOriginalExtension();
-                $request['private_key_path']->move(public_path('files/payment_certificates'), $private_key_path_name);
-                $information->private_key_path = '/files/payment_certificates/' . $private_key_path_name;
-            }
-
             $item = $information;
-            $item->user_id = Auth::user()->getAuthIdentifier();
-            $item->merchant_certificate_id = $request->merchant_certificate_id;
-            $item->merchant_name = $request->merchant_name;
-//            $item->private_key_path	= $request->private_key_path;
-            $item->private_key_pass = $request->private_key_pass;
-//            $item->public_key_path	= $request->public_key_path;
-            $item->merchant_id = $request->merchant_id;
+            $item->merchant_login = $request->merchant_login;
+            $item->merchant_password = $request->merchant_password;
             $item->save();
 
-            return redirect("/" . app()->getLocale() . "/profile_pay_information")->with('status', __('default.pages.profile.save_success_message'));
+            return redirect("/" . app()->getLocale() . "/profile-pay-information")->with('status', __('default.pages.profile.save_success_message'));
         }
 
     }

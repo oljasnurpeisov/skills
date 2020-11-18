@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/assets/data/author-stats.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/data/skills/engineer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/js/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/layout/default/components/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/header.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/statistics.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/statistics.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/profile/profile_pay_information.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/profile/profile_pay_information.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,7 +243,7 @@
       <workItem from="1605268357179" duration="18024000" />
       <workItem from="1605518681133" duration="22131000" />
       <workItem from="1605564413935" duration="44597000" />
-      <workItem from="1605698690159" duration="29783000" />
+      <workItem from="1605698690159" duration="31973000" />
     </task>
     <task id="LOCAL-00001" summary="- update routes">
       <created>1603898521230</created>
@@ -461,7 +455,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605704516701</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="- add author statistic">
+      <created>1605740879818</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1605740879818</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TodoView">
@@ -477,7 +478,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add recommended courses" />
     <MESSAGE value="- add course payment" />
     <MESSAGE value="- add skills link to catalog" />
     <MESSAGE value="- payment fix" />
@@ -502,7 +502,8 @@
     <MESSAGE value="- add author information" />
     <MESSAGE value="- add author registration profile" />
     <MESSAGE value="- add author password change" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add author password change" />
+    <MESSAGE value="- add author statistic" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add author statistic" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -517,10 +518,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="509" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1605616029762" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1605704514861">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1605740875220">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605704514861" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605740875220" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1605559122928">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

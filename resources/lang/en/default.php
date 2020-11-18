@@ -90,10 +90,8 @@ return [
             'max_file_title' => 'макс.',
             'save_btn_title' => 'Сохранить',
 
-            'merchant_certificate_id' => 'ID сертификата продавца',
-            'merchant_name' => 'Наименование продавца',
-            'private_key_pass' => 'Пароль от секретного ключа ',
-            'merchant_id' => 'ID продавца',
+            'merchant_login' => 'Логин',
+            'merchant_password' => 'Пароль',
 
             'save_success_message' => 'Изменения успешно сохранены',
             'password_update_success' => 'Пароль успешно изменен',
