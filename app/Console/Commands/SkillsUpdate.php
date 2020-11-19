@@ -41,6 +41,11 @@ class SkillsUpdate extends Command
             }else{
                 $skill['fl_check'] = 1;
             }
+            if($skill['fl_show'] == null){
+                $skill['fl_check'] = 1;
+            }else{
+                $skill['fl_check'] = 0;
+            }
             $user = Skill::updateOrCreate([
                 'code_skill' => $skill['codskill']
             ], [

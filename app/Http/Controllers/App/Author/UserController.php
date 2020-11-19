@@ -20,6 +20,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
+use XmlParser;
 
 
 class UserController extends Controller
@@ -81,6 +82,34 @@ class UserController extends Controller
         return view("app.pages.author.profile.change_password", [
             "user" => $user,
         ]);
+//        $xml = XmlParser::load(url('https://iac2:Iac2007RBD@www.enbek.kz/feed/resume/cl_hard_skills.xml'));
+//
+//        $skills = $xml->parse([
+//            'data' => ['uses' => 'row[field(::name=@)]'],
+//        ]);
+//
+//        foreach (array_values($skills)[0] as $skill) {
+//            if($skill['fl_check'] == 'x'){
+//                $skill['fl_check'] = 0;
+//            }else{
+//                $skill['fl_check'] = 1;
+//            }
+//            if($skill['fl_show'] == null){
+//                $skill['fl_show'] = 1;
+//            }else{
+//                $skill['fl_show'] = 0;
+//            }
+//            $user = Skill::updateOrCreate([
+//                'code_skill' => $skill['codskill']
+//            ], [
+//                'fl_check' => $skill['fl_check'],
+//                'name_ru' => $skill['name_skill'],
+//                'name_kk' => $skill['name_skill_kz'],
+//                'fl_show' => $skill['fl_show'],
+//                'uid' => $skill['uid'],
+//            ]);
+//        }
+//        return '';
     }
 
     public function update_password(Request $request)

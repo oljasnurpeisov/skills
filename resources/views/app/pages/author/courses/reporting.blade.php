@@ -492,7 +492,7 @@
                     <td>@if($item->is_paid == true){{__('default.yes_title')}}@else{{__('default.no_title')}}@endif</td>
                     <td>@if($item->quota_status == 2){{__('default.yes_title')}}@else{{__('default.no_title')}}@endif</td>
                     <td>{{$item->cost}}</td>
-                    <td>{{count($item->course_members)}}</td>
+                    <td>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</td>
                     <td>{{count($item->course_members->where('paid_status', '=', 2))}}</td>
                     <td>{{count($item->course_members->where('is_finished', '=', true))}}</td>
                     <td>{{count($item->course_members->where('is_finished', '=', true))}}</td>

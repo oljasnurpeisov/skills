@@ -71,7 +71,7 @@
                                             </div>
                                             <div class="card__bottom">
                                                 <div class="card__attribute">
-                                                    <i class="icon-user"> </i><span>{{count($item->course_members)}}</span>
+                                                    <i class="icon-user"> </i><span>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</span>
                                                 </div>
                                                 <div class="card__attribute">
                                                     <i class="icon-star-full"> </i><span>{{$item->rate->pluck('rate')->avg() ?? 0}}</span>
@@ -84,7 +84,7 @@
 
                         </div>
                         <div class="text-center">
-                            {{ $items->links('vendor.pagination.default') }}
+                            {{ $items->appends(request()->input())->links('vendor.pagination.default') }}
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -106,52 +106,52 @@
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
-                                    <div class="sidebar-item__title">Язык обучения:</div>
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.language_education')}}:</div>
                                     <div class="sidebar-item__body">
-                                        <label class="checkbox"><input type="checkbox" name="lang"
-                                                                       value="kk"><span>Казахский</span></label>
-                                        <label class="checkbox"><input type="checkbox" name="lang"
-                                                                       value="ru"><span>Русский</span></label>
+                                        <label class="checkbox"><input type="checkbox" name="lang_kk"
+                                                                       value="1" {{($request->lang_kk == 1 ? ' checked' : '')}}><span>{{__('default.pages.courses.language_education_kk')}}</span></label>
+                                        <label class="checkbox"><input type="checkbox" name="lang_ru"
+                                                                       value="1" {{($request->lang_ru == 1 ? ' checked' : '')}}><span>{{__('default.pages.courses.language_education_ru')}}</span></label>
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
-                                    <div class="sidebar-item__title">Рейтинг от:</div>
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.rating_from')}}:</div>
                                     <div class="sidebar-item__body">
                                         <div class="range-slider-wrapper">
-                                            <input type="range" class="range-slider single-range-slider" name="rating" min="1"
-                                                   data-decimals="1" step="0.5" max="5" value="3">
+                                            <input type="range" class="range-slider single-range-slider" name="min_rating" min="0"
+                                                   data-decimals="1" step="0.5" max="5" value="{{$request->min_rating ?? 0}}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
-                                    <div class="sidebar-item__title">Учеников, окончивших курс (мин):</div>
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.students_complete_course')}}:</div>
                                     <div class="sidebar-item__body">
                                         <div class="range-slider-wrapper">
-                                            <input type="range" class="range-slider single-range-slider" name="studentsCount" min="1"
-                                                   data-decimals="0" step="1" max="30" value="10">
+                                            <input type="range" class="range-slider single-range-slider" name="members_count" min="0"
+                                                   data-decimals="0" step="1" max="30" value="{{$request->members_count ?? 0}}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
-                                    <div class="sidebar-item__title">Вид курса:</div>
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.course_type')}}:</div>
                                     <div class="sidebar-item__body">
-                                        <select name="courseType" class="selectize-regular custom" placeholder="Выберите вид курса" >
-                                            <option value="">По умолчанию</option>
-                                            <option value="Платные">Платные</option>
-                                            <option value="Бесплатные">Бесплатные</option>
-                                            <option value="По квоте">По квоте</option>
+                                        <select name="course_type" class="selectize-regular custom" placeholder="{{__('default.pages.courses.choose_course_type')}}" >
+                                            <option value="">{{__('default.pages.courses.sort_by_default')}}</option>
+                                            <option value="1" {{($request->course_type == 1 ? 'selected' : '')}}>{{__('default.pages.courses.paid_type')}}</option>
+                                            <option value="2" {{($request->course_type == 2 ? 'selected' : '')}}>{{__('default.pages.courses.free_type')}}</option>
+                                            <option value="3" {{($request->course_type == 3 ? 'selected' : '')}}>{{__('default.pages.courses.quota_type')}}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
-                                    <div class="sidebar-item__title">Сортировка:</div>
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.sorting')}}:</div>
                                     <div class="sidebar-item__body">
-                                        <select name="sort" placeholder="Выберите сортировку" class="selectize-regular custom">
-                                            <option value="">По умолчанию</option>
-                                            <option value="Рейтинг - по убыванию">Рейтинг - по убыванию</option>
-                                            <option value="Рейтинг - по возрастанию">Рейтинг - по возрастанию</option>
-                                            <option value="Стоимость - по убыванию">Стоимость - по убыванию</option>
-                                            <option value="Стоимость - по возрастанию">Стоимость - по возрастанию</option>
+                                        <select name="course_sort" placeholder="{{__('default.pages.courses.choose_sort_type')}}" class="selectize-regular custom">
+                                            <option value="">{{__('default.pages.courses.sort_by_default')}}</option>
+                                            <option value="sort_by_rate_high" {{($request->course_sort == 'sort_by_rate_high' ? 'selected' : '')}}>{{__('default.pages.courses.sort_by_rate_high')}}</option>
+                                            <option value="sort_by_rate_low" {{($request->course_sort == 'sort_by_rate_low' ? 'selected' : '')}}>{{__('default.pages.courses.sort_by_rate_low')}}</option>
+                                            <option value="sort_by_cost_high" {{($request->course_sort == 'sort_by_cost_high' ? 'selected' : '')}}>{{__('default.pages.courses.sort_by_cost_high')}}</option>
+                                            <option value="sort_by_cost_low" {{($request->course_sort == 'sort_by_cost_low' ? 'selected' : '')}}>{{__('default.pages.courses.sort_by_cost_low')}}</option>
                                         </select>
                                     </div>
                                 </div>
