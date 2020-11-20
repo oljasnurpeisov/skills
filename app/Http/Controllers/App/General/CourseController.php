@@ -212,7 +212,7 @@ class CourseController extends Controller
             if ($professions != []) {
                 $q->whereIn('professions.id', $professions);
             }
-        })->where('fl_check', '=', '1')->where('fl_show', '=', '1')->limit(50)->get();
+        })->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->limit(50)->get();
 
         return $skills;
     }

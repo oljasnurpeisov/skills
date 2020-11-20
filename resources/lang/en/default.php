@@ -20,7 +20,9 @@ return [
             'course_materials' => 'Материалы курса',
             'course_description' => 'Описание курса',
             'profession' => 'Профессия',
+            'choose_profession' => 'Выберите профессию',
             'skill' => 'Навык',
+            'choose_skill' => 'Выберите навык',
             'language_education' => 'Язык обучения',
             'language_education_kk' => 'Казахский',
             'language_education_ru' => 'Русский',
@@ -51,8 +53,8 @@ return [
             'send_rate_button_title' => 'Отправить',
             'report_title' => 'Отчет',
             'free_title' => 'Бесплатно',
-            'access_by_quota' => 'Доступен по квоте'
-
+            'access_by_quota' => 'Доступен по квоте',
+            'apply_title' => 'Применить'
 
         ],
         'lessons' => [
@@ -160,6 +162,10 @@ return [
             'average_rate' => 'Средняя оценка',
             'export' => 'Экспорт'
 
+        ],
+
+        'auth' => [
+          'student_login_author_exist' => 'Аккаунт с этой почтой уже зарегистрирован как автор'
         ],
     ],
 

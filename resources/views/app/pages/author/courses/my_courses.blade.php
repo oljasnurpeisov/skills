@@ -91,17 +91,17 @@
                         <form class="sidebar">
                             <div class="sidebar__inner">
                                 <div class="sidebar-item">
-                                    <div class="sidebar-item__title">Профессия:</div>
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.profession')}}:</div>
                                     <div class="sidebar-item__body">
-                                        <select name="speciality" placeholder="Выберите профессию"
+                                        <select name="speciality" placeholder="{{__('default.pages.courses.choose_profession')}}"
                                                 data-method="getProfessionsByName"
                                                 class="custom" multiple> </select>
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
-                                    <div class="sidebar-item__title">Навык:</div>
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.skill')}}:</div>
                                     <div class="sidebar-item__body">
-                                        <select name="skills" placeholder="Выберите навык" data-method="getSkillsByData"
+                                        <select name="skills" placeholder="{{__('default.pages.courses.choose_skill')}}" data-method="getSkillsByData"
                                                 class="custom" multiple> </select>
                                     </div>
                                 </div>
@@ -157,7 +157,7 @@
                                 </div>
                             </div>
                             <div class="sidebar__buttons">
-                                <button type="submit" class="sidebar-btn">Применить</button>
+                                <button type="submit" class="sidebar-btn">{{__('default.pages.courses.apply_title')}}</button>
                             </div>
                         </form>
                     </div>

@@ -100,6 +100,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
     Route::group(["middleware" => ["web"], "namespace" => "Author"], function () {
         // Сохранение файлов
         Route::post('/ajax_upload_image', 'AjaxUploadController@ajax_upload_image');
+        Route::post('/ajaxUploadCertificates', 'AjaxUploadController@ajaxUploadCertificates');
 
     });
 
@@ -112,7 +113,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::get("/course-catalog/course/{item}", "CourseController@courseView");
             // Фильтр
             Route::post("/course-catalog-filter", "CourseController@courseCatalogFilter");
-            // Тестовый фильтр
+
             Route::post("/getProfessionsByName", "CourseController@getProfessionsByName");
             Route::post("/getSkillsByData", "CourseController@getSkillsByData");
 //            Route::post("/getSkillsByName", "CourseController@getSkillsByName");

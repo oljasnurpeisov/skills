@@ -42,9 +42,9 @@ class SkillsUpdate extends Command
                 $skill['fl_check'] = 1;
             }
             if($skill['fl_show'] == null){
-                $skill['fl_check'] = 1;
+                $skill['fl_show'] = 1;
             }else{
-                $skill['fl_check'] = 0;
+                $skill['fl_show'] = 0;
             }
             $user = Skill::updateOrCreate([
                 'code_skill' => $skill['codskill']

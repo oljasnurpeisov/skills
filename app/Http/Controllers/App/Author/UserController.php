@@ -82,34 +82,6 @@ class UserController extends Controller
         return view("app.pages.author.profile.change_password", [
             "user" => $user,
         ]);
-//        $xml = XmlParser::load(url('https://iac2:Iac2007RBD@www.enbek.kz/feed/resume/cl_hard_skills.xml'));
-//
-//        $skills = $xml->parse([
-//            'data' => ['uses' => 'row[field(::name=@)]'],
-//        ]);
-//
-//        foreach (array_values($skills)[0] as $skill) {
-//            if($skill['fl_check'] == 'x'){
-//                $skill['fl_check'] = 0;
-//            }else{
-//                $skill['fl_check'] = 1;
-//            }
-//            if($skill['fl_show'] == null){
-//                $skill['fl_show'] = 1;
-//            }else{
-//                $skill['fl_show'] = 0;
-//            }
-//            $user = Skill::updateOrCreate([
-//                'code_skill' => $skill['codskill']
-//            ], [
-//                'fl_check' => $skill['fl_check'],
-//                'name_ru' => $skill['name_skill'],
-//                'name_kk' => $skill['name_skill_kz'],
-//                'fl_show' => $skill['fl_show'],
-//                'uid' => $skill['uid'],
-//            ]);
-//        }
-//        return '';
     }
 
     public function update_password(Request $request)
@@ -288,6 +260,7 @@ class UserController extends Controller
             $item->vk_link = $request->vk_link;
             $item->fb_link = $request->fb_link;
             $item->instagram_link = $request->instagram_link;
+            $item->certificates = $request->certificates;
 
             if (($request->avatar != $item->avatar)) {
                 File::delete(public_path($item->avatar));
@@ -295,19 +268,6 @@ class UserController extends Controller
                 $item->avatar = $request->avatar;
             }
 
-
-
-            if ($request->hasFile('certificates')) {
-                $names = [];
-                foreach ($request->file('certificates') as $key => $certificate) {
-                    File::delete(public_path($certificate));
-                    $filename = time() . $key . '.' . $certificate->getClientOriginalExtension();
-                    $certificate->move(public_path('images/certificates'), $filename);
-                    array_push($names, '/images/certificates/' . $filename);
-
-                }
-                $item->certificates = json_encode($names);
-            }
 
             $item->save();
         } else {
@@ -323,24 +283,25 @@ class UserController extends Controller
             $item->vk_link = $request->vk_link;
             $item->fb_link = $request->fb_link;
             $item->instagram_link = $request->instagram_link;
+            $item->certificates = $request->certificates;
 
-            if (!empty($request->avatar)) {
+            if (!empty($request->avatar != $item->avatar)) {
                 File::delete(public_path($item->avatar));
 
                 $item->avatar = $request->avatar;
             }
 
-            if ($request->hasFile('certificates')) {
-                $names = [];
-                foreach ($request->file('certificates') as $key => $certificate) {
-                    File::delete(public_path($certificate));
-                    $filename = time() . $key . '.' . $certificate->getClientOriginalExtension();
-                    $certificate->move(public_path('images/certificates'), $filename);
-                    array_push($names, '/images/certificates/' . $filename);
-
-                }
-                $item->certificates = json_encode($names);
-            }
+//            if ($request->hasFile('certificates')) {
+//                $names = [];
+//                foreach ($request->file('certificates') as $key => $certificate) {
+//                    File::delete(public_path($certificate));
+//                    $filename = time() . $key . '.' . $certificate->getClientOriginalExtension();
+//                    $certificate->move(public_path('images/certificates'), $filename);
+//                    array_push($names, '/images/certificates/' . $filename);
+//
+//                }
+//                $item->certificates = json_encode($names);
+//            }
             $item->save();
         }
 

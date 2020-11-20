@@ -499,15 +499,17 @@
                                     <td>{{$lesson->name}}&nbsp;&nbsp;
                                         @auth
                                             @if(Auth::user()->roles()->first()->id == 5)
-                                                @if(!empty($lesson->lesson_student))
+                                                @if(!empty($student_course))
                                                     {{--{{$lesson}}--}}
-                                                    @if($lesson->lesson_student->is_finished != true)
-                                                        <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}"
-                                                           class="btn btn-warning"><i class="fa fa-eye"></i></a>
-                                                    @else
-                                                        <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}"
-                                                           class="btn btn-success"><i class="fa fa-check"></i></a>
-                                                    @endif
+                                                    <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}"
+                                                       class="btn btn-warning"><i class="fa fa-eye"></i></a>
+{{--                                                    @if($lesson->lesson_student->is_finished != true)--}}
+{{--                                                        <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}"--}}
+{{--                                                           class="btn btn-warning"><i class="fa fa-eye"></i></a>--}}
+{{--                                                    @else--}}
+{{--                                                        <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}"--}}
+{{--                                                           class="btn btn-success"><i class="fa fa-check"></i></a>--}}
+{{--                                                    @endif--}}
                                                 @endif
                                             @endif
                                         @endauth
@@ -599,7 +601,7 @@
                                                     <div class="modal-body">
                                                         <p>Вы уверены, что хотите записаться на выбранный курс?</p>
 
-                                                        @if($item->quota_status == 3)
+                                                        @if($item->quota_status == 2)
                                                             <div class="form-check">
                                                                 <input type="checkbox" class="form-check-input"
                                                                        id="quota_check"

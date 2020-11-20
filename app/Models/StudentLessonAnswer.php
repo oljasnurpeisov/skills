@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $student_id
  * @property int|null $lesson_id
  * @property int $type 0 - домашняя работа, 1 - курсовая работа
- * @property string|null $text_answer
+ * @property string|null $answer
  * @property string|null $attachments
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at

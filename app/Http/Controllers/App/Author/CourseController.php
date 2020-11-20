@@ -24,7 +24,7 @@ class CourseController extends Controller
 
     public function createCourse($lang)
     {
-        $skills = Skill::where('fl_show', '=', 1)->where('fl_check', '=', 1)->orderBy('name_' . $lang, 'asc')->get();
+        $skills = Skill::where('fl_show', '=', 1)->where('fl_check', '=', 1)->where('uid', '=', null)->orderBy('name_' . $lang, 'asc')->get();
         return view("app.pages.author.courses.create_course", [
             "items" => [],
             "skills" => $skills
@@ -504,7 +504,7 @@ class CourseController extends Controller
                     $current_skills = Skill::whereHas('courses', function ($query) use ($item) {
                         $query->where('courses.id', '=', $item->id);
                     })->get();
-                    $skills = Skill::where('fl_show', '=', 1)->where('fl_check', '=', 1)->get();
+                    $skills = Skill::where('fl_show', '=', 1)->where('fl_check', '=', 1)->where('uid', '=', null)->get();
                     return view("app.pages.author.courses.edit_course", [
                         "item" => $item,
                         "current_skills" => $current_skills,

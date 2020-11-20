@@ -80,4 +80,10 @@ class Lesson extends Model
     {
         return $this->hasOne(StudentLesson::class, 'lesson_id', 'id');
     }
+
+    public function student_lessons() {
+
+        return $this->hasMany(StudentLesson::class,'lesson_id', 'id');
+
+    }
 }

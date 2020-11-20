@@ -216,7 +216,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.profile.certificates')}}</label>
-                                    <div data-url="https://dev3.panama.kz/ajaxUploadFilesTest" data-maxfiles="15"
+                                    <div data-url="{{env('APP_URL')}}/ajaxUploadCertificates?_token={{ csrf_token() }}" data-maxfiles="15"
                                          data-maxsize="20" data-acceptedfiles=".pdf, .png, .jpg"
                                          id="certificates-dropzone"
                                          class="dropzone-default dropzone-multiple">
@@ -228,7 +228,7 @@
                                            title="{{__('default.pages.profile.add_files_btn_title')}}"
                                            class="dropzone-default__link">{{__('default.pages.profile.add_files_btn_title')}}</a>
                                     </div>
-                                    <input type="hidden" name="certificates" value="">
+                                    <input type="hidden" name="certificates" value="{{$item->certificates}}">
                                 </div>
                                 <div class="buttons">
                                     <button type="submit"

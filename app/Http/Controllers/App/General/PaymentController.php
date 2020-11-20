@@ -27,7 +27,7 @@ class PaymentController extends Controller
                 $student_course->student_id = Auth::user()->id;
                 $student_course->save();
 
-                $this->syncUserLessons($item->id);
+//                $this->syncUserLessons($item->id);
 
                 return redirect()->back()->with('status', __('default.pages.courses.pay_course_success'));
             } else {
@@ -97,7 +97,7 @@ class PaymentController extends Controller
                 $student_course->student_id = Auth::user()->id;
                 $student_course->save();
 
-                $this->syncUserLessons($item->id);
+//                $this->syncUserLessons($item->id);
 
                 $student_info->quota_count = $student_info->quota_count - 1;
                 $student_info->save();
@@ -143,36 +143,6 @@ class PaymentController extends Controller
                     $student_course->save();
 
                 }
-
-                $student = User::where('id', '=', $json->metadata->student_id)->first();
-
-                $course = Course::where('id', '=', $json->metadata->course_id)->first();
-                $lessons = Lesson::where('theme_id','!=', null)->orderBy('index_number', 'asc')->where('course_id', '=', $course->id)->get();
-                $lessons_tests = Lesson::whereIn('type', [3,4])->orderBy('index_number', 'asc')->where('course_id', '=', $course->id)->get();
-                $lessons = $lessons->concat($lessons_tests);
-
-                $lesson_ids = [];
-
-                foreach ($lessons as $key => $lesson) {
-                    if ($course->is_access_all == false) {
-                        if ($key == 0) {
-                            $lesson_ids[$lesson->id] = ['is_access' => true];
-                        } else {
-                            $lesson_ids[$lesson->id] = ['is_access' => false];
-                        }
-                    } else {
-                        if(!in_array($lesson->type, [3,4])) {
-                            $lesson_ids[$lesson->id] = ['is_access' => true];
-                        }else if(in_array($lesson->type, [3,4]) and $key == 0){
-                            $lesson_ids[$lesson->id] = ['is_access' => true];
-                        }else{
-                            $lesson_ids[$lesson->id] = ['is_access' => false];
-                        }
-                    }
-                }
-
-                $student->student_lesson()->sync($lesson_ids, false);
-
 
             }
 

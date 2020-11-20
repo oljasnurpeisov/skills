@@ -123,7 +123,7 @@ class UserController extends Controller
 
         } else {
             if ($user->roles()->first()->id != $student_role) {
-                return redirect()->back()->with('status', __('Аккаунт с этой почтой уже зарегистрирован как автор'));
+                return redirect()->back()->with('status', __('default.pages.auth.student_login_author_exist'));
             }
             Session::put('student_token', $token);
             Auth::login($user);

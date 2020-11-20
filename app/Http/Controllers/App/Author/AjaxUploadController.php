@@ -26,6 +26,10 @@ class AjaxUploadController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
+
+    public $imageMaxSize = '1024';
+    public $fileMaxSize = '25000';
+
     public function ajax_upload_image(Request $request)
     {
         $this->validate($request, [
@@ -34,9 +38,9 @@ class AjaxUploadController extends Controller
 
         $file = $request->file;
         $imageName = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/images'), $imageName);
+        $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/profile/images'), $imageName);
 
-        return Response::json(array('location' => config('APP_URL') . '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/images/' . $imageName));
+        return Response::json(array('location' => config('APP_URL') . '/users/user_' . Auth::user()->getAuthIdentifier() . '/profile/images/' . $imageName));
     }
 
     /**
@@ -44,6 +48,20 @@ class AjaxUploadController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    public function ajaxUploadCertificates(Request $request)
+    {
+
+        $data = [];
+        foreach($request->file('files') as $file)
+        {
+            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/profile/files'), $name);
+            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/profile/files/'.$name);
+        }
+
+        return Response::json(array('filenames' => $data));
+    }
+
     public function ajax_upload_file()
     {
         $rules = array(
@@ -64,8 +82,7 @@ class AjaxUploadController extends Controller
         }
     }
 
-    public $imageMaxSize = '1024';
-    public $fileMaxSize = '25000';
+
 
     public function ajaxUploadPic(Request $request)
     {
@@ -112,44 +129,6 @@ class AjaxUploadController extends Controller
             'success' => true,
             'location' => config('APP_URL') . '/files/' . $imageName
         ));
-    }
-
-
-
-    // Тест для Айтана
-    public function ajaxUploadPicTest(Request $request)
-    {
-//        if ($request->header('Origin') !== env('APP_URL')) {
-//            return Response::json(array('success' => false));
-//        }
-
-        $this->validate($request, [
-            "file" => "image|required|max:$this->imageMaxSize|mimes:png,jpg,jpeg"
-        ]);
-
-        $file = $request->file;
-        $imageName = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('images/test/'), $imageName);
-
-//        Buffet::log('upload_img', '', '', $imageName);
-
-        return Response::json(array('location' => config('APP_URL') . '/images/test/' . $imageName));
-    }
-
-    public function ajaxUploadFilesTest(Request $request)
-    {
-
-//        if($request->hasfile('filenames'))
-//        {
-        $data = [];
-        foreach($request->file('files') as $file)
-        {
-            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
-            $file->move(public_path('images/test/files/'), $name);
-            array_push($data, $name);
-        }
-
-        return Response::json(array('filenames' => $data));
     }
 
 
