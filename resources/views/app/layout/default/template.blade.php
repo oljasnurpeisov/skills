@@ -10,10 +10,10 @@
     @include('app.layout.default.components.header')
     @yield('content')
 
+    @include('app.layout.default.components.footer')
+    @include('app.layout.default.components.scripts')
+    @include('app.layout.default.components.modals')
+    @yield('scripts')
 </div>
-@include('app.layout.default.components.footer')
-@include('app.layout.default.components.scripts')
-@include('app.layout.default.components.modals')
-@yield('scripts')
 </body>
 </html>

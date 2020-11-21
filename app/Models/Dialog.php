@@ -45,8 +45,10 @@ class Dialog extends Model
 
         if($member->roles()->first()->slug == 'author'){
             $name = $member->author_info->name;
+            $avatar = $member->author_info->avatar;
         }else if($member->roles()->first()->slug == 'student'){
             $name = 'Обучающийся';
+            $avatar = $member->student_info->avatar;
         }else{
             $name = '';
         }
@@ -54,6 +56,7 @@ class Dialog extends Model
         return (object)[
             'id' => $member->id,
             'name' => $name,
+            'avatar' => $avatar
 //            'slug' => $member->slug,
 //            'avatar' => $member->avatar,
         ];

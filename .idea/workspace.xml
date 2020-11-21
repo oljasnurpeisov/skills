@@ -2,18 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/assets/js/course-edit.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/js/lesson-create.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/js/test-constructor.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/PageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/js/ajax-select.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ajax-select.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/scripts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/DialogController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/DialogController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Dialog.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Dialog.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/app/layout/default/components/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/header.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/my_courses.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/my_courses.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/notifications/notifications.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/notifications/notifications.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/layout/default/template.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/layout/default/template.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/dialogs/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/dialogs/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/dialogs/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/dialogs/view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,7 +251,7 @@
       <workItem from="1605698690159" duration="54681000" />
       <workItem from="1605801438576" duration="33971000" />
       <workItem from="1605966192343" duration="573000" />
-      <workItem from="1605967156794" duration="6906000" />
+      <workItem from="1605967156794" duration="9631000" />
     </task>
     <task id="LOCAL-00001" summary="- update routes">
       <created>1603898521230</created>
@@ -515,7 +512,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605965488571</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="- minor fix notifications &#10;- change styles and scripts">
+      <created>1605986101799</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1605986101799</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TodoView">
@@ -531,7 +535,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add coursework" />
     <MESSAGE value="- refractor CourseController" />
     <MESSAGE value="- add course rate" />
     <MESSAGE value="- payment access fix" />
@@ -556,7 +559,8 @@
     <MESSAGE value="- add student course catalog" />
     <MESSAGE value="- header fix" />
     <MESSAGE value="- add footer translates&#10;- add notifications" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add footer translates&#10;- add notifications" />
+    <MESSAGE value="- minor fix notifications &#10;- change styles and scripts" />
+    <option name="LAST_COMMIT_MESSAGE" value="- minor fix notifications &#10;- change styles and scripts" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -575,10 +579,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1605865240143" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1605965479432">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1605986095652">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605965479432" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605986095652" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1605559122928">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

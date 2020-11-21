@@ -133,6 +133,9 @@ return [
         'dialogs' => [
             'title' => 'Мои диалоги',
             'you_title' => 'Вы',
+            'open_dialog' => 'Открыть диалог',
+            'message_text_placeholder' => 'Введите сообщение',
+            'message_send_button' => 'Отправить',
         ],
 
         'statistics' => [

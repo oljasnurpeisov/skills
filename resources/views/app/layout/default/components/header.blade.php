@@ -113,7 +113,7 @@
                                    title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                             </li>
                         @endif
-                        <li><a href="#"
+                        <li><a href="/{{$lang}}/dialogs"
                                title="{{__('default.pages.dialogs.title')}}">{{__('default.pages.dialogs.title')}}</a>
                         </li>
                         @if(Auth::user()->roles()->first()->slug == 'author')
@@ -216,7 +216,7 @@
                            title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                     </li>
                 @endif
-                <li><a href="#" title="{{__('default.pages.dialogs.title')}}">{{__('default.pages.dialogs.title')}}</a>
+                <li><a href="/{{$lang}}/dialogs" title="{{__('default.pages.dialogs.title')}}">{{__('default.pages.dialogs.title')}}</a>
                 </li>
                 @if(Auth::user()->roles()->first()->slug == 'author')
                     <li><a href="/{{$lang}}/my-courses/reporting"

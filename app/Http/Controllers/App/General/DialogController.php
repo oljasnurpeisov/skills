@@ -70,7 +70,7 @@ class DialogController extends Controller
 
         return view("app.pages.general.dialogs.view", [
             "item" => $item,
-            "messages" => $messages,
+            "messages" => $messages
         ]);
     }
 
