@@ -26,24 +26,20 @@
             <!--<a href="#" title="Помощь" class="ghost-btn ghost-btn&#45;&#45;blue small">Помощь</a>-->
             <div class="header-dropdown notifications">
                 <div class="header-dropdown__title">
-                    <a href="#" title="Уведомления" class="btn-icon small btn-icon--transparent icon-notification"> </a>
+                    <a href="#" title="{{__('notifications.title')}}"
+                       class="btn-icon small btn-icon--transparent icon-notification"> </a>
                 </div>
                 <div class="header-dropdown__desc">
+                    @php($notifications = Auth::user()->notifications()->limit(3)->get())
                     <ul>
-                        <li><span>Чтобы стать автором, подтвердите свой E-mail</span></li>
-                        <li class="break">
-                            <hr>
-                        </li>
-                        <li><span>Текст уведомления <a href="#" title="Ссылка в уведомлении">Ссылка в уведомлении</a> продолжение текста</span>
-                        </li>
-                        <li class="break">
-                            <hr>
-                        </li>
-                        <li><span>Добро пожаловать на сервис Enbek.kz</span></li>
-                        <li class="break">
-                            <hr>
-                        </li>
-                        <li><a href="/notifications.html" title="Все уведомления" class="blue">Все уведомления <i
+                        @foreach($notifications as $notification)
+                            <li><span>{!!trans($notification->name, ['course_name' => '"'.$notification->course->name.'"'])!!}</span></li>
+                            <li class="break">
+                                <hr>
+                            </li>
+                        @endforeach
+                        <li><a href="/{{$lang}}/notifications" title="{{__('notifications.all_notifications')}}"
+                               class="blue">{{__('notifications.all_notifications')}} <i
                                         class="icon-chevron-right"> </i></a></li>
                     </ul>
                 </div>
@@ -97,7 +93,8 @@
                                    title="{{__('default.pages.reporting.title')}}">{{__('default.pages.reporting.title')}}</a>
                             </li>
                         @endif
-                        <li><a href="#" title="{{__('notifications.title')}}">{{__('notifications.title')}}</a></li>
+                        <li><a href="/{{$lang}}/notifications"
+                               title="{{__('notifications.title')}}">{{__('notifications.title')}}</a></li>
                         <li class="break">
                             <hr>
                         </li>
@@ -144,7 +141,7 @@
         </div>
         <div class="mobile-buttons">
             <div class="notifications-btn mob-overlay-btn" data-target="notifications-mobile">
-                <i class="icon-notification"> </i>
+                <a href="/{{$lang}}/notifications"><i class="icon-notification"> </i></a>
             </div>
             <div class="menu-btn mob-overlay-btn" data-target="header-mobile">
                 <i class="icon-menu"> </i>
@@ -198,7 +195,8 @@
                            title="{{__('default.pages.reporting.title')}}">{{__('default.pages.reporting.title')}}</a>
                     </li>
                 @endif
-                <li><a href="#" title="{{__('notifications.title')}}">{{__('notifications.title')}}</a></li>
+                <li><a href="/{{$lang}}/notifications"
+                       title="{{__('notifications.title')}}">{{__('notifications.title')}}</a></li>
                 <li><a href="/{{$lang}}/logout"
                        title="{{__('default.pages.profile.logout_title')}}">{{__('default.pages.profile.logout_title')}}</a>
                 </li>

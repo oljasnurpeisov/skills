@@ -122,6 +122,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                 Route::get("/dialogs", "DialogController@index");
                 Route::get('/dialog/opponent-{id}', 'DialogController@view');
                 Route::post('/dialog-{dialog}/message/create', 'DialogController@save');
+                // Уведомления
+                Route::get("/notifications", "PageController@notifications");
             });
 
         });

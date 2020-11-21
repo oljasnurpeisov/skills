@@ -2,26 +2,26 @@
     <div class="container">
         <div class="row row--multiline">
             <div class="col-md-5">
-                <h4 class="footer__title">Основные ссылки</h4>
+                <h4 class="footer__title">{{__('default.pages.footer.main_links')}}</h4>
                 <ul class="site-map">
-                    <li><a href="#" title="Главная">Главная</a></li>
-                    <li><a href="#" title="Enbek.kz">Enbek.kz</a></li>
-                    <li><a href="#" title="Преподаватель">Преподаватель</a></li>
-                    <li><a href="#" title="О нас">О нас</a></li>
-                    <li><a href="#" title="FAQ">FAQ</a></li>
-                    <li><a href="#" title="Обратная связь">Обратная связь</a></li>
+                    <li><a href="/{{$lang}}" title="{{__('default.main_title')}}">{{__('default.main_title')}}</a></li>
+                    <li><a href="https://www.enbek.kz/" title="{{__('default.pages.footer.enbek_kz')}}" target="_blank">{{__('default.pages.footer.enbek_kz')}}</a></li>
+                    <li><a href="#" title="{{__('default.pages.footer.teacher_title')}}">{{__('default.pages.footer.teacher_title')}}</a></li>
+                    <li><a href="#" title="{{__('default.pages.footer.about_us')}}">{{__('default.pages.footer.about_us')}}</a></li>
+                    <li><a href="#" title="{{__('default.pages.footer.faq')}}">{{__('default.pages.footer.faq')}}</a></li>
+                    <li><a href="#" title="{{__('default.pages.footer.feedback')}}">{{__('default.pages.footer.feedback')}}</a></li>
                 </ul>
             </div>
             <div class="col-md-4">
-                <h4 class="footer__title">Контакты</h4>
+                <h4 class="footer__title">{{__('default.pages.footer.contacts')}}</h4>
                 <div class="footer__contacts">
-                    <p><span>Адрес:</span> г.Нур-Султан, проспект Мангилик Ел, 8</p>
-                    <p><span>E-mail:</span> <a href="mailto:info@enbek.kz" title="info@enbek.kz">info@enbek.kz</a></p>
-                    <p><span>Телефон:</span> <a href="tel:1411" title="1411">1411</a></p>
+                    <p><span>{{__('default.pages.footer.address_title')}}:</span> {{__('default.pages.footer.address')}}</p>
+                    <p><span>{{__('default.pages.footer.email_title')}}:</span> <a href="mailto:{{__('default.pages.footer.email')}}" title="{{__('default.pages.footer.email')}}">{{__('default.pages.footer.email')}}</a></p>
+                    <p><span>{{__('default.pages.footer.phone_title')}}:</span> <a href="tel:{{__('default.pages.footer.phone')}}" title="{{__('default.pages.footer.phone')}}">{{__('default.pages.footer.phone')}}</a></p>
                 </div>
             </div>
             <div class="col-md-3">
-                <h4 class="footer__title">Социальные сети</h4>
+                <h4 class="footer__title">{{__('default.pages.footer.social_networks')}}</h4>
                 <ul class="socials">
                     <li><a href="#" title="" class="icon-instagram"> </a></li>
                     <li><a href="#" title="" class="icon-twitter"> </a></li>

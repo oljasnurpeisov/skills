@@ -172,6 +172,24 @@ return [
         'auth' => [
           'student_login_author_exist' => 'Аккаунт с этой почтой уже зарегистрирован как автор'
         ],
+
+        'footer' => [
+            'teacher_title' => 'Преподаватель',
+            'about_us' => 'О нас',
+            'enbek_kz' => 'Enbek.kz',
+            'faq' => 'FAQ',
+            'feedback' => 'Обратная связь',
+            'main_links' => 'Основные ссылки',
+            'contacts' => 'Контакты',
+            'address_title' => 'Адрес',
+            'address' => 'г.Нур-Султан, проспект Мангилик Ел, 8',
+            'email_title' => 'E-mail',
+            'email' => 'info@enbek.kz',
+            'phone_title' => 'Телефон',
+            'phone' => '1411',
+            'social_networks' => 'Социальные сети',
+
+        ],
     ],
 
 ];

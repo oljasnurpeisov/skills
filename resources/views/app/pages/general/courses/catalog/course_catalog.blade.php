@@ -17,61 +17,63 @@
                         <div class="row row--multiline">
                             <div class="col-auto col-grow-1">
                                 <input type="text" name="search" class="input-regular"
-                                       placeholder="{{__('default.pages.courses.search_placeholder')}}" value="{{$request->search}}">
+                                       placeholder="{{__('default.pages.courses.search_placeholder')}}"
+                                       value="{{$request->search}}">
                             </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn">{{__('default.pages.courses.search_button')}}</button>
                             </div>
                         </div>
                     </div>
-{{--                </form>--}}
+                    {{--                </form>--}}
 
-                <div class="row row--multiline">
-                    <div class="col-md-8">
-                        <div class="row row--multiline">
-                            @foreach($items as $item)
-                                <div class="col-sm-6 col-md-4">
-                                    <a href="#" title="" class="card">
-                                        @if($item->quota_status == 2)
-                                            <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
-                                        @endif
-                                        <div class="card__image">
-                                            <img src="{{$item->image}}" alt="">
-                                        </div>
-                                        <div class="card__desc">
-                                            <div class="card__top">
-                                                @if($item->is_paid == true)
-                                                    <div class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
-                                                @else
-                                                    <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
-                                                @endif
-                                                <h3 class="card__title">{{$item->name}}</h3>
-                                                <div class="card__author">{{$item->user->company_name}}</div>
+                    <div class="row row--multiline">
+                        <div class="col-md-8">
+                            <div class="row row--multiline">
+                                @foreach($items as $item)
+                                    <div class="col-sm-6 col-md-4">
+                                        <a href="#" title="" class="card">
+                                            @if($item->quota_status == 2)
+                                                <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
+                                            @endif
+                                            <div class="card__image">
+                                                <img src="{{$item->image}}" alt="">
                                             </div>
-                                            <div class="card__bottom">
-                                                <div class="card__attribute">
-                                                    <i class="icon-user"> </i><span>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</span>
+                                            <div class="card__desc">
+                                                <div class="card__top">
+                                                    @if($item->is_paid == true)
+                                                        <div class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                                                    @else
+                                                        <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
+                                                    @endif
+                                                    <h3 class="card__title">{{$item->name}}</h3>
+                                                    <div class="card__author">{{$item->user->company_name}}</div>
                                                 </div>
-                                                <div class="card__attribute">
-                                                    <i class="icon-star-full"> </i><span>{{$item->rate->pluck('rate')->avg() ?? 0}}</span>
+                                                <div class="card__bottom">
+                                                    <div class="card__attribute">
+                                                        <i class="icon-user"> </i><span>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</span>
+                                                    </div>
+                                                    <div class="card__attribute">
+                                                        <i class="icon-star-full"> </i><span>{{$item->rate->pluck('rate')->avg() ?? 0}}</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            @endforeach
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="text-center">
+                                {{ $items->appends(request()->input())->links('vendor.pagination.default') }}
+                            </div>
                         </div>
-                        <div class="text-center">
-                            {{ $items->appends(request()->input())->links('vendor.pagination.default') }}
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-{{--                        <form class="sidebar">--}}
+                        <div class="col-md-4">
+                            {{--                        <form class="sidebar">--}}
                             <div class="sidebar__inner">
                                 <div class="sidebar-item">
                                     <div class="sidebar-item__title">{{__('default.pages.courses.profession')}}:</div>
                                     <div class="sidebar-item__body">
-                                        <select name="speciality" placeholder="{{__('default.pages.courses.choose_profession')}}"
+                                        <select name="speciality"
+                                                placeholder="{{__('default.pages.courses.choose_profession')}}"
                                                 data-method="getProfessionsByName"
                                                 class="custom" multiple> </select>
                                     </div>
@@ -79,7 +81,8 @@
                                 <div class="sidebar-item">
                                     <div class="sidebar-item__title">{{__('default.pages.courses.skill')}}:</div>
                                     <div class="sidebar-item__body">
-                                        <select name="skills" placeholder="{{__('default.pages.courses.choose_skill')}}" data-method="getSkillsByData"
+                                        <select name="skills" placeholder="{{__('default.pages.courses.choose_skill')}}"
+                                                data-method="getSkillsByData"
                                                 class="custom" multiple> </select>
                                     </div>
                                 </div>
@@ -92,7 +95,9 @@
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.language_education')}}:</div>
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.language_education')}}
+                                        :
+                                    </div>
                                     <div class="sidebar-item__body">
                                         <label class="checkbox"><input type="checkbox" name="lang_kk"
                                                                        value="1" {{($request->lang_kk == 1 ? ' checked' : '')}}><span>{{__('default.pages.courses.language_education_kk')}}</span></label>
@@ -104,24 +109,31 @@
                                     <div class="sidebar-item__title">{{__('default.pages.courses.rating_from')}}:</div>
                                     <div class="sidebar-item__body">
                                         <div class="range-slider-wrapper">
-                                            <input type="range" class="range-slider single-range-slider" name="min_rating" min="0"
-                                                   data-decimals="1" step="0.5" max="5" value="{{$request->min_rating ?? 0}}">
+                                            <input type="range" class="range-slider single-range-slider"
+                                                   name="min_rating" min="0"
+                                                   data-decimals="1" step="0.5" max="5"
+                                                   value="{{$request->min_rating ?? 0}}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.students_complete_course')}}:</div>
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.students_complete_course')}}
+                                        :
+                                    </div>
                                     <div class="sidebar-item__body">
                                         <div class="range-slider-wrapper">
-                                            <input type="range" class="range-slider single-range-slider" name="members_count" min="0"
-                                                   data-decimals="0" step="1" max="30" value="{{$request->members_count ?? 0}}">
+                                            <input type="range" class="range-slider single-range-slider"
+                                                   name="members_count" min="0"
+                                                   data-decimals="0" step="1" max="30"
+                                                   value="{{$request->members_count ?? 0}}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
                                     <div class="sidebar-item__title">{{__('default.pages.courses.course_type')}}:</div>
                                     <div class="sidebar-item__body">
-                                        <select name="course_type" class="selectize-regular custom" placeholder="{{__('default.pages.courses.choose_course_type')}}" >
+                                        <select name="course_type" class="selectize-regular custom"
+                                                placeholder="{{__('default.pages.courses.choose_course_type')}}">
                                             <option value="">{{__('default.pages.courses.sort_by_default')}}</option>
                                             <option value="1" {{($request->course_type == 1 ? 'selected' : '')}}>{{__('default.pages.courses.paid_type')}}</option>
                                             <option value="2" {{($request->course_type == 2 ? 'selected' : '')}}>{{__('default.pages.courses.free_type')}}</option>
@@ -132,7 +144,9 @@
                                 <div class="sidebar-item">
                                     <div class="sidebar-item__title">{{__('default.pages.courses.sorting')}}:</div>
                                     <div class="sidebar-item__body">
-                                        <select name="course_sort" placeholder="{{__('default.pages.courses.choose_sort_type')}}" class="selectize-regular custom">
+                                        <select name="course_sort"
+                                                placeholder="{{__('default.pages.courses.choose_sort_type')}}"
+                                                class="selectize-regular custom">
                                             <option value="">{{__('default.pages.courses.sort_by_default')}}</option>
                                             <option value="sort_by_rate_high" {{($request->course_sort == 'sort_by_rate_high' ? 'selected' : '')}}>{{__('default.pages.courses.sort_by_rate_high')}}</option>
                                             <option value="sort_by_rate_low" {{($request->course_sort == 'sort_by_rate_low' ? 'selected' : '')}}>{{__('default.pages.courses.sort_by_rate_low')}}</option>
@@ -143,11 +157,12 @@
                                 </div>
                             </div>
                             <div class="sidebar__buttons">
-                                <button type="submit" class="sidebar-btn">{{__('default.pages.courses.apply_title')}}</button>
+                                <button type="submit"
+                                        class="sidebar-btn">{{__('default.pages.courses.apply_title')}}</button>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </section>
 
