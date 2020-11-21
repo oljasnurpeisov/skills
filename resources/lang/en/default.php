@@ -3,6 +3,7 @@
 return [
 
     'site_name' => 'Enbek',
+    'main_title' => 'Главная',
     'yes_title' => 'Да',
     'no_title' => 'Нет',
     'tenge_title' => 'тг',
