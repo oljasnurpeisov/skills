@@ -51,7 +51,7 @@ class PageController extends Controller
 
     public function notifications(){
 
-        $notifications = Auth::user()->notifications()->paginate(5);
+        $notifications = Auth::user()->notifications()->orderBy('created_at', 'desc')->paginate(5);
 
         return view("app.pages.general.notifications.notifications", [
             'notifications' => $notifications

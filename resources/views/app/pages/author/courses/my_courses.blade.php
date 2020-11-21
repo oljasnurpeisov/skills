@@ -3,16 +3,6 @@
 @section('content')
     <main class="main">
         <section class="plain">
-            @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-error">
-                    {{ session('error') }}
-                </div>
-            @endif
             <div class="container">
                 <div class="title-block">
                     <div class="row row--multiline align-items-center">
@@ -49,6 +39,16 @@
 
                 <div class="row row--multiline">
                     <div class="col-md-8">
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                         <div class="row row--multiline">
                             @foreach($items as $item)
                                 <div class="col-sm-6 col-md-4">

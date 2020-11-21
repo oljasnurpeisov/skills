@@ -30,17 +30,45 @@
                        class="btn-icon small btn-icon--transparent icon-notification"> </a>
                 </div>
                 <div class="header-dropdown__desc">
-                    @php($notifications = Auth::user()->notifications()->limit(3)->get())
+                    @php($notifications = Auth::user()->notifications()->orderBy('created_at', 'desc')->limit(3)->get())
                     <ul>
                         @foreach($notifications as $notification)
-                            <li><span>{!!trans($notification->name, ['course_name' => '"'.$notification->course->name.'"'])!!}</span></li>
-                            <li class="break">
-                                <hr>
-                            </li>
+                            @if($notification->type == 1)
+                                <form method="POST"
+                                      action="/{{$lang}}/my-courses/quota-confirm-course/{{$notification->course->id}}"
+                                      id="quota_confirm_form">
+                                    {{ csrf_field() }}
+                                    <li>
+                                        <span>{!!trans($notification->name, ['course_name' => '"'.$notification->course->name.'"'])!!}</span>
+                                        @if($notification->course->quota_status == 1)
+                                            <div class="buttons">
+                                                <button name="action" value="confirm"
+                                                        title="{{__('notifications.confirm_btn_title')}}"
+                                                        class="btn small">{{__('notifications.confirm_btn_title')}}</button>
+                                                <button name="action" value="reject" style="background-color: white"
+                                                        title="{{__('notifications.reject_btn_title')}}"
+                                                        class="ghost-btn small">{{__('notifications.reject_btn_title')}}</button>
+                                            </div>
+                                        @endif
+                                    </li>
+                                </form>
+                                <li class="break">
+                                    <hr>
+                                </li>
+                            @else
+                                <li>
+                                    <span>{!!trans($notification->name, ['course_name' => '"'.$notification->course->name.'"'])!!}</span>
+                                </li>
+                                <li class="break">
+                                    <hr>
+                                </li>
+                            @endif
                         @endforeach
-                        <li><a href="/{{$lang}}/notifications" title="{{__('notifications.all_notifications')}}"
+                        <li><a href="/{{$lang}}/notifications"
+                               title="{{__('notifications.all_notifications')}}"
                                class="blue">{{__('notifications.all_notifications')}} <i
                                         class="icon-chevron-right"> </i></a></li>
+
                     </ul>
                 </div>
             </div>

@@ -626,17 +626,16 @@ class CourseController extends Controller
             $notification->type = 0;
             $notification->save();
 
-            $notification = new Notification;
-            $notification->name = 'notifications.course_quota_access';
-            $notification->course_id = $item->id;
-            $notification->type = 0;
-            $notification->save();
-
-            array_push($recipients_array, $author_course);
+            $notification_1 = new Notification;
+            $notification_1->name = 'notifications.course_quota_access';
+            $notification_1->course_id = $item->id;
+            $notification_1->type = 0;
+            $notification_1->save();
 
             $notification->users()->sync($recipients_array);
+            $notification_1->users()->sync([$item->author_id]);
 
-            return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('notifications.confirm_quota_description'));
+            return redirect()->back()->with('status', trans('notifications.course_quota_access', ['course_name' => '"'.$item->name.'"']));
         } else {
             $item->quota_status = 3;
             $item->save();
@@ -648,7 +647,7 @@ class CourseController extends Controller
             $notification->save();
 
             $notification->users()->sync($recipients_array);
-            return redirect("/" . app()->getLocale() . "/my-courses")->with('error', __('notifications.course_quota_access_denied'));
+            return redirect()->back()->with('error', trans('notifications.course_quota_access_denied', ['course_name' => '"'.$item->name.'"']));
         }
 
 
