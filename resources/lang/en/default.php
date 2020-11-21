@@ -54,7 +54,11 @@ return [
             'report_title' => 'Отчет',
             'free_title' => 'Бесплатно',
             'access_by_quota' => 'Доступен по квоте',
-            'apply_title' => 'Применить'
+            'apply_title' => 'Применить',
+
+            'course_catalog' => 'Каталог курсов',
+            'search_placeholder' => 'Поиск по названию курса...',
+            'search_button' => 'Найти'
 
         ],
         'lessons' => [

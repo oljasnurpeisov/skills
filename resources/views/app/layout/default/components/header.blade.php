@@ -10,8 +10,8 @@
 
                 </li>
             @elseif(Auth::user()->roles()->first()->slug == 'student')
-                <li class="active"><a href="/{{$lang}}/student/my-courses"
-                                            title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
+                <li><a href="/{{$lang}}/student/my-courses"
+                       title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
 
                 </li>
             @endif
@@ -44,15 +44,27 @@
             </div>
             <div class="header-dropdown profile">
                 <div class="header-dropdown__title">
-                    <img src="{{Auth::user()->author_info->avatar}}" alt=""><i class="icon-chevron-down"> </i>
+                    @if(Auth::user()->roles()->first()->slug == 'author')
+                        <img src="{{Auth::user()->author_info->avatar ?? '/assets/img/author-thumbnail.png'}}" alt=""><i
+                                class="icon-chevron-down"> </i>
+                    @elseif(Auth::user()->roles()->first()->slug == 'student')
+                        <img src="{{Auth::user()->student_info->avatar ?? '/assets/img/author-thumbnail.png'}}" alt="">
+                        <i class="icon-chevron-down"> </i>
+                    @endif
                 </div>
                 <div class="header-dropdown__desc">
-                    <div class="name">{{Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname}}</div>
+                    @if(Auth::user()->roles()->first()->slug == 'author')
+                        <div class="name">{{Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname}}</div>
+                    @elseif(Auth::user()->roles()->first()->slug == 'student')
+                        {{--                        <div class="name">{{Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname}}</div>--}}
+                    @endif
                     <hr>
                     <ul>
-                        <li><a href="/{{$lang}}/my-courses/statistics"
-                               title="{{__('default.pages.statistics.title')}}">{{__('default.pages.statistics.title')}}</a>
-                        </li>
+                        @if(Auth::user()->roles()->first()->slug == 'author')
+                            <li><a href="/{{$lang}}/my-courses/statistics"
+                                   title="{{__('default.pages.statistics.title')}}">{{__('default.pages.statistics.title')}}</a>
+                            </li>
+                        @endif
                         <li><a href="/{{$lang}}/profile-author-information"
                                title="{{__('default.pages.profile.title')}}">{{__('default.pages.profile.title')}}</a>
                         </li>
@@ -68,9 +80,11 @@
                         <li><a href="#"
                                title="{{__('default.pages.dialogs.title')}}">{{__('default.pages.dialogs.title')}}</a>
                         </li>
-                        <li><a href="/{{$lang}}/my-courses/reporting"
-                               title="{{__('default.pages.reporting.title')}}">{{__('default.pages.reporting.title')}}</a>
-                        </li>
+                        @if(Auth::user()->roles()->first()->slug == 'author')
+                            <li><a href="/{{$lang}}/my-courses/reporting"
+                                   title="{{__('default.pages.reporting.title')}}">{{__('default.pages.reporting.title')}}</a>
+                            </li>
+                        @endif
                         <li><a href="#" title="{{__('notifications.title')}}">{{__('notifications.title')}}</a></li>
                         <li class="break">
                             <hr>

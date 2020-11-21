@@ -23,51 +23,95 @@ class CourseController extends Controller
 
         $skills = collect();
 
-        $term = $request->term ? $request->term : '';
+        $term = $request->search ? $request->search : '';
+
         $choosed_profession = $request->choosed_profession ? $request->choosed_profession : '';
         $choosed_skills = $request->choosed_skills;
-        $course_type = $request->course_type ?? [0, 1];
-        $choosed_lang = $request->choosed_lang ?? [0, 1];
+        $lang_ru = $request->lang_ru ?? null;
+        $lang_kk = $request->lang_kk ?? null;
+        $course_type = $request->course_type ?? '';
+        $course_sort = $request->course_sort ?? '';
+        $min_rating = $request->min_rating ?? 0;
+        $members_count = $request->members_count ?? 0;
 
         $query = Course::where('status', '=', Course::published);
         if ($term) {
             $query = $query->where('name', 'like', '%' . $term . '%');
         }
-//        if ($course_type) {
-        if ($course_type == 1) {
-            $query = $query->where('is_paid', '=', 1);
-        } else if ($course_type == 0) {
-            $query = $query->where('is_paid', '=', 0);
-        } else {
-            $query = $query->whereIn('is_paid', $course_type);
+        // Сортировка по виду курса
+        if ($course_type) {
+            if ($course_type == 2) {
+                $query = $query->where('is_paid', '=', 0);
+            } else if ($course_type == 1) {
+                $query = $query->where('is_paid', '=', 1);
+            } else if ($course_type == 3) {
+                $query = $query->where('quota_status', '=', 2);
+            }
         }
-
-        if ($choosed_lang == 1) {
+        // Сортировка по языку
+        if ($lang_ru == 1 and $lang_kk == null) {
             $query = $query->where('lang', '=', 1);
-        } else if ($choosed_lang == 0) {
+        } else if ($lang_ru == null and $lang_kk == 1) {
             $query = $query->where('lang', '=', 0);
-        } else {
-            $query = $query->whereIn('lang', $choosed_lang);
+        } else if ($lang_ru == null and $lang_kk == 1) {
+            $query = $query->whereIn('lang', [0, 1]);
         }
-//        }
         if (!empty($choosed_skills)) {
             $query = $query->whereHas('skills', function ($q) use ($choosed_skills) {
                 $q->where('skills.id', '=', $choosed_skills);
             });
+        }
+        // Сортировка курса
+        if ($course_sort) {
+            // Сортировка Рейтинг - по возрастанию
+            if ($course_sort == 'sort_by_rate_low') {
+                $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
+                    ->select('course_rate.rate as course_rate', 'courses.*')
+                    ->orderBy('course_rate.rate', 'asc');
+                // Сортировка Рейтинг - по убыванию
+            } else if ($course_sort == 'sort_by_rate_low') {
+                $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
+                    ->select('course_rate.rate as course_rate', 'courses.*')
+                    ->orderBy('course_rate.rate', 'desc');
+                // Сортировка Стоимость - по убыванию
+            } else if ($course_sort == 'sort_by_rate_high') {
+                $query->orderBy('cost', 'desc');
+                // Сортировка Стоимость - по возрастанию
+            } else if ($course_sort == 'sort_by_cost_low') {
+                $query->orderBy('cost', 'asc');
+            }
+        } else {
+            $query->orderBy('created_at', 'desc');
         }
         if ($choosed_profession) {
             $skills = Skill::whereHas('professions', function ($q) use ($choosed_profession) {
                 $q->where('professions.id', '=', $choosed_profession);
             })->get();
         }
-        $items = $query->where('status', '=', Course::published)->paginate();
+        // Рейтинг от
+        if ($min_rating) {
+            $query->whereHas('rate', function ($q) use ($min_rating) {
+                $q->where('course_rate.rate', '>=', $min_rating);
+            });
+        }
+        // Учеников, окончивших курс (мин)
+        if ($members_count) {
+            $query->whereHas('course_members', function ($q) use ($min_rating) {
+                $q->where('student_course.is_finished', '=', true)->whereIn('student_course.paid_status', [1, 2]);
+            })->withCount([
+                'course_members' => function ($q) {
+                    $q->whereIn('paid_status', [1, 2]);
+                }])->having('course_members_count', '>=', $members_count);
+        }
+        $items = $query->paginate(6);
         return view("app.pages.general.courses.catalog.course_catalog", [
             "items" => $items,
             'term' => $term,
             'professions' => $professions,
             'skills' => $skills,
-            'choosed_profession' => $choosed_profession
-        ])->render();
+            'choosed_profession' => $choosed_profession,
+            'request' => $request
+        ]);
 //        return $course_type;
     }
 
