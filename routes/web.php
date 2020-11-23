@@ -98,9 +98,16 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
         Route::post("/callbackPaymentOrder", "PaymentController@callbackPaymentOrder");
     });
     Route::group(["middleware" => ["web"], "namespace" => "Author"], function () {
-        // Сохранение файлов
+        // Сохранение изображения автора
         Route::post('/ajax_upload_image', 'AjaxUploadController@ajax_upload_image');
+        // Сохранение сертификатов автора
         Route::post('/ajaxUploadCertificates', 'AjaxUploadController@ajaxUploadCertificates');
+        // Сохранение изображения курса
+        Route::post('/ajax_upload_course_image', 'AjaxUploadController@ajaxUploadCourseImage');
+        // Сохранение видео курса
+        Route::post('/ajax_upload_course_videos', 'AjaxUploadController@ajaxUploadCourseVideos');
+        // Сохранение аудио курса
+        Route::post('/ajax_upload_course_audios', 'AjaxUploadController@ajaxUploadCourseAudios');
 
     });
 

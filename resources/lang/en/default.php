@@ -57,6 +57,7 @@ return [
             'free_title' => 'Бесплатно',
             'access_by_quota' => 'Доступен по квоте',
             'apply_title' => 'Применить',
+            'create' => 'Создать',
 
             'course_catalog' => 'Каталог курсов',
             'search_placeholder' => 'Поиск по названию курса...',
@@ -68,6 +69,7 @@ return [
             'choose_lang' => 'Выберите язык',
             'is_paid' => 'Платный',
             'is_access_all' => 'Все уроки доступны сразу',
+            'is_vision_version' => 'Версия для слабовидящих',
             'course_cost' => 'Стоимость, тг',
             'course_profit' => 'Чему научит курс (макс. 2000 символов)',
             'course_teaser' => 'Краткое описание (макс. 200 символов)',

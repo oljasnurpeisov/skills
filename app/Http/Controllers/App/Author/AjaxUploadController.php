@@ -29,6 +29,7 @@ class AjaxUploadController extends Controller
 
     public $imageMaxSize = '1024';
     public $fileMaxSize = '25000';
+    public $videoMaxSize = '50000';
 
     public function ajax_upload_image(Request $request)
     {
@@ -41,6 +42,19 @@ class AjaxUploadController extends Controller
         $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/profile/images'), $imageName);
 
         return Response::json(array('location' => config('APP_URL') . '/users/user_' . Auth::user()->getAuthIdentifier() . '/profile/images/' . $imageName));
+    }
+
+    public function ajaxUploadCourseImage(Request $request)
+    {
+        $this->validate($request, [
+            "file" => "image|required|max:$this->imageMaxSize|mimes:png,jpg,jpeg"
+        ]);
+
+        $file = $request->file;
+        $imageName = time() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/images'), $imageName);
+
+        return Response::json(array('location' => config('APP_URL') . '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/images/' . $imageName));
     }
 
     /**
@@ -62,74 +76,30 @@ class AjaxUploadController extends Controller
         return Response::json(array('filenames' => $data));
     }
 
-    public function ajax_upload_file()
+    public function ajaxUploadCourseVideos(Request $request)
     {
-        $rules = array(
-            'file' => 'file|required|max:15000|mimes:docx,doc,xls,xlsx,pdf,txt,ppt,pptx',
-        );
-
-        $validation = Validator::make(Input::all(), $rules);
-        $file = Input::file('file');
-        if ($validation->fails()) {
-            return FALSE;
-        } else {
-            $imageName = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('files'), $imageName);
-
-//            Buffet::log('upload_file', '', '', $imageName);
-
-            return Response::json(array('filelink' => '/files/' . $imageName));
+        $data = [];
+        foreach($request->file('files') as $file)
+        {
+            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/videos'), $name);
+            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/videos/'.$name);
         }
+
+        return Response::json(array('filenames' => $data));
     }
 
-
-
-    public function ajaxUploadPic(Request $request)
+    public function ajaxUploadCourseAudios(Request $request)
     {
-        if ($request->header('Origin') !== env('APP_URL')) {
-            return Response::json(array('success' => false));
+        $data = [];
+        foreach($request->file('files') as $file)
+        {
+            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/audios'), $name);
+            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/audios/'.$name);
         }
 
-        $this->validate($request, [
-            "file" => "image|required|max:$this->imageMaxSize|mimes:png,jpg,jpeg"
-        ]);
-
-        $file = $request->file;
-        $imageName = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('images/profile_images/'), $imageName);
-
-//        Buffet::log('upload_img', '', '', $imageName);
-
-        return Response::json(array('location' => config('APP_URL') . '/images/profile_images/' . $imageName));
+        return Response::json(array('filenames' => $data));
     }
-
-    public function ajaxUploadFile(Request $request)
-    {
-        if ($request->header('Origin') !== env('APP_URL')) {
-            return Response::json(array('success' => false, 'message' => 'invalid url'));
-        }
-
-        $rules = array(
-            'file' => "file|required|max:$this->fileMaxSize|mimes:docx,doc,xls,xlsx,pdf,txt,ppt,pptx,xml"
-        );
-
-        $validation = Validator::make(Input::all(), $rules);
-        if ($validation->fails()) {
-            return Response::json(array('success' => false, 'message' => $validation->errors()->all()));
-        }
-
-        $file = Input::file('file');
-        $imageName = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('files'), $imageName);
-
-
-//        Buffet::log('upload_file', '', '', $imageName);
-
-        return Response::json(array(
-            'success' => true,
-            'location' => config('APP_URL') . '/files/' . $imageName
-        ));
-    }
-
 
 }

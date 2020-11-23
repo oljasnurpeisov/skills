@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App\Author;
 use App\Exports\ReportingExport;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\CourseAttachments;
 use App\Models\Lesson;
 use App\Models\Notification;
 use App\Models\Professions;
@@ -52,50 +53,64 @@ class CourseController extends Controller
         } else {
             $item->is_access_all = 0;
         }
-        $item->cost = $request->cost;
+        if ($request->is_poor_vision) {
+            $item->is_poor_vision = 1;
+        } else {
+            $item->is_poor_vision = 0;
+        }
+        $item->cost = $request->cost ?? 0;
         $item->profit_desc = $request->profit_desc;
         $item->teaser = $request->teaser;
         $item->description = $request->description;
         $item->course_includes = $request->course_includes;
-        if ($request->youtube_link != [null]) {
-            $item->youtube_link = json_encode($request->youtube_link);
-        }
         $item->certificate_id = $request->certificate_id;
 
-        if (!empty($request->image)) {
+        if (($request->image != $item->image)) {
             File::delete(public_path($item->image));
 
-            $imageName = time() . '.' . $request['image']->getClientOriginalExtension();
-            $request['image']->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/images'), $imageName);
-
-            $item->image = '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/images/' . $imageName;
-
+            $item->image = $request->image;
         }
-
-        if (!empty($request->video)) {
-            File::delete(public_path($item->video));
-
-            foreach ($request->video as $video) {
-                $videoName = time() . '.' . $video->getClientOriginalExtension();
-                $video->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/videos'), $videoName);
-                array_push($videos, '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/videos/' . $videoName);
-            }
-            $item->video = json_encode($videos);
-        }
-
-        if (!empty($request->audio)) {
-            File::delete(public_path($item->audio));
-
-            foreach ($request->audio as $audio) {
-                $audioName = time() . '.' . $audio->getClientOriginalExtension();
-                $audio->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/audios'), $audioName);
-                array_push($audios, '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/audios/' . $audioName);
-            }
-            $item->audio = json_encode($audios);
-        }
-
 
         $item->save();
+
+        $item_attachments = new CourseAttachments;
+        $item_attachments->course_id = $item->id;
+
+        // Ссылки на видео курса
+        if ($request->videos_link != [null]) {
+            $item_attachments->videos_link = json_encode($request->videos_link);
+        }
+        // Ссылки на видео курса для слабовидящих
+        if ($request->videos_poor_vision_link != [null]) {
+            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        }
+        // Видео с устройства
+        if (($request->videos != $item_attachments->videos)) {
+            File::delete(public_path($item_attachments->videos));
+
+            $item_attachments->videos = $request->videos;
+        }
+        // Видео с устройства для слабовидящих
+        if (($request->videos_poor_vision != $item_attachments->videos_poor_vision)) {
+            File::delete(public_path($item_attachments->videos_poor_vision));
+
+            $item_attachments->videos_poor_vision = $request->videos_poor_vision;
+        }
+        // Аудио с устройства
+        if (($request->audios != $item_attachments->audios)) {
+            File::delete(public_path($item_attachments->audios));
+
+            $item_attachments->audios = $request->audios;
+        }
+        // Аудио с устройства для слабовидящих
+        if (($request->audios_poor_vision != $item_attachments->audios_poor_vision)) {
+            File::delete(public_path($item_attachments->audios_poor_vision));
+
+            $item_attachments->audios = $request->audios_poor_vision;
+        }
+
+        $item_attachments->save();
+
         $item->skills()->sync($request->skills, false);
 
 //        $item->users()->sync([Auth::user()->id]);
