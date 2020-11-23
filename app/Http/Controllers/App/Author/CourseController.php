@@ -12,6 +12,7 @@ use App\Models\StudentCourse;
 use App\Models\Theme;
 use App\Models\Type_of_ownership;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -635,7 +636,7 @@ class CourseController extends Controller
             $notification->users()->sync($recipients_array);
             $notification_1->users()->sync([$item->author_id]);
 
-            return redirect()->back()->with('status', trans('notifications.course_quota_access', ['course_name' => '"'.$item->name.'"']));
+            return redirect()->back()->with('status', trans('notifications.course_quota_access', ['course_name' => '"' . $item->name . '"']));
         } else {
             $item->quota_status = 3;
             $item->save();
@@ -647,7 +648,7 @@ class CourseController extends Controller
             $notification->save();
 
             $notification->users()->sync($recipients_array);
-            return redirect()->back()->with('error', trans('notifications.course_quota_access_denied', ['course_name' => '"'.$item->name.'"']));
+            return redirect()->back()->with('error', trans('notifications.course_quota_access_denied', ['course_name' => '"' . $item->name . '"']));
         }
 
 
@@ -737,18 +738,29 @@ class CourseController extends Controller
     public function statisticForChart()
     {
 
+//        $items = StudentCourse::whereHas('course', function ($q) {
+//            $q->where('courses.author_id', '=', Auth::user()->id);
+//        })->where('paid_status', '!=', 0)->get()->groupBy(function ($val) {
+//            return Carbon::parse($val->created_at)->format('d');
+//        });
+
         $items = StudentCourse::whereHas('course', function ($q) {
             $q->where('courses.author_id', '=', Auth::user()->id);
-        })->where('paid_status', '!=', 0)->get();
+        })->where('paid_status', '!=', 0)->get()->groupBy(function ($val) {
+            return Carbon::parse($val->created_at)->format('d');
+        });
+
+        $value1 = StudentCourse::where('paid_status', '=', 1)->get()->groupBy(function ($val) {
+            return Carbon::parse($val->created_at)->format('d');
+        });
+        $value2 = count(StudentCourse::where('paid_status', '=', 2)->get());
+
+
+//        $items = StudentCourse::whereHas('course', function ($q) {
+//            $q->where('courses.author_id', '=', Auth::user()->id);
+//        })->where('paid_status', '!=', 0)->get();
 
         $data = [];
-        foreach ($items as $d) {
-//            if($d->paid_status == 2) {
-//                array_push($data, ["date" => $d->created_at, "value1" => $d->course->cost, "value2" => $d->course->cost]);
-//            }else if ($d->paid_status == 1){
-//                array_push($data, ["date" => $d->created_at, "value1" => $d->course->cost, "value2" => null]);
-//            }
-        }
 
         $json = '{
   "title1": "Общий заработок",
@@ -757,7 +769,8 @@ class CourseController extends Controller
   "color2": "#F2C94C",
   "data": ' . json_encode($data) . '
 }';
-        return json_decode($json, true);
+//        return json_decode($json, true);
+        return $value1;
     }
 
     public function reportingCourse(Request $request)

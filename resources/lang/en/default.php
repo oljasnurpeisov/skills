@@ -136,6 +136,7 @@ return [
             'open_dialog' => 'Открыть диалог',
             'message_text_placeholder' => 'Введите сообщение',
             'message_send_button' => 'Отправить',
+            'empty_dialog' => 'Диалог пуст'
         ],
 
         'statistics' => [

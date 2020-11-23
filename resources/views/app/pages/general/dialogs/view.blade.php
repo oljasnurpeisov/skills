@@ -16,36 +16,45 @@
                     <div class="col-md-8">
                         <div class="dialog">
                             <div class="dialog__body">
-                                @foreach($messages as $message)
-                                    <div class="message">
-                                        <div class="message__avatar">
-                                            @if($message->sender_id == Auth::user()->id)
-                                                @if(Auth::user()->roles()->first()->slug == 'author')
-                                                    <img src="{{Auth::user()->author_info->avatar ?? '/assets/img/author-thumbnail.png'}}"
-                                                         alt="">
-                                                @elseif(Auth::user()->roles()->first()->slug == 'student')
-                                                    <img src="{{Auth::user()->student_info->avatar ?? '/assets/img/author-thumbnail.png'}}"
+                                @if(count($messages) > 0)
+                                    @foreach($messages as $message)
+                                        <div class="message">
+                                            <div class="message__avatar">
+                                                @if($message->sender_id == Auth::user()->id)
+                                                    @if(Auth::user()->roles()->first()->slug == 'author')
+                                                        <img src="{{Auth::user()->author_info->avatar ?? '/assets/img/author-thumbnail.png'}}"
+                                                             alt="">
+                                                    @elseif(Auth::user()->roles()->first()->slug == 'student')
+                                                        <img src="{{Auth::user()->student_info->avatar ?? '/assets/img/author-thumbnail.png'}}"
+                                                             alt="">
+                                                    @endif
+                                                @else
+                                                    <img src="{{$item->opponent()->avatar ?? '/assets/img/author-thumbnail.png'}}"
                                                          alt="">
                                                 @endif
-                                            @else
-                                                <img src="{{$item->opponent()->avatar ?? '/assets/img/author-thumbnail.png'}}"
-                                                     alt="">
-                                            @endif
+                                            </div>
+                                            <div class="message__desc">
+                                                <div class="message__text">{{ json_decode('"'.str_replace('"','\"',$message->message).'"') }}</div>
+                                            </div>
+                                            <div class="message__date">
+                                                {{\App\Extensions\FormatDate::formatDate($message->created_at->format("d.m.Y, H:i"))}}
+                                            </div>
                                         </div>
-                                        <div class="message__desc">
-                                            <div class="message__text">{{ json_decode('"'.str_replace('"','\"',$message->message).'"') }}</div>
-                                        </div>
-                                        <div class="message__date">
-                                            {{\App\Extensions\FormatDate::formatDate($message->created_at->format("d.m.Y, H:i"))}}
-                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="dialog__empty-message">
+                                        {{__('default.pages.dialogs.empty_dialog')}}
                                     </div>
-                                @endforeach
+                                @endif
                             </div>
-                            <form class="dialog__sender" action="/{{$lang}}/dialog-{{$item->id}}/message/create" method="POST">
+                            <form class="dialog__sender" action="/{{$lang}}/dialog-{{$item->id}}/message/create"
+                                  method="POST">
                                 @csrf
-                                <input type="text" name="message" class="input-regular" placeholder="{{__('default.pages.dialogs.message_text_placeholder')}}"
+                                <input type="text" name="message" class="input-regular"
+                                       placeholder="{{__('default.pages.dialogs.message_text_placeholder')}}"
                                        required>
-                                <button type="submit" class="btn-icon icon-send" title="{{__('default.pages.dialogs.message_send_button')}}"></button>
+                                <button type="submit" class="btn-icon icon-send"
+                                        title="{{__('default.pages.dialogs.message_send_button')}}"></button>
                             </form>
                         </div>
                     </div>
