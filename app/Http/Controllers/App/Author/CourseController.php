@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Notification;
+use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCourse;
 use App\Models\Theme;
@@ -104,14 +105,39 @@ class CourseController extends Controller
 
     public function myCourses(Request $request)
     {
+        $courses_uri = request()->segment(count(request()->segments()));
+        switch ($courses_uri) {
+            case('my-courses'):
+                $query = Auth::user()->courses()->where('status', '=', Course::published);
+                $page_name = 'default.pages.courses.my_courses';
+                break;
+            case('unpublished'):
+                $query = Auth::user()->courses()->where('status', '=', Course::unpublished);
+                $page_name = 'default.pages.courses.my_courses_unpublished';
+                break;
+            case('on-check'):
+                $query = Auth::user()->courses()->where('status', '=', Course::onCheck);
+                $page_name = 'default.pages.courses.my_courses_onCheck';
+                break;
+            case('drafts'):
+                $query = Auth::user()->courses()->where('status', '=', Course::draft);
+                $page_name = 'default.pages.courses.drafts';
+                break;
+            case('deleted'):
+                $query = Auth::user()->courses()->where('status', '=', Course::deleted);
+                $page_name = 'default.pages.courses.my_courses_deleted';
+                break;
+        }
+
         $lang_ru = $request->lang_ru ?? null;
         $lang_kk = $request->lang_kk ?? null;
         $course_type = $request->course_type ?? '';
         $course_sort = $request->course_sort ?? '';
         $min_rating = $request->min_rating ?? 0;
         $members_count = $request->members_count ?? 0;
+        $specialities = $request->specialities;
+        $skills = $request->skills;
 
-        $query = Auth::user()->courses()->where('status', '=', Course::published);
         // Сортировка по языку
         if ($lang_ru == 1 and $lang_kk == null) {
             $query = $query->where('lang', '=', 1);
@@ -167,316 +193,27 @@ class CourseController extends Controller
                     $q->whereIn('paid_status', [1, 2]);
                 }])->having('course_members_count', '>=', $members_count);
         }
-
-        $items = $query->paginate(6);
-
-        $page_name = 'default.pages.courses.my_courses';
-        return view("app.pages.author.courses.my_courses", [
-            "items" => $items,
-            "page_name" => $page_name,
-            "request" => $request
-        ]);
-//        return json_encode($items);
-    }
-
-    public function myDrafts(Request $request)
-    {
-        $lang_ru = $request->lang_ru ?? null;
-        $lang_kk = $request->lang_kk ?? null;
-        $course_type = $request->course_type ?? '';
-        $course_sort = $request->course_sort ?? '';
-        $min_rating = $request->min_rating ?? 0;
-        $members_count = $request->members_count ?? 0;
-
-        $query = Auth::user()->courses()->where('status', '=', Course::draft);
-        // Сортировка по языку
-        if ($lang_ru == 1 and $lang_kk == null) {
-            $query = $query->where('lang', '=', 1);
-        } else if ($lang_ru == null and $lang_kk == 1) {
-            $query = $query->where('lang', '=', 0);
-        } else if ($lang_ru == null and $lang_kk == 1) {
-            $query = $query->whereIn('lang', [0, 1]);
+        // Получить профессии
+        if ($specialities) {
+            $professions = Professions::whereIn('id', $specialities)->get();
         }
-        // Сортировка по виду курса
-        if ($course_type) {
-            if ($course_type == 2) {
-                $query = $query->where('is_paid', '=', 0);
-            } else if ($course_type == 1) {
-                $query = $query->where('is_paid', '=', 1);
-            } else if ($course_type == 3) {
-                $query = $query->where('quota_status', '=', 2);
-            }
-        }
-        // Сортировка курса
-        if ($course_sort) {
-            // Сортировка Рейтинг - по возрастанию
-            if ($course_sort == 'sort_by_rate_low') {
-                $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
-                    ->select('course_rate.rate as course_rate', 'courses.*')
-                    ->orderBy('course_rate.rate', 'asc');
-                // Сортировка Рейтинг - по убыванию
-            } else if ($course_sort == 'sort_by_rate_low') {
-                $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
-                    ->select('course_rate.rate as course_rate', 'courses.*')
-                    ->orderBy('course_rate.rate', 'desc');
-                // Сортировка Стоимость - по убыванию
-            } else if ($course_sort == 'sort_by_rate_high') {
-                $query->orderBy('cost', 'desc');
-                // Сортировка Стоимость - по возрастанию
-            } else if ($course_sort == 'sort_by_cost_low') {
-                $query->orderBy('cost', 'asc');
-            }
-        } else {
-            $query->orderBy('created_at', 'desc');
-        }
-        // Рейтинг от
-        if ($min_rating) {
-            $query->whereHas('rate', function ($q) use ($min_rating) {
-                $q->where('course_rate.rate', '>=', $min_rating);
+        // Сортировка по навыкам
+        if ($skills) {
+            $skills = Skill::whereIn('id', $skills)->get();
+
+            $query->whereHas('skills', function ($q) use ($request) {
+                $q->whereIn('skills.id', $request->skills);
             });
         }
-        // Учеников, окончивших курс (мин)
-        if ($members_count) {
-            $query->whereHas('course_members', function ($q) use ($min_rating) {
-                $q->where('student_course.is_finished', '=', true)->whereIn('student_course.paid_status', [1, 2]);
-            })->withCount([
-                'course_members' => function ($q) {
-                    $q->whereIn('paid_status', [1, 2]);
-                }])->having('course_members_count', '>=', $members_count);
-        }
-
-        $items = $query->paginate(6);
-        $page_name = 'default.pages.courses.drafts';
-        return view("app.pages.author.courses.my_courses", [
-            "items" => $items,
-            "page_name" => $page_name,
-            "request" => $request
-        ]);
-    }
-
-    public function myUnpublishedCourses(Request $request)
-    {
-        $lang_ru = $request->lang_ru ?? null;
-        $lang_kk = $request->lang_kk ?? null;
-        $course_type = $request->course_type ?? '';
-        $course_sort = $request->course_sort ?? '';
-        $min_rating = $request->min_rating ?? 0;
-        $members_count = $request->members_count ?? 0;
-
-        $query = Auth::user()->courses()->where('status', '=', Course::unpublished);
-        // Сортировка по языку
-        if ($lang_ru == 1 and $lang_kk == null) {
-            $query = $query->where('lang', '=', 1);
-        } else if ($lang_ru == null and $lang_kk == 1) {
-            $query = $query->where('lang', '=', 0);
-        } else if ($lang_ru == null and $lang_kk == 1) {
-            $query = $query->whereIn('lang', [0, 1]);
-        }
-        // Сортировка по виду курса
-        if ($course_type) {
-            if ($course_type == 2) {
-                $query = $query->where('is_paid', '=', 0);
-            } else if ($course_type == 1) {
-                $query = $query->where('is_paid', '=', 1);
-            } else if ($course_type == 3) {
-                $query = $query->where('quota_status', '=', 2);
-            }
-        }
-        // Сортировка курса
-        if ($course_sort) {
-            // Сортировка Рейтинг - по возрастанию
-            if ($course_sort == 'sort_by_rate_low') {
-                $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
-                    ->select('course_rate.rate as course_rate', 'courses.*')
-                    ->orderBy('course_rate.rate', 'asc');
-                // Сортировка Рейтинг - по убыванию
-            } else if ($course_sort == 'sort_by_rate_low') {
-                $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
-                    ->select('course_rate.rate as course_rate', 'courses.*')
-                    ->orderBy('course_rate.rate', 'desc');
-                // Сортировка Стоимость - по убыванию
-            } else if ($course_sort == 'sort_by_rate_high') {
-                $query->orderBy('cost', 'desc');
-                // Сортировка Стоимость - по возрастанию
-            } else if ($course_sort == 'sort_by_cost_low') {
-                $query->orderBy('cost', 'asc');
-            }
-        } else {
-            $query->orderBy('created_at', 'desc');
-        }
-        // Рейтинг от
-        if ($min_rating) {
-            $query->whereHas('rate', function ($q) use ($min_rating) {
-                $q->where('course_rate.rate', '>=', $min_rating);
-            });
-        }
-        // Учеников, окончивших курс (мин)
-        if ($members_count) {
-            $query->whereHas('course_members', function ($q) use ($min_rating) {
-                $q->where('student_course.is_finished', '=', true)->whereIn('student_course.paid_status', [1, 2]);
-            })->withCount([
-                'course_members' => function ($q) {
-                    $q->whereIn('paid_status', [1, 2]);
-                }])->having('course_members_count', '>=', $members_count);
-        }
-
-        $items = $query->paginate(6);
-        $page_name = 'default.pages.courses.my_courses_unpublished';
-        return view("app.pages.author.courses.my_courses", [
-            "items" => $items,
-            "page_name" => $page_name,
-            "request" => $request
-        ]);
-    }
-
-    public function myOnCheckCourses(Request $request)
-    {
-        $lang_ru = $request->lang_ru ?? null;
-        $lang_kk = $request->lang_kk ?? null;
-        $course_type = $request->course_type ?? '';
-        $course_sort = $request->course_sort ?? '';
-        $min_rating = $request->min_rating ?? 0;
-        $members_count = $request->members_count ?? 0;
-
-        $query = Auth::user()->courses()->where('status', '=', Course::onCheck);
-        // Сортировка по языку
-        if ($lang_ru == 1 and $lang_kk == null) {
-            $query = $query->where('lang', '=', 1);
-        } else if ($lang_ru == null and $lang_kk == 1) {
-            $query = $query->where('lang', '=', 0);
-        } else if ($lang_ru == null and $lang_kk == 1) {
-            $query = $query->whereIn('lang', [0, 1]);
-        }
-        // Сортировка по виду курса
-        if ($course_type) {
-            if ($course_type == 2) {
-                $query = $query->where('is_paid', '=', 0);
-            } else if ($course_type == 1) {
-                $query = $query->where('is_paid', '=', 1);
-            } else if ($course_type == 3) {
-                $query = $query->where('quota_status', '=', 2);
-            }
-        }
-        // Сортировка курса
-        if ($course_sort) {
-            // Сортировка Рейтинг - по возрастанию
-            if ($course_sort == 'sort_by_rate_low') {
-                $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
-                    ->select('course_rate.rate as course_rate', 'courses.*')
-                    ->orderBy('course_rate.rate', 'asc');
-                // Сортировка Рейтинг - по убыванию
-            } else if ($course_sort == 'sort_by_rate_low') {
-                $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
-                    ->select('course_rate.rate as course_rate', 'courses.*')
-                    ->orderBy('course_rate.rate', 'desc');
-                // Сортировка Стоимость - по убыванию
-            } else if ($course_sort == 'sort_by_rate_high') {
-                $query->orderBy('cost', 'desc');
-                // Сортировка Стоимость - по возрастанию
-            } else if ($course_sort == 'sort_by_cost_low') {
-                $query->orderBy('cost', 'asc');
-            }
-        } else {
-            $query->orderBy('created_at', 'desc');
-        }
-        // Рейтинг от
-        if ($min_rating) {
-            $query->whereHas('rate', function ($q) use ($min_rating) {
-                $q->where('course_rate.rate', '>=', $min_rating);
-            });
-        }
-        // Учеников, окончивших курс (мин)
-        if ($members_count) {
-            $query->whereHas('course_members', function ($q) use ($min_rating) {
-                $q->where('student_course.is_finished', '=', true)->whereIn('student_course.paid_status', [1, 2]);
-            })->withCount([
-                'course_members' => function ($q) {
-                    $q->whereIn('paid_status', [1, 2]);
-                }])->having('course_members_count', '>=', $members_count);
-        }
-
-        $items = $query->paginate(6);
-        $page_name = 'default.pages.courses.my_courses_onCheck';
-        return view("app.pages.author.courses.my_courses", [
-            "items" => $items,
-            "page_name" => $page_name,
-            "request" => $request
-        ]);
-    }
-
-    public function myDeletedCourses(Request $request)
-    {
-        $lang_ru = $request->lang_ru ?? null;
-        $lang_kk = $request->lang_kk ?? null;
-        $course_type = $request->course_type ?? '';
-        $course_sort = $request->course_sort ?? '';
-        $min_rating = $request->min_rating ?? 0;
-        $members_count = $request->members_count ?? 0;
-
-        $query = Auth::user()->courses()->where('status', '=', Course::deleted);
-        // Сортировка по языку
-        if ($lang_ru == 1 and $lang_kk == null) {
-            $query = $query->where('lang', '=', 1);
-        } else if ($lang_ru == null and $lang_kk == 1) {
-            $query = $query->where('lang', '=', 0);
-        } else if ($lang_ru == null and $lang_kk == 1) {
-            $query = $query->whereIn('lang', [0, 1]);
-        }
-        // Сортировка по виду курса
-        if ($course_type) {
-            if ($course_type == 2) {
-                $query = $query->where('is_paid', '=', 0);
-            } else if ($course_type == 1) {
-                $query = $query->where('is_paid', '=', 1);
-            } else if ($course_type == 3) {
-                $query = $query->where('quota_status', '=', 2);
-            }
-        }
-        // Сортировка курса
-        if ($course_sort) {
-            // Сортировка Рейтинг - по возрастанию
-            if ($course_sort == 'sort_by_rate_low') {
-                $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
-                    ->select('course_rate.rate as course_rate', 'courses.*')
-                    ->orderBy('course_rate.rate', 'asc');
-                // Сортировка Рейтинг - по убыванию
-            } else if ($course_sort == 'sort_by_rate_low') {
-                $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
-                    ->select('course_rate.rate as course_rate', 'courses.*')
-                    ->orderBy('course_rate.rate', 'desc');
-                // Сортировка Стоимость - по убыванию
-            } else if ($course_sort == 'sort_by_rate_high') {
-                $query->orderBy('cost', 'desc');
-                // Сортировка Стоимость - по возрастанию
-            } else if ($course_sort == 'sort_by_cost_low') {
-                $query->orderBy('cost', 'asc');
-            }
-        } else {
-            $query->orderBy('created_at', 'desc');
-        }
-        // Рейтинг от
-        if ($min_rating) {
-            $query->whereHas('rate', function ($q) use ($min_rating) {
-                $q->where('course_rate.rate', '>=', $min_rating);
-            });
-        }
-        // Учеников, окончивших курс (мин)
-        if ($members_count) {
-            $query->whereHas('course_members', function ($q) use ($min_rating) {
-                $q->where('student_course.is_finished', '=', true)->whereIn('student_course.paid_status', [1, 2]);
-            })->withCount([
-                'course_members' => function ($q) {
-                    $q->whereIn('paid_status', [1, 2]);
-                }])->having('course_members_count', '>=', $members_count);
-        }
 
         $items = $query->paginate(6);
 
-        $page_name = 'default.pages.courses.my_courses_deleted';
         return view("app.pages.author.courses.my_courses", [
             "items" => $items,
             "page_name" => $page_name,
-            "request" => $request
+            "request" => $request,
+            "professions" => $professions ?? null,
+            "skills" => $skills ?? null
         ]);
     }
 
@@ -738,29 +475,16 @@ class CourseController extends Controller
     public function statisticForChart()
     {
 
-//        $items = StudentCourse::whereHas('course', function ($q) {
-//            $q->where('courses.author_id', '=', Auth::user()->id);
-//        })->where('paid_status', '!=', 0)->get()->groupBy(function ($val) {
-//            return Carbon::parse($val->created_at)->format('d');
-//        });
-
         $items = StudentCourse::whereHas('course', function ($q) {
             $q->where('courses.author_id', '=', Auth::user()->id);
         })->where('paid_status', '!=', 0)->get()->groupBy(function ($val) {
             return Carbon::parse($val->created_at)->format('d');
         });
 
-        $value1 = StudentCourse::where('paid_status', '=', 1)->get()->groupBy(function ($val) {
-            return Carbon::parse($val->created_at)->format('d');
-        });
-        $value2 = count(StudentCourse::where('paid_status', '=', 2)->get());
-
-
-//        $items = StudentCourse::whereHas('course', function ($q) {
-//            $q->where('courses.author_id', '=', Auth::user()->id);
-//        })->where('paid_status', '!=', 0)->get();
-
         $data = [];
+        foreach ($items as $item) {
+            array_push($data, ["date" => $item->first()->created_at, "value1" => $item->count(), "value2" => $item->where('paid_status', '=', 2)->count()]);
+        }
 
         $json = '{
   "title1": "Общий заработок",
@@ -769,8 +493,7 @@ class CourseController extends Controller
   "color2": "#F2C94C",
   "data": ' . json_encode($data) . '
 }';
-//        return json_decode($json, true);
-        return $value1;
+        return json_decode($json, true);
     }
 
     public function reportingCourse(Request $request)

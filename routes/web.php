@@ -209,13 +209,13 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                         // Финальное тестирование
                         Route::get("/my-courses/course/{item}/create-final-test", "LessonController@createFinalTest");
                         // Черновики
-                        Route::get("/my-courses/drafts", "CourseController@myDrafts");
+                        Route::get("/my-courses/drafts", "CourseController@myCourses");
                         // Неопубликованные курсы
-                        Route::get("/my-courses/unpublished", "CourseController@myUnpublishedCourses");
+                        Route::get("/my-courses/unpublished", "CourseController@myCourses");
                         // На проверке
-                        Route::get("/my-courses/on-check", "CourseController@myOnCheckCourses");
+                        Route::get("/my-courses/on-check", "CourseController@myCourses");
                         // Удаленные курсы
-                        Route::get("/my-courses/deleted", "CourseController@myDeletedCourses");
+                        Route::get("/my-courses/deleted", "CourseController@myCourses");
                         // Редактирование курса
                         Route::get("/my-courses/course/{item}", "CourseController@courseShow");
                     });

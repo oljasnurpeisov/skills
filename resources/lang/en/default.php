@@ -13,6 +13,7 @@ return [
             'drafts' => 'Черновики',
             'my_courses_title' => 'Мои курсы',
             'create_course' => 'Создать курс',
+            'creation_course' => 'Создание курса',
             'my_courses' => 'Опубликованные',
             'my_courses_unpublished' => 'Неопубликованные курсы',
             'my_courses_onCheck' => 'На проверке',
@@ -59,7 +60,32 @@ return [
 
             'course_catalog' => 'Каталог курсов',
             'search_placeholder' => 'Поиск по названию курса...',
-            'search_button' => 'Найти'
+            'search_button' => 'Найти',
+
+            'course_name' => 'Название курса',
+            'skills_title' => 'Навыки (мин. 1 навык)',
+            'course_lang' => 'Язык курса',
+            'choose_lang' => 'Выберите язык',
+            'is_paid' => 'Платный',
+            'is_access_all' => 'Все уроки доступны сразу',
+            'course_cost' => 'Стоимость, тг',
+            'course_profit' => 'Чему научит курс (макс. 2000 символов)',
+            'course_teaser' => 'Краткое описание (макс. 200 символов)',
+            'course_desc' => 'Описание (макс. 2000 символов)',
+            'course_image' => 'Картинка курса',
+            'max_file_title' => 'макс.',
+            'choose_photo' => 'Выбрать фото',
+            'delete' => 'Удалить',
+            'video_link' => 'Ссылка на видео курса',
+            'video_link_1' => 'Ссылка на видео курса (для слабовидящих)',
+            'video_local' => 'Видео файл с устройства',
+            'add_file_btn_title' => 'Добавить файл',
+            'video_local_1' => 'Видео файл с устройства (для слабовидящих)',
+            'course_audio' => 'Аудио курса',
+            'course_audio_1' => 'Аудио курса (для слабовидящих)',
+            'choose_certificate' => 'Выберите сертификат окончания',
+            'zoom_certificate' => 'Увеличить',
+            'choose' => 'Выбрать'
 
         ],
         'lessons' => [

@@ -261,11 +261,4 @@ class CourseController extends Controller
         return $skills;
     }
 
-//    public function getSkillsByName(Request $request, $lang){
-//        $skill_name = $request->name ?? '';
-//
-//        $skills = Skill::where('name_'.$lang, 'like', '%' . $skill_name . '%')->limit(50)->get();
-//
-//        return $skills;
-//    }
 }
