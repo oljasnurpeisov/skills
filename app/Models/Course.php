@@ -86,6 +86,12 @@ class Course extends Model
 
     }
 
+    public function users() {
+
+        return $this->hasMany(User::class,'id', 'author_id');
+
+    }
+
     public function themes() {
 
         return $this->hasMany(Theme::class,'course_id', 'id');

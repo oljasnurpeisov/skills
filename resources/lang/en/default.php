@@ -25,6 +25,8 @@ return [
             'choose_profession' => 'Выберите профессию',
             'skill' => 'Навык',
             'choose_skill' => 'Выберите навык',
+            'course_author' => 'Автор курса',
+            'choose_author' => 'Выберите автора',
             'language_education' => 'Язык обучения',
             'language_education_kk' => 'Казахский',
             'language_education_ru' => 'Русский',

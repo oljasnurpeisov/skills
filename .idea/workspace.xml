@@ -4,7 +4,11 @@
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Course.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Course.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_catalog.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_catalog.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -246,7 +250,7 @@
       <workItem from="1605698690159" duration="54681000" />
       <workItem from="1605801438576" duration="33971000" />
       <workItem from="1605966192343" duration="573000" />
-      <workItem from="1605967156794" duration="44651000" />
+      <workItem from="1605967156794" duration="46364000" />
     </task>
     <task id="LOCAL-00001" summary="- update routes">
       <created>1603898521230</created>
@@ -542,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606157387873</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="- change student course catalog filter">
+      <created>1606158371910</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1606158371910</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TodoView">
@@ -558,7 +569,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add test filter methods" />
     <MESSAGE value="- change coursework create" />
     <MESSAGE value="- change access lessons" />
     <MESSAGE value="- change course student" />
@@ -583,7 +593,8 @@
     <MESSAGE value="- minor fix" />
     <MESSAGE value="- minor course catalog fix&#10;- add filter by skills in author courses" />
     <MESSAGE value="- add create course &#10;- change styles and scripts" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add create course &#10;- change styles and scripts" />
+    <MESSAGE value="- change student course catalog filter" />
+    <option name="LAST_COMMIT_MESSAGE" value="- change student course catalog filter" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -602,10 +613,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1606125758886" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1606157372170">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1606158369194">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606157372170" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606158369194" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1605559122928">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -618,10 +629,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="572" y="146" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.1536.824@0.0.1536.824" timestamp="1605561054285" />
-    <state x="478" y="11" width="579" height="801" key="find.popup" timestamp="1606150534557">
+    <state x="478" y="11" width="579" height="801" key="find.popup" timestamp="1606159604306">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="478" y="11" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1606150534557" />
+    <state x="478" y="11" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1606159604306" />
     <state x="425" y="187" key="run.anything.popup" timestamp="1606148082501">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

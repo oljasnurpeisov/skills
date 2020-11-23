@@ -123,6 +123,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
 
             Route::post("/getProfessionsByName", "CourseController@getProfessionsByName");
             Route::post("/getSkillsByData", "CourseController@getSkillsByData");
+            Route::post("/getAuthorsByName", "CourseController@getAuthorsByName");
 //            Route::post("/getSkillsByName", "CourseController@getSkillsByName");
             Route::group(['middleware' => ["auth", "verified"]], static function () {
                 // Диалоги

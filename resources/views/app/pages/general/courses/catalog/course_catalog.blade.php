@@ -102,11 +102,20 @@
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
-                                    <div class="sidebar-item__title">Автор курса:</div>
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.course_author')}}:
+                                    </div>
                                     <div class="sidebar-item__body">
-                                        <select name="author" placeholder="Выберите автора"
+                                        <select name="authors[]"
+                                                placeholder="{{__('default.pages.courses.choose_author')}}"
                                                 data-method="getAuthorsByName"
-                                                data-default="По умолчанию" class="custom" multiple> </select>
+                                                data-default="" class="custom" multiple>
+                                            @if(!empty($request->authors))
+                                                @foreach($authors as $author)
+                                                    <option value="{{$author->id}}"
+                                                            selected>{{$author->author_info->name . ' ' . $author->author_info->surname}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
@@ -189,7 +198,7 @@
     <script>
         const specialityEl = $('[name="specialities[]"]'),
             skillsEl = $('[name="skills[]"]'),
-            authorEl = $('[name="author"]');
+            authorEl = $('[name="authors[]"]');
 
         let specialitySelect = new ajaxSelect(specialityEl);
         let skillsSelect = new ajaxSelect(skillsEl, specialityEl);
