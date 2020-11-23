@@ -18,25 +18,29 @@ class CourseController extends Controller
 {
     public function courseCatalog(Request $request, $lang)
     {
+        $query = Course::where('status', '=', Course::published);
 
-        $professions = Professions::orderBy('name_' . $lang, 'asc')->paginate(500);
-
-        $skills = collect();
-
-        $term = $request->search ? $request->search : '';
-
-        $choosed_profession = $request->choosed_profession ? $request->choosed_profession : '';
-        $choosed_skills = $request->choosed_skills;
         $lang_ru = $request->lang_ru ?? null;
         $lang_kk = $request->lang_kk ?? null;
         $course_type = $request->course_type ?? '';
         $course_sort = $request->course_sort ?? '';
         $min_rating = $request->min_rating ?? 0;
         $members_count = $request->members_count ?? 0;
+        $specialities = $request->specialities;
+        $skills = $request->skills;
+        $term = $request->search ? $request->search : '';
 
-        $query = Course::where('status', '=', Course::published);
+        // Сортировка по названию
         if ($term) {
             $query = $query->where('name', 'like', '%' . $term . '%');
+        }
+        // Сортировка по языку
+        if ($lang_ru == 1 and $lang_kk == null) {
+            $query = $query->where('lang', '=', 1);
+        } else if ($lang_ru == null and $lang_kk == 1) {
+            $query = $query->where('lang', '=', 0);
+        } else if ($lang_ru == null and $lang_kk == 1) {
+            $query = $query->whereIn('lang', [0, 1]);
         }
         // Сортировка по виду курса
         if ($course_type) {
@@ -47,19 +51,6 @@ class CourseController extends Controller
             } else if ($course_type == 3) {
                 $query = $query->where('quota_status', '=', 2);
             }
-        }
-        // Сортировка по языку
-        if ($lang_ru == 1 and $lang_kk == null) {
-            $query = $query->where('lang', '=', 1);
-        } else if ($lang_ru == null and $lang_kk == 1) {
-            $query = $query->where('lang', '=', 0);
-        } else if ($lang_ru == null and $lang_kk == 1) {
-            $query = $query->whereIn('lang', [0, 1]);
-        }
-        if (!empty($choosed_skills)) {
-            $query = $query->whereHas('skills', function ($q) use ($choosed_skills) {
-                $q->where('skills.id', '=', $choosed_skills);
-            });
         }
         // Сортировка курса
         if ($course_sort) {
@@ -83,11 +74,6 @@ class CourseController extends Controller
         } else {
             $query->orderBy('created_at', 'desc');
         }
-        if ($choosed_profession) {
-            $skills = Skill::whereHas('professions', function ($q) use ($choosed_profession) {
-                $q->where('professions.id', '=', $choosed_profession);
-            })->get();
-        }
         // Рейтинг от
         if ($min_rating) {
             $query->whereHas('rate', function ($q) use ($min_rating) {
@@ -103,16 +89,26 @@ class CourseController extends Controller
                     $q->whereIn('paid_status', [1, 2]);
                 }])->having('course_members_count', '>=', $members_count);
         }
+        // Получить профессии
+        if ($specialities) {
+            $professions = Professions::whereIn('id', $specialities)->get();
+        }
+        // Сортировка по навыкам
+        if ($skills) {
+            $skills = Skill::whereIn('id', $skills)->get();
+
+            $query->whereHas('skills', function ($q) use ($request) {
+                $q->whereIn('skills.id', $request->skills);
+            });
+        }
+
         $items = $query->paginate(6);
         return view("app.pages.general.courses.catalog.course_catalog", [
             "items" => $items,
-            'term' => $term,
-            'professions' => $professions,
-            'skills' => $skills,
-            'choosed_profession' => $choosed_profession,
-            'request' => $request
+            "request" => $request,
+            "professions" => $professions ?? null,
+            "skills" => $skills ?? null
         ]);
-//        return $course_type;
     }
 
     public function courseView($lang, Course $item)
@@ -256,8 +252,8 @@ class CourseController extends Controller
             if ($professions != []) {
                 $q->whereIn('professions.id', $professions);
             }
-//        })->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->limit(50)->get();
-        })->where('uid', '=', null)->limit(50)->get();
+        })->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->limit(50)->get();
+//        })->where('uid', '=', null)->limit(50)->get();
 
 
         return $skills;

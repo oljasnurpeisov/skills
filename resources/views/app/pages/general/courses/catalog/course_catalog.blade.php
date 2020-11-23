@@ -72,18 +72,33 @@
                                 <div class="sidebar-item">
                                     <div class="sidebar-item__title">{{__('default.pages.courses.profession')}}:</div>
                                     <div class="sidebar-item__body">
-                                        <select name="speciality"
+                                        <select name="specialities[]"
                                                 placeholder="{{__('default.pages.courses.choose_profession')}}"
                                                 data-method="getProfessionsByName"
-                                                class="custom" multiple> </select>
+                                                class="custom" multiple>
+                                            @if(!empty($request->specialities))
+                                                @foreach($professions as $profession)
+                                                    <option value="{{$profession->id}}"
+                                                            selected>{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
                                     <div class="sidebar-item__title">{{__('default.pages.courses.skill')}}:</div>
                                     <div class="sidebar-item__body">
-                                        <select name="skills" placeholder="{{__('default.pages.courses.choose_skill')}}"
+                                        <select name="skills[]"
+                                                placeholder="{{__('default.pages.courses.choose_skill')}}"
                                                 data-method="getSkillsByData"
-                                                class="custom" multiple> </select>
+                                                class="custom" multiple>
+                                            @if(!empty($request->skills))
+                                                @foreach($skills as $skill)
+                                                    <option value="{{$skill->id}}"
+                                                            selected>{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
@@ -172,8 +187,8 @@
 @section('scripts')
     <!--Only this page's scripts-->
     <script>
-        const specialityEl = $('[name="speciality"]'),
-            skillsEl = $('[name="skills"]'),
+        const specialityEl = $('[name="specialities[]"]'),
+            skillsEl = $('[name="skills[]"]'),
             authorEl = $('[name="author"]');
 
         let specialitySelect = new ajaxSelect(specialityEl);
