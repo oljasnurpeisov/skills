@@ -104,10 +104,20 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
         Route::post('/ajaxUploadCertificates', 'AjaxUploadController@ajaxUploadCertificates');
         // Сохранение изображения курса
         Route::post('/ajax_upload_course_image', 'AjaxUploadController@ajaxUploadCourseImage');
+        // Сохранение изображения урока
+        Route::post('/ajax_upload_lesson_image', 'AjaxUploadController@ajaxUploadLessonImage');
         // Сохранение видео курса
         Route::post('/ajax_upload_course_videos', 'AjaxUploadController@ajaxUploadCourseVideos');
         // Сохранение аудио курса
         Route::post('/ajax_upload_course_audios', 'AjaxUploadController@ajaxUploadCourseAudios');
+        // Сохранение видео урока
+        Route::post('/ajax_upload_lesson_videos', 'AjaxUploadController@ajaxUploadLessonVideos');
+        // Сохранение аудио урока
+        Route::post('/ajax_upload_lesson_audios', 'AjaxUploadController@ajaxUploadLessonAudios');
+        // Сохранение других материалов урока
+        Route::post('/ajax_upload_lesson_another_files', 'AjaxUploadController@ajaxUploadLessonAnotherFiles');
+
+
 
     });
 
@@ -211,7 +221,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                         Route::post("/movedown-lesson/{item}", "LessonController@movedownLesson");
                         // Курсовая работа
                         Route::get("/my-courses/course/{item}/create-coursework", "LessonController@createCoursework");
-                        Route::post("/create-coursework", "LessonController@storeCoursework");
+                        Route::post("/course-{course}/create-coursework", "LessonController@storeCoursework");
                         Route::get("/my-courses/course/{course}/edit-coursework", "LessonController@editCoursework");
                         Route::post("/my-courses/course/{course}/edit-coursework", "LessonController@updateCoursework");
                         // Финальное тестирование

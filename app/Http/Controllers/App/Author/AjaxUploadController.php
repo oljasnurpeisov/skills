@@ -43,7 +43,7 @@ class AjaxUploadController extends Controller
 
         return Response::json(array('location' => config('APP_URL') . '/users/user_' . Auth::user()->getAuthIdentifier() . '/profile/images/' . $imageName));
     }
-
+    // Загрузка изображения курса
     public function ajaxUploadCourseImage(Request $request)
     {
         $this->validate($request, [
@@ -56,12 +56,26 @@ class AjaxUploadController extends Controller
 
         return Response::json(array('location' => config('APP_URL') . '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/images/' . $imageName));
     }
+    // Загрузка изображения урока
+    public function ajaxUploadLessonImage(Request $request)
+    {
+        $this->validate($request, [
+            "file" => "image|required|max:$this->imageMaxSize|mimes:png,jpg,jpeg"
+        ]);
+
+        $file = $request->file;
+        $imageName = time() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/images'), $imageName);
+
+        return Response::json(array('location' => config('APP_URL') . '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/images/' . $imageName));
+    }
 
     /**
      * Загрузка файла на сайт.
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    // Загрузка сертификатов автора
     public function ajaxUploadCertificates(Request $request)
     {
 
@@ -75,7 +89,7 @@ class AjaxUploadController extends Controller
 
         return Response::json(array('filenames' => $data));
     }
-
+    // Загрузка видео курса
     public function ajaxUploadCourseVideos(Request $request)
     {
         $data = [];
@@ -88,7 +102,7 @@ class AjaxUploadController extends Controller
 
         return Response::json(array('filenames' => $data));
     }
-
+    // Загрузка аудио курса
     public function ajaxUploadCourseAudios(Request $request)
     {
         $data = [];
@@ -97,6 +111,45 @@ class AjaxUploadController extends Controller
             $name = time().uniqid().'.'.$file->getClientOriginalExtension();
             $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/audios'), $name);
             array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/audios/'.$name);
+        }
+
+        return Response::json(array('filenames' => $data));
+    }
+    // Загрузка видео урока
+    public function ajaxUploadLessonVideos(Request $request)
+    {
+        $data = [];
+        foreach($request->file('files') as $file)
+        {
+            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/videos'), $name);
+            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/videos/'.$name);
+        }
+
+        return Response::json(array('filenames' => $data));
+    }
+    // Загрузка аудио урока
+    public function ajaxUploadLessonAudios(Request $request)
+    {
+        $data = [];
+        foreach($request->file('files') as $file)
+        {
+            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/audios'), $name);
+            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/audios/'.$name);
+        }
+
+        return Response::json(array('filenames' => $data));
+    }
+    // Загрузка других материалов урока
+    public function ajaxUploadLessonAnotherFiles(Request $request)
+    {
+        $data = [];
+        foreach($request->file('files') as $file)
+        {
+            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files'), $name);
+            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files/'.$name);
         }
 
         return Response::json(array('filenames' => $data));

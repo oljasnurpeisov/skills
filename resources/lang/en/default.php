@@ -122,7 +122,22 @@ return [
             'cancel_title' => 'Отмена',
             'coursework_count_error_message' => 'Курс может содержать только один урок с типом "Курсовая работа"',
             'final_test_count_error_message' => 'Курс может содержать только один урок с типом "Финальный тест"',
-            'lesson_update_success' => 'Изменения успешно сохранены'
+            'lesson_update_success' => 'Изменения успешно сохранены',
+
+            'coursework_create_title' => 'Создание курсовой работы',
+            'duration_title' => 'Продолжительность урока, минуты',
+            'lesson_image' => 'Картинка урока',
+            'theory_title' => 'Теория',
+            'lesson_video_link' => 'Ссылка на видео урока',
+            'lesson_video_link_1' => 'Ссылка на видео урока (для слабовидящих)',
+            'lesson_audio' => 'Аудио урока',
+            'lesson_audio_1' => 'Аудио урока (для слабовидящих)',
+            'another_lesson_attachments' => 'Другие материалы урока',
+            'another_lesson_attachments_1' => 'Другие материалы урока (для слабовидящих)',
+            'video_local_1' => 'Видео файл с устройства (для слабовидящих)',
+            'coursework_task' => 'Задание для курсовой работы',
+            'create' => 'Создать',
+            'cancel' => 'Отмена'
         ],
         'profile' => [
             'title' => 'Профиль',

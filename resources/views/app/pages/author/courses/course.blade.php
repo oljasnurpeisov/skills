@@ -14,6 +14,16 @@
                     <li><span>{{$item->name}}</span></li>
                 </ul>
 
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <div class="row row--multiline">
                     <div class="col-md-8">
                         <div class="article">
@@ -59,7 +69,7 @@
                                            data-fancybox>{{__('default.pages.courses.create_theme')}}</a>
                                     </div>
                                     <div class="col-auto">
-                                        <a href="/author-coursework-create.html"
+                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-coursework"
                                            title="{{__('default.pages.courses.coursework_title')}}"
                                            class="ghost-btn ghost-btn--blue small">{{__('default.pages.courses.coursework_title')}}</a>
                                     </div>
