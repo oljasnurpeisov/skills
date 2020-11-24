@@ -9,9 +9,10 @@
                         <div class="col-auto"><h1
                                     class="title-primary">{{__('default.pages.courses.my_courses_title')}}</h1></div>
                         <div class="col-auto">
-                            <div class="ghost-btn ghost-btn--blue"><a
-                                        href="/{{$lang}}/create-course">{{__('default.pages.courses.create_course')}}</a>
-                            </div>
+                            <a href="/{{$lang}}/create-course">
+                                <div class="ghost-btn ghost-btn--blue">{{__('default.pages.courses.create_course')}}
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -106,7 +107,8 @@
                                                 class="custom" multiple>
                                             @if(!empty($request->specialities))
                                                 @foreach($professions as $profession)
-                                                    <option value="{{$profession->id}}" selected>{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}</option>
+                                                    <option value="{{$profession->id}}"
+                                                            selected>{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}</option>
                                                 @endforeach
                                             @endif
                                         </select>
@@ -117,12 +119,14 @@
                                 <div class="sidebar-item">
                                     <div class="sidebar-item__title">{{__('default.pages.courses.skill')}}:</div>
                                     <div class="sidebar-item__body">
-                                        <select name="skills[]" placeholder="{{__('default.pages.courses.choose_skill')}}"
+                                        <select name="skills[]"
+                                                placeholder="{{__('default.pages.courses.choose_skill')}}"
                                                 data-method="getSkillsByData"
                                                 class="custom" multiple>
                                             @if(!empty($request->skills))
                                                 @foreach($skills as $skill)
-                                                    <option value="{{$skill->id}}" selected>{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}</option>
+                                                    <option value="{{$skill->id}}"
+                                                            selected>{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}</option>
                                                 @endforeach
                                             @endif
                                         </select>

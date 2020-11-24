@@ -234,13 +234,52 @@ class CourseController extends Controller
 
     public function courseShow($lang, Course $item)
     {
+        $courses = Auth::user()->courses()->get();
+        // Все оценки всех курсов
+        $rates = [];
+        foreach ($courses as $course) {
+            foreach ($course->rate as $rate) {
+                array_push($rates, $rate->rate);
+            }
+        }
+        // Все ученики автора
+        $author_students = [];
+        foreach ($courses->unique('student_id') as $course){
+            foreach ($course->course_members as $member){
+                array_push($author_students, $member);
+            }
+        }
+        // Все ученики закончившие курс
+        $author_students_finished = [];
+        foreach ($courses as $course){
+            foreach ($course->course_members->where('is_finished', '=', true) as $member){
+                array_push($author_students_finished, $member);
+            }
+        }
+        // Оценка автора исходя из всех оценок
+        if (count($rates) == 0) {
+            $average_rates = 0;
+        } else {
+            $average_rates = array_sum($rates) / count($rates);
+        }
+
+//        $data = [['id' => 0, 'name' => "\u0422\u0435\u043C\u0430 1", 'order'=> 0, 'lessons'=> null, 'collapsed'=> !1]];
+
+        $data = 'name';
+
         if ($item->author_id == Auth::user()->id) {
             $themes = $item->themes()->orderBy('index_number', 'asc')->get();
             $lessons_count = count(Lesson::where('course_id', '=', $item->id)->get());
             return view("app.pages.author.courses.course", [
                 "item" => $item,
                 "themes" => $themes,
-                "lessons_count" => $lessons_count
+                "lessons_count" => $lessons_count,
+                "rates" => $rates,
+                "author_students" => $author_students,
+                "courses" => $courses,
+                "author_students_finished" => $author_students_finished,
+                "average_rates" => $average_rates,
+                "data" => $data
             ]);
         } else {
             return redirect("/" . app()->getLocale() . "/my-courses");

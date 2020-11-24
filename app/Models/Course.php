@@ -122,4 +122,9 @@ class Course extends Model
 
     }
 
+    public function attachments() {
+
+        return $this->hasOne(CourseAttachments::class,'course_id', 'id');
+
+    }
 }
