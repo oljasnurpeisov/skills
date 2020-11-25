@@ -119,8 +119,6 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
         // Сохранение других материалов урока
         Route::post('/ajax_upload_lesson_another_files', 'AjaxUploadController@ajaxUploadLessonAnotherFiles');
 
-
-
     });
 
     Route::group(['prefix' => '{lang}'], function () {
@@ -207,21 +205,21 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                         Route::post("/my-courses/delete-course/{item}", "CourseController@deleteCourse");
                         Route::post("/my-courses/reestablish-course/{item}", "CourseController@reestablishCourse");
                         Route::post("/my-courses/quota-confirm-course/{item}", "CourseController@quotaConfirm");
+                        // Получить курс
+                        Route::get("/getCourseData/{course}", "CourseController@getCourseData");
                         // Тема
                         Route::post("/create-theme", "ThemeController@createTheme");
-                        Route::post("/edit-theme/{item}", "ThemeController@editTheme");
-                        Route::delete("/delete-theme/{item}", "ThemeController@deleteTheme");
-                        Route::post("/moveup-theme/{item}", "ThemeController@moveupTheme");
-                        Route::post("/movedown-theme/{item}", "ThemeController@movedownTheme");
+                        Route::post("/edit-theme", "ThemeController@editTheme");
+                        Route::delete("/delete-theme", "ThemeController@deleteTheme");
+                        Route::post("/move-theme", "ThemeController@moveTheme");
                         // Урок
                         Route::get("/my-courses/course/{item}/theme-{theme}/create-lesson", "LessonController@createLesson");
                         Route::get("/my-courses/course/{course}/theme-{theme}/edit-lesson-{lesson}", "LessonController@editLesson");
                         Route::get("/my-courses/course/{course}/theme-{theme}/view-lesson-{lesson}", "LessonController@editLesson");
                         Route::post("/create-lesson", "LessonController@storeLesson");
                         Route::post("/edit-lesson-{item}", "LessonController@updateLesson");
-                        Route::delete("/delete-lesson/{item}", "LessonController@deleteLesson");
-                        Route::post("/moveup-lesson/{item}", "LessonController@moveupLesson");
-                        Route::post("/movedown-lesson/{item}", "LessonController@movedownLesson");
+                        Route::delete("/delete-lesson", "LessonController@deleteLesson");
+                        Route::post("/move-lesson", "LessonController@moveLesson");
                         // Курсовая работа
                         Route::get("/my-courses/course/{item}/create-coursework", "LessonController@createCoursework");
                         Route::post("/course-{course}/create-coursework", "LessonController@storeCoursework");

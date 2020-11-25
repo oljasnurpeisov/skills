@@ -607,4 +607,63 @@ class CourseController extends Controller
         return Excel::download(new ReportingExport($ar), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
+    public function getCourseData($lang, Course $course){
+        $a = [['id' => 0, 'name' => "Тема 1", 'order' => 0, 'lessons' => [[
+            'id'=> 0,
+                'name'=> "\u041A\u0430\u043A \u043F\u0440\u043E\u0445\u043E\u0434\u0438\u0442 \u0434\u0430\u043D\u043D\u044B\u0439 \u043A\u0443\u0440\u0441",
+                'order'=> 0,
+                'duration'=> 20
+            ]], 'collapsed'=> !1]];
+        $themes = Theme::where('course_id', '=', $course->id)->with('lessons')->get();
+
+        foreach ($themes as $theme){
+            $theme->order = $theme->index_number;
+
+
+            foreach ($theme->lessons as $lesson){
+                $lesson->order = $lesson->index_number;
+            }
+        }
+
+//        [{id: 0, name: "\u0422\u0435\u043C\u0430 1", order: 0, lessons: null, collapsed: !1}, {
+//            id: 1,
+//            name: "\u0422\u0435\u043C\u0430 2",
+//            order: 1,
+//            lessons: [{
+//                id: 0,
+//                name: "\u041A\u0430\u043A \u043F\u0440\u043E\u0445\u043E\u0434\u0438\u0442 \u0434\u0430\u043D\u043D\u044B\u0439 \u043A\u0443\u0440\u0441",
+//                order: 0,
+//                duration: 20
+//            }, {
+//                id: 1,
+//                name: "\u0420\u0430\u0431\u043E\u0447\u0435\u0435 \u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u0441\u0442\u0432\u043E",
+//                order: 1,
+//                duration: 40
+//            }, {id: 2, name: "\u0423\u0440\u043E\u043A 3", order: 2, duration: 25}, {
+//                id: 3,
+//                name: "\u0423\u0440\u043E\u043A 4",
+//                order: 3,
+//                duration: 55
+//            }],
+//            collapsed: !1
+//        }, {id: 2, name: "\u0422\u0435\u043C\u0430 3", order: 2, lessons: null, collapsed: !1}, {
+//            id: 3,
+//            name: "\u0422\u0435\u043C\u0430 4",
+//            order: 3,
+//            lessons: null,
+//            collapsed: !1
+//        }, {id: 4, name: "\u0422\u0435\u043C\u0430 5", order: 4, lessons: null, collapsed: !1}, {
+//            id: 5,
+//            name: "\u0422\u0435\u043C\u0430 6",
+//            order: 5,
+//            lessons: [{id: 0, name: "\u0423\u0440\u043E\u043A 1", order: 0, duration: 30}, {
+//                id: 1,
+//                name: "\u0423\u0440\u043E\u043A 2",
+//                order: 1,
+//                duration: 15
+//            }, {id: 2, name: "\u0423\u0440\u043E\u043A 3", order: 2, duration: 45}],
+//            collapsed: !1
+//        }]
+        return $themes;
+    }
 }

@@ -225,136 +225,18 @@ class LessonController extends Controller
         return redirect("/" . app()->getLocale() . "/my-courses/course/" . $request->course_id);
     }
 
-    public function deleteLesson($lang, Request $request)
+    public function deleteLesson(Request $request)
     {
         Lesson::where('id', '=', $request->lesson_id)->delete();
-        $course = Course::where('id', '=', $request->course_id)->first();
-        $themes = $course->themes()->orderBy('index_number', 'asc')->get();
-        $table_content = '<table class="table table-striped" id="themes_table">
-            <tbody>';
-        foreach ($themes as $theme) {
-            $content = '<tr>
-            <td>' . $theme->name . '</td>
-            <td><a href="/' . $lang . '/my-courses/course/' . $request->course_id . '/theme-' . $theme->id . '/create-lesson"
-                                           class="btn btn-primary">+</a>
-            <button type="button" theme-id="' . $theme->id . '" theme-name="' . $theme->name . '" class="btn btn-warning" data-toggle="modal" data-target=".editThemeModal"><i class="fa fa-pencil"></i></button>
-            <button type="button" class="btn btn-danger deleteThemeBtn"><i class="fa fa-trash"></i></button>
-            <button type="button" class="btn btn-info moveUpThemeBtn"><i
-                                                        class="fa fa-arrow-up"></i></button>
-                                            <button type="button" class="btn btn-info moveDownThemeBtn"><i
-                                                        class="fa fa-arrow-down"></i></button>
-            <td hidden>' . $theme->id . '</td><td hidden>'.$theme->index_number.'</td>
-            </tr>';
-            foreach ($theme->lessons()->orderBy('index_number', 'asc')->get() as $key => $lesson) {
-                $content .= '<tr><td></td><td>' . $lesson->name . ' <a href="/{{$lang}}/my-courses/theme-{{$theme->id}}/edit-lesson-{{$lesson->id}}"
-                                                   class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                <button type="button" class="btn btn-danger deleteLessonBtn"><i
-                                                            class="fa fa-trash"></i></button>
-                                                            <button type="button" class="btn btn-info moveUpLessonBtn"><i
-                                                            class="fa fa-arrow-up"></i></button>
-                                                <button type="button" class="btn btn-info moveDownLessonBtn"><i
-                                                            class="fa fa-arrow-down"></i></button></td><td hidden>' . $lesson->id . '</td><td hidden>' . $lesson->index_number . '</td><td hidden>'.$theme->id.'</td></tr>';
-            }
-            $table_content .= $content;
-        }
-        $table_content .= '</tbody>
-                        </table>';
-
-        return $table_content;
     }
 
-    public function moveupLesson($lang, Request $request)
-    {
-        $previous_lesson = Lesson::where('index_number', '<', $request->lesson_index)->whereHas('themes', function($q) use ($request){
-            $q->where('themes.id', '=', $request->theme_id);
-        })->first();
-        $current_lesson = Lesson::where('id', '=', $request->lesson_id)->where('index_number', '=', $request->lesson_index)->first();
+    public function moveLesson(Request $request){
+        $lesson_1 = Lesson::where('id', '=', $request->lesson_1_id)->first();
+        $lesson_2 = Lesson::where('id', '=', $request->lesson_2_id)->first();
 
-        $current_lesson->index_number = $previous_lesson->index_number;
-        $previous_lesson->index_number = $request->lesson_index;
-        $previous_lesson->save();
-        $current_lesson->save();
-
-        $course = Course::where('id', '=', $request->course_id)->first();
-        $themes = $course->themes()->orderBy('index_number', 'asc')->get();
-        $table_content = '<table class="table table-striped" id="themes_table">
-            <tbody>';
-        foreach ($themes as $theme) {
-            $content = '<tr>
-            <td>' . $theme->name . '</td>
-            <td><a href="/' . $lang . '/my-courses/course/' . $request->course_id . '/theme-' . $theme->id . '/create-lesson"
-                                           class="btn btn-primary">+</a>
-            <button type="button" theme-id="' . $theme->id . '" theme-name="' . $theme->name . '" class="btn btn-warning" data-toggle="modal" data-target=".editThemeModal"><i class="fa fa-pencil"></i></button>
-            <button type="button" class="btn btn-danger deleteThemeBtn"><i class="fa fa-trash"></i></button>
-            <button type="button" class="btn btn-info moveUpThemeBtn"><i
-                                                        class="fa fa-arrow-up"></i></button>
-                                            <button type="button" class="btn btn-info moveDownThemeBtn"><i
-                                                        class="fa fa-arrow-down"></i></button>
-            <td hidden>' . $theme->id . '</td><td hidden>'.$theme->index_number.'</td>
-            </tr>';
-            foreach ($theme->lessons()->orderBy('index_number', 'asc')->get() as $key => $lesson) {
-                $content .= '<tr><td></td><td>' . $lesson->name . ' <a href="/{{$lang}}/my-courses/theme-{{$theme->id}}/edit-lesson-{{$lesson->id}}"
-                                                   class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                <button type="button" class="btn btn-danger deleteLessonBtn"><i
-                                                            class="fa fa-trash"></i></button>
-                                                            <button type="button" class="btn btn-info moveUpLessonBtn"><i
-                                                            class="fa fa-arrow-up"></i></button>
-                                                <button type="button" class="btn btn-info moveDownLessonBtn"><i
-                                                            class="fa fa-arrow-down"></i></button></td><td hidden>' . $lesson->id . '</td><td hidden>' . $lesson->index_number . '</td><td hidden>'.$theme->id.'</td></tr>';
-            }
-            $table_content .= $content;
-        }
-        $table_content .= '</tbody>
-                        </table>';
-
-        return $table_content;
-    }
-
-    public function movedownLesson($lang, Request $request)
-    {
-        $next_lesson = Lesson::where('index_number', '>', $request->lesson_index)->whereHas('themes', function($q) use ($request){
-        $q->where('themes.id', '=', $request->theme_id);
-    })->first();
-        $current_lesson = Lesson::where('id', '=', $request->lesson_id)->where('index_number', '=', $request->lesson_index)->first();
-
-        $current_lesson->index_number = $next_lesson->index_number;
-        $next_lesson->index_number = $request->lesson_index;
-        $next_lesson->save();
-        $current_lesson->save();
-
-        $course = Course::where('id', '=', $request->course_id)->first();
-        $themes = $course->themes()->orderBy('index_number', 'asc')->get();
-        $table_content = '<table class="table table-striped" id="themes_table">
-            <tbody>';
-        foreach ($themes as $theme) {
-            $content = '<tr>
-            <td>' . $theme->name . '</td>
-            <td><a href="/' . $lang . '/my-courses/course/' . $request->course_id . '/theme-' . $theme->id . '/create-lesson"
-                                           class="btn btn-primary">+</a>
-            <button type="button" theme-id="' . $theme->id . '" theme-name="' . $theme->name . '" class="btn btn-warning" data-toggle="modal" data-target=".editThemeModal"><i class="fa fa-pencil"></i></button>
-            <button type="button" class="btn btn-danger deleteThemeBtn"><i class="fa fa-trash"></i></button>
-            <button type="button" class="btn btn-info moveUpThemeBtn"><i
-                                                        class="fa fa-arrow-up"></i></button>
-                                            <button type="button" class="btn btn-info moveDownThemeBtn"><i
-                                                        class="fa fa-arrow-down"></i></button>
-            <td hidden>' . $theme->id . '</td><td hidden>'.$theme->index_number.'</td>
-            </tr>';
-            foreach ($theme->lessons()->orderBy('index_number', 'asc')->get() as $key => $lesson) {
-                $content .= '<tr><td></td><td>' . $lesson->name . ' <a href="/{{$lang}}/my-courses/theme-{{$theme->id}}/edit-lesson-{{$lesson->id}}"
-                                                   class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                                                <button type="button" class="btn btn-danger deleteLessonBtn"><i
-                                                            class="fa fa-trash"></i></button>
-                                                            <button type="button" class="btn btn-info moveUpLessonBtn"><i
-                                                            class="fa fa-arrow-up"></i></button>
-                                                <button type="button" class="btn btn-info moveDownLessonBtn"><i
-                                                            class="fa fa-arrow-down"></i></button></td><td hidden>' . $lesson->id . '</td><td hidden>' . $lesson->index_number . '</td><td hidden>'.$theme->id.'</td></tr>';
-            }
-            $table_content .= $content;
-        }
-        $table_content .= '</tbody>
-                        </table>';
-
-        return $table_content;
+        [$lesson_1->index_number, $lesson_2->index_number] = [$lesson_2->index_number, $lesson_1->index_number];
+        $lesson_1->save();
+        $lesson_2->save();
     }
 
     public function createCoursework($lang, Course $item){

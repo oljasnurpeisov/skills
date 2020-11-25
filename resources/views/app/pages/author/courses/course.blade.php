@@ -88,10 +88,13 @@
                                     </div>
                                     <div class="row row--multiline justify-center">
                                         <div class="col-auto">
-                                            <a href="#" title="{{__('default.pages.courses.create')}}" class="btn" id="addTopicBtn">{{__('default.pages.courses.create')}}</a>
+                                            <a href="#" title="{{__('default.pages.courses.create')}}" class="btn"
+                                               id="addTopicBtn">{{__('default.pages.courses.create')}}</a>
                                         </div>
                                         <div class="col-auto">
-                                            <a href="#" title="{{__('default.pages.courses.cancel_title')}}" class="ghost-btn" data-fancybox-close>{{__('default.pages.courses.cancel_title')}}</a>
+                                            <a href="#" title="{{__('default.pages.courses.cancel_title')}}"
+                                               class="ghost-btn"
+                                               data-fancybox-close>{{__('default.pages.courses.cancel_title')}}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -439,15 +442,20 @@
     <!--Only this page's scripts-->
     <script src="/assets/js/course-edit.js"></script>
     <script>
-        let newCourseController = new courseController(123, {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        let newCourseController = new courseController({{$item->id}}, {
             upText: 'Поднять',
             downText: 'Опустить',
             deleteText: 'Удалить',
             editText: 'Редактировать',
-            addText: 'Создать урок'
+            addText: 'Создать урок',
         });
         newCourseController.initComponent();
-        {{--console.log(JSON.parse(@json($data)));--}}
 
     </script>
     <!---->
