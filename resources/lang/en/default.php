@@ -255,7 +255,8 @@ return [
         'index' => [
             'index_title' => 'Улучши свои навыки! <br/><span>вместе с Enbek.kz</span>',
             'find_your_course' => '<span>Найдите</span><br/> Ваш курс',
-            'popular_courses' => '<span>Популярные</span><br/> курсы'
+            'popular_courses' => '<span>Популярные</span><br/> курсы',
+            'popular_authors' => '<span>Популярные</span><br/> авторы'
         ],
 
         'footer' => [

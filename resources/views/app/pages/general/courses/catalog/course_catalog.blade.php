@@ -202,7 +202,7 @@
 
         let specialitySelect = new ajaxSelect(specialityEl);
         let skillsSelect = new ajaxSelect(skillsEl, specialityEl);
-        let authorSelect = new ajaxSelect(authorEl);
+        let authorSelect = new ajaxSelect(authorEl, null, false);
 
         specialityEl.change(function () {
             skillsSelect.update($(this).val() ? {"professions": toArray($(this).val())} : null);

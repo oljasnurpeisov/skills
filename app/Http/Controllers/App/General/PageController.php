@@ -9,6 +9,7 @@ use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PharIo\Manifest\Author;
 
 
 class PageController extends Controller
@@ -43,18 +44,61 @@ class PageController extends Controller
 
         }
 
-        $popular_courses = Course::leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
-            ->select('course_rate.rate as course_rate', 'courses.*')
-            ->orderBy('course_rate.rate', 'desc')->where('status', '=', Course::published)->limit(8)->get();
+        $popular_courses = Course::withCount('course_members')->orderBy('course_members_count', 'desc')->where('status', '=', Course::published)->limit(8)->get();
+        $popular_authors = User::whereHas('roles', function ($q) {
+            $q->where('slug', '=', 'author');
+        })->where('email_verified_at', '!=', null)->with('courses')->get();
+
+        // Получить количество записавшихся на курсы
+        foreach ($popular_authors as $author) {
+            $author->unique_members = 0;
+            $author->members = 0;
+            $author->rates = 0;
+            $rates_array = [];
+
+//            $rates = $author->rates_array;
+//            $author->rates_array = [];
+
+            foreach ($author->courses as $course) {
+                // Количество купленных курсов
+                foreach ($course->course_members as $member) {
+                    $author->members = count($course->course_members);
+                }
+                // Количество отзывов
+                foreach ($course->rate as $rate) {
+                    $author->rates++;
+
+                    $rates_array[] = $rate->rate;
+
+                }
+            }
+            // Уникальные пользователи
+            foreach ($author->courses->unique('student_id') as $course) {
+                foreach ($course->course_members as $member) {
+                    $author->unique_members = count($course->course_members);
+                }
+            }
+            // Оценка автора исходя из всех оценок
+            if (count($rates_array) == 0) {
+                $author->average_rates = 0;
+            } else {
+                $author->average_rates = array_sum($rates_array) / count($rates_array);
+            }
+        }
+
+        $popular_authors = $popular_authors->sortByDesc("members")->take(8);
 
         return view("index", [
             "courses" => $courses ?? [],
             "skills" => $skills ?? [],
-            "popular_courses" => $popular_courses
+            "popular_courses" => $popular_courses,
+            "popular_authors" => $popular_authors
         ]);
+//        return $popular_authors;
     }
 
-    public function notifications(){
+    public function notifications()
+    {
 
         $notifications = Auth::user()->notifications()->orderBy('created_at', 'desc')->paginate(5);
 

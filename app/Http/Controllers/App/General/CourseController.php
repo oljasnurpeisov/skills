@@ -178,11 +178,15 @@ class CourseController extends Controller
     {
         $author_name = $request->name ?? '';
 
-        $author = User::with('author_info')->whereHas('author_info', function($q) use($author_name){
-            $q->where('name', 'like', '%' . $author_name . '%');
+        $authors = User::with('author_info')->whereHas('author_info', function($q) use($author_name){
+            $q->where('name', 'like', '%' . $author_name . '%')->orWhere('surname', 'like', '%' . $author_name . '%');
         })->limit(50)->get();
 
-        return $author;
+        foreach ($authors as $author) {
+            $author->name = $author->author_info->name . ' ' . $author->author_info->surname;
+        }
+
+        return $authors;
     }
 
 }

@@ -137,18 +137,9 @@
             <div class="container">
                 <h3 class="title-primary decorated"><span>Можно применить</span><br/> популярные курсы</h3>
                 <ul class="home-arrow-links">
-                    <li><a href="#" class="arrow-link" title="Курс визуального дизайна и интерьера">Курс визуального
-                            дизайна и интерьера</a></li>
-                    <li><a href="#" class="arrow-link" title="Основы программирования на Phyton">Основы программирования
-                            на Phyton</a></li>
-                    <li><a href="#" class="arrow-link" title="3D дизайн или как начать создавать с нуля">3D дизайн или
-                            как начать создавать с нуля</a></li>
-                    <li><a href="#" class="arrow-link" title="Основы модульного построения зданий">Основы модульного
-                            построения зданий</a></li>
-                    <li><a href="#" class="arrow-link" title="Веб-дизайн или с чего начать новичку">Веб-дизайн или с
-                            чего начать новичку</a></li>
-                    <li><a href="#" class="arrow-link" title="Детальный разбор C++ от профессионала">Детальный разбор
-                            C++ от профессионала</a></li>
+                    @foreach($popular_courses as $item)
+                    <li><a href="#" class="arrow-link" title="{{$item->name}}">{{$item->name}}</a></li>
+                    @endforeach
                     <li><a href="/{{$lang}}/course-catalog" title="Посмотреть весь каталог" class="btn">Посмотреть весь
                             каталог</a></li>
                 </ul>
@@ -222,27 +213,32 @@
             @if(Auth::user()->roles()->first()->slug == 'student')
                 <section class="plain">
                     <div class="container">
-                        <h2 class="title-primary decorated"><span>Популярные</span><br/> курсы</h2>
+                        <h2 class="title-primary decorated">{!! __('default.pages.index.popular_courses') !!}</h2>
                         <div class="regular-carousel courses-carousel">
-                            @foreach($popular_courses as $course)
+                            @foreach($popular_courses as $item)
                                 <a href="#" title="" class="card">
-                                    <div class="card__quota mark mark--yellow">Доступен по квоте</div>
+                                    @if($item->quota_status == 2)
+                                        <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
+                                    @endif
                                     <div class="card__image">
-                                        <img src="/assets/img/courses/1.png" alt="">
+                                        <img src="{{$item->image}}" alt="">
                                     </div>
                                     <div class="card__desc">
                                         <div class="card__top">
-                                            <div class="card__price mark mark--blue">10 000 тг</div>
-                                            <h3 class="card__title">Монтаж электросетевого оборудования для
-                                                начинающих</h3>
-                                            <div class="card__author">Арман Досмугамбетов</div>
+                                            @if($item->is_paid == true)
+                                                <div class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                                            @else
+                                                <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
+                                            @endif
+                                            <h3 class="card__title">{{$item->name}}</h3>
+                                            <div class="card__author">{{$item->user->company_name}}</div>
                                         </div>
                                         <div class="card__bottom">
                                             <div class="card__attribute">
-                                                <i class="icon-user"> </i><span>1500</span>
+                                                <i class="icon-user"> </i><span>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</span>
                                             </div>
                                             <div class="card__attribute">
-                                                <i class="icon-star-full"> </i><span>4.5</span>
+                                                <i class="icon-star-full"> </i><span>{{$item->rate->pluck('rate')->avg() ?? 0}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -254,265 +250,137 @@
 
                 <section class="plain big-padding">
                     <div class="container">
-                        <h2 class="title-primary decorated"><span>Популярные</span><br/> авторы</h2>
+                        <h2 class="title-primary decorated">{!! __('default.pages.index.popular_authors') !!}</h2>
                         <div class="regular-carousel courses-carousel">
-                            <a href="#" title="" class="card">
-                                <div class="card__image card__author-image">
-                                    <img src="/assets/img/authors/1.png" alt="">
-                                </div>
-                                <div class="card__desc">
-                                    <div class="card__top">
-                                        <h3 class="card__title">Гурьев Евгений</h3>
-                                        <div class="card__stats">
-                                            <span>29</span> отзывов<br/>
-                                            <span>129</span> обучающихся<br/>
-                                            <span>12</span> курсов
-                                        </div>
+                            @foreach($popular_authors as $author)
+                                <a href="/{{$lang}}/course-catalog?authors[]={{$author->id}}" title="" class="card">
+                                    <div class="card__image card__author-image">
+                                        <img src="{{$author->author_info->avatar}}" alt="">
                                     </div>
-                                    <div class="card__bottom">
-                                        <div class="rating">
-                                            <div class="rating__number">4.5</div>
-                                            <div class="rating__stars">
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-half"> </i>
+                                    <div class="card__desc">
+                                        <div class="card__top">
+                                            <h3 class="card__title">{{$author->author_info->name . ' ' . $author->author_info->surname}}</h3>
+                                            <div class="card__stats">
+                                                <span>{{$author->rates ?? 0}}</span> {{__('default.pages.profile.rates_count_title')}}
+                                                <br/>
+                                                <span>{{$author->unique_members}}</span> {{__('default.pages.profile.course_members_count')}}
+                                                <br/>
+                                                <span>{{$author->courses->where('status', '=', 3)->count()}}</span> {{__('default.pages.profile.course_count')}}
+                                            </div>
+                                        </div>
+                                        <div class="card__bottom">
+                                            <div class="rating">
+                                                <div class="rating__number">{{round($author->average_rates, 1)}}</div>
+                                                <div class="rating__stars">
+                                                    <?php
+                                                    for ($x = 1; $x <= $author->average_rates; $x++) {
+                                                        echo '<i class="icon-star-full"> </i>';
+                                                    }
+                                                    if (strpos($author->average_rates, '.')) {
+                                                        echo '<i class="icon-star-half"> </i>';
+                                                        $x++;
+                                                    }
+                                                    while ($x <= 5) {
+                                                        echo '<i class="icon-star-empty"> </i>';
+                                                        $x++;
+                                                    }
+                                                    ?>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                            <a href="#" title="" class="card">
-                                <div class="card__image card__author-image">
-                                    <img src="/assets/img/authors/2.png" alt="">
-                                </div>
-                                <div class="card__desc">
-                                    <div class="card__top">
-                                        <h3 class="card__title">Насыров Арман </h3>
-                                        <div class="card__stats">
-                                            <span>29</span> отзывов<br/>
-                                            <span>129</span> обучающихся<br/>
-                                            <span>12</span> курсов
-                                        </div>
-                                    </div>
-                                    <div class="card__bottom">
-                                        <div class="rating">
-                                            <div class="rating__number">4.5</div>
-                                            <div class="rating__stars">
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-half"> </i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#" title="" class="card">
-                                <div class="card__image card__author-image">
-                                    <img src="/assets/img/authors/3.png" alt="">
-                                </div>
-                                <div class="card__desc">
-                                    <div class="card__top">
-                                        <h3 class="card__title">Алексеева Кристина</h3>
-                                        <div class="card__stats">
-                                            <span>29</span> отзывов<br/>
-                                            <span>129</span> обучающихся<br/>
-                                            <span>12</span> курсов
-                                        </div>
-                                    </div>
-                                    <div class="card__bottom">
-                                        <div class="rating">
-                                            <div class="rating__number">4.5</div>
-                                            <div class="rating__stars">
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-half"> </i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#" title="" class="card">
-                                <div class="card__image card__author-image">
-                                    <img src="/assets/img/authors/4.png" alt="">
-                                </div>
-                                <div class="card__desc">
-                                    <div class="card__top">
-                                        <h3 class="card__title">Аширбеков Даулет</h3>
-                                        <div class="card__stats">
-                                            <span>29</span> отзывов<br/>
-                                            <span>129</span> обучающихся<br/>
-                                            <span>12</span> курсов
-                                        </div>
-                                    </div>
-                                    <div class="card__bottom">
-                                        <div class="rating">
-                                            <div class="rating__number">4.5</div>
-                                            <div class="rating__stars">
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-half"> </i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#" title="" class="card">
-                                <div class="card__image card__author-image">
-                                    <img src="/assets/img/authors/1.png" alt="">
-                                </div>
-                                <div class="card__desc">
-                                    <div class="card__top">
-                                        <h3 class="card__title">Гурьев Евгений</h3>
-                                        <div class="card__stats">
-                                            <span>29</span> отзывов<br/>
-                                            <span>129</span> обучающихся<br/>
-                                            <span>12</span> курсов
-                                        </div>
-                                    </div>
-                                    <div class="card__bottom">
-                                        <div class="rating">
-                                            <div class="rating__number">4.5</div>
-                                            <div class="rating__stars">
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-half"> </i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#" title="" class="card">
-                                <div class="card__image card__author-image">
-                                    <img src="/assets/img/authors/2.png" alt="">
-                                </div>
-                                <div class="card__desc">
-                                    <div class="card__top">
-                                        <h3 class="card__title">Насыров Арман </h3>
-                                        <div class="card__stats">
-                                            <span>29</span> отзывов<br/>
-                                            <span>129</span> обучающихся<br/>
-                                            <span>12</span> курсов
-                                        </div>
-                                    </div>
-                                    <div class="card__bottom">
-                                        <div class="rating">
-                                            <div class="rating__number">4.5</div>
-                                            <div class="rating__stars">
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-half"> </i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#" title="" class="card">
-                                <div class="card__image card__author-image">
-                                    <img src="/assets/img/authors/3.png" alt="">
-                                </div>
-                                <div class="card__desc">
-                                    <div class="card__top">
-                                        <h3 class="card__title">Алексеева Кристина</h3>
-                                        <div class="card__stats">
-                                            <span>29</span> отзывов<br/>
-                                            <span>129</span> обучающихся<br/>
-                                            <span>12</span> курсов
-                                        </div>
-                                    </div>
-                                    <div class="card__bottom">
-                                        <div class="rating">
-                                            <div class="rating__number">4.5</div>
-                                            <div class="rating__stars">
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-half"> </i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#" title="" class="card">
-                                <div class="card__image card__author-image">
-                                    <img src="/assets/img/authors/4.png" alt="">
-                                </div>
-                                <div class="card__desc">
-                                    <div class="card__top">
-                                        <h3 class="card__title">Аширбеков Даулет</h3>
-                                        <div class="card__stats">
-                                            <span>29</span> отзывов<br/>
-                                            <span>129</span> обучающихся<br/>
-                                            <span>12</span> курсов
-                                        </div>
-                                    </div>
-                                    <div class="card__bottom">
-                                        <div class="rating">
-                                            <div class="rating__number">4.5</div>
-                                            <div class="rating__stars">
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-full"> </i>
-                                                <i class="icon-star-half"> </i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
+                                </a>
+                            @endforeach
                         </div>
                     </div>
                 </section>
             @endif
         @endauth
-        <section class="plain">
-            <div class="container">
-                <h2 class="title-primary decorated">{!! __('default.pages.index.popular_courses') !!}</h2>
-                <div class="regular-carousel courses-carousel">
-                    @foreach($popular_courses as $item)
-                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}" title="" class="card">
-                            @if($item->quota_status == 2)
-                                <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
-                            @endif
-                            <div class="card__image">
-                                <img src="{{$item->image}}" alt="">
-                            </div>
-                            <div class="card__desc">
-                                <div class="card__top">
-                                    @if($item->is_paid == true)
-                                        <div class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
-                                    @else
-                                        <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
-                                    @endif
-                                    <h3 class="card__title">{{$item->name}}</h3>
-                                    <div class="card__author">{{$item->user->company_name}}</div>
+        @guest
+            <section class="plain">
+                <div class="container">
+                    <h2 class="title-primary decorated">{!! __('default.pages.index.popular_courses') !!}</h2>
+                    <div class="regular-carousel courses-carousel">
+                        @foreach($popular_courses as $item)
+                            <a href="#" title="" class="card">
+                                @if($item->quota_status == 2)
+                                    <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
+                                @endif
+                                <div class="card__image">
+                                    <img src="{{$item->image}}" alt="">
                                 </div>
-                                <div class="card__bottom">
-                                    <div class="card__attribute">
-                                        <i class="icon-user"> </i><span>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</span>
+                                <div class="card__desc">
+                                    <div class="card__top">
+                                        @if($item->is_paid == true)
+                                            <div class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                                        @else
+                                            <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
+                                        @endif
+                                        <h3 class="card__title">{{$item->name}}</h3>
+                                        <div class="card__author">{{$item->user->company_name}}</div>
                                     </div>
-                                    <div class="card__attribute">
-                                        <i class="icon-star-full"> </i><span>{{$item->rate->pluck('rate')->avg() ?? 0}}</span>
+                                    <div class="card__bottom">
+                                        <div class="card__attribute">
+                                            <i class="icon-user"> </i><span>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</span>
+                                        </div>
+                                        <div class="card__attribute">
+                                            <i class="icon-star-full"> </i><span>{{$item->rate->pluck('rate')->avg() ?? 0}}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                    @endforeach
+                            </a>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <section class="plain big-padding">
+                <div class="container">
+                    <h2 class="title-primary decorated">{!! __('default.pages.index.popular_authors') !!}</h2>
+                    <div class="regular-carousel courses-carousel">
+                        @foreach($popular_authors as $author)
+                            <a href="/{{$lang}}/course-catalog?authors[]={{$author->id}}" title="" class="card">
+                                <div class="card__image card__author-image">
+                                    <img src="{{$author->author_info->avatar}}" alt="">
+                                </div>
+                                <div class="card__desc">
+                                    <div class="card__top">
+                                        <h3 class="card__title">{{$author->author_info->name . ' ' . $author->author_info->surname}}</h3>
+                                        <div class="card__stats">
+                                            <span>{{$author->rates ?? 0}}</span> {{__('default.pages.profile.rates_count_title')}}
+                                            <br/>
+                                            <span>{{$author->unique_members}}</span> {{__('default.pages.profile.course_members_count')}}
+                                            <br/>
+                                            <span>{{$author->courses->where('status', '=', 3)->count()}}</span> {{__('default.pages.profile.course_count')}}
+                                        </div>
+                                    </div>
+                                    <div class="card__bottom">
+                                        <div class="rating">
+                                            <div class="rating__number">{{round($author->average_rates, 1)}}</div>
+                                            <div class="rating__stars">
+                                                <?php
+                                                for ($x = 1; $x <= $author->average_rates; $x++) {
+                                                    echo '<i class="icon-star-full"> </i>';
+                                                }
+                                                if (strpos($author->average_rates, '.')) {
+                                                    echo '<i class="icon-star-half"> </i>';
+                                                    $x++;
+                                                }
+                                                while ($x <= 5) {
+                                                    echo '<i class="icon-star-empty"> </i>';
+                                                    $x++;
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endguest
 
         <section class="blue">
             <div class="container">
