@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dialog;
 use App\Models\PayInformation;
 use App\Models\Skill;
 use App\Models\StudentInformation;
@@ -77,7 +78,7 @@ class UserController extends Controller
                 ]
             ]);
         } catch (BadResponseException $e) {
-            return redirect()->back()->with('status', __('auth.failed'));
+            return redirect()->back()->with('failed', __('auth.failed'));
         }
 
         $token = json_decode($response->getBody(), true);
@@ -116,6 +117,8 @@ class UserController extends Controller
             }
             $skills = Skill::whereIn('code_skill', $user_skills)->pluck('id')->toArray();
             $item->skills()->sync($skills);
+
+            $this->createTechDialog($user);
 
 
             Session::put('student_token', $token);
@@ -167,6 +170,18 @@ class UserController extends Controller
         }
 
         return $response->getBody();
+    }
+
+    public function createTechDialog(User $user){
+        // Создание диалога с тех.поддержкой
+        $tech_support = User::whereHas('roles', function ($q) {
+            $q->where('slug', '=', 'tech_support');
+        })->first();
+
+        $dialog = new Dialog;
+        $dialog->save();
+
+        $dialog->members()->sync([$user->id, $tech_support->id]);
     }
 
 }

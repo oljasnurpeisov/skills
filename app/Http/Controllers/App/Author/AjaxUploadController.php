@@ -43,6 +43,19 @@ class AjaxUploadController extends Controller
 
         return Response::json(array('location' => config('APP_URL') . '/users/user_' . Auth::user()->getAuthIdentifier() . '/profile/images/' . $imageName));
     }
+    // Загрузка изображения компании
+    public function ajaxUploadCompanyImage(Request $request)
+    {
+        $this->validate($request, [
+            "file" => "image|required|max:$this->imageMaxSize|mimes:png,jpg,jpeg"
+        ]);
+
+        $file = $request->file;
+        $imageName = time() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('images/company'), $imageName);
+
+        return Response::json(array('location' => config('APP_URL') . '/images/company/' . $imageName));
+    }
     // Загрузка изображения курса
     public function ajaxUploadCourseImage(Request $request)
     {

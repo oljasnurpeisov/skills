@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Professions;
 use App\Models\Skill;
+use App\Models\Type_of_ownership;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,7 @@ class PageController extends Controller
         $popular_courses = Course::withCount('course_members')->orderBy('course_members_count', 'desc')->where('status', '=', Course::published)->limit(8)->get();
         $popular_authors = User::whereHas('roles', function ($q) {
             $q->where('slug', '=', 'author');
-        })->where('email_verified_at', '!=', null)->with('courses')->get();
+        })->where('email_verified_at', '!=', null)->where('is_activate', '=', true)->with('courses')->get();
 
         // Получить количество записавшихся на курсы
         foreach ($popular_authors as $author) {
@@ -88,11 +89,12 @@ class PageController extends Controller
 
         $popular_authors = $popular_authors->sortByDesc("members")->take(8);
 
+
         return view("index", [
             "courses" => $courses ?? [],
             "skills" => $skills ?? [],
             "popular_courses" => $popular_courses,
-            "popular_authors" => $popular_authors
+            "popular_authors" => $popular_authors,
         ]);
 //        return $popular_authors;
     }

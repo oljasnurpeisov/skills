@@ -30,7 +30,7 @@ class ForgotPasswordController extends Controller
     {
 
         $request->validate([
-            'email' => 'required|exists:users,email|max:255',
+            'email_forgot_password' => 'required|exists:users,email|max:255',
         ]);
 
         $generator = new RandomStringGenerator();
@@ -38,20 +38,20 @@ class ForgotPasswordController extends Controller
 
 
         $data = [
-            'email' => $request->email,
+            'email' => $request->email_forgot_password,
             'password' => $generate_password,
         ];
 
         Mail::send('app.pages.page.emails.view', ['data' => $data], function ($message) use ($request) {
             $message->from(env("MAIL_USERNAME"), 'Enbek');
-            $message->to($request->email, 'Receiver')->subject('');
+            $message->to($request->email_forgot_password, 'Receiver')->subject(__('default.pages.auth.recovery_password'));
         });
 
-        $user = User::where('email', '=', $request->email)->first();
+        $user = User::where('email', '=', $request->email_forgot_password)->first();
         $user->password = Hash::make($generate_password);
         $user->save();
 
-        return redirect('/'.app()->getLocale().'/login');
+        return redirect('/'.app()->getLocale().'/')->with('recovery_pass', __('default.pages.auth.recovery_pass_success'));
 
     }
 

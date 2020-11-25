@@ -39,7 +39,7 @@
                                                         </p>
                                                         <p>Ваш новый пароль <b>{{$data['password']}}</b>
                                                         </p>
-                                                        <p><a href="#" target="_blank">Авторизация</a>
+{{--                                                        <p><a href="#" target="_blank">Авторизация</a>--}}
                                                         </p>
                                                     </div>
                                                 </td>

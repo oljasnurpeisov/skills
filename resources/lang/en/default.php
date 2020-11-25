@@ -246,10 +246,24 @@ return [
             'as_author' => 'Как автор',
             'as_student' => 'Как обучающийся',
             'auth_as_author' => 'Войти как автор',
+            'auth_as_student' => 'Войти как обучающийся',
             'password_title' => 'Пароль',
+            'confirm_password_title' => 'Повторите пароль',
             'student_login_author_exist' => 'Аккаунт с этой почтой уже зарегистрирован как автор',
             'not_registered_title' => 'Не зарегистрированы?',
-            'registration_title' => 'Регистрация'
+            'registration_title' => 'Регистрация',
+            'forgot_password' => 'Забыли пароль?',
+            'recovery_password' =>'Восстановление пароля',
+            'send_button_title' => 'Отправить',
+            'author_register' => 'Регистрация автора',
+            'email_title' => 'Электронная почта',
+            'iin' => 'ИИН/БИН',
+            'type_of_ownership' => 'Форма собственности',
+            'company_name' => 'Наименование организации',
+            'register_submit' => 'Зарегистрироваться',
+            'is_registered_title' => 'Уже зарегистрированы?',
+            'authorization_title' => 'Авторизация',
+            'recovery_pass_success' => 'Новый пароль был отправлен на почту'
         ],
 
         'index' => [

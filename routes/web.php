@@ -100,6 +100,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
     Route::group(["middleware" => ["web"], "namespace" => "Author"], function () {
         // Сохранение изображения автора
         Route::post('/ajax_upload_image', 'AjaxUploadController@ajax_upload_image');
+        // Сохранение изображения компании
+        Route::post('/ajax_upload_company_image', 'AjaxUploadController@ajaxUploadCompanyImage');
         // Сохранение сертификатов автора
         Route::post('/ajax_upload_certificates', 'AjaxUploadController@ajaxUploadCertificates');
         // Сохранение изображения курса

@@ -13,9 +13,16 @@
                                 <a href="/{{ $lang }}/dialog/opponent-{{ $item->opponent()->id }}"
                                    title="{{__('default.pages.dialogs.open_dialog')}}"
                                    class="dialog-item dialog-item--tech-support">
-                                    <div class="dialog-item__avatar">
-                                        <img src="{{$item->opponent()->avatar ?? '/assets/img/author-thumbnail.png'}}" alt="">
-                                    </div>
+                                    @if($item->opponent()->slug == 'tech_support')
+                                        <div class="dialog-item__avatar">
+                                            <span>ТП</span>
+                                        </div>
+                                    @else
+                                        <div class="dialog-item__avatar">
+                                            <img src="{{$item->opponent()->avatar ?? '/assets/img/author-thumbnail.png'}}"
+                                                 alt="">
+                                        </div>
+                                    @endif
                                     <div class="dialog-item__desc">
                                         <h4 class="dialog-item__name">{{$item->opponent()->name}}</h4>
                                         <div class="dialog-item__text">

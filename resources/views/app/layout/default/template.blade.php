@@ -11,8 +11,8 @@
     @yield('content')
 
     @include('app.layout.default.components.footer')
-    @include('app.layout.default.components.scripts')
     @include('app.layout.default.components.modals')
+    @include('app.layout.default.components.scripts')
     @yield('scripts')
 </div>
 </body>

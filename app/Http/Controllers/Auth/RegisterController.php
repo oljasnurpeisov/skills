@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Extensions\RandomStringGenerator;
 use App\Http\Controllers\Controller;
+use App\Models\Dialog;
 use App\Models\PayInformation;
 use App\Models\Type_of_ownership;
 use App\Models\UserInformation;
@@ -75,11 +76,12 @@ class RegisterController extends Controller
 //        ];
 
         return Validator::make($data, [
-            'email' => 'required|unique:users|max:255',
+            'email_register' => 'required|unique:users,email|max:255',
             'iin' => 'required|unique:users|min:12|max:12',
             'company_name' => 'required|max:255',
-            'company_logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
-            'password' => ['required',
+//            'company_logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'company_logo' => 'required|max:255',
+            'password_register' => ['required',
                 'min:8',
                 'max:20',
                 'confirmed',
@@ -100,17 +102,17 @@ class RegisterController extends Controller
 
         $user = User::create([
 //            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'email' => $data['email_register'],
+            'password' => Hash::make($data['password_register']),
             'iin' => $data['iin'],
             'type_of_ownership' => $data['type_of_ownership'],
             'company_name' => $data['company_name'],
-//            'company_logo' => '/images/profile_images/' . $imageName,
+            'company_logo' => $data['company_logo'],
         ]);
 
-        $imageName = time() . '.' . $data['company_logo']->getClientOriginalExtension();
-        $user->company_logo = '/users/user_' . $user->id . '/profile/image/' . $imageName;
-        $data['company_logo']->move(public_path('users/user_' . $user->id . '/profile/image'), $imageName);
+//        $imageName = time() . '.' . $data['company_logo']->getClientOriginalExtension();
+//        $user->company_logo = '/users/user_' . $user->id . '/profile/image/' . $imageName;
+//        $data['company_logo']->move(public_path('users/user_' . $user->id . '/profile/image'), $imageName);
 
 //        $user->company_logo = $imageName;
         $user->save();
@@ -124,6 +126,16 @@ class RegisterController extends Controller
         $user_pay_information->save();
 
         $user->roles()->sync([4]);
+
+        // Создание диалога с тех.поддержкой
+        $tech_support = User::whereHas('roles', function ($q) {
+            $q->where('slug', '=', 'tech_support');
+        })->first();
+
+        $dialog = new Dialog;
+        $dialog->save();
+
+        $dialog->members()->sync([$user->id, $tech_support->id]);
 
         return ($user);
     }
