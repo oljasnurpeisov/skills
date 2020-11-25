@@ -101,7 +101,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
         // Сохранение изображения автора
         Route::post('/ajax_upload_image', 'AjaxUploadController@ajax_upload_image');
         // Сохранение сертификатов автора
-        Route::post('/ajaxUploadCertificates', 'AjaxUploadController@ajaxUploadCertificates');
+        Route::post('/ajax_upload_certificates', 'AjaxUploadController@ajaxUploadCertificates');
         // Сохранение изображения курса
         Route::post('/ajax_upload_course_image', 'AjaxUploadController@ajaxUploadCourseImage');
         // Сохранение изображения урока
@@ -135,7 +135,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::post("/getSkillsByData", "CourseController@getSkillsByData");
             Route::post("/getAuthorsByName", "CourseController@getAuthorsByName");
 //            Route::post("/getSkillsByName", "CourseController@getSkillsByName");
-            Route::group(['middleware' => ["auth", "verified"]], static function () {
+//            Route::group(['middleware' => ["auth", "verified"]], static function () {
+            Route::group(['middleware' => ["auth"]], static function () {
                 // Диалоги
                 Route::get("/dialogs", "DialogController@index");
                 Route::get('/dialog/opponent-{id}', 'DialogController@view');
@@ -150,7 +151,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::post("/login_student", "UserController@studentLogin");
 
         });
-        Route::group(['middleware' => ["auth", "verified"]], static function () {
+        Route::group(['middleware' => ["auth"]], static function () {
             Route::group(['middleware' => 'check.role:author'], static function () {
                 Route::group(["middleware" => ["web"], "namespace" => "Author"], function () {
                     // Профиль автора
@@ -256,6 +257,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Auth"], function () {
 Route::group(['prefix' => '{lang}'], function () {
     Auth::routes();
     Auth::routes(['reset' => false]);
+//    Auth::routes(['verify' => true]);
 
     Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

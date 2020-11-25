@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Extensions\RandomStringGenerator;
 use App\Http\Controllers\Controller;
+use App\Models\PayInformation;
 use App\Models\Type_of_ownership;
+use App\Models\UserInformation;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -41,12 +43,13 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->redirectTo = '/' . app()->getLocale() . '/profile-author-information';
     }
 
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
 
@@ -88,12 +91,11 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array $data
+     * @param array $data
      * @return \App\Models\User
      */
     protected function create(array $data)
     {
-
 
 
         $user = User::create([
@@ -112,6 +114,14 @@ class RegisterController extends Controller
 
 //        $user->company_logo = $imageName;
         $user->save();
+
+        $user_information = new UserInformation;
+        $user_information->user_id = $user->id;
+        $user_information->save();
+
+        $user_pay_information = new PayInformation;
+        $user_pay_information->user_id = $user->id;
+        $user_pay_information->save();
 
         $user->roles()->sync([4]);
 

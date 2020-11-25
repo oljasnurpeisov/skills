@@ -38,7 +38,7 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->redirectTo = '/' . app()->getLocale() . '/';
+        $this->redirectTo = '/' . app()->getLocale() . '/profile-author-information';
 
     }
 
@@ -52,7 +52,7 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/' . app()->getLocale() . '/login');
+        return redirect('/' . app()->getLocale() . '/');
     }
 
 }

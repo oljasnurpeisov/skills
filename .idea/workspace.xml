@@ -2,16 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Models/LessonAttachments.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/article-cover.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/lesson-thumbnail.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/AjaxUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/AjaxUploadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/LessonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/LessonController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/PageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/AuthorActivate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/AuthorActivate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/PayInformation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/PayInformation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/UserInformation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/UserInformation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/libs/chosen/chosen.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/libs/chosen/chosen.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/libs/chosen/chosen.jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/libs/chosen/chosen.jquery.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_coursework.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_coursework.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/layout/default/components/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/footer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/layout/default/components/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/header.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/layout/default/components/modals.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/modals.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/layout/default/components/scripts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/scripts.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/profile/author_data_profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/profile/author_data_profile.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/profile/profile_pay_information.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/profile/profile_pay_information.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/framework/views/4d2c238da1bf53d1bb76a19d488fc8cfc69267cf.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/4d2c238da1bf53d1bb76a19d488fc8cfc69267cf.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -196,7 +208,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Виталий/PhpstormProjects/enbek/app/Http/Controllers/App/Student/UserController.php" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/assets/img" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/assets/js" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -205,11 +217,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
+      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\libs" />
       <recent name="F:\OpenServer\domains\enbek-backend\public\assets\img" />
       <recent name="F:\OpenServer\domains\enbek-backend\public\assets\css" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
       <recent name="F:\OpenServer\domains\enbek-backend\public\assets" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\libs" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\OpenServer\domains\enbek-backend\resources\views\app\layout" />
@@ -254,7 +266,7 @@
       <workItem from="1605801438576" duration="33971000" />
       <workItem from="1605966192343" duration="573000" />
       <workItem from="1605967156794" duration="46364000" />
-      <workItem from="1606192643907" duration="27879000" />
+      <workItem from="1606192643907" duration="41081000" />
     </task>
     <task id="LOCAL-00001" summary="- update routes">
       <created>1603898521230</created>
@@ -564,7 +576,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606241399684</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="- add create coursework">
+      <created>1606249146525</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1606249146525</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TodoView">
@@ -580,7 +599,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- change access lessons" />
     <MESSAGE value="- change course student" />
     <MESSAGE value="- change course student&#10;- add draft and deleted courses in admin panel" />
     <MESSAGE value="- add statistic page" />
@@ -605,7 +623,8 @@
     <MESSAGE value="- add create course &#10;- change styles and scripts" />
     <MESSAGE value="- change student course catalog filter" />
     <MESSAGE value="- change styles and scripts &#10;- add course page" />
-    <option name="LAST_COMMIT_MESSAGE" value="- change styles and scripts &#10;- add course page" />
+    <MESSAGE value="- add create coursework" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add create coursework" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -624,10 +643,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1606244831688" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1606241389946">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1606249140950">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606241389946" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606249140950" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1605559122928">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -640,14 +659,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="572" y="146" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.1536.824@0.0.1536.824" timestamp="1605561054285" />
-    <state x="478" y="11" width="579" height="801" key="find.popup" timestamp="1606245551307">
+    <state x="478" y="11" width="579" height="801" key="find.popup" timestamp="1606282360912">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="478" y="11" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1606245551307" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1606198246120">
+    <state x="478" y="11" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1606282360912" />
+    <state x="425" y="187" key="run.anything.popup" timestamp="1606283340709">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1606198246120" />
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1606283340709" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1606236600954">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

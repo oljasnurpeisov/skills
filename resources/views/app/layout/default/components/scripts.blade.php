@@ -4,7 +4,7 @@
 <script src="/assets/libs/fancybox/dist/jquery.fancybox.min.js"></script>
 <script src="/assets/libs/slick-carousel/slick/slick.js"></script>
 <!--<script src="/assets/libs/chosen/chosen.jquery.js"></script>-->
-<script src="/assets/libs/simplebar/simplebar.js"></script>
+{{--<script src="/assets/libs/simplebar/simplebar.js"></script>--}}
 <script src="/assets/libs/dropzone/dropzone.min.js"></script>
 <script src="/assets/libs/dropzone/locale.js"></script>
 <script src="/assets/libs/nouislider/distribute/nouislider.js"></script>

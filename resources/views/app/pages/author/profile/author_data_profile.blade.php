@@ -34,6 +34,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    @if (session('failed'))
+                        <div class="alert alert-danger">
+                            {{ session('failed') }}
+                        </div>
+                    @endif
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -43,8 +48,12 @@
                             </ul>
                         </div>
                     @endif
-
-                    <div class="row row--multiline">
+                    @if ($item->user->email_verified_at == null)
+                        <div class="alert alert-danger">
+                            {{__('default.pages.profile.email_confirm_error')}}
+                        </div>
+                    @endif
+                    <div @if($item->user->email_verified_at == null)class="row row--multiline disabled"@else class="row row--multiline"@endif>
                         <div class="col-sm-4">
                             <div class="author-personal__left">
                                 <div class="avatar author-picture dropzone-avatar" id="avatar"
@@ -163,6 +172,12 @@
                                                 class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
                                                 class="btn-icon small icon-plus"> </span></a>
                                 </div>
+{{--                                <div class="text-right pull-up">--}}
+{{--                                    <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"--}}
+{{--                                       data-duplicate="specialitiesInputTpl"><span--}}
+{{--                                                class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span--}}
+{{--                                                class="btn-icon small icon-plus"> </span></a>--}}
+{{--                                </div>--}}
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.profile.about_company')}}
                                         *</label>
@@ -216,10 +231,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.profile.certificates')}}</label>
-                                    <div data-url="{{env('APP_URL')}}/ajaxUploadCertificates?_token={{ csrf_token() }}" data-maxfiles="15"
+                                    <div data-url="/ajax_upload_certificates?_token={{ csrf_token() }}" data-maxfiles="15"
                                          data-maxsize="20" data-acceptedfiles=".pdf, .png, .jpg"
-                                         id="certificates-dropzone"
+                                         id="documents-dropzone2"
                                          class="dropzone-default dropzone-multiple">
+                                        <input type="hidden" name="certificates" value="{{$item->certificates}}">
                                         <div class="dropzone-default__info">PDF, PNG, JPG
                                             • {{__('default.pages.profile.max_file_title')}} 20MB
                                         </div>
@@ -228,7 +244,7 @@
                                            title="{{__('default.pages.profile.add_files_btn_title')}}"
                                            class="dropzone-default__link">{{__('default.pages.profile.add_files_btn_title')}}</a>
                                     </div>
-                                    <input type="hidden" name="certificates" value="{{$item->certificates}}">
+
                                 </div>
                                 <div class="buttons">
                                     <button type="submit"

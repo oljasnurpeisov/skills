@@ -109,6 +109,9 @@ return [
             'theme_name' => 'Название темы',
             'cancel_title' => 'Отмена',
 
+            'recommended_courses' => 'Рекомендованные</span><br/> курсы',
+            'recommended_skills' => 'Рекомендованные</span><br/> навыки'
+
         ],
         'lessons' => [
             'create_request_message' => 'Урок успешно создан',
@@ -141,6 +144,8 @@ return [
         ],
         'profile' => [
             'title' => 'Профиль',
+            'email_confirm_error' => 'Чтобы стать автором, подтвердите свой E-mail',
+            'profile_activate_error' => 'У вас пока нет доступа к этому разделу, заполните информацию в профиле и дождитесь подверждения модератора.',
             'organization_data' => 'Данные об организации',
             'payment_information' => 'Платежная информация',
             'registration_data' => 'Регистрационные данные',
@@ -237,7 +242,20 @@ return [
         ],
 
         'auth' => [
-          'student_login_author_exist' => 'Аккаунт с этой почтой уже зарегистрирован как автор'
+            'auth_title' => 'Войти',
+            'as_author' => 'Как автор',
+            'as_student' => 'Как обучающийся',
+            'auth_as_author' => 'Войти как автор',
+            'password_title' => 'Пароль',
+            'student_login_author_exist' => 'Аккаунт с этой почтой уже зарегистрирован как автор',
+            'not_registered_title' => 'Не зарегистрированы?',
+            'registration_title' => 'Регистрация'
+        ],
+
+        'index' => [
+            'index_title' => 'Улучши свои навыки! <br/><span>вместе с Enbek.kz</span>',
+            'find_your_course' => '<span>Найдите</span><br/> Ваш курс',
+            'popular_courses' => '<span>Популярные</span><br/> курсы'
         ],
 
         'footer' => [

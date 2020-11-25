@@ -42,8 +42,12 @@
                             </ul>
                         </div>
                     @endif
-
-                    <div class="row row--multiline">
+                    @if ($pay_information->user->email_verified_at == null)
+                        <div class="alert alert-danger">
+                            {{__('default.pages.profile.email_confirm_error')}}
+                        </div>
+                    @endif
+                    <div @if($pay_information->user->email_verified_at == null)class="row row--multiline disabled"@else class="row row--multiline"@endif>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.profile.merchant_login')}} *</label>

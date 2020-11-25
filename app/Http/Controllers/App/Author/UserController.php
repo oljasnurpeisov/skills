@@ -268,6 +268,12 @@ class UserController extends Controller
                 $item->avatar = $request->avatar;
             }
 
+            if (!empty($request->certificates != $item->certificates)) {
+                File::delete(public_path($item->certificates));
+
+                $item->certificates = $request->certificates;
+            }
+
 
             $item->save();
         } else {
@@ -291,17 +297,12 @@ class UserController extends Controller
                 $item->avatar = $request->avatar;
             }
 
-//            if ($request->hasFile('certificates')) {
-//                $names = [];
-//                foreach ($request->file('certificates') as $key => $certificate) {
-//                    File::delete(public_path($certificate));
-//                    $filename = time() . $key . '.' . $certificate->getClientOriginalExtension();
-//                    $certificate->move(public_path('images/certificates'), $filename);
-//                    array_push($names, '/images/certificates/' . $filename);
-//
-//                }
-//                $item->certificates = json_encode($names);
-//            }
+            if (!empty($request->certificates != $item->certificates)) {
+                File::delete(public_path($item->certificates));
+
+                $item->certificates = $request->certificates;
+            }
+
             $item->save();
         }
 

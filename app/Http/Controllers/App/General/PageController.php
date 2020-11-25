@@ -43,9 +43,14 @@ class PageController extends Controller
 
         }
 
-        return view("welcome", [
+        $popular_courses = Course::leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
+            ->select('course_rate.rate as course_rate', 'courses.*')
+            ->orderBy('course_rate.rate', 'desc')->where('status', '=', Course::published)->limit(8)->get();
+
+        return view("index", [
             "courses" => $courses ?? [],
             "skills" => $skills ?? [],
+            "popular_courses" => $popular_courses
         ]);
     }
 

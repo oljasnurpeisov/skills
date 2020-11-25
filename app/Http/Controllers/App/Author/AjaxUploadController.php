@@ -78,7 +78,6 @@ class AjaxUploadController extends Controller
     // Загрузка сертификатов автора
     public function ajaxUploadCertificates(Request $request)
     {
-
         $data = [];
         foreach($request->file('files') as $file)
         {
