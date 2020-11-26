@@ -216,7 +216,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                         Route::get("/my-courses/course/{item}/theme-{theme}/create-lesson", "LessonController@createLesson");
                         Route::get("/my-courses/course/{course}/theme-{theme}/edit-lesson-{lesson}", "LessonController@editLesson");
                         Route::get("/my-courses/course/{course}/theme-{theme}/view-lesson-{lesson}", "LessonController@editLesson");
-                        Route::post("/create-lesson", "LessonController@storeLesson");
+                        Route::post("/create-lesson/{course}/{theme}", "LessonController@storeLesson");
                         Route::post("/edit-lesson-{item}", "LessonController@updateLesson");
                         Route::delete("/delete-lesson", "LessonController@deleteLesson");
                         Route::post("/move-lesson", "LessonController@moveLesson");

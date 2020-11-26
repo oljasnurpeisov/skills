@@ -34,81 +34,98 @@ class LessonController extends Controller
         }
     }
 
-    public function storeLesson(Request $request)
+    public function storeLesson($lang, Request $request, Course $course, Theme $theme)
     {
 
-        $last_id = Lesson::whereHas('themes', function($q) use ($request){
-            $q->where('themes.id', '=', $request->theme_id);
-        })->orderBy('index_number', 'desc')->latest()->first()->index_number ?? 0;
+        $last_id = Lesson::whereHas('themes', function ($q) use ($theme) {
+                $q->where('themes.id', '=', $theme->id);
+            })->orderBy('index_number', 'desc')->latest()->first()->index_number ?? 0;
 
         if (!empty($last_id)) {
             $last_id++;
         } else {
-            $last_id = 1;
+            $last_id = 0;
         }
 
         $item = new Lesson;
-        $item->theme_id = $request->theme_id;
-        $item->course_id = $request->course_id;
+        $item->theme_id = $theme->id;
+        $item->course_id = $course->id;
         $item->name = $request->name;
         $item->index_number = $last_id;
-        $item->type = $request->type;
-        $item->end_lesson_type = $request->end_lesson_type;
+        if ($request->type == 'theory') {
+            $item->type = 1;
+        }else{
+            $item->type = 2;
+        }
+        if($request->end_lesson_type == 'test'){
+            $item->end_lesson_type = 0;
+        }else{
+            $item->end_lesson_type = 1;
+        }
         $item->duration = $request->duration;
         $item->theory = $request->theory;
-        if($request->youtube_link != [null]) {
-            $item->youtube_link = json_encode($request->youtube_link);
-        }
-        $item->files = $request->another_files;
-        $item->test = $request->test;
 
-        if (!empty($request->image)) {
+        if (($request->image != $item->image)) {
             File::delete(public_path($item->image));
 
-            $imageName = time() . '.' . $request['image']->getClientOriginalExtension();
-            $request['image']->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/images'), $imageName);
-
-            $item->image = '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/images/' . $imageName;
-
+            $item->image = $request->image;
         }
 
-        if (!empty($request->video)) {
-            File::delete(public_path($item->video));
-            $videos = [];
-            foreach ($request->video as $video) {
-                $videoName = time() . '.' . $video->getClientOriginalExtension();
-                $video->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/videos'), $videoName);
-                array_push($videos, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/videos/' . $videoName);
-            }
-            $item->video = json_encode($videos);
-        }
-
-        if (!empty($request->audio)) {
-            File::delete(public_path($item->audio));
-            $audios = [];
-            foreach ($request->audio as $audio) {
-                $audioName = time() . '.' . $audio->getClientOriginalExtension();
-                $audio->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/audios'), $audioName);
-                array_push($audios, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/audios/' . $audioName);
-            }
-            $item->audio = json_encode($audios);
-        }
-
-        if ($request->hasFile('another_files')) {
-            $names = [];
-            foreach ($request->file('another_files') as $key => $file) {
-                File::delete(public_path($file));
-                $filename = time() . $key . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files'), $filename);
-                array_push($names, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files/' . $filename);
-
-            }
-            $item->files = json_encode($names);
-        }
+//        $item->test = $request->test;
 
         $item->save();
 
-        return redirect("/" . app()->getLocale() . "/my-courses/course/" . $request->course_id)->with('status', __('default.pages.lessons.create_request_message'));
+        $item_attachments = new LessonAttachments;
+        $item_attachments->lesson_id = $item->id;
+
+        // Ссылки на видео курса
+        if ($request->videos_link != [null]) {
+            $item_attachments->videos_link = json_encode($request->videos_link);
+        }
+        // Ссылки на видео курса для слабовидящих
+        if ($request->videos_poor_vision_link != []) {
+            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        }
+        // Видео с устройства
+        if (($request->videos != $item_attachments->videos)) {
+            File::delete(public_path($item_attachments->videos));
+
+            $item_attachments->videos = $request->videos;
+        }
+        // Видео с устройства для слабовидящих
+        if (($request->videos_poor_vision != $item_attachments->videos_poor_vision)) {
+            File::delete(public_path($item_attachments->videos_poor_vision));
+
+            $item_attachments->videos_poor_vision = $request->videos_poor_vision;
+        }
+        // Аудио с устройства
+        if (($request->audios != $item_attachments->audios)) {
+            File::delete(public_path($item_attachments->audios));
+
+            $item_attachments->audios = $request->audios;
+        }
+        // Аудио с устройства для слабовидящих
+        if (($request->audios_poor_vision != $item_attachments->audios_poor_vision)) {
+            File::delete(public_path($item_attachments->audios_poor_vision));
+
+            $item_attachments->audios_poor_vision = $request->audios_poor_vision;
+        }
+        // Другие материалы
+        if (($request->another_files != $item_attachments->another_files)) {
+            File::delete(public_path($item_attachments->another_files));
+
+            $item_attachments->another_files = $request->another_files;
+        }
+        // Другие материалы для слабовидящих
+        if (($request->another_files_poor_vision != $item_attachments->another_files_poor_vision)) {
+            File::delete(public_path($item_attachments->another_files_poor_vision));
+
+            $item_attachments->another_files_poor_vision = $request->another_files_poor_vision;
+        }
+
+        $item_attachments->save();
+
+        return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.create_request_message'));
     }
 
     public function editLesson($lang, Course $course, Theme $theme, Lesson $lesson)
@@ -170,7 +187,7 @@ class LessonController extends Controller
         $item->end_lesson_type = $request->end_lesson_type;
         $item->duration = $request->duration;
         $item->theory = $request->theory;
-        if($request->youtube_link != [null]) {
+        if ($request->youtube_link != [null]) {
             $item->youtube_link = json_encode($request->youtube_link);
         }
         $item->files = $request->another_files;
@@ -230,7 +247,8 @@ class LessonController extends Controller
         Lesson::where('id', '=', $request->lesson_id)->delete();
     }
 
-    public function moveLesson(Request $request){
+    public function moveLesson(Request $request)
+    {
         $lesson_1 = Lesson::where('id', '=', $request->lesson_1_id)->first();
         $lesson_2 = Lesson::where('id', '=', $request->lesson_2_id)->first();
 
@@ -239,18 +257,19 @@ class LessonController extends Controller
         $lesson_2->save();
     }
 
-    public function createCoursework($lang, Course $item){
+    public function createCoursework($lang, Course $item)
+    {
         // Проверка владельца курса
         if ($item->author_id == Auth::user()->id) {
             // Проверка существования курсовой работы
             $coursework = Lesson::where('course_id', '=', $item->id)->where('type', '=', 3)->first();
-            if(empty($coursework)) {
+            if (empty($coursework)) {
                 return view("app.pages.author.courses.create_coursework", [
                     "item" => $item
                 ]);
                 //Если курсовой работы нет
-            }else{
-                return redirect("/" . $lang . "/my-courses/course/".$item->id)->with('error', __('default.pages.lessons.coursework_count_error_message'));
+            } else {
+                return redirect("/" . $lang . "/my-courses/course/" . $item->id)->with('error', __('default.pages.lessons.coursework_count_error_message'));
             }
             //Если автор не владелец курса
         } else {
@@ -350,7 +369,7 @@ class LessonController extends Controller
         $item->name = $request->name;
         $item->duration = $request->duration;
         $item->theory = $request->theory;
-        if($request->youtube_link != [null]) {
+        if ($request->youtube_link != [null]) {
             $item->youtube_link = json_encode($request->youtube_link);
         }
         $item->files = $request->another_files;
@@ -405,18 +424,19 @@ class LessonController extends Controller
         return redirect("/" . app()->getLocale() . "/my-courses/course/" . $request->course_id)->with('status', __('default.pages.lessons.lesson_update_success'));
     }
 
-    public function createFinalTest($lang, Course $item){
+    public function createFinalTest($lang, Course $item)
+    {
         // Проверка владельца курса
         if ($item->author_id == Auth::user()->id) {
             // Проверка существования финального теста
             $final_test = Lesson::where('course_id', '=', $item->id)->where('type', '=', 4)->first();
-            if(empty($final_test)) {
+            if (empty($final_test)) {
                 return view("app.pages.author.courses.create_final_test", [
                     "item" => $item
                 ]);
                 //Если курсовой работы нет
-            }else{
-                return redirect("/" . $lang . "/my-courses/course/".$item->id)->with('error', __('default.pages.lessons.final_test_count_error_message'));
+            } else {
+                return redirect("/" . $lang . "/my-courses/course/" . $item->id)->with('error', __('default.pages.lessons.final_test_count_error_message'));
             }
             //Если автор не владелец курса
         } else {

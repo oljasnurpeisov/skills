@@ -131,6 +131,7 @@ return [
             'duration_title' => 'Продолжительность урока, минуты',
             'lesson_image' => 'Картинка урока',
             'theory_title' => 'Теория',
+            'theory_with_practic_title' => 'Теория с практическим заданием',
             'lesson_video_link' => 'Ссылка на видео урока',
             'lesson_video_link_1' => 'Ссылка на видео урока (для слабовидящих)',
             'lesson_audio' => 'Аудио урока',
@@ -140,7 +141,14 @@ return [
             'video_local_1' => 'Видео файл с устройства (для слабовидящих)',
             'coursework_task' => 'Задание для курсовой работы',
             'create' => 'Создать',
-            'cancel' => 'Отмена'
+            'cancel' => 'Отмена',
+
+            'lesson_create' => 'Создание урока',
+            'lesson_name' => 'Название урока',
+            'lesson_type' => 'Тип урока',
+            'headline' => 'Заголовок',
+            'test_title' => 'Тест',
+            'homework' => 'Домашнее задание'
         ],
         'profile' => [
             'title' => 'Профиль',

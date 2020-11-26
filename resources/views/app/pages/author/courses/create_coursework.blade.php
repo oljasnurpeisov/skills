@@ -206,7 +206,7 @@
                             </div>
                             <div class="buttons">
                                 <button type="submit" class="btn">{{__('default.pages.lessons.create')}}</button>
-                                <a href="#" title="{{__('default.pages.lessons.cancel')}}"
+                                <a href="/{{$lang}}/my-courses/course/{{$item->id}}" title="{{__('default.pages.lessons.cancel')}}"
                                    class="ghost-btn">{{__('default.pages.lessons.cancel')}}</a>
                             </div>
                         </form>
