@@ -24,12 +24,13 @@
                                 <label class="form-group__label">{{__('default.pages.courses.skills_title')}}</label>
                                 <div class="input-addon">
                                     <select name="skills[]" placeholder="{{__('default.pages.courses.choose_skill')}}"
-                                            data-method="getSkillsByData" id="skillsInputTpl"> </select>
+                                            data-method="getSkills?_token={{ csrf_token() }}" id="skillsInputTpl" required> </select>
                                     <div class="addon">
                                         <span class="required">*</span>
                                     </div>
                                 </div>
                             </div>
+                            <div class="removable-items"></div>
                             <div class="text-right pull-up">
                                 <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn" data-duplicate="skillsInputTpl"><span
                                             class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span class="btn-icon small icon-plus"> </span></a>
@@ -55,15 +56,15 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_profit')}} *</label>
-                                <textarea name="profit_desc" class="input-regular" required> </textarea>
+                                <textarea name="profit_desc" class="input-regular tinymce-here" required> </textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_teaser')}} *</label>
-                                <textarea name="teaser" class="input-regular" required> </textarea>
+                                <textarea name="teaser" class="input-regular tinymce-here" required> </textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_desc')}} *</label>
-                                <textarea name="description" class="input-regular" required> </textarea>
+                                <textarea name="description" class="input-regular tinymce-here" required> </textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_image')}}</label>
@@ -228,6 +229,7 @@
                 })
             })(jQuery);
         });
+
     </script>
     <!---->
 @endsection

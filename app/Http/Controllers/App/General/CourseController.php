@@ -151,9 +151,18 @@ class CourseController extends Controller
 
     public function getProfessionsByName(Request $request, $lang)
     {
-        $profession_name = $request->name ?? '';
+//        $profession_name = $request->name ?? '';
+//
+//        $professions = Professions::where('name_' . $lang, 'like', '%' . $profession_name . '%')->orderBy('name_' . $lang, 'asc')->limit(50)->get();
+//
+//        return $professions;
 
-        $professions = Professions::where('name_' . $lang, 'like', '%' . $profession_name . '%')->orderBy('name_' . $lang, 'asc')->limit(50)->get();
+                $profession_name = $request->name ?? '';
+                $page = $request->page ?? 1;
+//
+        $pageNumber = 1;
+
+        $professions = Professions::where('name_ru', 'like', '%' . $profession_name . '%')->orderBy('name_ru', 'asc')->paginate(50, ['*'], 'page', $page);
 
         return $professions;
     }
@@ -163,11 +172,26 @@ class CourseController extends Controller
         $professions = $request->professions;
         $skill_name = $request->name ?? '';
 
-        $skills = $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->whereHas('professions', function ($q) use ($professions) {
-            if ($professions != []) {
-                $q->whereIn('professions.id', $professions);
-            }
-        })->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->limit(50)->get();
+        if($professions != []) {
+            $skills = $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->whereHas('professions', function ($q) use ($professions) {
+                if ($professions != []) {
+                    $q->whereIn('professions.id', $professions);
+                }
+            })->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->orderBy('name_' . $lang, 'asc')->limit(50)->get();
+//        })->where('uid', '=', null)->limit(50)->get();
+        }else{
+            $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->orderBy('name_' . $lang, 'asc')->limit(50)->get();
+        }
+
+
+        return $skills;
+    }
+
+    public function getSkills(Request $request, $lang)
+    {
+        $skill_name = $request->name ?? '';
+
+        $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->orderBy('name_' . $lang, 'asc')->limit(50)->get();
 //        })->where('uid', '=', null)->limit(50)->get();
 
 

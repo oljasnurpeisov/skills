@@ -55,6 +55,6 @@
 <script>
     window.Laravel = {
         "csrfToken": "2S3CCGYeRaf0zijpZ9P3Bepw9UgcKe08iuNzbtaH",
-        "lang": "ru"
+        "lang": "{{$lang}}"
     }
 </script>

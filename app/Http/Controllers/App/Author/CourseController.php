@@ -36,86 +36,164 @@ class CourseController extends Controller
 
     public function storeCourse(Request $request)
     {
-        $videos = array();
-        $audios = array();
+        if ($request->is_paid and $request->cost > 0){
+            if ((Auth::user()->payment_info->merchant_login != null) and (Auth::user()->payment_info->merchant_password != null)) {
 
-        $item = new Course;
-        $item->name = $request->name;
-        $item->author_id = Auth::user()->id;
-        $item->lang = $request->lang;
-        if ($request->is_paid) {
-            $item->is_paid = 1;
-        } else {
-            $item->is_paid = 0;
+
+                $item = new Course;
+                $item->name = $request->name;
+                $item->author_id = Auth::user()->id;
+                $item->lang = $request->lang;
+                if ($request->is_paid) {
+                    $item->is_paid = 1;
+                } else {
+                    $item->is_paid = 0;
+                }
+                if ($request->is_access_all) {
+                    $item->is_access_all = 1;
+                } else {
+                    $item->is_access_all = 0;
+                }
+                if ($request->is_poor_vision) {
+                    $item->is_poor_vision = 1;
+                } else {
+                    $item->is_poor_vision = 0;
+                }
+                $item->cost = $request->cost ?? 0;
+                $item->profit_desc = $request->profit_desc;
+                $item->teaser = $request->teaser;
+                $item->description = $request->description;
+                $item->course_includes = $request->course_includes;
+                $item->certificate_id = $request->certificate_id;
+
+                if (($request->image != $item->image)) {
+                    File::delete(public_path($item->image));
+
+                    $item->image = $request->image;
+                }
+
+                $item->save();
+
+                $item_attachments = new CourseAttachments;
+                $item_attachments->course_id = $item->id;
+
+                // Ссылки на видео курса
+                if ($request->videos_link != [null]) {
+                    $item_attachments->videos_link = json_encode($request->videos_link);
+                }
+                // Ссылки на видео курса для слабовидящих
+                if ($request->videos_poor_vision_link != [null]) {
+                    $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+                }
+                // Видео с устройства
+                if (($request->videos != $item_attachments->videos)) {
+                    File::delete(public_path($item_attachments->videos));
+
+                    $item_attachments->videos = $request->videos;
+                }
+                // Видео с устройства для слабовидящих
+                if (($request->videos_poor_vision != $item_attachments->videos_poor_vision)) {
+                    File::delete(public_path($item_attachments->videos_poor_vision));
+
+                    $item_attachments->videos_poor_vision = $request->videos_poor_vision;
+                }
+                // Аудио с устройства
+                if (($request->audios != $item_attachments->audios)) {
+                    File::delete(public_path($item_attachments->audios));
+
+                    $item_attachments->audios = $request->audios;
+                }
+                // Аудио с устройства для слабовидящих
+                if (($request->audios_poor_vision != $item_attachments->audios_poor_vision)) {
+                    File::delete(public_path($item_attachments->audios_poor_vision));
+
+                    $item_attachments->audios = $request->audios_poor_vision;
+                }
+
+                $item_attachments->save();
+
+                $item->skills()->sync($request->skills, false);
+
+                return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.create_request_message'));
+            }
+            return redirect('/'.app()->getLocale().'/profile-pay-information')->with('failed', __('default.pages.profile.pay_info_error'));
+        }else{
+            $item = new Course;
+            $item->name = $request->name;
+            $item->author_id = Auth::user()->id;
+            $item->lang = $request->lang;
+            if ($request->is_paid) {
+                $item->is_paid = 1;
+            } else {
+                $item->is_paid = 0;
+            }
+            if ($request->is_access_all) {
+                $item->is_access_all = 1;
+            } else {
+                $item->is_access_all = 0;
+            }
+            if ($request->is_poor_vision) {
+                $item->is_poor_vision = 1;
+            } else {
+                $item->is_poor_vision = 0;
+            }
+            $item->cost = $request->cost ?? 0;
+            $item->profit_desc = $request->profit_desc;
+            $item->teaser = $request->teaser;
+            $item->description = $request->description;
+            $item->course_includes = $request->course_includes;
+            $item->certificate_id = $request->certificate_id;
+
+            if (($request->image != $item->image)) {
+                File::delete(public_path($item->image));
+
+                $item->image = $request->image;
+            }
+
+            $item->save();
+
+            $item_attachments = new CourseAttachments;
+            $item_attachments->course_id = $item->id;
+
+            // Ссылки на видео курса
+            if ($request->videos_link != [null]) {
+                $item_attachments->videos_link = json_encode($request->videos_link);
+            }
+            // Ссылки на видео курса для слабовидящих
+            if ($request->videos_poor_vision_link != [null]) {
+                $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+            }
+            // Видео с устройства
+            if (($request->videos != $item_attachments->videos)) {
+                File::delete(public_path($item_attachments->videos));
+
+                $item_attachments->videos = $request->videos;
+            }
+            // Видео с устройства для слабовидящих
+            if (($request->videos_poor_vision != $item_attachments->videos_poor_vision)) {
+                File::delete(public_path($item_attachments->videos_poor_vision));
+
+                $item_attachments->videos_poor_vision = $request->videos_poor_vision;
+            }
+            // Аудио с устройства
+            if (($request->audios != $item_attachments->audios)) {
+                File::delete(public_path($item_attachments->audios));
+
+                $item_attachments->audios = $request->audios;
+            }
+            // Аудио с устройства для слабовидящих
+            if (($request->audios_poor_vision != $item_attachments->audios_poor_vision)) {
+                File::delete(public_path($item_attachments->audios_poor_vision));
+
+                $item_attachments->audios = $request->audios_poor_vision;
+            }
+
+            $item_attachments->save();
+
+            $item->skills()->sync($request->skills, false);
+
+            return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.create_request_message'));
         }
-        if ($request->is_access_all) {
-            $item->is_access_all = 1;
-        } else {
-            $item->is_access_all = 0;
-        }
-        if ($request->is_poor_vision) {
-            $item->is_poor_vision = 1;
-        } else {
-            $item->is_poor_vision = 0;
-        }
-        $item->cost = $request->cost ?? 0;
-        $item->profit_desc = $request->profit_desc;
-        $item->teaser = $request->teaser;
-        $item->description = $request->description;
-        $item->course_includes = $request->course_includes;
-        $item->certificate_id = $request->certificate_id;
-
-        if (($request->image != $item->image)) {
-            File::delete(public_path($item->image));
-
-            $item->image = $request->image;
-        }
-
-        $item->save();
-
-        $item_attachments = new CourseAttachments;
-        $item_attachments->course_id = $item->id;
-
-        // Ссылки на видео курса
-        if ($request->videos_link != [null]) {
-            $item_attachments->videos_link = json_encode($request->videos_link);
-        }
-        // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link != [null]) {
-            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
-        }
-        // Видео с устройства
-        if (($request->videos != $item_attachments->videos)) {
-            File::delete(public_path($item_attachments->videos));
-
-            $item_attachments->videos = $request->videos;
-        }
-        // Видео с устройства для слабовидящих
-        if (($request->videos_poor_vision != $item_attachments->videos_poor_vision)) {
-            File::delete(public_path($item_attachments->videos_poor_vision));
-
-            $item_attachments->videos_poor_vision = $request->videos_poor_vision;
-        }
-        // Аудио с устройства
-        if (($request->audios != $item_attachments->audios)) {
-            File::delete(public_path($item_attachments->audios));
-
-            $item_attachments->audios = $request->audios;
-        }
-        // Аудио с устройства для слабовидящих
-        if (($request->audios_poor_vision != $item_attachments->audios_poor_vision)) {
-            File::delete(public_path($item_attachments->audios_poor_vision));
-
-            $item_attachments->audios = $request->audios_poor_vision;
-        }
-
-        $item_attachments->save();
-
-        $item->skills()->sync($request->skills, false);
-
-//        $item->users()->sync([Auth::user()->id]);
-
-        return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.create_request_message'));
     }
 
     public function myCourses(Request $request)
@@ -244,15 +322,15 @@ class CourseController extends Controller
         }
         // Все ученики автора
         $author_students = [];
-        foreach ($courses->unique('student_id') as $course){
-            foreach ($course->course_members as $member){
+        foreach ($courses->unique('student_id') as $course) {
+            foreach ($course->course_members as $member) {
                 array_push($author_students, $member);
             }
         }
         // Все ученики закончившие курс
         $author_students_finished = [];
-        foreach ($courses as $course){
-            foreach ($course->course_members->where('is_finished', '=', true) as $member){
+        foreach ($courses as $course) {
+            foreach ($course->course_members->where('is_finished', '=', true) as $member) {
                 array_push($author_students_finished, $member);
             }
         }
@@ -607,20 +685,21 @@ class CourseController extends Controller
         return Excel::download(new ReportingExport($ar), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
-    public function getCourseData($lang, Course $course){
+    public function getCourseData($lang, Course $course)
+    {
         $a = [['id' => 0, 'name' => "Тема 1", 'order' => 0, 'lessons' => [[
-            'id'=> 0,
-                'name'=> "\u041A\u0430\u043A \u043F\u0440\u043E\u0445\u043E\u0434\u0438\u0442 \u0434\u0430\u043D\u043D\u044B\u0439 \u043A\u0443\u0440\u0441",
-                'order'=> 0,
-                'duration'=> 20
-            ]], 'collapsed'=> !1]];
+            'id' => 0,
+            'name' => "\u041A\u0430\u043A \u043F\u0440\u043E\u0445\u043E\u0434\u0438\u0442 \u0434\u0430\u043D\u043D\u044B\u0439 \u043A\u0443\u0440\u0441",
+            'order' => 0,
+            'duration' => 20
+        ]], 'collapsed' => !1]];
         $themes = Theme::where('course_id', '=', $course->id)->with('lessons')->get();
 
-        foreach ($themes as $theme){
+        foreach ($themes as $theme) {
             $theme->order = $theme->index_number;
 
 
-            foreach ($theme->lessons as $lesson){
+            foreach ($theme->lessons as $lesson) {
                 $lesson->order = $lesson->index_number;
             }
         }

@@ -110,7 +110,15 @@ return [
             'cancel_title' => 'Отмена',
 
             'recommended_courses' => 'Рекомендованные</span><br/> курсы',
-            'recommended_skills' => 'Рекомендованные</span><br/> навыки'
+            'recommended_skills' => 'Рекомендованные</span><br/> навыки',
+
+            'course_include' => 'В курс входит',
+            'lessons_title' => 'уроков',
+            'tests_count_title' => 'тестов',
+            'mobile_access_title' => 'Доступ через мобильные устройства',
+            'certificate_access_title' => 'Сертификат при завершени',
+            'last_updates' => 'Последнее обновление',
+            'theory_material_count_title' => 'Теоретических материалов'
 
         ],
         'lessons' => [
@@ -164,7 +172,8 @@ return [
         'profile' => [
             'title' => 'Профиль',
             'email_confirm_error' => 'Чтобы стать автором, подтвердите свой E-mail',
-            'profile_activate_error' => 'У вас пока нет доступа к этому разделу, заполните информацию в профиле и дождитесь подверждения модератора.',
+            'profile_activate_error' => 'У вас пока нет доступа к этому разделу, заполните информацию в профиле.',
+            'pay_info_error' => 'Для продолжения работы пожалуйста заполните данные в разделе Профиль - Платежная информация',
             'organization_data' => 'Данные об организации',
             'payment_information' => 'Платежная информация',
             'registration_data' => 'Регистрационные данные',

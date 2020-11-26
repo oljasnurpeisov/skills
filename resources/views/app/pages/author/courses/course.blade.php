@@ -220,35 +220,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="article-section">
-                                <h2 class="title-secondary">{{__('default.pages.courses.author_certificates')}}</h2>
-                                <div class="row row--multiline">
-                                    <div class="col-md-3 col-sm-4 col-xs-6">
-                                        <a href="/assets/img/author-certificates/1.png"
-                                           data-fancybox="author- certificates" title="Увеличить" class="certificate">
-                                            <img src="/assets/img/author-certificates/1.png" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">
-                                        <a href="/assets/img/author-certificates/2.png"
-                                           data-fancybox="author- certificates" title="Увеличить" class="certificate">
-                                            <img src="/assets/img/author-certificates/2.png" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">
-                                        <a href="/assets/img/author-certificates/3.png"
-                                           data-fancybox="author- certificates" title="Увеличить" class="certificate">
-                                            <img src="/assets/img/author-certificates/3.png" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">
-                                        <a href="/assets/img/author-certificates/4.png"
-                                           data-fancybox="author- certificates" title="Увеличить" class="certificate">
-                                            <img src="/assets/img/author-certificates/4.png" alt="">
-                                        </a>
+                            @if(!empty($item->user->author_info->certificates))
+                                <div class="article-section">
+                                    <h2 class="title-secondary">{{__('default.pages.courses.author_certificates')}}</h2>
+                                    <div class="row row--multiline">
+
+                                        @foreach(json_decode($item->user->author_info->certificates) as $certificate)
+                                            <div class="col-md-3 col-sm-4 col-xs-6">
+                                                <a href="{{$certificate}}"
+                                                   data-fancybox="author- certificates"
+                                                   title="{{__('default.pages.courses.zoom_certificate')}}"
+                                                   class="certificate">
+                                                    <img src="{{$certificate}}" alt="">
+                                                </a>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                             <div class="article-section">
                                 <h2 class="title-secondary">{{__('default.pages.courses.feedback_title')}}</h2>
                                 <div class="plain-text">{{__('default.pages.courses.feedback_placeholder')}}</div>
@@ -349,20 +338,23 @@
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
-                                    <div class="sidebar-item__title">В курс входит:</div>
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.course_include')}}:
+                                    </div>
                                     <div class="sidebar-item__body">
                                         <div class="plain-text">
                                             <ul>
-                                                <li>24 урока</li>
-                                                <li>70,5 часов видео</li>
-                                                <li>86 тестов</li>
-                                                <li>8 интерактивных задач</li>
-                                                <li>1 статья</li>
-                                                <li>Доступ через мобильные устройства</li>
-                                                <li>10 файлов</li>
-                                                <li>Сертификат при завершени</li>
+                                                <li>{{$item->lessons->count()}} {{__('default.pages.courses.lessons_title')}}</li>
+                                                {{--                                                <li>70,5 часов видео</li>--}}
+                                                <li>{{$item->lessons->whereIn('type', [2,4])->where('end_lesson_type', '=', 0)->count()}} {{__('default.pages.courses.tests_count_title')}}</li>
+                                                <li>{{$item->lessons->where('type', '=', 1)->count()}} {{__('default.pages.courses.theory_material_count_title')}}</li>
+                                                {{--                                                <li>8 интерактивных задач</li>--}}
+                                                {{--                                                <li>1 статья</li>--}}
+                                                <li>{{__('default.pages.courses.mobile_access_title')}}</li>
+                                                {{--                                                <li>10 файлов</li>--}}
+                                                <li>{{__('default.pages.courses.certificate_access_title')}}</li>
                                             </ul>
-                                            <div class="hint gray">Последнее обновление: 20.07.20</div>
+                                            <div class="hint gray">{{__('default.pages.courses.last_updates')}}
+                                                : {{\App\Extensions\FormatDate::formatDate($item->updated_at->format("d.m.Y"))}}</div>
                                         </div>
                                     </div>
                                 </div>

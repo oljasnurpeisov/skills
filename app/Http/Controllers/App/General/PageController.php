@@ -107,6 +107,7 @@ class PageController extends Controller
         return view("app.pages.general.notifications.notifications", [
             'notifications' => $notifications
         ]);
+
     }
 
 }

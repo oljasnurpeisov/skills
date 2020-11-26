@@ -135,6 +135,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
 
             Route::post("/getProfessionsByName", "CourseController@getProfessionsByName");
             Route::post("/getSkillsByData", "CourseController@getSkillsByData");
+            Route::post("/getSkills", "CourseController@getSkills");
             Route::post("/getAuthorsByName", "CourseController@getAuthorsByName");
 //            Route::post("/getSkillsByName", "CourseController@getSkillsByName");
 //            Route::group(['middleware' => ["auth", "verified"]], static function () {
@@ -168,7 +169,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::post("/update_author_data_profile", "UserController@update_author_data_profile");
                 });
             });
-            Route::group(['middleware' => 'check.activate'], static function () {
+//            Route::group(['middleware' => 'check.activate'], static function () {
                 Route::group(['middleware' => 'check.role:student'], static function () {
                     Route::group(["middleware" => ["web"], "namespace" => "Student"], function () {
                         // Профиль обучающегося
@@ -245,7 +246,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                 });
             });
         });
-    });
+//    });
 //    Route::get("/", "PageController@index");
 });
 

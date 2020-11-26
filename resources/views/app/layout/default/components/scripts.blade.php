@@ -14,36 +14,38 @@
 <script src="/assets/js/service.js"></script>
 <script src="/assets/js/scripts.js"></script>
 
-<script type="text/javascript">
-    @if ($errors->has('email'))
-    $.fancybox.open({
-        src: '#authorAuth',
-        touch:false
-    });
-    @endif
-    @if ($errors->has('email_forgot_password'))
-    $.fancybox.open({
-        src: '#passwordRecovery',
-        touch:false
-    });
-    @endif
-    @if (session('recovery_pass'))
-    $.fancybox.open({
-        src: '#authorAuth',
-        touch:false
-    });
-    @endif
-    @if ($errors->has('email_register') or $errors->has('password_register') or $errors->has('password_register_confirmation')
-    or $errors->has('iin') or $errors->has('company_name') or $errors->has('company_logo'))
-    $.fancybox.open({
-        src: '#authorRegistration',
-        touch:false
-    });
-    @endif
-    @if (session('failed'))
-    $.fancybox.open({
-        src: '#studentAuth',
-        touch:false
-    });
-    @endif
-</script>
+@guest
+    <script type="text/javascript">
+        @if ($errors->has('email'))
+        $.fancybox.open({
+            src: '#authorAuth',
+            touch: false
+        });
+        @endif
+        @if ($errors->has('email_forgot_password'))
+        $.fancybox.open({
+            src: '#passwordRecovery',
+            touch: false
+        });
+        @endif
+        @if (session('recovery_pass'))
+        $.fancybox.open({
+            src: '#authorAuth',
+            touch: false
+        });
+        @endif
+        @if ($errors->has('email_register') or $errors->has('password_register') or $errors->has('password_register_confirmation')
+        or $errors->has('iin') or $errors->has('company_name') or $errors->has('company_logo'))
+        $.fancybox.open({
+            src: '#authorRegistration',
+            touch: false
+        });
+        @endif
+        @if (session('failed'))
+        $.fancybox.open({
+            src: '#studentAuth',
+            touch: false
+        });
+        @endif
+    </script>
+@endguest

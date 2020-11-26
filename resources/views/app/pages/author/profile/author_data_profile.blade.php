@@ -181,7 +181,7 @@
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.profile.about_company')}}
                                         *</label>
-                                    <textarea name="about" class="input-regular" required>{{$item->about}}</textarea>
+                                    <textarea name="about" class="input-regular tinymce-text-here" required>{{$item->about}}</textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">

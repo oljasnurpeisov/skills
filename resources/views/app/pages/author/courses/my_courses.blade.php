@@ -121,7 +121,7 @@
                                     <div class="sidebar-item__body">
                                         <select name="skills[]"
                                                 placeholder="{{__('default.pages.courses.choose_skill')}}"
-                                                data-method="getSkillsByData"
+                                                data-method="getSkillsByData?_token={{ csrf_token() }}"
                                                 class="custom" multiple>
                                             @if(!empty($request->skills))
                                                 @foreach($skills as $skill)
