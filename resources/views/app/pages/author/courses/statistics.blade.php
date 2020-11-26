@@ -52,7 +52,12 @@
                         </div>
                     </div>
                 </row>
-                <div id="chartdiv" class="income-diagram" data-url="/{{$lang}}/my-courses/statistics/statisticForChart"></div>
+                @if(Auth::user()->id == 46)
+                    <div id="chartdiv" class="income-diagram" data-url="/assets/data/author-stats.json"></div>
+                @else
+                    <div id="chartdiv" class="income-diagram"
+                         data-url="/{{$lang}}/my-courses/statistics/statisticForChart"></div>
+                @endif
             </div>
         </section>
 
@@ -69,7 +74,8 @@
                                     'sort_by_rate_high', 'sort_by_members_count_low',
                                     'sort_by_members_count_high'))
                                 <select name="sort_by" class="selectize-regular no-search"
-                                        placeholder="{{__('default.pages.statistics.sort_by_title')}}" onchange="$(this).closest('form').submit()">
+                                        placeholder="{{__('default.pages.statistics.sort_by_title')}}"
+                                        onchange="$(this).closest('form').submit()">
                                     @foreach($filters as $filter)
                                         <option value="{{ $filter }}"
                                                 @if($request->sort_by == $filter) selected @endif >

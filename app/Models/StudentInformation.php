@@ -42,5 +42,12 @@ class StudentInformation extends Model
     public $timestamps = true;
 
 
+    public function getAvatar()
+    {
+        if ($this->avatar === null) {
+            return '/assets/img/author-thumbnail.png';
+        }
+        return $this->avatar;
+    }
 
 }

@@ -157,10 +157,8 @@ class CourseController extends Controller
 //
 //        return $professions;
 
-                $profession_name = $request->name ?? '';
-                $page = $request->page ?? 1;
-//
-        $pageNumber = 1;
+        $profession_name = $request->name ?? '';
+        $page = $request->page ?? 1;
 
         $professions = Professions::where('name_ru', 'like', '%' . $profession_name . '%')->orderBy('name_ru', 'asc')->paginate(50, ['*'], 'page', $page);
 
@@ -171,16 +169,17 @@ class CourseController extends Controller
     {
         $professions = $request->professions;
         $skill_name = $request->name ?? '';
+        $page = $request->page ?? 1;
 
-        if($professions != []) {
+        if ($professions != []) {
             $skills = $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->whereHas('professions', function ($q) use ($professions) {
                 if ($professions != []) {
                     $q->whereIn('professions.id', $professions);
                 }
-            })->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->orderBy('name_' . $lang, 'asc')->limit(50)->get();
+            })->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->orderBy('name_' . $lang, 'asc')->paginate(50, ['*'], 'page', $page);
 //        })->where('uid', '=', null)->limit(50)->get();
-        }else{
-            $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->orderBy('name_' . $lang, 'asc')->limit(50)->get();
+        } else {
+            $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->orderBy('name_' . $lang, 'asc')->paginate(50, ['*'], 'page', $page);
         }
 
 
@@ -190,6 +189,7 @@ class CourseController extends Controller
     public function getSkills(Request $request, $lang)
     {
         $skill_name = $request->name ?? '';
+        $page = $request->page ?? 1;
 
         $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->orderBy('name_' . $lang, 'asc')->limit(50)->get();
 //        })->where('uid', '=', null)->limit(50)->get();
@@ -201,10 +201,11 @@ class CourseController extends Controller
     public function getAuthorsByName(Request $request, $lang)
     {
         $author_name = $request->name ?? '';
+        $page = $request->page ?? 1;
 
-        $authors = User::with('author_info')->whereHas('author_info', function($q) use($author_name){
+        $authors = User::with('author_info')->whereHas('author_info', function ($q) use ($author_name) {
             $q->where('name', 'like', '%' . $author_name . '%')->orWhere('surname', 'like', '%' . $author_name . '%');
-        })->limit(50)->get();
+        })->paginate(50, ['*'], 'page', $page);
 
         foreach ($authors as $author) {
             $author->name = $author->author_info->name . ' ' . $author->author_info->surname;

@@ -36,7 +36,8 @@ class CourseController extends Controller
 
     public function storeCourse(Request $request)
     {
-        if ($request->is_paid and $request->cost > 0){
+
+        if ($request->is_paid and $request->cost > 0) {
             if ((Auth::user()->payment_info->merchant_login != null) and (Auth::user()->payment_info->merchant_password != null)) {
 
 
@@ -116,8 +117,8 @@ class CourseController extends Controller
 
                 return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.create_request_message'));
             }
-            return redirect('/'.app()->getLocale().'/profile-pay-information')->with('failed', __('default.pages.profile.pay_info_error'));
-        }else{
+            return redirect()->back()->withInput()->with('failed', __('default.pages.profile.pay_info_error'));
+        } else {
             $item = new Course;
             $item->name = $request->name;
             $item->author_id = Auth::user()->id;
@@ -343,11 +344,31 @@ class CourseController extends Controller
 
 //        $data = [['id' => 0, 'name' => "\u0422\u0435\u043C\u0430 1", 'order'=> 0, 'lessons'=> null, 'collapsed'=> !1]];
 
-        $data = 'name';
 
         if ($item->author_id == Auth::user()->id) {
             $themes = $item->themes()->orderBy('index_number', 'asc')->get();
             $lessons_count = count(Lesson::where('course_id', '=', $item->id)->get());
+
+            $lessons = $item->lessons;
+            $videos_count = [];
+            $audios_count = [];
+            $attachments_count = [];
+
+            foreach ($lessons as $lesson){
+                if($lesson->lesson_attachment != null){
+                    if($lesson->lesson_attachment->videos != null){
+                        $videos_count[] = count(json_decode($lesson->lesson_attachment->videos));
+                    }
+                    if($lesson->lesson_attachment->audios != null){
+                        $audios_count[] = count(json_decode($lesson->lesson_attachment->audios));
+                    }
+                    if($lesson->lesson_attachment->another_files != null){
+                        $attachments_count[] = count(json_decode($lesson->lesson_attachment->another_files));
+                    }
+                }
+
+            }
+
             return view("app.pages.author.courses.course", [
                 "item" => $item,
                 "themes" => $themes,
@@ -357,7 +378,9 @@ class CourseController extends Controller
                 "courses" => $courses,
                 "author_students_finished" => $author_students_finished,
                 "average_rates" => $average_rates,
-                "data" => $data
+                "videos_count" => array_sum($videos_count),
+                "audios_count" => array_sum($audios_count),
+                "attachments_count" => array_sum($attachments_count)
             ]);
         } else {
             return redirect("/" . app()->getLocale() . "/my-courses");

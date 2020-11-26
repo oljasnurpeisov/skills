@@ -77,11 +77,11 @@
                 <div class="header-dropdown profile">
                     <div class="header-dropdown__title">
                         @if(Auth::user()->roles()->first()->slug == 'author')
-                            <img src="{{Auth::user()->author_info->avatar ?? '/assets/img/author-thumbnail.png'}}"
+                            <img src="{{Auth::user()->author_info->getAvatar()}}"
                                  alt=""><i
                                     class="icon-chevron-down"> </i>
                         @elseif(Auth::user()->roles()->first()->slug == 'student')
-                            <img src="{{Auth::user()->student_info->avatar ?? '/assets/img/author-thumbnail.png'}}"
+                            <img src="{{Auth::user()->student_info->getAvatar()}}"
                                  alt="">
                             <i class="icon-chevron-down"> </i>
                         @endif
@@ -190,10 +190,10 @@
             <div class="mob-overlay__inner">
                 <div class="header-mobile__profile">
                     @if(Auth::user()->roles()->first()->slug == 'author')
-                        <img src="{{Auth::user()->author_info->avatar ?? '/assets/img/author-thumbnail.png'}}" alt="">
+                        <img src="{{Auth::user()->author_info->getAvatar()}}" alt="">
                         <div class="name">{{Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname}}</div>
                     @elseif(Auth::user()->roles()->first()->slug == 'student')
-                        <img src="{{Auth::user()->student_info->avatar ?? '/assets/img/author-thumbnail.png'}}" alt="">
+                        <img src="{{Auth::user()->student_info->getAvatar()}}" alt="">
                         <div class="name"></div>
                     @endif
                 </div>

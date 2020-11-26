@@ -11,14 +11,18 @@
                     <li><span>{{__('default.pages.courses.creation_course')}}</span></li>
                 </ul>
                 <h1 class="title-primary">{{__('default.pages.courses.creation_course')}}</h1>
-
+                @if (session('failed'))
+                    <div class="alert alert-danger">
+                        {!! session('failed') !!}
+                    </div>
+                @endif
                 <div class="row row--multiline">
                     <div class="col-md-8">
                         <form action="/{{$lang}}/create-course" method="POST">
                             @csrf
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_name')}}</label>
-                                <input type="text" name="name" placeholder="" class="input-regular" required>
+                                <input type="text" name="name" placeholder="" class="input-regular" value="{{ old('name') }}" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.skills_title')}}</label>
@@ -52,19 +56,19 @@
                             </div>
                             <div class="form-group" id="paidFormgroup" style="display:none;">
                                 <label class="form-group__label">{{__('default.pages.courses.course_cost')}} *</label>
-                                <input type="text" name="cost" placeholder="" class="input-regular">
+                                <input type="text" name="cost" placeholder="" class="input-regular" value="{{ old('cost') }}">
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_profit')}} *</label>
-                                <textarea name="profit_desc" class="input-regular tinymce-here" required> </textarea>
+                                <textarea name="profit_desc" class="input-regular tinymce-here" required> {{ old('profit_desc') }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_teaser')}} *</label>
-                                <textarea name="teaser" class="input-regular tinymce-here" required> </textarea>
+                                <textarea name="teaser" class="input-regular tinymce-here" required> {{ old('teaser') }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_desc')}} *</label>
-                                <textarea name="description" class="input-regular tinymce-here" required> </textarea>
+                                <textarea name="description" class="input-regular tinymce-here" required> {{ old('description') }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_image')}}</label>

@@ -255,7 +255,7 @@
                             @foreach($popular_authors as $author)
                                 <a href="/{{$lang}}/course-catalog?authors[]={{$author->id}}" title="" class="card">
                                     <div class="card__image card__author-image">
-                                        <img src="{{$author->author_info->avatar}}" alt="">
+                                        <img src="{{$author->author_info->getAvatar()}}" alt="">
                                     </div>
                                     <div class="card__desc">
                                         <div class="card__top">
@@ -307,7 +307,7 @@
                                     <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
                                 @endif
                                 <div class="card__image">
-                                    <img src="{{$item->image}}" alt="">
+                                    <img src="{{$item->getAvatar()}}" alt="">
                                 </div>
                                 <div class="card__desc">
                                     <div class="card__top">
@@ -341,7 +341,7 @@
                         @foreach($popular_authors as $author)
                             <a href="/{{$lang}}/course-catalog?authors[]={{$author->id}}" title="" class="card">
                                 <div class="card__image card__author-image">
-                                    <img src="{{$author->author_info->avatar}}" alt="">
+                                    <img src="{{$author->author_info->getAvatar()}}" alt="">
                                 </div>
                                 <div class="card__desc">
                                     <div class="card__top">

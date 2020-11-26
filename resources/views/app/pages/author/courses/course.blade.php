@@ -60,7 +60,38 @@
                                     <span>Общая продолжительность: <span id="courseDuration">0:00</span> часов</span>
                                 </div>
 
-                                <div class="course" id="courseDataContainer"></div>
+{{--                                <div class="course" id="courseDataContainer"></div>--}}
+                                <div class="course">
+                                    <div id="courseDataContainer" style="margin-bottom: .75em;"></div>
+                                    @if($item->courseWork() !== null)
+                                        <div class="topic">
+                                            <div class="topic__header">
+                                                <div class="title">{{__('default.pages.lessons.coursework_title')}}</div>
+                                                <div class="duration"></div>
+                                                <div class="edit-buttons">
+                                                    <a href="#" title="{{__('default.pages.courses.delete_title')}}"
+                                                       class="btn-icon small btn-icon--ghost icon-trash-can"> </a>
+                                                    <a href="#" title="{{__('default.pages.courses.edit_title')}}"
+                                                       class="btn-icon small btn-icon--ghost icon-edit"> </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if($item->finalTest() !== null)
+                                        <div class="topic">
+                                            <div class="topic__header">
+                                                <div class="title">{{__('default.pages.courses.final_test_title')}}</div>
+                                                <div class="duration"></div>
+                                                <div class="edit-buttons">
+                                                    <a href="#" title="{{__('default.pages.courses.delete_title')}}"
+                                                       class="btn-icon small btn-icon--ghost icon-trash-can"> </a>
+                                                    <a href="#" title="{{__('default.pages.courses.edit_title')}}"
+                                                       class="btn-icon small btn-icon--ghost icon-edit"> </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
 
                                 <div class="row row--multiline">
                                     <div class="col-auto">
@@ -100,43 +131,43 @@
                                 </div>
 
                                 <div id="editTopicModal" style="display:none;">
-                                    <h4 class="title-primary text-center">Редактирование темы</h4>
+                                    <h4 class="title-primary text-center">{{__('default.pages.courses.edit_theme_title')}}</h4>
                                     <div class="form-group">
                                         <input type="text" name="editTopicName" id="editTopicNameInput" placeholder=""
                                                class="input-regular">
                                     </div>
                                     <div class="row row--multiline justify-center">
                                         <div class="col-auto">
-                                            <a href="#" title="Сохранить" class="btn" id="editTopicBtn">Сохранить</a>
+                                            <a href="#" title="{{__('default.pages.courses.save_title')}}" class="btn" id="editTopicBtn">{{__('default.pages.courses.save_title')}}</a>
                                         </div>
                                         <div class="col-auto">
-                                            <a href="#" title="Отмена" class="ghost-btn" data-fancybox-close>Отмена</a>
+                                            <a href="#" title="{{__('default.pages.courses.cancel_title')}}" class="ghost-btn" data-fancybox-close>{{__('default.pages.courses.cancel_title')}}</a>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div id="removeTopicModal" style="display:none;">
-                                    <h4 class="title-primary text-center">Подтверждение</h4>
-                                    <div class="plain-text gray">Вы уверены, что хотите удалить выбранную тему?</div>
+                                    <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
+                                    <div class="plain-text gray">{{__('default.pages.courses.confirm_theme_modal_desc')}}</div>
                                     <div class="row row--multiline justify-center">
                                         <div class="col-auto">
-                                            <a href="#" title="Сохранить" class="btn" id="removeTopicBtn">Удалить</a>
+                                            <a href="#" title="{{__('default.pages.courses.delete_title')}}" class="btn" id="removeTopicBtn">{{__('default.pages.courses.delete_title')}}</a>
                                         </div>
                                         <div class="col-auto">
-                                            <a href="#" title="Отмена" class="ghost-btn" data-fancybox-close>Отмена</a>
+                                            <a href="#" title="{{__('default.pages.courses.cancel_tile')}}" class="ghost-btn" data-fancybox-close>{{__('default.pages.courses.cancel_tile')}}</a>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div id="removeLessonModal" style="display:none;">
-                                    <h4 class="title-primary text-center">Подтверждение</h4>
-                                    <div class="plain-text gray">Вы уверены, что хотите удалить выбранную тему?</div>
+                                    <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
+                                    <div class="plain-text gray">{{__('default.pages.courses.confirm_lesson_modal_desc')}}</div>
                                     <div class="row row--multiline justify-center">
                                         <div class="col-auto">
-                                            <a href="#" title="Сохранить" class="btn" id="removeLessonBtn">Удалить</a>
+                                            <a href="#" title="{{__('default.pages.courses.delete_title')}}" class="btn" id="removeLessonBtn">{{__('default.pages.courses.delete_title')}}</a>
                                         </div>
                                         <div class="col-auto">
-                                            <a href="#" title="Отмена" class="ghost-btn" data-fancybox-close>Отмена</a>
+                                            <a href="#" title="{{__('default.pages.courses.cancel_tile')}}" class="ghost-btn" data-fancybox-close>{{__('default.pages.courses.cancel_tile')}}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +176,7 @@
                                     <div class="text-center">
                                         <h4 class="title-primary text-center"></h4>
                                         <div class="plain-text gray"></div>
-                                        <button data-fancybox-close class="btn">Закрыть</button>
+                                        <button data-fancybox-close class="btn">{{__('default.pages.courses.close_title')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +189,7 @@
                                 <div class="personal-card">
                                     <div class="personal-card__left">
                                         <div class="personal-card__image">
-                                            <img src="{{ $item->user->author_info->avatar  }}" alt="">
+                                            <img src="{{ $item->user->author_info->getAvatar()  }}" alt="">
                                         </div>
                                         <ul class="socials">
                                             @if(!empty($item->user->author_info->site_url))
@@ -243,18 +274,24 @@
                                 <div class="plain-text">{{__('default.pages.courses.feedback_placeholder')}}</div>
                             </div>
                         </div>
+
                         <div class="row row--multiline">
-                            <div class="col-auto">
-                                <a href="#" title="{{__('default.pages.courses.publish_title')}}"
-                                   class="btn">{{__('default.pages.courses.publish_title')}}</a>
-                            </div>
-                            <div class="col-auto">
-                                <a href="#" title="{{__('default.pages.courses.edit_title')}}"
-                                   class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
-                            </div>
-                            <div class="col-auto">
-                                {{--                                <a href="#" title="Отмена" class="ghost-btn">Отмена</a>--}}
-                            </div>
+                            @switch(!($item->status))
+                                @case(1)
+                                @case(3)
+                                <div class="col-auto">
+                                    <a href="#" title="{{__('default.pages.courses.publish_title')}}"
+                                       class="btn">{{__('default.pages.courses.publish_title')}}</a>
+                                </div>
+                                <div class="col-auto">
+                                    <a href="#" title="{{__('default.pages.courses.edit_title')}}"
+                                       class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
+                                </div>
+                                <div class="col-auto">
+                                    {{--                                <a href="#" title="Отмена" class="ghost-btn">Отмена</a>--}}
+                                </div>
+                                @break
+                            @endswitch
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -343,10 +380,19 @@
                                     <div class="sidebar-item__body">
                                         <div class="plain-text">
                                             <ul>
-                                                <li>{{$item->lessons->count()}} {{__('default.pages.courses.lessons_title')}}</li>
+                                                <li>{{$item->lessons->whereIn('type', [1,2])->count()}} {{__('default.pages.courses.lessons_title')}}</li>
+                                                <li>{{$videos_count}} {{__('default.pages.courses.videos_count')}}</li>
+                                                <li>{{$audios_count}} {{__('default.pages.courses.audios_count')}} </li>
+                                                <li>{{$attachments_count}} {{__('default.pages.courses.attachments_count')}} </li>
                                                 {{--                                                <li>70,5 часов видео</li>--}}
-                                                <li>{{$item->lessons->whereIn('type', [2,4])->where('end_lesson_type', '=', 0)->count()}} {{__('default.pages.courses.tests_count_title')}}</li>
-                                                <li>{{$item->lessons->where('type', '=', 1)->count()}} {{__('default.pages.courses.theory_material_count_title')}}</li>
+                                                <li>{{$item->lessons->whereIn('type', [2])->where('end_lesson_type', '=', 0)->count()}} {{__('default.pages.courses.tests_count_title')}}</li>
+                                                <li>{{$item->lessons->where('end_lesson_type', '=', 1)->where('type', '=', 2)->count()}} {{__('default.pages.courses.homeworks_count')}}</li>
+                                                @if(!empty($item->courseWork()))
+                                                    <li>{{__('default.pages.courses.coursework_title')}}</li>
+                                                @endif
+                                                @if(!empty($item->finalTest()))
+                                                    <li>{{__('default.pages.courses.final_test_title')}}</li>
+                                                @endif
                                                 {{--                                                <li>8 интерактивных задач</li>--}}
                                                 {{--                                                <li>1 статья</li>--}}
                                                 <li>{{__('default.pages.courses.mobile_access_title')}}</li>
@@ -441,13 +487,16 @@
         });
 
         let newCourseController = new courseController({{$item->id}}, {
-            upText: 'Поднять',
-            downText: 'Опустить',
-            deleteText: 'Удалить',
-            editText: 'Редактировать',
-            addText: 'Создать урок',
+            upText: '{{__('default.pages.courses.move_up_title')}}',
+            downText: '{{__('default.pages.courses.move_down_title')}}',
+            deleteText: '{{__('default.pages.courses.delete_title')}}',
+            editText: '{{__('default.pages.courses.edit_title')}}',
+            addText: '{{__('default.pages.courses.create_lesson')}}',
         });
+
         newCourseController.initComponent();
+
+
 
     </script>
     <!---->

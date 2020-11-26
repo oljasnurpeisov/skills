@@ -88,6 +88,7 @@
                                 <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link')}}</label>
                                 <input type="url" name="videos_link[]" placeholder="" class="input-regular" id="courseVideo">
                             </div>
+                            <div class="removable-items"></div>
                             <div class="text-right pull-up">
                                 <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn" data-duplicate="courseVideo" data-maxcount="4"><span
                                             class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span class="btn-icon small icon-plus"> </span></a>

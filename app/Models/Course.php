@@ -127,4 +127,22 @@ class Course extends Model
         return $this->hasOne(CourseAttachments::class,'course_id', 'id');
 
     }
+
+    public function getAvatar()
+    {
+        if ($this->image === null) {
+            return '/assets/img/course-thumbnail.jpg';
+        }
+        return $this->image;
+    }
+
+    public function courseWork()
+    {
+        return $this->lessons()->where('type', '=', 3)->first();
+    }
+
+    public function finalTest()
+    {
+        return $this->lessons()->where('type', '=', 4)->first();
+    }
 }

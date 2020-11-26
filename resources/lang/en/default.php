@@ -115,10 +115,28 @@ return [
             'course_include' => 'В курс входит',
             'lessons_title' => 'уроков',
             'tests_count_title' => 'тестов',
+            'homeworks_count' => 'домашних заданий',
+            'videos_count' => 'количество видео',
+            'audios_count' => 'количество аудио',
+            'attachments_count' => 'количество материалов',
+
             'mobile_access_title' => 'Доступ через мобильные устройства',
             'certificate_access_title' => 'Сертификат при завершени',
             'last_updates' => 'Последнее обновление',
-            'theory_material_count_title' => 'Теоретических материалов'
+            'theory_material_count_title' => 'Теоретических материалов',
+
+            'confirm_modal_title' => 'Подтверждение',
+            'confirm_theme_modal_desc' => 'Вы уверены, что хотите удалить выбранную тему?',
+            'confirm_lesson_modal_desc' => 'Вы уверены, что хотите удалить выбранный урок?',
+            'delete_title' => 'Удалить',
+            'cancel_tile' => 'Отмена',
+            'edit_theme_title' => 'Редактирование темы',
+            'save_title' => 'Редактирование темы',
+            'close_title' => 'Закрыть',
+
+            'move_up_title' => 'Поднять',
+            'move_down_title' => 'Поднять',
+            'create_lesson' => 'Создать урок',
 
         ],
         'lessons' => [
@@ -173,7 +191,7 @@ return [
             'title' => 'Профиль',
             'email_confirm_error' => 'Чтобы стать автором, подтвердите свой E-mail',
             'profile_activate_error' => 'У вас пока нет доступа к этому разделу, заполните информацию в профиле.',
-            'pay_info_error' => 'Для продолжения работы пожалуйста заполните данные в разделе Профиль - Платежная информация',
+            'pay_info_error' => 'Для продолжения работы пожалуйста заполните данные в разделе <a style="color: #2ab5f6" href="/{{$lang}}/profile-pay-information" target="_blank">Профиль - Платежная информация</a>',
             'organization_data' => 'Данные об организации',
             'payment_information' => 'Платежная информация',
             'registration_data' => 'Регистрационные данные',

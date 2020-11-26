@@ -149,7 +149,7 @@ class AjaxUploadController extends Controller
             {
                 $name = time().uniqid().'.'.$file->getClientOriginalExtension();
                 $file->move(public_path('images/test/files/'), $name);
-                array_push($data, $name);
+                array_push($data, '/images/test/files/'.$name);
             }
 
         return Response::json(array('filenames' => $data));

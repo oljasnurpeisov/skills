@@ -86,4 +86,9 @@ class Lesson extends Model
         return $this->hasMany(StudentLesson::class,'lesson_id', 'id');
 
     }
+
+    public function lesson_attachment()
+    {
+        return $this->hasOne(LessonAttachments::class, 'lesson_id', 'id');
+    }
 }

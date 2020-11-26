@@ -59,4 +59,12 @@ class UserInformation extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function getAvatar()
+    {
+        if ($this->avatar === null) {
+            return '/assets/img/author-thumbnail.png';
+        }
+        return $this->avatar;
+    }
 }
