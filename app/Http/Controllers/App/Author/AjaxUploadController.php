@@ -83,6 +83,20 @@ class AjaxUploadController extends Controller
         return Response::json(array('location' => config('APP_URL') . '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/images/' . $imageName));
     }
 
+    // Загрузка изображений теста
+    public function ajaxUploadTestImages(Request $request)
+    {
+        $data = [];
+        foreach($request->file('files') as $file)
+        {
+            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/images/tests'), $name);
+            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/images/tests/'.$name);
+        }
+
+        return Response::json(array('filenames' => $data));
+    }
+
     /**
      * Загрузка файла на сайт.
      *

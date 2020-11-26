@@ -74,7 +74,7 @@
                                            class="ghost-btn ghost-btn--blue small">{{__('default.pages.courses.coursework_title')}}</a>
                                     </div>
                                     <div class="col-auto">
-                                        <a href="/author-finaltest-create.html"
+                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-final-test"
                                            title="{{__('default.pages.courses.final_test_title')}}"
                                            class="ghost-btn ghost-btn--blue small">{{__('default.pages.courses.final_test_title')}}</a>
                                     </div>

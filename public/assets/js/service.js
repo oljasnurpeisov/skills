@@ -46,7 +46,7 @@ const dataService = function () {
         xhr.open('DELETE', '/ru/delete-lesson', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
-        xhr.send('lesson_id='+I+'');
+        xhr.send('lesson_id='+I+'&theme_id='+G+'');
 
         return {
             msgTitle: "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435 \u0443\u0440\u043E\u043A\u0430",

@@ -34,9 +34,9 @@
                                     </div>
                                     <div class="form-group" id="practiceTypes" style="display: none;">
                                         <label class="form-group__label">{{__('default.pages.lessons.headline')}}</label>
-                                        <label class="radio"><input type="radio" name="end_lesson_type"
+                                        <label class="radio"><input type="radio" name="practiceType"
                                                                     value="test" checked><span>{{__('default.pages.lessons.test_title')}}</span></label>
-                                        <label class="radio"><input type="radio" name="end_lesson_type"
+                                        <label class="radio"><input type="radio" name="practiceType"
                                                                     value="homework"><span>{{__('default.pages.lessons.homework')}}</span></label>
                                     </div>
                                     <div class="form-group" id="durationField">
@@ -198,7 +198,7 @@
                             <div id="optionalFields">
                                 <div id="homework" style="display: none;">
                                     <div class="form-group">
-                                        <label class="form-group__label">Домашнее задание *</label>
+                                        <label class="form-group__label">{{__('default.pages.lessons.homework')}} *</label>
                                         <textarea name="homework" class="input-regular tinymce-here" required></textarea>
                                     </div>
                                 </div>

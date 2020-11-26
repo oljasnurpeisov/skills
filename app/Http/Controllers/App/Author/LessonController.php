@@ -56,9 +56,12 @@ class LessonController extends Controller
             $item->type = 1;
         }else{
             $item->type = 2;
+            $item->practice = $request->homework;
         }
-        if($request->end_lesson_type == 'test'){
+        if($request->practiceType == 'test'){
             $item->end_lesson_type = 0;
+
+            $item->practice = json_encode([$request->questions, $request->answers, 'passingScore' => $request->passingScore, 'mixAnswers' => $request->mixAnswers]);
         }else{
             $item->end_lesson_type = 1;
         }
@@ -245,6 +248,15 @@ class LessonController extends Controller
     public function deleteLesson(Request $request)
     {
         Lesson::where('id', '=', $request->lesson_id)->delete();
+
+        $theme_lessons = Lesson::whereHas('themes', function($q) use ($request){
+            $q->where('themes.id', '=', $request->theme_id);
+        })->orderBy('index_number', 'asc')->get();
+
+        foreach ($theme_lessons as $key => $lesson){
+            $lesson->index_number = $key;
+            $lesson->save();
+        }
     }
 
     public function moveLesson(Request $request)
@@ -304,7 +316,7 @@ class LessonController extends Controller
             $item_attachments->videos_link = json_encode($request->videos_link);
         }
         // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link != [null]) {
+        if ($request->videos_poor_vision_link != []) {
             $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
         }
         // Видео с устройства
@@ -442,5 +454,79 @@ class LessonController extends Controller
         } else {
             return redirect("/" . $lang . "/my-courses");
         }
+    }
+
+    public function storeFinalTest($lang, Request $request, Course $course)
+    {
+        $item = new Lesson;
+        $item->course_id = $course->id;
+        $item->index_number = 2;
+        $item->type = 4; // Тип "Финальное тестирование"
+        $item->end_lesson_type = 0; // Тип "Тест"
+        $item->duration = $request->duration;
+        $item->theory = $request->theory;
+        $item->coursework_task = $request->coursework_task;
+
+        if (($request->image != $item->image)) {
+            File::delete(public_path($item->image));
+
+            $item->image = $request->image;
+        }
+
+        $item->practice = json_encode([$request->questions, $request->answers, 'passingScore' => $request->passingScore, 'mixAnswers' => $request->mixAnswers]);
+
+        $item->save();
+
+        $item_attachments = new LessonAttachments;
+        $item_attachments->lesson_id = $item->id;
+
+        // Ссылки на видео курса
+        if ($request->videos_link != [null]) {
+            $item_attachments->videos_link = json_encode($request->videos_link);
+        }
+        // Ссылки на видео курса для слабовидящих
+        if ($request->videos_poor_vision_link != []) {
+            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        }
+        // Видео с устройства
+        if (($request->videos != $item_attachments->videos)) {
+            File::delete(public_path($item_attachments->videos));
+
+            $item_attachments->videos = $request->videos;
+        }
+        // Видео с устройства для слабовидящих
+        if (($request->videos_poor_vision != $item_attachments->videos_poor_vision)) {
+            File::delete(public_path($item_attachments->videos_poor_vision));
+
+            $item_attachments->videos_poor_vision = $request->videos_poor_vision;
+        }
+        // Аудио с устройства
+        if (($request->audios != $item_attachments->audios)) {
+            File::delete(public_path($item_attachments->audios));
+
+            $item_attachments->audios = $request->audios;
+        }
+        // Аудио с устройства для слабовидящих
+        if (($request->audios_poor_vision != $item_attachments->audios_poor_vision)) {
+            File::delete(public_path($item_attachments->audios_poor_vision));
+
+            $item_attachments->audios_poor_vision = $request->audios_poor_vision;
+        }
+        // Другие материалы
+        if (($request->another_files != $item_attachments->another_files)) {
+            File::delete(public_path($item_attachments->another_files));
+
+            $item_attachments->another_files = $request->another_files;
+        }
+        // Другие материалы для слабовидящих
+        if (($request->another_files_poor_vision != $item_attachments->another_files_poor_vision)) {
+            File::delete(public_path($item_attachments->another_files_poor_vision));
+
+            $item_attachments->another_files_poor_vision = $request->another_files_poor_vision;
+        }
+
+        $item_attachments->save();
+
+        return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.create_request_message'));
     }
 }

@@ -144,11 +144,22 @@ return [
             'cancel' => 'Отмена',
 
             'lesson_create' => 'Создание урока',
+            'final_test_create' => 'Создание финального тестирования',
             'lesson_name' => 'Название урока',
             'lesson_type' => 'Тип урока',
             'headline' => 'Заголовок',
             'test_title' => 'Тест',
-            'homework' => 'Домашнее задание'
+            'question_title' => 'Вопрос',
+            'question_text' => 'Текст вопроса',
+            'answers_title' => 'Ответы',
+            'pictures_type_title' => 'В виде картинок',
+            'right_answer_title' => 'Введите правильный вариант ответа',
+            'input_answer_title' => 'Введите вариант ответа',
+            'homework' => 'Домашнее задание',
+            'add_question' => 'Добавить вопрос',
+            'questions_count' => 'Всего вопросов',
+            'passing_score' => 'Проходной балл',
+            'mix_answers' => 'Перемешать ответы'
         ],
         'profile' => [
             'title' => 'Профиль',

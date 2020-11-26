@@ -102,6 +102,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
         Route::post('/ajax_upload_image', 'AjaxUploadController@ajax_upload_image');
         // Сохранение изображения компании
         Route::post('/ajax_upload_company_image', 'AjaxUploadController@ajaxUploadCompanyImage');
+        // Сохранение изображений теста
+        Route::post('/ajax_upload_test_images', 'AjaxUploadController@ajaxUploadTestImages');
         // Сохранение сертификатов автора
         Route::post('/ajax_upload_certificates', 'AjaxUploadController@ajaxUploadCertificates');
         // Сохранение изображения курса
@@ -227,6 +229,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                         Route::post("/my-courses/course/{course}/edit-coursework", "LessonController@updateCoursework");
                         // Финальное тестирование
                         Route::get("/my-courses/course/{item}/create-final-test", "LessonController@createFinalTest");
+                        Route::post("/my-courses/course/{course}/create-final-test", "LessonController@storeFinalTest");
                         // Черновики
                         Route::get("/my-courses/drafts", "CourseController@myCourses");
                         // Неопубликованные курсы
