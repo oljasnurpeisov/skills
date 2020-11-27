@@ -117,7 +117,7 @@ class CourseController extends Controller
 
                 return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.create_request_message'));
             }
-            return redirect()->back()->withInput()->with('failed', __('default.pages.profile.pay_info_error'));
+            return redirect()->back()->withInput()->with('failed', __('default.pages.profile.pay_info_error', ['lang' => app()->getLocale()]));
         } else {
             $item = new Course;
             $item->name = $request->name;
@@ -354,15 +354,15 @@ class CourseController extends Controller
             $audios_count = [];
             $attachments_count = [];
 
-            foreach ($lessons as $lesson){
-                if($lesson->lesson_attachment != null){
-                    if($lesson->lesson_attachment->videos != null){
+            foreach ($lessons as $lesson) {
+                if ($lesson->lesson_attachment != null) {
+                    if ($lesson->lesson_attachment->videos != null) {
                         $videos_count[] = count(json_decode($lesson->lesson_attachment->videos));
                     }
-                    if($lesson->lesson_attachment->audios != null){
+                    if ($lesson->lesson_attachment->audios != null) {
                         $audios_count[] = count(json_decode($lesson->lesson_attachment->audios));
                     }
-                    if($lesson->lesson_attachment->another_files != null){
+                    if ($lesson->lesson_attachment->another_files != null) {
                         $attachments_count[] = count(json_decode($lesson->lesson_attachment->another_files));
                     }
                 }

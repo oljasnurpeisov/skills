@@ -10,6 +10,7 @@
                     <li><a href="/{{$lang}}/my-courses"
                            title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                     </li>
+                    @include('app.pages.author.courses.components.breadcrumb_course_type',['item' => $item])
                     <li><a href="/{{$lang}}/my-courses/course/{{$item->id}}"
                            title="{{$item->name}}"><span>{{$item->name}}</span></a></li>
                     <li><span>{{__('default.pages.lessons.coursework_create_title')}}</span></li>

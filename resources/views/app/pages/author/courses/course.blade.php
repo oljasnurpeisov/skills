@@ -10,7 +10,7 @@
                     <li><a href="/{{$lang}}/my-courses"
                            title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                     </li>
-                    {{--                    <li><a href="#" title="Черновики">Черновики</a></li>--}}
+                    @include('app.pages.author.courses.components.breadcrumb_course_type',['item' => $item])
                     <li><span>{{$item->name}}</span></li>
                 </ul>
 
@@ -60,7 +60,7 @@
                                     <span>Общая продолжительность: <span id="courseDuration">0:00</span> часов</span>
                                 </div>
 
-{{--                                <div class="course" id="courseDataContainer"></div>--}}
+                                {{--                                <div class="course" id="courseDataContainer"></div>--}}
                                 <div class="course">
                                     <div id="courseDataContainer" style="margin-bottom: .75em;"></div>
                                     @if($item->courseWork() !== null)
@@ -138,10 +138,13 @@
                                     </div>
                                     <div class="row row--multiline justify-center">
                                         <div class="col-auto">
-                                            <a href="#" title="{{__('default.pages.courses.save_title')}}" class="btn" id="editTopicBtn">{{__('default.pages.courses.save_title')}}</a>
+                                            <a href="#" title="{{__('default.pages.courses.save_title')}}" class="btn"
+                                               id="editTopicBtn">{{__('default.pages.courses.save_title')}}</a>
                                         </div>
                                         <div class="col-auto">
-                                            <a href="#" title="{{__('default.pages.courses.cancel_title')}}" class="ghost-btn" data-fancybox-close>{{__('default.pages.courses.cancel_title')}}</a>
+                                            <a href="#" title="{{__('default.pages.courses.cancel_title')}}"
+                                               class="ghost-btn"
+                                               data-fancybox-close>{{__('default.pages.courses.cancel_title')}}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -151,10 +154,13 @@
                                     <div class="plain-text gray">{{__('default.pages.courses.confirm_theme_modal_desc')}}</div>
                                     <div class="row row--multiline justify-center">
                                         <div class="col-auto">
-                                            <a href="#" title="{{__('default.pages.courses.delete_title')}}" class="btn" id="removeTopicBtn">{{__('default.pages.courses.delete_title')}}</a>
+                                            <a href="#" title="{{__('default.pages.courses.delete_title')}}" class="btn"
+                                               id="removeTopicBtn">{{__('default.pages.courses.delete_title')}}</a>
                                         </div>
                                         <div class="col-auto">
-                                            <a href="#" title="{{__('default.pages.courses.cancel_tile')}}" class="ghost-btn" data-fancybox-close>{{__('default.pages.courses.cancel_tile')}}</a>
+                                            <a href="#" title="{{__('default.pages.courses.cancel_tile')}}"
+                                               class="ghost-btn"
+                                               data-fancybox-close>{{__('default.pages.courses.cancel_tile')}}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -164,10 +170,13 @@
                                     <div class="plain-text gray">{{__('default.pages.courses.confirm_lesson_modal_desc')}}</div>
                                     <div class="row row--multiline justify-center">
                                         <div class="col-auto">
-                                            <a href="#" title="{{__('default.pages.courses.delete_title')}}" class="btn" id="removeLessonBtn">{{__('default.pages.courses.delete_title')}}</a>
+                                            <a href="#" title="{{__('default.pages.courses.delete_title')}}" class="btn"
+                                               id="removeLessonBtn">{{__('default.pages.courses.delete_title')}}</a>
                                         </div>
                                         <div class="col-auto">
-                                            <a href="#" title="{{__('default.pages.courses.cancel_tile')}}" class="ghost-btn" data-fancybox-close>{{__('default.pages.courses.cancel_tile')}}</a>
+                                            <a href="#" title="{{__('default.pages.courses.cancel_tile')}}"
+                                               class="ghost-btn"
+                                               data-fancybox-close>{{__('default.pages.courses.cancel_tile')}}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +185,8 @@
                                     <div class="text-center">
                                         <h4 class="title-primary text-center"></h4>
                                         <div class="plain-text gray"></div>
-                                        <button data-fancybox-close class="btn">{{__('default.pages.courses.close_title')}}</button>
+                                        <button data-fancybox-close
+                                                class="btn">{{__('default.pages.courses.close_title')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -212,7 +222,7 @@
                                     </div>
                                     <div class="personal-card__right">
                                         <div class="personal-card__name">{{ $item->user->author_info->name . ' ' . $item->user->author_info->surname  }}</div>
-                                        <div class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->author_info->specialization)) }}</div>
+                                        <div class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->author_info->specialization) ?? []) }}</div>
                                         <div class="plain-text">
                                             {!! $item->user->author_info->about !!}
                                         </div>
@@ -284,7 +294,8 @@
                                        class="btn">{{__('default.pages.courses.publish_title')}}</a>
                                 </div>
                                 <div class="col-auto">
-                                    <a href="/{{$lang}}/my-courses/edit-course/{{$item->id}}" title="{{__('default.pages.courses.edit_title')}}"
+                                    <a href="/{{$lang}}/my-courses/edit-course/{{$item->id}}"
+                                       title="{{__('default.pages.courses.edit_title')}}"
                                        class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
                                 </div>
                                 <div class="col-auto">
@@ -495,7 +506,6 @@
         });
 
         newCourseController.initComponent();
-
 
 
     </script>
