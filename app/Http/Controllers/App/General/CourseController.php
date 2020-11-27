@@ -97,11 +97,12 @@ class CourseController extends Controller
         }
         // Сортировка по навыкам
         if ($skills) {
+            if(count(array_filter($skills)) > 0){
+                $query->whereHas('skills', function ($q) use ($request) {
+                    $q->whereIn('skills.id', $request->skills);
+                });
+            }
             $skills = Skill::whereIn('id', $skills)->get();
-
-            $query->whereHas('skills', function ($q) use ($request) {
-                $q->whereIn('skills.id', $request->skills);
-            });
         }
         // Сортировка по авторам
         if ($authors) {
@@ -191,7 +192,7 @@ class CourseController extends Controller
         $skill_name = $request->name ?? '';
         $page = $request->page ?? 1;
 
-        $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->orderBy('name_' . $lang, 'asc')->limit(50)->get();
+        $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->orderBy('name_' . $lang, 'asc')->paginate(50, ['*'], 'page', $page);
 //        })->where('uid', '=', null)->limit(50)->get();
 
 

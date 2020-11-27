@@ -193,7 +193,7 @@ return [
             'email_confirm_error' => 'Чтобы стать автором, подтвердите свой E-mail',
             'email_confirm_success' => 'Вы успешно подтвердили E-mail',
             'profile_activate_error' => 'У вас пока нет доступа к этому разделу, заполните информацию в профиле.',
-            'pay_info_error' => 'Для продолжения работы пожалуйста заполните данные в разделе <a style="color: #2ab5f6" href="/{{$lang}}/profile-pay-information" target="_blank">Профиль - Платежная информация</a>',
+            'pay_info_error' => 'Для продолжения работы пожалуйста заполните данные в разделе <a style="color: #2ab5f6" href="/:lang/profile-pay-information" target="_blank">Профиль - Платежная информация</a>',
             'organization_data' => 'Данные об организации',
             'payment_information' => 'Платежная информация',
             'registration_data' => 'Регистрационные данные',
