@@ -10,6 +10,7 @@
 <script src="/assets/libs/dropzone/locale.js"></script>
 <script src="/assets/libs/nouislider/distribute/nouislider.js"></script>
 <script src="/assets/libs/selectize/selectize.js"></script>
+<script src="/assets/libs/air-datepicker/dist/js/datepicker.js"></script>
 <script src="/assets/js/ajax-select.js"></script>
 <script src="/assets/js/service.js"></script>
 <script src="/assets/js/scripts.js"></script>

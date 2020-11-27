@@ -52,6 +52,9 @@
                             {{__('default.pages.profile.email_confirm_error')}}
                         </div>
                     @endif
+                    <div class="alert alert-warning">
+                        {!! __('Логин и пароль от платежной системы вы можете получить по адресу <a href="https://www.kassa24.kz/" target="_blank"><b>kassa24.kz</b></a>') !!}
+                    </div>
                     <div @if($pay_information->user->email_verified_at == null)class="row row--multiline disabled"@else class="row row--multiline"@endif>
                         <div class="col-sm-6">
                             <div class="form-group">
