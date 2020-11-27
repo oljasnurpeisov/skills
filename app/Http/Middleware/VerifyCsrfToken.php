@@ -26,6 +26,16 @@ class VerifyCsrfToken extends Middleware
         '/en/getProfessionsByName',
         '/en/getSkillsByData',
         '/en/getAuthorsByName',
-        '/en/getSkills'
+        '/en/getSkills',
+
+
+        '/ru/getCourseData/*',
+        '/move-theme',
+        '/delete-theme',
+        '/edit-theme',
+        '/create-theme',
+
+        '/move-lesson',
+        '/delete-lesson'
     ];
 }

@@ -186,11 +186,10 @@
                     </div>
                 </div>
                 <input type="hidden" name="company_logo" class="avatar-path">
-
-                {!! $errors->first('company_logo', '<div class="alert alert-danger">
-                    :message
-                </div>') !!}
             </div>
+            {!! $errors->first('company_logo', '<div class="alert alert-danger">
+                :message
+            </div>') !!}
             <br>
             <div class="text-center">
                 <div class="form-group">

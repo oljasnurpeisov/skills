@@ -48,7 +48,9 @@
 <link rel="stylesheet" href="/assets/libs/dropzone/dropzone.min.css" type="text/css" media="screen"/>
 <link rel="stylesheet" href="/assets/libs/nouislider/distribute/nouislider.min.css" type="text/css" media="screen"/>
 <link rel="stylesheet" href="/assets/libs/selectize/selectize.default.css" type="text/css" media="screen"/>
+<link rel="stylesheet" href="/assets/libs/air-datepicker/dist/css/datepicker.css" type="text/css" media="screen"/>
 <link rel="stylesheet" href="/assets/css/style.css" type="text/css" media="screen"/>
+
 
 <script src="/assets/admin/libs/jquery/dist/jquery.js"></script>
 

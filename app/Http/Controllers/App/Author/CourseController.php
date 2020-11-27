@@ -415,9 +415,6 @@ class CourseController extends Controller
 
     public function updateCourse($lang, Request $request, Course $item)
     {
-        $videos = array();
-        $audios = array();
-
         $item->name = $request->name;
         $item->lang = $request->lang;
         if ($request->is_paid) {
@@ -430,52 +427,76 @@ class CourseController extends Controller
         } else {
             $item->is_access_all = 0;
         }
+        if ($request->is_poor_vision) {
+            $item->is_poor_vision = 1;
+        } else {
+            $item->is_poor_vision = 0;
+        }
         $item->cost = $request->cost;
         $item->profit_desc = $request->profit_desc;
         $item->teaser = $request->teaser;
         $item->description = $request->description;
-        $item->course_includes = $request->course_includes;
-        if ($request->youtube_link != [null]) {
-            $item->youtube_link = json_encode($request->youtube_link);
-        }
+
         $item->certificate_id = $request->certificate_id;
-//        $item->status = 1;
-        // Файлы
-        if (!empty($request->image)) {
+
+        if (($request->image != $item->image)) {
             File::delete(public_path($item->image));
 
-            $imageName = time() . '.' . $request['image']->getClientOriginalExtension();
-            $request['image']->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/images'), $imageName);
-
-            $item->image = '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/images/' . $imageName;
-
+            $item->image = $request->image;
         }
-
-        if (!empty($request->video)) {
-            File::delete(public_path($item->video));
-
-            foreach ($request->video as $video) {
-                $videoName = time() . '.' . $video->getClientOriginalExtension();
-                $video->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/videos'), $videoName);
-                array_push($videos, '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/videos/' . $videoName);
-            }
-            $item->video = json_encode($videos);
-        }
-
-        if (!empty($request->audio)) {
-            File::delete(public_path($item->audio));
-
-            foreach ($request->audio as $audio) {
-                $audioName = time() . '.' . $audio->getClientOriginalExtension();
-                $audio->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/audios'), $audioName);
-                array_push($audios, '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/audios/' . $audioName);
-            }
-            $item->audio = json_encode($audios);
-        }
-
+//        $item->status = 1;
+        $item->skills()->sync($request->skills);
         $item->save();
 
-        $item->skills()->sync($request->skills, false);
+        $item_attachments = CourseAttachments::where('course_id', '=', $item->id)->first();
+
+        if ($request->videos_link != [null]) {
+            $item_attachments->videos_link = json_encode($request->videos_link);
+        }
+        if ($request->videos_poor_vision_link != [null]) {
+            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        }
+
+        // Видео с устройства
+        if (($request->videos != $item_attachments->videos)) {
+            File::delete(public_path($item_attachments->videos));
+            $a = json_decode($request->localVideo) ?? [];
+            $b = $request->localVideoStored;
+            $videos = array_merge($a,$b);
+
+            $item_attachments->videos = $videos;
+        }
+        // Видео с устройства для слабовидящих
+        if (($request->videos_poor_vision != $item_attachments->videos_poor_vision)) {
+            File::delete(public_path($item_attachments->videos_poor_vision));
+            $a = json_decode($request->localVideo1) ?? [];
+            $b = $request->videos_poor_vision;
+            $videos_poor_vision = array_merge($a,$b);
+
+            $item_attachments->videos_poor_vision = $videos_poor_vision;
+        }
+        // Аудио с устройства
+        if (($request->audios != $item_attachments->audios)) {
+            File::delete(public_path($item_attachments->audios));
+            $a = json_decode($request->audio) ?? [];
+            $b = $request->audios;
+            $audios = array_merge($a,$b);
+
+            $item_attachments->audios = $audios;
+        }
+        // Аудио с устройства для слабовидящих
+        if (($request->audios_poor_vision != $item_attachments->audios_poor_vision)) {
+            File::delete(public_path($item_attachments->audios_poor_vision));
+            $a = json_decode($request->audio1) ?? [];
+            $b = $request->audios_poor_vision;
+            $audios_poor_vision = array_merge($a,$b);
+
+            $item_attachments->audios = $audios_poor_vision;
+        }
+
+        $item_attachments->save();
+
+
 
         return redirect("/" . app()->getLocale() . "/my-courses/course/" . $item->id)->with('status', __('default.pages.profile.save_success_message'));
     }
@@ -710,62 +731,13 @@ class CourseController extends Controller
 
     public function getCourseData($lang, Course $course)
     {
-        $a = [['id' => 0, 'name' => "Тема 1", 'order' => 0, 'lessons' => [[
-            'id' => 0,
-            'name' => "\u041A\u0430\u043A \u043F\u0440\u043E\u0445\u043E\u0434\u0438\u0442 \u0434\u0430\u043D\u043D\u044B\u0439 \u043A\u0443\u0440\u0441",
-            'order' => 0,
-            'duration' => 20
-        ]], 'collapsed' => !1]];
         $themes = Theme::where('course_id', '=', $course->id)->with('lessons')->get();
 
         foreach ($themes as $theme) {
             $theme->order = $theme->index_number;
 
-
-            foreach ($theme->lessons as $lesson) {
-                $lesson->order = $lesson->index_number;
-            }
         }
 
-//        [{id: 0, name: "\u0422\u0435\u043C\u0430 1", order: 0, lessons: null, collapsed: !1}, {
-//            id: 1,
-//            name: "\u0422\u0435\u043C\u0430 2",
-//            order: 1,
-//            lessons: [{
-//                id: 0,
-//                name: "\u041A\u0430\u043A \u043F\u0440\u043E\u0445\u043E\u0434\u0438\u0442 \u0434\u0430\u043D\u043D\u044B\u0439 \u043A\u0443\u0440\u0441",
-//                order: 0,
-//                duration: 20
-//            }, {
-//                id: 1,
-//                name: "\u0420\u0430\u0431\u043E\u0447\u0435\u0435 \u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u0441\u0442\u0432\u043E",
-//                order: 1,
-//                duration: 40
-//            }, {id: 2, name: "\u0423\u0440\u043E\u043A 3", order: 2, duration: 25}, {
-//                id: 3,
-//                name: "\u0423\u0440\u043E\u043A 4",
-//                order: 3,
-//                duration: 55
-//            }],
-//            collapsed: !1
-//        }, {id: 2, name: "\u0422\u0435\u043C\u0430 3", order: 2, lessons: null, collapsed: !1}, {
-//            id: 3,
-//            name: "\u0422\u0435\u043C\u0430 4",
-//            order: 3,
-//            lessons: null,
-//            collapsed: !1
-//        }, {id: 4, name: "\u0422\u0435\u043C\u0430 5", order: 4, lessons: null, collapsed: !1}, {
-//            id: 5,
-//            name: "\u0422\u0435\u043C\u0430 6",
-//            order: 5,
-//            lessons: [{id: 0, name: "\u0423\u0440\u043E\u043A 1", order: 0, duration: 30}, {
-//                id: 1,
-//                name: "\u0423\u0440\u043E\u043A 2",
-//                order: 1,
-//                duration: 15
-//            }, {id: 2, name: "\u0423\u0440\u043E\u043A 3", order: 2, duration: 45}],
-//            collapsed: !1
-//        }]
         return $themes;
     }
 }

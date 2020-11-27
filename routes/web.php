@@ -16,6 +16,28 @@ use App\Http\Controllers\App\PageController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Тест
+
+Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
+    Route::group(["namespace" => "Author"], function () {
+//Route::group(['prefix' => '{lang}'], function () {
+        // Получить курс
+        Route::get("/getCourseData/{course}", "TestController@getCourseData");
+
+        // Тема
+        Route::post("/create-theme", "ThemeController@createTheme");
+        Route::post("/edit-theme", "ThemeController@editTheme");
+        Route::delete("/delete-theme", "ThemeController@deleteTheme");
+        Route::post("/move-theme", "ThemeController@moveTheme");
+        // Урок
+        Route::get("/my-courses/course/{item}/theme-{theme}/create-lesson", "LessonController@createLesson");
+        Route::get("/my-courses/course/{course}/theme-{theme}/edit-lesson-{lesson}", "LessonController@editLesson");
+        Route::get("/my-courses/course/{course}/theme-{theme}/view-lesson-{lesson}", "LessonController@editLesson");
+        Route::post("/create-lesson/{course}/{theme}", "LessonController@storeLesson");
+        Route::post("/edit-lesson-{item}", "LessonController@updateLesson");
+        Route::delete("/delete-lesson", "LessonController@deleteLesson");
+        Route::post("/move-lesson", "LessonController@moveLesson");
+    });
 
 
 // Админ панель
@@ -90,7 +112,7 @@ Route::group(["namespace" => "Admin"], function () {
     });
 });
 
-Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
+
     Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
         Route::get("/", "PageController@index");
         // Оплата курса
@@ -122,6 +144,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
         Route::post('/ajax_upload_lesson_another_files', 'AjaxUploadController@ajaxUploadLessonAnotherFiles');
 
     });
+
 
     Route::group(['prefix' => '{lang}'], function () {
 
