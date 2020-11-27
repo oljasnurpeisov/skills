@@ -14,6 +14,7 @@ return [
             'my_courses_title' => 'Мои курсы',
             'create_course' => 'Создать курс',
             'creation_course' => 'Создание курса',
+            'edit_course' => 'Редактирование курса',
             'my_courses' => 'Опубликованные',
             'my_courses_unpublished' => 'Неопубликованные курсы',
             'my_courses_onCheck' => 'На проверке',
@@ -190,6 +191,7 @@ return [
         'profile' => [
             'title' => 'Профиль',
             'email_confirm_error' => 'Чтобы стать автором, подтвердите свой E-mail',
+            'email_confirm_success' => 'Вы успешно подтвердили E-mail',
             'profile_activate_error' => 'У вас пока нет доступа к этому разделу, заполните информацию в профиле.',
             'pay_info_error' => 'Для продолжения работы пожалуйста заполните данные в разделе <a style="color: #2ab5f6" href="/{{$lang}}/profile-pay-information" target="_blank">Профиль - Платежная информация</a>',
             'organization_data' => 'Данные об организации',
@@ -309,7 +311,7 @@ return [
             'register_submit' => 'Зарегистрироваться',
             'is_registered_title' => 'Уже зарегистрированы?',
             'authorization_title' => 'Авторизация',
-            'recovery_pass_success' => 'Новый пароль был отправлен на почту'
+            'recovery_pass_success' => 'Новый пароль был отправлен на почту',
         ],
 
         'index' => [

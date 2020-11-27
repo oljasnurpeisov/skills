@@ -284,7 +284,7 @@
                                        class="btn">{{__('default.pages.courses.publish_title')}}</a>
                                 </div>
                                 <div class="col-auto">
-                                    <a href="#" title="{{__('default.pages.courses.edit_title')}}"
+                                    <a href="/{{$lang}}/my-courses/edit-course/{{$item->id}}" title="{{__('default.pages.courses.edit_title')}}"
                                        class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
                                 </div>
                                 <div class="col-auto">

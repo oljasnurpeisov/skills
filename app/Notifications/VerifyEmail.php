@@ -20,12 +20,14 @@ class VerifyEmail extends VerifyEmailBase
             return call_user_func(static::$toMailCallback, $notifiable);
         }
         return (new MailMessage)
-            ->subject('Verify Email Address')
-            ->line('Please click the button below to verify your email address.')
+            ->greeting(__('auth.pages.greeting'))
+            ->from('info@enbek.kz')
+            ->subject(__('auth.pages.verification_title'))
+            ->line(__('auth.pages.verification_description'))
             ->action(
-                'Verify Email Address',
+                __('auth.pages.verification_title'),
                 $this->verificationUrl($notifiable)
             )
-            ->line('If you did not create an account, no further action is required.');
+            ->line(__('auth.pages.ignore_message'));
     }
 }

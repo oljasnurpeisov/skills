@@ -55,7 +55,6 @@
                     {{ session('recovery_pass') }}
                 </div>
             @endif
-
             <div class="text-center">
                 <div class="form-group">
                     <button type="submit" class="btn">{{__('default.pages.auth.auth_title')}}</button>
@@ -192,7 +191,7 @@
                     :message
                 </div>') !!}
             </div>
-
+            <br>
             <div class="text-center">
                 <div class="form-group">
                     <button type="submit" class="btn">{{__('default.pages.auth.register_submit')}}</button>

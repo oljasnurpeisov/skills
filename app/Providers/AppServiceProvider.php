@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
+use App\Mail\EmailVerification;
+use URL;
+use Carbon\Carbon;
+use Config;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,26 +33,6 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-//    {
-//        $lang = ["ru", "kk", "en"];
-//        $currentPath = Request::path();
-//        if (in_array(Request::segment(1), $lang)) {
-//            $locale = Request::segment(1);
-//            $uri = substr($currentPath, 2);
-//        } else {
-//            $locale = "ru";
-//            $uri = $currentPath;
-//        }
-//
-//
-//        App::setLocale($locale);
-//        View::share("uri", $uri);
-//        View::share("lang", $locale);
-//        View::share("title", config("app.name"));
-//        View::share("meta", "");
-//
-//        Schema::defaultStringLength(191);
-//    }
     {
         Schema::defaultStringLength(191);
 
@@ -68,6 +54,19 @@ class AppServiceProvider extends ServiceProvider
             /** @var User $user */
             $user = auth()->user();
             return $user and $user->can($permission);
+        });
+
+        // Override the email notification for verifying email
+        VerifyEmail::toMailUsing(function ($notifiable){
+            $verifyUrl = URL::temporarySignedRoute('verification.verify',
+                Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+                [
+                    'id' => $notifiable->getKey(),
+                    'hash' => sha1($notifiable->getEmailForVerification()),
+                ]
+            );
+            return new EmailVerification($verifyUrl, $notifiable);
+
         });
     }
 }

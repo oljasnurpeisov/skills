@@ -1,579 +1,362 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Laravel</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Styles -->
-    <style>
-        /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
-        html {
-            line-height: 1.15;
-            -webkit-text-size-adjust: 100%
-        }
-
-        body {
-            margin: 0
-        }
-
-        a {
-            background-color: transparent
-        }
-
-        [hidden] {
-            display: none
-        }
-
-        html {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-            line-height: 1.5
-        }
-
-        *, :after, :before {
-            box-sizing: border-box;
-            border: 0 solid #e2e8f0
-        }
-
-        a {
-            color: inherit;
-            text-decoration: inherit
-        }
-
-        svg, video {
-            display: block;
-            vertical-align: middle
-        }
-
-        video {
-            max-width: 100%;
-            height: auto
-        }
-
-        .bg-white {
-            --bg-opacity: 1;
-            background-color: #fff;
-            background-color: rgba(255, 255, 255, var(--bg-opacity))
-        }
-
-        .bg-gray-100 {
-            --bg-opacity: 1;
-            background-color: #f7fafc;
-            background-color: rgba(247, 250, 252, var(--bg-opacity))
-        }
-
-        .border-gray-200 {
-            --border-opacity: 1;
-            border-color: #edf2f7;
-            border-color: rgba(237, 242, 247, var(--border-opacity))
-        }
-
-        .border-t {
-            border-top-width: 1px
-        }
-
-        .flex {
-            display: flex
-        }
-
-        .grid {
-            display: grid
-        }
-
-        .hidden {
-            display: none
-        }
-
-        .items-center {
-            align-items: center
-        }
-
-        .justify-center {
-            justify-content: center
-        }
-
-        .font-semibold {
-            font-weight: 600
-        }
-
-        .h-5 {
-            height: 1.25rem
-        }
-
-        .h-8 {
-            height: 2rem
-        }
-
-        .h-16 {
-            height: 4rem
-        }
-
-        .text-sm {
-            font-size: .875rem
-        }
-
-        .text-lg {
-            font-size: 1.125rem
-        }
-
-        .leading-7 {
-            line-height: 1.75rem
-        }
-
-        .mx-auto {
-            margin-left: auto;
-            margin-right: auto
-        }
-
-        .ml-1 {
-            margin-left: .25rem
-        }
-
-        .mt-2 {
-            margin-top: .5rem
-        }
-
-        .mr-2 {
-            margin-right: .5rem
-        }
-
-        .ml-2 {
-            margin-left: .5rem
-        }
-
-        .mt-4 {
-            margin-top: 1rem
-        }
-
-        .ml-4 {
-            margin-left: 1rem
-        }
-
-        .mt-8 {
-            margin-top: 2rem
-        }
-
-        .ml-12 {
-            margin-left: 3rem
-        }
-
-        .-mt-px {
-            margin-top: -1px
-        }
-
-        .max-w-6xl {
-            max-width: 72rem
-        }
-
-        .min-h-screen {
-            min-height: 100vh
-        }
-
-        .overflow-hidden {
-            overflow: hidden
-        }
-
-        .p-6 {
-            padding: 1.5rem
-        }
-
-        .py-4 {
-            padding-top: 1rem;
-            padding-bottom: 1rem
-        }
-
-        .px-6 {
-            padding-left: 1.5rem;
-            padding-right: 1.5rem
-        }
-
-        .pt-8 {
-            padding-top: 2rem
-        }
-
-        .fixed {
-            position: fixed
-        }
-
-        .relative {
-            position: relative
-        }
-
-        .top-0 {
-            top: 0
-        }
-
-        .right-0 {
-            right: 0
-        }
-
-        .shadow {
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)
-        }
-
-        .text-center {
-            text-align: center
-        }
-
-        .text-gray-200 {
-            --text-opacity: 1;
-            color: #edf2f7;
-            color: rgba(237, 242, 247, var(--text-opacity))
-        }
-
-        .text-gray-300 {
-            --text-opacity: 1;
-            color: #e2e8f0;
-            color: rgba(226, 232, 240, var(--text-opacity))
-        }
-
-        .text-gray-400 {
-            --text-opacity: 1;
-            color: #cbd5e0;
-            color: rgba(203, 213, 224, var(--text-opacity))
-        }
-
-        .text-gray-500 {
-            --text-opacity: 1;
-            color: #a0aec0;
-            color: rgba(160, 174, 192, var(--text-opacity))
-        }
-
-        .text-gray-600 {
-            --text-opacity: 1;
-            color: #718096;
-            color: rgba(113, 128, 150, var(--text-opacity))
-        }
-
-        .text-gray-700 {
-            --text-opacity: 1;
-            color: #4a5568;
-            color: rgba(74, 85, 104, var(--text-opacity))
-        }
-
-        .text-gray-900 {
-            --text-opacity: 1;
-            color: #1a202c;
-            color: rgba(26, 32, 44, var(--text-opacity))
-        }
-
-        .underline {
-            text-decoration: underline
-        }
-
-        .antialiased {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale
-        }
-
-        .w-5 {
-            width: 1.25rem
-        }
-
-        .w-8 {
-            width: 2rem
-        }
-
-        .w-auto {
-            width: auto
-        }
-
-        .grid-cols-1 {
-            grid-template-columns: repeat(1, minmax(0, 1fr))
-        }
-
-        @media (min-width: 640px) {
-            .sm\:rounded-lg {
-                border-radius: .5rem
-            }
-
-            .sm\:block {
-                display: block
-            }
-
-            .sm\:items-center {
-                align-items: center
-            }
-
-            .sm\:justify-start {
-                justify-content: flex-start
-            }
-
-            .sm\:justify-between {
-                justify-content: space-between
-            }
-
-            .sm\:h-20 {
-                height: 5rem
-            }
-
-            .sm\:ml-0 {
-                margin-left: 0
-            }
-
-            .sm\:px-6 {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem
-            }
-
-            .sm\:pt-0 {
-                padding-top: 0
-            }
-
-            .sm\:text-left {
-                text-align: left
-            }
-
-            .sm\:text-right {
-                text-align: right
-            }
-        }
-
-        @media (min-width: 768px) {
-            .md\:border-t-0 {
-                border-top-width: 0
-            }
-
-            .md\:border-l {
-                border-left-width: 1px
-            }
-
-            .md\:grid-cols-2 {
-                grid-template-columns: repeat(2, minmax(0, 1fr))
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .lg\:px-8 {
-                padding-left: 2rem;
-                padding-right: 2rem
-            }
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .dark\:bg-gray-800 {
-                --bg-opacity: 1;
-                background-color: #2d3748;
-                background-color: rgba(45, 55, 72, var(--bg-opacity))
-            }
-
-            .dark\:bg-gray-900 {
-                --bg-opacity: 1;
-                background-color: #1a202c;
-                background-color: rgba(26, 32, 44, var(--bg-opacity))
-            }
-
-            .dark\:border-gray-700 {
-                --border-opacity: 1;
-                border-color: #4a5568;
-                border-color: rgba(74, 85, 104, var(--border-opacity))
-            }
-
-            .dark\:text-white {
-                --text-opacity: 1;
-                color: #fff;
-                color: rgba(255, 255, 255, var(--text-opacity))
-            }
-
-            .dark\:text-gray-400 {
-                --text-opacity: 1;
-                color: #cbd5e0;
-                color: rgba(203, 213, 224, var(--text-opacity))
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <style>
-        body {
-            font-family: 'Nunito';
-        }
-    </style>
-</head>
-<body class="antialiased">
-<div class="container">
-    <br>
-    <nav class="nav nav-pills nav-justified">
-        <a class="nav-link" href="/{{$lang}}/my-courses">{{__('default.pages.courses.my_courses')}}</a>
-        <a class="nav-link"
-           href="/{{$lang}}/my-courses/unpublished">{{__('default.pages.courses.my_courses_unpublished')}}</a>
-        <a class="nav-link" href="/{{$lang}}/my-courses/on-check">{{__('default.pages.courses.my_courses_onCheck')}}</a>
-        <a class="nav-link" href="/{{$lang}}/my-courses/drafts">{{__('default.pages.courses.drafts')}}</a>
-        <a class="nav-link" href="/{{$lang}}/my-courses/deleted">{{__('default.pages.courses.my_courses_deleted')}}</a>
-    </nav>
-    <br>
-    <br>
-    <h2>Редактирование курса</h2>
-    @if (Route::has('login'))
-        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-            @auth
-                <a href="/{{$lang}}/edit_profile" class="text-sm text-gray-700 underline">Профиль</a>|
-                <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
-            @else
-                <a href="/{{$lang}}/login" class="text-sm text-gray-700 underline">Login</a>
-
-                @if (Route::has('register'))
-                    <a href="/{{$lang}}/login" class="ml-4 text-sm text-gray-700 underline">Register</a>
-                @endif
-            @endif
-        </div>
-    @endif
-    <div class="row my-2">
-        <div class="col-lg-8 order-lg-2">
-            <div class="tab-content py-4">
-                <div class="tab-pane active" id="profile">
-                    <form action="/{{$lang}}/my-courses/edit-course/{{$item->id}}" method="POST"
-                          enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="tab-content py-4">
-                            <div class="tab-pane active" id="profile">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <b><label for="name">Название курса *</label></b>
-                                            <input type="text" class="form-control" name="name"
-                                                   placeholder="" value="{{$item->name}}">
+@extends('app.layout.default.template')
+
+@section('content')
+    <main class="main">
+
+
+        <section class="plain">
+            <div class="container">
+                <ul class="breadcrumbs">
+                    <li><a href="/{{$lang}}/my-courses/" title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a></li>
+                    <li><a href="/{{$lang}}/my-courses/course/{{$item->id}}" title="{{$item->name}}">{{$item->name}}</a></li>
+                    <li><span>{{__('default.pages.courses.edit_course')}}</span></li>
+                </ul>
+                <h1 class="title-primary">{{__('default.pages.courses.edit_course')}}</h1>
+
+                <div class="row row--multiline">
+                    <div class="col-md-8">
+                        <form action="">
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.course_name')}}</label>
+                                <input type="text" name="courseName" placeholder="" value="{{$item->name}}" class="input-regular" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">Навыки (мин. 1 навык)</label>
+                                <div class="input-addon">
+                                    <select name="skills[]" placeholder="Выберите навык"
+                                            data-method="getSkillsByData" id="skillsInputTpl" required>
+                                        <option value="9311" selected="selected">{{$item->skills[0]}}</option>
+                                    </select>
+                                    <div class="addon">
+                                        <span class="required">*</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="removable-items">
+                                <div class="form-group">
+                                    <div class="input-addon">
+                                        <select name="skills[]" placeholder="Выберите навык"
+                                                data-method="getSkillsByData">
+                                            <option value="8497" selected="selected">Автоматизация  составления расклада лекал </option>
+                                        </select>
+                                        <div class="addon"><div class="btn-icon small icon-close"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right pull-up">
+                                <a href="#" title="Добавить" class="add-btn" data-duplicate="skillsInputTpl"><span
+                                            class="add-btn__title">Добавить</span><span class="btn-icon small icon-plus"> </span></a>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">Язык курса</label>
+                                <select name="lang" placeholder="Выберите язык" class="selectize-regular" required>
+                                    <option value="Русский">Русский</option>
+                                    <option value="Казахский">Казахский</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox"><input type="checkbox" name="paid"
+                                                               value="true" id="paidCheckbox" checked><span>Платный</span></label>
+                                <label class="checkbox"><input type="checkbox" name="allAvailable"
+                                                               value="true"><span>Все уроки доступны сразу</span></label>
+                                <label class="checkbox"><input type="checkbox" name="poorVision"
+                                                               value="true" data-toggle="poorVision" checked><span>Версия для слабовидящих</span></label>
+                            </div>
+                            <div class="form-group" id="paidFormgroup" style="display:block;">
+                                <label class="form-group__label">Стоимость, тг *</label>
+                                <input type="text" name="price" placeholder="" value="3000" class="input-regular" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">Чему научит курс (макс. 2000 символов) *</label>
+                                <textarea name="aim" class="input-regular tinymce-text-here" required>
+                            <p>Тестовый текст</p>
+                        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">Краткое описание (макс. 200 символов) *</label>
+                                <textarea name="annotation" class="input-regular tinymce-text-here" required>
+                            <p>Тестовый текст</p>
+                        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">Описание (макс. 2000 символов) *</label>
+                                <textarea name="description" class="input-regular tinymce-text-here" required>
+                            <p>Тестовый текст</p>
+                        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">Картинка курса</label>
+                                <div class="avatar course-image dropzone-avatar" id="courseCover"
+                                     data-url="https://dev3.panama.kz/ajaxUploadImageTest" data-maxsize="1"
+                                     data-acceptedfiles="image/*">
+                                    <img src="/assets/img/courses/1.png" data-defaultsrc="/assets/img/course-thumbnail.jpg" class="course-image__preview avatar-preview" alt="">
+                                    <div class="course-image__desc dropzone-default">
+                                        <input type="text" name="avatarPath" class="avatar-path" value="/assets/img/courses/1.png" required="">
+                                        <div class="previews-container">
+                                            <div class="dz-preview dz-image-preview">
+                                                <div class="dz-details">
+                                                    <div class="dz-filename"><span data-dz-name="">1.png</span></div>
+                                                    <div class="dz-size" data-dz-size=""><strong>24</strong> KB</div>
+                                                </div>
+                                                <a href="javascript:undefined;" title="Удалить" class="author-picture__link red" data-dz-remove="">Удалить</a>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Навыки (мин. 1 навык)</label>
-                                            @foreach($current_skills as $current_skill)
-                                                <select class="form-control" name="skills[]">
-                                                    @foreach($skills as $skill)
-                                                        <option value="{{ $skill->id }}"
-                                                                @if($skill->id==$current_skill->id) selected='selected' @endif >{{ $skill->getAttribute('name_'.$lang) ?? $skill->getAttribute('name_ru')}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <br>
-                                            @endforeach
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Язык курса *</label>
-                                            <select class="form-control" name="lang">
-                                                @php($languages = [["Қазақша","0"], ["Русский","1"]])
-                                                @foreach($languages as $key => $language)
-                                                    <option value="{{ $language[1] }}"
-                                                            @if($language[1]==$item->lang) selected='selected' @endif >{{ $language[0] }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id="is_paid"
-                                                   name="is_paid" @if($item->is_paid == 1) checked @endif>
-                                            <label class="form-check-label" for="is_paid">Платный</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id="is_access_all"
-                                                   name="is_access_all" @if($item->is_access_all == 1) checked @endif>
-                                            <label class="form-check-label" for="is_access_all">Все уроки доступны
-                                                сразу</label>
-                                        </div>
-                                        <div class="form-group">
-                                            <b><label for="name">Стоимость, тг *</label></b>
-                                            <input type="text" class="form-control" name="cost"
-                                                   value="{{$item->cost}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="profit_desc">Чему научит курс *</label>
-                                            <textarea class="form-control" name="profit_desc" id="profit_desc"
-                                                      rows="3">{!! $item->profit_desc !!}</textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="teaser">Краткое описание</label>
-                                            <textarea class="form-control" name="teaser" id="teaser"
-                                                      rows="3">{!! $item->teaser !!}</textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="description">Описание</label>
-                                            <textarea class="form-control" name="description" id="description"
-                                                      rows="3">{!! $item->description !!}</textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="course_includes">В курс входит</label>
-                                            <textarea class="form-control" name="course_includes" id="course_includes"
-                                                      rows="3">{!! $item->course_includes !!}</textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="image">Картинка курса</label>
-                                            <input type="file" id="image" name="image" accept="image/*">
-                                        </div>
-                                        <div class="form-group">
-                                            <b><label for="name">Ссылка на видео курса</label></b>
-                                            @if(!empty($item->youtube_link))
-                                                @foreach(json_decode($item->youtube_link) as $link)
-                                                    <input type="text" class="form-control" name="youtube_link[]"
-                                                           value="{{$link}}">
-                                                    <br>
-                                                @endforeach
-                                                @else
-                                                <input type="text" class="form-control" name="youtube_link[]"
-                                                       value="">
-                                            @endif
-
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="video">Видео файл с устройства</label>
-                                            @if(!empty($item->video))
-                                                @foreach(json_decode($item->video) as $video)
-                                                    <input type="file" id="video" name="video[]" multiple accept="video/*">
-                                                    <video width="400" controls>
-                                                        <source src="{{$video}}" type="video/mp4">
-                                                        Your browser does not support HTML video.
-                                                    </video>
-                                                @endforeach
-                                            @else
-                                                <input type="file" id="video" name="video[]" multiple accept="video/*">
-                                            @endif
-
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="audio">Аудио курса</label>
-                                            <input type="file" id="audio" name="audio[]" multiple accept="audio/*">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Выберите сертификат</label>
-                                            <select class="form-control" name="certificate_id">
-                                                @php($certificates = ["1", "2", "3"])
-                                                @foreach($certificates as $certificate)
-                                                    <option value="{{ $certificate }}"
-                                                            @if($certificate==$item->certificate_id) selected='selected' @endif >{{ $certificate }}</option>
-                                                @endforeach
-                                            </select>
+                                        <div class="dropzone-default__info">PNG, JPG • макс. 1MB</div>
+                                        <div class="course-image__link avatar-pick dropzone-default__link dz-clickable">Выбрать фото</div>
+                                    </div>
+                                    <div class="avatar-preview-template" style="display:none;">
+                                        <div class="dz-preview dz-file-preview">
+                                            <div class="dz-details">
+                                                <div class="dz-filename"><span data-dz-name></span></div>
+                                                <div class="dz-size" data-dz-size></div>
+                                                <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+                                            </div>
+                                            <div class="alert alert-danger"><span data-dz-errormessage> </span></div>
+                                            <a href="javascript:undefined;" title="Удалить" class="author-picture__link red"
+                                               data-dz-remove>Удалить</a>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Сохранить</button>
-                                <!--/row-->
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label class="form-group__label">Ссылка на видео курса</label>
+                                <input type="url" name="video[]" placeholder="" class="input-regular" value="https://www.youtube.com/?gl=RU" id="courseVideo">
+                            </div>
+                            <div class="removable-items">
+                                <div class="form-group">
+                                    <div class="input-addon">
+                                        <input type="url" name="video[]" placeholder="" class="input-regular" value="https://www.youtube.com/?gl=RU">
+                                        <div class="addon"><div class="btn-icon small icon-close"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right pull-up">
+                                <a href="#" title="Добавить" class="add-btn" data-duplicate="courseVideo" data-maxcount="4"><span
+                                            class="add-btn__title">Добавить</span><span class="btn-icon small icon-plus"> </span></a>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">Видео файл с устройства</label>
+                                <div data-url="https://dev3.panama.kz/ajaxUploadFilesTest" data-maxfiles="5"
+                                     data-maxsize="50" data-acceptedfiles=".mp4" id="video"
+                                     class="dropzone-default dropzone-multiple">
+                                    <input type="text" name="localVideo" value="">
+                                    <div class="dropzone-default__info">MP4 • макс. 50MB</div>
+                                    <div class="previews-container">
+                                        <div class="dz-preview dz-image-preview dz-stored">
+                                            <div class="dz-details">
+                                                <input type="text" name="localVideoStored[]" value="/location/example1.mp4" placeholder="">
+                                                <div class="dz-filename"><span data-dz-name="">example1.mp4</span></div>
+                                                <div class="dz-size" data-dz-size=""><strong>57.2</strong> KB</div>
+                                            </div>
+                                            <a href="javascript:undefined;" title="Удалить" class="link red">Удалить</a>
+                                            <a href="javascript:undefined;" title="Восстановить" class="link green" style="display:none;">Восстановить</a>
+                                        </div>
+                                        <div class="dz-preview dz-image-preview dz-stored">
+                                            <div class="dz-details">
+                                                <input type="text" name="localVideoStored[]" value="/location/example2.mp4" placeholder="">
+                                                <div class="dz-filename"><span data-dz-name="">example2.mp4</span></div>
+                                                <div class="dz-size" data-dz-size=""><strong>44.6</strong> KB</div>
+                                            </div>
+                                            <a href="javascript:undefined;" title="Удалить" class="link red">Удалить</a>
+                                            <a href="javascript:undefined;" title="Восстановить" class="link green" style="display:none;">Восстановить</a>
+                                        </div>
+                                    </div>
+                                    <a href="javascript:;" title="Загрузить файлы" class="dropzone-default__link">Добавить файл</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">Аудио курса</label>
+                                <div data-url="https://dev3.panama.kz/ajax_upload_course_audios" data-maxfiles="5"
+                                     data-maxsize="10" data-acceptedfiles=".mp3" id="audio"
+                                     class="dropzone-default dropzone-multiple">
+                                    <input type="text" name="audio" value="">
+                                    <div class="dropzone-default__info">MP3 • макс. 10MB</div>
+                                    <div class="previews-container">
+                                        <div class="dz-preview dz-image-preview dz-stored">
+                                            <div class="dz-details">
+                                                <input type="text" name="audioStored[]" value="/location/example1.mp3" placeholder="">
+                                                <div class="dz-filename"><span data-dz-name="">example1.mp3</span></div>
+                                                <div class="dz-size" data-dz-size=""><strong>57.2</strong> KB</div>
+                                            </div>
+                                            <a href="javascript:undefined;" title="Удалить" class="link red">Удалить</a>
+                                            <a href="javascript:undefined;" title="Восстановить" class="link green" style="display:none;">Восстановить</a>
+                                        </div>
+                                        <div class="dz-preview dz-image-preview dz-stored">
+                                            <div class="dz-details">
+                                                <input type="text" name="audioStored[]" value="/location/example2.mp3" placeholder="">
+                                                <div class="dz-filename"><span data-dz-name="">example2.mp3</span></div>
+                                                <div class="dz-size" data-dz-size=""><strong>44.6</strong> KB</div>
+                                            </div>
+                                            <a href="javascript:undefined;" title="Удалить" class="link red">Удалить</a>
+                                            <a href="javascript:undefined;" title="Восстановить" class="link green" style="display:none;">Восстановить</a>
+                                        </div>
+                                        <div class="dz-preview dz-image-preview dz-stored">
+                                            <div class="dz-details">
+                                                <input type="text" name="audioStored[]" value="/location/example3.mp3" placeholder="">
+                                                <div class="dz-filename"><span data-dz-name="">example3.mp3</span></div>
+                                                <div class="dz-size" data-dz-size=""><strong>78.6</strong> KB</div>
+                                            </div>
+                                            <a href="javascript:undefined;" title="Удалить" class="link red">Удалить</a>
+                                            <a href="javascript:undefined;" title="Восстановить" class="link green" style="display:none;">Восстановить</a>
+                                        </div>
+                                    </div>
+                                    <a href="javascript:;" title="Загрузить файлы" class="dropzone-default__link">Добавить файл</a>
+                                </div>
+                            </div>
+                            <div id="poorVision" style="display: block">
+                                <div class="form-group">
+                                    <label class="form-group__label">Ссылка на видео курса (для слабовидящих)</label>
+                                    <input type="url" name="video1[]" placeholder="" class="input-regular" value="https://www.youtube.com/?gl=RU" id="courseVideo1">
+                                </div>
+                                <div class="removable-items">
+                                    <div class="form-group">
+                                        <div class="input-addon">
+                                            <input type="url" name="video1[]" placeholder="" class="input-regular" value="https://www.youtube.com/?gl=RU">
+                                            <div class="addon"><div class="btn-icon small icon-close"></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-addon">
+                                            <input type="url" name="video1[]" placeholder="" class="input-regular" value="https://www.youtube.com/?gl=RU">
+                                            <div class="addon"><div class="btn-icon small icon-close"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right pull-up">
+                                    <a href="#" title="Добавить" class="add-btn" data-duplicate="courseVideo1" data-maxcount="4"><span
+                                                class="add-btn__title">Добавить</span><span class="btn-icon small icon-plus"> </span></a>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-group__label">Видео файл с устройства (для слабовидящих)</label>
+                                    <div data-url="https://dev3.panama.kz/ajaxUploadFilesTest" data-maxfiles="5"
+                                         data-maxsize="50" data-acceptedfiles=".mp4" id="video2"
+                                         class="dropzone-default dropzone-multiple">
+                                        <input type="hidden" name="localVideo1" value="">
+                                        <div class="dropzone-default__info">MP4 • макс. 50MB</div>
+                                        <div class="previews-container">
+                                            <div class="dz-preview dz-image-preview dz-stored">
+                                                <div class="dz-details">
+                                                    <input type="text" name="localVideo1Stored[]" value="/location/example1.mp4" placeholder="">
+                                                    <div class="dz-filename"><span data-dz-name="">example1.mp4</span></div>
+                                                    <div class="dz-size" data-dz-size=""><strong>57.2</strong> KB</div>
+                                                </div>
+                                                <a href="javascript:undefined;" title="Удалить" class="link red">Удалить</a>
+                                                <a href="javascript:undefined;" title="Восстановить" class="link green" style="display:none;">Восстановить</a>
+                                            </div>
+                                        </div>
+                                        <a href="javascript:;" title="Загрузить файлы" class="dropzone-default__link">Добавить файл</a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-group__label">Аудио курса (для слабовидящих)</label>
+                                    <div data-url="https://dev3.panama.kz/ajax_upload_course_audios" data-maxfiles="5"
+                                         data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
+                                         class="dropzone-default dropzone-multiple">
+                                        <input type="hidden" name="audio1" value="">
+                                        <div class="dropzone-default__info">MP3 • макс. 10MB</div>
+                                        <div class="previews-container">
+                                            <div class="dz-preview dz-image-preview dz-stored">
+                                                <div class="dz-details">
+                                                    <input type="text" name="audio1Stored[]" value="/location/example1.mp3" placeholder="">
+                                                    <div class="dz-filename"><span data-dz-name="">example1.mp3</span></div>
+                                                    <div class="dz-size" data-dz-size=""><strong>57.2</strong> KB</div>
+                                                </div>
+                                                <a href="javascript:undefined;" title="Удалить" class="link red">Удалить</a>
+                                                <a href="javascript:undefined;" title="Восстановить" class="link green" style="display:none;">Восстановить</a>
+                                            </div>
+                                            <div class="dz-preview dz-image-preview dz-stored">
+                                                <div class="dz-details">
+                                                    <input type="text" name="audio1Stored[]" value="/location/example2.mp3" placeholder="">
+                                                    <div class="dz-filename"><span data-dz-name="">example2.mp3</span></div>
+                                                    <div class="dz-size" data-dz-size=""><strong>44.6</strong> KB</div>
+                                                </div>
+                                                <a href="javascript:undefined;" title="Удалить" class="link red">Удалить</a>
+                                                <a href="javascript:undefined;" title="Восстановить" class="link green" style="display:none;">Восстановить</a>
+                                            </div>
+                                        </div>
+                                        <a href="javascript:;" title="Загрузить файлы" class="dropzone-default__link">Добавить файл</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">Выберите сертификат окончания</label>
+                                <div class="row row--multiline">
+                                    <div class="col-auto">
+                                        <div class="image-choice">
+                                            <img src="/assets/img/certificates/1-thumbnail.jpg" class="image-choice__thumbnail"
+                                                 alt="">
+                                            <label class="image-choice__overflow" title="Выбрать">
+                                                <input type="radio" value="1" name="certificate" checked required>
+                                                <i class="icon-checkmark"> </i>
+                                                <a href="/assets/img/certificates/1.jpg" data-fancybox title="Увеличить"
+                                                   class="icon-zoom-in"> </a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="image-choice">
+                                            <img src="/assets/img/certificates/2-thumbnail.jpg" class="image-choice__thumbnail"
+                                                 alt="">
+                                            <label class="image-choice__overflow" title="Выбрать">
+                                                <input type="radio" value="2" name="certificate">
+                                                <i class="icon-checkmark"> </i>
+                                                <a href="/assets/img/certificates/2.jpg" data-fancybox title="Увеличить"
+                                                   class="icon-zoom-in"> </a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="image-choice">
+                                            <img src="/assets/img/certificates/3-thumbnail.jpg" class="image-choice__thumbnail"
+                                                 alt="">
+                                            <label class="image-choice__overflow" title="Выбрать">
+                                                <input type="radio" value="3" name="certificate">
+                                                <i class="icon-checkmark"> </i>
+                                                <a href="/assets/img/certificates/3.jpg" data-fancybox title="Увеличить"
+                                                   class="icon-zoom-in"> </a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="buttons">
+                                <button type="submit" class="btn">Создать</button>
+                                <a href="#" title="Отмена" class="ghost-btn">Отмена</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                </form>
             </div>
-        </div>
-</body>
-<script>
-    $('document').ready(function () {
-        $("#company_logo").change(function () {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#company_logo_img').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(this.files[0]);
-            }
+        </section>
+
+    </main>
+@endsection
+
+@section('scripts')
+    <!--Only this page's scripts-->
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            (function($) {
+                const skillsEl = $('[name="skills[]"]');
+                let paidCheckbox = document.querySelector('#paidCheckbox'),
+                    paidFormgroup = document.querySelector('#paidFormgroup');
+
+                skillsEl.each(function () {
+                    let skillsSelect = new ajaxSelect($(this));
+                });
+
+                paidCheckbox.addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        showEl(paidFormgroup);
+                        paidFormgroup.querySelector('input').setAttribute('required', 'required');
+                    } else {
+                        hideEl(paidFormgroup);
+                        paidFormgroup.querySelector('input').removeAttribute('required');
+                    }
+                })
+            })(jQuery);
         });
-    });
-</script>
-</html>
+    </script>
+    <!---->
+@endsection
+

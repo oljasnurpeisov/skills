@@ -44,6 +44,12 @@ class VerificationController extends Controller
         $this->redirectTo = '/' . app()->getLocale() . '/profile-author-information';
     }
 
+    protected function redirectTo()
+    {
+        session()->flash('status', __('default.pages.profile.email_confirm_success'));
+        return '/' . app()->getLocale() . '/profile-author-information';
+    }
+
     public function verify(Request $request)
     {
         if ($request->route('id') != $request->user()->getKey()) {
