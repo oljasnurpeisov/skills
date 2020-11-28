@@ -8,11 +8,11 @@
             <div class="container">
                 <ul class="breadcrumbs">
                     <li><a href="/{{$lang}}/my-courses/" title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a></li>
+                    <li><a href="/{{$lang}}/my-courses/drafts"
+                           title="{{__('default.pages.courses.drafts')}}">{{__('default.pages.courses.drafts')}}</a>
+                    </li>
                     <li><span>{{__('default.pages.courses.creation_course')}}</span></li>
                 </ul>
-                <li><a href="/{{$lang}}/my-courses/drafts"
-                       title="{{__('default.pages.courses.drafts')}}">{{__('default.pages.courses.drafts')}}</a>
-                </li>
                 <h1 class="title-primary">{{__('default.pages.courses.creation_course')}}</h1>
                 @if (session('failed'))
                     <div class="alert alert-danger">
