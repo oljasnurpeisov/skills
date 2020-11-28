@@ -71,7 +71,7 @@
                                                 <div class="edit-buttons">
                                                     <a href="#" title="{{__('default.pages.courses.delete_title')}}"
                                                        class="btn-icon small btn-icon--ghost icon-trash-can"> </a>
-                                                    <a href="#" title="{{__('default.pages.courses.edit_title')}}"
+                                                    <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework" title="{{__('default.pages.courses.edit_title')}}"
                                                        class="btn-icon small btn-icon--ghost icon-edit"> </a>
                                                 </div>
                                             </div>
@@ -85,7 +85,7 @@
                                                 <div class="edit-buttons">
                                                     <a href="#" title="{{__('default.pages.courses.delete_title')}}"
                                                        class="btn-icon small btn-icon--ghost icon-trash-can"> </a>
-                                                    <a href="#" title="{{__('default.pages.courses.edit_title')}}"
+                                                    <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final-test" title="{{__('default.pages.courses.edit_title')}}"
                                                        class="btn-icon small btn-icon--ghost icon-edit"> </a>
                                                 </div>
                                             </div>

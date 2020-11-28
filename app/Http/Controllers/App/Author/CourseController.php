@@ -453,45 +453,44 @@ class CourseController extends Controller
         if ($request->videos_link != [null]) {
             $item_attachments->videos_link = json_encode($request->videos_link);
         }
-        if ($request->videos_poor_vision_link != [null]) {
+        // Ссылки на видео курса для слабовидящих
+        if ($request->videos_poor_vision_link != []) {
             $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
         }
 
+        $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
+        $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);
+
+        $videos_poor_vision = array_merge(json_decode($request->localVideo1) ?? [], $request->localVideoStored1 ?? []);
+        $audios_poor_vision = array_merge(json_decode($request->localAudio1) ?? [], $request->localAudioStored1 ?? []);
+
         // Видео с устройства
-        if (($request->videos != $item_attachments->videos)) {
-            File::delete(public_path($item_attachments->videos));
-            $a = json_decode($request->localVideo) ?? [];
-            $b = $request->localVideoStored;
-            $videos = array_merge($a,$b);
+        if($videos != $item_attachments->videos){
 
             $item_attachments->videos = $videos;
-        }
-        // Видео с устройства для слабовидящих
-        if (($request->videos_poor_vision != $item_attachments->videos_poor_vision)) {
-            File::delete(public_path($item_attachments->videos_poor_vision));
-            $a = json_decode($request->localVideo1) ?? [];
-            $b = $request->videos_poor_vision;
-            $videos_poor_vision = array_merge($a,$b);
 
-            $item_attachments->videos_poor_vision = $videos_poor_vision;
+            $item_attachments->save();
         }
         // Аудио с устройства
-        if (($request->audios != $item_attachments->audios)) {
-            File::delete(public_path($item_attachments->audios));
-            $a = json_decode($request->audio) ?? [];
-            $b = $request->audios;
-            $audios = array_merge($a,$b);
+        if($audios != $item_attachments->audios){
 
             $item_attachments->audios = $audios;
-        }
-        // Аудио с устройства для слабовидящих
-        if (($request->audios_poor_vision != $item_attachments->audios_poor_vision)) {
-            File::delete(public_path($item_attachments->audios_poor_vision));
-            $a = json_decode($request->audio1) ?? [];
-            $b = $request->audios_poor_vision;
-            $audios_poor_vision = array_merge($a,$b);
 
-            $item_attachments->audios = $audios_poor_vision;
+            $item_attachments->save();
+        }
+        // Видео с устройства (для слабовидящих)
+        if($videos_poor_vision != $item_attachments->videos_poor_vision){
+
+            $item_attachments->videos_poor_vision = $videos_poor_vision;
+
+            $item_attachments->save();
+        }
+        // Аудио с устройства (для слабовидящих)
+        if($audios_poor_vision != $item_attachments->audios_poor_vision){
+
+            $item_attachments->audios_poor_vision = $audios_poor_vision;
+
+            $item_attachments->save();
         }
 
         $item_attachments->save();

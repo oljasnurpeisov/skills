@@ -91,4 +91,12 @@ class Lesson extends Model
     {
         return $this->hasOne(LessonAttachments::class, 'lesson_id', 'id');
     }
+
+    public function getAvatar()
+    {
+        if ($this->image === null) {
+            return '/assets/img/course-thumbnail.jpg';
+        }
+        return $this->image;
+    }
 }

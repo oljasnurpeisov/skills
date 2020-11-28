@@ -1,580 +1,348 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}"/>
-    <title>Laravel</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Styles -->
-    <style>
-        /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
-        html {
-            line-height: 1.15;
-            -webkit-text-size-adjust: 100%
-        }
-
-        body {
-            margin: 0
-        }
-
-        a {
-            background-color: transparent
-        }
-
-        [hidden] {
-            display: none
-        }
-
-        html {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-            line-height: 1.5
-        }
-
-        *, :after, :before {
-            box-sizing: border-box;
-            border: 0 solid #e2e8f0
-        }
-
-        a {
-            color: inherit;
-            text-decoration: inherit
-        }
-
-        svg, video {
-            display: block;
-            vertical-align: middle
-        }
-
-        video {
-            max-width: 100%;
-            height: auto
-        }
-
-        .bg-white {
-            --bg-opacity: 1;
-            background-color: #fff;
-            background-color: rgba(255, 255, 255, var(--bg-opacity))
-        }
-
-        .bg-gray-100 {
-            --bg-opacity: 1;
-            background-color: #f7fafc;
-            background-color: rgba(247, 250, 252, var(--bg-opacity))
-        }
-
-        .border-gray-200 {
-            --border-opacity: 1;
-            border-color: #edf2f7;
-            border-color: rgba(237, 242, 247, var(--border-opacity))
-        }
-
-        .border-t {
-            border-top-width: 1px
-        }
-
-        .flex {
-            display: flex
-        }
-
-        .grid {
-            display: grid
-        }
-
-        .hidden {
-            display: none
-        }
-
-        .items-center {
-            align-items: center
-        }
-
-        .justify-center {
-            justify-content: center
-        }
-
-        .font-semibold {
-            font-weight: 600
-        }
-
-        .h-5 {
-            height: 1.25rem
-        }
-
-        .h-8 {
-            height: 2rem
-        }
-
-        .h-16 {
-            height: 4rem
-        }
-
-        .text-sm {
-            font-size: .875rem
-        }
-
-        .text-lg {
-            font-size: 1.125rem
-        }
-
-        .leading-7 {
-            line-height: 1.75rem
-        }
-
-        .mx-auto {
-            margin-left: auto;
-            margin-right: auto
-        }
-
-        .ml-1 {
-            margin-left: .25rem
-        }
-
-        .mt-2 {
-            margin-top: .5rem
-        }
-
-        .mr-2 {
-            margin-right: .5rem
-        }
-
-        .ml-2 {
-            margin-left: .5rem
-        }
-
-        .mt-4 {
-            margin-top: 1rem
-        }
-
-        .ml-4 {
-            margin-left: 1rem
-        }
-
-        .mt-8 {
-            margin-top: 2rem
-        }
-
-        .ml-12 {
-            margin-left: 3rem
-        }
-
-        .-mt-px {
-            margin-top: -1px
-        }
-
-        .max-w-6xl {
-            max-width: 72rem
-        }
-
-        .min-h-screen {
-            min-height: 100vh
-        }
-
-        .overflow-hidden {
-            overflow: hidden
-        }
-
-        .p-6 {
-            padding: 1.5rem
-        }
-
-        .py-4 {
-            padding-top: 1rem;
-            padding-bottom: 1rem
-        }
-
-        .px-6 {
-            padding-left: 1.5rem;
-            padding-right: 1.5rem
-        }
-
-        .pt-8 {
-            padding-top: 2rem
-        }
-
-        .fixed {
-            position: fixed
-        }
-
-        .relative {
-            position: relative
-        }
-
-        .top-0 {
-            top: 0
-        }
-
-        .right-0 {
-            right: 0
-        }
-
-        .shadow {
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)
-        }
-
-        .text-center {
-            text-align: center
-        }
-
-        .text-gray-200 {
-            --text-opacity: 1;
-            color: #edf2f7;
-            color: rgba(237, 242, 247, var(--text-opacity))
-        }
-
-        .text-gray-300 {
-            --text-opacity: 1;
-            color: #e2e8f0;
-            color: rgba(226, 232, 240, var(--text-opacity))
-        }
-
-        .text-gray-400 {
-            --text-opacity: 1;
-            color: #cbd5e0;
-            color: rgba(203, 213, 224, var(--text-opacity))
-        }
-
-        .text-gray-500 {
-            --text-opacity: 1;
-            color: #a0aec0;
-            color: rgba(160, 174, 192, var(--text-opacity))
-        }
-
-        .text-gray-600 {
-            --text-opacity: 1;
-            color: #718096;
-            color: rgba(113, 128, 150, var(--text-opacity))
-        }
-
-        .text-gray-700 {
-            --text-opacity: 1;
-            color: #4a5568;
-            color: rgba(74, 85, 104, var(--text-opacity))
-        }
-
-        .text-gray-900 {
-            --text-opacity: 1;
-            color: #1a202c;
-            color: rgba(26, 32, 44, var(--text-opacity))
-        }
-
-        .underline {
-            text-decoration: underline
-        }
-
-        .antialiased {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale
-        }
-
-        .w-5 {
-            width: 1.25rem
-        }
-
-        .w-8 {
-            width: 2rem
-        }
-
-        .w-auto {
-            width: auto
-        }
-
-        .grid-cols-1 {
-            grid-template-columns: repeat(1, minmax(0, 1fr))
-        }
-
-        @media (min-width: 640px) {
-            .sm\:rounded-lg {
-                border-radius: .5rem
-            }
-
-            .sm\:block {
-                display: block
-            }
-
-            .sm\:items-center {
-                align-items: center
-            }
-
-            .sm\:justify-start {
-                justify-content: flex-start
-            }
-
-            .sm\:justify-between {
-                justify-content: space-between
-            }
-
-            .sm\:h-20 {
-                height: 5rem
-            }
-
-            .sm\:ml-0 {
-                margin-left: 0
-            }
-
-            .sm\:px-6 {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem
-            }
-
-            .sm\:pt-0 {
-                padding-top: 0
-            }
-
-            .sm\:text-left {
-                text-align: left
-            }
-
-            .sm\:text-right {
-                text-align: right
-            }
-        }
-
-        @media (min-width: 768px) {
-            .md\:border-t-0 {
-                border-top-width: 0
-            }
-
-            .md\:border-l {
-                border-left-width: 1px
-            }
-
-            .md\:grid-cols-2 {
-                grid-template-columns: repeat(2, minmax(0, 1fr))
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .lg\:px-8 {
-                padding-left: 2rem;
-                padding-right: 2rem
-            }
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .dark\:bg-gray-800 {
-                --bg-opacity: 1;
-                background-color: #2d3748;
-                background-color: rgba(45, 55, 72, var(--bg-opacity))
-            }
-
-            .dark\:bg-gray-900 {
-                --bg-opacity: 1;
-                background-color: #1a202c;
-                background-color: rgba(26, 32, 44, var(--bg-opacity))
-            }
-
-            .dark\:border-gray-700 {
-                --border-opacity: 1;
-                border-color: #4a5568;
-                border-color: rgba(74, 85, 104, var(--border-opacity))
-            }
-
-            .dark\:text-white {
-                --text-opacity: 1;
-                color: #fff;
-                color: rgba(255, 255, 255, var(--text-opacity))
-            }
-
-            .dark\:text-gray-400 {
-                --text-opacity: 1;
-                color: #cbd5e0;
-                color: rgba(203, 213, 224, var(--text-opacity))
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <style>
-        body {
-            font-family: 'Nunito';
-        }
-    </style>
-</head>
-<body class="antialiased">
-<div class="container">
-    <br>
-    <nav class="nav nav-pills nav-justified">
-        <a class="nav-link" href="/{{$lang}}/my-courses">{{__('default.pages.courses.my_courses')}}</a>
-        <a class="nav-link"
-           href="/{{$lang}}/my-courses/unpublished">{{__('default.pages.courses.my_courses_unpublished')}}</a>
-        <a class="nav-link" href="/{{$lang}}/my-courses/on-check">{{__('default.pages.courses.my_courses_onCheck')}}</a>
-        <a class="nav-link" href="/{{$lang}}/my-courses/drafts">{{__('default.pages.courses.drafts')}}</a>
-        <a class="nav-link" href="/{{$lang}}/my-courses/deleted">{{__('default.pages.courses.my_courses_deleted')}}</a>
-    </nav>
-    @if (Route::has('login'))
-        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-            @auth
-                <a href="/{{$lang}}/edit_profile" class="text-sm text-gray-700 underline">Профиль</a>|
-                <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
-            @else
-                <a href="/{{$lang}}/login" class="text-sm text-gray-700 underline">Login</a>
-
-                @if (Route::has('register'))
-                    <a href="/{{$lang}}/login" class="ml-4 text-sm text-gray-700 underline">Register</a>
-                @endif
-            @endif
-        </div>
-    @endif
-    <div class="row my-2">
-        <div class="col-lg-8 order-lg-2">
-            <div class="tab-content py-4">
-                <div class="tab-pane active" id="profile">
-                    <form action="/{{$lang}}/edit-lesson-{{$item->id}}" method="POST" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="tab-content py-4">
-                            <div class="tab-pane active" id="profile">
-                                <input name="course_id" value="{{$course->id}}" hidden>
-                                <h3>Редактирование урока</h3>
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="name">Название урока *</label>
-                                            <input type="text" class="form-control" name="name"
-                                                   placeholder="" value="{{$item->name}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Тип урока</label>
-                                            <select class="form-control" name="type" id="type">
-                                                {{--<option value="0">Теория</option>--}}
-                                                {{--<option value="1">Теория с практическим заданием</option>--}}
-                                                {{--<option value="2">Курсовая работа</option>--}}
-                                                {{--<option value="3">Финальное тестирование</option>--}}
-                                                @foreach($lessons_type as $type)
-                                                    <option value="{{ $type->id }}"
-                                                            @if($type->id==$item->type) selected='selected' @endif >{{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div id="end_lesson_type_block" style="display: none">
-                                            <div class="form-check form-check-inline" id="test_type_block">
-                                                <input class="form-check-input" type="radio" name="end_lesson_type"
-                                                       id="test_lesson_type"
-                                                       value="0">
-                                                <label class="form-check-label" for="inlineRadio1">Тест</label>
-                                            </div>
-                                            <div class="form-check form-check-inline" id="homework_type_block">
-                                                <input class="form-check-input" type="radio" name="end_lesson_type"
-                                                       id="homework_lesson_type"
-                                                       value="1">
-                                                <label class="form-check-label" for="inlineRadio2">Домашнее
-                                                    задание</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="duration">Продолжительность урока, минуты *</label>
-                                            <input type="text" class="form-control" name="duration"
-                                                   placeholder="" value="{{$item->duration}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="image">Картинка урока</label>
-                                            <input type="file" id="image" name="image" accept="image/*">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="profit_desc">Теория *</label>
-                                            <textarea class="form-control" name="theory" id="theory"
-                                                      rows="3">{{$item->theory}}</textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <b><label for="name">Ссылка на видео урока</label></b>
-                                            @if(!empty($item->youtube_link))
-                                                @foreach(json_decode($item->youtube_link) as $link)
-                                                    <input type="text" class="form-control" name="youtube_link[]"
-                                                           value="{{$link}}">
-                                                    <br>
-                                                @endforeach
-                                            @else
-                                                <input type="text" class="form-control" name="youtube_link[]"
-                                                       value="">
-                                            @endif
-
-                                            <br>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="video">Видео файл с устройства</label>
-                                            @if(!empty($item->video))
-                                                @foreach(json_decode($item->video) as $video)
-                                                    <input type="file" id="video" name="video[]" multiple accept="video/*">
-                                                    <video width="400" controls>
-                                                        <source src="{{$video}}" type="video/mp4">
-                                                        Your browser does not support HTML video.
-                                                    </video>
-                                                @endforeach
-                                            @else
-                                                <input type="file" id="video" name="video[]" multiple accept="video/*">
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="audio">Аудио урока</label>
-                                            <input type="file" id="audio" name="audio[]" multiple accept="audio/*">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="another_files">Другие материалы урока</label>
-                                            <input type="file" name="another_files">
-                                        </div>
-
-                                        <div class="form-group" id="test_block"
-                                             @if($item->type == 2 or $item->type == 4) style="display: block"
-                                             @else style="display: none" @endif>
-                                            <label for="test">Тест</label>
-                                            <textarea class="form-control" name="test"
-                                                      rows="3">{{$item->test}}</textarea>
-                                        </div>
-
+@extends('app.layout.default.template')
+
+@section('content')
+    <main class="main">
+
+        <section class="plain">
+            <div class="container">
+                <ul class="breadcrumbs">
+                    <li><a href="/{{$lang}}/my-courses/"
+                           title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
+                    </li>
+                    <li><a href="/{{$lang}}/my-courses/course/{{$course->id}}"
+                           title="{{$course->name}}">{{$course->name}}</a>
+                    <li><span>{{__('default.pages.courses.edit_lesson_title')}}</span></li>
+                </ul>
+                <h1 class="title-primary">{{__('default.pages.courses.edit_lesson_title')}}</h1>
+
+                <div class="row row--multiline">
+                    <div class="col-md-8">
+                        <form action="/{{$lang}}/course-{{$course->id}}/edit-lesson-{{$item->id}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="row row--multiline">
+                                <div class="col-md-8">
+                                    <div class="form-group" id="nameField">
+                                        <label class="form-group__label">{{__('default.pages.lessons.lesson_name')}}
+                                            *</label>
+                                        <input type="text" name="name" placeholder="" class="input-regular"
+                                               value="{{$item->name}}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-group__label">{{__('default.pages.lessons.lesson_type')}}
+                                            *</label>
+                                        <select name="type" class="selectize-regular" id="lessonSelect">
+                                            <option value="theory" {{ ($item->type == 1 ? ' selected' : '') }}>{{__('default.pages.lessons.theory_title')}}</option>
+                                            <option value="practice"{{ ($item->type == 2 ? ' selected' : '') }}>{{__('default.pages.lessons.theory_with_practic_title')}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="practiceTypes" style="display: none;">
+                                        <label class="form-group__label">{{__('default.pages.lessons.headline')}}</label>
+                                        <label class="radio"><input type="radio" name="practiceType"
+                                                                    value="test" {{ ($item->end_lesson_type == 0 ? ' checked' : '') }}><span>{{__('default.pages.lessons.test_title')}}</span></label>
+                                        <label class="radio"><input type="radio" name="practiceType"
+                                                                    value="homework"{{ ($item->end_lesson_type == 1  ? ' checked' : '') }}{{ ($item->end_lesson_type == 2  ? ' checked' : '') }}><span>{{__('default.pages.lessons.homework')}}</span></label>
+                                    </div>
+                                    <div class="form-group" id="durationField">
+                                        <label class="form-group__label">{{__('default.pages.lessons.duration_title')}}
+                                            *</label>
+                                        <input type="number" name="duration" placeholder="" class="input-regular"
+                                               value="{{$item->duration}}" required>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Сохранить</button>
-                                <!--/row-->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-group__label">{{__('default.pages.lessons.lesson_image')}}</label>
+                                        <div class="avatar lesson-image dropzone-avatar" id="lessonCover"
+                                             data-url="/ajax_upload_lesson_image?_token={{ csrf_token() }}"
+                                             data-maxsize="1"
+                                             data-acceptedfiles="image/*">
+                                            <input type="hidden" name="image" class="avatar-path" value="{{$item->image}}">
+                                            <div class="lesson-image__preview">
+                                                <img src="{{$item->getAvatar()}}"
+                                                     class="avatar-preview" alt="">
+                                            </div>
+                                            <div class="lesson-image__desc dropzone-default">
+                                                <div class="previews-container"></div>
+                                                <div class="dropzone-default__info">PNG, JPG
+                                                    • {{__('default.pages.courses.max_file_title')}} 1MB
+                                                </div>
+                                                <div class="lesson-image__link avatar-pick dropzone-default__link">
+                                                    Выбрать
+                                                    фото
+                                                </div>
+                                            </div>
+                                            <div class="avatar-preview-template" style="display:none;">
+                                                <div class="dz-preview dz-file-preview">
+                                                    <div class="dz-details">
+                                                        <div class="dz-filename"><span data-dz-name></span></div>
+                                                        <div class="dz-size" data-dz-size></div>
+                                                        <div class="dz-progress"><span class="dz-upload"
+                                                                                       data-dz-uploadprogress></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="alert alert-danger"><span data-dz-errormessage> </span>
+                                                    </div>
+                                                    <a href="javascript:undefined;"
+                                                       title="{{__('default.pages.courses.delete')}}"
+                                                       class="author-picture__link red"
+                                                       data-dz-remove>{{__('default.pages.courses.delete')}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.lessons.theory_title')}} *</label>
+                                <textarea name="theory" class="input-regular tinymce-here"
+                                          required>{{$item->theory}}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.video_link')}}</label>
+                                @if($item->lesson_attachment->videos_link != null)
+                                    <input type="url" name="videos_link[]" placeholder=""
+                                           class="input-regular"
+                                           value="{{json_decode($item->lesson_attachment->videos_link)[0]}}"
+                                           id="courseVideo">
+                                @else
+                                    <input type="url" name="videos_link[]" placeholder=""
+                                           class="input-regular"
+                                           value="" id="courseVideo">
+                                @endif
+                            </div>
+                            <div class="removable-items">
+                                @if($item->lesson_attachment->videos_link != null)
+                                    @foreach(array_slice(json_decode($item->lesson_attachment->videos_link),1) as $video_link)
+                                        <div class="form-group">
+                                            <div class="input-addon">
+                                                <input type="url" name="videos_link[]" placeholder=""
+                                                       class="input-regular"
+                                                       value="{{$video_link}}">
+                                                <div class="addon">
+                                                    <div class="btn-icon small icon-close"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
+                            <div class="text-right pull-up">
+                                <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"
+                                   data-duplicate="courseVideo" data-maxcount="4"><span
+                                            class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
+                                            class="btn-icon small icon-plus"> </span></a>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.video_local')}}</label>
+                                <div data-url="/ajax_upload_lesson_videos?_token={{ csrf_token() }}"
+                                     data-maxfiles="5"
+                                     data-maxsize="50" data-acceptedfiles=".mp4" id="video2"
+                                     class="dropzone-default dropzone-multiple">
+                                    <input type="hidden" name="localVideo" value="">
+                                    <div class="dropzone-default__info">MP4
+                                        • {{__('default.pages.courses.max_file_title')}} 50MB
+                                    </div>
+                                    <div class="previews-container">
+                                        @if($item->lesson_attachment->videos != null)
+                                            @foreach(json_decode($item->lesson_attachment->videos) as $video)
+                                                <div class="dz-preview dz-image-preview dz-stored">
+                                                    <div class="dz-details">
+                                                        <input type="text" name="localVideoStored[]"
+                                                               value="{{$video}}" placeholder="">
+                                                        <div class="dz-filename"><span
+                                                                    data-dz-name="">{{basename($video)}}</span>
+                                                        </div>
+                                                        <div class="dz-size" data-dz-size=""><strong>57.2</strong>
+                                                            KB
+                                                        </div>
+                                                    </div>
+                                                    <a href="javascript:undefined;"
+                                                       title="{{__('default.pages.courses.delete')}}"
+                                                       class="link red">{{__('default.pages.courses.delete')}}</a>
+                                                    <a href="javascript:undefined;"
+                                                       title="{{__('default.pages.courses.reestablish')}}"
+                                                       class="link green"
+                                                       style="display:none;">{{__('default.pages.courses.reestablish')}}</a>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <a href="javascript:;"
+                                       title="{{__('default.pages.courses.add_file_btn_title')}}{{__('default.pages.courses.add_file_btn_title')}}"
+                                       class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.course_audio')}}</label>
+                                <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}" data-maxfiles="5"
+                                     data-maxsize="10" data-acceptedfiles=".mp3" id="audio"
+                                     class="dropzone-default dropzone-multiple">
+                                    <input type="text" name="localAudio" value="">
+                                    <div class="dropzone-default__info">MP3
+                                        • {{__('default.pages.courses.max_file_title')}} 10MB
+                                    </div>
+                                    <div class="previews-container">
+                                        @if($item->lesson_attachment->audios != null)
+                                            @foreach(json_decode($item->lesson_attachment->audios) as $audio)
+                                                <div class="dz-preview dz-image-preview dz-stored">
+                                                    <div class="dz-details">
+                                                        <input type="text" name="localAudioStored[]"
+                                                               value="{{$audio}}"
+                                                               placeholder="">
+                                                        <div class="dz-filename"><span
+                                                                    data-dz-name="">{{basename($audio)}}</span>
+                                                        </div>
+                                                        <div class="dz-size" data-dz-size=""><strong>57.2</strong> KB
+                                                        </div>
+                                                    </div>
+                                                    <a href="javascript:undefined;"
+                                                       title="{{__('default.pages.courses.delete')}}"
+                                                       class="link red">{{__('default.pages.courses.delete')}}</a>
+                                                    <a href="javascript:undefined;"
+                                                       title="{{__('default.pages.courses.reestablish')}}"
+                                                       class="link green"
+                                                       style="display:none;">{{__('default.pages.courses.reestablish')}}</a>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <a href="javascript:;" title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                       class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments')}}</label>
+                                <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}" data-maxfiles="20"
+                                     data-maxsize="20"
+                                     data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg, .rar, .zip, .7z, .mp3, .mp4, .avi, .mov"
+                                     id="documents-dropzone"
+                                     class="dropzone-default dropzone-multiple">
+                                    <input type="text" name="localDocuments" value="">
+                                    <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX, PPTX, PNG, JPG,
+                                        RAR,
+                                        ZIP, 7z, MP3, MP4, AVI, MOV • {{__('default.pages.courses.max_file_title')}} 20
+                                        MB
+                                    </div>
+                                    <div class="previews-container">
+                                        @if($item->lesson_attachment->another_files != null)
+                                            @foreach(json_decode($item->lesson_attachment->another_files) as $file)
+                                                <div class="dz-preview dz-image-preview dz-stored">
+                                                    <div class="dz-details">
+                                                        <input type="text" name="localDocuments1[]"
+                                                               value="{{$file}}"
+                                                               placeholder="">
+                                                        <div class="dz-filename"><span
+                                                                    data-dz-name="">{{basename($file)}}</span>
+                                                        </div>
+                                                        <div class="dz-size" data-dz-size=""><strong>57.2</strong> KB
+                                                        </div>
+                                                    </div>
+                                                    <a href="javascript:undefined;"
+                                                       title="{{__('default.pages.courses.delete')}}"
+                                                       class="link red">{{__('default.pages.courses.delete')}}</a>
+                                                    <a href="javascript:undefined;"
+                                                       title="{{__('default.pages.courses.reestablish')}}"
+                                                       class="link green"
+                                                       style="display:none;">{{__('default.pages.courses.reestablish')}}</a>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <a href="javascript:;" title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                       class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                </div>
+                            </div>
+{{--                            @if($course->is_poor_vision == true)--}}
+                                @include('app.pages.author.courses.components.lesson.poor_vision_lesson_edit',['item' => $item])
+{{--                            @endif--}}
+                            <div id="optionalFields">
+{{--                                @if($item->end_lesson_type == 1)--}}
+                                    <div id="homework" @if($item->end_lesson_type == 1) style="display: block" @else style="display: none" @endif>
+                                        <div class="form-group">
+                                            <label class="form-group__label">{{__('default.pages.lessons.homework')}}
+                                                *</label>
+                                            <textarea name="homework" class="input-regular tinymce-here"
+                                                      required>{{$item->practice}}</textarea>
+                                        </div>
+                                    </div>
+{{--                                @elseif($item->end_lesson_type == 0)--}}
+                                    @include('app.pages.author.courses.components.lesson.test_lesson_edit',['item' => $item])
+{{--                                @endif--}}
+                            </div>
+
+                            <div class="buttons">
+                                <button type="submit" class="btn">{{__('default.pages.courses.save_title')}}</button>
+                                <a href="/{{$lang}}/my-courses/course/{{$course->id}}" title="{{__('default.pages.courses.cancel_title')}}" class="ghost-btn">{{__('default.pages.courses.cancel_title')}}</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+@endsection
+
+@section('scripts')
+    <!--Only this page's scripts-->
+    <script src="/assets/js/lesson-create.js"></script>
+    <script src="/assets/js/test-constructor.js"></script>
+    <script>
+        let textAnswerTpl = `<div class="form-group">
+                            <div class="input-addon">
+                                <input type="text" name="$answersName"
+                                       placeholder="{{__('default.pages.lessons.input_answer_title')}}"
+                                       class="input-regular small" required>
+                                <div class="addon small">
+                                    <span class="required">*</span>
+                                </div>
+                            </div>
+                        </div>`;
+        let picAnswerTpl = `<div class="form-group">
+                        <div class="input-addon">
+                            <div data-url="/ajax_upload_test_images?_token={{ csrf_token() }}" data-maxfiles="1"
+                                 data-maxsize="1" data-acceptedfiles="image/*"
+                                 class="dropzone-default dropzone-multiple">
+                                <input type="text" name="$answersName" value="" required>
+                                <div class="dropzone-default__info">JPG, PNG • {{__('default.pages.courses.max_file_title')}} 1MB</div>
+                                <a href="javascript:;" title="{{__('default.pages.courses.add_file_btn_title')}}" class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                <div class="previews-container"></div>
+                            </div>
+                            <div class="addon small">
+                                <span class="required">*</span>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>`;
+        let questionTpl = `<div class="question form-group">
+                            <label class="form-group__label">{{__('default.pages.lessons.question_title')}}</label>
+                            <div class="input-addon">
+                                <div>
+                                    <div class="form-group">
+                                        <textarea name="$questionName" class="input-regular tinymce-here question-text"
+                                                  placeholder="{{__('default.pages.lessons.question_text')}}" required></textarea>
+                                    </div>
+                                    <div class="answers-bar">
+                                        <span>{{__('default.pages.lessons.answers_title')}}</span>
+                                        <label class="checkbox"><input type="checkbox" name="isPictures"
+                                                                       value="true"><span>{{__('default.pages.lessons.pictures_type_title')}}</span></label>
+                                    </div>
+                                    <div class="answers">
 
+                                    </div>
+                                    <div class="text-right">
+                                        <div title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"><span
+                                                class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
+                                                class="btn-icon extra-small icon-plus"> </span></div>
+                                    </div>
+                                </div>
+                                <div class="addon addon-btn">
 
-            </div>
-        </div>
+                                </div>
+                            </div>
+                        </div>`;
 
-    </div>
-</div>
-<script>
-    $(document).ready(function () {
-        $('#type').on('change', function () {
-            if (this.value == '0' || this.value == '2') {
-                $("#end_lesson_type_block").hide();
-                $('#test_lesson_type').attr('checked', false);
-                $("#test_block").hide();
-            }
-            else {
-                $("#end_lesson_type_block").show();
-                $('#test_lesson_type').attr('checked', true);
-                $("#test_block").show();
-            }
-        });
-    });
-    $('#test_lesson_type').on("change", function () {
-        if ($('#test_lesson_type').attr('checked', true)) {
-            $('#homework_lesson_type').attr('checked', false);
-            $("#test_block").show();
-        }
-    });
-    $('#homework_lesson_type').on("change", function () {
-        if ($('#homework_lesson_type').attr('checked', true)) {
-            $('#test_lesson_type').attr('checked', false);
-            $("#test_block").hide();
-        }
-    });
+        let newTextConstructor = new TestConstructor({textAnswerTpl, picAnswerTpl, questionTpl});
+    </script>
+    <!---->
+@endsection
 
-</script>
-</body>
-</html>

@@ -36,13 +36,16 @@ class ThemeController extends Controller
         return $theme->id;
     }
 
-    public function editTheme($lang, Request $request)
+    public function editTheme(Request $request)
     {
         $theme = Theme::where('id', '=', $request->theme_id)->first();
 
         $theme->name = $request->theme_name;
         $theme->save();
 
+        $messages = ["title" => __('default.pages.courses.edit_theme_title'), "body" => __('default.pages.courses.edit_theme_success')];
+
+        return $messages;
     }
 
     public function deleteTheme(Request $request)
@@ -57,6 +60,11 @@ class ThemeController extends Controller
             $theme->index_number = $key;
             $theme->save();
         }
+
+
+        $messages = ["title" => __('default.pages.courses.delete_theme_title'), "body" => __('default.pages.courses.delete_theme_success')];
+
+        return $messages;
     }
 
     public function moveTheme(Request $request){

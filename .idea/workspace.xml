@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/components/breadcrumb_course_type.blade.php" afterDir="false" />
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="Merge branch 'develop' of https://gitlab.com/panamadc/enbek-backend into develop&#10;&#10;-minor fix">
+      <change afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/components/lesson/poor_vision_lesson_edit.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/components/lesson/test_lesson_edit.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_final_test.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/js/ajax-select-old.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ajax-select-old.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/layout/default/components/scripts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/scripts.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/LessonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/LessonController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/ThemeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/ThemeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Lesson.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Lesson.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/course-edit.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/course-edit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_coursework.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_coursework.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_final_test.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_final_test.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_lesson.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_lesson.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/profile/profile_pay_information.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/profile/profile_pay_information.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_course.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_course.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_coursework.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_coursework.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_lesson.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_lesson.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,19 +211,19 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\libs" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\css" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\img" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\OpenServer\domains\enbek-backend\resources\views\app\pages\author\courses\components\lesson" />
       <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
       <recent name="F:\OpenServer\domains\enbek-backend\resources\views\app\layout" />
       <recent name="C:\Users\Виталий\PhpstormProjects\enbek\app\Http\Controllers\App\Student" />
       <recent name="C:\Users\Виталий\PhpstormProjects\enbek\app\Http\Controllers\App\General" />
-      <recent name="C:\Users\Виталий\PhpstormProjects\enbek\app\Http\Controllers\App\Author" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
+      <recent name="F:\OpenServer\domains\enbek-backend\resources\lang\ru" />
+      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\libs" />
+      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\css" />
+      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\img" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -258,14 +265,8 @@
       <workItem from="1606317921029" duration="18258000" />
       <workItem from="1606337786497" duration="463000" />
       <workItem from="1606338276661" duration="81807000" />
-      <workItem from="1606470535109" duration="9855000" />
-    </task>
-    <task id="LOCAL-00007" summary="- add course payment">
-      <created>1604530461214</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1604530461214</updated>
+      <workItem from="1606470535109" duration="22210000" />
+      <workItem from="1606497435169" duration="36420000" />
     </task>
     <task id="LOCAL-00008" summary="- add skills link to catalog">
       <created>1604556933831</created>
@@ -603,7 +604,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606478962796</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="Merge branch 'develop' of https://gitlab.com/panamadc/enbek-backend into develop&#10;&#10;-minor fix">
+      <created>1606480459377</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1606480459378</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TodoView">
@@ -655,6 +663,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="444" y="93" key="#Options/0.0.1536.824@0.0.1536.824" timestamp="1605513997949" />
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606540473321">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1606540473321" />
     <state x="509" y="214" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606148927358">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -663,10 +675,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1606405066602" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1606480227312">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1606480486855">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606480227312" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606480486855" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -679,22 +691,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605559122928" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1606451010488">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1606480477896">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606451010488" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606480477896" />
     <state x="572" y="146" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1605561054285">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="572" y="146" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.1536.824@0.0.1536.824" timestamp="1605561054285" />
-    <state x="597" y="23" width="579" height="801" key="find.popup" timestamp="1606480124411">
+    <state x="597" y="23" width="579" height="801" key="find.popup" timestamp="1606500295182">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="597" y="23" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1606480124411" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1606385417811">
+    <state x="597" y="23" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1606500295182" />
+    <state x="425" y="187" key="run.anything.popup" timestamp="1606515511598">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1606385417811" />
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1606515511598" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1606393380390">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

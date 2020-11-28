@@ -243,7 +243,7 @@ Route::group(["namespace" => "Admin"], function () {
                         Route::get("/my-courses/course/{course}/theme-{theme}/edit-lesson-{lesson}", "LessonController@editLesson");
                         Route::get("/my-courses/course/{course}/theme-{theme}/view-lesson-{lesson}", "LessonController@editLesson");
                         Route::post("/create-lesson/{course}/{theme}", "LessonController@storeLesson");
-                        Route::post("/edit-lesson-{item}", "LessonController@updateLesson");
+                        Route::post("/course-{course}/edit-lesson-{item}", "LessonController@updateLesson");
                         Route::delete("/delete-lesson", "LessonController@deleteLesson");
                         Route::post("/move-lesson", "LessonController@moveLesson");
                         // Курсовая работа
@@ -254,6 +254,8 @@ Route::group(["namespace" => "Admin"], function () {
                         // Финальное тестирование
                         Route::get("/my-courses/course/{item}/create-final-test", "LessonController@createFinalTest");
                         Route::post("/my-courses/course/{course}/create-final-test", "LessonController@storeFinalTest");
+                        Route::get("/my-courses/course/{course}/edit-final-test", "LessonController@editFinalTest");
+                        Route::post("/my-courses/course/{course}/edit-final-test", "LessonController@updateFinalTest");
                         // Черновики
                         Route::get("/my-courses/drafts", "CourseController@myCourses");
                         // Неопубликованные курсы

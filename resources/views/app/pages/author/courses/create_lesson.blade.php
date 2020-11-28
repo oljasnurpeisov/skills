@@ -125,9 +125,9 @@
                                      class="dropzone-default dropzone-multiple">
                                     <input type="hidden" name="another_files" value="">
                                     <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX, PPTX, PNG, JPG, RAR,
-                                        ZIP, 7z, MP3, MP4, AVI, MOV • макс. 20 MB
+                                        ZIP, 7z, MP3, MP4, AVI, MOV • {{__('default.pages.courses.max_file_title')}} 20 MB
                                     </div>
-                                    <a href="javascript:;" title="{{__('default.pages.courses.max_file_title')}}" class="dropzone-default__link">{{__('default.pages.courses.max_file_title')}}</a>
+                                    <a href="javascript:;" title="{{__('default.pages.courses.add_file_btn_title')}}" class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                     <div class="previews-container"></div>
                                 </div>
                             </div>
@@ -206,27 +206,27 @@
                                 </div>
                                 <div id="test" style="display: none;">
                                     <div class="test-constructor">
-                                        <div class="title-secondary">Тест</div>
+                                        <div class="title-secondary">{{__('default.pages.lessons.test_title')}}</div>
                                         <div class="questions" id="questions">
                                             <div class="question form-group">
-                                                <label class="form-group__label">Вопрос</label>
+                                                <label class="form-group__label">{{__('default.pages.lessons.question_title')}}</label>
                                                 <div class="input-addon">
                                                     <div>
                                                         <div class="form-group">
                                             <textarea name="questions[1]" class="input-regular tinymce-here question-text"
-                                                      placeholder="Текст вопроса" required></textarea>
+                                                      placeholder="{{__('default.pages.lessons.question_text')}}" required></textarea>
                                                         </div>
                                                         <div class="answers-bar">
-                                                            <span>Ответы</span>
+                                                            <span>{{__('default.pages.lessons.answers_title')}}</span>
                                                             <label class="checkbox"><input type="checkbox" name="isPictures"
-                                                                                           value="true"><span>В виде картинок</span></label>
+                                                                                           value="true"><span>{{__('default.pages.lessons.pictures_type_title')}}</span></label>
                                                         </div>
                                                         <div class="answers-wrapper">
                                                             <div class="answers">
                                                                 <div class="form-group green">
                                                                     <div class="input-addon">
                                                                         <input type="text" name="answers[1][]"
-                                                                               placeholder="Введите правильный вариант ответа"
+                                                                               placeholder="{{__('default.pages.lessons.right_answer_title')}}"
                                                                                class="input-regular small" required>
                                                                         <div class="addon small">
                                                                             <span class="required">*</span>
@@ -236,7 +236,7 @@
                                                                 <div class="form-group">
                                                                     <div class="input-addon">
                                                                         <input type="text" name="answers[1][]"
-                                                                               placeholder="Введите вариант ответа"
+                                                                               placeholder="{{__('default.pages.lessons.input_answer_title')}}"
                                                                                class="input-regular small" required>
                                                                         <div class="addon small">
                                                                             <span class="required">*</span>
@@ -246,8 +246,8 @@
                                                             </div>
 
                                                             <div class="text-right">
-                                                                <div title="Добавить" class="add-btn"><span
-                                                                            class="add-btn__title">Добавить</span><span
+                                                                <div title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"><span
+                                                                            class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
                                                                             class="btn-icon extra-small icon-plus"> </span></div>
                                                             </div>
                                                         </div>
@@ -258,21 +258,21 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <a href="#" title="Добавить вопрос" class="btn small" id="addQuestion">Добавить вопрос</a>
+                                        <a href="#" title="{{__('default.pages.lessons.add_question')}}" class="btn small" id="addQuestion">{{__('default.pages.lessons.add_question')}}</a>
                                         <div class="test-constructor__info">
                                             <div class="row row--multiline">
                                                 <div class="col-auto">
-                                                    <div class="text">Всего вопросов: <span id="questionsCount">1</span></div>
+                                                    <div class="text">{{__('default.pages.lessons.questions_count')}}: <span id="questionsCount">1</span></div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <div class="passing-score">
-                                                        <span class="text">Проходной балл</span>
+                                                        <span class="text">{{__('default.pages.lessons.passing_score')}}</span>
                                                         <input id="passingScore" type="text" name="passingScore" class="input-regular small" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <label class="checkbox small"><input type="checkbox" name="mixAnswers"
-                                                                                         value="true" checked><span>Перемешать ответы</span></label>
+                                                                                         value="true" checked><span>{{__('default.pages.lessons.mix_answers')}}</span></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -301,7 +301,7 @@
         let textAnswerTpl = `<div class="form-group">
                             <div class="input-addon">
                                 <input type="text" name="$answersName"
-                                       placeholder="Введите вариант ответа"
+                                       placeholder="{{__('default.pages.lessons.input_answer_title')}}"
                                        class="input-regular small" required>
                                 <div class="addon small">
                                     <span class="required">*</span>
@@ -310,13 +310,12 @@
                         </div>`;
         let picAnswerTpl = `<div class="form-group">
                         <div class="input-addon">
-                            <div data-url="https://dev3.panama.kz/ajaxUploadFilesTest" data-maxfiles="1"
+                            <div data-url="/ajax_upload_test_images?_token={{ csrf_token() }}" data-maxfiles="1"
                                  data-maxsize="1" data-acceptedfiles="image/*"
                                  class="dropzone-default dropzone-multiple">
                                 <input type="text" name="$answersName" value="" required>
-                                <div class="dropzone-default__info">JPG, PNG • макс. 1MB</div>
-                                <a href="javascript:;" title="Загрузить файлы" class="dropzone-default__link">Добавить
-                                    файлы</a>
+                                <div class="dropzone-default__info">JPG, PNG • {{__('default.pages.courses.max_file_title')}} 1MB</div>
+                                <a href="javascript:;" title="{{__('default.pages.courses.add_file_btn_title')}}" class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                 <div class="previews-container"></div>
                             </div>
                             <div class="addon small">
@@ -325,24 +324,24 @@
                         </div>
                     </div>`;
         let questionTpl = `<div class="question form-group">
-                            <label class="form-group__label">Вопрос</label>
+                            <label class="form-group__label">{{__('default.pages.lessons.question_title')}}</label>
                             <div class="input-addon">
                                 <div>
                                     <div class="form-group">
                                         <textarea name="$questionName" class="input-regular tinymce-here question-text"
-                                                  placeholder="Текст вопроса" required></textarea>
+                                                  placeholder="{{__('default.pages.lessons.question_text')}}" required></textarea>
                                     </div>
                                     <div class="answers-bar">
-                                        <span>Ответы</span>
+                                        <span>{{__('default.pages.lessons.answers_title')}}</span>
                                         <label class="checkbox"><input type="checkbox" name="isPictures"
-                                                                       value="true"><span>В виде картинок</span></label>
+                                                                       value="true"><span>{{__('default.pages.lessons.pictures_type_title')}}</span></label>
                                     </div>
                                     <div class="answers">
 
                                     </div>
                                     <div class="text-right">
-                                        <div title="Добавить" class="add-btn"><span
-                                                class="add-btn__title">Добавить</span><span
+                                        <div title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"><span
+                                                class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
                                                 class="btn-icon extra-small icon-plus"> </span></div>
                                     </div>
                                 </div>
