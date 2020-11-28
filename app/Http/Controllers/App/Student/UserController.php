@@ -28,6 +28,7 @@ class UserController extends Controller
 
     public function student_profile()
     {
+        return redirect("/", 302);
         $item = StudentInformation::where('user_id', '=', Auth::user()->id)->first();
         return view("app.pages.student.profile.student_profile", [
             "item" => $item
@@ -132,7 +133,8 @@ class UserController extends Controller
             Auth::login($user);
         }
 
-        return redirect("/" . app()->getLocale() . "/student-profile");
+        return redirect("/" . app()->getLocale());
+//        return redirect("/" . app()->getLocale() . "/student-profile");
 
     }
 
@@ -172,7 +174,8 @@ class UserController extends Controller
         return $response->getBody();
     }
 
-    public function createTechDialog(User $user){
+    public function createTechDialog(User $user)
+    {
         // Создание диалога с тех.поддержкой
         $tech_support = User::whereHas('roles', function ($q) {
             $q->where('slug', '=', 'tech_support');

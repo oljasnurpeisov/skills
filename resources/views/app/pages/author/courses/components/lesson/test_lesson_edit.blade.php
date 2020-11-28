@@ -9,14 +9,14 @@
                         <div class="input-addon">
                             <div>
                                 <div class="form-group">
-                                            <textarea name="questions[1]"
+                                            <textarea name="questions[{{ $key+1 }}]"
                                                       class="input-regular tinymce-here question-text"
                                                       placeholder="{{__('default.pages.lessons.question_text')}}"
                                                       required>{{$question->name}}</textarea>
                                 </div>
                                 <div class="answers-bar">
                                     <span>{{__('default.pages.lessons.answers_title')}}</span>
-                                    <label class="checkbox"><input type="checkbox" name="isPictures"
+                                    <label class="checkbox"><input type="checkbox" name="isPictures[{{ $key+1 }}]"
                                                                    value="true" {{ ($question->is_pictures == true ? ' checked' : '') }}><span>{{__('default.pages.lessons.pictures_type_title')}}</span></label>
                                 </div>
                                 @if($question->is_pictures == true)
@@ -29,7 +29,7 @@
                                                              data-maxfiles="1" data-maxsize="1"
                                                              data-acceptedfiles="image/*"
                                                              class="dropzone-default dropzone-multiple dz-max-files-reached">
-                                                            <input type="text" name="answers[2][]"
+                                                            <input type="text" name="answers[{{ $key+1 }}][]"
                                                                    value="{{json_decode($answer)[0]}}" required="">
                                                             <div class="dropzone-default__info">JPG, PNG • макс. 1MB
                                                             </div>
@@ -72,7 +72,7 @@
                                         <div class="answers">
                                             <div class="form-group green">
                                                 <div class="input-addon">
-                                                    <input type="text" name="answers[1][]"
+                                                    <input type="text" name="answers[{{ $key+1 }}][]"
                                                            placeholder="{{__('default.pages.lessons.right_answer_title')}}"
                                                            class="input-regular small" value="{{$question->answers[0]}}"
                                                            required>
@@ -84,7 +84,7 @@
                                             @foreach(array_slice($question->answers,1) as $answer)
                                                 <div class="form-group">
                                                     <div class="input-addon">
-                                                        <input type="text" name="answers[1][]"
+                                                        <input type="text" name="answers[{{ $key+1 }}][]"
                                                                placeholder="{{__('default.pages.lessons.input_answer_title')}}"
                                                                class="input-regular small" value="{{$answer}}" required>
                                                         <div class="addon small">
@@ -123,7 +123,7 @@
                             </div>
                             <div class="answers-bar">
                                 <span>{{__('default.pages.lessons.answers_title')}}</span>
-                                <label class="checkbox"><input type="checkbox" name="isPictures"
+                                <label class="checkbox"><input type="checkbox" name="isPictures[1]"
                                                                value="true" ><span>{{__('default.pages.lessons.pictures_type_title')}}</span></label>
                             </div>
                             <div class="answers-wrapper">

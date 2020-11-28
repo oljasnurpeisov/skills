@@ -56,9 +56,6 @@
                                 <div class="dz-filename"><span
                                             data-dz-name="">{{basename($video_poor_vision)}}</span>
                                 </div>
-                                <div class="dz-size" data-dz-size=""><strong>57.2</strong>
-                                    KB
-                                </div>
                             </div>
                             <a href="javascript:undefined;"
                                title="{{__('default.pages.courses.delete')}}"
@@ -95,9 +92,6 @@
                                        value="{{$audio_poor_vision}}" placeholder="">
                                 <div class="dz-filename"><span
                                             data-dz-name="">{{basename($audio_poor_vision)}}</span>
-                                </div>
-                                <div class="dz-size" data-dz-size=""><strong>57.2</strong>
-                                    KB
                                 </div>
                             </div>
                             <a href="javascript:undefined;"
@@ -138,8 +132,6 @@
                                        placeholder="">
                                 <div class="dz-filename"><span
                                             data-dz-name="">{{basename($file)}}</span>
-                                </div>
-                                <div class="dz-size" data-dz-size=""><strong>57.2</strong> KB
                                 </div>
                             </div>
                             <a href="javascript:undefined;"

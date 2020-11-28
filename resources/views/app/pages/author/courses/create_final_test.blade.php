@@ -212,7 +212,7 @@
                                                 </div>
                                                 <div class="answers-bar">
                                                     <span>{{__('default.pages.lessons.answers_title')}}</span>
-                                                    <label class="checkbox"><input type="checkbox" name="isPictures"
+                                                    <label class="checkbox"><input type="checkbox" name="isPictures[1]"
                                                                                    value="true"><span>{{__('default.pages.lessons.pictures_type_title')}}</span></label>
                                                 </div>
                                                 <div class="answers-wrapper">
@@ -315,8 +315,7 @@
                             </div>
                         </div>
                     </div>`;
-        let questionTpl = `<div class="question form-group">
-                            <label class="form-group__label">{{__('default.pages.lessons.question_title')}}</label>
+        let questionTpl = `<label class="form-group__label">{{__('default.pages.lessons.question_title')}}</label>
                             <div class="input-addon">
                                 <div>
                                     <div class="form-group">
@@ -325,7 +324,7 @@
                                     </div>
                                     <div class="answers-bar">
                                         <span>{{__('default.pages.lessons.answers_title')}}</span>
-                                        <label class="checkbox"><input type="checkbox" name="isPictures"
+                                        <label class="checkbox"><input type="checkbox" name="isPictures[]"
                                                                        value="true"><span>{{__('default.pages.lessons.pictures_type_title')}}</span></label>
                                     </div>
                                     <div class="answers">
@@ -340,8 +339,7 @@
                                 <div class="addon addon-btn">
 
                                 </div>
-                            </div>
-                        </div>`;
+                            </div>`;
 
         let newTextConstructor = new TestConstructor({textAnswerTpl, picAnswerTpl, questionTpl});
     </script>

@@ -95,7 +95,7 @@ class Lesson extends Model
     public function getAvatar()
     {
         if ($this->image === null) {
-            return '/assets/img/course-thumbnail.jpg';
+            return '/assets/img/lesson-thumbnail.jpg';
         }
         return $this->image;
     }

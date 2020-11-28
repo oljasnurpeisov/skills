@@ -176,7 +176,6 @@ class LessonController extends Controller
 
     public function updateLesson($lang, Request $request, Course $course, Lesson $item)
     {
-
         $item->name = $request->name;
 
         if ($request->type == 'theory') {
@@ -556,7 +555,7 @@ class LessonController extends Controller
         foreach ($request->questions as $key => $question) {
             $data['questions'][] = array(
                 'name' => $request->questions[$key],
-                'is_pictures' => $request->isPictures[$key] ?? false,
+                'is_pictures' => isset($request->isPictures[$key]),
                 'answers' => $request->answers[$key]
             );
         }
@@ -653,7 +652,7 @@ class LessonController extends Controller
         foreach ($request->questions as $key => $question) {
             $data['questions'][] = array(
                 'name' => $request->questions[$key],
-                'is_pictures' => $request->isPictures[$key] ?? false,
+                'is_pictures' => isset($request->isPictures[$key]),
                 'answers' => $request->answers[$key]
             );
         }
