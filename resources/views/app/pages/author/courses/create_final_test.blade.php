@@ -37,12 +37,12 @@
                                              data-url="/ajax_upload_lesson_image?_token={{ csrf_token() }}"
                                              data-maxsize="1"
                                              data-acceptedfiles="image/*">
-                                            <input type="hidden" name="image" class="avatar-path">
                                             <div class="lesson-image__preview">
                                                 <img src="/assets/img/lesson-thumbnail.jpg"
                                                      class="avatar-preview" alt="">
                                             </div>
                                             <div class="lesson-image__desc dropzone-default">
+                                                <input type="text" name="image" class="avatar-path" required>
                                                 <div class="previews-container"></div>
                                                 <div class="dropzone-default__info">PNG, JPG
                                                     • {{__('default.pages.courses.max_file_title')}} 1MB

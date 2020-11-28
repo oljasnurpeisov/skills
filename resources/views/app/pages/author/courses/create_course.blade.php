@@ -78,7 +78,7 @@
                                 <div class="avatar course-image dropzone-avatar" id="courseCover"
                                      data-url="/ajax_upload_course_image?_token={{ csrf_token() }}" data-maxsize="1"
                                      data-acceptedfiles="image/*">
-                                    <input type="hidden" name="image" class="avatar-path">
+                                    <input type="text" name="image" class="avatar-path" required>
                                     <img src="/assets/img/course-thumbnail.jpg" class="course-image__preview avatar-preview" alt="">
                                     <div class="course-image__desc dropzone-default">
                                         <div class="previews-container"></div>

@@ -35,12 +35,13 @@
                                         <div class="avatar lesson-image dropzone-avatar" id="lessonCover"
                                              data-url="/ajax_upload_lesson_image?_token={{ csrf_token() }}" data-maxsize="1"
                                              data-acceptedfiles="image/*">
-                                            <input type="hidden" name="image" class="avatar-path" value="{{$item->image}}">
                                             <div class="lesson-image__preview">
                                                 <img src="{{$item->getAvatar()}}" data-defaultsrc="/assets/img/lesson-thumbnail.jpg"
                                                      class="avatar-preview" alt="">
                                             </div>
                                             <div class="lesson-image__desc dropzone-default">
+                                                <input type="text" name="image" class="avatar-path"
+                                                       value="{{ $item->image }}" required>
                                                 @if($item->image)
                                                     <div class="previews-container">
                                                         <div class="dz-preview dz-image-preview">

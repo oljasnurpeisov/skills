@@ -120,7 +120,7 @@
                                          data-defaultsrc="/assets/img/course-thumbnail.jpg"
                                          class="course-image__preview avatar-preview" alt="">
                                     <div class="course-image__desc dropzone-default">
-                                        <input type="text" name="image" class="avatar-path" value="{{ $item->image }}">
+                                        <input type="text" name="image" class="avatar-path" value="{{ $item->image }}" required>
                                         @if($item->image)
                                             <div class="previews-container">
                                                 <div class="dz-preview dz-image-preview">
