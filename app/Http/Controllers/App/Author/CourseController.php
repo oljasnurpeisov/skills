@@ -729,13 +729,17 @@ class CourseController extends Controller
         return Excel::download(new ReportingExport($ar), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
-    public function getCourseData($lang, Course $course)
+    public function getCourseData(  Course $course)
     {
         $themes = Theme::where('course_id', '=', $course->id)->with('lessons')->get();
 
         foreach ($themes as $theme) {
             $theme->order = $theme->index_number;
 
+
+            foreach ($theme->lessons as $lesson) {
+                $lesson->order = $lesson->index_number;
+            }
         }
 
         return $themes;
