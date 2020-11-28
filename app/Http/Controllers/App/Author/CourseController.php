@@ -673,6 +673,7 @@ class CourseController extends Controller
 
     public function reportingCourse(Request $request)
     {
+        return redirect('/' . app()->getLocale() . '/my-courses', 302);
         $date_from = $request->date_from;
         $date_to = $request->date_to;
 

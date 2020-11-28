@@ -10,6 +10,7 @@
                     <li><a href="/{{$lang}}/my-courses/"
                            title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                     </li>
+                    @include('app.pages.author.courses.components.breadcrumb_course_type',['item' => $course])
                     <li><a href="/{{$lang}}/my-courses/course/{{$course->id}}"
                            title="{{$course->name}}">{{$course->name}}</a>
                     <li><span>{{__('default.pages.courses.edit_coursework_title')}}</span></li>
@@ -18,37 +19,57 @@
 
                 <div class="row row--multiline">
                     <div class="col-md-8">
-                        <form action="/{{$lang}}/my-courses/course/{{$course->id}}/edit-coursework" method="POST" enctype="multipart/form-data">
-                           @csrf
+                        <form action="/{{$lang}}/my-courses/course/{{$course->id}}/edit-coursework" method="POST"
+                              enctype="multipart/form-data">
+                            @csrf
                             <div class="row row--multiline">
                                 <div class="col-md-8">
                                     <div class="form-group" id="durationField">
-                                        <label class="form-group__label">{{__('default.pages.lessons.duration_title')}} *</label>
-                                        <input type="number" name="duration" placeholder="" class="input-regular" value="{{$item->duration}}" required>
+                                        <label class="form-group__label">{{__('default.pages.lessons.duration_title')}}
+                                            *</label>
+                                        <input type="number" name="duration" placeholder="" class="input-regular"
+                                               value="{{$item->duration}}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-group__label">{{__('default.pages.lessons.lesson_image')}}</label>
                                         <div class="avatar lesson-image dropzone-avatar" id="lessonCover"
-                                             data-url="/ajax_upload_lesson_image?_token={{ csrf_token() }}" data-maxsize="1"
+                                             data-url="/ajax_upload_lesson_image?_token={{ csrf_token() }}"
+                                             data-maxsize="1"
                                              data-acceptedfiles="image/*">
-                                            <input type="hidden" name="image" class="avatar-path" value="{{$item->image}}">
+                                            <input type="hidden" name="image" class="avatar-path"
+                                                   value="{{ $item->image }}">
                                             <div class="lesson-image__preview">
-                                                <img src="{{$item->getAvatar()}}" data-defaultsrc="/assets/img/lesson-thumbnail.jpg"
+                                                <img src="{{$item->getAvatar()}}"
+                                                     data-defaultsrc="/assets/img/lesson-thumbnail.jpg"
                                                      class="avatar-preview" alt="">
                                             </div>
                                             <div class="lesson-image__desc dropzone-default">
-                                                <div class="previews-container">
-                                                    <div class="dz-preview dz-image-preview">
-                                                        <div class="dz-details">
-                                                            <div class="dz-filename"><span data-dz-name="">{{basename($item->image)}}</span></div>
-                                                            <div class="dz-size" data-dz-size=""><strong>0.1</strong> MB</div>
+                                                @if($item->image)
+                                                    <div class="previews-container">
+                                                        <div class="dz-preview dz-image-preview">
+                                                            <div class="dz-details">
+                                                                <div class="dz-filename"><span
+                                                                            data-dz-name="">{{ basename($item->image) }}</span>
+                                                                </div>
+                                                                <div class="dz-size" data-dz-size="">
+                                                                    <strong> {{ $item->image ? round(filesize(public_path($item->image)) / 1024) : 0 }}</strong>
+                                                                    KB
+                                                                </div>
+                                                            </div>
+                                                            <a href="javascript:undefined;"
+                                                               title="{{__('default.pages.courses.delete')}}"
+                                                               class="author-picture__link red"
+                                                               data-dz-remove="">{{__('default.pages.courses.delete')}}</a>
                                                         </div>
-                                                        <a href="javascript:undefined;" title="{{__('default.pages.courses.delete')}}" class="author-picture__link red" data-dz-remove="">{{__('default.pages.courses.delete')}}</a>
                                                     </div>
+                                                @else
+                                                    <div class="previews-container"></div>
+                                                @endif
+                                                <div class="dropzone-default__info">PNG, JPG
+                                                    • {{__('default.pages.courses.max_file_title')}} 1MB
                                                 </div>
-                                                <div class="dropzone-default__info">PNG, JPG • {{__('default.pages.courses.max_file_title')}} 1MB</div>
                                                 <div class="lesson-image__link avatar-pick dropzone-default__link">{{__('default.pages.courses.choose_photo')}}
                                                 </div>
                                             </div>
@@ -58,10 +79,13 @@
                                                         <div class="dz-filename"><span data-dz-name></span></div>
                                                         <div class="dz-size" data-dz-size></div>
                                                         <div class="dz-progress"><span class="dz-upload"
-                                                                                       data-dz-uploadprogress></span></div>
+                                                                                       data-dz-uploadprogress></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="alert alert-danger"><span data-dz-errormessage> </span></div>
-                                                    <a href="javascript:undefined;" title="{{__('default.pages.courses.delete')}}"
+                                                    <div class="alert alert-danger"><span
+                                                                data-dz-errormessage> </span></div>
+                                                    <a href="javascript:undefined;"
+                                                       title="{{__('default.pages.courses.delete')}}"
                                                        class="author-picture__link red"
                                                        data-dz-remove>{{__('default.pages.courses.delete')}}</a>
                                                 </div>
@@ -131,9 +155,6 @@
                                                         <div class="dz-filename"><span
                                                                     data-dz-name="">{{basename($video)}}</span>
                                                         </div>
-                                                        <div class="dz-size" data-dz-size=""><strong>57.2</strong>
-                                                            KB
-                                                        </div>
                                                     </div>
                                                     <a href="javascript:undefined;"
                                                        title="{{__('default.pages.courses.delete')}}"
@@ -171,8 +192,6 @@
                                                         <div class="dz-filename"><span
                                                                     data-dz-name="">{{basename($audio)}}</span>
                                                         </div>
-                                                        <div class="dz-size" data-dz-size=""><strong>57.2</strong> KB
-                                                        </div>
                                                     </div>
                                                     <a href="javascript:undefined;"
                                                        title="{{__('default.pages.courses.delete')}}"
@@ -191,7 +210,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments')}}</label>
-                                <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}" data-maxfiles="20"
+                                <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}"
+                                     data-maxfiles="20"
                                      data-maxsize="20"
                                      data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg, .rar, .zip, .7z, .mp3, .mp4, .avi, .mov"
                                      id="documents-dropzone"
@@ -213,8 +233,6 @@
                                                         <div class="dz-filename"><span
                                                                     data-dz-name="">{{basename($file)}}</span>
                                                         </div>
-                                                        <div class="dz-size" data-dz-size=""><strong>57.2</strong> KB
-                                                        </div>
                                                     </div>
                                                     <a href="javascript:undefined;"
                                                        title="{{__('default.pages.courses.delete')}}"
@@ -235,14 +253,17 @@
                                 @include('app.pages.author.courses.components.lesson.poor_vision_lesson_edit',['item' => $item])
                             @endif
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.lessons.coursework_task')}} *</label>
+                                <label class="form-group__label">{{__('default.pages.lessons.coursework_task')}}
+                                    *</label>
                                 <textarea name="coursework_task" class="input-regular tinymce-here" required>
                             {{$item->coursework_task}}
                         </textarea>
                             </div>
                             <div class="buttons">
                                 <button type="submit" class="btn">{{__('default.pages.courses.save_title')}}</button>
-                                <a href="/{{$lang}}/my-courses/course/{{$course->id}}" title="{{__('default.pages.courses.cancel_title')}}" class="ghost-btn">{{__('default.pages.courses.cancel_title')}}</a>
+                                <a href="/{{$lang}}/my-courses/course/{{$course->id}}"
+                                   title="{{__('default.pages.courses.cancel_title')}}"
+                                   class="ghost-btn">{{__('default.pages.courses.cancel_title')}}</a>
                             </div>
                         </form>
                     </div>
