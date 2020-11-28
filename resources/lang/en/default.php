@@ -165,6 +165,7 @@ return [
             'coursework_count_error_message' => 'Курс может содержать только один урок с типом "Курсовая работа"',
             'final_test_count_error_message' => 'Курс может содержать только один урок с типом "Финальный тест"',
             'lesson_update_success' => 'Изменения успешно сохранены',
+            'lesson_delete_success' => 'Урок успешно удален',
 
             'coursework_create_title' => 'Создание курсовой работы',
             'duration_title' => 'Продолжительность урока, минуты',
@@ -200,7 +201,20 @@ return [
             'add_question' => 'Добавить вопрос',
             'questions_count' => 'Всего вопросов',
             'passing_score' => 'Проходной балл',
-            'mix_answers' => 'Перемешать ответы'
+            'mix_answers' => 'Перемешать ответы',
+
+            'poor_vision_title' => 'Версия для слабовидящих',
+            'hour_short_title' => 'ч.',
+            'font_size_title' => 'Размер шрифта',
+            'line_spacing' => 'Межстрочный интервал',
+            'font' => 'Шрифт',
+            'default_title' => 'По умолчанию',
+            'color_palette' => 'Цветовая палитра',
+            'white_on_black_palette' => 'Белый на черном',
+            'yellow_on_blue_palette' => 'Желтый на синем',
+            'lesson_files' => 'Материалы урока',
+            'media_attachments_poor_vision' => 'Медиа материалы (для слабовидящих)',
+            'lesson_files_poor_vision' => 'Материалы урока (для слабовидящих)'
         ],
         'profile' => [
             'title' => 'Профиль',

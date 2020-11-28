@@ -153,11 +153,6 @@ class LessonController extends Controller
 
     public function editLesson($lang, Course $course, Theme $theme, Lesson $lesson)
     {
-//        $xml = XmlParser::load(url('https://iac2:Iac2007RBD@www.enbek.kz/feed/resume/cl_hard_skills.xml'));
-//
-//        $skills = $xml->parse([
-//            'data' => ['uses' => 'row[field(::name=@)]'],
-//        ]);
 
         $course_theme = $theme->courses()->first();
         $lesson_theme = $theme->with(["lessons" => function ($q) use ($lesson) {
@@ -176,30 +171,6 @@ class LessonController extends Controller
         } else {
             return redirect("/" . app()->getLocale() . "/my-courses");
         }
-
-
-//        foreach (array_values($skills)[0] as $skill){
-////            $item = new Skill;
-////            $item->code_skill = $skill['codskill'];
-////            $item->fl_check = $skill['fl_check'];
-////            $item->name_ru = $skill['name_skill'];
-////            $item->name_kk = $skill['name_skill_kz'];
-////            $item->fl_show = $skill['fl_show'];
-////            $item->uid = $skill['uid'];
-////            $item->save();
-//
-//            $user = Skill::updateOrCreate([
-//                'code_skill' => $skill['codskill']
-//            ], [
-//                'fl_check' => $skill['fl_check'],
-//                'name_ru' => $skill['name_skill'],
-//                'name_kk'=> $skill['name_skill_kz'],
-//                'fl_show'=> $skill['fl_show'],
-//                'uid'=> $skill['uid'],
-//            ]);
-//        }
-////
-//        return 1;
 
     }
 
@@ -756,6 +727,47 @@ class LessonController extends Controller
         $item_attachments->save();
 
         return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.lesson_update_success'));
+    }
+
+    public function viewLesson($lang, Course $course, Theme $theme, Lesson $lesson){
+        if ($course->author_id == Auth::user()->id) {
+            //Конверт числа во время
+            $format = '%02d:%02d';
+
+            $hours = floor($lesson->duration / 60);
+            $minutes = ($lesson->duration % 60);
+
+            $time = sprintf($format, $hours, $minutes);
+
+            // Получить все файлы урока
+            $lesson_attachments = LessonAttachments::whereId($lesson->id)->first();
+
+            return view("app.pages.author.courses.view_lesson", [
+                "item" => $course,
+                "theme" => $theme,
+                "lesson" => $lesson,
+                "time" => $time,
+                "lesson_attachments" => $lesson_attachments
+            ]);
+        } else {
+            return redirect("/" . $lang . "/my-courses");
+        }
+    }
+
+    public function deleteLessonForm($lang, Request $request, Course $course, Theme $theme, Lesson $lesson)
+    {
+        Lesson::where('id', '=', $lesson->id)->delete();
+
+        $theme_lessons = Lesson::whereHas('themes', function ($q) use ($theme) {
+            $q->where('themes.id', '=', $theme->id);
+        })->orderBy('index_number', 'asc')->get();
+
+        foreach ($theme_lessons as $key => $lesson) {
+            $lesson->index_number = $key;
+            $lesson->save();
+        }
+
+        return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.lesson_delete_success'));
     }
 }
 

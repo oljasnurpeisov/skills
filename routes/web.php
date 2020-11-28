@@ -241,10 +241,11 @@ Route::group(["namespace" => "Admin"], function () {
                         // Урок
                         Route::get("/my-courses/course/{item}/theme-{theme}/create-lesson", "LessonController@createLesson");
                         Route::get("/my-courses/course/{course}/theme-{theme}/edit-lesson-{lesson}", "LessonController@editLesson");
-                        Route::get("/my-courses/course/{course}/theme-{theme}/view-lesson-{lesson}", "LessonController@editLesson");
+                        Route::get("/my-courses/course/{course}/theme-{theme}/view-lesson-{lesson}", "LessonController@viewLesson");
                         Route::post("/create-lesson/{course}/{theme}", "LessonController@storeLesson");
                         Route::post("/course-{course}/edit-lesson-{item}", "LessonController@updateLesson");
                         Route::delete("/delete-lesson", "LessonController@deleteLesson");
+                        Route::delete("/course-{course}/theme-{theme}/lesson-{lesson}/delete-lesson-form", "LessonController@deleteLessonForm");
                         Route::post("/move-lesson", "LessonController@moveLesson");
                         // Курсовая работа
                         Route::get("/my-courses/course/{item}/create-coursework", "LessonController@createCoursework");
