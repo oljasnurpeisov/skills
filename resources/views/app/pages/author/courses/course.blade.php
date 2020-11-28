@@ -71,7 +71,8 @@
                                                 <div class="edit-buttons">
                                                     <a href="#" title="{{__('default.pages.courses.delete_title')}}"
                                                        class="btn-icon small btn-icon--ghost icon-trash-can"> </a>
-                                                    <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework" title="{{__('default.pages.courses.edit_title')}}"
+                                                    <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
+                                                       title="{{__('default.pages.courses.edit_title')}}"
                                                        class="btn-icon small btn-icon--ghost icon-edit"> </a>
                                                 </div>
                                             </div>
@@ -85,7 +86,8 @@
                                                 <div class="edit-buttons">
                                                     <a href="#" title="{{__('default.pages.courses.delete_title')}}"
                                                        class="btn-icon small btn-icon--ghost icon-trash-can"> </a>
-                                                    <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final-test" title="{{__('default.pages.courses.edit_title')}}"
+                                                    <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final-test"
+                                                       title="{{__('default.pages.courses.edit_title')}}"
                                                        class="btn-icon small btn-icon--ghost icon-edit"> </a>
                                                 </div>
                                             </div>
@@ -315,32 +317,36 @@
                                     <div class="sidebar-item__body">
                                         @if(!empty($item->attachments->videos_link))
                                             @foreach(json_decode($item->attachments->videos_link) as $video_link)
-                                                @php
-                                                    $video_id = explode("?v=", $video_link);
-                                                    $video_id = $video_id[1];
-                                                @endphp
-                                                <div class="video-wrapper">
-                                                    <iframe width="560" height="315"
-                                                            src="https://www.youtube.com/embed/{{$video_id}}"
-                                                            frameborder="0"
-                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                            allowfullscreen></iframe>
-                                                </div>
+                                                @if(!empty($video_link))
+                                                    @php
+                                                        $video_id = explode("?v=", $video_link);
+                                                        $video_id = $video_id[1];
+                                                    @endphp
+                                                    <div class="video-wrapper">
+                                                        <iframe width="560" height="315"
+                                                                src="https://www.youtube.com/embed/{{$video_id}}"
+                                                                frameborder="0"
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                allowfullscreen></iframe>
+                                                    </div>
+                                                @endif
                                             @endforeach
                                         @endif
                                         @if(!empty($item->attachments->videos_poor_vision_link) and $item->is_poor_vision == true)
                                             @foreach(json_decode($item->attachments->videos_poor_vision_link) as $video_link)
-                                                @php
-                                                    $video_id = explode("?v=", $video_link);
-                                                    $video_id = $video_id[1];
-                                                @endphp
-                                                <div class="video-wrapper">
-                                                    <iframe width="560" height="315"
-                                                            src="https://www.youtube.com/embed/{{$video_id}}"
-                                                            frameborder="0"
-                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                            allowfullscreen></iframe>
-                                                </div>
+                                                @if(!empty($video_link))
+                                                    @php
+                                                        $video_id = explode("?v=", $video_link);
+                                                        $video_id = $video_id[1];
+                                                    @endphp
+                                                    <div class="video-wrapper">
+                                                        <iframe width="560" height="315"
+                                                                src="https://www.youtube.com/embed/{{$video_id}}"
+                                                                frameborder="0"
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                allowfullscreen></iframe>
+                                                    </div>
+                                                @endif
                                             @endforeach
                                         @endif
                                         @if(!empty($item->attachments->videos))
