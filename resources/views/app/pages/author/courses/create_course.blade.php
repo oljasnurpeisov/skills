@@ -2,8 +2,6 @@
 
 @section('content')
     <main class="main">
-
-
         <section class="plain">
             <div class="container">
                 <ul class="breadcrumbs">
@@ -204,7 +202,6 @@
                             </div>
                             <div class="buttons">
                                 <button type="submit" class="btn">{{__('default.pages.courses.create')}}</button>
-{{--                                <a href="#" title="Отмена" class="ghost-btn">Отмена</a>--}}
                             </div>
                         </form>
                     </div>

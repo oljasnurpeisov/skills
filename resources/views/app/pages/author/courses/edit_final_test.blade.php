@@ -260,12 +260,13 @@
 
 @section('scripts')
     <!--Only this page's scripts-->
+    <script src="/assets/js/lesson-create.js"></script>
     <script src="/assets/js/test-constructor.js"></script>
     <script>
         let textAnswerTpl = `<div class="form-group">
                             <div class="input-addon">
                                 <input type="text" name="$answersName"
-                                       placeholder="Введите вариант ответа"
+                                       placeholder="{{__('default.pages.lessons.input_answer_title')}}"
                                        class="input-regular small" required>
                                 <div class="addon small">
                                     <span class="required">*</span>
@@ -274,38 +275,37 @@
                         </div>`;
         let picAnswerTpl = `<div class="form-group">
                         <div class="input-addon">
-                            <div data-url="https://dev3.panama.kz/ajaxUploadFilesTest" data-maxfiles="1"
+                            <div data-url="/ajax_upload_test_images?_token={{ csrf_token() }}" data-maxfiles="1"
                                  data-maxsize="1" data-acceptedfiles="image/*"
                                  class="dropzone-default dropzone-multiple">
                                 <input type="text" name="$answersName" value="" required>
-                                <div class="dropzone-default__info">JPG, PNG • макс. 1MB</div>
+                                <div class="dropzone-default__info">JPG, PNG • {{__('default.pages.courses.max_file_title')}} 1MB</div>
+                                <a href="javascript:;" title="{{__('default.pages.courses.add_file_btn_title')}}" class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                 <div class="previews-container"></div>
-                                <a href="javascript:;" title="Загрузить файлы" class="dropzone-default__link">Добавить
-                                    файлы</a>
                             </div>
                             <div class="addon small">
                                 <span class="required">*</span>
                             </div>
                         </div>
                     </div>`;
-        let questionTpl = `<label class="form-group__label">Вопрос</label>
+        let questionTpl = `<label class="form-group__label">{{__('default.pages.lessons.question_title')}}</label>
                             <div class="input-addon">
                                 <div>
                                     <div class="form-group">
                                         <textarea name="$questionName" class="input-regular tinymce-here question-text"
-                                                  placeholder="Текст вопроса" required></textarea>
+                                                  placeholder="{{__('default.pages.lessons.question_text')}}" required></textarea>
                                     </div>
                                     <div class="answers-bar">
-                                        <span>Ответы</span>
-                                        <label class="checkbox"><input type="checkbox" name="isPictures[]"
-                                                                       value="true"><span>В виде картинок</span></label>
+                                        <span>{{__('default.pages.lessons.answers_title')}}</span>
+                                        <label class="checkbox"><input type="checkbox" name="isPictures[$isPicturesIndex]"
+                                                                       value="true"><span>{{__('default.pages.lessons.pictures_type_title')}}</span></label>
                                     </div>
                                     <div class="answers">
 
                                     </div>
                                     <div class="text-right">
-                                        <div title="Добавить" class="add-btn"><span
-                                                class="add-btn__title">Добавить</span><span
+                                        <div title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"><span
+                                                class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
                                                 class="btn-icon extra-small icon-plus"> </span></div>
                                     </div>
                                 </div>

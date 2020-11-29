@@ -38,7 +38,6 @@
 <link rel="shortlink" href="{{ \Illuminate\Support\Facades\URL::current() }}">
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<script>window.Laravel = <?php echo json_encode(['csrfToken' => csrf_token()]); ?></script>
 
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="/assets/libs/fancybox/dist/jquery.fancybox.min.css" type="text/css" media="screen"/>
@@ -56,7 +55,7 @@
 
 <script>
     window.Laravel = {
-        "csrfToken": "2S3CCGYeRaf0zijpZ9P3Bepw9UgcKe08iuNzbtaH",
+        "csrfToken": "{{ csrf_token() }}",
         "lang": "{{$lang}}"
     }
 </script>

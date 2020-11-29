@@ -10,6 +10,7 @@
                     <li><a href="/{{$lang}}/my-courses"
                            title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                     </li>
+                    @include('app.pages.author.courses.components.breadcrumb_course_type',['item' => $item])
                     <li><a href="/{{$lang}}/my-courses/course/{{$item->id}}"
                            title="{{$item->name}}">{{$item->name}}</a>
                     </li>
@@ -162,9 +163,10 @@
                                                         @foreach(json_decode($lesson->lesson_attachment->another_files) as $file)
                                                             <li><a href="{{env('APP_URL').$file}}"
                                                                    title="{{basename($file)}}"
-                                                                   target="_blank">{{basename($file)}} </a>
+                                                                   target="_blank">{{basename($file)}}&nbsp;</a>
                                                                 ({{ round(File::size(public_path($file))/1000000, 1) }}
                                                                 MB)
+                                                            </li>
                                                         @endforeach
                                                     @endif
                                                 </ul>
@@ -180,17 +182,19 @@
                                         <div class="sidebar-item__body">
                                             @if(!empty($lesson->lesson_attachment->videos_poor_vision_link))
                                                 @foreach(json_decode($lesson->lesson_attachment->videos_poor_vision_link) as $video_link)
-                                                    @php
-                                                        $video_id = explode("?v=", $video_link);
-                                                        $video_id = $video_id[1] ?? null;
-                                                    @endphp
-                                                    <div class="video-wrapper">
-                                                        <iframe width="560" height="315"
-                                                                src="https://www.youtube.com/embed/{{$video_id}}"
-                                                                frameborder="0"
-                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                                allowfullscreen></iframe>
-                                                    </div>
+                                                    @if($video_link !== null)
+                                                        @php
+                                                            $video_id = explode("?v=", $video_link);
+                                                            $video_id = $video_id[1] ?? null;
+                                                        @endphp
+                                                        <div class="video-wrapper">
+                                                            <iframe width="560" height="315"
+                                                                    src="https://www.youtube.com/embed/{{$video_id}}"
+                                                                    frameborder="0"
+                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                    allowfullscreen></iframe>
+                                                        </div>
+                                                    @endif
                                                 @endforeach
                                             @endif
                                             @if(!empty($lesson->lesson_attachment->videos_poor_vision))
@@ -220,9 +224,10 @@
                                                         @foreach(json_decode($lesson->lesson_attachment->another_files_poor_vision) as $file)
                                                             <li><a href="{{env('APP_URL').$file}}"
                                                                    title="{{basename($file)}}"
-                                                                   target="_blank">{{basename($file)}} </a>
+                                                                   target="_blank">{{basename($file)}}&nbsp;</a>
                                                                 ({{ round(File::size(public_path($file))/1000000, 1) }}
                                                                 MB)
+                                                            </li>
                                                         @endforeach
                                                     @endif
                                                 </ul>
