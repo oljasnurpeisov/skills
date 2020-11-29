@@ -30,7 +30,7 @@
                                                              data-acceptedfiles="image/*"
                                                              class="dropzone-default dropzone-multiple dz-max-files-reached">
                                                             <input type="text" name="answers[{{ $key+1 }}][]"
-                                                                   value="{{json_decode($answer)[0]}}" required="">
+                                                                   value="{{ $answer }}" required="">
                                                             <div class="dropzone-default__info">JPG, PNG • макс. 1MB
                                                             </div>
                                                             <div class="previews-container">
@@ -38,12 +38,12 @@
                                                                     <div class="dz-details">
                                                                         <img data-dz-thumbnail=""
                                                                              alt=""
-                                                                             src="{{json_decode($answer)[0]}}">
-
-                                                                        <div class="dz-filename"><span data-dz-name="">{{basename(json_decode($answer)[0])}}</span>
+                                                                             src="{{ $answer }}">
+                                                                        <div class="dz-filename"><span data-dz-name="">{{basename($answer)}}</span>
                                                                         </div>
                                                                         <div class="dz-size" data-dz-size="">
-                                                                            <strong>0.1</strong> MB
+                                                                            <strong> {{ round(filesize(public_path($answer)) / 1024) }}</strong>
+                                                                            KB
                                                                         </div>
                                                                     </div>
                                                                     <a href="javascript:undefined;" title="{{__('default.pages.courses.delete')}}"
