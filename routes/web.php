@@ -231,6 +231,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::post("/create-lesson/{course}/{theme}", "LessonController@storeLesson");
                     Route::post("/course-{course}/edit-lesson-{item}", "LessonController@updateLesson");
                     Route::delete("/course-{course}/theme-{theme}/lesson-{lesson}/delete-lesson-form", "LessonController@deleteLessonForm");
+                    Route::delete("/course-{course}/lesson-{lesson}/delete-lesson-form", "LessonController@deleteLessonForm");
                     Route::delete("/course-{course}/lesson-{lesson}/deleteTest", "LessonController@deleteTest");
 
                     // Домашняя, Курсовая работа и Тест для Автора
