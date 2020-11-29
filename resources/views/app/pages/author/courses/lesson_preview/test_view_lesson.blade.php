@@ -70,10 +70,10 @@
                                                                                         name="answers[{{$key}}]"
                                                                                         value="{{$k}}"
                                                                                         required><span>{{__('default.pages.lessons.option_title')}} {{$k+1}}</span></label>
-                                                            <a href="{{json_decode($answer)[0]}}"
+                                                            <a href="{{ $answer }}"
                                                                data-fancybox="question2"
                                                                title="{{__('default.pages.lessons.zoom_certificate')}}"><img
-                                                                        src="{{json_decode($answer)[0]}}" alt=""></a>
+                                                                        src="{{ $answer }}" alt=""></a>
                                                         </div>
                                                     @endforeach
                                                 </div>

@@ -68,10 +68,20 @@ class LessonController extends Controller
                 );
 
                 foreach ($request->questions as $key => $question) {
+                    $answers = $request->answers[$key];
+
+                    if (isset($request->isPictures[$key])) {
+                        foreach ($answers as $k => $answer) {
+                            if (is_array(json_decode($answer))) {
+                                $answers[$k] = json_decode($answer)[0];
+                            }
+                        }
+                    }
+
                     $data['questions'][] = array(
                         'name' => $request->questions[$key],
-                        'is_pictures' => $request->isPictures[$key] ?? false,
-                        'answers' => $request->answers[$key]
+                        'is_pictures' => isset($request->isPictures[$key]),
+                        'answers' => $answers
                     );
                 }
 
@@ -156,7 +166,7 @@ class LessonController extends Controller
 
         $theme = Theme::where('id', '=', $lesson->theme_id)->first();
 
-        if($theme){
+        if ($theme) {
             $course_theme = $theme->courses()->first();
             $lesson_theme = $theme->with(["lessons" => function ($q) use ($lesson) {
                 $q->where('lessons.id', '=', $lesson->id);
@@ -199,10 +209,20 @@ class LessonController extends Controller
                 );
 
                 foreach ($request->questions as $key => $question) {
+                    $answers = $request->answers[$key];
+
+                    if (isset($request->isPictures[$key])) {
+                        foreach ($answers as $k => $answer) {
+                            if (is_array(json_decode($answer))) {
+                                $answers[$k] = json_decode($answer)[0];
+                            }
+                        }
+                    }
+
                     $data['questions'][] = array(
                         'name' => $request->questions[$key],
                         'is_pictures' => isset($request->isPictures[$key]),
-                        'answers' => $request->answers[$key]
+                        'answers' => $answers
                     );
                 }
 
@@ -557,10 +577,20 @@ class LessonController extends Controller
         );
 
         foreach ($request->questions as $key => $question) {
+            $answers = $request->answers[$key];
+
+            if (isset($request->isPictures[$key])) {
+                foreach ($answers as $k => $answer) {
+                    if (is_array(json_decode($answer))) {
+                        $answers[$k] = json_decode($answer)[0];
+                    }
+                }
+            }
+
             $data['questions'][] = array(
                 'name' => $request->questions[$key],
                 'is_pictures' => isset($request->isPictures[$key]),
-                'answers' => $request->answers[$key]
+                'answers' => $answers
             );
         }
 
@@ -654,10 +684,20 @@ class LessonController extends Controller
         );
 
         foreach ($request->questions as $key => $question) {
+            $answers = $request->answers[$key];
+
+            if (isset($request->isPictures[$key])) {
+                foreach ($answers as $k => $answer) {
+                    if (is_array(json_decode($answer))) {
+                        $answers[$k] = json_decode($answer)[0];
+                    }
+                }
+            }
+
             $data['questions'][] = array(
                 'name' => $request->questions[$key],
                 'is_pictures' => isset($request->isPictures[$key]),
-                'answers' => $request->answers[$key]
+                'answers' => $answers
             );
         }
 
@@ -763,7 +803,7 @@ class LessonController extends Controller
 
         $theme = Theme::where('id', '=', $lesson->theme_id)->first();
 
-        if($theme != null) {
+        if ($theme != null) {
             $theme_lessons = Lesson::whereHas('themes', function ($q) use ($theme) {
                 $q->where('themes.id', '=', $theme->id);
             })->orderBy('index_number', 'asc')->get();
@@ -832,7 +872,7 @@ class LessonController extends Controller
 
             $right_answers = [];
 
-            foreach (json_decode($lesson->practice)->questions as $key => $question){
+            foreach (json_decode($lesson->practice)->questions as $key => $question) {
                 $right_answers[] = $question->answers[0];
             }
 
@@ -842,8 +882,8 @@ class LessonController extends Controller
 
             $right_answers = 0;
 
-            foreach (json_decode($lesson->practice)->questions as $key => $question){
-                if(!array_key_exists($key, $test_results)){
+            foreach (json_decode($lesson->practice)->questions as $key => $question) {
+                if (!array_key_exists($key, $test_results)) {
                     $right_answers++;
                 }
             }
