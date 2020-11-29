@@ -151,14 +151,18 @@ class LessonController extends Controller
         return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.create_request_message'));
     }
 
-    public function editLesson($lang, Course $course, Theme $theme, Lesson $lesson)
+    public function editLesson($lang, Course $course, Lesson $lesson)
     {
 
-        $course_theme = $theme->courses()->first();
-        $lesson_theme = $theme->with(["lessons" => function ($q) use ($lesson) {
-            $q->where('lessons.id', '=', $lesson->id);
-        }])->where('id', '=', $theme->id)->first();
-//        $course = Course::where('id', '=', $course_theme->pivot->course_id)->first();
+        $theme = Theme::where('id', '=', $lesson->theme_id)->first();
+
+        if($theme){
+            $course_theme = $theme->courses()->first();
+            $lesson_theme = $theme->with(["lessons" => function ($q) use ($lesson) {
+                $q->where('lessons.id', '=', $lesson->id);
+            }])->where('id', '=', $theme->id)->first();
+        }
+
         $lessons_type = LessonsType::all();
 
         if (($course->author_id == Auth::user()->id) and (!empty($lesson_theme->lessons->first()->id) == $lesson->id)) {
@@ -197,7 +201,7 @@ class LessonController extends Controller
                 foreach ($request->questions as $key => $question) {
                     $data['questions'][] = array(
                         'name' => $request->questions[$key],
-                        'is_pictures' => $request->isPictures[$key] ?? false,
+                        'is_pictures' => isset($request->isPictures[$key]),
                         'answers' => $request->answers[$key]
                     );
                 }
@@ -243,42 +247,42 @@ class LessonController extends Controller
         $another_files_poor_vision = array_merge(json_decode($request->localDocuments1) ?? [], $request->localDocumentsStored1 ?? []);
 
         // Видео с устройства
-        if($videos != $item_attachments->videos){
+        if ($videos != $item_attachments->videos) {
 
             $item_attachments->videos = $videos;
 
             $item_attachments->save();
         }
         // Аудио с устройства
-        if($audios != $item_attachments->audios){
+        if ($audios != $item_attachments->audios) {
 
             $item_attachments->audios = $audios;
 
             $item_attachments->save();
         }
         // Другие файлы с устройства
-        if($another_files != $item_attachments->another_files){
+        if ($another_files != $item_attachments->another_files) {
 
             $item_attachments->another_files = $another_files;
 
             $item_attachments->save();
         }
         // Видео с устройства (для слабовидящих)
-        if($videos_poor_vision != $item_attachments->videos_poor_vision){
+        if ($videos_poor_vision != $item_attachments->videos_poor_vision) {
 
             $item_attachments->videos_poor_vision = $videos_poor_vision;
 
             $item_attachments->save();
         }
         // Аудио с устройства (для слабовидящих)
-        if($audios_poor_vision != $item_attachments->audios_poor_vision){
+        if ($audios_poor_vision != $item_attachments->audios_poor_vision) {
 
             $item_attachments->audios_poor_vision = $audios_poor_vision;
 
             $item_attachments->save();
         }
         // Другие файлы с устройства (для слабовидящих)
-        if($another_files_poor_vision != $item_attachments->another_files_poor_vision){
+        if ($another_files_poor_vision != $item_attachments->another_files_poor_vision) {
 
             $item_attachments->another_files_poor_vision = $another_files_poor_vision;
 
@@ -460,42 +464,42 @@ class LessonController extends Controller
         $another_files_poor_vision = array_merge(json_decode($request->localDocuments1) ?? [], $request->localDocumentsStored1 ?? []);
 
         // Видео с устройства
-        if($videos != $item_attachments->videos){
+        if ($videos != $item_attachments->videos) {
 
             $item_attachments->videos = $videos;
 
             $item_attachments->save();
         }
         // Аудио с устройства
-        if($audios != $item_attachments->audios){
+        if ($audios != $item_attachments->audios) {
 
             $item_attachments->audios = $audios;
 
             $item_attachments->save();
         }
         // Другие файлы с устройства
-        if($another_files != $item_attachments->another_files){
+        if ($another_files != $item_attachments->another_files) {
 
             $item_attachments->another_files = $another_files;
 
             $item_attachments->save();
         }
         // Видео с устройства (для слабовидящих)
-        if($videos_poor_vision != $item_attachments->videos_poor_vision){
+        if ($videos_poor_vision != $item_attachments->videos_poor_vision) {
 
             $item_attachments->videos_poor_vision = $videos_poor_vision;
 
             $item_attachments->save();
         }
         // Аудио с устройства (для слабовидящих)
-        if($audios_poor_vision != $item_attachments->audios_poor_vision){
+        if ($audios_poor_vision != $item_attachments->audios_poor_vision) {
 
             $item_attachments->audios_poor_vision = $audios_poor_vision;
 
             $item_attachments->save();
         }
         // Другие файлы с устройства (для слабовидящих)
-        if($another_files_poor_vision != $item_attachments->another_files_poor_vision){
+        if ($another_files_poor_vision != $item_attachments->another_files_poor_vision) {
 
             $item_attachments->another_files_poor_vision = $another_files_poor_vision;
 
@@ -681,42 +685,42 @@ class LessonController extends Controller
         $another_files_poor_vision = array_merge(json_decode($request->localDocuments1) ?? [], $request->localDocumentsStored1 ?? []);
 
         // Видео с устройства
-        if($videos != $item_attachments->videos){
+        if ($videos != $item_attachments->videos) {
 
             $item_attachments->videos = $videos;
 
             $item_attachments->save();
         }
         // Аудио с устройства
-        if($audios != $item_attachments->audios){
+        if ($audios != $item_attachments->audios) {
 
             $item_attachments->audios = $audios;
 
             $item_attachments->save();
         }
         // Другие файлы с устройства
-        if($another_files != $item_attachments->another_files){
+        if ($another_files != $item_attachments->another_files) {
 
             $item_attachments->another_files = $another_files;
 
             $item_attachments->save();
         }
         // Видео с устройства (для слабовидящих)
-        if($videos_poor_vision != $item_attachments->videos_poor_vision){
+        if ($videos_poor_vision != $item_attachments->videos_poor_vision) {
 
             $item_attachments->videos_poor_vision = $videos_poor_vision;
 
             $item_attachments->save();
         }
         // Аудио с устройства (для слабовидящих)
-        if($audios_poor_vision != $item_attachments->audios_poor_vision){
+        if ($audios_poor_vision != $item_attachments->audios_poor_vision) {
 
             $item_attachments->audios_poor_vision = $audios_poor_vision;
 
             $item_attachments->save();
         }
         // Другие файлы с устройства (для слабовидящих)
-        if($another_files_poor_vision != $item_attachments->another_files_poor_vision){
+        if ($another_files_poor_vision != $item_attachments->another_files_poor_vision) {
 
             $item_attachments->another_files_poor_vision = $another_files_poor_vision;
 
@@ -728,7 +732,8 @@ class LessonController extends Controller
         return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.lesson_update_success'));
     }
 
-    public function viewLesson($lang, Course $course, Theme $theme, Lesson $lesson){
+    public function viewLesson($lang, Course $course, Lesson $lesson)
+    {
         if ($course->author_id == Auth::user()->id) {
             //Конверт числа во время
             $format = '%02d:%02d';
@@ -741,9 +746,8 @@ class LessonController extends Controller
             // Получить все файлы урока
             $lesson_attachments = LessonAttachments::whereId($lesson->id)->first();
 
-            return view("app.pages.author.courses.view_lesson", [
+            return view("app.pages.author.courses.lesson_preview.view_lesson", [
                 "item" => $course,
-                "theme" => $theme,
                 "lesson" => $lesson,
                 "time" => $time,
                 "lesson_attachments" => $lesson_attachments
@@ -753,18 +757,117 @@ class LessonController extends Controller
         }
     }
 
-    public function deleteLessonForm($lang, Request $request, Course $course, Theme $theme, Lesson $lesson)
+    public function deleteLessonForm($lang, Request $request, Course $course, Lesson $lesson)
     {
         Lesson::where('id', '=', $lesson->id)->delete();
 
-        $theme_lessons = Lesson::whereHas('themes', function ($q) use ($theme) {
-            $q->where('themes.id', '=', $theme->id);
-        })->orderBy('index_number', 'asc')->get();
+        $theme = Theme::where('id', '=', $lesson->theme_id)->first();
 
-        foreach ($theme_lessons as $key => $lesson) {
-            $lesson->index_number = $key;
-            $lesson->save();
+        if($theme != null) {
+            $theme_lessons = Lesson::whereHas('themes', function ($q) use ($theme) {
+                $q->where('themes.id', '=', $theme->id);
+            })->orderBy('index_number', 'asc')->get();
+
+            foreach ($theme_lessons as $key => $lesson) {
+                $lesson->index_number = $key;
+                $lesson->save();
+            }
         }
+
+
+        return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.lesson_delete_success'));
+    }
+
+    public function lessonFinished($lang, Request $request, Course $course, Lesson $lesson)
+    {
+        switch ($request->input('action')) {
+            // Переход к домашнему заданию
+            case 'homework':
+                return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-' . $lesson->id . '/author-homework');
+            // Переход к тесту
+            case 'test':
+                return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-' . $lesson->id . '/author-test');
+                break;
+            case 'coursework':
+                return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-' . $lesson->id . '/author-coursework');
+                break;
+            case 'final-test':
+                return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-' . $lesson->id . '/author-test');
+        }
+
+        return redirect()->back();
+    }
+
+    public function testView($lang, Request $request, Course $course, Lesson $lesson)
+    {
+        if ($course->author_id == Auth::user()->id) {
+
+
+            return view("app.pages.author.courses.lesson_preview.test_view_lesson", [
+                "item" => $course,
+                "lesson" => $lesson
+            ]);
+        } else {
+            return redirect("/" . $lang . "/my-courses");
+        }
+    }
+
+    public function homeWorkView($lang, Request $request, Course $course, Lesson $lesson)
+    {
+        if ($course->author_id == Auth::user()->id) {
+
+
+            return view("app.pages.author.courses.lesson_preview.homework_view_lesson", [
+                "item" => $course,
+                "lesson" => $lesson
+            ]);
+        } else {
+            return redirect("/" . $lang . "/my-courses");
+        }
+    }
+
+    public function submitTest($lang, Request $request, Course $course, Lesson $lesson)
+    {
+        if ($course->author_id == Auth::user()->id) {
+
+            $right_answers = [];
+
+            foreach (json_decode($lesson->practice)->questions as $key => $question){
+                $right_answers[] = $question->answers[0];
+            }
+
+            $answers = $request->answers;
+
+            $test_results = array_diff($answers, $right_answers);
+
+            $right_answers = 0;
+
+            foreach (json_decode($lesson->practice)->questions as $key => $question){
+                if(!array_key_exists($key, $test_results)){
+                    $right_answers++;
+                }
+            }
+
+//            return $test_results;
+            return view("app.pages.author.courses.lesson_preview.test_results_view", [
+                "item" => $course,
+                "lesson" => $lesson,
+                "results" => $test_results,
+                "right_answers" => $right_answers
+            ]);
+        } else {
+            return redirect("/" . $lang . "/my-courses");
+        }
+    }
+
+    public function submitHomeWork($lang, Request $request, Course $course, Lesson $lesson)
+    {
+        return redirect("/" . $lang . "/my-courses/course/" . $course->id);
+    }
+
+    public function deleteTest($lang, Request $request, Course $course, Lesson $lesson)
+    {
+        Lesson::where('id', '=', $lesson->id)->delete();
 
         return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.lesson_delete_success'));
     }

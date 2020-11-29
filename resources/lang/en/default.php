@@ -150,6 +150,9 @@ return [
             'move_up_title' => 'Поднять',
             'move_down_title' => 'Поднять',
             'create_lesson' => 'Создать урок',
+            'lessons_title_1' => 'Уроков',
+            'total_time_lessons' => 'Общая продолжительность',
+            'hours_title' => 'часов'
 
         ],
         'lessons' => [
@@ -214,7 +217,13 @@ return [
             'yellow_on_blue_palette' => 'Желтый на синем',
             'lesson_files' => 'Материалы урока',
             'media_attachments_poor_vision' => 'Медиа материалы (для слабовидящих)',
-            'lesson_files_poor_vision' => 'Материалы урока (для слабовидящих)'
+            'lesson_files_poor_vision' => 'Материалы урока (для слабовидящих)',
+
+            'next_lesson' => 'Следующий урок',
+            'get_task_btn' => 'Перейти к заданию',
+            'get_test_btn' => 'Пройти тест',
+            'option_title' => 'Вариант',
+            'done_test_btn' => 'Завершить',
         ],
         'profile' => [
             'title' => 'Профиль',

@@ -229,11 +229,22 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::post("/my-courses/quota-confirm-course/{item}", "CourseController@quotaConfirm");
                     // Урок
                     Route::get("/my-courses/course/{item}/theme-{theme}/create-lesson", "LessonController@createLesson");
-                    Route::get("/my-courses/course/{course}/theme-{theme}/edit-lesson-{lesson}", "LessonController@editLesson");
-                    Route::get("/my-courses/course/{course}/theme-{theme}/view-lesson-{lesson}", "LessonController@viewLesson");
+                    Route::get("/my-courses/course/{course}/edit-lesson-{lesson}", "LessonController@editLesson");
+//                    Route::get("/my-courses/course/{course}/theme-{theme}/view-lesson-{lesson}", "LessonController@viewLesson");
                     Route::post("/create-lesson/{course}/{theme}", "LessonController@storeLesson");
                     Route::post("/course-{course}/edit-lesson-{item}", "LessonController@updateLesson");
                     Route::delete("/course-{course}/theme-{theme}/lesson-{lesson}/delete-lesson-form", "LessonController@deleteLessonForm");
+                    Route::delete("/course-{course}/lesson-{lesson}/deleteTest", "LessonController@deleteTest");
+
+                    // Домашняя, Курсовая работа и Тест для Автора
+                    Route::get("/my-courses/course/{course}/view-lesson-{lesson}", "LessonController@viewLesson");
+                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/author-test", "LessonController@testView");
+                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/author-homework", "LessonController@homeWorkView");
+                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/author-coursework", "LessonController@homeWorkView");
+                    Route::post("/course-{course}/theme-{theme}/lesson-{lesson}/textwork", "LessonController@answerSend");
+                    Route::post("/course-{course}/lesson-{lesson}/author-test-submit", "LessonController@submitTest");
+                    Route::post("/course-{course}/lesson-{lesson}/author-homework-submit", "LessonController@submitHomeWork");
+                    Route::post("/course_{course}/author_lesson_finished_{lesson}", "LessonController@lessonFinished");
                     // Курсовая работа
                     Route::get("/my-courses/course/{item}/create-coursework", "LessonController@createCoursework");
                     Route::post("/course-{course}/create-coursework", "LessonController@storeCoursework");

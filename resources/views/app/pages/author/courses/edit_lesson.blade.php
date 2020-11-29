@@ -9,7 +9,6 @@
                     <li><a href="/{{$lang}}/my-courses/"
                            title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                     </li>
-                    @include('app.pages.author.courses.components.breadcrumb_course_type',['item' => $item])
                     <li><a href="/{{$lang}}/my-courses/course/{{$course->id}}"
                            title="{{$course->name}}">{{$course->name}}</a>
                     <li><span>{{__('default.pages.courses.edit_lesson_title')}}</span></li>
@@ -340,7 +339,7 @@
                                     </div>
                                     <div class="answers-bar">
                                         <span>{{__('default.pages.lessons.answers_title')}}</span>
-                                        <label class="checkbox"><input type="checkbox" name="isPictures[]"
+                                        <label class="checkbox"><input type="checkbox" name="isPictures[$isPicturesIndex]"
                                                                        value="true"><span>{{__('default.pages.lessons.pictures_type_title')}}</span></label>
                                     </div>
                                     <div class="answers">

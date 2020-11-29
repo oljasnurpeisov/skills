@@ -56,43 +56,60 @@
                             <div class="article-section">
                                 <h2 class="title-secondary">{{__('default.pages.courses.course_materials')}}</h2>
                                 <div class="article__info">
-                                    <span>Уроков: <span id="lessonsCount">0</span></span>
-                                    <span>Общая продолжительность: <span id="courseDuration">0:00</span> часов</span>
+                                    <span>{{__('default.pages.courses.lessons_title_1')}}: <span
+                                                id="lessonsCount">0</span></span>
+                                    <span>{{__('default.pages.courses.total_time_lessons')}}: <span id="courseDuration">0:00</span> {{__('default.pages.courses.hours_title')}}</span>
                                 </div>
 
-                                {{--                                <div class="course" id="courseDataContainer"></div>--}}
                                 <div class="course">
                                     <div id="courseDataContainer" style="margin-bottom: .75em;"></div>
+
                                     @if($item->courseWork() !== null)
                                         <div class="topic">
-                                            <div class="topic__header">
-                                                <div class="title">{{__('default.pages.lessons.coursework_title')}}</div>
-                                                <div class="duration"></div>
-                                                <div class="edit-buttons">
-                                                    <a href="#" title="{{__('default.pages.courses.delete_title')}}"
-                                                       class="btn-icon small btn-icon--ghost icon-trash-can"> </a>
-                                                    <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
-                                                       title="{{__('default.pages.courses.edit_title')}}"
-                                                       class="btn-icon small btn-icon--ghost icon-edit"> </a>
+                                            <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$item->courseWork()->id}}/delete-lesson-form"
+                                                  method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="topic__header">
+                                                    <div class="title"><a
+                                                                href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
+                                                    </div>
+                                                    <div class="duration"></div>
+                                                    <div class="edit-buttons">
+                                                        <button type="submit"
+                                                                title="{{__('default.pages.courses.delete_title')}}"
+                                                                class="btn-icon small btn-icon--ghost icon-trash-can"></button>
+                                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
+                                                           title="{{__('default.pages.courses.edit_title')}}"
+                                                           class="btn-icon small btn-icon--ghost icon-edit"> </a>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     @endif
                                     @if($item->finalTest() !== null)
                                         <div class="topic">
-                                            <div class="topic__header">
-                                                <div class="title">{{__('default.pages.courses.final_test_title')}}</div>
-                                                <div class="duration"></div>
-                                                <div class="edit-buttons">
-                                                    <a href="#" title="{{__('default.pages.courses.delete_title')}}"
-                                                       class="btn-icon small btn-icon--ghost icon-trash-can"> </a>
-                                                    <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final-test"
-                                                       title="{{__('default.pages.courses.edit_title')}}"
-                                                       class="btn-icon small btn-icon--ghost icon-edit"> </a>
+                                            <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$item->finalTest()->id}}/delete-lesson-form"
+                                                  method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="topic__header">
+                                                    <div class="title"><a
+                                                                href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a></div>
+                                                    <div class="duration"></div>
+                                                    <div class="edit-buttons">
+                                                        <button type="submit"
+                                                                title="{{__('default.pages.courses.delete_title')}}"
+                                                                class="btn-icon small btn-icon--ghost icon-trash-can"></button>
+                                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final-test"
+                                                           title="{{__('default.pages.courses.edit_title')}}"
+                                                           class="btn-icon small btn-icon--ghost icon-edit"> </a>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     @endif
+
                                 </div>
 
                                 <div class="row row--multiline">
