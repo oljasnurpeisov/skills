@@ -17,6 +17,79 @@ use App\Http\Controllers\App\PageController;
 |
 */
 
+// Админ панель
+Route::group(["namespace" => "Admin"], function () {
+    Route::post('/ajax_upload_image', 'AjaxUploadController@ajax_upload_image');
+    Route::post('/ajax_upload_file', 'AjaxUploadController@ajax_upload_file');
+
+    Route::post('/ajaxUploadImage', 'AjaxUploadController@ajaxUploadPic');
+    Route::post('/ajaxUploadFile', 'AjaxUploadController@ajaxUploadFile');
+
+    // Тест для Айтана
+    Route::post('/ajaxUploadImageTest', 'AjaxUploadController@ajaxUploadPicTest');
+    Route::post('/ajaxUploadFilesTest', 'AjaxUploadController@ajaxUploadFilesTest');
+});
+
+Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
+    Route::group(['prefix' => '{lang}'], function () {
+        Route::group(["prefix" => "admin"], function () {
+            Route::get("/login", "LoginController@showLoginForm");
+            Route::post("/login", "LoginController@login");
+            Route::get('/passwordReset', 'LoginController@showPasswordResetForm');
+            Route::post('/passwordReset', 'LoginController@passwordReset');
+            // Профиль
+            Route::group(['middleware' => 'check.permission:access.panel'], static function () {
+                Route::get("/", "UserController@profile");
+                Route::get("/profile", "UserController@profile");
+                Route::post("/profile", "UserController@profileUpdate");
+            });
+            // Роли
+            Route::group(['middleware' => 'check.permission:admin.roles'], static function () {
+                Route::get('/role/index', 'RoleController@index');
+                Route::get('/role/create', 'RoleController@create');
+                Route::post('/role/create', 'RoleController@store');
+                Route::get('/role/{item}', 'RoleController@edit');
+                Route::post('/role/{item}', 'RoleController@update');
+                Route::delete('/role/{item}', 'RoleController@delete');
+            });
+            // Пользователи
+            Route::group(['middleware' => 'check.permission:admin.users'], static function () {
+                Route::get('/user/index', 'UserController@index');
+                Route::get('/user/create', 'UserController@create');
+                Route::post('/user/create', 'UserController@store');
+                Route::get('/user/{item}/passwordUpdate', 'UserController@passwordUpdate');
+                Route::get('/user/{item}', 'UserController@edit');
+                Route::post('/user/{item}', 'UserController@update');
+                Route::delete('/user/{item}', 'UserController@delete');
+            });
+            // Авторы
+            Route::group(['middleware' => 'check.permission:admin.authors'], static function () {
+                Route::get('/author/index', 'AuthorController@index');
+                Route::get('/author/create', 'AuthorController@create');
+                Route::post('/author/create', 'AuthorController@store');
+                Route::get('/author/{item}/passwordUpdate', 'AuthorController@passwordUpdate');
+                Route::get('/author/{item}', 'AuthorController@edit');
+                Route::post('/author/{item}', 'AuthorController@update');
+                Route::delete('/author/{item}', 'AuthorController@delete');
+            });
+            // Курсы
+            Route::group(['middleware' => 'check.permission:admin.courses'], static function () {
+                Route::get('/courses/index', 'CourseController@index');
+                Route::get('/courses/wait_verification', 'CourseController@wait_verification');
+                Route::get('/courses/unpublished', 'CourseController@unpublished_index');
+                Route::get("/courses/drafts", "CourseController@drafts_index");
+                Route::get("/courses/deleted", "CourseController@deleted_index");
+                Route::get('/courses/published', 'CourseController@published_index');
+                Route::get('/course/{item}', 'CourseController@view');
+                Route::post('/course/publish/{item}', 'CourseController@publish');
+                Route::post('/course/unpublish/{item}', 'CourseController@unpublish');
+                Route::post('/course/quota_request/{item}', 'CourseController@quota_request');
+                Route::post('/course/quota_contract/{item}', 'CourseController@quota_contract');
+            });
+        });
+    });
+});
+
 // Таблица с уроками и темами
 Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
     Route::group(['middleware' => ["auth"]], static function () {
@@ -35,80 +108,6 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             });
         });
     });
-
-
-// Админ панель
-    Route::group(["namespace" => "Admin"], function () {
-        Route::post('/ajax_upload_image', 'AjaxUploadController@ajax_upload_image');
-        Route::post('/ajax_upload_file', 'AjaxUploadController@ajax_upload_file');
-
-        Route::post('/ajaxUploadImage', 'AjaxUploadController@ajaxUploadPic');
-        Route::post('/ajaxUploadFile', 'AjaxUploadController@ajaxUploadFile');
-
-        // Тест для Айтана
-        Route::post('/ajaxUploadImageTest', 'AjaxUploadController@ajaxUploadPicTest');
-        Route::post('/ajaxUploadFilesTest', 'AjaxUploadController@ajaxUploadFilesTest');
-
-
-        Route::group(['prefix' => '{lang}'], function () {
-            Route::group(["prefix" => "admin"], function () {
-                Route::get("/login", "LoginController@showLoginForm");
-                Route::post("/login", "LoginController@login");
-                Route::get('/passwordReset', 'LoginController@showPasswordResetForm');
-                Route::post('/passwordReset', 'LoginController@passwordReset');
-                // Профиль
-                Route::group(['middleware' => 'check.permission:access.panel'], static function () {
-                    Route::get("/", "UserController@profile");
-                    Route::get("/profile", "UserController@profile");
-                    Route::post("/profile", "UserController@profileUpdate");
-                });
-                // Роли
-                Route::group(['middleware' => 'check.permission:admin.roles'], static function () {
-                    Route::get('/role/index', 'RoleController@index');
-                    Route::get('/role/create', 'RoleController@create');
-                    Route::post('/role/create', 'RoleController@store');
-                    Route::get('/role/{item}', 'RoleController@edit');
-                    Route::post('/role/{item}', 'RoleController@update');
-                    Route::delete('/role/{item}', 'RoleController@delete');
-                });
-                // Пользователи
-                Route::group(['middleware' => 'check.permission:admin.users'], static function () {
-                    Route::get('/user/index', 'UserController@index');
-                    Route::get('/user/create', 'UserController@create');
-                    Route::post('/user/create', 'UserController@store');
-                    Route::get('/user/{item}/passwordUpdate', 'UserController@passwordUpdate');
-                    Route::get('/user/{item}', 'UserController@edit');
-                    Route::post('/user/{item}', 'UserController@update');
-                    Route::delete('/user/{item}', 'UserController@delete');
-                });
-                // Авторы
-                Route::group(['middleware' => 'check.permission:admin.authors'], static function () {
-                    Route::get('/author/index', 'AuthorController@index');
-                    Route::get('/author/create', 'AuthorController@create');
-                    Route::post('/author/create', 'AuthorController@store');
-                    Route::get('/author/{item}/passwordUpdate', 'AuthorController@passwordUpdate');
-                    Route::get('/author/{item}', 'AuthorController@edit');
-                    Route::post('/author/{item}', 'AuthorController@update');
-                    Route::delete('/author/{item}', 'AuthorController@delete');
-                });
-                // Курсы
-                Route::group(['middleware' => 'check.permission:admin.courses'], static function () {
-                    Route::get('/courses/index', 'CourseController@index');
-                    Route::get('/courses/wait_verification', 'CourseController@wait_verification');
-                    Route::get('/courses/unpublished', 'CourseController@unpublished_index');
-                    Route::get("/courses/drafts", "CourseController@drafts_index");
-                    Route::get("/courses/deleted", "CourseController@deleted_index");
-                    Route::get('/courses/published', 'CourseController@published_index');
-                    Route::get('/course/{item}', 'CourseController@view');
-                    Route::post('/course/publish/{item}', 'CourseController@publish');
-                    Route::post('/course/unpublish/{item}', 'CourseController@unpublish');
-                    Route::post('/course/quota_request/{item}', 'CourseController@quota_request');
-                    Route::post('/course/quota_contract/{item}', 'CourseController@quota_contract');
-                });
-            });
-        });
-    });
-
 
     Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
         Route::get("/", "PageController@index");
@@ -142,9 +141,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
 
     });
 
-
     Route::group(['prefix' => '{lang}'], function () {
-
         Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
             Route::get("/", "PageController@index");
             // Курсы
@@ -270,8 +267,6 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             });
         });
     });
-//    });
-//    Route::get("/", "PageController@index");
 });
 
 Route::group(["middleware" => ["web"], "namespace" => "Auth"], function () {
@@ -285,7 +280,6 @@ Route::group(["middleware" => ["web"], "namespace" => "Auth"], function () {
 Route::group(['prefix' => '{lang}'], function () {
     Auth::routes();
     Auth::routes(['reset' => false]);
-//    Auth::routes(['verify' => true]);
 
     Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

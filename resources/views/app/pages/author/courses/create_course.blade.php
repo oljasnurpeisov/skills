@@ -2,8 +2,6 @@
 
 @section('content')
     <main class="main">
-
-
         <section class="plain">
             <div class="container">
                 <ul class="breadcrumbs">
@@ -78,7 +76,7 @@
                                 <div class="avatar course-image dropzone-avatar" id="courseCover"
                                      data-url="/ajax_upload_course_image?_token={{ csrf_token() }}" data-maxsize="1"
                                      data-acceptedfiles="image/*">
-                                    <input type="text" name="image" class="avatar-path" required>
+                                    <input type="text" name="image" class="avatar-path" required hidden>
                                     <img src="/assets/img/course-thumbnail.jpg" class="course-image__preview avatar-preview" alt="">
                                     <div class="course-image__desc dropzone-default">
                                         <div class="previews-container"></div>
@@ -204,7 +202,6 @@
                             </div>
                             <div class="buttons">
                                 <button type="submit" class="btn">{{__('default.pages.courses.create')}}</button>
-{{--                                <a href="#" title="Отмена" class="ghost-btn">Отмена</a>--}}
                             </div>
                         </form>
                     </div>

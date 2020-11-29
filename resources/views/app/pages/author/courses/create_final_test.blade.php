@@ -324,7 +324,7 @@
                                     </div>
                                     <div class="answers-bar">
                                         <span>{{__('default.pages.lessons.answers_title')}}</span>
-                                        <label class="checkbox"><input type="checkbox" name="isPictures[]"
+                                        <label class="checkbox"><input type="checkbox" name="isPictures[$isPicturesIndex]"
                                                                        value="true"><span>{{__('default.pages.lessons.pictures_type_title')}}</span></label>
                                     </div>
                                     <div class="answers">
