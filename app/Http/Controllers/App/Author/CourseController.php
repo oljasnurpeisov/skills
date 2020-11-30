@@ -517,7 +517,7 @@ class CourseController extends Controller
 
         Mail::send('app.pages.page.emails.new_verification_course', ['data' => $data], function ($message) use ($item, $recipients) {
             $message->from(env("MAIL_USERNAME"), 'Enbek');
-            $message->to($recipients, 'Receiver')->subject('Подтверждение курса');
+            $message->to($recipients, 'Receiver')->subject(__('notifications.course_verification_title'));
         });
 
         return redirect("/" . app()->getLocale() . "/my-courses/on-check")->with('status', __('default.pages.courses.publish_request_message'));

@@ -87,8 +87,8 @@
                         <br>
                         <p style="
     margin: 0;
-">Новая заявка на публикацию курса на сайте <b>Enbek.kz</b> </p>
-                        <p>Для подтверждения/отклонения публикации курса перейдите по ссылке:</p>
+">{{__('notifications.new_verification_course')}} <b>{{env('APP_NAME')}}</b> </p>
+                        <p>{{__('notifications.new_verification_course_desc')}}:</p>
                         <p style="
     margin: 0;
 "><a href="{{env('APP_URL')}}/ru/admin/course/{{$data["course_id"]}}" title="" target="_blank" style="

@@ -15,4 +15,7 @@ return [
     'course_quota_access' => 'Курс :course_name теперь доступен по квоте',
     'course_quota_access_denied' => 'Вы отказались от квоты на курс :course_name',
 
+    'new_verification_course' => 'Новая заявка на публикацию курса на сайте',
+    'new_verification_course_desc' => 'Для подтверждения/отклонения публикации курса перейдите по ссылке',
+    'course_verification_title' => 'Подтверждение курса'
     ];
