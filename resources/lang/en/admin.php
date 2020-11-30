@@ -106,6 +106,7 @@ return [
             'course_unpublished' => 'Курс :course_name был успешно снят с публикации.',
             'course_quote_request' => 'Уведомление о публикации курса по квоте было отправлено автору курса',
             'quote_contract_saved' => 'Номер договора успешно сохранен',
+            'back_title' => 'Назад'
 
         ],
         'user' => [

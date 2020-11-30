@@ -87,9 +87,13 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post('/course/unpublish/{item}', 'CourseController@unpublish');
                 Route::post('/course/quota_request/{item}', 'CourseController@quota_request');
                 Route::post('/course/quota_contract/{item}', 'CourseController@quota_contract');
-                //
+                // Предосмотр курса
+                Route::post("/course_{course}/admin_lesson_finished_{lesson}", "CourseController@lessonFinished");
                 Route::get('/moderator-course-iframe-{item}', 'CourseController@viewCourse');
                 Route::get('/moderator-course-iframe-{item}/lesson-{lesson}', 'CourseController@viewLesson');
+                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-homework", "CourseController@homeWorkView");
+                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-coursework", "CourseController@homeWorkView");
+                Route::post("/course-{course}/lesson-{lesson}/admin-homework-submit", "CourseController@submitHomeWork");
             });
         });
     });

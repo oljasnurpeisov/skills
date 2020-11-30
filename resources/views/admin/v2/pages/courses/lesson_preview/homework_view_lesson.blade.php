@@ -8,27 +8,86 @@
             <div class="col-md-8">
                 <div class="article">
                     @if($lesson->type == 3)
-                        <h1 class="page-title">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</h1>
-                    @elseif($lesson->type == 4)
-                        <h1 class="page-title">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</h1>
+                        <h1 class="page-title">{{__('default.pages.lessons.coursework_title')}}</h1>
                     @else
-                        <h1 class="page-title">{{$lesson->name}}</h1>
-                    @endif
-                    <div class="article__info">
-                        <span><i class="icon-lesson"></i> {{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</span>
-                        <span><i class="icon-clock"></i> {{$time .' '. __('default.pages.lessons.hour_short_title')}} </span>
-                    </div>
-                    @if($lesson->image !== null)
-                        <div class="article__image">
-                            <img src="{{ $lesson->image }}" alt="">
-                        </div>
+                        <h1 class="page-title">{{__('default.pages.lessons.homework_title')}}</h1>
                     @endif
                     <div class="plain-text">
-                        {!! $lesson->theory !!}
+                        {!! $lesson->practice !!}
                     </div>
+                    <hr>
+                    <h2 class="title-secondary">{{__('default.pages.lessons.answer_title')}}</h2>
+                    <form action="/{{$lang}}/admin/course-{{$item->id}}/lesson-{{$lesson->id}}/admin-homework-submit"
+                          method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label class="form-group__label">{{__('default.pages.lessons.answer_text_title')}}
+                                *</label>
+                            <textarea name="answer" class="input-regular tinymce-here" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label">{{__('default.pages.courses.video_local')}}</label>
+                            <div data-url="/ajax_upload_lesson_videos?_token={{ csrf_token() }}"
+                                 data-maxfiles="5"
+                                 data-maxsize="50" data-acceptedfiles=".mp4" id="video"
+                                 class="dropzone-default dropzone-multiple">
+                                <input type="hidden" name="videos" value="">
+                                <div class="dropzone-default__info">MP4
+                                    • {{__('default.pages.courses.max_file_title')}} 50MB
+                                </div>
+                                <a href="javascript:;"
+                                   title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                   class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                <div class="previews-container"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label">{{__('default.pages.lessons.lesson_audio')}}</label>
+                            <div data-url="/ajax_upload_lesson_audios?_token={{ csrf_token() }}"
+                                 data-maxfiles="5"
+                                 data-maxsize="10" data-acceptedfiles=".mp3" id="audio"
+                                 class="dropzone-default dropzone-multiple">
+                                <input type="hidden" name="audios" value="">
+                                <div class="dropzone-default__info">MP3
+                                    • {{__('default.pages.courses.max_file_title')}} 10MB
+                                </div>
+                                <a href="javascript:;"
+                                   title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                   class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}
+                                    л</a>
+                                <div class="previews-container"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments')}}</label>
+                            <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}"
+                                 data-maxfiles="20"
+                                 data-maxsize="20"
+                                 data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg, .rar, .zip, .7z, .mp3, .mp4, .avi, .mov"
+                                 id="documents-dropzone"
+                                 class="dropzone-default dropzone-multiple">
+                                <input type="hidden" name="another_files" value="">
+                                <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX, PPTX, PNG,
+                                    JPG, RAR,
+                                    ZIP, 7z, MP3, MP4, AVI, MOV • {{__('default.pages.courses.max_file_title')}}
+                                    20 MB
+                                </div>
+                                <a href="javascript:;"
+                                   title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                   class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                <div class="previews-container"></div>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <button type="submit"
+                                    class="btn">{{__('default.pages.lessons.send_answer_title')}}</button>
+                            <a href="{{ url()->previous() }}"
+                               title="{{__('default.pages.courses.cancel_title')}}"
+                               class="ghost-btn">{{__('default.pages.courses.cancel_title')}}</a>
+                        </div>
+                    </form>
                 </div>
             </div>
-
             <div class="col-md-4">
                 @if($item->is_poor_vision == true)
                     <div class="sidebar">
@@ -142,10 +201,11 @@
                                         <ul>
                                             @if(!empty($lesson->lesson_attachment->another_files))
                                                 @foreach(json_decode($lesson->lesson_attachment->another_files) as $file)
-                                                    <li>
-                                                        <a href="{{env('APP_URL').$file}}" title="{{basename($file)}}"
+                                                    <li><a href="{{env('APP_URL').$file}}"
+                                                           title="{{basename($file)}}"
                                                            target="_blank">{{basename($file)}}&nbsp;</a>
-                                                        ({{ round(File::size(public_path($file))/1000000, 1) }} MB)
+                                                        ({{ round(File::size(public_path($file))/1000000, 1) }}
+                                                        MB)
                                                     </li>
                                                 @endforeach
                                             @endif
@@ -202,8 +262,8 @@
                                         <ul>
                                             @if(!empty($lesson->lesson_attachment->another_files_poor_vision))
                                                 @foreach(json_decode($lesson->lesson_attachment->another_files_poor_vision) as $file)
-                                                    <li>
-                                                        <a href="{{env('APP_URL').$file}}" title="{{basename($file)}}"
+                                                    <li><a href="{{env('APP_URL').$file}}"
+                                                           title="{{basename($file)}}"
                                                            target="_blank">{{basename($file)}}
                                                             &nbsp;</a>({{ round(File::size(public_path($file))/1000000, 1) }}
                                                         MB)
@@ -216,28 +276,6 @@
                             </div>
                         </div>
                     </div>
-                    <form action="/{{$lang}}/admin/course_{{$item->id}}/admin_lesson_finished_{{$lesson->id}}"
-                          method="POST">
-                        @csrf
-                        <div class="sidebar__buttons">
-                            @if($lesson->type == 1)
-                                <button type="submit" class="sidebar-btn disabled" name="action"
-                                        value="next_lesson">{{__('default.pages.lessons.next_lesson')}}</button>
-                            @elseif($lesson->type == 2 and $lesson->end_lesson_type == 1)
-                                <button type="submit" class="sidebar-btn" name="action"
-                                        value="homework">{{__('default.pages.lessons.get_task_btn')}}</button>
-                            @elseif($lesson->type == 2 and $lesson->end_lesson_type == 0)
-                                <button type="submit" class="sidebar-btn" name="action"
-                                        value="test">{{__('default.pages.lessons.get_test_btn')}}</button>
-                            @elseif($lesson->type == 3)
-                                <button type="submit" class="sidebar-btn" name="action"
-                                        value="coursework">{{__('default.pages.lessons.get_task_btn')}}</button>
-                            @elseif($lesson->type == 4)
-                                <button type="submit" class="sidebar-btn" name="action"
-                                        value="final-test">{{__('default.pages.lessons.get_test_btn')}}</button>
-                            @endif
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

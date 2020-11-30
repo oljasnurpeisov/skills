@@ -342,4 +342,38 @@ class CourseController extends Controller
 
     }
 
+    public function homeWorkView($lang, Request $request, Course $course, Lesson $lesson)
+    {
+
+        return view("admin.v2.pages.courses.lesson_preview.homework_view_lesson", [
+            "item" => $course,
+            "lesson" => $lesson
+        ]);
+
+    }
+
+    public function lessonFinished($lang, Request $request, Course $course, Lesson $lesson)
+    {
+        switch ($request->input('action')) {
+            // Переход к домашнему заданию
+            case 'homework':
+                return redirect('/' . $lang . '/admin/course-catalog/course/' . $course->id . '/lesson-' . $lesson->id . '/admin-homework');
+            // Переход к тесту
+            case 'test':
+            case 'final-test':
+                return redirect('/' . $lang . '/admin/course-catalog/course/' . $course->id . '/lesson-' . $lesson->id . '/admin-test');
+                break;
+            case 'coursework':
+                return redirect('/' . $lang . '/admin/course-catalog/course/' . $course->id . '/lesson-' . $lesson->id . '/admin-coursework');
+                break;
+        }
+
+        return redirect()->back();
+    }
+
+    public function submitHomeWork($lang, Request $request, Course $course, Lesson $lesson)
+    {
+        return redirect("/" . $lang . "/admin/moderator-course-iframe-" . $course->id);
+    }
+
 }

@@ -62,7 +62,7 @@
                                 <div class="topic">
                                     <div class="topic__header">
                                         <div class="title"><a
-                                                    href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
+                                                    href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
                                         </div>
                                         <div class="duration"></div>
                                     </div>
@@ -72,7 +72,7 @@
                                 <div class="topic">
                                     <div class="topic__header">
                                         <div class="title"><a
-                                                    href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
+                                                    href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
                                         </div>
                                         <div class="duration"></div>
 
