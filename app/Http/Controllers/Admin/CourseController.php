@@ -376,4 +376,42 @@ class CourseController extends Controller
         return redirect("/" . $lang . "/admin/moderator-course-iframe-" . $course->id);
     }
 
+    public function testView($lang, Request $request, Course $course, Lesson $lesson)
+    {
+
+        return view("admin.v2.pages.courses.lesson_preview.test_view_lesson", [
+            "item" => $course,
+            "lesson" => $lesson
+        ]);
+    }
+
+    public function submitTest($lang, Request $request, Course $course, Lesson $lesson)
+    {
+
+        $right_answers = [];
+
+        foreach (json_decode($lesson->practice)->questions as $key => $question) {
+            $right_answers[] = $question->answers[0];
+        }
+
+        $answers = $request->answers;
+
+        $test_results = array_diff($answers, $right_answers);
+
+        $right_answers = 0;
+
+        foreach (json_decode($lesson->practice)->questions as $key => $question) {
+            if (!array_key_exists($key, $test_results)) {
+                $right_answers++;
+            }
+        }
+
+        return view("admin.v2.pages.courses.lesson_preview.test_results_view", [
+            "item" => $course,
+            "lesson" => $lesson,
+            "results" => $test_results,
+            "right_answers" => $right_answers
+        ]);
+    }
+
 }

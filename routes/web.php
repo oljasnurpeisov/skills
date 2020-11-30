@@ -94,6 +94,9 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-homework", "CourseController@homeWorkView");
                 Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-coursework", "CourseController@homeWorkView");
                 Route::post("/course-{course}/lesson-{lesson}/admin-homework-submit", "CourseController@submitHomeWork");
+                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-test", "CourseController@testView");
+                Route::post("/course-{course}/lesson-{lesson}/admin-test-submit", "CourseController@submitTest");
+
             });
         });
     });

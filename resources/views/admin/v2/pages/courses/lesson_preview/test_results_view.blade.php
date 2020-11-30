@@ -1,24 +1,9 @@
-@extends('app.layout.default.template')
+@extends('admin.v2.layout.course.template')
 
 @section('content')
-    <main class="main">
-
-
-        <section class="plain">
             <div class="container">
-                <ul class="breadcrumbs">
-                    <li><a href="/{{$lang}}/my-courses"
-                           title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
-                    </li>
-                    @include('app.pages.author.courses.components.breadcrumb_course_type',['item' => $item])
-                    <li><a href="/{{$lang}}/my-courses/course/{{$item->id}}"
-                           title="{{$item->name}}">{{$item->name}}</a>
-                    </li>
-                    <li>
-                        <span>{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</span>
-                    </li>
-                </ul>
-
+                <div><a href="javascript:history.back();" title="{{__('admin.pages.courses.back_title')}}" class="link">{{__('admin.pages.courses.back_title')}}</a></div>
+                <br/>
                 <div class="row row--multiline">
                     <div class="col-md-8">
                         <div class="article">
@@ -41,7 +26,7 @@
 
                             </div>
                             <div class="buttons">
-                                <a href="/{{$lang}}/my-courses/course/{{$item->id}}" title="{{__('default.pages.lessons.to_lessons_list')}}"
+                                <a href="/{{$lang}}/admin/moderator-course-iframe-{{ $item->id }}" title="{{__('default.pages.lessons.to_lessons_list')}}"
                                    class="btn">{{__('default.pages.lessons.to_lessons_list')}}</a>
                                 <a href="{{ url()->previous() }}" title="{{__('default.pages.lessons.test_try_again')}}" class="ghost-btn">{{__('default.pages.lessons.test_try_again')}}</a>
                             </div>
@@ -239,7 +224,6 @@
                     </div>
                 </div>
             </div>
-        </section>
 
         <div id="result" style="display:none;">
             <h4 class="title-primary text-center">{{__('default.pages.lessons.result_title')}}</h4>
@@ -257,8 +241,6 @@
                 <a href="#" title="Ок" class="btn" data-fancybox-close>Ок</a>
             </div>
         </div>
-
-    </main>
 @endsection
 
 @section('scripts')

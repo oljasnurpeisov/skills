@@ -72,7 +72,7 @@
                                                                                         required><span>{{__('default.pages.lessons.option_title')}} {{$k+1}}</span></label>
                                                             <a href="{{ $answer }}"
                                                                data-fancybox="question2"
-                                                               title="{{__('default.pages.lessons.zoom_certificate')}}"><img
+                                                               title="{{__('default.pages.courses.zoom_certificate')}}"><img
                                                                         src="{{ $answer }}" alt=""></a>
                                                         </div>
                                                     @endforeach
