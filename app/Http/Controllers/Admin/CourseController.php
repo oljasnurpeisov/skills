@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 //use App\Helpers\Buffet;
 //use App\Models\Card;
 //use App\Models\Company;
+use App\Extensions\FormatDate;
 use App\Extensions\RandomStringGenerator;
 use App\Mail\QuotaMessage;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\LessonAttachments;
 use App\Models\Notification;
 use App\Models\PayInformation;
 use App\Models\Role;
@@ -324,15 +326,20 @@ class CourseController extends Controller
 
     }
 
-    public static function convertMunitesToTime(Int $minutes){
-        //Конверт числа во время
-        $format = '%02d:%02d';
+    public function viewLesson($lang, Course $item, Lesson $lesson)
+    {
+        $time = FormatDate::convertMunitesToTime($lesson->duration);
 
-        $hours = floor($minutes / 60);
-        $minutes = ($minutes % 60);
+        // Получить все файлы урока
+        $lesson_attachments = LessonAttachments::whereId($lesson->id)->first();
 
-        $time = sprintf($format, $hours, $minutes);
+        return view("admin.v2.pages.courses.lesson_preview.view_lesson", [
+            "item" => $item,
+            "lesson" => $lesson,
+            "time" => $time,
+            "lesson_attachments" => $lesson_attachments
+        ]);
 
-        return $time;
     }
+
 }

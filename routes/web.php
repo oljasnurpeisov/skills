@@ -89,6 +89,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post('/course/quota_contract/{item}', 'CourseController@quota_contract');
                 //
                 Route::get('/moderator-course-iframe-{item}', 'CourseController@viewCourse');
+                Route::get('/moderator-course-iframe-{item}/lesson-{lesson}', 'CourseController@viewLesson');
             });
         });
     });

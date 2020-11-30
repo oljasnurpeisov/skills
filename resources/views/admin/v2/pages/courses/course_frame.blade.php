@@ -33,7 +33,7 @@
                                     <span>{{__('default.pages.courses.lessons_title_1')}}: <span
                                                 id="lessonsCount">{{$item->lessons->whereIn('type', [1,2])->count()}}</span></span>
                             <span>{{__('default.pages.courses.total_time_lessons')}}: <span
-                                        id="courseDuration">{{\App\Http\Controllers\Admin\CourseController::convertMunitesToTime($item->lessons->whereIn('type', [1,2])->sum('duration'))}}</span> {{__('default.pages.courses.hours_title')}}</span>
+                                        id="courseDuration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->whereIn('type', [1,2])->sum('duration'))}}</span> {{__('default.pages.courses.hours_title')}}</span>
                         </div>
 
                         <div class="course">
@@ -42,15 +42,15 @@
                                     <div class="topic spoiler">
                                         <div class="topic__header">
                                             <div class="title">{{$theme->name}}</div>
-                                            <div class="duration">{{\App\Http\Controllers\Admin\CourseController::convertMunitesToTime($item->lessons->where('theme_id', '=', $theme->id)->sum('duration'))}}</div>
+                                            <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->where('theme_id', '=', $theme->id)->sum('duration'))}}</div>
                                         </div>
                                         <div class="topic__body">
                                             @foreach($theme->lessons as $lesson)
                                                 <div class="lesson">
                                                     <div class="title"><a
-                                                                href="/moderator-lesson-iframe.html"
+                                                                href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$lesson->id}}"
                                                                 title="{{$lesson->name}}">{{$lesson->name}}</a></div>
-                                                    <div class="duration">{{\App\Http\Controllers\Admin\CourseController::convertMunitesToTime($lesson->duration)}}</div>
+                                                    <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -382,10 +382,7 @@
                                         @if(!empty($item->finalTest()))
                                             <li>{{__('default.pages.courses.final_test_title')}}</li>
                                         @endif
-                                        {{--                                                <li>8 интерактивных задач</li>--}}
-                                        {{--                                                <li>1 статья</li>--}}
                                         <li>{{__('default.pages.courses.mobile_access_title')}}</li>
-                                        {{--                                                <li>10 файлов</li>--}}
                                         <li>{{__('default.pages.courses.certificate_access_title')}}</li>
                                     </ul>
                                     <div class="hint gray">{{__('default.pages.courses.last_updates')}}
@@ -400,7 +397,6 @@
                             <div class="sidebar-item__body">
                                 <div class="tags">
                                     <ul>
-                                        {{--                                                {{$item->skills[0]->professions->first()}}--}}
                                         @foreach($item->skills as $skill)
                                             @foreach($skill->professions as $profession)
                                                 <li>
