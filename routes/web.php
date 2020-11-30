@@ -88,14 +88,14 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post('/course/quota_request/{item}', 'CourseController@quota_request');
                 Route::post('/course/quota_contract/{item}', 'CourseController@quota_contract');
                 // Предосмотр курса
-                Route::post("/course_{course}/admin_lesson_finished_{lesson}", "CourseController@lessonFinished");
-                Route::get('/moderator-course-iframe-{item}', 'CourseController@viewCourse');
-                Route::get('/moderator-course-iframe-{item}/lesson-{lesson}', 'CourseController@viewLesson');
-                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-homework", "CourseController@homeWorkView");
-                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-coursework", "CourseController@homeWorkView");
-                Route::post("/course-{course}/lesson-{lesson}/admin-homework-submit", "CourseController@submitHomeWork");
-                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-test", "CourseController@testView");
-                Route::post("/course-{course}/lesson-{lesson}/admin-test-submit", "CourseController@submitTest");
+                Route::post("/course_{course}/admin_lesson_finished_{lesson}", "PreviewCourseController@lessonFinished");
+                Route::get('/moderator-course-iframe-{item}', 'PreviewCourseController@viewCourse');
+                Route::get('/moderator-course-iframe-{item}/lesson-{lesson}', 'PreviewCourseController@viewLesson');
+                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-homework", "PreviewCourseController@homeWorkView");
+                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-coursework", "PreviewCourseController@homeWorkView");
+                Route::post("/course-{course}/lesson-{lesson}/admin-homework-submit", "PreviewCourseController@submitHomeWork");
+                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-test", "PreviewCourseController@testView");
+                Route::post("/course-{course}/lesson-{lesson}/admin-test-submit", "PreviewCourseController@submitTest");
 
             });
         });
