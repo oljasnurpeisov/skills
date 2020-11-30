@@ -28,9 +28,11 @@ Route::group(["namespace" => "Admin"], function () {
     // Тест для Айтана
     Route::post('/ajaxUploadImageTest', 'AjaxUploadController@ajaxUploadPicTest');
     Route::post('/ajaxUploadFilesTest', 'AjaxUploadController@ajaxUploadFilesTest');
+
 });
 
 Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
+
     Route::group(['prefix' => '{lang}'], function () {
         Route::group(["prefix" => "admin"], function () {
             Route::get("/login", "LoginController@showLoginForm");
@@ -85,10 +87,13 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post('/course/unpublish/{item}', 'CourseController@unpublish');
                 Route::post('/course/quota_request/{item}', 'CourseController@quota_request');
                 Route::post('/course/quota_contract/{item}', 'CourseController@quota_contract');
+                //
+                Route::get('/moderator-course-iframe-{item}', 'CourseController@viewCourse');
             });
         });
     });
 });
+
 
 // Таблица с уроками и темами
 Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
