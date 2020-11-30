@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/assets/img/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/app/pages/page/emails/new_verification_course.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/profile/author_data_profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/profile/author_data_profile.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -258,14 +255,7 @@
       <workItem from="1606577827753" duration="5790000" />
       <workItem from="1606585892104" duration="13454000" />
       <workItem from="1606636718633" duration="18047000" />
-      <workItem from="1606727731089" duration="5350000" />
-    </task>
-    <task id="LOCAL-00020" summary="- change access lessons">
-      <created>1605042803831</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1605042803831</updated>
+      <workItem from="1606727731089" duration="8727000" />
     </task>
     <task id="LOCAL-00021" summary="- change course student">
       <created>1605051748415</created>
@@ -603,7 +593,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606731449304</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="- add email notification">
+      <created>1606734000222</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1606734000338</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TodoView">
@@ -619,7 +616,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add create course &#10;- change styles and scripts" />
     <MESSAGE value="- change student course catalog filter" />
     <MESSAGE value="- change styles and scripts &#10;- add course page" />
     <MESSAGE value="- add create coursework" />
@@ -644,7 +640,8 @@
     <MESSAGE value="- add homework and coursework preview" />
     <MESSAGE value="- add test preview on admin page" />
     <MESSAGE value="- minor fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="- minor fix" />
+    <MESSAGE value="- add email notification" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add email notification" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -667,10 +664,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1606731925590" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1606731447367">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1606733991318">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606731447367" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606733991318" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -683,10 +680,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605559122928" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1606731425645">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1606734185891">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606731425645" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606734185891" />
     <state x="572" y="146" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1605561054285">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

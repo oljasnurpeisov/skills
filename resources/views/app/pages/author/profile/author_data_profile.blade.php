@@ -60,9 +60,10 @@
                                      data-url="{{env('APP_URL')}}/ajax_upload_image?_token={{ csrf_token() }}"
                                      data-maxsize="1"
                                      data-acceptedfiles="image/*">
-                                    <img src="{{$item->avatar ?? '/assets/img/author-thumbnail.png'}}"
+                                    <img src="{{$item->getAvatar()}}"
                                          class="author-picture__preview avatar-preview" alt="">
                                     <div class="author-picture__link avatar-pick">{{__('default.pages.profile.choose_photo')}}</div>
+                                    <div class="previews-container"></div>
                                     <div class="avatar-preview-template" style="display:none;">
                                         <div class="dz-preview dz-file-preview">
                                             <div class="alert alert-danger"><span data-dz-errormessage> </span></div>
@@ -72,7 +73,7 @@
                                                data-dz-remove>{{__('default.pages.profile.delete')}}</a>
                                         </div>
                                     </div>
-                                    <input type="hidden" name="avatar" class="avatar-path" value="{{$item->avatar}}">
+                                    <input type="hidden" name="avatar" class="avatar-path" value="{{$item->getAvatar()}}">
                                 </div>
                                 <div class="rating">
                                     <div class="rating__number">{{round($average_rates, 1)}}</div>
