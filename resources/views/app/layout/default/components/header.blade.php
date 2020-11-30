@@ -4,20 +4,20 @@
             <a href="/{{$lang}}" title="{{__('default.main_title')}}" class="logo"><img src="/assets/img/logo.svg"
                                                                                         alt=""></a>
             <ul class="menu">
-                @if(Auth::user()->roles()->first()->slug == 'author')
+                @if(Auth::user()->hasRole('author'))
                     <li><a href="/{{$lang}}/profile-author-information"
                            title="{{__('default.pages.profile.title')}}">{{__('default.pages.profile.title')}}</a></li>
-                @elseif(Auth::user()->roles()->first()->slug == 'student')
+                @elseif(Auth::user()->hasRole('student'))
                     <li><a href="/{{$lang}}/student-profile"
                            title="{{__('default.pages.profile.title')}}">{{__('default.pages.profile.title')}}</a></li>
                 @endif
-                @if(Auth::user()->roles()->first()->slug == 'author')
+                @if(Auth::user()->hasRole('author'))
                     <li @if(basename(request()->path()) == 'my-courses')class="active"@endif><a
                                 href="/{{$lang}}/my-courses"
                                 title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
 
                     </li>
-                @elseif(Auth::user()->roles()->first()->slug == 'student')
+                @elseif(Auth::user()->hasRole('student'))
                     <li><a href="/{{$lang}}/student/my-courses"
                            title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
 
@@ -76,43 +76,43 @@
                 </div>
                 <div class="header-dropdown profile">
                     <div class="header-dropdown__title">
-                        @if(Auth::user()->roles()->first()->slug == 'author')
+                        @if(Auth::user()->hasRole('author'))
                             <img src="{{Auth::user()->author_info->getAvatar()}}"
                                  alt=""><i
                                     class="icon-chevron-down"> </i>
-                        @elseif(Auth::user()->roles()->first()->slug == 'student')
+                        @elseif(Auth::user()->hasRole('student'))
                             <img src="{{Auth::user()->student_info->getAvatar()}}"
                                  alt="">
                             <i class="icon-chevron-down"> </i>
                         @endif
                     </div>
                     <div class="header-dropdown__desc">
-                        @if(Auth::user()->roles()->first()->slug == 'author')
+                        @if(Auth::user()->hasRole('author'))
                             <div class="name">{{Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname}}</div>
-                        @elseif(Auth::user()->roles()->first()->slug == 'student')
+                        @elseif(Auth::user()->hasRole('student'))
                             {{--                        <div class="name">{{Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname}}</div>--}}
                         @endif
                         <hr>
                         <ul>
-                            @if(Auth::user()->roles()->first()->slug == 'author')
+                            @if(Auth::user()->hasRole('author'))
                                 <li><a href="/{{$lang}}/my-courses/statistics"
                                        title="{{__('default.pages.statistics.title')}}">{{__('default.pages.statistics.title')}}</a>
                                 </li>
                             @endif
-                            @if(Auth::user()->roles()->first()->slug == 'author')
+                            @if(Auth::user()->hasRole('author'))
                                 <li><a href="/{{$lang}}/profile-author-information"
                                        title="{{__('default.pages.profile.title')}}">{{__('default.pages.profile.title')}}</a>
                                 </li>
-                            @elseif(Auth::user()->roles()->first()->slug == 'student')
+                            @elseif(Auth::user()->hasRole('student'))
                                 <li><a href="/{{$lang}}/student-profile"
                                        title="{{__('default.pages.profile.title')}}">{{__('default.pages.profile.title')}}</a>
                                 </li>
                             @endif
-                            @if(Auth::user()->roles()->first()->slug == 'author')
+                            @if(Auth::user()->hasRole('author'))
                                 <li><a href="/{{$lang}}/my-courses"
                                        title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                                 </li>
-                            @elseif(Auth::user()->roles()->first()->slug == 'student')
+                            @elseif(Auth::user()->hasRole('student'))
                                 <li><a href="/{{$lang}}/student/my-courses"
                                        title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                                 </li>
@@ -120,7 +120,7 @@
                             <li><a href="/{{$lang}}/dialogs"
                                    title="{{__('default.pages.dialogs.title')}}">{{__('default.pages.dialogs.title')}}</a>
                             </li>
-                            @if(Auth::user()->roles()->first()->slug == 'author')
+                            @if(Auth::user()->hasRole('author'))
                                 <li><a href="/{{$lang}}/my-courses/reporting"
                                        title="{{__('default.pages.reporting.title')}}">{{__('default.pages.reporting.title')}}</a>
                                 </li>
@@ -189,35 +189,35 @@
         <div class="mob-overlay__body">
             <div class="mob-overlay__inner">
                 <div class="header-mobile__profile">
-                    @if(Auth::user()->roles()->first()->slug == 'author')
+                    @if(Auth::user()->hasRole('author'))
                         <img src="{{Auth::user()->author_info->getAvatar()}}" alt="">
                         <div class="name">{{Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname}}</div>
-                    @elseif(Auth::user()->roles()->first()->slug == 'student')
+                    @elseif(Auth::user()->hasRole('student'))
                         <img src="{{Auth::user()->student_info->getAvatar()}}" alt="">
                         <div class="name"></div>
                     @endif
                 </div>
                 <hr>
                 <ul class="header-mobile__menu">
-                    @if(Auth::user()->roles()->first()->slug == 'author')
+                    @if(Auth::user()->hasRole('author'))
                         <li><a href="/{{$lang}}/my-courses/statistics"
                                title="{{__('default.pages.statistics.title')}}">{{__('default.pages.statistics.title')}}</a>
                         </li>
                     @endif
-                    @if(Auth::user()->roles()->first()->slug == 'author')
+                    @if(Auth::user()->hasRole('author'))
                         <li><a href="/{{$lang}}/profile-author-information"
                                title="{{__('default.pages.profile.title')}}">{{__('default.pages.profile.title')}}</a>
                         </li>
-                    @elseif(Auth::user()->roles()->first()->slug == 'student')
+                    @elseif(Auth::user()->hasRole('student'))
                         <li><a href="/{{$lang}}/student-profile"
                                title="{{__('default.pages.profile.title')}}">{{__('default.pages.profile.title')}}</a>
                         </li>
                     @endif
-                    @if(Auth::user()->roles()->first()->slug == 'author')
+                    @if(Auth::user()->hasRole('author'))
                         <li><a href="/{{$lang}}/my-courses"
                                title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                         </li>
-                    @elseif(Auth::user()->roles()->first()->slug == 'student')
+                    @elseif(Auth::user()->hasRole('student'))
                         <li><a href="/{{$lang}}/student/my-courses"
                                title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                         </li>
@@ -225,7 +225,7 @@
                     <li><a href="/{{$lang}}/dialogs"
                            title="{{__('default.pages.dialogs.title')}}">{{__('default.pages.dialogs.title')}}</a>
                     </li>
-                    @if(Auth::user()->roles()->first()->slug == 'author')
+                    @if(Auth::user()->hasRole('author'))
                         <li><a href="/{{$lang}}/my-courses/reporting"
                                title="{{__('default.pages.reporting.title')}}">{{__('default.pages.reporting.title')}}</a>
                         </li>
