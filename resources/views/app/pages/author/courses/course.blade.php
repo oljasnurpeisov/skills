@@ -95,7 +95,8 @@
                                                 @method('DELETE')
                                                 <div class="topic__header">
                                                     <div class="title"><a
-                                                                href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a></div>
+                                                                href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
+                                                    </div>
                                                     <div class="duration"></div>
                                                     <div class="edit-buttons">
                                                         <button type="submit"
@@ -309,8 +310,11 @@
                                 @case(1)
                                 @case(3)
                                 <div class="col-auto">
-                                    <a href="#" title="{{__('default.pages.courses.publish_title')}}"
-                                       class="btn">{{__('default.pages.courses.publish_title')}}</a>
+                                    <form action="/{{$lang}}/publish-course/{{$item->id}}" method="POST">
+                                        @csrf
+                                        <button type="submit" title="{{__('default.pages.courses.publish_title')}}"
+                                                class="btn">{{__('default.pages.courses.publish_title')}}</button>
+                                    </form>
                                 </div>
                                 <div class="col-auto">
                                     <a href="/{{$lang}}/my-courses/edit-course/{{$item->id}}"

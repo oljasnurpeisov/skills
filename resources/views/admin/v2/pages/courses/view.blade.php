@@ -26,13 +26,14 @@
                             <li><a href="javascript:;"
                                    title="{{__('admin.pages.courses.info_about_course')}}">{{__('admin.pages.courses.info_about_course')}}</a>
                             </li>
-                            </li>
                         </ul>
                     </div>
                 </div>
                 <div class="tabs-contents">
                     <div class="active">
-                        <h4>Информация о курсе</h4>
+                        <iframe id="courseFrame" onload="iframeLoaded()"
+                                src="/{{$lang}}/admin/moderator-course-iframe-{{ $item->id }}" width="100%"
+                                scrolling="no" frameborder="0"></iframe>
                     </div>
                     <div>
                         <div class="block">
@@ -84,7 +85,8 @@
                                     @endif
                                     @break
                                     @case(2)
-                                    <form id="quota_number_form" method="POST" action="/{{$lang}}/admin/course/quota_contract/{{ $item->id }}">
+                                    <form id="quota_number_form" method="POST"
+                                          action="/{{$lang}}/admin/course/quota_contract/{{ $item->id }}">
                                         {{ csrf_field() }}
                                         <div class="input-group {{ $errors->has('quota_contract_number') ? ' has-error' : '' }}">
                                             <label class="input-group__title">Номер договора*</label>
@@ -222,5 +224,15 @@
                 });
             }
         });
+    </script>
+    <script type="text/javascript">
+        function iframeLoaded() {
+            var iFrameID = document.getElementById('courseFrame');
+            if (iFrameID) {
+                // here you can make the height, I delete it first, then I make it again
+                iFrameID.height = "";
+                iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
+            }
+        }
     </script>
 @endsection

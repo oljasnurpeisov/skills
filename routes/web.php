@@ -28,9 +28,11 @@ Route::group(["namespace" => "Admin"], function () {
     // Тест для Айтана
     Route::post('/ajaxUploadImageTest', 'AjaxUploadController@ajaxUploadPicTest');
     Route::post('/ajaxUploadFilesTest', 'AjaxUploadController@ajaxUploadFilesTest');
+
 });
 
 Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
+
     Route::group(['prefix' => '{lang}'], function () {
         Route::group(["prefix" => "admin"], function () {
             Route::get("/login", "LoginController@showLoginForm");
@@ -85,10 +87,21 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post('/course/unpublish/{item}', 'CourseController@unpublish');
                 Route::post('/course/quota_request/{item}', 'CourseController@quota_request');
                 Route::post('/course/quota_contract/{item}', 'CourseController@quota_contract');
+                // Предосмотр курса
+                Route::post("/course_{course}/admin_lesson_finished_{lesson}", "PreviewCourseController@lessonFinished");
+                Route::get('/moderator-course-iframe-{item}', 'PreviewCourseController@viewCourse');
+                Route::get('/moderator-course-iframe-{item}/lesson-{lesson}', 'PreviewCourseController@viewLesson');
+                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-homework", "PreviewCourseController@homeWorkView");
+                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-coursework", "PreviewCourseController@homeWorkView");
+                Route::post("/course-{course}/lesson-{lesson}/admin-homework-submit", "PreviewCourseController@submitHomeWork");
+                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-test", "PreviewCourseController@testView");
+                Route::post("/course-{course}/lesson-{lesson}/admin-test-submit", "PreviewCourseController@submitTest");
+
             });
         });
     });
 });
+
 
 // Таблица с уроками и темами
 Route::group(["middleware" => ["web"], "namespace" => "App"], function () {

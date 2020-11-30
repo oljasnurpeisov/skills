@@ -41,10 +41,9 @@
 
                             </div>
                             <div class="buttons">
-                                <a href="/{{$lang}}/my-courses/course/{{$item->id}}" title="К списку уроков"
-                                   class="btn">К списку уроков</a>
-                                <a href="{{ url()->previous() }}" title="Пройти повторно" class="ghost-btn">Пройти
-                                    повторно</a>
+                                <a href="/{{$lang}}/my-courses/course/{{$item->id}}" title="{{__('default.pages.lessons.to_lessons_list')}}"
+                                   class="btn">{{__('default.pages.lessons.to_lessons_list')}}</a>
+                                <a href="{{ url()->previous() }}" title="{{__('default.pages.lessons.test_try_again')}}" class="ghost-btn">{{__('default.pages.lessons.test_try_again')}}</a>
                             </div>
                         </div>
                     </div>
@@ -243,14 +242,14 @@
         </section>
 
         <div id="result" style="display:none;">
-            <h4 class="title-primary text-center">Результат</h4>
+            <h4 class="title-primary text-center">{{__('default.pages.lessons.result_title')}}</h4>
             @if($right_answers >= json_decode($lesson->practice)->passingScore)
                 <div class="plain-text gray text-center green">{{$right_answers}}
-                    /{{json_decode($lesson->practice)->passingScore}}. Тест успешно пройден!
+                    /{{json_decode($lesson->practice)->passingScore}}. {{__('default.pages.lessons.test_success_passed')}}
                 </div>
             @else
                 <div class="plain-text gray text-center red">{{$right_answers}}
-                    /{{json_decode($lesson->practice)->passingScore}}. Тест не пройден!
+                    /{{json_decode($lesson->practice)->passingScore}}. {{__('default.pages.lessons.test_failed_passed')}}
                 </div>
 
             @endif

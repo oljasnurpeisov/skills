@@ -224,6 +224,11 @@ return [
             'get_test_btn' => 'Пройти тест',
             'option_title' => 'Вариант',
             'done_test_btn' => 'Завершить',
+            'test_try_again' => 'Пройти повторно',
+            'to_lessons_list' => 'К списку уроков',
+            'result_title' => 'Результат',
+            'test_success_passed' => 'Тест успешно пройден!',
+            'test_failed_passed' => 'Тест не пройден!'
         ],
         'profile' => [
             'title' => 'Профиль',

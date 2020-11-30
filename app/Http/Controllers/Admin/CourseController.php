@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Admin;
 //use App\Helpers\Buffet;
 //use App\Models\Card;
 //use App\Models\Company;
+use App\Extensions\FormatDate;
 use App\Extensions\RandomStringGenerator;
 use App\Mail\QuotaMessage;
 use App\Models\Course;
+use App\Models\Lesson;
+use App\Models\LessonAttachments;
 use App\Models\Notification;
 use App\Models\PayInformation;
 use App\Models\Role;
+use App\Models\Theme;
 use App\Models\Type_of_ownership;
 use App\Models\User;
 use App\Models\Log;
@@ -248,5 +252,6 @@ class CourseController extends Controller
 
         return redirect()->back()->with('status', __('admin.pages.courses.quote_contract_saved'));
     }
+
 
 }

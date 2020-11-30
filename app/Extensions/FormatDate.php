@@ -25,5 +25,17 @@ class FormatDate
         return $str;
     }
 
+    public static function convertMunitesToTime(int $minutes)
+    {
+        //Конверт числа во время
+        $format = '%02d:%02d';
+
+        $hours = floor($minutes / 60);
+        $minutes = ($minutes % 60);
+
+        $time = sprintf($format, $hours, $minutes);
+
+        return $time;
+    }
 
 }
