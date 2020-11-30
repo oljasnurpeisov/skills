@@ -64,6 +64,7 @@
                                          class="author-picture__preview avatar-preview" alt="">
                                     <div class="author-picture__link avatar-pick">{{__('default.pages.profile.choose_photo')}}</div>
                                     <div class="avatar-preview-template" style="display:none;">
+                                        <div class="previews-container"></div>
                                         <div class="dz-preview dz-file-preview">
                                             <div class="alert alert-danger"><span data-dz-errormessage> </span></div>
                                             <a href="javascript:undefined;"
