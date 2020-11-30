@@ -15,6 +15,7 @@ use App\Models\Theme;
 use App\Models\Type_of_ownership;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -504,6 +505,20 @@ class CourseController extends Controller
     {
         $item->status = 1;
         $item->save();
+
+        $recipients = User::whereHas('roles', function ($q) {
+            $q->where('slug', '=', 'moderator');
+        })->pluck('email')->toArray();
+
+        $data = [
+            'course_id' => $item->id,
+        ];
+
+
+        Mail::send('app.pages.page.emails.new_verification_course', ['data' => $data], function ($message) use ($item, $recipients) {
+            $message->from(env("MAIL_USERNAME"), 'Enbek');
+            $message->to($recipients, 'Receiver')->subject('Подтверждение курса');
+        });
 
         return redirect("/" . app()->getLocale() . "/my-courses/on-check")->with('status', __('default.pages.courses.publish_request_message'));
     }
