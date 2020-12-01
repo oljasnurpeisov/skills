@@ -28,7 +28,6 @@ class UserController extends Controller
 
     public function student_profile()
     {
-        return redirect("/", 302);
         $item = StudentInformation::where('user_id', '=', Auth::user()->id)->first();
         return view("app.pages.student.profile.student_profile", [
             "item" => $item
@@ -38,19 +37,18 @@ class UserController extends Controller
     public function update_student_profile(Request $request)
     {
         $request->validate([
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'avatar' => 'required|max:255',
         ]);
+
         $item = StudentInformation::where('user_id', '=', Auth::user()->getAuthIdentifier())->first();
 
-        if (!empty($request->avatar)) {
+        if (($request->avatar != $item->avatar)) {
             File::delete(public_path($item->avatar));
 
-            $imageName = time() . '.' . $request['avatar']->getClientOriginalExtension();
-            $request['avatar']->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/profile/image'), $imageName);
-            $item->avatar = '/users/user_' . Auth::user()->getAuthIdentifier() . '/profile/image/' . $imageName;
-            $item->save();
-
+            $item->avatar = $request->avatar;
         }
+
+        $item->save();
 
         return redirect()->back()->with('status', __('default.pages.profile.save_success_message'));
     }
