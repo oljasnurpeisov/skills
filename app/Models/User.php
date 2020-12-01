@@ -147,5 +147,4 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Dialog::class, "dialog_members", "user_id", "dialog_id");
     }
 
-
 }

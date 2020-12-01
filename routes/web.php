@@ -121,13 +121,14 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             });
         });
     });
-
+    // Оплата курса
     Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
         Route::get("/", "PageController@index");
         // Оплата курса
         Route::post("/createPaymentOrder/{item}", "PaymentController@createPaymentOrder");
         Route::post("/callbackPaymentOrder", "PaymentController@callbackPaymentOrder");
     });
+    //
     Route::group(["middleware" => ["web"], "namespace" => "Author"], function () {
         // Сохранение изображения автора
         Route::post('/ajax_upload_image', 'AjaxUploadController@ajax_upload_image');
@@ -153,7 +154,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
         Route::post('/ajax_upload_lesson_another_files', 'AjaxUploadController@ajaxUploadLessonAnotherFiles');
 
     });
-
+    //
     Route::group(['prefix' => '{lang}'], function () {
         Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
             Route::get("/", "PageController@index");
@@ -178,11 +179,13 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             });
 
         });
+        //
         Route::group(["middleware" => ["web"], "namespace" => "Student"], function () {
             Route::get("/login_student", "UserController@studentAuth");
             Route::post("/login_student", "UserController@studentLogin");
 
         });
+        //
         Route::group(['middleware' => ["auth"]], static function () {
             Route::group(['middleware' => 'check.role:author'], static function () {
                 Route::group(["middleware" => ["web"], "namespace" => "Author"], function () {
@@ -198,7 +201,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::post("/update_author_data_profile", "UserController@update_author_data_profile");
                 });
             });
-//            Route::group(['middleware' => 'check.activate'], static function () {
+            //
             Route::group(['middleware' => 'check.role:student'], static function () {
                 Route::group(["middleware" => ["web"], "namespace" => "Student"], function () {
                     // Профиль обучающегося
@@ -216,6 +219,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::post("/course-{course}/theme-{theme}/lesson-{lesson}/textwork", "LessonController@answerSend");
                 });
             });
+            //
             Route::group(['middleware' => 'check.role:author'], static function () {
                 Route::group(["middleware" => ["web"], "namespace" => "Author"], function () {
                     // Мои курсы
@@ -224,9 +228,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-courses/statistics", "CourseController@statisticsCourse");
                     Route::get("/my-courses/reporting", "CourseController@reportingCourse");
                     Route::get("/export-reporting", "CourseController@exportReporting");
-
+                    // Статистика для графика
                     Route::get("/my-courses/statistics/statisticForChart", "CourseController@statisticForChart");
-
                     // Курс
                     Route::post("/create-course", "CourseController@storeCourse");
                     Route::post("/publish-course/{item}", "CourseController@publishCourse");
@@ -246,7 +249,6 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::delete("/course-{course}/theme-{theme}/lesson-{lesson}/delete-lesson-form", "LessonController@deleteLessonForm");
                     Route::delete("/course-{course}/lesson-{lesson}/delete-lesson-form", "LessonController@deleteLessonForm");
                     Route::delete("/course-{course}/lesson-{lesson}/deleteTest", "LessonController@deleteTest");
-
                     // Домашняя, Курсовая работа и Тест для Автора
                     Route::get("/my-courses/course/{course}/view-lesson-{lesson}", "LessonController@viewLesson");
                     Route::get("/course-catalog/course/{course}/lesson-{lesson}/author-test", "LessonController@testView");
@@ -277,7 +279,6 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     // Редактирование курса
                     Route::get("/my-courses/course/{item}", "CourseController@courseShow");
                 });
-
             });
         });
     });

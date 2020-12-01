@@ -99,4 +99,9 @@ class Lesson extends Model
         }
         return $this->image;
     }
+
+    public function finishedLesson(){
+
+        return $this->student_lessons()->where('is_finished', '=', true)->get();
+    }
 }

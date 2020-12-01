@@ -466,28 +466,28 @@ class CourseController extends Controller
         $audios_poor_vision = array_merge(json_decode($request->localAudio1) ?? [], $request->localAudioStored1 ?? []);
 
         // Видео с устройства
-        if($videos != $item_attachments->videos){
+        if ($videos != $item_attachments->videos) {
 
             $item_attachments->videos = $videos;
 
             $item_attachments->save();
         }
         // Аудио с устройства
-        if($audios != $item_attachments->audios){
+        if ($audios != $item_attachments->audios) {
 
             $item_attachments->audios = $audios;
 
             $item_attachments->save();
         }
         // Видео с устройства (для слабовидящих)
-        if($videos_poor_vision != $item_attachments->videos_poor_vision){
+        if ($videos_poor_vision != $item_attachments->videos_poor_vision) {
 
             $item_attachments->videos_poor_vision = $videos_poor_vision;
 
             $item_attachments->save();
         }
         // Аудио с устройства (для слабовидящих)
-        if($audios_poor_vision != $item_attachments->audios_poor_vision){
+        if ($audios_poor_vision != $item_attachments->audios_poor_vision) {
 
             $item_attachments->audios_poor_vision = $audios_poor_vision;
 
@@ -495,7 +495,6 @@ class CourseController extends Controller
         }
 
         $item_attachments->save();
-
 
 
         return redirect("/" . app()->getLocale() . "/my-courses/course/" . $item->id)->with('status', __('default.pages.profile.save_success_message'));
@@ -688,29 +687,43 @@ class CourseController extends Controller
 
     public function reportingCourse(Request $request)
     {
-        return redirect('/' . app()->getLocale() . '/my-courses', 302);
-        $date_from = $request->date_from;
-        $date_to = $request->date_to;
+//        return redirect('/' . app()->getLocale() . '/my-courses', 302);
 
-        $query = Auth::user()->courses();
+        $from = $request->date_from;
+        $to = $request->date_to;
+        $all_time = $request->all_time;
 
-        if (empty($date_to)) {
-            $query = $query->where('updated_at', '>=', date('Y-m-d', strtotime($date_from)));
-        } else if (empty($date_from)) {
-            $query = $query->where('updated_at', '<=', date('Y-m-d', strtotime($date_to)));
-        }
+        $date_from = Carbon::parse($from ?? '01.01.2020')
+            ->startOfDay()
+            ->toDateTimeString();
+        $date_to = Carbon::parse($to)
+            ->endOfDay()
+            ->toDateTimeString();
 
-        if (!empty($data_from) and !empty($date_to)) {
-            $query = $query->whereBetween('updated_at', [$data_from, $date_to]);
-        }
+//        $query = Auth::user()->courses();
+        $query = Course::where('author_id', '=', Auth::user()->id)
+            // Рейтинг
+            ->with(['rate' => function ($q) use ($date_from, $date_to) {
+            $q->whereBetween('course_rate.created_at', [$date_from, $date_to]);
+            // Записавшиеся
+        }])->with(['course_members' => function ($q) use ($date_from, $date_to) {
+            $q->whereBetween('student_course.updated_at', [$date_from, $date_to]);
+        }]);
 
         $items = $query->paginate();
 
         Session::put('export_reporting', $query->get());
 
         return view("app.pages.author.courses.reporting", [
-            'items' => $items
+            'items' => $items,
+            'from' => $from,
+            'to' => $to,
+            'all_time' => $all_time,
+            'date_from' => $date_from,
+            'date_to' => $date_to,
         ]);
+//        return $query->get();
+
     }
 
     public function exportReporting(Request $request)
@@ -744,7 +757,7 @@ class CourseController extends Controller
         return Excel::download(new ReportingExport($ar), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
-    public function getCourseData(  Course $course)
+    public function getCourseData(Course $course)
     {
         $themes = Theme::where('course_id', '=', $course->id)->with('lessons')->get();
 

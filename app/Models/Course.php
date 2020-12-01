@@ -145,4 +145,14 @@ class Course extends Model
     {
         return $this->lessons()->where('type', '=', 4)->first();
     }
+
+    public function professionsBySkills()
+    {
+        $professions = Professions::whereHas('skills', function ($q) {
+            $q->whereIn('skills.id', $this->skills->pluck('id')->toArray());
+        });
+
+        return $professions;
+    }
+
 }
