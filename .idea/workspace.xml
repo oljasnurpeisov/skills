@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- minor fix">
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exports/ReportingExport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exports/ReportingExport.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Course.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Course.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Lesson.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Lesson.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Skill.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Skill.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/StudentLesson.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/StudentLesson.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/reporting.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/reporting.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,14 +259,7 @@
       <workItem from="1606636718633" duration="18047000" />
       <workItem from="1606727731089" duration="8727000" />
       <workItem from="1606756420810" duration="8673000" />
-      <workItem from="1606766009268" duration="16496000" />
-    </task>
-    <task id="LOCAL-00023" summary="- add statistic page">
-      <created>1605515068654</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1605515068654</updated>
+      <workItem from="1606766009268" duration="17857000" />
     </task>
     <task id="LOCAL-00024" summary="- add ide helper&#10;- add export reporting">
       <created>1605567965412</created>
@@ -611,7 +597,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606759167482</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="- add author reporting">
+      <created>1606803447468</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1606803447469</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TodoView">
@@ -627,7 +620,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- change styles and scripts &#10;- add course page" />
     <MESSAGE value="- add create coursework" />
     <MESSAGE value="- fix registration &#10;- add modals" />
     <MESSAGE value="- fix author filter&#10;- add popular skills and authors on index page" />
@@ -652,7 +644,8 @@
     <MESSAGE value="- add email notification" />
     <MESSAGE value="- localized course verification mail template" />
     <MESSAGE value="- minor fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="- minor fix" />
+    <MESSAGE value="- add author reporting" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add author reporting" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -675,10 +668,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1606731925590" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1606768184168">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1606803437793">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606768184168" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606803437793" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

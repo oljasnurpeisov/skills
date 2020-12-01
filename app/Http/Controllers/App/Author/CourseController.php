@@ -704,15 +704,16 @@ class CourseController extends Controller
         $query = Course::where('author_id', '=', Auth::user()->id)
             // Рейтинг
             ->with(['rate' => function ($q) use ($date_from, $date_to) {
-            $q->whereBetween('course_rate.created_at', [$date_from, $date_to]);
-            // Записавшиеся
-        }])->with(['course_members' => function ($q) use ($date_from, $date_to) {
-            $q->whereBetween('student_course.updated_at', [$date_from, $date_to]);
-        }]);
+                $q->whereBetween('course_rate.created_at', [$date_from, $date_to]);
+                // Записавшиеся
+            }])->with(['course_members' => function ($q) use ($date_from, $date_to) {
+                $q->whereBetween('student_course.updated_at', [$date_from, $date_to]);
+            }]);
 
         $items = $query->paginate();
 
         Session::put('export_reporting', $query->get());
+        Session::put('export_reporting_dates', [$date_from, $date_to]);
 
         return view("app.pages.author.courses.reporting", [
             'items' => $items,
@@ -729,32 +730,57 @@ class CourseController extends Controller
     public function exportReporting(Request $request)
     {
         $query = Session::get('export_reporting');
-        $ar = [[]];
+        $dates = Session::get('export_reporting_dates');
+        $export = [[]];
+        $lang = app()->getLocale();
         foreach ($query as $i) {
             // Платный
             if ($i->is_paid == true) {
-                $i->is_paid = __('default.yes_title');
+                $is_paid = __('default.pages.reporting.paid_course');
             } else {
-                $i->is_paid = __('default.no_title');
+                $is_paid = __('default.pages.reporting.free_course');
             }
             // Квота
             if ($i->quota_status == 2) {
-                $i->quota_status = __('default.yes_title');
+                $is_quota = __('default.yes_title');
             } else {
-                $i->quota_status = __('default.no_title');
+                $is_quota = __('default.no_title');
+            }
+            // Наименование курса
+            $name = $i->name;
+            // Навыки
+            $skills = implode(', ', array_filter($i->skills->pluck('name_' . $lang)->toArray())) ?: implode(', ', $i->skills->pluck('name_ru')->toArray());
+            // Профессии по навыкам
+            if (count($i->professionsBySkills()->pluck('id')->toArray()) <= 0) {
+                $professions_group = '-';
+            } else {
+                $professions_group = implode(', ', array_filter($i->professionsBySkills()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professionsBySkills()->pluck('name_ru')->toArray()));
+            }
+            // Рейтинг курса
+            $course_rate = $i->rate->pluck('rate')->avg() ?? 0;
+            // Статус курса
+            $course_status = __('default.pages.reporting.statuses.' . $i->status);
+            // Стоимость курса
+            $course_cost = $i->cost ?? '-';
+            // Участников курса
+            $course_members_count = count($i->course_members->whereIn('paid_status', [1, 2]));
+            // Получили сертификат
+            $got_certificate_members_count = count($i->course_members->where('is_finished', '=', true));
+            if ($i->courseWork()) {
+                $confirmed_qualifications = $i->courseWork()->finishedLesson()->whereBetween('updated_at', $dates)->count();
+            } else {
+                $confirmed_qualifications = '-';
             }
 
-            $newElement = ['id' => $i['id'], 'author_name' => $i->user->author_info->name, 'name' => $i->name,
-                'is_paid' => $i->is_paid, 'quota_status' => $i->quota_status, 'cost' => $i->cost, 'course_members' => count($i->course_members),
-                'course_members_quota' => count($i->course_members->where('paid_status', '=', 2)), 'course_members_finished' => count($i->course_members->where('is_finished', '=', true)),
-                'course_members_certificate' => count($i->course_members->where('is_finished', '=', true)), 'rate' => count($i->rate),
-                'average_rate' => $i->rate->pluck('rate')->avg(), 'count_rate_1' => count($i->rate->where('rate', '=', 1)), 'count_rate_2' => count($i->rate->where('rate', '=', 2)),
-                'count_rate_3' => count($i->rate->where('rate', '=', 3)), 'count_rate_4' => count($i->rate->where('rate', '=', 4)), 'count_rate_5' => count($i->rate->where('rate', '=', 5))];
-            array_push($ar, $newElement);
+            $newElement = ['name' => $name, 'skills' => $skills, 'professions_group' => $professions_group, 'course_rate' => $course_rate,
+                'course_status' => $course_status, 'is_quota' => $is_quota, 'is_paid' => $is_paid, 'course_cost' => $course_cost, 'course_members_count' => $course_members_count,
+                'got_certificate_members_count' => $got_certificate_members_count, 'confirmed_qualifications' => $confirmed_qualifications];
+
+            array_push($export, $newElement);
         }
 
-        asort($ar);
-        return Excel::download(new ReportingExport($ar), '' . __('default.pages.courses.report_title') . '.xlsx');
+        asort($export);
+        return Excel::download(new ReportingExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
     public function getCourseData(Course $course)

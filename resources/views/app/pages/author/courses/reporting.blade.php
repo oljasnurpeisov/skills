@@ -101,7 +101,7 @@
                 <div class="text-right">
                     <label class="form-group__label">&nbsp;</label>
                     <div class="input-group">
-                        <a href="#" title="{{__('default.pages.reporting.export')}}"
+                        <a href="/{{$lang}}/export-reporting" title="{{__('default.pages.reporting.export')}}"
                            class="btn small">{{__('default.pages.reporting.export')}}</a>
                     </div>
                 </div>
