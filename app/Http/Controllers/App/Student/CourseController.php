@@ -19,15 +19,15 @@ class CourseController extends Controller
     public function saveCourseRate($lang, Request $request, Course $course)
     {
         $request->validate([
-            'rate' => 'required|min:1|max:1',
-            'rate_description' => 'required|max:255',
+            'rating' => 'required|min:1|max:1',
+            'review' => 'required|max:255',
         ]);
 
         $item = new CourseRate;
         $item->course_id = $course->id;
         $item->student_id = Auth::user()->id;
-        $item->rate = $request->rate;
-        $item->description = $request->rate_description;
+        $item->rate = $request->rating;
+        $item->description = $request->review;
         $item->save();
 
         return redirect('/' . $lang . '/student/my-courses');
@@ -35,7 +35,8 @@ class CourseController extends Controller
 
     public function studentCourses(Request $request, $lang)
     {
-        return redirect("/", 302);
+        // Оценка курса обучающегося
+        $student_rate = CourseRate::where('student_id', '=', Auth::user()->id)->get();
         // Получить все курсы обучающегося
         $query = StudentCourse::where('student_id', '=', Auth::user()->id)->whereHas('course', function ($q) {
             $q->where('status', '=', Course::published);
@@ -43,28 +44,19 @@ class CourseController extends Controller
         $items = $query->paginate();
 
         foreach ($items as $key => $item) {
-            // Получить все темы из курса
-            $themes = $item->course->themes()->orderBy('index_number', 'asc')->get();
-            $lessons_count = 0;
-            $finished_lessons_count = 0;
-            foreach ($themes as $theme) {
-                foreach ($theme->lessons()->get() as $lesson) {
-                    // Инкремент общего количества уроков
-                    $lessons_count++;
-                    // Инкремент выполненых уроков
-                    $confirm_lessons = StudentLesson::where('lesson_id', '=', $lesson->id)->where('is_finished', '=', true)->first();
-                    if (!empty($confirm_lessons)) {
-                        $finished_lessons_count++;
-                    }
-                }
-            }
+            $lessons_count = $item->course->lessons()->count();
+            $finished_lessons_count = $item->course->lessons()->whereHas('student_lessons', function($q){
+                $q->where('student_lesson.is_finished', '=', true);
+            })->get()->count();
+
             // Добавление новых полей в коллекцию
             $item->lessons_count = $lessons_count;
             $item->finished_lessons_count = $finished_lessons_count;
         }
 
         return view("app.pages.student.courses.my_courses", [
-            "items" => $items
+            "items" => $items,
+            "student_rate" => $student_rate
         ]);
     }
 }

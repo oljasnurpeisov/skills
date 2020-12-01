@@ -7,9 +7,6 @@
                 @if(Auth::user()->hasRole('author'))
                     <li><a href="/{{$lang}}/profile-author-information"
                            title="{{__('default.pages.profile.title')}}">{{__('default.pages.profile.title')}}</a></li>
-                @elseif(Auth::user()->hasRole('student'))
-                    <li><a href="/{{$lang}}/student-profile"
-                           title="{{__('default.pages.profile.title')}}">{{__('default.pages.profile.title')}}</a></li>
                 @endif
                 @if(Auth::user()->hasRole('author'))
                     <li @if(basename(request()->path()) == 'my-courses')class="active"@endif><a
@@ -17,9 +14,11 @@
                                 title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
 
                     </li>
-                @elseif(Auth::user()->hasRole('student'))
-                    <li><a href="/{{$lang}}/student/my-courses"
-                           title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
+                @endif
+                @if(Auth::user()->hasRole('student'))
+                    <li @if(basename(request()->path()) == 'course-catalog')class="active"@endif><a
+                                href="/{{$lang}}/course-catalog"
+                                title="{{__('default.pages.courses.course_catalog')}}">{{__('default.pages.courses.course_catalog')}}</a>
 
                     </li>
                 @endif
@@ -91,6 +90,8 @@
                             <div class="name">{{Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname}}</div>
                         @elseif(Auth::user()->hasRole('student'))
                             {{--                        <div class="name">{{Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname}}</div>--}}
+                            <div class="quotas">{{__('default.pages.profile.have_quota')}}
+                                : {{Auth::user()->student_info->quota_count}}</div>
                         @endif
                         <hr>
                         <ul>
@@ -116,6 +117,11 @@
                                 <li><a href="/{{$lang}}/student/my-courses"
                                        title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                                 </li>
+                            @endif
+                            @if(Auth::user()->hasRole('student'))
+                                    <li><a href="#"
+                                           title="{{__('default.pages.profile.my_certificates')}}">{{__('default.pages.profile.my_certificates')}}</a>
+                                    </li>
                             @endif
                             <li><a href="/{{$lang}}/dialogs"
                                    title="{{__('default.pages.dialogs.title')}}">{{__('default.pages.dialogs.title')}}</a>
@@ -257,10 +263,11 @@
                 <form class="input-search">
                     <i class="icon-search"> </i>
                     <input type="text" name="search" placeholder="Поиск">
-                    <button type="submit" class="btn-icon small icon-chevron-right"> </button>
+                    <button type="submit" class="btn-icon small icon-chevron-right"></button>
                 </form>
                 <!--<a href="#" title="Помощь" class="ghost-btn ghost-btn&#45;&#45;blue small">Помощь</a>-->
-                <a href="#authorization" data-fancybox title="{{__('default.pages.auth.auth_title')}}" class="btn small">{{__('default.pages.auth.auth_title')}}</a>
+                <a href="#authorization" data-fancybox title="{{__('default.pages.auth.auth_title')}}"
+                   class="btn small">{{__('default.pages.auth.auth_title')}}</a>
                 <div class="header-dropdown language">
                     <div class="header-dropdown__title">
                         @if($lang == 'en')
@@ -306,16 +313,17 @@
 
     <div class="mob-overlay" id="header-mobile">
         <div class="mob-overlay__top">
-            <a href="#" title="Закрыть" class="mob-overlay__close icon-close"> </a>
+            <a href="#" title="{{__('default.pages.courses.close_title')}}" class="mob-overlay__close icon-close"> </a>
         </div>
         <div class="mob-overlay__body">
             <div class="mob-overlay__inner">
                 <div class="mob-overlay__group">
-                    <a href="#authorization" data-fancybox title="{{__('default.pages.auth.auth_title')}}" class="btn">{{__('default.pages.auth.auth_title')}}</a>
+                    <a href="#authorization" data-fancybox title="{{__('default.pages.auth.auth_title')}}"
+                       class="btn">{{__('default.pages.auth.auth_title')}}</a>
                     <form class="input-search">
                         <i class="icon-search"> </i>
                         <input type="text" name="search" placeholder="Поиск">
-                        <button type="submit" class="btn-icon small icon-chevron-right"> </button>
+                        <button type="submit" class="btn-icon small icon-chevron-right"></button>
                     </form>
                 </div>
                 <hr>

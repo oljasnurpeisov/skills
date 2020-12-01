@@ -59,6 +59,7 @@ return [
             'pay_course_success' => 'Вы успешно активировали курс',
             'course_rate_title' => 'Оцените курс',
             'course_rate_description' => 'Отзыв о курсе...',
+            'course_rate_ps' => 'Оценка курса и отзыв являются обязательными условиями',
             'send_rate_button_title' => 'Отправить',
             'report_title' => 'Отчет',
             'free_title' => 'Бесплатно',
@@ -72,6 +73,9 @@ return [
             'course_catalog' => 'Каталог курсов',
             'search_placeholder' => 'Поиск по названию курса...',
             'search_button' => 'Найти',
+            'get_certificate_active' => 'Сертификат',
+            'get_certificate_inactive' => 'Сертификат не доступен',
+            'write_feedback' => 'Оставить отзыв',
 
             'course_name' => 'Название курса',
             'skills_title' => 'Навыки (мин. 1 навык)',
@@ -232,6 +236,8 @@ return [
         ],
         'profile' => [
             'title' => 'Профиль',
+            'have_quota' => 'Имеется квот',
+            'my_certificates' => 'Мои сертификаты',
             'email_confirm_error' => 'Чтобы стать автором, подтвердите свой E-mail',
             'email_confirm_success' => 'Вы успешно подтвердили E-mail',
             'profile_activate_error' => 'У вас пока нет доступа к этому разделу, заполните информацию в профиле.',
