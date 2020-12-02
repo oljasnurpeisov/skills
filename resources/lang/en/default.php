@@ -7,6 +7,8 @@ return [
     'yes_title' => 'Да',
     'no_title' => 'Нет',
     'tenge_title' => 'тг',
+    'from' => 'от',
+    'to' => 'до',
 
     'pages' => [
         'courses' => [
@@ -38,6 +40,12 @@ return [
             'rating_from' => 'Рейтинг от',
             'students_complete_course' => 'Учеников, окончивших курс (мин)',
             'course_type' => 'Вид курса',
+            'course_status' => 'Статус курса',
+            'course_in_process' => 'В процессе изучения',
+            'course_finished' => 'Изучен',
+            'course_got_certificate' => 'Получен сертификат',
+            'course_date_begin' => 'Дата записи на курс',
+            'course_end_begin' => 'Дата окончания курса',
             'choose_course_type' => 'Выберите вид курса',
             'sort_by_default' => 'По умолчанию',
             'sorting' => 'Сортировка',
