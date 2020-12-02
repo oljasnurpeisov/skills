@@ -55,14 +55,55 @@
                             </div>
                             <div class="article-section">
                                 <h2 class="title-secondary">{{__('default.pages.courses.course_materials')}}</h2>
-                                <div class="article__info">
+                                @switch($item->status)
+                                    @case(0)
+                                    @case(2)
+                                    <div class="article__info">
                                     <span>{{__('default.pages.courses.lessons_title_1')}}: <span
                                                 id="lessonsCount">0</span></span>
-                                    <span>{{__('default.pages.courses.total_time_lessons')}}: <span id="courseDuration">0:00</span> {{__('default.pages.courses.hours_title')}}</span>
-                                </div>
+                                        <span>{{__('default.pages.courses.total_time_lessons')}}: <span
+                                                    id="courseDuration">0:00</span> {{__('default.pages.courses.hours_title')}}</span>
+                                    </div>
+                                    @break
+                                    @default
+                                    <div class="article__info">
+                                    <span>{{__('default.pages.courses.lessons_title_1')}}: <span
+                                                id="lessonsCount">{{$item->lessons->whereIn('type', [1,2])->count()}}</span></span>
+                                        <span>{{__('default.pages.courses.total_time_lessons')}}: <span
+                                                    id="courseDuration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->whereIn('type', [1,2])->sum('duration'))}}</span> {{__('default.pages.courses.hours_title')}}</span>
+                                    </div>
+                                @endswitch
 
                                 <div class="course">
-                                    <div id="courseDataContainer" style="margin-bottom: .75em;"></div>
+                                    @switch($item->status)
+                                        @case(0)
+                                        @case(2)
+                                        <div id="courseDataContainer" style="margin-bottom: .75em;"></div>
+                                        @break
+                                        @default
+                                        <div class="course">
+                                            @foreach($item->themes as $theme)
+                                                <div class="topic spoiler">
+                                                    <div class="topic__header">
+                                                        <div class="title">{{$theme->name}}</div>
+                                                        <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->where('theme_id', '=', $theme->id)->sum('duration'))}}</div>
+                                                    </div>
+                                                    <div class="topic__body">
+                                                        @foreach($theme->lessons as $lesson)
+                                                            <div class="lesson">
+                                                                <div class="title"><a
+                                                                            href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$lesson->id}}"
+                                                                            title="{{$lesson->name}}">{{$lesson->name}}</a>
+                                                                </div>
+                                                                <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        @break
+                                    @endswitch
 
                                     @if($item->courseWork() !== null)
                                         <div class="topic">
@@ -75,14 +116,19 @@
                                                                 href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
                                                     </div>
                                                     <div class="duration"></div>
-                                                    <div class="edit-buttons">
-                                                        <button type="submit"
-                                                                title="{{__('default.pages.courses.delete_title')}}"
-                                                                class="btn-icon small btn-icon--ghost icon-trash-can"></button>
-                                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
-                                                           title="{{__('default.pages.courses.edit_title')}}"
-                                                           class="btn-icon small btn-icon--ghost icon-edit"> </a>
-                                                    </div>
+                                                    @switch($item->status)
+                                                        @case(0)
+                                                        @case(2)
+                                                        <div class="edit-buttons">
+                                                            <button type="submit"
+                                                                    title="{{__('default.pages.courses.delete_title')}}"
+                                                                    class="btn-icon small btn-icon--ghost icon-trash-can"></button>
+                                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
+                                                               title="{{__('default.pages.courses.edit_title')}}"
+                                                               class="btn-icon small btn-icon--ghost icon-edit"> </a>
+                                                        </div>
+                                                        @break
+                                                    @endswitch
                                                 </div>
                                             </form>
                                         </div>
@@ -98,14 +144,19 @@
                                                                 href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
                                                     </div>
                                                     <div class="duration"></div>
-                                                    <div class="edit-buttons">
-                                                        <button type="submit"
-                                                                title="{{__('default.pages.courses.delete_title')}}"
-                                                                class="btn-icon small btn-icon--ghost icon-trash-can"></button>
-                                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final-test"
-                                                           title="{{__('default.pages.courses.edit_title')}}"
-                                                           class="btn-icon small btn-icon--ghost icon-edit"> </a>
-                                                    </div>
+                                                    @switch($item->status)
+                                                        @case(0)
+                                                        @case(2)
+                                                        <div class="edit-buttons">
+                                                            <button type="submit"
+                                                                    title="{{__('default.pages.courses.delete_title')}}"
+                                                                    class="btn-icon small btn-icon--ghost icon-trash-can"></button>
+                                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final-test"
+                                                               title="{{__('default.pages.courses.edit_title')}}"
+                                                               class="btn-icon small btn-icon--ghost icon-edit"> </a>
+                                                        </div>
+                                                        @break
+                                                    @endswitch
                                                 </div>
                                             </form>
                                         </div>
@@ -113,33 +164,41 @@
 
                                 </div>
 
-                                <div class="row row--multiline">
-                                    <div class="col-auto">
-                                        <a href="#addTopicModal" title="{{__('default.pages.courses.create_theme')}}"
-                                           class="btn small"
-                                           data-fancybox>{{__('default.pages.courses.create_theme')}}</a>
+                                @switch($item->status)
+                                    @case(0)
+                                    @case(2)
+                                    <div class="row row--multiline">
+                                        <div class="col-auto">
+                                            <a href="#addTopicModal"
+                                               title="{{__('default.pages.courses.create_theme')}}"
+                                               class="btn small"
+                                               data-fancybox>{{__('default.pages.courses.create_theme')}}</a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-coursework"
+                                               title="{{__('default.pages.courses.coursework_title')}}"
+                                               class="ghost-btn ghost-btn--blue small">{{__('default.pages.courses.coursework_title')}}</a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-final-test"
+                                               title="{{__('default.pages.courses.final_test_title')}}"
+                                               class="ghost-btn ghost-btn--blue small">{{__('default.pages.courses.final_test_title')}}</a>
+                                        </div>
                                     </div>
-                                    <div class="col-auto">
-                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-coursework"
-                                           title="{{__('default.pages.courses.coursework_title')}}"
-                                           class="ghost-btn ghost-btn--blue small">{{__('default.pages.courses.coursework_title')}}</a>
-                                    </div>
-                                    <div class="col-auto">
-                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-final-test"
-                                           title="{{__('default.pages.courses.final_test_title')}}"
-                                           class="ghost-btn ghost-btn--blue small">{{__('default.pages.courses.final_test_title')}}</a>
-                                    </div>
-                                </div>
+                                    @break
+                                @endswitch
 
                                 <div id="addTopicModal" style="display:none;">
                                     <h4 class="title-primary text-center">{{__('default.pages.courses.theme_name')}}</h4>
                                     <div class="form-group">
-                                        <input type="text" name="topicName" id="newTopicNameInput" placeholder=""
+                                        <input type="text" name="topicName" id="newTopicNameInput"
+                                               placeholder=""
                                                class="input-regular" required>
                                     </div>
                                     <div class="row row--multiline justify-center">
                                         <div class="col-auto">
-                                            <a href="#" title="{{__('default.pages.courses.create')}}" class="btn"
+                                            <a href="#" title="{{__('default.pages.courses.create')}}"
+                                               class="btn"
                                                id="addTopicBtn">{{__('default.pages.courses.create')}}</a>
                                         </div>
                                         <div class="col-auto">
@@ -153,12 +212,14 @@
                                 <div id="editTopicModal" style="display:none;">
                                     <h4 class="title-primary text-center">{{__('default.pages.courses.edit_theme_title')}}</h4>
                                     <div class="form-group">
-                                        <input type="text" name="editTopicName" id="editTopicNameInput" placeholder=""
+                                        <input type="text" name="editTopicName" id="editTopicNameInput"
+                                               placeholder=""
                                                class="input-regular">
                                     </div>
                                     <div class="row row--multiline justify-center">
                                         <div class="col-auto">
-                                            <a href="#" title="{{__('default.pages.courses.save_title')}}" class="btn"
+                                            <a href="#" title="{{__('default.pages.courses.save_title')}}"
+                                               class="btn"
                                                id="editTopicBtn">{{__('default.pages.courses.save_title')}}</a>
                                         </div>
                                         <div class="col-auto">
@@ -174,7 +235,8 @@
                                     <div class="plain-text gray">{{__('default.pages.courses.confirm_theme_modal_desc')}}</div>
                                     <div class="row row--multiline justify-center">
                                         <div class="col-auto">
-                                            <a href="#" title="{{__('default.pages.courses.delete_title')}}" class="btn"
+                                            <a href="#" title="{{__('default.pages.courses.delete_title')}}"
+                                               class="btn"
                                                id="removeTopicBtn">{{__('default.pages.courses.delete_title')}}</a>
                                         </div>
                                         <div class="col-auto">
@@ -190,7 +252,8 @@
                                     <div class="plain-text gray">{{__('default.pages.courses.confirm_lesson_modal_desc')}}</div>
                                     <div class="row row--multiline justify-center">
                                         <div class="col-auto">
-                                            <a href="#" title="{{__('default.pages.courses.delete_title')}}" class="btn"
+                                            <a href="#" title="{{__('default.pages.courses.delete_title')}}"
+                                               class="btn"
                                                id="removeLessonBtn">{{__('default.pages.courses.delete_title')}}</a>
                                         </div>
                                         <div class="col-auto">
@@ -306,9 +369,9 @@
                         </div>
 
                         <div class="row row--multiline">
-                            @switch(!($item->status))
-                                @case(1)
-                                @case(3)
+                            @switch($item->status)
+                                @case(0)
+                                @case(2)
                                 <div class="col-auto">
                                     <form action="/{{$lang}}/publish-course/{{$item->id}}" method="POST">
                                         @csrf
@@ -325,6 +388,24 @@
                                     {{--                                <a href="#" title="Отмена" class="ghost-btn">Отмена</a>--}}
                                 </div>
                                 @break
+                                @case(4)
+                                <div class="col-auto">
+                                    <form action="/{{$lang}}/my-courses/reestablish-course/{{$item->id}}"
+                                          method="POST">
+                                        @csrf
+                                        <button type="submit" title="{{__('default.pages.courses.reestablish')}}"
+                                                class="ghost-btn"
+                                                style="background-color: white">{{__('default.pages.courses.reestablish')}}</button>
+                                    </form>
+                                </div>
+                                @break
+                                @default
+                                <div class="col-auto">
+
+                                    <a href="#removeCourseModal" data-fancybox title="{{__('default.pages.courses.delete_course')}}"
+                                       class="btn red">{{__('default.pages.courses.delete_course')}}</a>
+
+                                </div>
                             @endswitch
                         </div>
                     </div>
@@ -401,7 +482,8 @@
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.course_lang')}}:</div>
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.course_lang')}}:
+                                    </div>
                                     <div class="sidebar-item__body">
                                         <div class="plain-text">
                                             @if($item->lang == 0)
@@ -482,7 +564,8 @@
                                     <div class="sidebar-item__body">
                                         <div class="price">
                                             @if($item->is_paid == 1)
-                                                <div class="price__value">{{number_format($item->cost, 0, ',', ' ')}} ₸
+                                                <div class="price__value">{{number_format($item->cost, 0, ',', ' ')}}
+                                                    ₸
                                                 </div>
                                             @else
                                                 <div class="price__value">{{__('default.pages.courses.free_title')}}
@@ -510,6 +593,24 @@
                 </div>
             </div>
         </section>
+
+
+        <div id="removeCourseModal" style="display:none;">
+            <form action="/{{$lang}}/my-courses/delete-course/{{$item->id}}"
+                  method="POST">
+                @csrf
+                <h4 class="title-primary text-center">{{__('default.pages.courses.warning_title')}}!</h4>
+                <div class="plain-text gray text-center">{{__('default.pages.courses.delete_course_warning')}}</div>
+                <div class="row row--multiline justify-center">
+                    <div class="col-auto">
+                        <button type="submit" title="{{__('default.yes_title')}}" class="btn">{{__('default.yes_title')}}</button>
+                    </div>
+                    <div class="col-auto">
+                        <a href="#" title="{{__('default.no_title')}}" class="ghost-btn" data-fancybox-close>{{__('default.no_title')}}</a>
+                    </div>
+                </div>
+            </form>
+        </div>
 
     </main>
 @endsection

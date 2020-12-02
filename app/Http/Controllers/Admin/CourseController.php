@@ -175,7 +175,7 @@ class CourseController extends Controller
 
 
                     Mail::send('app.pages.page.emails.course_reject', ['data' => $data], function ($message) use ($request, $item, $user) {
-                        $message->from(env("MAIL_USERNAME"), 'Enbek');
+                        $message->from(env("MAIL_USERNAME"), 'Enbek.kz');
                         $message->to($user->email, 'Receiver')->subject('');
                     });
 
@@ -197,7 +197,7 @@ class CourseController extends Controller
     public function unpublish($lang, Course $item)
     {
         if ($item->status == 1 or $item->status == 2 or $item->status == 3) {
-            $item->status = 2;
+            $item->status = 4;
             $item->save();
 
             return redirect()->back()->with('status', trans('admin.pages.courses.course_unpublished', ['course_name' => $item->name]));

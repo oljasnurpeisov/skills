@@ -524,10 +524,15 @@ class CourseController extends Controller
 
     public function deleteCourse($lang, Course $item)
     {
-        $item->status = 4;
-        $item->save();
+        if($item->author_id == Auth::user()->id){
+            $item->status = 4;
+            $item->save();
 
-        return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('default.pages.courses.delete_request_message'));
+            return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('default.pages.courses.delete_request_message'));
+
+        }
+        return redirect("/" . app()->getLocale() . "/my-courses");
+
     }
 
     public function quotaConfirm($lang, Course $item, Request $request)
@@ -785,17 +790,20 @@ class CourseController extends Controller
 
     public function getCourseData(Course $course)
     {
-        $themes = Theme::where('course_id', '=', $course->id)->with('lessons')->get();
+        if ($course->author_id == Auth::user()->id) {
+            $themes = Theme::where('course_id', '=', $course->id)->with('lessons')->get();
 
-        foreach ($themes as $theme) {
-            $theme->order = $theme->index_number;
+            foreach ($themes as $theme) {
+                $theme->order = $theme->index_number;
 
 
-            foreach ($theme->lessons as $lesson) {
-                $lesson->order = $lesson->index_number;
+                foreach ($theme->lessons as $lesson) {
+                    $lesson->order = $lesson->index_number;
+                }
             }
-        }
 
-        return $themes;
+            return $themes;
+        }
+        return abort(404);
     }
 }

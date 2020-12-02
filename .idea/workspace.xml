@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/page/emails/quota_confirm.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/page/emails/quota_confirm.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/lesson_preview/view_lesson.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/lesson_preview/view_lesson.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,14 +262,7 @@
       <workItem from="1606636718633" duration="18047000" />
       <workItem from="1606727731089" duration="8727000" />
       <workItem from="1606756420810" duration="8673000" />
-      <workItem from="1606766009268" duration="42489000" />
-    </task>
-    <task id="LOCAL-00029" summary="- add author registration profile">
-      <created>1605703478732</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1605703478733</updated>
+      <workItem from="1606766009268" duration="50632000" />
     </task>
     <task id="LOCAL-00030" summary="- add author password change">
       <created>1605704516701</created>
@@ -602,7 +600,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606883081530</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="- update quota mail template">
+      <created>1606883272070</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1606883272070</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TodoView">
@@ -618,7 +623,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add lesson theory create" />
     <MESSAGE value="- add lesson test create&#10;- add lesson homework create&#10;- add final test create" />
     <MESSAGE value="- auth fix" />
     <MESSAGE value="- add verification email" />
@@ -643,7 +647,8 @@
     <MESSAGE value="- add student profile" />
     <MESSAGE value="- add course catalog for students" />
     <MESSAGE value="- update course reject mail template" />
-    <option name="LAST_COMMIT_MESSAGE" value="- update course reject mail template" />
+    <MESSAGE value="- update quota mail template" />
+    <option name="LAST_COMMIT_MESSAGE" value="- update quota mail template" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -666,10 +671,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1606731925590" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1606883076681">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1606883270485">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606883076681" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606883270485" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

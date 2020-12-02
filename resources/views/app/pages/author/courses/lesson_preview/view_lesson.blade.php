@@ -53,35 +53,36 @@
                                 {!! $lesson->theory !!}
                             </div>
                         </div>
-
-                        <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$lesson->id}}/delete-lesson-form"
-                              method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <div class="row row--multiline">
-                                <div class="col-auto">
-                                    @if($lesson->type == 3)
-                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
-                                           title="{{__('default.pages.courses.edit_title')}}"
-                                           class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
-                                    @elseif($lesson->type == 4)
-                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final-test"
-                                           title="{{__('default.pages.courses.edit_title')}}"
-                                           class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
-                                    @else
-                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-lesson-{{$lesson->id}}"
-                                           title="{{__('default.pages.courses.edit_title')}}"
-                                           class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
-                                    @endif
+                        @if($item->status == 1 or $item->status == 2)
+                            <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$lesson->id}}/delete-lesson-form"
+                                  method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <div class="row row--multiline">
+                                    <div class="col-auto">
+                                        @if($lesson->type == 3)
+                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
+                                               title="{{__('default.pages.courses.edit_title')}}"
+                                               class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
+                                        @elseif($lesson->type == 4)
+                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final-test"
+                                               title="{{__('default.pages.courses.edit_title')}}"
+                                               class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
+                                        @else
+                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-lesson-{{$lesson->id}}"
+                                               title="{{__('default.pages.courses.edit_title')}}"
+                                               class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
+                                        @endif
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit"
+                                                title="{{__('default.pages.courses.delete_title')}}"
+                                                class="ghost-btn"
+                                                style="background-color: white">{{__('default.pages.courses.delete_title')}}</button>
+                                    </div>
                                 </div>
-                                <div class="col-auto">
-                                    <button type="submit"
-                                            title="{{__('default.pages.courses.delete_title')}}"
-                                            class="ghost-btn"
-                                            style="background-color: white">{{__('default.pages.courses.delete_title')}}</button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        @endif
                     </div>
 
                     <div class="col-md-4">
@@ -198,7 +199,11 @@
                                                     @if(!empty($lesson->lesson_attachment->another_files))
                                                         @foreach(json_decode($lesson->lesson_attachment->another_files) as $file)
                                                             <li>
-                                                                <a href="{{env('APP_URL').$file}}" title="{{basename($file)}}" target="_blank">{{basename($file)}}&nbsp;</a> ({{ round(File::size(public_path($file))/1000000, 1) }} MB)
+                                                                <a href="{{env('APP_URL').$file}}"
+                                                                   title="{{basename($file)}}"
+                                                                   target="_blank">{{basename($file)}}&nbsp;</a>
+                                                                ({{ round(File::size(public_path($file))/1000000, 1) }}
+                                                                MB)
                                                             </li>
                                                         @endforeach
                                                     @endif
@@ -256,7 +261,11 @@
                                                     @if(!empty($lesson->lesson_attachment->another_files_poor_vision))
                                                         @foreach(json_decode($lesson->lesson_attachment->another_files_poor_vision) as $file)
                                                             <li>
-                                                                <a href="{{env('APP_URL').$file}}" title="{{basename($file)}}" target="_blank">{{basename($file)}}&nbsp;</a>({{ round(File::size(public_path($file))/1000000, 1) }} MB)
+                                                                <a href="{{env('APP_URL').$file}}"
+                                                                   title="{{basename($file)}}"
+                                                                   target="_blank">{{basename($file)}}
+                                                                    &nbsp;</a>({{ round(File::size(public_path($file))/1000000, 1) }}
+                                                                MB)
                                                             </li>
                                                         @endforeach
                                                     @endif
