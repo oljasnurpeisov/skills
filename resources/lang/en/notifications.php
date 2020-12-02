@@ -17,5 +17,8 @@ return [
 
     'new_verification_course' => 'Новая заявка на публикацию курса на сайте',
     'new_verification_course_desc' => 'Для подтверждения/отклонения публикации курса перейдите по ссылке',
-    'course_verification_title' => 'Подтверждение курса'
+    'course_verification_title' => 'Подтверждение курса',
+
+    'course_reject_description' => 'Ваш курс был отклонен',
+    'course_reject_reason' => 'Причина отклонения'
     ];
