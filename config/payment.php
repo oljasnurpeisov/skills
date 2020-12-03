@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "callbackUrl" => "https://dev3.panama.kz/callbackPaymentOrder",
+    "callbackUrl" => env('APP_URL')."/callbackPaymentOrder",
     "description" => "",
     "demo" => true
 ];
