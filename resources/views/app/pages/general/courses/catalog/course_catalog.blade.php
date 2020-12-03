@@ -32,7 +32,7 @@
                             <div class="row row--multiline">
                                 @foreach($items as $item)
                                     <div class="col-sm-6 col-md-4">
-                                        <a href="#" title="" class="card">
+                                        <a href="/{{$lang}}/course-catalog/course/{{$item->id}}" title="" class="card">
                                             @if($item->quota_status == 2)
                                                 <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
                                             @endif

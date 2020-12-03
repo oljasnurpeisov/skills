@@ -211,12 +211,12 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/student/my-courses", "CourseController@studentCourses");
                     Route::post("/course-{course}/saveCourseRate", "CourseController@saveCourseRate");
                     // Урок
-                    Route::get("/course-catalog/course/{course}/theme-{theme}/lesson-{lesson}", "LessonController@lessonView");
+                    Route::get("/course-catalog/course/{course}/lesson-{lesson}", "LessonController@lessonView");
                     Route::post("/course_{course}/theme-{theme}/student_lesson_finished_{lesson}", "LessonController@lessonFinished");
                     // Домашняя и Курсовая работа
-                    Route::get("/course-catalog/course/{course}/theme-{theme}/lesson-{lesson}/homework", "LessonController@homeworkView");
-                    Route::get("/course-catalog/course/{course}/theme-{theme}/lesson-{lesson}/coursework", "LessonController@courseworkView");
-                    Route::post("/course-{course}/theme-{theme}/lesson-{lesson}/textwork", "LessonController@answerSend");
+                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/homework", "LessonController@homeworkView");
+                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/coursework", "LessonController@courseworkView");
+                    Route::post("/course-{course}/lesson-{lesson}/textwork", "LessonController@answerSend");
                 });
             });
             //

@@ -32,10 +32,6 @@
                                 <div class="plain-text">{!! $item->teaser !!}</div>
                                 <div class="text-right">
                                     <div class="attributes">
-                                        {{--                                        <div class="attributes-item">--}}
-                                        {{--                                            <i class="icon-checklist"> </i>--}}
-                                        {{--                                            <span>174</span>--}}
-                                        {{--                                        </div>--}}
                                         <div class="attributes-item">
                                             <i class="icon-user"> </i>
                                             <span>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</span>
@@ -74,10 +70,15 @@
                                                 <div class="topic__body">
                                                     @foreach($theme->lessons as $lesson)
                                                         <div class="lesson">
-                                                            <div class="title"><a
-                                                                        href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$lesson->id}}"
-                                                                        title="{{$lesson->name}}">{{$lesson->name}}</a>
-                                                            </div>
+                                                            @if($student_course)
+                                                                <div class="title"><a
+                                                                            href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$lesson->id}}"
+                                                                            title="{{$lesson->name}}">{{$lesson->name}}</a>
+                                                                </div>
+                                                            @else
+                                                                <div class="title">{{$lesson->name}}
+                                                                </div>
+                                                            @endif
                                                             <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
                                                         </div>
                                                     @endforeach
@@ -93,23 +94,15 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <div class="topic__header">
-                                                    <div class="title"><a
-                                                                href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
-                                                    </div>
-                                                    <div class="duration"></div>
-                                                    @switch($item->status)
-                                                        @case(0)
-                                                        @case(2)
-                                                        <div class="edit-buttons">
-                                                            <button type="submit"
-                                                                    title="{{__('default.pages.courses.delete_title')}}"
-                                                                    class="btn-icon small btn-icon--ghost icon-trash-can"></button>
-                                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
-                                                               title="{{__('default.pages.courses.edit_title')}}"
-                                                               class="btn-icon small btn-icon--ghost icon-edit"> </a>
+                                                    @if($student_course)
+                                                        <div class="title"><a
+                                                                    href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
                                                         </div>
-                                                        @break
-                                                    @endswitch
+                                                    @else
+                                                        <div class="title">{{__('default.pages.lessons.coursework_title')}}
+                                                        </div>
+                                                    @endif
+                                                    <div class="duration"></div>
                                                 </div>
                                             </form>
                                         </div>
@@ -121,23 +114,15 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <div class="topic__header">
-                                                    <div class="title"><a
-                                                                href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
-                                                    </div>
-                                                    <div class="duration"></div>
-                                                    @switch($item->status)
-                                                        @case(0)
-                                                        @case(2)
-                                                        <div class="edit-buttons">
-                                                            <button type="submit"
-                                                                    title="{{__('default.pages.courses.delete_title')}}"
-                                                                    class="btn-icon small btn-icon--ghost icon-trash-can"></button>
-                                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final-test"
-                                                               title="{{__('default.pages.courses.edit_title')}}"
-                                                               class="btn-icon small btn-icon--ghost icon-edit"> </a>
+                                                    @if($student_course)
+                                                        <div class="title"><a
+                                                                    href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
                                                         </div>
-                                                        @break
-                                                    @endswitch
+                                                    @else
+                                                        <div class="title">{{__('default.pages.courses.final_test_title')}}
+                                                        </div>
+                                                    @endif
+                                                    <div class="duration"></div>
                                                 </div>
                                             </form>
                                         </div>

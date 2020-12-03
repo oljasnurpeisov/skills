@@ -18,67 +18,102 @@ use Illuminate\Support\Facades\Auth;
 
 class LessonController extends Controller
 {
-    public function lessonView($lang, Course $course, Theme $theme, Lesson $lesson)
+    public function lessonView($lang, Course $course, Lesson $lesson)
     {
-        $return_view = view("app.pages.general.lesson.view", [
+        $theme = $lesson->themes;
+        $return_view = view("app.pages.student.lesson.view", [
             "course" => $course,
             "lesson" => $lesson,
-            "theme" => $theme
+            "theme" => $theme,
         ]);
+
 
         if (!empty($lesson->lesson_student)) {
             // Если доступ к курсу есть
             if ($lesson->lesson_student->is_access == true) {
                 return $return_view;
-            // Если доступа нет, вернуться обратно
+                // Если доступа нет, вернуться обратно
             } else {
                 return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
             }
         } else {
             // Если все уроки не доступны сразу
             if ($course->is_access_all == false) {
-                // Получить первый урок и первую тему из курса
-                $first_theme = Theme::where('course_id', '=', $course->id)->orderBy('index_number', 'asc')->first();
-                $first_lesson = Lesson::where('theme_id', '=', $theme->id)->orderBy('index_number', 'asc')->first();
+                if ($theme) {
+                    // Получить первый урок и первую тему из курса
+                    $first_theme = Theme::where('course_id', '=', $course->id)->orderBy('index_number', 'asc')->first();
+                    $first_lesson = Lesson::where('theme_id', '=', $theme->id)->orderBy('index_number', 'asc')->first();
 
-                // Проверить является ли урок первым в курсе
-                if (($theme->id == $first_theme->id) and ($first_lesson->id == $lesson->id)) {
+                    // Проверить является ли урок первым в курсе
+                    if (($theme->id == $first_theme->id) and ($first_lesson->id == $lesson->id)) {
 
-                    $this->syncUserLessons($lesson->id);
+                        $this->syncUserLessons($lesson->id);
 
-                    return $return_view;
-                // Если урок не является первым в курсе
-                } else {
-                    // Получить предыдущую тему и урок из этой темы
-                    $previous_theme = Theme::where('course_id', '=', $course->id)->where('index_number', '<', $theme->index_number)->first();
-                    $previous_lesson_theme = Lesson::where('index_number', '<', $lesson->index_number)->where('theme_id', '=', $theme->id)->first();
-                    // Если предыдущая тема есть, то получить урок из предыдущей темы
-                    if (!empty($previous_theme)) {
-                        $previous_lesson = Lesson::where('theme_id', '=', $previous_theme->id)->orderBy('index_number', 'desc')->first();
-                    }
-                    // Если есть урок из предыдущей темы и он завершен, дать доступ к текущему уроку
-                    if (!empty($previous_lesson_theme)) {
-                        if (!empty($previous_lesson_theme->lesson_student->is_finished) == true) {
-                            $this->syncUserLessons($lesson->id);
-
-                            return $return_view;
-                       // Если урок из предыдущей темы не завершен, вернуться обратно
-                        } else {
-                            return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
-                        }
+                        return $return_view;
+                        // Если урок не является первым в курсе
                     } else {
-                        // Если есть урок и он завершен, дать доступ к текущему уроку
-                        if (!empty($previous_lesson) and !empty($previous_lesson->lesson_student->is_finished) == true) {
-                            $this->syncUserLessons($lesson->id);
+                        // Получить предыдущую тему и урок из этой темы
+                        $previous_theme = Theme::where('course_id', '=', $course->id)->where('index_number', '<', $theme->index_number)->first();
+                        $previous_lesson_theme = Lesson::where('index_number', '<', $lesson->index_number)->where('theme_id', '=', $theme->id)->first();
+                        // Если предыдущая тема есть, то получить урок из предыдущей темы
+                        if (!empty($previous_theme)) {
+                            $previous_lesson = Lesson::where('theme_id', '=', $previous_theme->id)->orderBy('index_number', 'desc')->first();
+                        }
+                        // Если есть урок из предыдущей темы и он завершен, дать доступ к текущему уроку
+                        if (!empty($previous_lesson_theme)) {
+                            if (!empty($previous_lesson_theme->lesson_student->is_finished) == true) {
+                                $this->syncUserLessons($lesson->id);
 
-                            return $return_view;
-                        // Если урок не завершен, вернуться обратно
+                                return $return_view;
+                                // Если урок из предыдущей темы не завершен, вернуться обратно
+                            } else {
+                                return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
+                            }
                         } else {
-                            return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
+                            // Если есть урок и он завершен, дать доступ к текущему уроку
+                            if (!empty($previous_lesson) and !empty($previous_lesson->lesson_student->is_finished) == true) {
+                                $this->syncUserLessons($lesson->id);
+
+                                return $return_view;
+                                // Если урок не завершен, вернуться обратно
+                            } else {
+                                return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
+                            }
                         }
                     }
+                } else {
+                    // Проверить завершенность уроков
+                    $all_course_lessons = $course->lessons()->whereNotIn('type', [3, 4])->pluck('id')->toArray();
+                    $finished_lessons = Auth::user()->student_lesson()->where('course_id', '=', $course->id)->where('is_finished', '=', true)->pluck('lesson_id')->toArray();
+                    // Если все курсы завершены
+                    if (array_diff($all_course_lessons, $finished_lessons) == []) {
+                        // Если это курсовая работа, дать доступ
+                        if ($lesson->type == 3) {
+                            $this->syncUserLessons($lesson->id);
+                            // Если это финальный тест, проверить завершена ли курсовая
+                        } else if ($lesson->type == 4) {
+                            $coursework = $course->lessons()->where('type', '=', 3)->first();
+                            if ($coursework) {
+                                // Если есть курсовая и она завершена, дать доступ
+                                if ($coursework->lesson_student->is_finished == true) {
+                                    $this->syncUserLessons($lesson->id);
+                                // Если есть курсовая, но она не завершена, вернуть обратно
+                                } else {
+                                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
+                                }
+                            // Если есть курсовой нет, то дать доступ
+                            } else {
+                                $this->syncUserLessons($lesson->id);
+                            }
+                        }
+
+                        return $return_view;
+                    } else {
+                        return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
+                    }
+
                 }
-            // Если все уроки доступны сразу
+                // Если все уроки доступны сразу
             } else {
                 $this->syncUserLessons($lesson->id);
 
@@ -117,7 +152,7 @@ class LessonController extends Controller
 
         if (!empty($lesson->lesson_student)) {
             if ($lesson->lesson_student->is_access == true) {
-                return view("app.pages.general.lesson.homework_view", [
+                return view("app.pages.student.lesson.homework_view", [
                     "course" => $course,
                     "lesson" => $lesson,
                     "theme" => $theme
@@ -136,7 +171,7 @@ class LessonController extends Controller
 
         if (!empty($lesson->lesson_student)) {
             if ($lesson->lesson_student->is_access == true) {
-                return view("app.pages.general.lesson.coursework_view", [
+                return view("app.pages.student.lesson.coursework_view", [
                     "course" => $course,
                     "lesson" => $lesson,
                     "theme" => $theme
