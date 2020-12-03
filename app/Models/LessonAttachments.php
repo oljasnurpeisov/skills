@@ -35,6 +35,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|LessonAttachments whereVideosPoorVisionLink($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LessonAttachments whereYoutubeLink($value)
  * @mixin \Eloquent
+ * @property string|null $another_files
+ * @property string|null $another_files_poor_vision
+ * @method static \Illuminate\Database\Eloquent\Builder|LessonAttachments whereAnotherFiles($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LessonAttachments whereAnotherFilesPoorVision($value)
  */
 class LessonAttachments extends Model
 {

@@ -64,6 +64,7 @@ use App\Notifications\VerifyEmail;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTypeOfOwnership($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\PayInformation $payment_info
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

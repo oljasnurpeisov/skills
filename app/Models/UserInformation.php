@@ -46,6 +46,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|UserInformation whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserInformation whereVkLink($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\User|null $user
  */
 class UserInformation extends Model
 {

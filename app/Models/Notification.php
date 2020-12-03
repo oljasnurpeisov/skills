@@ -24,6 +24,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Notification whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Notification whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $course_id
+ * @property-read \App\Models\Course|null $course
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification whereCourseId($value)
  */
 class Notification extends Model
 {

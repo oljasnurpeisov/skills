@@ -1,483 +1,341 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}"/>
-    <title>Laravel</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- Styles -->
-    <style>
-        /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
-        html {
-            line-height: 1.15;
-            -webkit-text-size-adjust: 100%
-        }
-
-        body {
-            margin: 0
-        }
-
-        a {
-            background-color: transparent
-        }
-
-        [hidden] {
-            display: none
-        }
-
-        html {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-            line-height: 1.5
-        }
-
-        *, :after, :before {
-            box-sizing: border-box;
-            border: 0 solid #e2e8f0
-        }
-
-        a {
-            color: inherit;
-            text-decoration: inherit
-        }
-
-        svg, video {
-            display: block;
-            vertical-align: middle
-        }
-
-        video {
-            max-width: 100%;
-            height: auto
-        }
-
-        .bg-white {
-            --bg-opacity: 1;
-            background-color: #fff;
-            background-color: rgba(255, 255, 255, var(--bg-opacity))
-        }
-
-        .bg-gray-100 {
-            --bg-opacity: 1;
-            background-color: #f7fafc;
-            background-color: rgba(247, 250, 252, var(--bg-opacity))
-        }
-
-        .border-gray-200 {
-            --border-opacity: 1;
-            border-color: #edf2f7;
-            border-color: rgba(237, 242, 247, var(--border-opacity))
-        }
-
-        .border-t {
-            border-top-width: 1px
-        }
-
-        .flex {
-            display: flex
-        }
-
-        .grid {
-            display: grid
-        }
-
-        .hidden {
-            display: none
-        }
-
-        .items-center {
-            align-items: center
-        }
-
-        .justify-center {
-            justify-content: center
-        }
-
-        .font-semibold {
-            font-weight: 600
-        }
-
-        .h-5 {
-            height: 1.25rem
-        }
-
-        .h-8 {
-            height: 2rem
-        }
-
-        .h-16 {
-            height: 4rem
-        }
-
-        .text-sm {
-            font-size: .875rem
-        }
-
-        .text-lg {
-            font-size: 1.125rem
-        }
-
-        .leading-7 {
-            line-height: 1.75rem
-        }
-
-        .mx-auto {
-            margin-left: auto;
-            margin-right: auto
-        }
-
-        .ml-1 {
-            margin-left: .25rem
-        }
-
-        .mt-2 {
-            margin-top: .5rem
-        }
-
-        .mr-2 {
-            margin-right: .5rem
-        }
-
-        .ml-2 {
-            margin-left: .5rem
-        }
-
-        .mt-4 {
-            margin-top: 1rem
-        }
-
-        .ml-4 {
-            margin-left: 1rem
-        }
-
-        .mt-8 {
-            margin-top: 2rem
-        }
-
-        .ml-12 {
-            margin-left: 3rem
-        }
-
-        .-mt-px {
-            margin-top: -1px
-        }
-
-        .max-w-6xl {
-            max-width: 72rem
-        }
-
-        .min-h-screen {
-            min-height: 100vh
-        }
-
-        .overflow-hidden {
-            overflow: hidden
-        }
-
-        .p-6 {
-            padding: 1.5rem
-        }
-
-        .py-4 {
-            padding-top: 1rem;
-            padding-bottom: 1rem
-        }
-
-        .px-6 {
-            padding-left: 1.5rem;
-            padding-right: 1.5rem
-        }
-
-        .pt-8 {
-            padding-top: 2rem
-        }
-
-        .fixed {
-            position: fixed
-        }
-
-        .relative {
-            position: relative
-        }
-
-        .top-0 {
-            top: 0
-        }
-
-        .right-0 {
-            right: 0
-        }
-
-        .shadow {
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)
-        }
-
-        .text-center {
-            text-align: center
-        }
-
-        .text-gray-200 {
-            --text-opacity: 1;
-            color: #edf2f7;
-            color: rgba(237, 242, 247, var(--text-opacity))
-        }
-
-        .text-gray-300 {
-            --text-opacity: 1;
-            color: #e2e8f0;
-            color: rgba(226, 232, 240, var(--text-opacity))
-        }
-
-        .text-gray-400 {
-            --text-opacity: 1;
-            color: #cbd5e0;
-            color: rgba(203, 213, 224, var(--text-opacity))
-        }
-
-        .text-gray-500 {
-            --text-opacity: 1;
-            color: #a0aec0;
-            color: rgba(160, 174, 192, var(--text-opacity))
-        }
-
-        .text-gray-600 {
-            --text-opacity: 1;
-            color: #718096;
-            color: rgba(113, 128, 150, var(--text-opacity))
-        }
-
-        .text-gray-700 {
-            --text-opacity: 1;
-            color: #4a5568;
-            color: rgba(74, 85, 104, var(--text-opacity))
-        }
-
-        .text-gray-900 {
-            --text-opacity: 1;
-            color: #1a202c;
-            color: rgba(26, 32, 44, var(--text-opacity))
-        }
-
-        .underline {
-            text-decoration: underline
-        }
-
-        .antialiased {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale
-        }
-
-        .w-5 {
-            width: 1.25rem
-        }
-
-        .w-8 {
-            width: 2rem
-        }
-
-        .w-auto {
-            width: auto
-        }
-
-        .grid-cols-1 {
-            grid-template-columns: repeat(1, minmax(0, 1fr))
-        }
-
-        @media (min-width: 640px) {
-            .sm\:rounded-lg {
-                border-radius: .5rem
-            }
-
-            .sm\:block {
-                display: block
-            }
-
-            .sm\:items-center {
-                align-items: center
-            }
-
-            .sm\:justify-start {
-                justify-content: flex-start
-            }
-
-            .sm\:justify-between {
-                justify-content: space-between
-            }
-
-            .sm\:h-20 {
-                height: 5rem
-            }
-
-            .sm\:ml-0 {
-                margin-left: 0
-            }
-
-            .sm\:px-6 {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem
-            }
-
-            .sm\:pt-0 {
-                padding-top: 0
-            }
-
-            .sm\:text-left {
-                text-align: left
-            }
-
-            .sm\:text-right {
-                text-align: right
-            }
-        }
-
-        @media (min-width: 768px) {
-            .md\:border-t-0 {
-                border-top-width: 0
-            }
-
-            .md\:border-l {
-                border-left-width: 1px
-            }
-
-            .md\:grid-cols-2 {
-                grid-template-columns: repeat(2, minmax(0, 1fr))
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .lg\:px-8 {
-                padding-left: 2rem;
-                padding-right: 2rem
-            }
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .dark\:bg-gray-800 {
-                --bg-opacity: 1;
-                background-color: #2d3748;
-                background-color: rgba(45, 55, 72, var(--bg-opacity))
-            }
-
-            .dark\:bg-gray-900 {
-                --bg-opacity: 1;
-                background-color: #1a202c;
-                background-color: rgba(26, 32, 44, var(--bg-opacity))
-            }
-
-            .dark\:border-gray-700 {
-                --border-opacity: 1;
-                border-color: #4a5568;
-                border-color: rgba(74, 85, 104, var(--border-opacity))
-            }
-
-            .dark\:text-white {
-                --text-opacity: 1;
-                color: #fff;
-                color: rgba(255, 255, 255, var(--text-opacity))
-            }
-
-            .dark\:text-gray-400 {
-                --text-opacity: 1;
-                color: #cbd5e0;
-                color: rgba(203, 213, 224, var(--text-opacity))
-            }
-
-            tr.collapse.in {
-                display: table-row;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <style>
-        body {
-            font-family: 'Nunito';
-        }
-    </style>
-</head>
-<body class="antialiased">
-<div class="container">
-    <br>
-    <nav class="nav nav-pills nav-justified">
-        <a class="nav-link active" href="/{{$lang}}/course-catalog">Каталог курсов</a>
-    </nav>
-    <br>
-
-    @if (Route::has('login'))
-        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-            <a href="/{{$lang}}/" class="text-sm text-gray-700 underline">Главная </a>|
-            @auth
-                <a href="/{{$lang}}/edit_profile" class="text-sm text-gray-700 underline">Профиль</a>
-                <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
-            @else
-                <a href="/{{$lang}}/login" class="text-sm text-gray-700 underline">Login</a>
-
-                @if (Route::has('register'))
-                    <a href="/{{$lang}}/login" class="ml-4 text-sm text-gray-700 underline">Register</a>
+@extends('app.layout.default.template')
+
+@section('content')
+    <main class="main">
+
+
+        <section class="plain">
+            <div class="container">
+                <ul class="breadcrumbs">
+                    <li><a href="/{{$lang}}/my-courses"
+                           title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
+                    </li>
+                    <li><a href="/{{$lang}}/my-courses/course/{{$item->id}}"
+                           title="{{$item->name}}">{{$item->name}}</a>
+                    </li>
+                    @if($lesson->type == 3)
+                        <li>
+                            <span>{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</span>
+                        </li>
+                    @elseif($lesson->type == 4)
+                        <li>
+                            <span>{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</span>
+                        </li>
+                    @else
+                        <li><span>{{$lesson->name}}</span></li>
+                    @endif
+                </ul>
+
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
                 @endif
-            @endif
-        </div>
+                @if (session('failed'))
+                    <div class="alert alert-danger">
+                        {{ session('failed') }}
+                    </div>
+                @endif
 
-    @endif
-    @if (\Session::has('status'))
-        <div class="alert alert-success">
-            <ul>
-                <li>{!! \Session::get('status') !!}</li>
-            </ul>
-        </div>
-    @endif
-    @if (\Session::has('error'))
-        <div class="alert alert-danger">
-            <ul>
-                <li>{!! \Session::get('error') !!}</li>
-            </ul>
-        </div>
-    @endif
-    <form id="lesson_form"
-          action="/{{$lang}}/course-{{$course->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}/textwork"
-          method="POST">
-        {{ csrf_field() }}
-        <div class="row my-2">
-            <div class="col-lg-8 order-lg-2">
-                <div class="tab-content py-4">
-                    <div class="tab-pane active" id="profile">
-                        <h3><b>{{__('default.pages.lessons.homework_title')}}</b>
-                        </h3>
-                        <p>{!! $lesson->text_work_description !!}</p>
-                        <div class="modal-footer">
+                <div class="row row--multiline">
+                    <div class="col-md-8">
+                        <div class="article">
+                            @if($lesson->type == 3)
+                                <h1 class="page-title">{{__('default.pages.lessons.coursework_title')}}</h1>
+                            @else
+                                <h1 class="page-title">{{__('default.pages.lessons.homework_title')}}</h1>
+                            @endif
+                            <div class="plain-text">
+                                {!! $lesson->practice !!}
+                            </div>
+                            <hr>
+                            <h2 class="title-secondary">{{__('default.pages.lessons.answer_title')}}</h2>
+                            <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$lesson->id}}/answerSend"
+                                  method="POST">
+                                @csrf
+                                <div class="form-group">
+                                    <label class="form-group__label">{{__('default.pages.lessons.answer_text_title')}}
+                                        *</label>
+                                    <textarea name="answer" class="input-regular tinymce-here"
+                                              required>{{old('answer')}}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-group__label">{{__('default.pages.courses.video_local')}}</label>
+                                    <div data-url="/ajax_upload_lesson_videos?_token={{ csrf_token() }}"
+                                         data-maxfiles="5"
+                                         data-maxsize="50" data-acceptedfiles=".mp4" id="video"
+                                         class="dropzone-default dropzone-multiple">
+                                        <input type="hidden" name="videos" value="">
+                                        <div class="dropzone-default__info">MP4
+                                            • {{__('default.pages.courses.max_file_title')}} 50MB
+                                        </div>
+                                        <a href="javascript:;"
+                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                        <div class="previews-container"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-group__label">{{__('default.pages.lessons.lesson_audio')}}</label>
+                                    <div data-url="/ajax_upload_lesson_audios?_token={{ csrf_token() }}"
+                                         data-maxfiles="5"
+                                         data-maxsize="10" data-acceptedfiles=".mp3" id="audio"
+                                         class="dropzone-default dropzone-multiple">
+                                        <input type="hidden" name="audios" value="">
+                                        <div class="dropzone-default__info">MP3
+                                            • {{__('default.pages.courses.max_file_title')}} 10MB
+                                        </div>
+                                        <a href="javascript:;"
+                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                        <div class="previews-container"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments')}} @if($lesson->type == 3)
+                                            *@endif</label>
+                                    <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}"
+                                         data-maxfiles="20"
+                                         data-maxsize="20"
+                                         data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg, .rar, .zip, .7z, .mp3, .mp4, .avi, .mov"
+                                         id="documents-dropzone"
+                                         class="dropzone-default dropzone-multiple">
+                                        <input type="hidden" name="another_files" value="">
+                                        <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX, PPTX, PNG,
+                                            JPG, RAR,
+                                            ZIP, 7z, MP3, MP4, AVI, MOV • {{__('default.pages.courses.max_file_title')}}
+                                            20 MB
+                                        </div>
+                                        <a href="javascript:;"
+                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                        <div class="previews-container"></div>
+                                    </div>
+                                    {!! $errors->first('another_files', '<div class="alert alert-danger">
+                    :message
+                </div>') !!}
+                                </div>
+                                <div class="buttons">
+                                    @if($lesson->type == 3)
+                                        <button type="submit"
+                                                class="btn" name="action"
+                                                value="coursework">{{__('default.pages.lessons.send_answer_title')}}</button>
+                                    @else
+                                        <button type="submit"
+                                                class="btn" name="action"
+                                                value="coursework">{{__('default.pages.lessons.send_answer_title')}}</button>
+                                    @endif
+                                    <a href="{{ url()->previous() }}"
+                                       title="{{__('default.pages.courses.cancel_title')}}"
+                                       class="ghost-btn">{{__('default.pages.courses.cancel_title')}}</a>
+                                </div>
+                            </form>
                         </div>
-                        <h5><b>{{__('default.pages.lessons.answer_title')}}</b></h5>
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1">{{__('default.pages.lessons.answer_text_title')}}
-                                *</label>
-                            <textarea class="form-control" name="text_answer" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="audio">{{__('default.pages.lessons.attachments_title')}}</label>
-                            <input type="file" id="files" name="files[]" multiple>
-                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        @if($item->is_poor_vision == true)
+                            <div class="sidebar">
+                                <div class="sidebar__inner">
+                                    <div class="poor-vision">
+                                        <div><label class="checkbox"><input type="checkbox"
+                                                                            data-toggle="poorVision,regularMaterials,poorVisionMaterials"
+                                                                            name="poorVision"><span><span
+                                                            class="special">{{__('default.pages.lessons.poor_vision_title')}}</span></span></label>
+                                        </div>
+                                        <div id="poorVision" style="display:none;">
+                                            <div class="sidebar-item">
+                                                <div class="sidebar-item__title">{{__('default.pages.lessons.font_size_title')}}
+                                                    :
+                                                </div>
+                                                <div class="sidebar-item__body">
+                                                    <div class="range-slider-wrapper">
+                                                        <input type="range" class="range-slider single-range-slider"
+                                                               name="fontSize" min="12"
+                                                               data-decimals="0" step="1" max="32" value="24">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="sidebar-item">
+                                                <div class="sidebar-item__title">{{__('default.pages.lessons.line_spacing')}}
+                                                    :
+                                                </div>
+                                                <div class="sidebar-item__body">
+                                                    <div class="range-slider-wrapper">
+                                                        <input type="range" class="range-slider single-range-slider"
+                                                               name="lineHeight" min="1"
+                                                               data-decimals="1" step="0.5" max="3" value="2">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="sidebar-item">
+                                                <div class="sidebar-item__title">{{__('default.pages.lessons.font')}}:
+                                                </div>
+                                                <div class="sidebar-item__body">
+                                                    <select name="fontFamily" class="selectize-regular custom"
+                                                            placeholder="Выберите шрифт">
+                                                        <option value="">{{__('default.pages.lessons.default_title')}}</option>
+                                                        <option value="Arial, sans-serif">Arial</option>
+                                                        <option value="Times New Roman, sans-serif">Times New Roman
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="sidebar-item">
+                                                <div class="sidebar-item__title">{{__('default.pages.lessons.color_palette')}}
+                                                    :
+                                                </div>
+                                                <div class="sidebar-item__body">
+                                                    <select name="colorScheme" class="selectize-regular custom color"
+                                                            placeholder="Выберите палитру">
+                                                        <option value="black-white">{{__('default.pages.lessons.default_title')}}</option>
+                                                        <option value="white-black">{{__('default.pages.lessons.white_on_black_palette')}}</option>
+                                                        <option value="yellow-blue">{{__('default.pages.lessons.yellow_on_blue_palette')}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        <div class="sidebar">
+                            <div class="sidebar__inner">
+                                <div id="regularMaterials">
+                                    <div class="sidebar-item">
+                                        <div class="sidebar-item__title">{{__('default.pages.courses.media_attachments')}}
+                                            :
+                                        </div>
+                                        <div class="sidebar-item__body">
+                                            @if(!empty($lesson->lesson_attachment->videos_link))
+                                                @foreach(json_decode($lesson->lesson_attachment->videos_link) as $video_link)
+                                                    @php
+                                                        $video_id = explode("?v=", $video_link);
+                                                        $video_id = $video_id[1];
+                                                    @endphp
+                                                    <div class="video-wrapper">
+                                                        <iframe width="560" height="315"
+                                                                src="https://www.youtube.com/embed/{{$video_id}}"
+                                                                frameborder="0"
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                allowfullscreen></iframe>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                            @if(!empty($lesson->lesson_attachment->videos))
+                                                @foreach(json_decode($lesson->lesson_attachment->videos) as $video)
+                                                    <div class="video-wrapper">
+                                                        <video controls
+                                                               src="{{$video}}"></video>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                            @if(!empty($lesson->lesson_attachment->audios))
+                                                @foreach(json_decode($lesson->lesson_attachment->audios) as $audio)
+                                                    <audio controls
+                                                           src="{{$audio}}"></audio>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
 
+                                    @if(!empty($lesson->lesson_attachment->another_files))
+                                        <div class="sidebar-item">
+                                            <div class="sidebar-item__title">{{__('default.pages.lessons.lesson_files')}}
+                                                :
+                                            </div>
+                                            <div class="sidebar-item__body">
+                                                <div class="plain-text">
+                                                    <ul>
+                                                        @foreach(json_decode($lesson->lesson_attachment->another_files) as $file)
+                                                            <li>
+                                                                <a href="{{env('APP_URL').$file}}"
+                                                                   title="{{basename($file)}}"
+                                                                   target="_blank">{{basename($file)}}&nbsp;</a>
+                                                                ({{ round(File::size(public_path($file))/1000000, 1) }}
+                                                                MB)
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div id="poorVisionMaterials" style="display:none;">
+                                    <div class="sidebar-item">
+                                        <div class="sidebar-item__title">{{__('default.pages.lessons.media_attachments_poor_vision')}}
+                                            :
+                                        </div>
+                                        <div class="sidebar-item__body">
+                                            @if(!empty($lesson->lesson_attachment->videos_poor_vision_link))
+                                                @foreach(json_decode($lesson->lesson_attachment->videos_poor_vision_link) as $video_link)
+                                                    @if($video_link !== null)
+                                                        @php
+                                                            $video_id = explode("?v=", $video_link);
+                                                            $video_id = $video_id[1] ?? null;
+                                                        @endphp
+                                                        <div class="video-wrapper">
+                                                            <iframe width="560" height="315"
+                                                                    src="https://www.youtube.com/embed/{{$video_id}}"
+                                                                    frameborder="0"
+                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                    allowfullscreen></iframe>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                            @if(!empty($lesson->lesson_attachment->videos_poor_vision))
+                                                @foreach(json_decode($lesson->lesson_attachment->videos_poor_vision) as $video)
+                                                    <div class="video-wrapper">
+                                                        <video controls
+                                                               src="{{$video}}"></video>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                            @if(!empty($lesson->lesson_attachment->audios_poor_vision))
+                                                @foreach(json_decode($lesson->lesson_attachment->audios_poor_vision) as $audio)
+                                                    <audio controls
+                                                           src="{{$audio}}"></audio>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-item">
+                                        <div class="sidebar-item__title">{{__('default.pages.lessons.lesson_files_poor_vision')}}
+                                            :
+                                        </div>
+                                        <div class="sidebar-item__body">
+                                            <div class="plain-text">
+                                                <ul>
+                                                    @if(!empty($lesson->lesson_attachment->another_files_poor_vision))
+                                                        @foreach(json_decode($lesson->lesson_attachment->another_files_poor_vision) as $file)
+                                                            <li>
+                                                                <a href="{{env('APP_URL').$file}}"
+                                                                   title="{{basename($file)}}"
+                                                                   target="_blank">{{basename($file)}}
+                                                                    &nbsp;</a>({{ round(File::size(public_path($file))/1000000, 1) }}
+                                                                MB)
+                                                            </li>
+                                                        @endforeach
+                                                    @endif
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <button name="action" value="homework" type="submit" class="btn btn-primary">{{__('default.pages.lessons.send_answer_title')}}</button>
-                <a href="{{ url()->previous() }}"
-                   class="btn btn-default">{{__('default.pages.lessons.cancel_title')}}</a>
             </div>
-        </div>
-    </form>
+        </section>
 
-</div>
-</div>
-</body>
-</html>
+    </main>
+@endsection
+
+@section('scripts')
+    <!--Only this page's scripts-->
+    <script src="/assets/js/visually-impaired-tools.js"></script>
+    <!---->
+@endsection
+

@@ -51,6 +51,13 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereVideo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereYoutubeLink($value)
  * @mixin \Eloquent
+ * @property string|null $practice
+ * @property string|null $coursework_task
+ * @property-read \App\Models\LessonAttachments|null $lesson_attachment
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StudentLesson[] $student_lessons
+ * @property-read int|null $student_lessons_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereCourseworkTask($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson wherePractice($value)
  */
 class Lesson extends Model
 {

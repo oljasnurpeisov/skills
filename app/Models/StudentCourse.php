@@ -33,6 +33,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|StudentCourse whereStudentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|StudentCourse whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Course[] $courses
+ * @property-read int|null $courses_count
  */
 class StudentCourse extends Model
 {

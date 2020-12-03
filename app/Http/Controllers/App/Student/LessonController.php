@@ -15,6 +15,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 
 class LessonController extends Controller
@@ -129,7 +130,7 @@ class LessonController extends Controller
 
     }
 
-    public function lessonFinished($lang, Request $request, Course $course, Theme $theme, Lesson $lesson)
+    public function lessonFinished($lang, Request $request, Course $course, Lesson $lesson)
     {
         switch ($request->input('action')) {
             // Переход к следующему уроку
@@ -142,11 +143,12 @@ class LessonController extends Controller
                 break;
             // Переход к домашнему заданию
             case 'homework':
-                return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/theme-' . $theme->id . '/lesson-' . $lesson->id . '/homework');
-                break;
             case 'coursework':
-                return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/theme-' . $theme->id . '/lesson-' . $lesson->id . '/coursework');
+                return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-' . $lesson->id . '/homework');
                 break;
+//            case 'coursework':
+//                return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-' . $lesson->id . '/coursework');
+//                break;
         }
 
         return redirect()->back();
@@ -158,7 +160,7 @@ class LessonController extends Controller
         if (!empty($lesson->lesson_student)) {
             if ($lesson->lesson_student->is_access == true) {
                 return view("app.pages.student.lesson.homework_view", [
-                    "course" => $course,
+                    "item" => $course,
                     "lesson" => $lesson,
                     "theme" => $theme
                 ]);
@@ -194,28 +196,48 @@ class LessonController extends Controller
     {
         if (!empty($lesson->lesson_student)) {
             if ($lesson->lesson_student->is_access == true) {
-                $attachments = array();
+
+                $request->validate([
+                    'answer' => 'required',
+                    'another_files' => 'required',
+                ]);
 
                 $answer = new StudentLessonAnswer;
                 $answer->student_lesson_id = $lesson->lesson_student->id;
                 $answer->student_id = Auth::user()->id;
                 $answer->lesson_id = $lesson->id;
-                if ($request->input('action') == 'homework') {
-                    $answer->type = 0;
-                } else {
-                    $answer->type = 1;
-                }
-                $answer->answer = $request->text_answer;
+                switch ($request->input('action')) {
+                    case('homework'):
+                    case('coursework'):
+                        $answer->type = 1;
 
-                if (!empty($request->files)) {
+                        // Видео с устройства
+                        if (($request->videos != $answer->videos)) {
+                            File::delete(public_path($answer->videos));
 
-                    foreach ($request->files as $attachment) {
-                        $attachmentName = time() . '.' . $attachment->getClientOriginalExtension();
-                        $attachment->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files'), $attachmentName);
-                        array_push($attachments, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files/' . $attachmentName);
-                    }
-                    $answer->attachments = json_encode($attachments);
+                            $answer->videos = $request->videos;
+                        }
+                        // Аудио с устройства
+                        if (($request->audios != $answer->audios)) {
+                            File::delete(public_path($answer->audios));
+
+                            $answer->audios = $request->audios;
+                        }
+                        // Другие материалы
+                        if (($request->another_files != $answer->another_files)) {
+                            File::delete(public_path($answer->another_files));
+
+                            $answer->another_files = $request->another_files;
+                        }
+                        break;
+
+                    case('test'):
+                    case('final_test'):
+                        $answer->type = 0;
+                        break;
                 }
+
+                $answer->answer = $request->answer;
 
                 $answer->save();
 
@@ -223,8 +245,17 @@ class LessonController extends Controller
                 $lesson->lesson_student->is_finished = true;
                 $lesson->lesson_student->save();
 
-                // Вернуть следующий урок
-                return $this->nextLessonShow($lang, $course, $lesson);
+                if ($lesson->type == 3) {
+
+                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('status', __('default.pages.lessons.coursework_send_success'));
+                } else if ($lesson->type == 4) {
+
+                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('status', __('default.pages.lessons.coursework_send_success'));
+                } else {
+                    // Вернуть следующий урок
+                    return $this->nextLessonShow($lang, $course, $lesson);
+                }
+
             } else {
                 return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
             }

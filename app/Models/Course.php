@@ -65,6 +65,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereVideo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereYoutubeLink($value)
  * @mixin \Eloquent
+ * @property int $is_poor_vision
+ * @property-read \App\Models\CourseAttachments|null $attachments
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
+ * @property-read int|null $users_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereIsPoorVision($value)
  */
 class Course extends Model
 {

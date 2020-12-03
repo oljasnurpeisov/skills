@@ -32,6 +32,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|PayInformation whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PayInformation whereUserId($value)
  * @mixin \Eloquent
+ * @property string|null $merchant_login
+ * @property string|null $merchant_password
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|PayInformation whereMerchantLogin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PayInformation whereMerchantPassword($value)
  */
 class PayInformation extends Model
 {

@@ -216,7 +216,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     // Домашняя и Курсовая работа
                     Route::get("/course-catalog/course/{course}/lesson-{lesson}/homework", "LessonController@homeworkView");
                     Route::get("/course-catalog/course/{course}/lesson-{lesson}/coursework", "LessonController@courseworkView");
-                    Route::post("/course-{course}/lesson-{lesson}/textwork", "LessonController@answerSend");
+                    Route::post("/course-{course}/lesson-{lesson}/answerSend", "LessonController@answerSend");
+
                 });
             });
             //
