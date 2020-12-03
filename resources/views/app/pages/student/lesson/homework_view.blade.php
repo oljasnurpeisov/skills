@@ -112,7 +112,7 @@
                                         <div class="previews-container"></div>
                                     </div>
                                     {!! $errors->first('another_files', '<div class="alert alert-danger">
-                    :message
+                    '.__('default.pages.lessons.coursework_send_failed').'
                 </div>') !!}
                                 </div>
                                 <div class="buttons">

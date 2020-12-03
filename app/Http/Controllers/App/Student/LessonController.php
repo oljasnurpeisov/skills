@@ -199,8 +199,13 @@ class LessonController extends Controller
 
                 $request->validate([
                     'answer' => 'required',
-                    'another_files' => 'required',
+                    'another_files' => 'required|not_in:[]',
                 ]);
+
+//                if ($lesson->type == 3 and $request->another_files == []) {
+//
+//                    return redirect()->back()->with('failed', __('default.pages.lessons.coursework_send_failed'));
+//                }
 
                 $answer = new StudentLessonAnswer;
                 $answer->student_lesson_id = $lesson->lesson_student->id;
