@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- minor fix">
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/StudentCourse.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/StudentCourse.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/student/courses/my_courses.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/student/courses/my_courses.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -262,14 +260,7 @@
       <workItem from="1606727731089" duration="8727000" />
       <workItem from="1606756420810" duration="8673000" />
       <workItem from="1606766009268" duration="54307000" />
-      <workItem from="1606903355593" duration="9227000" />
-    </task>
-    <task id="LOCAL-00032" summary="- add author pay information">
-      <created>1605743091188</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1605743091188</updated>
+      <workItem from="1606903355593" duration="11540000" />
     </task>
     <task id="LOCAL-00033" summary="- change author filter">
       <created>1605784779044</created>
@@ -607,7 +598,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606893919055</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="- add filter to student courses">
+      <created>1606935366132</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1606935366133</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TodoView">
@@ -623,7 +621,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- auth fix" />
     <MESSAGE value="- add verification email" />
     <MESSAGE value="- add course edit&#10;- minor fix" />
     <MESSAGE value="Merge branch 'develop' of https://gitlab.com/panamadc/enbek-backend into develop&#10;&#10;-minor fix" />
@@ -648,7 +645,8 @@
     <MESSAGE value="- update quota mail template" />
     <MESSAGE value="- add delete course on author page&#10;- add reestablish course on author page&#10;- minor fix" />
     <MESSAGE value="- minor fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="- minor fix" />
+    <MESSAGE value="- add filter to student courses" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add filter to student courses" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -671,10 +669,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1606933897686" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1606909595048">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1606935354515">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606909595048" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606935354515" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -703,9 +701,9 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1606585141565" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1606843415179">
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1606966311084">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1606843415179" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1606966311084" />
   </component>
 </project>

@@ -187,9 +187,9 @@ class UserController extends Controller
         }
         // Все ученики автора
         $author_students = [];
-        foreach ($courses->unique('student_id') as $course){
-            foreach ($course->course_members as $member){
-                array_push($author_students, $member);
+        foreach ($courses as $course) {
+            foreach ($course->course_members as $member) {
+                $author_students[$member['student_id']][] = $member;
             }
         }
         // Все ученики закончившие курс

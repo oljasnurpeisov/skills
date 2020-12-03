@@ -324,9 +324,9 @@ class CourseController extends Controller
         }
         // Все ученики автора
         $author_students = [];
-        foreach ($courses->unique('student_id') as $course) {
+        foreach ($courses as $course) {
             foreach ($course->course_members as $member) {
-                array_push($author_students, $member);
+                $author_students[$member['student_id']][] = $member;
             }
         }
         // Все ученики закончившие курс
@@ -614,11 +614,12 @@ class CourseController extends Controller
         }
         // Все ученики автора
         $author_students = [];
-        foreach ($items->unique('student_id') as $course) {
+        foreach ($items as $course) {
             foreach ($course->course_members as $member) {
-                array_push($author_students, $member);
+                $author_students[$member['student_id']][] = $member;
             }
         }
+
         // Цена купленных курсов
         $all_cost_courses = [];
         $quota_cost_courses = [];
