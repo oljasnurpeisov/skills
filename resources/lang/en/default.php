@@ -77,6 +77,7 @@ return [
             'create' => 'Создать',
             'buy_course' => 'Купить',
             'get_by_quota' => 'Пройти по квоте',
+            'get_free' => 'Пройти бесплатно',
 
             'course_catalog' => 'Каталог курсов',
             'search_placeholder' => 'Поиск по названию курса...',
@@ -143,6 +144,9 @@ return [
             'confirm_modal_title' => 'Подтверждение',
             'confirm_theme_modal_desc' => 'Вы уверены, что хотите удалить выбранную тему?',
             'confirm_lesson_modal_desc' => 'Вы уверены, что хотите удалить выбранный урок?',
+            'confirm_course_buy' => 'Вы уверены, что хотите записаться на выбранный курс?',
+            'confirm_course_by_quota' => 'Вы уверены, что хотите записаться на выбранный курс по квоте?',
+            'quota_have' => 'Осталось квот',
             'delete_title' => 'Удалить',
             'warning_title' => 'Внимание',
             'delete_course' => 'Удалить курс',

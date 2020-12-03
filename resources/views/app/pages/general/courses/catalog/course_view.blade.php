@@ -1,713 +1,530 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}"/>
-    <title>Laravel</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- Styles -->
-    <style>
-        /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
-        html {
-            line-height: 1.15;
-            -webkit-text-size-adjust: 100%
-        }
-
-        body {
-            margin: 0
-        }
-
-        a {
-            background-color: transparent
-        }
-
-        [hidden] {
-            display: none
-        }
-
-        html {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-            line-height: 1.5
-        }
-
-        *, :after, :before {
-            box-sizing: border-box;
-            border: 0 solid #e2e8f0
-        }
-
-        a {
-            color: inherit;
-            text-decoration: inherit
-        }
-
-        svg, video {
-            display: block;
-            vertical-align: middle
-        }
-
-        video {
-            max-width: 100%;
-            height: auto
-        }
-
-        .bg-white {
-            --bg-opacity: 1;
-            background-color: #fff;
-            background-color: rgba(255, 255, 255, var(--bg-opacity))
-        }
-
-        .bg-gray-100 {
-            --bg-opacity: 1;
-            background-color: #f7fafc;
-            background-color: rgba(247, 250, 252, var(--bg-opacity))
-        }
-
-        .border-gray-200 {
-            --border-opacity: 1;
-            border-color: #edf2f7;
-            border-color: rgba(237, 242, 247, var(--border-opacity))
-        }
-
-        .border-t {
-            border-top-width: 1px
-        }
-
-        .flex {
-            display: flex
-        }
-
-        .grid {
-            display: grid
-        }
-
-        .hidden {
-            display: none
-        }
-
-        .items-center {
-            align-items: center
-        }
-
-        .justify-center {
-            justify-content: center
-        }
-
-        .font-semibold {
-            font-weight: 600
-        }
-
-        .h-5 {
-            height: 1.25rem
-        }
-
-        .h-8 {
-            height: 2rem
-        }
-
-        .h-16 {
-            height: 4rem
-        }
-
-        .text-sm {
-            font-size: .875rem
-        }
-
-        .text-lg {
-            font-size: 1.125rem
-        }
-
-        .leading-7 {
-            line-height: 1.75rem
-        }
-
-        .mx-auto {
-            margin-left: auto;
-            margin-right: auto
-        }
-
-        .ml-1 {
-            margin-left: .25rem
-        }
-
-        .mt-2 {
-            margin-top: .5rem
-        }
-
-        .mr-2 {
-            margin-right: .5rem
-        }
-
-        .ml-2 {
-            margin-left: .5rem
-        }
-
-        .mt-4 {
-            margin-top: 1rem
-        }
-
-        .ml-4 {
-            margin-left: 1rem
-        }
-
-        .mt-8 {
-            margin-top: 2rem
-        }
-
-        .ml-12 {
-            margin-left: 3rem
-        }
-
-        .-mt-px {
-            margin-top: -1px
-        }
-
-        .max-w-6xl {
-            max-width: 72rem
-        }
-
-        .min-h-screen {
-            min-height: 100vh
-        }
-
-        .overflow-hidden {
-            overflow: hidden
-        }
-
-        .p-6 {
-            padding: 1.5rem
-        }
-
-        .py-4 {
-            padding-top: 1rem;
-            padding-bottom: 1rem
-        }
-
-        .px-6 {
-            padding-left: 1.5rem;
-            padding-right: 1.5rem
-        }
-
-        .pt-8 {
-            padding-top: 2rem
-        }
-
-        .fixed {
-            position: fixed
-        }
-
-        .relative {
-            position: relative
-        }
-
-        .top-0 {
-            top: 0
-        }
-
-        .right-0 {
-            right: 0
-        }
-
-        .shadow {
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06)
-        }
-
-        .text-center {
-            text-align: center
-        }
-
-        .text-gray-200 {
-            --text-opacity: 1;
-            color: #edf2f7;
-            color: rgba(237, 242, 247, var(--text-opacity))
-        }
-
-        .text-gray-300 {
-            --text-opacity: 1;
-            color: #e2e8f0;
-            color: rgba(226, 232, 240, var(--text-opacity))
-        }
-
-        .text-gray-400 {
-            --text-opacity: 1;
-            color: #cbd5e0;
-            color: rgba(203, 213, 224, var(--text-opacity))
-        }
-
-        .text-gray-500 {
-            --text-opacity: 1;
-            color: #a0aec0;
-            color: rgba(160, 174, 192, var(--text-opacity))
-        }
-
-        .text-gray-600 {
-            --text-opacity: 1;
-            color: #718096;
-            color: rgba(113, 128, 150, var(--text-opacity))
-        }
-
-        .text-gray-700 {
-            --text-opacity: 1;
-            color: #4a5568;
-            color: rgba(74, 85, 104, var(--text-opacity))
-        }
-
-        .text-gray-900 {
-            --text-opacity: 1;
-            color: #1a202c;
-            color: rgba(26, 32, 44, var(--text-opacity))
-        }
-
-        .underline {
-            text-decoration: underline
-        }
-
-        .antialiased {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale
-        }
-
-        .w-5 {
-            width: 1.25rem
-        }
-
-        .w-8 {
-            width: 2rem
-        }
-
-        .w-auto {
-            width: auto
-        }
-
-        .grid-cols-1 {
-            grid-template-columns: repeat(1, minmax(0, 1fr))
-        }
-
-        @media (min-width: 640px) {
-            .sm\:rounded-lg {
-                border-radius: .5rem
-            }
-
-            .sm\:block {
-                display: block
-            }
-
-            .sm\:items-center {
-                align-items: center
-            }
-
-            .sm\:justify-start {
-                justify-content: flex-start
-            }
-
-            .sm\:justify-between {
-                justify-content: space-between
-            }
-
-            .sm\:h-20 {
-                height: 5rem
-            }
-
-            .sm\:ml-0 {
-                margin-left: 0
-            }
-
-            .sm\:px-6 {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem
-            }
-
-            .sm\:pt-0 {
-                padding-top: 0
-            }
-
-            .sm\:text-left {
-                text-align: left
-            }
-
-            .sm\:text-right {
-                text-align: right
-            }
-        }
-
-        @media (min-width: 768px) {
-            .md\:border-t-0 {
-                border-top-width: 0
-            }
-
-            .md\:border-l {
-                border-left-width: 1px
-            }
-
-            .md\:grid-cols-2 {
-                grid-template-columns: repeat(2, minmax(0, 1fr))
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .lg\:px-8 {
-                padding-left: 2rem;
-                padding-right: 2rem
-            }
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .dark\:bg-gray-800 {
-                --bg-opacity: 1;
-                background-color: #2d3748;
-                background-color: rgba(45, 55, 72, var(--bg-opacity))
-            }
-
-            .dark\:bg-gray-900 {
-                --bg-opacity: 1;
-                background-color: #1a202c;
-                background-color: rgba(26, 32, 44, var(--bg-opacity))
-            }
-
-            .dark\:border-gray-700 {
-                --border-opacity: 1;
-                border-color: #4a5568;
-                border-color: rgba(74, 85, 104, var(--border-opacity))
-            }
-
-            .dark\:text-white {
-                --text-opacity: 1;
-                color: #fff;
-                color: rgba(255, 255, 255, var(--text-opacity))
-            }
-
-            .dark\:text-gray-400 {
-                --text-opacity: 1;
-                color: #cbd5e0;
-                color: rgba(203, 213, 224, var(--text-opacity))
-            }
-
-            tr.collapse.in {
-                display: table-row;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <style>
-        body {
-            font-family: 'Nunito';
-        }
-    </style>
-</head>
-<body class="antialiased">
-<div class="container">
-    <br>
-    <nav class="nav nav-pills nav-justified">
-        <a class="nav-link active" href="/{{$lang}}/course-catalog">Каталог курсов</a>
-        @auth
-            @if(Auth::user()->roles()->first()->id == 5)
-                <a class="nav-link" href="/{{$lang}}/student/my-courses">Мои курсы</a>
-            @endif
-        @endauth
-    </nav>
-    <br>
-
-    @if (Route::has('login'))
-        <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-            <a href="/{{$lang}}/" class="text-sm text-gray-700 underline">Главная </a>|
-            @auth
-                <a href="/{{$lang}}/edit_profile" class="text-sm text-gray-700 underline">Профиль</a>
-                <a href="/{{$lang}}/logout" class="text-sm text-gray-700 underline">Logout</a>
-            @else
-                <a href="/{{$lang}}/login" class="text-sm text-gray-700 underline">Login</a>
-
-                @if (Route::has('register'))
-                    <a href="/{{$lang}}/login" class="ml-4 text-sm text-gray-700 underline">Register</a>
-                @endif
-            @endif
-        </div>
-
-    @endif
-    @if (\Session::has('status'))
-        <div class="alert alert-success">
-            <ul>
-                <li>{!! \Session::get('status') !!}</li>
-            </ul>
-        </div>
-    @endif
-    @if (\Session::has('error'))
-        <div class="alert alert-danger">
-            <ul>
-                <li>{!! \Session::get('error') !!}</li>
-            </ul>
-        </div>
-    @endif
-    <div class="row my-2">
-        <div class="col-lg-8 order-lg-2">
-            <div class="tab-content py-4">
-                <div class="tab-pane active" id="profile">
-                    {{--<form id="themes_form" action="/{{$lang}}/publish-course/{{$item->id}}" method="POST"--}}
-                    {{--enctype="multipart/form-data">--}}
-                    {{--{{ csrf_field() }}--}}
-                    <h3><b>{{$item->name}}</b>@if(!empty($student_course))&nbsp;&nbsp;<span class="badge badge-primary">Оплачен</span>@endif
-                    </h3>
-                    <p>{!! $item->teaser !!}</p>
-                    <br>
-                    <h4><b>{{__('default.pages.courses.profit_title')}}</b></h4>
-                    <p>{!! $item->profit_desc !!}</p>
-                    <br>
-                    <h4><b>{{__('default.pages.courses.course_materials')}}</b></h4>
-                    <p>Уроков {{$lessons_count}}</p>
-                    <table class="table table-striped" id="themes_table">
-                        <tbody>
-                        @foreach($themes as $key => $theme)
-
-                            <tr>
-                                <td>{{$theme->name}}</td>
-                                @switch(!($item->status))
-                                    @case(1)
-                                    @case(3)
-                                    <td>
-                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/theme-{{$theme->id}}/create-lesson"
-                                           class="btn btn-primary">+</a>
-                                        <button type="button" theme-id="{{$theme->id}}"
-                                                theme-name="{{$theme->name}}"
-                                                class="btn btn-warning" data-toggle="modal"
-                                                data-target=".editThemeModal"><i class="fa fa-pencil"></i></button>
-                                        <button type="button" class="btn btn-danger deleteThemeBtn"><i
-                                                    class="fa fa-trash"></i></button>
-                                        <button type="button" class="btn btn-info moveUpThemeBtn"><i
-                                                    class="fa fa-arrow-up"></i></button>
-                                        <button type="button" class="btn btn-info moveDownThemeBtn"><i
-                                                    class="fa fa-arrow-down"></i></button>
-                                    </td>
-                                    @break
-                                @endswitch
-                                <td hidden>{{$theme->id}}</td>
-                                <td hidden>{{$theme->index_number}}</td>
-                            </tr>
-                            @foreach($theme->lessons()->orderBy('index_number', 'asc')->get() as $key => $lesson)
-                                <tr>
-                                    <td></td>
-                                    <td>{{$lesson->name}}&nbsp;&nbsp;
-                                        @auth
-                                            @if(Auth::user()->roles()->first()->id == 5)
-                                                @if(!empty($student_course))
-                                                    {{--{{$lesson}}--}}
-                                                    <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}"
-                                                       class="btn btn-warning"><i class="fa fa-eye"></i></a>
-{{--                                                    @if($lesson->lesson_student->is_finished != true)--}}
-{{--                                                        <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}"--}}
-{{--                                                           class="btn btn-warning"><i class="fa fa-eye"></i></a>--}}
-{{--                                                    @else--}}
-{{--                                                        <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$lesson->id}}"--}}
-{{--                                                           class="btn btn-success"><i class="fa fa-check"></i></a>--}}
-{{--                                                    @endif--}}
-                                                @endif
-                                            @endif
-                                        @endauth
-                                    </td>
-                                    <td hidden>{{$lesson->id}}</td>
-                                    <td hidden>{{$lesson->index_number}}</td>
-                                    <td hidden>{{$theme->id}}</td>
-                                </tr>
-                            @endforeach
-                        @endforeach
-
-                        <tr>
-                            <td></td>
-                            @if(!empty($coursework))
-                            <td>{{$coursework->name}}&nbsp;&nbsp;
-                                @if(!empty($coursework->lesson_student))
-                                    @auth
-                                        @if(Auth::user()->roles()->first()->id == 5)
-                                            @if(!empty($coursework->lesson_student->is_finished) != true)
-                                                <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$coursework->id}}"
-                                                   class="btn btn-warning"><i class="fa fa-eye"></i></a>
-                                            @else
-                                                <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$coursework->id}}"
-                                                   class="btn btn-success"><i class="fa fa-check"></i></a>
-                                            @endif
-                                        @endif
-                                    @endauth
-
-                            </td>
-                            @endif
-                            <td hidden>{{$coursework->id}}</td>
-                            @endif
-                        </tr>
-
-
-                        <tr>
-                            @if(!empty($final_test))
-                            <td></td>
-                            <td>{{$final_test->name}}&nbsp;&nbsp;
-                                @if(!empty($final_test->lesson_student))
-                                    @auth
-                                        @if(Auth::user()->roles()->first()->id == 5)
-                                            @if($final_test->lesson_student->is_finished != true)
-                                                <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$final_test->id}}"
-                                                   class="btn btn-warning"><i class="fa fa-eye"></i></a>
-                                            @else
-                                                <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/theme-{{$theme->id}}/lesson-{{$final_test->id}}"
-                                                   class="btn btn-success"><i class="fa fa-check"></i></a>
-                                            @endif
-                                        @endif
-                                    @endauth
-                                @endif
-                            </td>
-
-                            <td hidden>{{$final_test->id}}</td>
-                            @endif
-                        </tr>
-
-                        </tbody>
-                    </table>
-                    <br><br>
-                    <h4><b>{{__('default.pages.courses.course_description')}}</b></h4>
-                    <p>{!! $item->description !!}</p>
-
-                    <div class="modal-footer">
+@extends('app.layout.default.template')
+
+@section('content')
+    <main class="main">
+
+
+        <section class="plain">
+            <div class="container">
+                <ul class="breadcrumbs">
+                    <li><a href="/{{$lang}}/course-catalog"
+                           title="{{__('default.pages.courses.course_catalog')}}">{{__('default.pages.courses.course_catalog')}}</a>
+                    </li>
+                    <li><span>{{$item->name}}</span></li>
+                </ul>
+
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
                     </div>
-                    @auth
-                        @if(Auth::user()->roles()->first()->id == 5)
-                            @if(empty($student_course))
-                                @if($item->is_paid == 1)
-                                    <form action="/createPaymentOrder/{{$item->id}}" method="POST">
-                                        {{ csrf_field() }}
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
 
-                                        <a style="color: white" class="btn btn-primary" data-toggle="modal"
-                                           data-target="#publishModal">Купить</a>
-                                        {{--<button type="submit" class="btn btn-primary">Купить</button>--}}
-                                        <div class="modal fade" id="publishModal" tabindex="-1" role="dialog"
-                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">
-                                                            Подтверждение</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Вы уверены, что хотите записаться на выбранный курс?</p>
+                <div class="row row--multiline">
+                    <div class="col-md-8">
+                        <div class="article">
+                            <div class="article-section">
+                                <h1 class="page-title">{{$item->name}}</h1>
+                                <div class="plain-text">{!! $item->teaser !!}</div>
+                                <div class="text-right">
+                                    <div class="attributes">
+                                        {{--                                        <div class="attributes-item">--}}
+                                        {{--                                            <i class="icon-checklist"> </i>--}}
+                                        {{--                                            <span>174</span>--}}
+                                        {{--                                        </div>--}}
+                                        <div class="attributes-item">
+                                            <i class="icon-user"> </i>
+                                            <span>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</span>
+                                        </div>
+                                        <div class="attributes-item">
+                                            <i class="icon-star-full"> </i>
+                                            <span>{{$item->rate->pluck('rate')->avg() ?? 0}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="article-section">
+                                <h2 class="title-secondary">{{__('default.pages.courses.profit_title')}}</h2>
+                                <div class="plain-text">
+                                    {!! $item->profit_desc !!}
+                                </div>
+                            </div>
+                            <div class="article-section">
+                                <h2 class="title-secondary">{{__('default.pages.courses.course_materials')}}</h2>
 
-                                                        @if($item->quota_status == 2)
-                                                            <div class="form-check">
-                                                                <input type="checkbox" class="form-check-input"
-                                                                       id="quota_check"
-                                                                       name="quota_check">
+                                <div class="article__info">
+                                    <span>{{__('default.pages.courses.lessons_title_1')}}: <span
+                                                id="lessonsCount">{{$item->lessons->whereIn('type', [1,2])->count()}}</span></span>
+                                    <span>{{__('default.pages.courses.total_time_lessons')}}: <span
+                                                id="courseDuration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->whereIn('type', [1,2])->sum('duration'))}}</span> {{__('default.pages.courses.hours_title')}}</span>
+                                </div>
 
-                                                                <label class="form-check-label" for="quota_check">Воспользоваться
-                                                                    квотой <b>Осталось
-                                                                        квот: {{Auth::user()->student_info()->first()->quota_count}}</b></label>
-
+                                <div class="course">
+                                    <div class="course">
+                                        @foreach($item->themes as $theme)
+                                            <div class="topic spoiler">
+                                                <div class="topic__header">
+                                                    <div class="title">{{$theme->name}}</div>
+                                                    <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->where('theme_id', '=', $theme->id)->sum('duration'))}}</div>
+                                                </div>
+                                                <div class="topic__body">
+                                                    @foreach($theme->lessons as $lesson)
+                                                        <div class="lesson">
+                                                            <div class="title"><a
+                                                                        href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$lesson->id}}"
+                                                                        title="{{$lesson->name}}">{{$lesson->name}}</a>
                                                             </div>
-                                                        @endif
-                                                    </div>
-
-                                                    <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Да</button>
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Нет
-                                                        </button>
-                                                    </div>
+                                                            <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    @if($item->courseWork() !== null)
+                                        <div class="topic">
+                                            <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$item->courseWork()->id}}/delete-lesson-form"
+                                                  method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="topic__header">
+                                                    <div class="title"><a
+                                                                href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
+                                                    </div>
+                                                    <div class="duration"></div>
+                                                    @switch($item->status)
+                                                        @case(0)
+                                                        @case(2)
+                                                        <div class="edit-buttons">
+                                                            <button type="submit"
+                                                                    title="{{__('default.pages.courses.delete_title')}}"
+                                                                    class="btn-icon small btn-icon--ghost icon-trash-can"></button>
+                                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
+                                                               title="{{__('default.pages.courses.edit_title')}}"
+                                                               class="btn-icon small btn-icon--ghost icon-edit"> </a>
+                                                        </div>
+                                                        @break
+                                                    @endswitch
+                                                </div>
+                                            </form>
+                                        </div>
+                                    @endif
+                                    @if($item->finalTest() !== null)
+                                        <div class="topic">
+                                            <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$item->finalTest()->id}}/delete-lesson-form"
+                                                  method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="topic__header">
+                                                    <div class="title"><a
+                                                                href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
+                                                    </div>
+                                                    <div class="duration"></div>
+                                                    @switch($item->status)
+                                                        @case(0)
+                                                        @case(2)
+                                                        <div class="edit-buttons">
+                                                            <button type="submit"
+                                                                    title="{{__('default.pages.courses.delete_title')}}"
+                                                                    class="btn-icon small btn-icon--ghost icon-trash-can"></button>
+                                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final-test"
+                                                               title="{{__('default.pages.courses.edit_title')}}"
+                                                               class="btn-icon small btn-icon--ghost icon-edit"> </a>
+                                                        </div>
+                                                        @break
+                                                    @endswitch
+                                                </div>
+                                            </form>
+                                        </div>
+                                    @endif
+
+                                </div>
+
+                            </div>
+                            <div class="article-section">
+                                <h2 class="title-secondary">{{__('default.pages.courses.course_description')}}</h2>
+                                <div class="plain-text">{!! $item->description !!}</div>
+                            </div>
+                            <div class="article-section">
+                                <h2 class="title-secondary">{{__('default.pages.courses.author_title')}}</h2>
+                                <div class="personal-card">
+                                    <div class="personal-card__left">
+                                        <div class="personal-card__image">
+                                            <img src="{{ $item->user->author_info->getAvatar()  }}" alt="">
+                                        </div>
+                                        <ul class="socials">
+                                            @if(!empty($item->user->author_info->site_url))
+                                                <li><a href="{{$item->user->author_info->site_url}}" title=""
+                                                       class="icon-language"> </a></li>
+                                            @endif
+                                            @if(!empty($item->user->author_info->vk_link))
+                                                <li><a href="{{$item->user->author_info->vk_link}}" title=""
+                                                       class="icon-vk"> </a></li>
+                                            @endif
+                                            @if(!empty($item->user->author_info->fb_link))
+                                                <li><a href="{{$item->user->author_info->fb_link}}" title=""
+                                                       class="icon-facebook"> </a></li>
+                                            @endif
+                                            @if(!empty($item->user->author_info->instagram_link))
+                                                <li><a href="{{$item->user->author_info->instagram_link}}" title=""
+                                                       class="icon-instagram"> </a></li>
+                                            @endif
+                                        </ul>
+                                    </div>
+                                    <div class="personal-card__right">
+                                        <div class="personal-card__name">{{ $item->user->author_info->name . ' ' . $item->user->author_info->surname  }}</div>
+                                        <div class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->author_info->specialization) ?? []) }}</div>
+                                        <div class="plain-text">
+                                            {!! $item->user->author_info->about !!}
+                                        </div>
+                                        <div class="personal-card__characteristics">
+                                            <div>
+                                                <span class="blue">{{count($rates)}}</span> {{__('default.pages.profile.rates_count_title')}}
+                                            </div>
+                                            <div>
+                                                <span class="blue">{{count($author_students)}}</span> {{__('default.pages.profile.course_members_count')}}
+                                            </div>
+                                            <div>
+                                                <span class="blue">{{count($courses->where('status', '=', 3))}}</span> {{__('default.pages.profile.course_count')}}
+                                            </div>
+                                            <div>
+                                                <span class="blue">{{count($author_students_finished)}}</span> {{__('default.pages.profile.issued_certificates')}}
                                             </div>
                                         </div>
-                                    </form>
-                                @else
-                                    <form action="/createPaymentOrder/{{$item->id}}" method="POST">
-                                        {{ csrf_field() }}
-
-                                        <a style="color: white" class="btn btn-primary" data-toggle="modal"
-                                           data-target="#publishModal">Получить бесплатно</a>
-                                        {{--<button type="submit" class="btn btn-primary">Купить</button>--}}
-                                        <div class="modal fade" id="publishModal" tabindex="-1" role="dialog"
-                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">
-                                                            Подтверждение</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Вы уверены, что хотите записаться на выбранный курс?</p>
-
-                                                    </div>
-
-                                                    <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Да</button>
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Нет
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                @endif
-                            @endif
-                        @endif
-                        @if(empty($student_rate) and !empty($student_course->is_finished) == true)
-                            <form id="rate_form"
-                                  action="/{{$lang}}/course-{{$student_course->course_id}}/saveCourseRate"
-                                  method="POST">
-                                {{ csrf_field() }}
-                                <div class="modal fade" id="rateModal" tabindex="-1" role="dialog"
-                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title"
-                                                    id="exampleModalLabel">{{__('default.pages.courses.course_rate_title')}}</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control" id="rate" name="rate"
-                                                           placeholder="от 1 до 5">
-                                                </div>
-                                                <div class="form-group">
-                                                <textarea class="form-control" name="rate_description"
-                                                          id="rate_description" rows="3"
-                                                          placeholder="{{__('default.pages.courses.course_rate_description')}}"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit"
-                                                        class="btn btn-primary">{{__('default.pages.courses.send_rate_button_title')}}</button>
+                                        <div class="rating">
+                                            <div class="rating__number">{{round($average_rates, 1)}}</div>
+                                            <div class="rating__stars">
+                                                <?php
+                                                for ($x = 1; $x <= $average_rates; $x++) {
+                                                    echo '<i class="icon-star-full"> </i>';
+                                                }
+                                                if (strpos($average_rates, '.')) {
+                                                    echo '<i class="icon-star-half"> </i>';
+                                                    $x++;
+                                                }
+                                                while ($x <= 5) {
+                                                    echo '<i class="icon-star-empty"> </i>';
+                                                    $x++;
+                                                }
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        @endif
-                    @endauth
+                            </div>
+                            @if(!empty($item->user->author_info->certificates))
+                                <div class="article-section">
+                                    <h2 class="title-secondary">{{__('default.pages.courses.author_certificates')}}</h2>
+                                    <div class="row row--multiline">
 
+                                        @foreach(json_decode($item->user->author_info->certificates) as $certificate)
+                                            <div class="col-md-3 col-sm-4 col-xs-6">
+                                                <a href="{{$certificate}}"
+                                                   data-fancybox="author- certificates"
+                                                   title="{{__('default.pages.courses.zoom_certificate')}}"
+                                                   class="certificate">
+                                                    <img src="{{$certificate}}" alt="">
+                                                </a>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="article-section">
+                                <h2 class="title-secondary">Отзывы</h2>
+                                <div>
+                                    <div class="review">
+                                        <div class="review__header">
+                                            <div class="review__name">Алиса Сергеевна</div>
+                                            <div class="rating">
+                                                <div class="rating__stars">
+                                                    <i class="icon-star-full"> </i>
+                                                    <i class="icon-star-full"> </i>
+                                                    <i class="icon-star-full"> </i>
+                                                    <i class="icon-star-full"> </i>
+                                                    <i class="icon-star-half"> </i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="review__text">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor incididunt ut labore et dolore magna aliqua.
+                                        </div>
+                                    </div>
+                                    <div class="review">
+                                        <div class="review__header">
+                                            <div class="review__name">Кларинов Сергей</div>
+                                            <div class="rating">
+                                                <div class="rating__stars">
+                                                    <i class="icon-star-full"> </i>
+                                                    <i class="icon-star-full"> </i>
+                                                    <i class="icon-star-full"> </i>
+                                                    <i class="icon-star-full"> </i>
+                                                    <i class="icon-star-half"> </i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="review__text">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                            consequat. Duis aute irure dolor in reprehenderit.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <form class="sidebar">
+                            <div class="sidebar__inner">
+                                <div class="sidebar-item">
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.media_attachments')}}
+                                        :
+                                    </div>
+                                    <div class="sidebar-item__body">
+                                        @if(!empty($item->attachments->videos_link))
+                                            @foreach(json_decode($item->attachments->videos_link) as $video_link)
+                                                @if(!empty($video_link))
+                                                    @php
+                                                        $video_id = explode("?v=", $video_link);
+                                                        $video_id = $video_id[1];
+                                                    @endphp
+                                                    <div class="video-wrapper">
+                                                        <iframe width="560" height="315"
+                                                                src="https://www.youtube.com/embed/{{$video_id}}"
+                                                                frameborder="0"
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                allowfullscreen></iframe>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                        @if(!empty($item->attachments->videos_poor_vision_link) and $item->is_poor_vision == true)
+                                            @foreach(json_decode($item->attachments->videos_poor_vision_link) as $video_link)
+                                                @if(!empty($video_link))
+                                                    @php
+                                                        $video_id = explode("?v=", $video_link);
+                                                        $video_id = $video_id[1];
+                                                    @endphp
+                                                    <div class="video-wrapper">
+                                                        <iframe width="560" height="315"
+                                                                src="https://www.youtube.com/embed/{{$video_id}}"
+                                                                frameborder="0"
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                allowfullscreen></iframe>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                        @if(!empty($item->attachments->videos))
+                                            @foreach(json_decode($item->attachments->videos) as $video)
+                                                <div class="video-wrapper">
+                                                    <video controls
+                                                           src="{{$video}}"></video>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                        @if(!empty($item->attachments->videos_poor_vision) and $item->is_poor_vision == true)
+                                            @foreach(json_decode($item->attachments->videos_poor_vision) as $video)
+                                                <div class="video-wrapper">
+                                                    <video controls
+                                                           src="{{$video}}"></video>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                        @if(!empty($item->attachments->audios))
+                                            @foreach(json_decode($item->attachments->audios) as $audio)
+                                                <audio controls
+                                                       src="{{$audio}}"></audio>
+                                            @endforeach
+                                        @endif
+                                        @if(!empty($item->attachments->audios_poor_vision) and $item->is_poor_vision == true)
+                                            @foreach(json_decode($item->attachments->audios_poor_vision) as $audio)
+                                                <audio controls
+                                                       src="{{$audio}}"></audio>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="sidebar-item">
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.course_lang')}}:
+                                    </div>
+                                    <div class="sidebar-item__body">
+                                        <div class="plain-text">
+                                            @if($item->lang == 0)
+                                                Қазақша
+                                            @elseif($item->lang == 1)
+                                                Русский
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sidebar-item">
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.course_include')}}:
+                                    </div>
+                                    <div class="sidebar-item__body">
+                                        <div class="plain-text">
+                                            <ul>
+                                                <li>{{$item->lessons->whereIn('type', [1,2])->count()}} {{__('default.pages.courses.lessons_title')}}</li>
+                                                <li>{{$videos_count}} {{__('default.pages.courses.videos_count')}}</li>
+                                                <li>{{$audios_count}} {{__('default.pages.courses.audios_count')}} </li>
+                                                <li>{{$attachments_count}} {{__('default.pages.courses.attachments_count')}} </li>
+                                                {{--                                                <li>70,5 часов видео</li>--}}
+                                                <li>{{$item->lessons->whereIn('type', [2])->where('end_lesson_type', '=', 0)->count()}} {{__('default.pages.courses.tests_count_title')}}</li>
+                                                <li>{{$item->lessons->where('end_lesson_type', '=', 1)->where('type', '=', 2)->count()}} {{__('default.pages.courses.homeworks_count')}}</li>
+                                                @if(!empty($item->courseWork()))
+                                                    <li>{{__('default.pages.courses.coursework_title')}}</li>
+                                                @endif
+                                                @if(!empty($item->finalTest()))
+                                                    <li>{{__('default.pages.courses.final_test_title')}}</li>
+                                                @endif
+                                                {{--                                                <li>8 интерактивных задач</li>--}}
+                                                {{--                                                <li>1 статья</li>--}}
+                                                <li>{{__('default.pages.courses.mobile_access_title')}}</li>
+                                                {{--                                                <li>10 файлов</li>--}}
+                                                <li>{{__('default.pages.courses.certificate_access_title')}}</li>
+                                            </ul>
+                                            <div class="hint gray">{{__('default.pages.courses.last_updates')}}
+                                                : {{\App\Extensions\FormatDate::formatDate($item->updated_at->format("d.m.Y"))}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sidebar-item">
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.professions_title_1')}}
+                                        :
+                                    </div>
+                                    <div class="sidebar-item__body">
+                                        <div class="tags">
+                                            <ul>
+                                                {{--                                                {{$item->skills[0]->professions->first()}}--}}
+                                                @foreach($item->skills as $skill)
+                                                    @foreach($skill->professions as $profession)
+                                                        <li>
+                                                            <a href="/{{$lang}}/course-catalog?specialities[]={{$profession->id}}"
+                                                               title="{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}">{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}</a>
+                                                        </li>
+                                                    @endforeach
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sidebar-item">
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.skills_title_1')}}:
+                                    </div>
+                                    <div class="sidebar-item__body">
+                                        <div class="tags">
+                                            <ul>
+                                                @foreach($item->skills as $skill)
+                                                    <li><a href="/{{$lang}}/course-catalog?skills[]={{$skill->id}}"
+                                                           title="{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}">{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}</a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if(empty($student_course) or ($student_course->paid_status == 0))
+                                    <div class="sidebar-item">
+                                        <div class="sidebar-item__title"></div>
+                                        <div class="sidebar-item__body">
+                                            <div class="price">
+                                                @if($item->is_paid == 1)
+                                                    <div class="price__value">{{number_format($item->cost, 0, ',', ' ')}}
+                                                        ₸
+                                                    </div>
+                                                @else
+                                                    <div class="price__value">{{__('default.pages.courses.free_title')}}
+                                                    </div>
+                                                @endif
+                                                @if($item->quota_status == 2)
+                                                    <div class="price__quota"><span
+                                                                class="mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</span>*
+                                                    </div>
+                                                    <div class="hint gray">
+                                                        * {{__('default.pages.courses.access_by_quota_desc')}}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                            @if(empty($student_course) or ($student_course->paid_status == 0))
+                                <div class="sidebar__buttons">
+                                    @if($item->quota_status == 2)
+                                        <a href="#quotaConfirm" data-fancybox
+                                           title="{{__('default.pages.courses.get_by_quota')}}"
+                                           class="sidebar-btn ghost">{{__('default.pages.courses.get_by_quota')}}</a>
+                                    @endif
+                                    @if($item->is_paid == 0)
+                                        <a href="#buyConfirm" data-fancybox
+                                           title="{{__('default.pages.courses.get_free')}}"
+                                           class="sidebar-btn ghost">{{__('default.pages.courses.get_free')}}</a>
+                                    @else
+                                        <a href="#buyConfirm" data-fancybox
+                                           title="{{__('default.pages.courses.buy_course')}}"
+                                           class="sidebar-btn">{{__('default.pages.courses.buy_course')}}</a>
+                                    @endif
+                                </div>
+                            @endif
+                        </form>
+                    </div>
                 </div>
             </div>
+        </section>
+
+
+        <div id="buyConfirm" style="display:none;">
+            <form action="/createPaymentOrder/{{$item->id}}" method="POST">
+                @csrf
+                <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
+                <div class="plain-text gray">{{__('default.pages.courses.confirm_course_buy')}}</div>
+                <div class="row row--multiline justify-center">
+                    <div class="col-auto">
+                        <button type="submit" title="{{__('default.yes_title')}}"
+                                class="btn">{{__('default.yes_title')}}</button>
+                    </div>
+                    <div class="col-auto">
+                        <a href="#" title="{{__('default.no_title')}}" class="ghost-btn"
+                           data-fancybox-close>{{__('default.no_title')}}</a>
+                    </div>
+                </div>
+            </form>
         </div>
-    </div>
-</div>
-<script>
-    $('#rateModal').modal('show')
-</script>
-</body>
-</html>
+
+        <div id="quotaConfirm" style="display:none;">
+            <form action="/createPaymentOrder/{{$item->id}}" method="POST">
+                @csrf
+                <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
+                <div class="plain-text gray text-center">{{__('default.pages.courses.confirm_course_by_quota')}}</div>
+                <div class="plain-text gray text-center">{{__('default.pages.courses.quota_have')}}
+                    : {{Auth::user()->student_info->quota_count}}</div>
+                <div class="row row--multiline justify-center">
+                    <div class="col-auto">
+                        <button type="submit" name="action" value="by_qouta" title="{{__('default.yes_title')}}"
+                                class="btn">{{__('default.yes_title')}}</button>
+                    </div>
+                    <div class="col-auto">
+                        <a href="#" title="{{__('default.no_title')}}" class="ghost-btn"
+                           data-fancybox-close>{{__('default.no_title')}}</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </main>
+@endsection
+
+@section('scripts')
+    <!--Only this page's scripts-->
+
+    <!---->
+@endsection
+

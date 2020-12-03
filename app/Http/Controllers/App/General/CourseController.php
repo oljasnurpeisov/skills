@@ -126,8 +126,59 @@ class CourseController extends Controller
     public function courseView($lang, Course $item)
     {
         if ($item->status == Course::published) {
+
+            $courses = $item->user->courses()->get();
+            // Все оценки всех курсов
+            $rates = [];
+            foreach ($courses as $course) {
+                foreach ($course->rate as $rate) {
+                    array_push($rates, $rate->rate);
+                }
+            }
+            // Все ученики автора
+            $author_students = [];
+            foreach ($courses as $course) {
+                foreach ($course->course_members as $member) {
+                    $author_students[$member['student_id']][] = $member;
+                }
+            }
+            // Все ученики закончившие курс
+            $author_students_finished = [];
+            foreach ($courses as $course) {
+                foreach ($course->course_members->where('is_finished', '=', true) as $member) {
+                    array_push($author_students_finished, $member);
+                }
+            }
+            // Оценка автора исходя из всех оценок
+            if (count($rates) == 0) {
+                $average_rates = 0;
+            } else {
+                $average_rates = array_sum($rates) / count($rates);
+            }
+
             $themes = $item->themes()->orderBy('index_number', 'asc')->get();
             $lessons_count = count(Lesson::where('course_id', '=', $item->id)->get());
+
+            $lessons = $item->lessons;
+            $videos_count = [];
+            $audios_count = [];
+            $attachments_count = [];
+
+            foreach ($lessons as $lesson) {
+                if ($lesson->lesson_attachment != null) {
+                    if ($lesson->lesson_attachment->videos != null) {
+                        $videos_count[] = count(json_decode($lesson->lesson_attachment->videos));
+                    }
+                    if ($lesson->lesson_attachment->audios != null) {
+                        $audios_count[] = count(json_decode($lesson->lesson_attachment->audios));
+                    }
+                    if ($lesson->lesson_attachment->another_files != null) {
+                        $attachments_count[] = count(json_decode($lesson->lesson_attachment->another_files));
+                    }
+                }
+
+            }
+
             if (Auth::check()) {
                 $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $item->id)->first();
                 $coursework = $item->lessons->where('type', '=', 3)->first();
@@ -139,11 +190,19 @@ class CourseController extends Controller
             return view("app.pages.general.courses.catalog.course_view", [
                 "item" => $item,
                 "themes" => $themes,
+                "rates" => $rates,
+                "author_students" => $author_students,
+                "courses" => $courses,
+                "author_students_finished" => $author_students_finished,
+                "average_rates" => $average_rates,
                 "lessons_count" => $lessons_count,
                 "student_course" => $student_course ?? [],
                 "student_rate" => $student_rate ?? [],
                 "coursework" => $coursework,
-                "final_test" => $final_test
+                "final_test" => $final_test,
+                "videos_count" => array_sum($videos_count),
+                "audios_count" => array_sum($audios_count),
+                "attachments_count" => array_sum($attachments_count)
             ]);
         } else {
             return redirect("/" . app()->getLocale() . "/course-catalog");

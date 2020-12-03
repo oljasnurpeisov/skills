@@ -53,7 +53,7 @@ class CourseController extends Controller
         // Оценка курса обучающегося
         $student_rate = CourseRate::where('student_id', '=', Auth::user()->id)->get();
         // Получить все курсы обучающегося
-        $query = StudentCourse::where('student_id', '=', Auth::user()->id)->whereHas('course', function ($q) {
+        $query = StudentCourse::where('student_id', '=', Auth::user()->id)->where('paid_status', '!=', 0)->whereHas('course', function ($q) {
             $q->where('status', '=', Course::published);
         });
 

@@ -18,7 +18,7 @@ class PaymentController extends Controller
 {
     public function createPaymentOrder(Request $request, Course $item)
     {
-        if (empty($request->quota_check)) {
+        if ($request->input('action') != 'by_qouta') {
 
             if ($item->is_paid == 0) {
                 $student_course = new StudentCourse;
@@ -35,7 +35,7 @@ class PaymentController extends Controller
                 $payment = new PaymentHistory;
                 $payment->save();
 
-                $data = array("merchantId" => config('payment.merchantId'),
+                $data = array("merchantId" => $item->user->payment_info->merchant_login,
                     "callbackUrl" => config('payment.callbackUrl'),
                     "description" => config('payment.description'),
                     "returnUrl" => env('APP_URL').'/'.app()->getLocale().'/course-catalog/course/'.$item->id,
@@ -71,7 +71,7 @@ class PaymentController extends Controller
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
                 $headers = array(
                     "Content-Type: application/json",
-                    "Authorization: Basic " . base64_encode(config('payment.login') . ':' . config('payment.password')),
+                    "Authorization: Basic " . base64_encode($item->user->payment_info->merchant_login . ':' . $item->user->payment_info->merchant_password),
                     'Content-Length: ' . strlen($data_string)
                 );
                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
@@ -111,6 +111,8 @@ class PaymentController extends Controller
 
 
     }
+
+
 
     public function callbackPaymentOrder(Request $request)
     {

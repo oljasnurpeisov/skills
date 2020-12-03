@@ -29,7 +29,7 @@
                             @foreach($items as $item)
                                 <div class="col-sm-6 col-md-4">
                                     <div class="card">
-                                        <a href="#" title="" class="card__image">
+                                        <a href="/{{$lang}}/course-catalog/course/{{$item->course->id}}" title="" class="card__image">
                                             <img src="{{$item->course->getAvatar()}}" alt="">
                                             <div class="card__progress mark mark--green">{{round(($item->finished_lessons_count/$item->lessons_count)*100)}}
                                                 %
