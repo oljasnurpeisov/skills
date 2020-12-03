@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App\Student;
 
+use App\Extensions\FormatDate;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Lesson;
@@ -21,10 +22,14 @@ class LessonController extends Controller
     public function lessonView($lang, Course $course, Lesson $lesson)
     {
         $theme = $lesson->themes;
+
+        $time = FormatDate::convertMunitesToTime($lesson->duration);
+
         $return_view = view("app.pages.student.lesson.view", [
-            "course" => $course,
+            "item" => $course,
             "lesson" => $lesson,
             "theme" => $theme,
+            "time" => $time
         ]);
 
 
@@ -97,11 +102,11 @@ class LessonController extends Controller
                                 // Если есть курсовая и она завершена, дать доступ
                                 if ($coursework->lesson_student->is_finished == true) {
                                     $this->syncUserLessons($lesson->id);
-                                // Если есть курсовая, но она не завершена, вернуть обратно
+                                    // Если есть курсовая, но она не завершена, вернуть обратно
                                 } else {
                                     return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
                                 }
-                            // Если есть курсовой нет, то дать доступ
+                                // Если есть курсовой нет, то дать доступ
                             } else {
                                 $this->syncUserLessons($lesson->id);
                             }
@@ -133,7 +138,7 @@ class LessonController extends Controller
                 $lesson->lesson_student->is_finished = true;
                 $lesson->lesson_student->save();
                 // Переход к следующему уроку
-                return $this->nextLessonShow($lang, $course, $theme, $lesson);
+                return $this->nextLessonShow($lang, $course, $lesson);
                 break;
             // Переход к домашнему заданию
             case 'homework':
@@ -185,7 +190,7 @@ class LessonController extends Controller
 
     }
 
-    public function answerSend($lang, Request $request, Course $course, Theme $theme, Lesson $lesson)
+    public function answerSend($lang, Request $request, Course $course, Lesson $lesson)
     {
         if (!empty($lesson->lesson_student)) {
             if ($lesson->lesson_student->is_access == true) {
@@ -219,7 +224,7 @@ class LessonController extends Controller
                 $lesson->lesson_student->save();
 
                 // Вернуть следующий урок
-                return $this->nextLessonShow($lang, $course, $theme, $lesson);
+                return $this->nextLessonShow($lang, $course, $lesson);
             } else {
                 return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
             }
@@ -228,11 +233,12 @@ class LessonController extends Controller
         }
     }
 
-    public function nextLessonShow($lang, $course, $theme, $lesson)
+    public function nextLessonShow($lang, $course, $lesson)
     {
         $course_status = StudentCourse::where('course_id', '=', $course->id)->first();
         if ($course_status->is_finished == false) {
             // Получить следующий урок
+            $theme = $lesson->themes;
             $next_lesson_theme = Lesson::where('index_number', '>', $lesson->index_number)->where('theme_id', '=', $theme->id)->first();
             $next_theme = Theme::where('course_id', '=', $course->id)->where('index_number', '>', $theme->index_number)->first();
             if (!empty($next_theme)) {
@@ -243,36 +249,37 @@ class LessonController extends Controller
 
             if (!empty($next_lesson_theme)) {
                 // Установка доступа к следующему уроку
-                $item = StudentLesson::where('lesson_id', '=', $next_lesson_theme->id)->where('student_id', '=', Auth::user()->id)->first();
-                if (empty($item)) {
-                    $this->syncUserLessons($next_lesson_theme->id);
-                }
+                $this->syncUserLessons($next_lesson_theme->id);
                 // Проверить окончание курса
                 $this->finishedCourse($course);
-                return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/theme-' . $theme->id . '/lesson-' . $next_lesson_theme->id);
+                return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-' . $next_lesson_theme->id);
 
             } else {
                 if (!empty($next_lesson) and !empty($next_lesson->lesson_student->is_finished) == false) {
-                    $item = StudentLesson::where('lesson_id', '=', $next_lesson->id)->where('student_id', '=', Auth::user()->id)->first();
                     // Установка доступа к следующему уроку
-                    if (empty($item)) {
-                        $this->syncUserLessons($next_lesson->id);
-                    }
+                    $this->syncUserLessons($next_lesson->id);
                     // Проверить окончание курса
                     $this->finishedCourse($course);
-                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/theme-' . $next_theme->id . '/lesson-' . $next_lesson->id);
+                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-' . $next_lesson->id);
 
                     // Если следующего урока нет
                 } else {
-                    $coursework = $course->lessons->where('type', '=', 3)->first();
+                    $coursework = $course->lessons()->where('type', '=', 3)->first();
                     $final_test = $course->lessons->where('type', '=', 4)->first();
+                    $coursework_item = StudentLesson::where('lesson_id', '=', $coursework->id)->where('student_id', '=', Auth::user()->id)->first();
+                    $final_test_item = StudentLesson::where('lesson_id', '=', $final_test->id)->where('student_id', '=', Auth::user()->id)->first();
+
                     if (!empty($coursework) and ($coursework->id != $lesson->id)) {
                         $this->syncUserLessons($coursework->id);
                     } else if (!empty($final_test) and empty($coursework) and ($final_test->id != $lesson->id)) {
                         $this->syncUserLessons($final_test->id);
+
                     }
-                    if (!empty($final_test) and ($final_test->id != $lesson->id) and !empty($coursework->lesson_student->is_finished == true)) {
-                        $this->syncUserLessons($final_test->id);
+                    if (!empty($final_test) and ($final_test->id != $lesson->id) and !empty($coursework)) {
+                        if ($coursework->is_finished == true) {
+                            $this->syncUserLessons($final_test->id);
+                        }
+
                     }
                     // Проверить окончание курса
                     $this->finishedCourse($course);
@@ -307,10 +314,14 @@ class LessonController extends Controller
 
     public function syncUserLessons(int $lesson_id)
     {
-        $item = new StudentLesson;
-        $item->lesson_id = $lesson_id;
-        $item->student_id = Auth::user()->id;
-        $item->is_access = true;
-        $item->save();
+        $item = StudentLesson::where('lesson_id', '=', $lesson_id)->where('student_id', '=', Auth::user()->id)->first();
+        if (empty($item)) {
+            $item = new StudentLesson;
+            $item->lesson_id = $lesson_id;
+            $item->student_id = Auth::user()->id;
+            $item->is_access = true;
+            $item->save();
+        }
+
     }
 }

@@ -41,11 +41,9 @@
                                 <span><i class="icon-lesson"></i> {{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</span>
                                 <span><i class="icon-clock"></i> {{$time .' '. __('default.pages.lessons.hour_short_title')}} </span>
                             </div>
-                            @if($lesson->image !== null)
                                 <div class="article__image">
-                                    <img src="{{ $lesson->image }}" alt="">
+                                    <img src="{{ $lesson->getAvatar() }}" alt="">
                                 </div>
-                            @endif
                             {{--                            <div class="article__annotation">--}}
                             {{--                                Mus maecenas ut eu vestibulum. Potenti tortor, rhoncus et praesent. Scelerisque at ante condimentum ultricies facilisis augue. Molestie enim tellus viverra enim diam. Maecenas pellentesque id tristique nullam.--}}
                             {{--                            </div>--}}
@@ -190,13 +188,14 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="sidebar-item">
-                                        <div class="sidebar-item__title">{{__('default.pages.lessons.lesson_files')}}:
-                                        </div>
-                                        <div class="sidebar-item__body">
-                                            <div class="plain-text">
-                                                <ul>
-                                                    @if(!empty($lesson->lesson_attachment->another_files))
+                                    @if(!empty($lesson->lesson_attachment->another_files))
+                                        <div class="sidebar-item">
+                                            <div class="sidebar-item__title">{{__('default.pages.lessons.lesson_files')}}
+                                                :
+                                            </div>
+                                            <div class="sidebar-item__body">
+                                                <div class="plain-text">
+                                                    <ul>
                                                         @foreach(json_decode($lesson->lesson_attachment->another_files) as $file)
                                                             <li>
                                                                 <a href="{{env('APP_URL').$file}}"
@@ -206,11 +205,11 @@
                                                                 MB)
                                                             </li>
                                                         @endforeach
-                                                    @endif
-                                                </ul>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 </div>
                                 <div id="poorVisionMaterials" style="display:none;">
                                     <div class="sidebar-item">
