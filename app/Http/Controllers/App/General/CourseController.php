@@ -181,11 +181,10 @@ class CourseController extends Controller
 
             if (Auth::check()) {
                 $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $item->id)->first();
-                $coursework = $item->lessons->where('type', '=', 3)->first();
-                $final_test = $item->lessons->where('type', '=', 4)->first();
                 $student_rate = CourseRate::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $item->id)->first();
-
             }
+            $coursework = $item->lessons->where('type', '=', 3)->first();
+            $final_test = $item->lessons->where('type', '=', 4)->first();
 
             return view("app.pages.general.courses.catalog.course_view", [
                 "item" => $item,

@@ -146,9 +146,10 @@ class LessonController extends Controller
             case 'coursework':
                 return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-' . $lesson->id . '/homework');
                 break;
-//            case 'coursework':
-//                return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-' . $lesson->id . '/coursework');
-//                break;
+            case 'test':
+            case 'final-test':
+                return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-' . $lesson->id . '/test');
+                break;
         }
 
         return redirect()->back();
@@ -173,15 +174,14 @@ class LessonController extends Controller
 
     }
 
-    public function courseworkView($lang, Course $course, Theme $theme, Lesson $lesson)
+    public function testView($lang, Course $course, Lesson $lesson)
     {
 
         if (!empty($lesson->lesson_student)) {
             if ($lesson->lesson_student->is_access == true) {
-                return view("app.pages.student.lesson.coursework_view", [
-                    "course" => $course,
-                    "lesson" => $lesson,
-                    "theme" => $theme
+                return view("app.pages.student.lesson.test_view_lesson", [
+                    "item" => $course,
+                    "lesson" => $lesson
                 ]);
             } else {
                 return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
@@ -189,7 +189,6 @@ class LessonController extends Controller
         } else {
             return redirect('/' . $lang . '/course-catalog')->with('error', __('default.pages.lessons.access_denied_message'));
         }
-
     }
 
     public function answerSend($lang, Request $request, Course $course, Lesson $lesson)
@@ -197,14 +196,21 @@ class LessonController extends Controller
         if (!empty($lesson->lesson_student)) {
             if ($lesson->lesson_student->is_access == true) {
 
-                if($lesson->type == 3) {
+                if ($lesson->type == 3) {
                     $request->validate([
                         'answer' => 'required',
                         'another_files' => 'required|not_in:[]',
                     ]);
                 }
 
-                $answer = new StudentLessonAnswer;
+                $result = StudentLessonAnswer::where('student_id', '=', Auth::user()->id)
+                    ->where('lesson_id', '=', $lesson->id)->first();
+
+                if (!$result) {
+                    $answer = new StudentLessonAnswer;
+                } else {
+                    $answer = $result;
+                }
                 $answer->student_lesson_id = $lesson->lesson_student->id;
                 $answer->student_id = Auth::user()->id;
                 $answer->lesson_id = $lesson->id;
@@ -212,6 +218,8 @@ class LessonController extends Controller
                     case('homework'):
                     case('coursework'):
                         $answer->type = 1;
+
+                        $answer->answer = $request->answer;
 
                         // Видео с устройства
                         if (($request->videos != $answer->videos)) {
@@ -236,10 +244,11 @@ class LessonController extends Controller
                     case('test'):
                     case('final_test'):
                         $answer->type = 0;
+
+                        $answer->answer = json_encode($request->answers);
+
                         break;
                 }
-
-                $answer->answer = $request->answer;
 
                 $answer->save();
 
@@ -248,12 +257,17 @@ class LessonController extends Controller
                 $lesson->lesson_student->save();
 
                 if ($lesson->type == 3) {
-
+                    $this->finishedCourse($course);
                     return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('status', __('default.pages.lessons.coursework_send_success'));
                 } else if ($lesson->type == 4) {
-
-                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('status', __('default.pages.lessons.coursework_send_success'));
-                } else {
+                    $this->finishedCourse($course);
+                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-'. $lesson->id . '/test-result');
+                }
+//                else if (($lesson->type == 2) and ($lesson->end_lesson_type == 0)) {
+//                    $this->finishedCourse($course);
+//                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-'. $lesson->id . '/test-result');
+//                }
+                else {
                     // Вернуть следующий урок
                     return $this->nextLessonShow($lang, $course, $lesson);
                 }
@@ -263,6 +277,41 @@ class LessonController extends Controller
             }
         } else {
             return redirect('/' . $lang . '/course-catalog')->with('error', __('default.pages.lessons.access_denied_message'));
+        }
+    }
+
+    public function testResultView($lang, Request $request, Course $course, Lesson $lesson){
+
+        $result = StudentLessonAnswer::where('student_id', '=', Auth::user()->id)
+            ->where('lesson_id', '=', $lesson->id)->first();
+        if ($result){
+
+            $right_answers = [];
+
+            foreach (json_decode($lesson->practice)->questions as $key => $question) {
+                $right_answers[] = $question->answers[0];
+            }
+
+            $answers = json_decode($result->answer);
+
+            $test_results = array_diff($answers, $right_answers);
+
+            $right_answers = 0;
+
+            foreach (json_decode($lesson->practice)->questions as $key => $question) {
+                if (!array_key_exists($key, $test_results)) {
+                    $right_answers++;
+                }
+            }
+
+            return view("app.pages.student.lesson.test_results_view", [
+                "item" => $course,
+                "lesson" => $lesson,
+                "results" => $test_results,
+                "right_answers" => $right_answers
+            ]);
+        }else{
+           return abort(404);
         }
     }
 
@@ -299,8 +348,8 @@ class LessonController extends Controller
                 } else {
                     $coursework = $course->lessons()->where('type', '=', 3)->first();
                     $final_test = $course->lessons->where('type', '=', 4)->first();
-                    $coursework_item = StudentLesson::where('lesson_id', '=', $coursework->id)->where('student_id', '=', Auth::user()->id)->first();
-                    $final_test_item = StudentLesson::where('lesson_id', '=', $final_test->id)->where('student_id', '=', Auth::user()->id)->first();
+//                    $coursework_item = StudentLesson::where('lesson_id', '=', $coursework->id)->where('student_id', '=', Auth::user()->id)->first();
+//                    $final_test_item = StudentLesson::where('lesson_id', '=', $final_test->id)->where('student_id', '=', Auth::user()->id)->first();
 
                     if (!empty($coursework) and ($coursework->id != $lesson->id)) {
                         $this->syncUserLessons($coursework->id);

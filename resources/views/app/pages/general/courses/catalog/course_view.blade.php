@@ -69,18 +69,23 @@
                                                 </div>
                                                 <div class="topic__body">
                                                     @foreach($theme->lessons as $lesson)
-                                                        <div class="lesson">
-                                                            @if($student_course)
+                                                        @if($student_course)
+                                                            <div class="lesson {{ (!empty($lesson->lesson_student->is_finished) == true ? 'finished' : '') }}">
                                                                 <div class="title"><a
                                                                             href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$lesson->id}}"
                                                                             title="{{$lesson->name}}">{{$lesson->name}}</a>
                                                                 </div>
-                                                            @else
+                                                                <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                            </div>
+                                                        @else
+                                                            <div class="lesson">
                                                                 <div class="title">{{$lesson->name}}
                                                                 </div>
-                                                            @endif
-                                                            <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
-                                                        </div>
+                                                                <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                            </div>
+                                                        @endif
+
+
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -199,6 +204,14 @@
                                                 ?>
                                             </div>
                                         </div>
+                                        @if(!empty($student_course) and ($student_course->paid_status != 0))
+                                            <div>
+                                                <a href="/{{$lang}}/dialog/opponent-{{$item->user->id}}"
+                                                   title="{{__('default.pages.courses.write_to_author')}}"
+                                                   class="btn small">{{__('default.pages.courses.write_to_author')}}
+                                                </a>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -448,13 +461,27 @@
                                            class="sidebar-btn ghost">{{__('default.pages.courses.get_by_quota')}}</a>
                                     @endif
                                     @if($item->is_paid == 0)
-                                        <a href="#buyConfirm" data-fancybox
-                                           title="{{__('default.pages.courses.get_free')}}"
-                                           class="sidebar-btn ghost">{{__('default.pages.courses.get_free')}}</a>
+                                        @guest
+                                            <a href="#studentAuth" data-fancybox
+                                               title="{{__('default.pages.courses.get_free')}}"
+                                               class="sidebar-btn ghost">{{__('default.pages.courses.get_free')}}</a>
+                                        @endguest
+                                        @auth
+                                            <a href="#buyConfirm" data-fancybox
+                                               title="{{__('default.pages.courses.get_free')}}"
+                                               class="sidebar-btn ghost">{{__('default.pages.courses.get_free')}}</a>
+                                        @endauth
                                     @else
-                                        <a href="#buyConfirm" data-fancybox
-                                           title="{{__('default.pages.courses.buy_course')}}"
-                                           class="sidebar-btn">{{__('default.pages.courses.buy_course')}}</a>
+                                        @guest
+                                            <a href="#studentAuth" data-fancybox
+                                               title="{{__('default.pages.courses.buy_course')}}"
+                                               class="sidebar-btn">{{__('default.pages.courses.buy_course')}}</a>
+                                        @endguest
+                                        @auth
+                                            <a href="#buyConfirm" data-fancybox
+                                               title="{{__('default.pages.courses.buy_course')}}"
+                                               class="sidebar-btn">{{__('default.pages.courses.buy_course')}}</a>
+                                        @endauth
                                     @endif
                                 </div>
                             @endif
@@ -483,25 +510,27 @@
             </form>
         </div>
 
-        <div id="quotaConfirm" style="display:none;">
-            <form action="/createPaymentOrder/{{$item->id}}" method="POST">
-                @csrf
-                <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
-                <div class="plain-text gray text-center">{{__('default.pages.courses.confirm_course_by_quota')}}</div>
-                <div class="plain-text gray text-center">{{__('default.pages.courses.quota_have')}}
-                    : {{Auth::user()->student_info->quota_count}}</div>
-                <div class="row row--multiline justify-center">
-                    <div class="col-auto">
-                        <button type="submit" name="action" value="by_qouta" title="{{__('default.yes_title')}}"
-                                class="btn">{{__('default.yes_title')}}</button>
+        @auth
+            <div id="quotaConfirm" style="display:none;">
+                <form action="/createPaymentOrder/{{$item->id}}" method="POST">
+                    @csrf
+                    <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
+                    <div class="plain-text gray text-center">{{__('default.pages.courses.confirm_course_by_quota')}}</div>
+                    <div class="plain-text gray text-center">{{__('default.pages.courses.quota_have')}}
+                        : {{Auth::user()->student_info->quota_count}}</div>
+                    <div class="row row--multiline justify-center">
+                        <div class="col-auto">
+                            <button type="submit" name="action" value="by_qouta" title="{{__('default.yes_title')}}"
+                                    class="btn">{{__('default.yes_title')}}</button>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#" title="{{__('default.no_title')}}" class="ghost-btn"
+                               data-fancybox-close>{{__('default.no_title')}}</a>
+                        </div>
                     </div>
-                    <div class="col-auto">
-                        <a href="#" title="{{__('default.no_title')}}" class="ghost-btn"
-                           data-fancybox-close>{{__('default.no_title')}}</a>
-                    </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
+        @endauth
 
 
     </main>

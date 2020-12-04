@@ -7,20 +7,15 @@
         <section class="plain">
             <div class="container">
                 <ul class="breadcrumbs">
-                    <li><a href="/{{$lang}}/my-courses"
+                    <li><a href="/{{$lang}}/student/my-courses"
                            title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                     </li>
-                    @include('app.pages.author.courses.components.breadcrumb_course_type',['item' => $item])
-                    <li><a href="/{{$lang}}/my-courses/course/{{$item->id}}"
+                    <li><a href="/{{$lang}}/course-catalog/course/{{$item->id}}"
                            title="{{$item->name}}">{{$item->name}}</a>
                     </li>
-                    @if($lesson->type == 4)
-                        <li>
-                            <span>{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</span>
-                        </li>
-                    @else
-                        <li><span>{{$lesson->name}}</span></li>
-                    @endif
+                    <li>
+                        <span>{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</span>
+                    </li>
                 </ul>
 
                 <div class="row row--multiline">
@@ -31,7 +26,7 @@
                             @else
                                 <h1 class="page-title">{{$lesson->name}}</h1>
                             @endif
-                            <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$lesson->id}}/author-test-submit"
+                            <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$lesson->id}}/answerSend"
                                   method="POST">
                                 @csrf
                                 <div class="test">
@@ -83,7 +78,7 @@
 
                                 </div>
                                 <div class="buttons">
-                                    <button type="submit"
+                                    <button type="submit" name="action" value="final_test"
                                             class="btn">{{__('default.pages.lessons.done_test_btn')}}</button>
                                     <a href="{{ url()->previous() }}"
                                        title="{{__('default.pages.courses.cancel_title')}}"

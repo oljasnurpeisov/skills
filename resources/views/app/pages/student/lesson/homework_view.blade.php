@@ -7,7 +7,7 @@
         <section class="plain">
             <div class="container">
                 <ul class="breadcrumbs">
-                    <li><a href="/{{$lang}}/my-courses"
+                    <li><a href="/{{$lang}}/student/my-courses"
                            title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                     </li>
                     <li><a href="/{{$lang}}/course-catalog/course/{{$item->id}}"
@@ -186,7 +186,7 @@
                                                 </div>
                                                 <div class="sidebar-item__body">
                                                     <select name="colorScheme" class="selectize-regular custom color"
-                                                            placeholder="Выберите палитру">
+                                                            placeholder="{{__('default.pages.lessons.choose_palette')}}">
                                                         <option value="black-white">{{__('default.pages.lessons.default_title')}}</option>
                                                         <option value="white-black">{{__('default.pages.lessons.white_on_black_palette')}}</option>
                                                         <option value="yellow-blue">{{__('default.pages.lessons.yellow_on_blue_palette')}}</option>

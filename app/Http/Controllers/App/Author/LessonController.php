@@ -888,7 +888,6 @@ class LessonController extends Controller
                 }
             }
 
-//            return $test_results;
             return view("app.pages.author.courses.lesson_preview.test_results_view", [
                 "item" => $course,
                 "lesson" => $lesson,

@@ -213,8 +213,11 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     // Урок
                     Route::get("/course-catalog/course/{course}/lesson-{lesson}", "LessonController@lessonView");
                     Route::post("/course_{course}/student_lesson_finished_{lesson}", "LessonController@lessonFinished");
-                    // Домашняя и Курсовая работа
+                    // Задания
                     Route::get("/course-catalog/course/{course}/lesson-{lesson}/homework", "LessonController@homeworkView");
+                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/test", "LessonController@testView");
+                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/test-result", "LessonController@testResultView");
+
                     Route::post("/course-{course}/lesson-{lesson}/answerSend", "LessonController@answerSend");
 
                 });

@@ -164,7 +164,7 @@
                                                 </div>
                                                 <div class="sidebar-item__body">
                                                     <select name="colorScheme" class="selectize-regular custom color"
-                                                            placeholder="Выберите палитру">
+                                                            placeholder="{{__('default.pages.lessons.choose_palette')}}">
                                                         <option value="black-white">{{__('default.pages.lessons.default_title')}}</option>
                                                         <option value="white-black">{{__('default.pages.lessons.white_on_black_palette')}}</option>
                                                         <option value="yellow-blue">{{__('default.pages.lessons.yellow_on_blue_palette')}}</option>
