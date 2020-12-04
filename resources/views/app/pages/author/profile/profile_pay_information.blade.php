@@ -53,7 +53,7 @@
                         </div>
                     @endif
                     <div class="alert alert-warning">
-                        {!! __('Логин и пароль от платежной системы вы можете получить по адресу <a href="https://www.kassa24.kz/" target="_blank"><b>kassa24.kz</b></a>') !!}
+                        {!! __('default.pages.profile.pay_info_help_title') !!}
                     </div>
                     <div @if($pay_information->user->email_verified_at == null)class="row row--multiline disabled"@else class="row row--multiline"@endif>
                         <div class="col-sm-6">

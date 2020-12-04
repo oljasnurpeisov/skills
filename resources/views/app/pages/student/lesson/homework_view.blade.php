@@ -10,7 +10,7 @@
                     <li><a href="/{{$lang}}/my-courses"
                            title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                     </li>
-                    <li><a href="/{{$lang}}/my-courses/course/{{$item->id}}"
+                    <li><a href="/{{$lang}}/course-catalog/course/{{$item->id}}"
                            title="{{$item->name}}">{{$item->name}}</a>
                     </li>
                     @if($lesson->type == 3)

@@ -197,15 +197,12 @@ class LessonController extends Controller
         if (!empty($lesson->lesson_student)) {
             if ($lesson->lesson_student->is_access == true) {
 
-                $request->validate([
-                    'answer' => 'required',
-                    'another_files' => 'required|not_in:[]',
-                ]);
-
-//                if ($lesson->type == 3 and $request->another_files == []) {
-//
-//                    return redirect()->back()->with('failed', __('default.pages.lessons.coursework_send_failed'));
-//                }
+                if($lesson->type == 3) {
+                    $request->validate([
+                        'answer' => 'required',
+                        'another_files' => 'required|not_in:[]',
+                    ]);
+                }
 
                 $answer = new StudentLessonAnswer;
                 $answer->student_lesson_id = $lesson->lesson_student->id;

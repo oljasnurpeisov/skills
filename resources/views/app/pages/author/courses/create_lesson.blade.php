@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label class="form-group__label">{{__('default.pages.lessons.lesson_image')}}</label>
+                                        <label class="form-group__label">{{__('default.pages.lessons.lesson_image')}} *</label>
                                         <div class="avatar lesson-image dropzone-avatar" id="lessonCover"
                                              data-url="/ajax_upload_lesson_image?_token={{ csrf_token() }}" data-maxsize="1"
                                              data-acceptedfiles="image/*">

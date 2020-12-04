@@ -22,11 +22,11 @@
                         <form action="/{{$lang}}/create-course" method="POST">
                             @csrf
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.course_name')}}</label>
+                                <label class="form-group__label">{{__('default.pages.courses.course_name')}} *</label>
                                 <input type="text" name="name" placeholder="" class="input-regular" value="{{ old('name') }}" required>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.skills_title')}}</label>
+                                <label class="form-group__label">{{__('default.pages.courses.skills_title')}} *</label>
                                 <div class="input-addon">
                                     <select name="skills[]" placeholder="{{__('default.pages.courses.choose_skill')}}"
                                             data-method="getSkills?_token={{ csrf_token() }}" id="skillsInputTpl" required> </select>
@@ -61,22 +61,22 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_profit')}} *</label>
-                                <textarea name="profit_desc" class="input-regular tinymce-here" required> {{ old('profit_desc') }}</textarea>
+                                <textarea name="profit_desc" class="input-regular tinymce-text-here" placeholder="{{__('default.pages.courses.course_profit_placeholder')}}" required>{{ old('profit_desc') }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_teaser')}} *</label>
-                                <textarea name="teaser" class="input-regular tinymce-here" required> {{ old('teaser') }}</textarea>
+                                <textarea name="teaser" class="input-regular tinymce-text-here" required>{{ old('teaser') }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_desc')}} *</label>
-                                <textarea name="description" class="input-regular tinymce-here" required> {{ old('description') }}</textarea>
+                                <textarea name="description" class="input-regular tinymce-text-here" placeholder="{{__('default.pages.courses.course_description_placeholder')}}" required>{{ old('description') }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_image')}}</label>
                                 <div class="avatar course-image dropzone-avatar" id="courseCover"
                                      data-url="/ajax_upload_course_image?_token={{ csrf_token() }}" data-maxsize="1"
                                      data-acceptedfiles="image/*">
-                                    <input type="text" name="image" class="avatar-path" required hidden>
+                                    <input type="text" name="image" class="avatar-path" hidden>
                                     <img src="/assets/img/course-thumbnail.jpg" class="course-image__preview avatar-preview" alt="">
                                     <div class="course-image__desc dropzone-default">
                                         <div class="previews-container"></div>
@@ -160,7 +160,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.choose_certificate')}}</label>
+                                <label class="form-group__label">{{__('default.pages.courses.choose_certificate')}} *</label>
                                 <div class="row row--multiline">
                                     <div class="col-auto">
                                         <div class="image-choice">

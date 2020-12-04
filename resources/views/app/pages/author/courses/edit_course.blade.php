@@ -22,12 +22,12 @@
                               enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.course_name')}}</label>
+                                <label class="form-group__label">{{__('default.pages.courses.course_name')}} *</label>
                                 <input type="text" name="name" placeholder="" value="{{$item->name}}"
                                        class="input-regular" required>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.skills_title')}}</label>
+                                <label class="form-group__label">{{__('default.pages.courses.skills_title')}} *</label>
                                 <div class="input-addon">
                                     <select name="skills[]" placeholder="{{__('default.pages.courses.choose_skill')}}"
                                             data-method="getSkillsByData" id="skillsInputTpl" required>
@@ -96,19 +96,19 @@
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_profit')}} *</label>
                                 <textarea name="profit_desc" class="input-regular tinymce-text-here" required>
-                            <p>{{$item->profit_desc}}</p>
+                            {{$item->profit_desc}}
                         </textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_teaser')}} *</label>
                                 <textarea name="teaser" class="input-regular tinymce-text-here" required>
-                            <p>{{$item->teaser}}</p>
+                            {{$item->teaser}}
                         </textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_desc')}} *</label>
                                 <textarea name="description" class="input-regular tinymce-text-here" required>
-                            <p>{{$item->description}}</p>
+                            {{$item->description}}
                         </textarea>
                             </div>
                             <div class="form-group">
@@ -120,7 +120,7 @@
                                          data-defaultsrc="/assets/img/course-thumbnail.jpg"
                                          class="course-image__preview avatar-preview" alt="">
                                     <div class="course-image__desc dropzone-default">
-                                        <input type="text" name="image" class="avatar-path" value="{{ $item->image }}" required>
+                                        <input type="text" name="image" class="avatar-path" value="{{ $item->image }}">
                                         @if($item->image)
                                             <div class="previews-container">
                                                 <div class="dz-preview dz-image-preview">
@@ -389,7 +389,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.choose_certificate')}}</label>
+                                <label class="form-group__label">{{__('default.pages.courses.choose_certificate')}} *</label>
                                 <div class="row row--multiline">
                                     @php($certificates = [["1","/assets/img/certificates/1-thumbnail.jpg","/assets/img/certificates/1.jpg"], ["2", "/assets/img/certificates/2-thumbnail.jpg", "/assets/img/certificates/2.jpg"], ["3", "/assets/img/certificates/3-thumbnail.jpg", "/assets/img/certificates/3.jpg"]])
                                     @foreach($certificates as $certificate)
