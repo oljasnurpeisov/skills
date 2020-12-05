@@ -40,9 +40,12 @@
 
                             </div>
                             <div class="buttons">
-                                <a href="/{{$lang}}/course-catalog/course/{{$item->id}}" title="{{__('default.pages.lessons.to_lessons_list')}}"
+                                <a href="/{{$lang}}/course-catalog/course/{{$item->id}}"
+                                   title="{{__('default.pages.lessons.to_lessons_list')}}"
                                    class="btn">{{__('default.pages.lessons.to_lessons_list')}}</a>
-                                <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$lesson->id}}/test" title="{{__('default.pages.lessons.test_try_again')}}" class="ghost-btn">{{__('default.pages.lessons.test_try_again')}}</a>
+                                <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$lesson->id}}/test"
+                                   title="{{__('default.pages.lessons.test_try_again')}}"
+                                   class="ghost-btn">{{__('default.pages.lessons.test_try_again')}}</a>
                             </div>
                         </div>
                     </div>
@@ -234,6 +237,20 @@
                                     </div>
                                 </div>
                             </div>
+                            @if($lesson->type == 2)
+                                <form action="/{{$lang}}/course_{{$item->id}}/student_lesson_finished_{{$lesson->id}}"
+                                      method="POST">
+                                    @csrf
+                                    <div class="sidebar__buttons">
+                                        @if($lesson->lesson_student->is_finished == true)
+                                            <button type="submit" class="sidebar-btn" name="action"
+                                                    value="next_lesson">{{__('default.pages.lessons.next_lesson')}}</button>
+                                        @else
+                                            <button class="sidebar-btn disabled">{{__('default.pages.lessons.next_lesson')}}</button>
+                                        @endif
+                                    </div>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -244,11 +261,13 @@
             <h4 class="title-primary text-center">{{__('default.pages.lessons.result_title')}}</h4>
             @if($right_answers >= json_decode($lesson->practice)->passingScore)
                 <div class="plain-text gray text-center green">{{$right_answers}}
-                    /{{json_decode($lesson->practice)->passingScore}}. {{__('default.pages.lessons.test_success_passed')}}
+                    /{{json_decode($lesson->practice)->passingScore}}
+                    . {{__('default.pages.lessons.test_success_passed')}}
                 </div>
             @else
                 <div class="plain-text gray text-center red">{{$right_answers}}
-                    /{{json_decode($lesson->practice)->passingScore}}. {{__('default.pages.lessons.test_failed_passed')}}
+                    /{{json_decode($lesson->practice)->passingScore}}
+                    . {{__('default.pages.lessons.test_failed_passed')}}
                 </div>
 
             @endif
