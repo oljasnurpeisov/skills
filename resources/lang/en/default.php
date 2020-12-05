@@ -406,7 +406,8 @@ return [
             'index_title' => 'Улучши свои навыки! <br/><span>вместе с Enbek.kz</span>',
             'find_your_course' => '<span>Найдите</span><br/> Ваш курс',
             'popular_courses' => '<span>Популярные</span><br/> курсы',
-            'popular_authors' => '<span>Популярные</span><br/> авторы'
+            'popular_authors' => '<span>Популярные</span><br/> авторы',
+            'poor_vision_version' => 'Версия для слабовидящих'
         ],
 
         'footer' => [

@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/CourseController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/layout/default/components/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/header.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/app/pages/student/courses/my_courses.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/student/courses/my_courses.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -262,14 +261,7 @@
       <workItem from="1606756420810" duration="8673000" />
       <workItem from="1606766009268" duration="54307000" />
       <workItem from="1606903355593" duration="54408000" />
-      <workItem from="1607138985469" duration="13114000" />
-    </task>
-    <task id="LOCAL-00044" summary="- change styles and scripts &#10;- add course page">
-      <created>1606241399684</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1606241399684</updated>
+      <workItem from="1607138985469" duration="14098000" />
     </task>
     <task id="LOCAL-00045" summary="- add create coursework">
       <created>1606249146525</created>
@@ -607,7 +599,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607160192457</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="- add rate on course page&#10;- minor fix">
+      <created>1607164768223</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1607164768223</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TodoView">
@@ -623,7 +622,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- minor fix methods of course table" />
     <MESSAGE value="- add preview test&#10;- add preview coursework&#10;- change lessons routes" />
     <MESSAGE value="- update styles&#10;- update scripts &#10;- add drafts and deleted courses on admin page&#10;- add course preview on admin page" />
     <MESSAGE value="- minor fix&#10;- add theory preview on admin page" />
@@ -648,7 +646,8 @@
     <MESSAGE value="- add test student lesson&#10;- add guest user catalog and course view&#10;- add write to author" />
     <MESSAGE value="- update styles and scripts &#10;- add test results&#10;- fix lessons list" />
     <MESSAGE value="- fix to get previous lesson and theme&#10;- add test and final test student&#10;- change finishedCourse method&#10;- change to get next lesson" />
-    <option name="LAST_COMMIT_MESSAGE" value="- fix to get previous lesson and theme&#10;- add test and final test student&#10;- change finishedCourse method&#10;- change to get next lesson" />
+    <MESSAGE value="- add rate on course page&#10;- minor fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add rate on course page&#10;- minor fix" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -672,11 +671,11 @@
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1606933897686" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1607160188682">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1607164766151">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1607160188682" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1607164766151" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -689,11 +688,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605559122928" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1607076490982">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1607164770242">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995349134" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1607076490982" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1607164770242" />
     <state x="572" y="146" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1605561054285">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
