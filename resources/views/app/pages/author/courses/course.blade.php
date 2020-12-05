@@ -107,58 +107,48 @@
 
                                     @if($item->courseWork() !== null)
                                         <div class="topic">
-                                            <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$item->courseWork()->id}}/delete-lesson-form"
-                                                  method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <div class="topic__header">
-                                                    <div class="title"><a
-                                                                href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
-                                                    </div>
-                                                    <div class="duration"></div>
-                                                    @switch($item->status)
-                                                        @case(0)
-                                                        @case(2)
-                                                        <div class="edit-buttons">
-                                                            <button type="submit"
-                                                                    title="{{__('default.pages.courses.delete_title')}}"
-                                                                    class="btn-icon small btn-icon--ghost icon-trash-can"></button>
-                                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
-                                                               title="{{__('default.pages.courses.edit_title')}}"
-                                                               class="btn-icon small btn-icon--ghost icon-edit"> </a>
-                                                        </div>
-                                                        @break
-                                                    @endswitch
+                                            <div class="topic__header">
+                                                <div class="title"><a
+                                                            href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
                                                 </div>
-                                            </form>
+                                                <div class="duration"></div>
+                                                @switch($item->status)
+                                                    @case(0)
+                                                    @case(2)
+                                                    <div class="edit-buttons">
+                                                        <a href="#removeCourseWorkModal" data-fancybox
+                                                           title="{{__('default.pages.courses.delete_title')}}"
+                                                           class="btn-icon small btn-icon--ghost icon-trash-can"></a>
+                                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
+                                                           title="{{__('default.pages.courses.edit_title')}}"
+                                                           class="btn-icon small btn-icon--ghost icon-edit"> </a>
+                                                    </div>
+                                                    @break
+                                                @endswitch
+                                            </div>
                                         </div>
                                     @endif
                                     @if($item->finalTest() !== null)
                                         <div class="topic">
-                                            <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$item->finalTest()->id}}/delete-lesson-form"
-                                                  method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <div class="topic__header">
-                                                    <div class="title"><a
-                                                                href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
-                                                    </div>
-                                                    <div class="duration"></div>
-                                                    @switch($item->status)
-                                                        @case(0)
-                                                        @case(2)
-                                                        <div class="edit-buttons">
-                                                            <button type="submit"
-                                                                    title="{{__('default.pages.courses.delete_title')}}"
-                                                                    class="btn-icon small btn-icon--ghost icon-trash-can"></button>
-                                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final-test"
-                                                               title="{{__('default.pages.courses.edit_title')}}"
-                                                               class="btn-icon small btn-icon--ghost icon-edit"> </a>
-                                                        </div>
-                                                        @break
-                                                    @endswitch
+                                            <div class="topic__header">
+                                                <div class="title"><a
+                                                            href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
                                                 </div>
-                                            </form>
+                                                <div class="duration"></div>
+                                                @switch($item->status)
+                                                    @case(0)
+                                                    @case(2)
+                                                    <div class="edit-buttons">
+                                                        <a href="#removeFinalTestModal" data-fancybox
+                                                           title="{{__('default.pages.courses.delete_title')}}"
+                                                           class="btn-icon small btn-icon--ghost icon-trash-can"></a>
+                                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final-test"
+                                                           title="{{__('default.pages.courses.edit_title')}}"
+                                                           class="btn-icon small btn-icon--ghost icon-edit"> </a>
+                                                    </div>
+                                                    @break
+                                                @endswitch
+                                            </div>
                                         </div>
                                     @endif
 
@@ -193,7 +183,7 @@
                                     <div class="form-group">
                                         <input type="text" name="topicName" id="newTopicNameInput"
                                                placeholder=""
-                                               class="input-regular" required>
+                                               class="input-regular" autocomplete="off" required>
                                     </div>
                                     <div class="row row--multiline justify-center">
                                         <div class="col-auto">
@@ -263,6 +253,58 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                @if($item->courseWork() !== null)
+                                    <div id="removeCourseWorkModal" style="display:none;">
+                                        <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$item->courseWork()->id}}/delete-lesson-form"
+                                              method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
+                                            <div class="plain-text gray">{{__('default.pages.courses.confirm_coursework_modal_desc')}}
+                                            </div>
+                                            <div class="row row--multiline justify-center">
+                                                <div class="col-auto">
+                                                    <button type="submit"
+                                                            title="{{__('default.pages.courses.delete_title')}}"
+                                                            class="btn">{{__('default.pages.courses.delete_title')}}</button>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a href="#" title="{{__('default.pages.courses.cancel_tile')}}"
+                                                       class="ghost-btn"
+                                                       data-fancybox-close>{{__('default.pages.courses.cancel_tile')}}</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                @endif
+
+
+                                @if($item->finalTest() !== null)
+                                    <div id="removeFinalTestModal" style="display:none;">
+                                        <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$item->finalTest()->id}}/delete-lesson-form"
+                                              method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
+                                            <div class="plain-text gray">{{__('default.pages.courses.confirm_final_test_modal_desc')}}
+                                            </div>
+                                            <div class="row row--multiline justify-center">
+                                                <div class="col-auto">
+                                                    <button type="submit"
+                                                            title="{{__('default.pages.courses.delete_title')}}"
+                                                            class="btn">{{__('default.pages.courses.delete_title')}}</button>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a href="#" title="{{__('default.pages.courses.cancel_tile')}}"
+                                                       class="ghost-btn"
+                                                       data-fancybox-close>{{__('default.pages.courses.cancel_tile')}}</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                @endif
+
 
                                 <div id="modalMsg" style="display:none;">
                                     <div class="text-center">
@@ -402,7 +444,8 @@
                                 @default
                                 <div class="col-auto">
 
-                                    <a href="#removeCourseModal" data-fancybox title="{{__('default.pages.courses.delete_course')}}"
+                                    <a href="#removeCourseModal" data-fancybox
+                                       title="{{__('default.pages.courses.delete_course')}}"
                                        class="btn red">{{__('default.pages.courses.delete_course')}}</a>
 
                                 </div>
@@ -626,7 +669,8 @@
                         @default
                         <div class="col-auto">
 
-                            <a href="#removeCourseModal" data-fancybox title="{{__('default.pages.courses.delete_course')}}"
+                            <a href="#removeCourseModal" data-fancybox
+                               title="{{__('default.pages.courses.delete_course')}}"
                                class="btn red">{{__('default.pages.courses.delete_course')}}</a>
 
                         </div>
@@ -645,10 +689,12 @@
                 <div class="plain-text gray text-center">{{__('default.pages.courses.delete_course_warning')}}</div>
                 <div class="row row--multiline justify-center">
                     <div class="col-auto">
-                        <button type="submit" title="{{__('default.yes_title')}}" class="btn">{{__('default.yes_title')}}</button>
+                        <button type="submit" title="{{__('default.yes_title')}}"
+                                class="btn">{{__('default.yes_title')}}</button>
                     </div>
                     <div class="col-auto">
-                        <a href="#" title="{{__('default.no_title')}}" class="ghost-btn" data-fancybox-close>{{__('default.no_title')}}</a>
+                        <a href="#" title="{{__('default.no_title')}}" class="ghost-btn"
+                           data-fancybox-close>{{__('default.no_title')}}</a>
                     </div>
                 </div>
             </form>

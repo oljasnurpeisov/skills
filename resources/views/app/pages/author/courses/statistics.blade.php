@@ -52,16 +52,42 @@
                         </div>
                     </div>
                 </row>
-                @if(Auth::user()->id == 46)
-                    <div id="chartdiv" class="income-diagram" data-url="/assets/data/author-stats.json"></div>
-                @else
-                    <div class="income-diagram">
-                        <div id="chartdiv" class="income-diagram"
-                             data-url="/{{$lang}}/my-courses/statistics/statisticForChart"></div>
+            </div>
+        </section>
+
+        <section class="plain">
+            <div class="container">
+                <div class="row row--multiline">
+                    <div class="col-md-3 col-sm-4">
+                        <div class="form-group">
+                            <label class="form-group__label">Дата (от):</label>
+                            <div class="input-group">
+                                <input type="text" name="dateFrom" value="04.11.2020" placeholder=""
+                                       class="input-regular">
+                                <i class="icon-calendar"></i>
+                            </div>
+                        </div>
                     </div>
-{{--                    <div id="chartdiv" class="income-diagram"--}}
-{{--                         data-url="/{{$lang}}/my-courses/statistics/statisticForChart"></div>--}}
-                @endif
+                    <div class="col-md-3 col-sm-4">
+                        <div class="form-group">
+                            <label class="form-group__label">Дата (до):</label>
+                            <div class="input-group">
+                                <input type="text" name="dateTo" value="04.12.2020" placeholder=""
+                                       class="input-regular">
+                                <i class="icon-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="income-diagram">
+                    @if(Auth::user()->id == 46)
+                        <div id="chartdiv" data-url="/assets/data/author-stats.json"></div>
+                    @else
+                        <div class="income-diagram">
+                            <div id="chartdiv" data-url="/{{$lang}}/my-courses/statistics/statisticForChart"></div>
+                        </div>
+                    @endif
+                </div>
             </div>
         </section>
 
