@@ -368,7 +368,7 @@
                             </div>
                         </div>
 
-                        <div class="row row--multiline">
+                        <div class="row row--multiline hidden-xs hidden-sm">
                             @switch($item->status)
                                 @case(0)
                                 @case(2)
@@ -591,6 +591,48 @@
                         </form>
                     </div>
                 </div>
+
+                <div class="row row--multiline hidden-md hidden-lg" style="margin-top: 10px">
+                    @switch($item->status)
+                        @case(0)
+                        @case(2)
+                        <div class="col-auto">
+                            <form action="/{{$lang}}/publish-course/{{$item->id}}" method="POST">
+                                @csrf
+                                <button type="submit" title="{{__('default.pages.courses.publish_title')}}"
+                                        class="btn">{{__('default.pages.courses.publish_title')}}</button>
+                            </form>
+                        </div>
+                        <div class="col-auto">
+                            <a href="/{{$lang}}/my-courses/edit-course/{{$item->id}}"
+                               title="{{__('default.pages.courses.edit_title')}}"
+                               class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
+                        </div>
+                        <div class="col-auto">
+                            {{--                                <a href="#" title="Отмена" class="ghost-btn">Отмена</a>--}}
+                        </div>
+                        @break
+                        @case(4)
+                        <div class="col-auto">
+                            <form action="/{{$lang}}/my-courses/reestablish-course/{{$item->id}}"
+                                  method="POST">
+                                @csrf
+                                <button type="submit" title="{{__('default.pages.courses.reestablish')}}"
+                                        class="ghost-btn"
+                                        style="background-color: white">{{__('default.pages.courses.reestablish')}}</button>
+                            </form>
+                        </div>
+                        @break
+                        @default
+                        <div class="col-auto">
+
+                            <a href="#removeCourseModal" data-fancybox title="{{__('default.pages.courses.delete_course')}}"
+                               class="btn red">{{__('default.pages.courses.delete_course')}}</a>
+
+                        </div>
+                    @endswitch
+                </div>
+
             </div>
         </section>
 

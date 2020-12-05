@@ -34,7 +34,7 @@
                         </div>
                     @endif
 
-                    <div class="row row--multiline">
+                    <div class="row row--multiline column-reverse-sm">
                         <div class="col-md-8">
                             <div class="row row--multiline">
                                 @foreach($items as $item)
@@ -97,146 +97,150 @@
                         </div>
                         <div class="col-md-4">
                             {{--                        <form class="sidebar">--}}
-                            <div class="sidebar__inner">
-                                <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.profession')}}:</div>
-                                    <div class="sidebar-item__body">
-                                        <select name="specialities[]"
-                                                placeholder="{{__('default.pages.courses.choose_profession')}}"
-                                                data-method="getProfessionsByName"
-                                                class="custom" multiple>
-                                            @if(!empty($request->specialities))
-                                                @foreach($professions as $profession)
-                                                    <option value="{{$profession->id}}"
-                                                            selected>{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
+                            <div class="sidebar" data-toggle-title="{{__('default.pages.courses.show_filter_title')}}">
+                                <div class="sidebar__inner">
+                                    <div class="sidebar-item">
+                                        <div class="sidebar-item__title">{{__('default.pages.courses.profession')}}:
+                                        </div>
+                                        <div class="sidebar-item__body">
+                                            <select name="specialities[]"
+                                                    placeholder="{{__('default.pages.courses.choose_profession')}}"
+                                                    data-method="getProfessionsByName"
+                                                    class="custom" multiple>
+                                                @if(!empty($request->specialities))
+                                                    @foreach($professions as $profession)
+                                                        <option value="{{$profession->id}}"
+                                                                selected>{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.skill')}}:</div>
-                                    <div class="sidebar-item__body">
-                                        <select name="skills[]"
-                                                placeholder="{{__('default.pages.courses.choose_skill')}}"
-                                                data-method="getSkillsByData?_token={{ csrf_token() }}"
-                                                class="custom" multiple>
-                                            @if(!empty($request->skills))
-                                                @foreach($skills as $skill)
-                                                    <option value="{{$skill->id}}"
-                                                            selected>{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
+                                    <div class="sidebar-item">
+                                        <div class="sidebar-item__title">{{__('default.pages.courses.skill')}}:</div>
+                                        <div class="sidebar-item__body">
+                                            <select name="skills[]"
+                                                    placeholder="{{__('default.pages.courses.choose_skill')}}"
+                                                    data-method="getSkillsByData?_token={{ csrf_token() }}"
+                                                    class="custom" multiple>
+                                                @if(!empty($request->skills))
+                                                    @foreach($skills as $skill)
+                                                        <option value="{{$skill->id}}"
+                                                                selected>{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.course_author')}}:
+                                    <div class="sidebar-item">
+                                        <div class="sidebar-item__title">{{__('default.pages.courses.course_author')}}:
+                                        </div>
+                                        <div class="sidebar-item__body">
+                                            <select name="authors[]"
+                                                    placeholder="{{__('default.pages.courses.choose_author')}}"
+                                                    data-method="getAuthorsByName"
+                                                    data-default="" class="custom" multiple>
+                                                @if(!empty($request->authors))
+                                                    @foreach($authors as $author)
+                                                        <option value="{{$author->id}}"
+                                                                selected>{{$author->author_info->name . ' ' . $author->author_info->surname}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="sidebar-item__body">
-                                        <select name="authors[]"
-                                                placeholder="{{__('default.pages.courses.choose_author')}}"
-                                                data-method="getAuthorsByName"
-                                                data-default="" class="custom" multiple>
-                                            @if(!empty($request->authors))
-                                                @foreach($authors as $author)
-                                                    <option value="{{$author->id}}"
-                                                            selected>{{$author->author_info->name . ' ' . $author->author_info->surname}}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
+                                    <div class="sidebar-item">
+                                        <div class="sidebar-item__title">{{__('default.pages.courses.language_education')}}
+                                            :
+                                        </div>
+                                        <div class="sidebar-item__body">
+                                            <label class="checkbox"><input type="checkbox" name="lang_kk"
+                                                                           value="1" {{($request->lang_kk == 1 ? ' checked' : '')}}><span>{{__('default.pages.courses.language_education_kk')}}</span></label>
+                                            <label class="checkbox"><input type="checkbox" name="lang_ru"
+                                                                           value="1" {{($request->lang_ru == 1 ? ' checked' : '')}}><span>{{__('default.pages.courses.language_education_ru')}}</span></label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.language_education')}}
-                                        :
+                                    <div class="sidebar-item">
+                                        <div class="sidebar-item__title">{{__('default.pages.courses.course_status')}}:
+                                        </div>
+                                        <div class="sidebar-item__body">
+                                            <label class="checkbox"><input type="checkbox" name="status[]"
+                                                                           value="0" {{(in_array('0', $status) ? ' checked' : '')}}><span>{{__('default.pages.courses.course_in_process')}}</span></label>
+                                            <label class="checkbox"><input type="checkbox" name="status[]"
+                                                                           value="1" {{(in_array('1', $status)  ? ' checked' : '')}}><span>{{__('default.pages.courses.course_finished')}}</span></label>
+                                            <label class="checkbox"><input type="checkbox" name="certificate"
+                                                                           value="1" {{($request->certificate == 1  ? ' checked' : '')}}><span>{{__('default.pages.courses.course_got_certificate')}}</span></label>
+                                        </div>
                                     </div>
-                                    <div class="sidebar-item__body">
-                                        <label class="checkbox"><input type="checkbox" name="lang_kk"
-                                                                       value="1" {{($request->lang_kk == 1 ? ' checked' : '')}}><span>{{__('default.pages.courses.language_education_kk')}}</span></label>
-                                        <label class="checkbox"><input type="checkbox" name="lang_ru"
-                                                                       value="1" {{($request->lang_ru == 1 ? ' checked' : '')}}><span>{{__('default.pages.courses.language_education_ru')}}</span></label>
-                                    </div>
-                                </div>
-                                <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.course_status')}}:
-                                    </div>
-                                    <div class="sidebar-item__body">
-                                        <label class="checkbox"><input type="checkbox" name="status[]"
-                                                                       value="0" {{(in_array('0', $status) ? ' checked' : '')}}><span>{{__('default.pages.courses.course_in_process')}}</span></label>
-                                        <label class="checkbox"><input type="checkbox" name="status[]"
-                                                                       value="1" {{(in_array('1', $status)  ? ' checked' : '')}}><span>{{__('default.pages.courses.course_finished')}}</span></label>
-                                        <label class="checkbox"><input type="checkbox" name="certificate"
-                                                                       value="1" {{($request->certificate == 1  ? ' checked' : '')}}><span>{{__('default.pages.courses.course_got_certificate')}}</span></label>
-                                    </div>
-                                </div>
-                                <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.course_date_begin')}}
-                                        :
-                                    </div>
-                                    <div class="sidebar-item__body" style="padding-right: .5em;padding-left: .5em;">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="text" name="start_date_from"
-                                                               placeholder="{{__('default.from')}}"
-                                                               class="input-regular custom-datepicker"
-                                                               value="{{$start_date_from}}">
-                                                        <i class="icon-calendar"></i>
+                                    <div class="sidebar-item">
+                                        <div class="sidebar-item__title">{{__('default.pages.courses.course_date_begin')}}
+                                            :
+                                        </div>
+                                        <div class="sidebar-item__body" style="padding-right: .5em;padding-left: .5em;">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="text" name="start_date_from"
+                                                                   placeholder="{{__('default.from')}}"
+                                                                   class="input-regular custom-datepicker"
+                                                                   value="{{$start_date_from}}">
+                                                            <i class="icon-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="text" name="start_date_to"
+                                                                   placeholder="{{__('default.to')}}"
+                                                                   class="input-regular custom-datepicker"
+                                                                   value="{{$start_date_to}}">
+                                                            <i class="icon-calendar"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="text" name="start_date_to"
-                                                               placeholder="{{__('default.to')}}"
-                                                               class="input-regular custom-datepicker"
-                                                               value="{{$start_date_to}}">
-                                                        <i class="icon-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <div class="sidebar-item">
+                                        <div class="sidebar-item__title">{{__('default.pages.courses.course_end_begin')}}
+                                            :
+                                        </div>
+                                        <div class="sidebar-item__body" style="padding-right: .5em;padding-left: .5em;">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="text" name="finish_date_from"
+                                                                   placeholder="{{__('default.from')}}"
+                                                                   class="input-regular custom-datepicker"
+                                                                   value="{{$finish_date_from}}">
+                                                            <i class="icon-calendar"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <input type="text" name="finish_date_to"
+                                                                   placeholder="{{__('default.to')}}"
+                                                                   class="input-regular custom-datepicker"
+                                                                   value="{{$finish_date_to}}">
+                                                            <i class="icon-calendar"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.course_end_begin')}}:
-                                    </div>
-                                    <div class="sidebar-item__body" style="padding-right: .5em;padding-left: .5em;">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="text" name="finish_date_from"
-                                                               placeholder="{{__('default.from')}}"
-                                                               class="input-regular custom-datepicker"
-                                                               value="{{$finish_date_from}}">
-                                                        <i class="icon-calendar"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <input type="text" name="finish_date_to"
-                                                               placeholder="{{__('default.to')}}"
-                                                               class="input-regular custom-datepicker"
-                                                               value="{{$finish_date_to}}">
-                                                        <i class="icon-calendar"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="sidebar__buttons">
+                                    <button type="submit"
+                                            class="sidebar-btn">{{__('default.pages.courses.apply_title')}}</button>
                                 </div>
-                            </div>
-                            <div class="sidebar__buttons">
-                                <button type="submit"
-                                        class="sidebar-btn">{{__('default.pages.courses.apply_title')}}</button>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
                 </form>

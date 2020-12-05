@@ -54,7 +54,7 @@
                         </div>
                     @endif
                     <div @if($item->user->email_verified_at == null)class="row row--multiline disabled"@else class="row row--multiline"@endif>
-                        <div class="col-sm-4">
+                        <div class="col-sm-5 col-md-4">
                             <div class="author-personal__left">
                                 <div class="avatar author-picture dropzone-avatar" id="avatar"
                                      data-url="{{env('APP_URL')}}/ajax_upload_image?_token={{ csrf_token() }}"
@@ -113,7 +113,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-8">
+                        <div class="col-sm-7 col-md-8">
                             <div class="author-personal__right">
                                 <h2 class="title-secondary">{{__('default.pages.profile.responsible_person')}}</h2>
                                 <div class="row">

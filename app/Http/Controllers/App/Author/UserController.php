@@ -26,15 +26,6 @@ use XmlParser;
 class UserController extends Controller
 {
 
-    public function profile()
-    {
-        $user = User::where('id', '=', Auth::user()->getAuthIdentifier())->with('type_ownership')->first();
-        return view("app.pages.author.profile.profile", [
-            "user" => $user
-        ]);
-    }
-
-
     public function edit_profile()
     {
         $user = User::where('id', '=', Auth::user()->getAuthIdentifier())->with('type_ownership')->first();

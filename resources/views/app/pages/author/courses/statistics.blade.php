@@ -37,14 +37,14 @@
                     </div>
                 </div>
                 <row class="row row--multiline">
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <div class="income">
                             <div class="income__label">{{__('default.pages.statistics.total_earn')}}</div>
                             <div class="income__value green">{{number_format(array_sum($all_cost_courses), 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
                             <img src="/assets/img/budget.svg" alt="" class="income__icon">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <div class="income">
                             <div class="income__label">{{__('default.pages.statistics.earn_quota')}}</div>
                             <div class="income__value yellow">{{number_format(array_sum($quota_cost_courses), 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
@@ -55,8 +55,12 @@
                 @if(Auth::user()->id == 46)
                     <div id="chartdiv" class="income-diagram" data-url="/assets/data/author-stats.json"></div>
                 @else
-                    <div id="chartdiv" class="income-diagram"
-                         data-url="/{{$lang}}/my-courses/statistics/statisticForChart"></div>
+                    <div class="income-diagram">
+                        <div id="chartdiv" class="income-diagram"
+                             data-url="/{{$lang}}/my-courses/statistics/statisticForChart"></div>
+                    </div>
+{{--                    <div id="chartdiv" class="income-diagram"--}}
+{{--                         data-url="/{{$lang}}/my-courses/statistics/statisticForChart"></div>--}}
                 @endif
             </div>
         </section>

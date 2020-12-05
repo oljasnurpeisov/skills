@@ -51,12 +51,12 @@
                                 {!! $lesson->theory !!}
                             </div>
                         </div>
-                        @if($item->status == 1 or $item->status == 2)
+                        @if($item->status == 0 or $item->status == 2)
                             <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$lesson->id}}/delete-lesson-form"
                                   method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <div class="row row--multiline">
+                                <div class="row row--multiline hidden-sm hidden-xs">
                                     <div class="col-auto">
                                         @if($lesson->type == 3)
                                             <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
@@ -85,7 +85,7 @@
 
                     <div class="col-md-4">
                         @if($item->is_poor_vision == true)
-                            <div class="sidebar">
+                            <div class="sidebar hidden-sm hidden-xs">
                                 <div class="sidebar__inner">
                                     <div class="poor-vision">
                                         <div><label class="checkbox"><input type="checkbox"
@@ -299,6 +299,38 @@
                         </div>
                     </div>
                 </div>
+
+                @if($item->status == 0 or $item->status == 2)
+                    <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$lesson->id}}/delete-lesson-form"
+                          method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <div class="row row--multiline hidden-md hidden-lg" style="margin-top: 10px">
+                            <div class="col-auto">
+                                @if($lesson->type == 3)
+                                    <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
+                                       title="{{__('default.pages.courses.edit_title')}}"
+                                       class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
+                                @elseif($lesson->type == 4)
+                                    <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-final-test"
+                                       title="{{__('default.pages.courses.edit_title')}}"
+                                       class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
+                                @else
+                                    <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-lesson-{{$lesson->id}}"
+                                       title="{{__('default.pages.courses.edit_title')}}"
+                                       class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
+                                @endif
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit"
+                                        title="{{__('default.pages.courses.delete_title')}}"
+                                        class="ghost-btn"
+                                        style="background-color: white">{{__('default.pages.courses.delete_title')}}</button>
+                            </div>
+                        </div>
+                    </form>
+                @endif
+
             </div>
         </section>
 

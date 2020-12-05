@@ -190,7 +190,6 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::group(['middleware' => 'check.role:author'], static function () {
                 Route::group(["middleware" => ["web"], "namespace" => "Author"], function () {
                     // Профиль автора
-                    Route::get("/profile", "UserController@profile");
                     Route::get("/edit-profile", "UserController@edit_profile");
                     Route::post("/update_profile", "UserController@update_profile");
                     Route::get("/change-password", "UserController@change_password");

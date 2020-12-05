@@ -37,7 +37,7 @@
                     </div>
                 @endif
 
-                <div class="row row--multiline">
+                <div class="row row--multiline column-reverse-sm">
                     <div class="col-md-8">
                         <div class="article">
                             @if($lesson->type == 3)
@@ -134,7 +134,7 @@
                     </div>
                     <div class="col-md-4">
                         @if($item->is_poor_vision == true)
-                            <div class="sidebar">
+                            <div class="sidebar hidden-xs hidden-sm">
                                 <div class="sidebar__inner">
                                     <div class="poor-vision">
                                         <div><label class="checkbox"><input type="checkbox"

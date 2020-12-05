@@ -50,7 +50,7 @@
                     </div>
                     <div class="col-md-4">
                         @if($item->is_poor_vision == true)
-                            <div class="sidebar">
+                            <div class="sidebar hidden-xs hidden-sm">
                                 <div class="sidebar__inner">
                                     <div class="poor-vision">
                                         <div><label class="checkbox"><input type="checkbox"

@@ -28,6 +28,8 @@ return [
             'create_theme' => 'Создать тему',
             'coursework_title' => 'Курсовая работа',
             'final_test_title' => 'Финальное тестирование',
+
+            'show_filter_title' => 'Показать/скрыть фильтрацию',
             'profession' => 'Профессия',
             'choose_profession' => 'Выберите профессию',
             'skill' => 'Навык',

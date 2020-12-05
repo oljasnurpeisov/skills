@@ -45,7 +45,7 @@
                     </div>
                 </div>
 
-                <div class="row row--multiline">
+                <div class="row row--multiline column-reverse-sm">
                     <div class="col-md-8">
                         @if (session('status'))
                             <div class="alert alert-success">
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <form class="sidebar">
+                        <form class="sidebar" data-toggle-title="{{__('default.pages.courses.show_filter_title')}}">
                             <div class="sidebar__inner">
                                 <div class="sidebar-item">
                                     <div class="sidebar-item__title">{{__('default.pages.courses.profession')}}:</div>
