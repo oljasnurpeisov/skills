@@ -105,6 +105,9 @@
                            class="btn small">{{__('default.pages.reporting.export')}}</a>
                     </div>
                 </div>
+                <div class="text-center">
+                    {{ $items->links('vendor.pagination.default') }}
+                </div>
             </div>
         </section>
 

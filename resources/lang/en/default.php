@@ -342,7 +342,9 @@ return [
             'sort_by_rate_low' => 'Рейтинг - по возрастанию',
             'sort_by_rate_high' => 'Рейтинг - по убыванию',
             'sort_by_members_count_low' => 'Количество обучающихся - по возрастанию',
-            'sort_by_members_count_high' => 'Количество обучающихся - по убыванию'
+            'sort_by_members_count_high' => 'Количество обучающихся - по убыванию',
+            'date_from' => 'Дата (от)',
+            'date_to' => 'Дата (до)',
         ],
 
         'reporting' => [

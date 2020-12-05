@@ -60,9 +60,9 @@
                 <div class="row row--multiline">
                     <div class="col-md-3 col-sm-4">
                         <div class="form-group">
-                            <label class="form-group__label">Дата (от):</label>
+                            <label class="form-group__label">{{__('default.pages.statistics.date_from')}}:</label>
                             <div class="input-group">
-                                <input type="text" name="dateFrom" value="04.11.2020" placeholder=""
+                                <input type="text" name="dateFrom" value="01.01.2020" placeholder=""
                                        class="input-regular">
                                 <i class="icon-calendar"></i>
                             </div>
@@ -70,9 +70,9 @@
                     </div>
                     <div class="col-md-3 col-sm-4">
                         <div class="form-group">
-                            <label class="form-group__label">Дата (до):</label>
+                            <label class="form-group__label">{{__('default.pages.statistics.date_to')}}:</label>
                             <div class="input-group">
-                                <input type="text" name="dateTo" value="04.12.2020" placeholder=""
+                                <input type="text" name="dateTo" value="{{date('d.m.Y')}}" placeholder=""
                                        class="input-regular">
                                 <i class="icon-calendar"></i>
                             </div>
@@ -83,9 +83,7 @@
                     @if(Auth::user()->id == 46)
                         <div id="chartdiv" data-url="/assets/data/author-stats.json"></div>
                     @else
-                        <div class="income-diagram">
-                            <div id="chartdiv" data-url="/{{$lang}}/my-courses/statistics/statisticForChart"></div>
-                        </div>
+                        <div id="chartdiv" data-url="/{{$lang}}/my-courses/statistics/statisticForChart"></div>
                     @endif
                 </div>
             </div>

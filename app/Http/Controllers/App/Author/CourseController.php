@@ -524,7 +524,7 @@ class CourseController extends Controller
 
     public function deleteCourse($lang, Course $item)
     {
-        if($item->author_id == Auth::user()->id){
+        if ($item->author_id == Auth::user()->id) {
             $item->status = 4;
             $item->save();
 
@@ -693,7 +693,6 @@ class CourseController extends Controller
 
     public function reportingCourse(Request $request)
     {
-//        return redirect('/' . app()->getLocale() . '/my-courses', 302);
 
         $from = $request->date_from;
         $to = $request->date_to;
@@ -716,7 +715,7 @@ class CourseController extends Controller
                 $q->whereBetween('student_course.updated_at', [$date_from, $date_to]);
             }]);
 
-        $items = $query->paginate();
+        $items = $query->paginate(5);
 
         Session::put('export_reporting', $query->get());
         Session::put('export_reporting_dates', [$date_from, $date_to]);
@@ -729,7 +728,6 @@ class CourseController extends Controller
             'date_from' => $date_from,
             'date_to' => $date_to,
         ]);
-//        return $query->get();
 
     }
 
