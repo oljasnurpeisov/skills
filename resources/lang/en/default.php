@@ -70,6 +70,7 @@ return [
             'course_rate_description' => 'Отзыв о курсе...',
             'course_rate_ps' => 'Оценка курса и отзыв являются обязательными условиями',
             'send_rate_button_title' => 'Отправить',
+            'success_rate_message' => 'Ваш отзыв был успешно отправлен автору курса!',
             'report_title' => 'Отчет',
             'free_title' => 'Бесплатно',
             'access_by_quota' => 'Доступен по квоте',

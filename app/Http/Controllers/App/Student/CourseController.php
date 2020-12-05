@@ -32,7 +32,7 @@ class CourseController extends Controller
         $item->description = $request->review;
         $item->save();
 
-        return redirect('/' . $lang . '/student/my-courses');
+        return redirect()->back()->with('status', __('default.pages.courses.success_rate_message'));
     }
 
     public function studentCourses(Request $request, $lang)

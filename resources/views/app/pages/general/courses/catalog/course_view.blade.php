@@ -491,6 +491,38 @@
             </div>
         </section>
 
+        @auth
+            @if(empty($student_rate) and !empty($student_course->is_finished) == true)
+                <div id="rate" style="display:none;">
+                    <h4 class="title-primary text-center">{{__('default.pages.courses.course_rate_title')}}</h4>
+                    <form action="/{{$lang}}/course-{{$student_course->course_id}}/saveCourseRate" method="POST">
+                        @csrf
+                        <div class="rating-fieldset">
+                            <input type="radio" name="rating" value="5" id="star5" required>
+                            <label for="star5"><i class="icon-star-empty"></i></label>
+                            <input type="radio" name="rating" value="4" id="star4">
+                            <label for="star4"><i class="icon-star-empty"></i></label>
+                            <input type="radio" name="rating" value="3" id="star3">
+                            <label for="star3"><i class="icon-star-empty"></i></label>
+                            <input type="radio" name="rating" value="2" id="star2">
+                            <label for="star2"><i class="icon-star-empty"></i></label>
+                            <input type="radio" name="rating" value="1" id="star1">
+                            <label for="star1"><i class="icon-star-empty"></i></label>
+                        </div>
+                        <div class="form-group">
+                    <textarea name="review" placeholder="{{__('default.pages.courses.course_rate_description')}}"
+                              class="input-regular" required></textarea>
+                            <div class="hint text-center gray">* {{__('default.pages.courses.course_rate_ps')}}</div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit"
+                                    class="btn">{{__('default.pages.courses.send_rate_button_title')}}</button>
+                        </div>
+                    </form>
+                </div>
+            @endif
+        @endauth
+
 
         <div id="buyConfirm" style="display:none;">
             <form action="/createPaymentOrder/{{$item->id}}" method="POST">
@@ -538,7 +570,18 @@
 
 @section('scripts')
     <!--Only this page's scripts-->
-
+    @if(empty($student_rate) and !empty($student_course->is_finished) == true)
+    <script>
+            $.fancybox.open({
+                src: '#rate',
+                touch: false,
+                smallBtn: false,
+                buttons: [],
+                clickSlide: false,
+                clickOutside: false
+            })
+    </script>
+    @endif
     <!---->
 @endsection
 
