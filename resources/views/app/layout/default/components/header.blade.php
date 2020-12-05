@@ -176,6 +176,7 @@
                         </ul>
                     </div>
                 </div>
+                <a href="#" class="bvi-open bvi-btn" title="Версия для слабовидящих"><img src="/assets/img/eye.svg" alt=""></a>
             </div>
             <div class="mobile-buttons">
                 <div class="notifications-btn mob-overlay-btn" data-target="notifications-mobile">

@@ -263,10 +263,9 @@ class LessonController extends Controller
                     $this->finishedCourse($course);
                     return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-'. $lesson->id . '/test-result');
                 }
-//                else if (($lesson->type == 2) and ($lesson->end_lesson_type == 0)) {
-//                    $this->finishedCourse($course);
-//                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-'. $lesson->id . '/test-result');
-//                }
+                else if (($lesson->type == 2) and ($lesson->end_lesson_type == 0)) {
+                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-'. $lesson->id . '/test-result');
+                }
                 else {
                     // Вернуть следующий урок
                     return $this->nextLessonShow($lang, $course, $lesson);

@@ -38,14 +38,14 @@
 
                         <div class="course">
                             <div class="course" id="courseDataContainer">
-                                @foreach($item->themes as $theme)
+                                @foreach($item->themes->sortBy('index_number') as $theme)
                                     <div class="topic spoiler">
                                         <div class="topic__header">
                                             <div class="title">{{$theme->name}}</div>
                                             <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->where('theme_id', '=', $theme->id)->sum('duration'))}}</div>
                                         </div>
                                         <div class="topic__body">
-                                            @foreach($theme->lessons as $lesson)
+                                            @foreach($theme->lessons->sortBy('index_number') as $lesson)
                                                 <div class="lesson">
                                                     <div class="title"><a
                                                                 href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$lesson->id}}"

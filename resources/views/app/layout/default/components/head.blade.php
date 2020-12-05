@@ -40,14 +40,14 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <meta name="viewport" content="width=device-width">
+
 <link rel="stylesheet" href="/assets/libs/fancybox/dist/jquery.fancybox.min.css" type="text/css" media="screen"/>
 <link rel="stylesheet" href="/assets/libs/slick-carousel/slick/slick.css" type="text/css" media="screen"/>
-<!--<link rel="stylesheet" href="/assets/libs/chosen/chosen.css" type="text/css" media="screen"/>-->
-<link rel="stylesheet" href="/assets/libs/simplebar/simplebar.css" type="text/css" media="screen"/>
 <link rel="stylesheet" href="/assets/libs/dropzone/dropzone.min.css" type="text/css" media="screen"/>
 <link rel="stylesheet" href="/assets/libs/nouislider/distribute/nouislider.min.css" type="text/css" media="screen"/>
 <link rel="stylesheet" href="/assets/libs/selectize/selectize.default.css" type="text/css" media="screen"/>
 <link rel="stylesheet" href="/assets/libs/air-datepicker/dist/css/datepicker.css" type="text/css" media="screen"/>
+<link rel="stylesheet" href="/assets/libs/visually-impaired/css/bvi.min.css" type="text/css" media="screen"/>
 <link rel="stylesheet" href="/assets/css/style.css" type="text/css" media="screen"/>
 
 
