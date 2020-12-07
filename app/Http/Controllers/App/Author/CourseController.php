@@ -672,7 +672,7 @@ class CourseController extends Controller
 
         $items = StudentCourse::whereHas('course', function ($q) {
             $q->where('courses.author_id', '=', Auth::user()->id);
-        })->where('paid_status', '!=', 0)->get()->groupBy(function ($val) {
+        })->orderBy('created_at', 'asc')->where('paid_status', '!=', 0)->get()->groupBy(function ($val) {
             return Carbon::parse($val->created_at)->format('d');
         });
 
