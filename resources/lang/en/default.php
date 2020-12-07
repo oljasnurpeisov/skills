@@ -418,7 +418,8 @@ return [
             'find_your_course' => '<span>Найдите</span><br/> Ваш курс',
             'popular_courses' => '<span>Популярные</span><br/> курсы',
             'popular_authors' => '<span>Популярные</span><br/> авторы',
-            'poor_vision_version' => 'Версия для слабовидящих'
+            'poor_vision_version' => 'Версия для слабовидящих',
+            'to_be_a_teacher' => 'ХОЧУ СТАТЬ АВТОРОМ КУРСОВ'
         ],
 
         'footer' => [

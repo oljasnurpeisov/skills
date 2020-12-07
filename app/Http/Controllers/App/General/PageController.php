@@ -99,6 +99,12 @@ class PageController extends Controller
 //        return $popular_authors;
     }
 
+    public function for_authors(){
+        return view("for_authors", [
+
+        ]);
+    }
+
     public function notifications()
     {
 

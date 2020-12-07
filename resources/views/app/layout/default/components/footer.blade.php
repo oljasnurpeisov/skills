@@ -7,7 +7,7 @@
                     <li><a href="/{{$lang}}" title="{{__('default.main_title')}}">{{__('default.main_title')}}</a></li>
                     <li><a href="https://www.enbek.kz/" title="{{__('default.pages.footer.enbek_kz')}}"
                            target="_blank">{{__('default.pages.footer.enbek_kz')}}</a></li>
-                    <li><a href="#"
+                    <li><a href="/{{$lang}}/for-authors"
                            title="{{__('default.pages.footer.teacher_title')}}">{{__('default.pages.footer.teacher_title')}}</a>
                     </li>
                     <li><a href="https://www.enbek.kz/docs/ru"
