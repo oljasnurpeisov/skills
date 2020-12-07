@@ -41,12 +41,9 @@
                                 <span><i class="icon-lesson"></i> {{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</span>
                                 <span><i class="icon-clock"></i> {{$time .' '. __('default.pages.lessons.hour_short_title')}} </span>
                             </div>
-                                <div class="article__image">
-                                    <img src="{{ $lesson->getAvatar() }}" alt="">
-                                </div>
-                            {{--                            <div class="article__annotation">--}}
-                            {{--                                Mus maecenas ut eu vestibulum. Potenti tortor, rhoncus et praesent. Scelerisque at ante condimentum ultricies facilisis augue. Molestie enim tellus viverra enim diam. Maecenas pellentesque id tristique nullam.--}}
-                            {{--                            </div>--}}
+                            <div class="article__image">
+                                <img src="{{ $lesson->getAvatar() }}" alt="">
+                            </div>
                             <div class="plain-text">
                                 {!! $lesson->theory !!}
                             </div>
@@ -159,17 +156,19 @@
                                         <div class="sidebar-item__body">
                                             @if(!empty($lesson->lesson_attachment->videos_link))
                                                 @foreach(json_decode($lesson->lesson_attachment->videos_link) as $video_link)
-                                                    @php
-                                                        $video_id = explode("?v=", $video_link);
-                                                        $video_id = $video_id[1];
-                                                    @endphp
-                                                    <div class="video-wrapper">
-                                                        <iframe width="560" height="315"
-                                                                src="https://www.youtube.com/embed/{{$video_id}}"
-                                                                frameborder="0"
-                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                                allowfullscreen></iframe>
-                                                    </div>
+                                                    @if(!empty($video_link))
+                                                        @php
+                                                            $video_id = explode("?v=", $video_link);
+                                                            $video_id = $video_id[1];
+                                                        @endphp
+                                                        <div class="video-wrapper">
+                                                            <iframe width="560" height="315"
+                                                                    src="https://www.youtube.com/embed/{{$video_id}}"
+                                                                    frameborder="0"
+                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                    allowfullscreen></iframe>
+                                                        </div>
+                                                    @endif
                                                 @endforeach
                                             @endif
                                             @if(!empty($lesson->lesson_attachment->videos))
@@ -200,7 +199,8 @@
                                                             <li>
                                                                 <a href="{{env('APP_URL').$file}}"
                                                                    title="{{substr(basename($file), 14)}}"
-                                                                   target="_blank">{{substr(basename($file), 14)}}&nbsp;</a>
+                                                                   target="_blank">{{substr(basename($file), 14)}}
+                                                                    &nbsp;</a>
                                                                 ({{ round(File::size(public_path($file))/1000000, 1) }}
                                                                 MB)
                                                             </li>

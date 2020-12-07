@@ -112,13 +112,11 @@ class LessonController extends Controller
         $item_attachments->lesson_id = $item->id;
 
         // Ссылки на видео курса
-        if ($request->videos_link != [null]) {
-            $item_attachments->videos_link = json_encode($request->videos_link);
-        }
+        $item_attachments->videos_link = json_encode($request->videos_link);
+
         // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link != []) {
-            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
-        }
+        $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+
         // Видео с устройства
         if (($request->videos != $item_attachments->videos)) {
             File::delete(public_path($item_attachments->videos));
@@ -250,13 +248,10 @@ class LessonController extends Controller
         $item_attachments = LessonAttachments::where('lesson_id', '=', $item->id)->first();
 
         // Ссылки на видео курса
-        if ($request->videos_link != [null]) {
-            $item_attachments->videos_link = json_encode($request->videos_link);
-        }
+        $item_attachments->videos_link = json_encode($request->videos_link);
+
         // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link != []) {
-            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
-        }
+        $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
 
         $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
         $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);
@@ -385,13 +380,11 @@ class LessonController extends Controller
         $item_attachments->lesson_id = $item->id;
 
         // Ссылки на видео курса
-        if ($request->videos_link != [null]) {
-            $item_attachments->videos_link = json_encode($request->videos_link);
-        }
+        $item_attachments->videos_link = json_encode($request->videos_link);
+
         // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link != []) {
-            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
-        }
+        $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+
         // Видео с устройства
         if (($request->videos != $item_attachments->videos)) {
             File::delete(public_path($item_attachments->videos));
@@ -467,13 +460,10 @@ class LessonController extends Controller
         $item_attachments = LessonAttachments::where('lesson_id', '=', $item->id)->first();
 
         // Ссылки на видео курса
-        if ($request->videos_link != [null]) {
-            $item_attachments->videos_link = json_encode($request->videos_link);
-        }
+        $item_attachments->videos_link = json_encode($request->videos_link);
+
         // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link) {
-            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
-        }
+        $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
 
         $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
         $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);
@@ -602,13 +592,11 @@ class LessonController extends Controller
         $item_attachments->lesson_id = $item->id;
 
         // Ссылки на видео курса
-        if ($request->videos_link != [null]) {
-            $item_attachments->videos_link = json_encode($request->videos_link);
-        }
+        $item_attachments->videos_link = json_encode($request->videos_link);
+
         // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link != []) {
-            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
-        }
+        $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+
         // Видео с устройства
         if (($request->videos != $item_attachments->videos)) {
             File::delete(public_path($item_attachments->videos));
@@ -708,13 +696,10 @@ class LessonController extends Controller
         $item_attachments = LessonAttachments::where('lesson_id', '=', $item->id)->first();
 
         // Ссылки на видео курса
-        if ($request->videos_link != [null]) {
-            $item_attachments->videos_link = json_encode($request->videos_link);
-        }
+        $item_attachments->videos_link = json_encode($request->videos_link);
+
         // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link) {
-            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
-        }
+        $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
 
         $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
         $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);
