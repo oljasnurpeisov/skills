@@ -144,7 +144,7 @@
                                                         <input type="text" name="localVideoStored[]"
                                                                value="{{$video}}" placeholder="">
                                                         <div class="dz-filename"><span
-                                                                    data-dz-name="">{{basename($video)}}</span>
+                                                                    data-dz-name="">{{substr(basename($video), 14)}}</span>
                                                         </div>
                                                     </div>
                                                     <a href="javascript:undefined;"
@@ -181,7 +181,7 @@
                                                                value="{{$audio}}"
                                                                placeholder="">
                                                         <div class="dz-filename"><span
-                                                                    data-dz-name="">{{basename($audio)}}</span>
+                                                                    data-dz-name="">{{substr(basename($audio), 14)}}</span>
                                                         </div>
                                                     </div>
                                                     <a href="javascript:undefined;"
@@ -217,11 +217,11 @@
                                             @foreach(json_decode($item->lesson_attachment->another_files) as $file)
                                                 <div class="dz-preview dz-image-preview dz-stored">
                                                     <div class="dz-details">
-                                                        <input type="text" name="localDocuments1[]"
+                                                        <input type="text" name="localDocumentsStored[]"
                                                                value="{{$file}}"
                                                                placeholder="">
                                                         <div class="dz-filename"><span
-                                                                    data-dz-name="">{{basename($file)}}</span>
+                                                                    data-dz-name="">{{substr(basename($file), 14)}}</span>
                                                         </div>
                                                     </div>
                                                     <a href="javascript:undefined;"

@@ -153,7 +153,7 @@
                                                         <input type="text" name="localVideoStored[]"
                                                                value="{{$video}}" placeholder="">
                                                         <div class="dz-filename"><span
-                                                                    data-dz-name="">{{basename($video)}}</span>
+                                                                    data-dz-name="">{{substr(basename($video), 14)}}</span>
                                                         </div>
                                                     </div>
                                                     <a href="javascript:undefined;"
@@ -190,7 +190,7 @@
                                                                value="{{$audio}}"
                                                                placeholder="">
                                                         <div class="dz-filename"><span
-                                                                    data-dz-name="">{{basename($audio)}}</span>
+                                                                    data-dz-name="">{{substr(basename($audio), 14)}}</span>
                                                         </div>
                                                     </div>
                                                     <a href="javascript:undefined;"
@@ -231,7 +231,7 @@
                                                                value="{{$file}}"
                                                                placeholder="">
                                                         <div class="dz-filename"><span
-                                                                    data-dz-name="">{{basename($file)}}</span>
+                                                                    data-dz-name="">{{substr(basename($file), 14)}}</span>
                                                         </div>
                                                     </div>
                                                     <a href="javascript:undefined;"

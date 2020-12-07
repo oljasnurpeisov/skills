@@ -100,7 +100,7 @@ class UserController extends Controller
 
             return redirect("/" . app()->getLocale() . "/profile-author-information")->with('status', __('default.pages.profile.password_update_success'));
 
-        }else{
+        } else {
             return redirect()->back()->with('failed', __('default.pages.profile.password_update_failed'));
         }
 
@@ -185,8 +185,8 @@ class UserController extends Controller
         }
         // Все ученики закончившие курс
         $author_students_finished = [];
-        foreach ($courses as $course){
-            foreach ($course->course_members->where('is_finished', '=', true) as $member){
+        foreach ($courses as $course) {
+            foreach ($course->course_members->where('is_finished', '=', true) as $member) {
                 array_push($author_students_finished, $member);
             }
         }
@@ -240,65 +240,38 @@ class UserController extends Controller
 
         if (empty($information)) {
             $item = new UserInformation;
-            $item->user_id = Auth::user()->getAuthIdentifier();
-            $item->name = $request->name;
-            $item->surname = $request->surname;
-            $item->specialization = json_encode($request->specialization);
-            $item->about = $request->about;
-            $item->phone_1 = $request->phone_1;
-            $item->phone_2 = $request->phone_2;
-            $item->site_url = $request->site_url;
-            $item->vk_link = $request->vk_link;
-            $item->fb_link = $request->fb_link;
-            $item->instagram_link = $request->instagram_link;
-
-            if (($request->avatar != $item->avatar)) {
-                File::delete(public_path($item->avatar));
-
-                $item->avatar = $request->avatar;
-            }
-
-            $certificates = array_merge(json_decode($request->certificates) ?? [], $request->certificatesStored ?? []);
-
-            if ($certificates != $item->certificates) {
-
-                $item->certificates = $certificates;
-
-//                $item->save();
-            }
-
-            $item->save();
         } else {
             $item = $information;
-            $item->user_id = Auth::user()->getAuthIdentifier();
-            $item->name = $request->name;
-            $item->surname = $request->surname;
-            $item->specialization = json_encode($request->specialization);
-            $item->about = $request->about;
-            $item->phone_1 = $request->phone_1;
-            $item->phone_2 = $request->phone_2;
-            $item->site_url = $request->site_url;
-            $item->vk_link = $request->vk_link;
-            $item->fb_link = $request->fb_link;
-            $item->instagram_link = $request->instagram_link;
-
-            if (!empty($request->avatar != $item->avatar)) {
-                File::delete(public_path($item->avatar));
-
-                $item->avatar = $request->avatar;
-            }
-
-            $certificates = array_merge(json_decode($request->certificates) ?? [], $request->certificatesStored ?? []);
-
-            if ($certificates != $item->certificates) {
-
-                $item->certificates = $certificates;
-
-//                $item->save();
-            }
-
-            $item->save();
         }
+
+        $item->user_id = Auth::user()->getAuthIdentifier();
+        $item->name = $request->name;
+        $item->surname = $request->surname;
+        $item->specialization = json_encode($request->specialization);
+        $item->about = $request->about;
+        $item->phone_1 = $request->phone_1;
+        $item->phone_2 = $request->phone_2;
+        $item->site_url = $request->site_url;
+        $item->vk_link = $request->vk_link;
+        $item->fb_link = $request->fb_link;
+        $item->instagram_link = $request->instagram_link;
+
+        if (($request->avatar != $item->avatar)) {
+            File::delete(public_path($item->avatar));
+
+            $item->avatar = $request->avatar;
+        }
+
+        $certificates = array_merge(json_decode($request->certificates) ?? [], $request->certificatesStored ?? []);
+
+        if ($certificates != $item->certificates) {
+
+            $item->certificates = $certificates;
+
+        }
+
+        $item->save();
+
 
         return redirect("/" . app()->getLocale() . "/profile-author-information")->with('status', __('default.pages.profile.save_success_message'));
 

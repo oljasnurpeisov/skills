@@ -108,7 +108,7 @@ class AjaxUploadController extends Controller
         $data = [];
         foreach($request->file('files') as $file)
         {
-            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+            $name = uniqid().'_'.$file->getClientOriginalName();
             $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/profile/files'), $name);
             array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/profile/files/'.$name);
         }
@@ -121,7 +121,7 @@ class AjaxUploadController extends Controller
         $data = [];
         foreach($request->file('files') as $file)
         {
-            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+            $name = uniqid().'_'.$file->getClientOriginalName();
             $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/videos'), $name);
             array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/videos/'.$name);
         }
@@ -134,7 +134,7 @@ class AjaxUploadController extends Controller
         $data = [];
         foreach($request->file('files') as $file)
         {
-            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+            $name = uniqid().'_'.$file->getClientOriginalName();
             $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/audios'), $name);
             array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/audios/'.$name);
         }
@@ -147,7 +147,7 @@ class AjaxUploadController extends Controller
         $data = [];
         foreach($request->file('files') as $file)
         {
-            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+            $name = uniqid().'_'.$file->getClientOriginalName();
             $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/videos'), $name);
             array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/videos/'.$name);
         }
@@ -160,7 +160,7 @@ class AjaxUploadController extends Controller
         $data = [];
         foreach($request->file('files') as $file)
         {
-            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+            $name = uniqid().'_'.$file->getClientOriginalName();
             $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/audios'), $name);
             array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/audios/'.$name);
         }
@@ -173,7 +173,7 @@ class AjaxUploadController extends Controller
         $data = [];
         foreach($request->file('files') as $file)
         {
-            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+            $name = uniqid().'_'.$file->getClientOriginalName();
             $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files'), $name);
             array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files/'.$name);
         }

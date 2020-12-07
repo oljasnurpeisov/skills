@@ -206,8 +206,8 @@
                                                     @if(!empty($lesson->lesson_attachment->another_files))
                                                         @foreach(json_decode($lesson->lesson_attachment->another_files) as $file)
                                                             <li><a href="{{env('APP_URL').$file}}"
-                                                                   title="{{basename($file)}}"
-                                                                   target="_blank">{{basename($file)}}&nbsp;</a>
+                                                                   title="{{substr(basename($file), 14)}}"
+                                                                   target="_blank">{{substr(basename($file), 14)}}&nbsp;</a>
                                                                 ({{ round(File::size(public_path($file))/1000000, 1) }}
                                                                 MB)
                                                             </li>
@@ -267,8 +267,8 @@
                                                     @if(!empty($lesson->lesson_attachment->another_files_poor_vision))
                                                         @foreach(json_decode($lesson->lesson_attachment->another_files_poor_vision) as $file)
                                                             <li><a href="{{env('APP_URL').$file}}"
-                                                                   title="{{basename($file)}}"
-                                                                   target="_blank">{{basename($file)}}&nbsp;</a>
+                                                                   title="{{substr(basename($file), 14)}}"
+                                                                   target="_blank">{{substr(basename($file), 14)}}&nbsp;</a>
                                                                 ({{ round(File::size(public_path($file))/1000000, 1) }}
                                                                 MB)
                                                             </li>

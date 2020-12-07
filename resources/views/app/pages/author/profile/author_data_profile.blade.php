@@ -246,7 +246,7 @@
                                                             <input type="text" name="certificatesStored[]"
                                                                    value="{{$certificate}}" placeholder="">
                                                             <div class="dz-filename"><span
-                                                                        data-dz-name="">{{basename($certificate)}}</span>
+                                                                        data-dz-name="">{{substr(basename($certificate), 14)}}</span>
                                                             </div>
                                                         </div>
                                                         <a href="javascript:undefined;"

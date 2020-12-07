@@ -220,7 +220,7 @@
                                                         <input type="text" name="localVideoStored[]"
                                                                value="{{$video}}" placeholder="">
                                                         <div class="dz-filename"><span
-                                                                    data-dz-name="">{{basename($video)}}</span>
+                                                                    data-dz-name="">{{substr(basename($video), 14)}}</span>
                                                         </div>
                                                     </div>
                                                     <a href="javascript:undefined;"
@@ -257,7 +257,7 @@
                                                                value="{{$audio}}"
                                                                placeholder="">
                                                         <div class="dz-filename"><span
-                                                                    data-dz-name="">{{basename($audio)}}</span>
+                                                                    data-dz-name="">{{substr(basename($audio), 14)}}</span>
                                                         </div>
                                                     </div>
                                                     <a href="javascript:undefined;"
@@ -331,7 +331,7 @@
                                                             <input type="text" name="localVideoStored1[]"
                                                                    value="{{{$video_poor_vision}}}" placeholder="">
                                                             <div class="dz-filename"><span
-                                                                        data-dz-name="">{{basename($video_poor_vision)}}</span>
+                                                                        data-dz-name="">{{substr(basename($video_poor_vision), 14)}}</span>
                                                             </div>
                                                         </div>
                                                         <a href="javascript:undefined;"
@@ -368,7 +368,7 @@
                                                             <input type="text" name="localAudioStored1[]"
                                                                    value="{{$audio_poor_vision}}" placeholder="">
                                                             <div class="dz-filename"><span
-                                                                        data-dz-name="">{{basename($audio_poor_vision)}}</span>
+                                                                        data-dz-name="">{{substr(basename($audio_poor_vision), 14)}}</span>
                                                             </div>
                                                         </div>
                                                         <a href="javascript:undefined;"
