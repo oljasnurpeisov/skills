@@ -251,7 +251,6 @@ class UserController extends Controller
             $item->vk_link = $request->vk_link;
             $item->fb_link = $request->fb_link;
             $item->instagram_link = $request->instagram_link;
-            $item->certificates = $request->certificates;
 
             if (($request->avatar != $item->avatar)) {
                 File::delete(public_path($item->avatar));
@@ -259,12 +258,14 @@ class UserController extends Controller
                 $item->avatar = $request->avatar;
             }
 
-            if (!empty($request->certificates != $item->certificates)) {
-                File::delete(public_path($item->certificates));
+            $certificates = array_merge(json_decode($request->certificates) ?? [], $request->certificatesStored ?? []);
 
-                $item->certificates = $request->certificates;
+            if ($certificates != $item->certificates) {
+
+                $item->certificates = $certificates;
+
+//                $item->save();
             }
-
 
             $item->save();
         } else {
@@ -280,7 +281,6 @@ class UserController extends Controller
             $item->vk_link = $request->vk_link;
             $item->fb_link = $request->fb_link;
             $item->instagram_link = $request->instagram_link;
-            $item->certificates = $request->certificates;
 
             if (!empty($request->avatar != $item->avatar)) {
                 File::delete(public_path($item->avatar));
@@ -288,10 +288,13 @@ class UserController extends Controller
                 $item->avatar = $request->avatar;
             }
 
-            if (!empty($request->certificates != $item->certificates)) {
-                File::delete(public_path($item->certificates));
+            $certificates = array_merge(json_decode($request->certificates) ?? [], $request->certificatesStored ?? []);
 
-                $item->certificates = $request->certificates;
+            if ($certificates != $item->certificates) {
+
+                $item->certificates = $certificates;
+
+//                $item->save();
             }
 
             $item->save();

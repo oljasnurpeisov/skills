@@ -235,7 +235,7 @@
                                         @endif
                                     </div>
                                     <a href="javascript:;"
-                                       title="{{__('default.pages.courses.add_file_btn_title')}}{{__('default.pages.courses.add_file_btn_title')}}"
+                                       title="{{__('default.pages.courses.add_file_btn_title')}}"
                                        class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                 </div>
                             </div>

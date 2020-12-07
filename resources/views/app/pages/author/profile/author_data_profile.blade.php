@@ -53,7 +53,8 @@
                             {{__('default.pages.profile.email_confirm_error')}}
                         </div>
                     @endif
-                    <div @if($item->user->email_verified_at == null)class="row row--multiline disabled"@else class="row row--multiline"@endif>
+                    <div @if($item->user->email_verified_at == null)class="row row--multiline disabled"
+                         @else class="row row--multiline"@endif>
                         <div class="col-sm-5 col-md-4">
                             <div class="author-personal__left">
                                 <div class="avatar author-picture dropzone-avatar" id="avatar"
@@ -73,7 +74,8 @@
                                                data-dz-remove>{{__('default.pages.profile.delete')}}</a>
                                         </div>
                                     </div>
-                                    <input type="hidden" name="avatar" class="avatar-path" value="{{$item->getAvatar()}}">
+                                    <input type="hidden" name="avatar" class="avatar-path"
+                                           value="{{$item->getAvatar()}}">
                                 </div>
                                 <div class="rating">
                                     <div class="rating__number">{{round($average_rates, 1)}}</div>
@@ -137,52 +139,47 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.profile.specialization')}}</label>
+                                    <label class="form-group__label">{{__('default.pages.profile.specialization')}}
+                                        *</label>
                                     <div class="input-addon">
-                                        <div id="specialitiesInputTpl">
-                                            <input type="text" name="specialization[]" placeholder=""
-                                                   class="input-regular"
-                                                   value="{{json_decode($item->specialization)[0] ?? ''}}">
-                                        </div>
-
+                                        <input id="specialitiesInputTpl" type="text" name="specialization[]"
+                                               placeholder="" class="input-regular"
+                                               value="{{json_decode($item->specialization)[0] ?? ''}}" required>
                                         <div class="addon">
                                             <span class="required">*</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="specialitiesContainer">
-                                    @if(!empty(json_decode($item->specialization)[1]))
-                                        @foreach(array_slice(json_decode($item->specialization),1) as $spec)
-                                            <div class="form-group">
-                                                <div class="input-addon">
-
+                                <div class="removable-items">
+                                    <div class="form-group">
+                                        @if(!empty(json_decode($item->specialization)[1]))
+                                            <div class="input-addon">
+                                                @foreach(array_slice(json_decode($item->specialization),1) as $spec)
                                                     <input type="text" name="specialization[]" placeholder=""
-                                                           class="input-regular" value="{{$spec}}">
+                                                           class="input-regular"
+                                                           value="{{$spec}}">
 
                                                     <div class="addon">
                                                         <div class="btn-icon small icon-close"></div>
                                                     </div>
-                                                </div>
+                                                @endforeach
                                             </div>
-                                        @endforeach
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="text-right pull-up">
-                                    <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"
-                                       id="specialitiesAddBtn"><span
-                                                class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
+                                    <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"
+                                       data-duplicate="specialitiesInputTpl"
+                                       data-maxcount="4"><span
+                                                class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span><span
                                                 class="btn-icon small icon-plus"> </span></a>
                                 </div>
-{{--                                <div class="text-right pull-up">--}}
-{{--                                    <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"--}}
-{{--                                       data-duplicate="specialitiesInputTpl"><span--}}
-{{--                                                class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span--}}
-{{--                                                class="btn-icon small icon-plus"> </span></a>--}}
-{{--                                </div>--}}
+
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.profile.about_company')}}
                                         *</label>
-                                    <textarea name="about" class="input-regular tinymce-text-here" required>{{$item->about}}</textarea>
+                                    <textarea name="about" class="input-regular tinymce-text-here"
+                                              required>{{$item->about}}</textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -232,18 +229,40 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.profile.certificates')}}</label>
-                                    <div data-url="/ajax_upload_certificates?_token={{ csrf_token() }}" data-maxfiles="15"
+                                    <div data-url="/ajax_upload_certificates?_token={{ csrf_token() }}"
+                                         data-maxfiles="15"
                                          data-maxsize="20" data-acceptedfiles=".pdf, .png, .jpg"
                                          id="documents-dropzone2"
                                          class="dropzone-default dropzone-multiple">
-                                        <input type="hidden" name="certificates" value="{{$item->certificates}}">
+                                        <input type="hidden" name="certificates" value="">
                                         <div class="dropzone-default__info">PDF, PNG, JPG
                                             • {{__('default.pages.profile.max_file_title')}} 20MB
                                         </div>
-                                        <div class="previews-container"></div>
+                                        <div class="previews-container">
+                                            @if($item->certificates != null)
+                                                @foreach(json_decode($item->certificates) as $certificate)
+                                                    <div class="dz-preview dz-image-preview dz-stored">
+                                                        <div class="dz-details">
+                                                            <input type="text" name="certificatesStored[]"
+                                                                   value="{{$certificate}}" placeholder="">
+                                                            <div class="dz-filename"><span
+                                                                        data-dz-name="">{{basename($certificate)}}</span>
+                                                            </div>
+                                                        </div>
+                                                        <a href="javascript:undefined;"
+                                                           title="{{__('default.pages.courses.delete')}}"
+                                                           class="link red">{{__('default.pages.courses.delete')}}</a>
+                                                        <a href="javascript:undefined;"
+                                                           title="{{__('default.pages.courses.reestablish')}}"
+                                                           class="link green"
+                                                           style="display:none;">{{__('default.pages.courses.reestablish')}}</a>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
                                         <a href="javascript:;"
-                                           title="{{__('default.pages.profile.add_files_btn_title')}}"
-                                           class="dropzone-default__link">{{__('default.pages.profile.add_files_btn_title')}}</a>
+                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                     </div>
 
                                 </div>
@@ -263,42 +282,6 @@
 @endsection
 
 @section('scripts')
-    <!--Only this page's scripts-->
-    <script>
-        let addBtn = document.querySelector('#specialitiesAddBtn'),
-            addContainer = document.querySelector('#specialitiesContainer'),
-            // inputTpl = document.querySelector('#specialitiesInputTpl').innerHTML;
-            inputTpl = '<div id="specialitiesInputTpl">\n' +
-                '                                            <input type="text" name="specialization[]" placeholder="" class="input-regular">\n' +
-                '                                        </div>'
 
-        addBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            let removeBtn = document.createElement('div'),
-                removeBtnClassList = ['btn-icon', 'small', 'icon-close'];
-            removeBtnClassList.forEach(function (className) {
-                removeBtn.classList.add(className);
-            });
-
-            let newItem = document.createElement('div');
-            newItem.className = 'form-group';
-            newItem.innerHTML = `<div class="input-addon">
-                                ${inputTpl}
-                                <div class="addon"></div>
-                            </div>
-      `;
-
-            removeBtn.addEventListener('click', function () {
-                newItem.remove();
-            });
-
-            newItem.querySelector('.addon').append(removeBtn);
-
-            addContainer.append(newItem);
-        });
-
-    </script>
-    <!---->
 @endsection
 
