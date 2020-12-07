@@ -27,8 +27,11 @@
                                         <label class="form-group__label">{{__('default.pages.lessons.duration_title')}}
                                             *</label>
                                         <input type="number" name="duration" placeholder="" class="input-regular"
-                                               required>
+                                               value="{{ old('duration') }}" required>
                                     </div>
+                                    {!! $errors->first('duration', '<div class="alert alert-danger">
+                    :message
+                </div>') !!}
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -38,11 +41,11 @@
                                              data-maxsize="1"
                                              data-acceptedfiles="image/*">
                                             <div class="lesson-image__preview">
-                                                <img src="/assets/img/lesson-thumbnail.jpg"
+                                                <img src="{{ old('image') ?? '/assets/img/lesson-thumbnail.jpg' }}"
                                                      class="avatar-preview" alt="">
                                             </div>
                                             <div class="lesson-image__desc dropzone-default">
-                                                <input type="text" name="image" class="avatar-path" required>
+                                                <input type="text" name="image" class="avatar-path" value="{{ old('image') }}" required>
                                                 <div class="previews-container"></div>
                                                 <div class="dropzone-default__info">PNG, JPG
                                                     • {{__('default.pages.courses.max_file_title')}} 1MB
@@ -73,7 +76,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.lessons.theory_title')}} *</label>
-                                <textarea name="theory" class="input-regular tinymce-here" required></textarea>
+                                <textarea name="theory" class="input-regular tinymce-here" required>{{ old('theory') }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link')}}</label>
@@ -252,7 +255,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="#" title="Добавить вопрос" class="btn small" id="addQuestion">{{__('default.pages.lessons.add_question')}}</a>
+                                <a href="#" title="{{__('default.pages.lessons.add_question')}}" class="btn small" id="addQuestion">{{__('default.pages.lessons.add_question')}}</a>
                                 <div class="test-constructor__info">
                                     <div class="row row--multiline">
                                         <div class="col-auto">

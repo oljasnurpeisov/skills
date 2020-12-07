@@ -64,6 +64,7 @@ return [
             'delete_request_message' => 'Курс был успешно удален',
             'reestablish_request_message' => 'Курс был успешно восстановлен',
             'create_request_message' => 'Курс успешно создан',
+
             'course_quota_activate_error' => 'Вы не можете активировать этот курс по квоте',
             'course_quota_activate_success' => 'Вы успешно активировали курс по квоте',
             'pay_course_error' => 'Ошибка платежного шлюза, попробуйте позже',
@@ -196,6 +197,10 @@ return [
             'final_test_count_error_message' => 'Курс может содержать только один урок с типом "Финальный тест"',
             'lesson_update_success' => 'Изменения успешно сохранены',
             'lesson_delete_success' => 'Урок успешно удален',
+            'create_coursework_message' => 'Курсовая работа успешно создана',
+            'create_final_test_message' => 'Финальное тестирование успешно создано',
+            'coursework_delete_success' => 'Курсовая работа успешно удалена',
+            'final_test_delete_success' => 'Финальное тестирование успешно удалено',
 
             'coursework_create_title' => 'Создание курсовой работы',
             'duration_title' => 'Продолжительность урока, минуты',

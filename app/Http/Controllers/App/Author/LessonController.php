@@ -36,6 +36,12 @@ class LessonController extends Controller
 
     public function storeLesson($lang, Request $request, Course $course, Theme $theme)
     {
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'duration' => 'required|numeric|gt:0',
+            'image' => 'required'
+        ]);
+
         $last_id = Lesson::whereHas('themes', function ($q) use ($theme) {
                 $q->where('themes.id', '=', $theme->id);
             })->orderBy('index_number', 'desc')->latest()->first()->index_number ?? 0;
@@ -115,7 +121,9 @@ class LessonController extends Controller
         $item_attachments->videos_link = json_encode($request->videos_link);
 
         // Ссылки на видео курса для слабовидящих
-        $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        if ($request->videos_poor_vision_link){
+            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        }
 
         // Видео с устройства
         if (($request->videos != $item_attachments->videos)) {
@@ -188,6 +196,12 @@ class LessonController extends Controller
 
     public function updateLesson($lang, Request $request, Course $course, Lesson $item)
     {
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'duration' => 'required|numeric|gt:0',
+            'image' => 'required'
+        ]);
+
         $item->name = $request->name;
 
         if ($request->type == 'theory') {
@@ -251,7 +265,9 @@ class LessonController extends Controller
         $item_attachments->videos_link = json_encode($request->videos_link);
 
         // Ссылки на видео курса для слабовидящих
-        $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        if ($request->videos_poor_vision_link){
+            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        }
 
         $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
         $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);
@@ -359,6 +375,11 @@ class LessonController extends Controller
 
     public function storeCoursework($lang, Request $request, Course $course)
     {
+        $this->validate($request, [
+            'duration' => 'required|numeric|gt:0',
+            'image' => 'required'
+        ]);
+
         $item = new Lesson;
         $item->course_id = $course->id;
         $item->index_number = 1;
@@ -383,7 +404,9 @@ class LessonController extends Controller
         $item_attachments->videos_link = json_encode($request->videos_link);
 
         // Ссылки на видео курса для слабовидящих
-        $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        if ($request->videos_poor_vision_link){
+            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        }
 
         // Видео с устройства
         if (($request->videos != $item_attachments->videos)) {
@@ -424,7 +447,7 @@ class LessonController extends Controller
 
         $item_attachments->save();
 
-        return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.create_request_message'));
+        return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.create_coursework_message'));
     }
 
     public function editCoursework($lang, Course $course)
@@ -443,6 +466,11 @@ class LessonController extends Controller
 
     public function updateCoursework($lang, Request $request, Course $course)
     {
+        $this->validate($request, [
+            'duration' => 'required|numeric|gt:0',
+            'image' => 'required'
+        ]);
+
         $item = Lesson::where('course_id', '=', $course->id)->where('type', '=', 3)->first();
         $item->duration = $request->duration;
         $item->theory = $request->theory;
@@ -463,7 +491,9 @@ class LessonController extends Controller
         $item_attachments->videos_link = json_encode($request->videos_link);
 
         // Ссылки на видео курса для слабовидящих
-        $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        if ($request->videos_poor_vision_link){
+            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        }
 
         $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
         $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);
@@ -545,6 +575,11 @@ class LessonController extends Controller
 
     public function storeFinalTest($lang, Request $request, Course $course)
     {
+        $this->validate($request, [
+            'duration' => 'required|numeric|gt:0',
+            'image' => 'required'
+        ]);
+
         $item = new Lesson;
         $item->course_id = $course->id;
         $item->index_number = 2;
@@ -595,7 +630,9 @@ class LessonController extends Controller
         $item_attachments->videos_link = json_encode($request->videos_link);
 
         // Ссылки на видео курса для слабовидящих
-        $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        if ($request->videos_poor_vision_link){
+            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        }
 
         // Видео с устройства
         if (($request->videos != $item_attachments->videos)) {
@@ -636,7 +673,7 @@ class LessonController extends Controller
 
         $item_attachments->save();
 
-        return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.create_request_message'));
+        return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.create_final_test_message'));
     }
 
     public function editFinalTest($lang, Course $course)
@@ -655,6 +692,12 @@ class LessonController extends Controller
 
     public function updateFinalTest($lang, Request $request, Course $course)
     {
+
+        $this->validate($request, [
+            'duration' => 'required|numeric|gt:0',
+            'image' => 'required'
+        ]);
+
         $item = Lesson::where('course_id', '=', $course->id)->where('type', '=', 4)->first();
         $item->duration = $request->duration;
         $item->theory = $request->theory;
@@ -699,7 +742,9 @@ class LessonController extends Controller
         $item_attachments->videos_link = json_encode($request->videos_link);
 
         // Ссылки на видео курса для слабовидящих
-        $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        if ($request->videos_poor_vision_link){
+            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        }
 
         $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
         $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);
@@ -799,8 +844,16 @@ class LessonController extends Controller
             }
         }
 
+        switch ($lesson->type) {
+            case(3):
+                return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.coursework_delete_success'));
+            case(4):
+                return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.final_test_delete_success'));
+            default:
+                return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.lesson_delete_success'));
 
-        return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.lesson_delete_success'));
+        }
+
     }
 
     public function lessonFinished($lang, Request $request, Course $course, Lesson $lesson)

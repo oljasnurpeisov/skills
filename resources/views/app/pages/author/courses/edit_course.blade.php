@@ -391,7 +391,7 @@
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.choose_certificate')}} *</label>
                                 <div class="row row--multiline">
-                                    @php($certificates = [["1","/assets/img/certificates/1-thumbnail.jpg","/assets/img/certificates/1.jpg"], ["2", "/assets/img/certificates/2-thumbnail.jpg", "/assets/img/certificates/2.jpg"], ["3", "/assets/img/certificates/3-thumbnail.jpg", "/assets/img/certificates/3.jpg"]])
+                                    @php($certificates = [["1","/assets/img/certificates/1_ru.jpg"], ["2", "/assets/img/certificates/2_ru.jpg"], ["3", "/assets/img/certificates/3_ru.jpg"]])
                                     @foreach($certificates as $certificate)
                                         <div class="col-auto">
                                             <div class="image-choice">
@@ -405,7 +405,7 @@
                                                            {{ ($item->certificate_id == $certificate[0] ? ' checked' : '') }}
                                                            required>
                                                     <i class="icon-checkmark"> </i>
-                                                    <a href="{{$certificate[2]}}" data-fancybox
+                                                    <a href="{{$certificate[1]}}" data-fancybox
                                                        title="{{__('default.pages.courses.zoom_certificate')}}"
                                                        class="icon-zoom-in"> </a>
                                                 </label>

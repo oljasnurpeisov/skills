@@ -168,17 +168,19 @@
                                         <div class="sidebar-item__body">
                                             @if(!empty($lesson->lesson_attachment->videos_link))
                                                 @foreach(json_decode($lesson->lesson_attachment->videos_link) as $video_link)
-                                                    @php
-                                                        $video_id = explode("?v=", $video_link);
-                                                        $video_id = $video_id[1];
-                                                    @endphp
-                                                    <div class="video-wrapper">
-                                                        <iframe width="560" height="315"
-                                                                src="https://www.youtube.com/embed/{{$video_id}}"
-                                                                frameborder="0"
-                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                                allowfullscreen></iframe>
-                                                    </div>
+                                                    @if(!empty($video_link))
+                                                        @php
+                                                            $video_id = explode("?v=", $video_link);
+                                                            $video_id = $video_id[1];
+                                                        @endphp
+                                                        <div class="video-wrapper">
+                                                            <iframe width="560" height="315"
+                                                                    src="https://www.youtube.com/embed/{{$video_id}}"
+                                                                    frameborder="0"
+                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                    allowfullscreen></iframe>
+                                                        </div>
+                                                    @endif
                                                 @endforeach
                                             @endif
                                             @if(!empty($lesson->lesson_attachment->videos))
@@ -207,7 +209,8 @@
                                                         @foreach(json_decode($lesson->lesson_attachment->another_files) as $file)
                                                             <li><a href="{{env('APP_URL').$file}}"
                                                                    title="{{substr(basename($file), 14)}}"
-                                                                   target="_blank">{{substr(basename($file), 14)}}&nbsp;</a>
+                                                                   target="_blank">{{substr(basename($file), 14)}}
+                                                                    &nbsp;</a>
                                                                 ({{ round(File::size(public_path($file))/1000000, 1) }}
                                                                 MB)
                                                             </li>
@@ -268,7 +271,8 @@
                                                         @foreach(json_decode($lesson->lesson_attachment->another_files_poor_vision) as $file)
                                                             <li><a href="{{env('APP_URL').$file}}"
                                                                    title="{{substr(basename($file), 14)}}"
-                                                                   target="_blank">{{substr(basename($file), 14)}}&nbsp;</a>
+                                                                   target="_blank">{{substr(basename($file), 14)}}
+                                                                    &nbsp;</a>
                                                                 ({{ round(File::size(public_path($file))/1000000, 1) }}
                                                                 MB)
                                                             </li>

@@ -83,7 +83,9 @@ class CourseController extends Controller
                 $item_attachments->videos_link = json_encode($request->videos_link);
 
                 // Ссылки на видео курса для слабовидящих
-                $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+                if ($request->videos_poor_vision_link){
+                    $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+                }
 
                 // Видео с устройства
                 if (($request->videos != $item_attachments->videos)) {
@@ -159,7 +161,9 @@ class CourseController extends Controller
             $item_attachments->videos_link = json_encode($request->videos_link);
 
             // Ссылки на видео курса для слабовидящих
-            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+            if ($request->videos_poor_vision_link){
+                $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+            }
 
             // Видео с устройства
             if (($request->videos != $item_attachments->videos)) {
@@ -449,7 +453,9 @@ class CourseController extends Controller
         // Ссылки на видео курса
         $item_attachments->videos_link = $request->videos_link;
         // Ссылки на видео курса для слабовидящих
-        $item_attachments->videos_poor_vision_link = $request->videos_poor_vision_link;
+        if ($request->videos_poor_vision_link){
+            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        }
 
         $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
         $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);

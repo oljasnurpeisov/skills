@@ -25,8 +25,11 @@
                                         <label class="form-group__label">{{__('default.pages.lessons.lesson_name')}}
                                             *</label>
                                         <input type="text" name="name" placeholder="" class="input-regular"
-                                               value="{{$item->name}}" required>
+                                               value="{{ old('name') ?? $item->name}}" required>
                                     </div>
+                                    {!! $errors->first('name', '<div class="alert alert-danger">
+                    :message
+                </div>') !!}
                                     <div class="form-group">
                                         <label class="form-group__label">{{__('default.pages.lessons.lesson_type')}}
                                             *</label>
@@ -46,8 +49,11 @@
                                         <label class="form-group__label">{{__('default.pages.lessons.duration_title')}}
                                             *</label>
                                         <input type="number" name="duration" placeholder="" class="input-regular"
-                                               value="{{$item->duration}}" required>
+                                               value="{{ old('duration') ?? $item->duration}}" required>
                                     </div>
+                                    {!! $errors->first('duration', '<div class="alert alert-danger">
+                    :message
+                </div>') !!}
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -58,12 +64,12 @@
                                              data-acceptedfiles="image/*">
 
                                             <div class="lesson-image__preview">
-                                                <img src="{{$item->getAvatar()}}"
+                                                <img src="{{old('image') ?? $item->getAvatar()}}"
                                                      class="avatar-preview" alt="">
                                             </div>
                                             <div class="lesson-image__desc dropzone-default">
                                                 <input type="text" name="image" class="avatar-path"
-                                                       value="{{ $item->image }}" required>
+                                                       value="{{ old('image') ?? $item->image }}" required>
                                                 @if($item->image)
                                                     <div class="previews-container">
                                                         <div class="dz-preview dz-image-preview">
@@ -117,7 +123,7 @@
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.lessons.theory_title')}} *</label>
                                 <textarea name="theory" class="input-regular tinymce-here"
-                                          required>{{$item->theory}}</textarea>
+                                          required>{{ old('theory') ?? $item->theory}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.video_link')}}</label>

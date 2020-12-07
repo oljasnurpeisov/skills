@@ -28,8 +28,11 @@
                                         <label class="form-group__label">{{__('default.pages.lessons.duration_title')}}
                                             *</label>
                                         <input type="number" name="duration" placeholder="" class="input-regular"
-                                               value="{{$item->duration}}" required>
+                                               value="{{ old('duration') ?? $item->duration}}" required>
                                     </div>
+                                    {!! $errors->first('duration', '<div class="alert alert-danger">
+                    :message
+                </div>') !!}
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -39,13 +42,13 @@
                                              data-maxsize="1"
                                              data-acceptedfiles="image/*">
                                             <div class="lesson-image__preview">
-                                                <img src="{{$item->getAvatar()}}"
+                                                <img src="{{old('image') ?? $item->getAvatar()}}"
                                                      data-defaultsrc="/assets/img/lesson-thumbnail.jpg"
                                                      class="avatar-preview" alt="">
                                             </div>
                                             <div class="lesson-image__desc dropzone-default">
                                                 <input type="text" name="image" class="avatar-path"
-                                                       value="{{ $item->image }}" required>
+                                                       value="{{ old('image') ?? $item->image }}" required>
                                                 @if($item->image)
                                                     <div class="previews-container">
                                                         <div class="dz-preview dz-image-preview">
@@ -97,7 +100,7 @@
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.lessons.theory_title')}} *</label>
                                 <textarea name="theory" class="input-regular tinymce-text-here" required>
-                            {{$item->theory}}
+                            {{ old('theory') ?? $item->theory}}
                         </textarea>
                             </div>
                             <div class="form-group">
@@ -256,7 +259,7 @@
                                 <label class="form-group__label">{{__('default.pages.lessons.coursework_task')}}
                                     *</label>
                                 <textarea name="coursework_task" class="input-regular tinymce-here" required>
-                            {{$item->coursework_task}}
+                            {{ old('coursework_task') ?? $item->coursework_task}}
                         </textarea>
                             </div>
                             <div class="buttons">
