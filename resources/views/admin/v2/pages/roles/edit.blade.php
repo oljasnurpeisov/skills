@@ -25,6 +25,7 @@
                         <span class="help-block"><strong>{{ $errors->first('name') }}</strong></span>
                     @endif
                 </div>
+
                 <div class="input-group {{ $errors->has('slug') ? ' has-error' : '' }}">
                     <label class="input-group__title">{{ __('admin.pages.role.slug') }} *</label>
                     <input type="text" name="slug" value="{{ $item->slug }}"

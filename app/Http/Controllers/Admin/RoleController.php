@@ -69,10 +69,13 @@ class RoleController extends Controller
 
     public function edit($lang, Role $item)
     {
+        $main_roles = ['admin', 'author', 'student', 'tech_support'];
+
         $permissions = Permission::orderBy('id', 'asc')->get();
         return view('admin.v2.pages.roles.edit', [
             'item' => $item,
             'permissions' => $permissions,
+            'main_roles' => $main_roles
         ]);
     }
 

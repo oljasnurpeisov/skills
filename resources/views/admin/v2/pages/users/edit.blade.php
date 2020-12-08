@@ -38,98 +38,104 @@
                         <span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
                     @endif
                 </div>
-                <div class="input-group {{ $errors->has('iin') ? ' has-error' : '' }}">
-                    <label class="input-group__title">{{ __('admin.pages.user.iin_bin') }} *</label>
-                    <input type="text" name="iin" value="{{ $item->iin }}"
-                           placeholder="{{ __('admin.labels.fill_field',['field' => __('admin.pages.user.iin_bin')]) }}"
-                           class="input-regular" required>
-                    @if ($errors->has('iin'))
-                        <span class="help-block"><strong>{{ $errors->first('iin') }}</strong></span>
-                    @endif
-                </div>
-                <div class="input-group {{ $errors->has('type_of_ownership') ? ' has-error' : '' }}">
-                    <label class="input-group__title">{{ __('admin.pages.user.type_of_ownership') }} *</label>
-                    <select name="type_of_ownership" id="type_of_ownership" class="input-regular chosen"
-                            data-placeholder=" " required>
-                        @foreach($types_of_ownership as $type)
-                            <option value="{{ $type->id }}"
-                                    @if($type->id==$item->type_ownership->id) selected='selected' @endif >{{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}</option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('type_of_ownership'))
-                        <span class="help-block"><strong>{{ $errors->first('type_of_ownership') }}</strong></span>
-                    @endif
-                </div>
-                <div class="input-group {{ $errors->has('iin') ? ' has-error' : '' }}">
-                    <label class="input-group__title">{{ __('admin.pages.user.company_name') }} *</label>
-                    <input type="text" name="company_name" value="{{ $item->company_name }}"
-                           placeholder="{{ __('admin.labels.fill_field',['field' => __('admin.pages.user.company_name')]) }}"
-                           class="input-regular" required>
-                    @if ($errors->has('iin'))
-                        <span class="help-block"><strong>{{ $errors->first('company_name') }}</strong></span>
-                    @endif
-                </div>
-                <div class="input-group {{ $errors->has('company_logo') ? ' has-error' : '' }}">
-                    <label class="input-group__title">{{ __('admin.pages.user.company_logo') }}</label>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img src="{{$item->getAvatar()}}" id="avatar_image" class="file-upload-image"
-                                 style="height: 150px">
-                        </div>
-                        <div class="col-md-10">
-                            <input type="hidden" name="company_logo" value="{{$item->getAvatar()}}">
-                            <div id="avatar" class="file-upload">
-                                <div id="avatar_uploader" class="file">
-                                    <div class="progress">
-                                        <div class="progress-bar"></div>
-                                    </div>
-                                    <span class="file__name">
+                @if(!$item->hasRole('admin'))
+                    <div class="input-group {{ $errors->has('iin') ? ' has-error' : '' }}">
+                        <label class="input-group__title">{{ __('admin.pages.user.iin_bin') }} *</label>
+                        <input type="text" name="iin" value="{{ $item->iin }}"
+                               placeholder="{{ __('admin.labels.fill_field',['field' => __('admin.pages.user.iin_bin')]) }}"
+                               class="input-regular" required>
+                        @if ($errors->has('iin'))
+                            <span class="help-block"><strong>{{ $errors->first('iin') }}</strong></span>
+                        @endif
+                    </div>
+                    <div class="input-group {{ $errors->has('type_of_ownership') ? ' has-error' : '' }}">
+                        <label class="input-group__title">{{ __('admin.pages.user.type_of_ownership') }} *</label>
+                        <select name="type_of_ownership" id="type_of_ownership" class="input-regular chosen"
+                                data-placeholder=" " required>
+                            @foreach($types_of_ownership as $type)
+                                <option value="{{ $type->id }}"
+                                        @if($type->id==$item->type_ownership->id) selected='selected' @endif >{{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('type_of_ownership'))
+                            <span class="help-block"><strong>{{ $errors->first('type_of_ownership') }}</strong></span>
+                        @endif
+                    </div>
+                    <div class="input-group {{ $errors->has('iin') ? ' has-error' : '' }}">
+                        <label class="input-group__title">{{ __('admin.pages.user.company_name') }} *</label>
+                        <input type="text" name="company_name" value="{{ $item->company_name }}"
+                               placeholder="{{ __('admin.labels.fill_field',['field' => __('admin.pages.user.company_name')]) }}"
+                               class="input-regular" required>
+                        @if ($errors->has('iin'))
+                            <span class="help-block"><strong>{{ $errors->first('company_name') }}</strong></span>
+                        @endif
+                    </div>
+                    <div class="input-group {{ $errors->has('company_logo') ? ' has-error' : '' }}">
+                        <label class="input-group__title">{{ __('admin.pages.user.company_logo') }}</label>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="{{$item->getAvatar()}}" id="avatar_image" class="file-upload-image"
+                                     style="height: 150px">
+                            </div>
+                            <div class="col-md-10">
+                                <input type="hidden" name="company_logo" value="{{$item->getAvatar()}}">
+                                <div id="avatar" class="file-upload">
+                                    <div id="avatar_uploader" class="file">
+                                        <div class="progress">
+                                            <div class="progress-bar"></div>
+                                        </div>
+                                        <span class="file__name">
                                     .png, .jpg • 1 MB<br/>
                                     <strong>{{ __('admin.labels.upload_image') }}</strong>
                                 </span>
+                                    </div>
                                 </div>
+                                @if ($errors->has('company_logo'))
+                                    <span class="help-block"><strong>{{ $errors->first('company_logo') }}</strong></span>
+                                @endif
                             </div>
-                            @if ($errors->has('company_logo'))
-                                <span class="help-block"><strong>{{ $errors->first('company_logo') }}</strong></span>
-                            @endif
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
-            <div class="block">
-                <h2 class="title-secondary" style="margin-bottom: .3125em;">{{ __('admin.pages.user.role') }} *</h2>
-                <div class="input-group {{ $errors->has('role_id') ? ' has-error' : '' }}">
-                    <select name="role_id" id="role_id" class="input-regular chosen" data-placeholder=" " required>
-                        {{--<option value="" data-permissions="" disabled>-</option>--}}
-                        @foreach($roles as $role)
-                            <option value="{{ $role->id }}"
-                                    @if($item->hasRole($role->slug)) selected @endif>{{ $role->name }}</option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('role_id'))
-                        <span class="help-block"><strong>{{ $errors->first('role_id') }}</strong></span>
-                    @endif
+            @if(!$item->hasRole('admin'))
+                <div class="block">
+                    <h2 class="title-secondary" style="margin-bottom: .3125em;">{{ __('admin.pages.user.role') }} *</h2>
+                    <div class="input-group {{ $errors->has('role_id') ? ' has-error' : '' }}">
+                        <select name="role_id" id="role_id" class="input-regular chosen" data-placeholder=" " required>
+                            {{--<option value="" data-permissions="" disabled>-</option>--}}
+                            @foreach($roles as $role)
+                                <option value="{{ $role->id }}"
+                                        @if($item->hasRole($role->slug)) selected @endif>{{ $role->name }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('role_id'))
+                            <span class="help-block"><strong>{{ $errors->first('role_id') }}</strong></span>
+                        @endif
+                    </div>
                 </div>
-            </div>
-            <div class="block">
-                <h2 class="title-secondary" style="margin-bottom: .3125em;">{{ __('admin.pages.user.status') }} *</h2>
-                <div class="input-group {{ $errors->has('role_id') ? ' has-error' : '' }}">
-                    <select name="is_activate" id="is_activate" class="input-regular chosen" data-placeholder="" required>
-                        @foreach($statuses as $status)
-                            <option value="{{ $status }}"
-                                    @if($item->is_activate == $status) selected @endif>{{ __("admin.pages.user.statuses.$status") }}</option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('is_activate'))
-                        <span class="help-block"><strong>{{ $errors->first('is_activate') }}</strong></span>
-                    @endif
+                <div class="block">
+                    <h2 class="title-secondary" style="margin-bottom: .3125em;">{{ __('admin.pages.user.status') }}
+                        *</h2>
+                    <div class="input-group {{ $errors->has('role_id') ? ' has-error' : '' }}">
+                        <select name="is_activate" id="is_activate" class="input-regular chosen" data-placeholder=""
+                                required>
+                            @foreach($statuses as $status)
+                                <option value="{{ $status }}"
+                                        @if($item->is_activate == $status) selected @endif>{{ __("admin.pages.user.statuses.$status") }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('is_activate'))
+                            <span class="help-block"><strong>{{ $errors->first('is_activate') }}</strong></span>
+                        @endif
+                    </div>
+                    <div class="input-group" id="rejectMessageBlock" style='display:none;'>
+                        <label class="input-group__title">Причина отказа*</label>
+                        <textarea name="rejectMessage" id="rejectMessage" placeholder="Заполните поле: Причина отказа"
+                                  class="input-regular"></textarea>
+                    </div>
                 </div>
-                <div class="input-group" id="rejectMessageBlock" style='display:none;'>
-                    <label class="input-group__title">Причина отказа*</label>
-                    <textarea name="rejectMessage" id="rejectMessage" placeholder="Заполните поле: Причина отказа"
-                              class="input-regular"></textarea>
-                </div>
-            </div>
+            @endif
             <div class="block">
                 <div class="buttons">
                     <div>
@@ -213,15 +219,12 @@
 
         initUploaders(uploaders);
 
-        $(document).ready(function(){
-            $('#is_activate').on('change', function() {
-                if ( this.value == '2')
-                {
+        $(document).ready(function () {
+            $('#is_activate').on('change', function () {
+                if (this.value == '2') {
                     $("#rejectMessageBlock").show();
                     $("#rejectMessage").attr('required', '');
-                }
-                else
-                {
+                } else {
                     $("#rejectMessageBlock").hide();
                     $("#rejectMessage").removeAttr('required');
                 }

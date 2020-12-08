@@ -68,7 +68,8 @@
 
                                 @switch($item->quota_status)
                                     @case(0)
-                                    @if($item->cost > 0)
+                                    @case(3)
+                                    @if(($item->cost > 0) and ($item->is_paid == true))
                                         <form id="course_form"
                                               action="/{{$lang}}/admin/course/quota_request/{{ $item->id }}"
                                               method="post"

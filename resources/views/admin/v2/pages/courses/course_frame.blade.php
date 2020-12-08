@@ -256,28 +256,6 @@
                     </div>
                 </div>
 
-                <div class="row row--multiline">
-                    @switch(!($item->status))
-                        @case(1)
-                        @case(3)
-                        <div class="col-auto">
-                            <form action="/{{$lang}}/publish-course/{{$item->id}}" method="POST">
-                                @csrf
-                                <button type="submit" title="{{__('default.pages.courses.publish_title')}}"
-                                        class="btn">{{__('default.pages.courses.publish_title')}}</button>
-                            </form>
-                        </div>
-                        <div class="col-auto">
-                            <a href="/{{$lang}}/my-courses/edit-course/{{$item->id}}"
-                               title="{{__('default.pages.courses.edit_title')}}"
-                               class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
-                        </div>
-                        <div class="col-auto">
-                            {{--                                <a href="#" title="Отмена" class="ghost-btn">Отмена</a>--}}
-                        </div>
-                        @break
-                    @endswitch
-                </div>
             </div>
             <div class="col-md-4">
                 <form class="sidebar">

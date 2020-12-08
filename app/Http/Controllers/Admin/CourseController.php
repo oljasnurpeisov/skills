@@ -151,13 +151,9 @@ class CourseController extends Controller
 
     public function view($lang, Course $item)
     {
-        if ($item->status == 1 or $item->status == 2 or $item->status == 3) {
-
-            return view('admin.v2.pages.courses.view', [
-                'item' => $item
-            ]);
-        }
-        return redirect('/' . $lang . '/admin/courses/index');
+        return view('admin.v2.pages.courses.view', [
+            'item' => $item
+        ]);
     }
 
     public function publish($lang, Course $item, Request $request)
