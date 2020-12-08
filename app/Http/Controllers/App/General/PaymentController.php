@@ -37,7 +37,7 @@ class PaymentController extends Controller
 
                 $data = array("merchantId" => $item->user->payment_info->merchant_login,
                     "callbackUrl" => config('payment.callbackUrl'),
-                    "description" => config('payment.description'),
+                    "description" => __('default.pages.courses.pay_for_course').' "'.$item->name.'"',
                     "returnUrl" => env('APP_URL').'/'.app()->getLocale().'/course-catalog/course/'.$item->id,
                     "amount" => $item->cost,
                     "orderId" => $payment->id,

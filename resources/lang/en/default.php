@@ -180,12 +180,14 @@ return [
             'create_lesson' => 'Создать урок',
             'lessons_title_1' => 'Уроков',
             'total_time_lessons' => 'Общая продолжительность',
-            'hours_title' => 'часов'
+            'hours_title' => 'часов',
+
+            'pay_for_course' => 'Оплата за курс',
 
         ],
         'lessons' => [
             'create_request_message' => 'Урок успешно создан',
-            'access_denied_message' => 'У вас нет доступа к выбранному уроку',
+            'access_denied_message' => 'У вас нет доступа к выбранному уроку, Вам необходимо завершить предыдущий урок',
             'homework_title' => 'Домашнее задание',
             'coursework_title' => 'Курсовая работа',
             'answer_title' => 'Ответ на задание',

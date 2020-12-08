@@ -456,9 +456,18 @@
                             @if(empty($student_course) or ($student_course->paid_status == 0))
                                 <div class="sidebar__buttons">
                                     @if($item->quota_status == 2)
-                                        <a href="#quotaConfirm" data-fancybox
-                                           title="{{__('default.pages.courses.get_by_quota')}}"
-                                           class="sidebar-btn ghost">{{__('default.pages.courses.get_by_quota')}}</a>
+                                        @guest
+                                            <a href="#studentAuth" data-fancybox
+                                               title="{{__('default.pages.courses.get_by_quota')}}"
+                                               class="sidebar-btn ghost">{{__('default.pages.courses.get_by_quota')}}</a>
+                                        @endguest
+                                        @auth
+                                            @if(Auth::user()->hasRole('student'))
+                                                <a href="#quotaConfirm" data-fancybox
+                                                   title="{{__('default.pages.courses.get_by_quota')}}"
+                                                   class="sidebar-btn ghost">{{__('default.pages.courses.get_by_quota')}}</a>
+                                            @endif
+                                        @endauth
                                     @endif
                                     @if($item->is_paid == 0)
                                         @guest
@@ -467,9 +476,11 @@
                                                class="sidebar-btn ghost">{{__('default.pages.courses.get_free')}}</a>
                                         @endguest
                                         @auth
-                                            <a href="#buyConfirm" data-fancybox
-                                               title="{{__('default.pages.courses.get_free')}}"
-                                               class="sidebar-btn ghost">{{__('default.pages.courses.get_free')}}</a>
+                                            @if(Auth::user()->hasRole('student'))
+                                                <a href="#buyConfirm" data-fancybox
+                                                   title="{{__('default.pages.courses.get_free')}}"
+                                                   class="sidebar-btn ghost">{{__('default.pages.courses.get_free')}}</a>
+                                            @endif
                                         @endauth
                                     @else
                                         @guest
@@ -478,9 +489,11 @@
                                                class="sidebar-btn">{{__('default.pages.courses.buy_course')}}</a>
                                         @endguest
                                         @auth
-                                            <a href="#buyConfirm" data-fancybox
-                                               title="{{__('default.pages.courses.buy_course')}}"
-                                               class="sidebar-btn">{{__('default.pages.courses.buy_course')}}</a>
+                                            @if(Auth::user()->hasRole('student'))
+                                                <a href="#buyConfirm" data-fancybox
+                                                   title="{{__('default.pages.courses.buy_course')}}"
+                                                   class="sidebar-btn">{{__('default.pages.courses.buy_course')}}</a>
+                                            @endif
                                         @endauth
                                     @endif
                                 </div>
@@ -543,25 +556,27 @@
         </div>
 
         @auth
-            <div id="quotaConfirm" style="display:none;">
-                <form action="/createPaymentOrder/{{$item->id}}" method="POST">
-                    @csrf
-                    <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
-                    <div class="plain-text gray text-center">{{__('default.pages.courses.confirm_course_by_quota')}}</div>
-                    <div class="plain-text gray text-center">{{__('default.pages.courses.quota_have')}}
-                        : {{Auth::user()->student_info->quota_count}}</div>
-                    <div class="row row--multiline justify-center">
-                        <div class="col-auto">
-                            <button type="submit" name="action" value="by_qouta" title="{{__('default.yes_title')}}"
-                                    class="btn">{{__('default.yes_title')}}</button>
+            @if(Auth::user()->hasRole('student'))
+                <div id="quotaConfirm" style="display:none;">
+                    <form action="/createPaymentOrder/{{$item->id}}" method="POST">
+                        @csrf
+                        <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
+                        <div class="plain-text gray text-center">{{__('default.pages.courses.confirm_course_by_quota')}}</div>
+                        <div class="plain-text gray text-center">{{__('default.pages.courses.quota_have')}}
+                            : {{Auth::user()->student_info->quota_count}}</div>
+                        <div class="row row--multiline justify-center">
+                            <div class="col-auto">
+                                <button type="submit" name="action" value="by_qouta" title="{{__('default.yes_title')}}"
+                                        class="btn">{{__('default.yes_title')}}</button>
+                            </div>
+                            <div class="col-auto">
+                                <a href="#" title="{{__('default.no_title')}}" class="ghost-btn"
+                                   data-fancybox-close>{{__('default.no_title')}}</a>
+                            </div>
                         </div>
-                        <div class="col-auto">
-                            <a href="#" title="{{__('default.no_title')}}" class="ghost-btn"
-                               data-fancybox-close>{{__('default.no_title')}}</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                    </form>
+                </div>
+            @endif
         @endauth
 
 
@@ -571,7 +586,7 @@
 @section('scripts')
     <!--Only this page's scripts-->
     @if(empty($student_rate) and !empty($student_course->is_finished) == true)
-    <script>
+        <script>
             $.fancybox.open({
                 src: '#rate',
                 touch: false,
@@ -580,7 +595,7 @@
                 clickSlide: false,
                 clickOutside: false
             })
-    </script>
+        </script>
     @endif
     <!---->
 @endsection
