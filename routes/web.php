@@ -208,6 +208,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     // Профиль обучающегося
                     Route::get("/student-profile", "UserController@student_profile");
                     Route::post("/update_student_profile", "UserController@update_student_profile");
+                    // Сертификаты
+                    Route::get("/student/my-certificates", "UserController@myCertificates");
                     // Курсы
                     Route::get("/student/my-courses", "CourseController@studentCourses");
                     Route::get("/student/get-certificate/course/{course}", "CourseController@getCertificate");

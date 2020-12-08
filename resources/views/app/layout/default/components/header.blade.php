@@ -119,7 +119,7 @@
                                 </li>
                             @endif
                             @if(Auth::user()->hasRole('student'))
-                                    <li><a href="#"
+                                    <li><a href="/{{$lang}}/student/my-certificates"
                                            title="{{__('default.pages.profile.my_certificates')}}">{{__('default.pages.profile.my_certificates')}}</a>
                                     </li>
                             @endif

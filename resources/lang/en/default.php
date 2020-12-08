@@ -270,6 +270,7 @@ return [
             'title' => 'Профиль',
             'have_quota' => 'Имеется квот',
             'my_certificates' => 'Мои сертификаты',
+            'download' => 'Скачать',
             'email_confirm_error' => 'Чтобы стать автором, подтвердите свой E-mail',
             'email_confirm_success' => 'Вы успешно подтвердили E-mail',
             'profile_activate_error' => 'У вас пока нет доступа к этому разделу, заполните информацию в профиле.',

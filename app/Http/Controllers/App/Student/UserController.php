@@ -7,6 +7,7 @@ use App\Models\Dialog;
 use App\Models\PayInformation;
 use App\Models\Role;
 use App\Models\Skill;
+use App\Models\StudentCertificate;
 use App\Models\StudentInformation;
 use App\Models\Type_of_ownership;
 use App\Models\User;
@@ -189,6 +190,15 @@ class UserController extends Controller
         $dialog->save();
 
         $dialog->members()->sync([$user->id, $tech_support->id]);
+    }
+
+    public function myCertificates(){
+
+        $certificates = StudentCertificate::where('user_id', '=', Auth::user()->id)->get();
+
+        return view("app.pages.student.profile.my_certificates", [
+            'items' => $certificates
+        ]);
     }
 
 }
