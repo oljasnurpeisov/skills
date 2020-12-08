@@ -122,9 +122,9 @@ class AjaxUploadController extends Controller
 //            return Response::json(array('success' => false));
 //        }
 
-        $this->validate($request, [
-            "file" => "image|required|max:$this->imageMaxSize|mimes:png,jpg,jpeg"
-        ]);
+//        $this->validate($request, [
+//            "file" => "image|required|max:$this->imageMaxSize|mimes:png,jpg,jpeg"
+//        ]);
 
         $file = $request->file;
         $imageName = time() . '.' . $file->getClientOriginalExtension();

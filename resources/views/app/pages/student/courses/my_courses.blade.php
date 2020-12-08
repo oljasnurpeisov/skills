@@ -50,7 +50,7 @@
                                             </a>
                                             <div class="card__desc">
                                                 <div class="card__top">
-                                                    <h3 class="card__title"><a href="#"
+                                                    <h3 class="card__title"><a href="/{{$lang}}/course-catalog/course/{{$item->course->id}}"
                                                                                title="{{$item->course->name}}">{{$item->course->name}}</a>
                                                     </h3>
                                                     <div class="card__author">{{$item->course->user->company_name}}</div>
@@ -70,7 +70,7 @@
                                             </div>
                                             <div class="card__additional">
                                                 @if($item->is_finished == true)
-                                                    <a href="#"
+                                                    <a href="/{{$lang}}/student/get-certificate/course/{{$item->course->id}}"
                                                        title="{{__('default.pages.courses.get_certificate_active')}}"
                                                        class="card__link">{{__('default.pages.courses.get_certificate_active')}}</a>
                                                     <a href="#rate" data-fancybox

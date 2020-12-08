@@ -89,7 +89,7 @@
                         @if(Auth::user()->hasRole('author'))
                             <div class="name">{{Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname}}</div>
                         @elseif(Auth::user()->hasRole('student'))
-                            {{--                        <div class="name">{{Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname}}</div>--}}
+                                                    <div class="name">{{Auth::user()->student_info->name}}</div>
                             <div class="quotas">{{__('default.pages.profile.have_quota')}}
                                 : {{Auth::user()->student_info->quota_count}}</div>
                         @endif

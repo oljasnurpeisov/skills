@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\PaymentHistory;
+use App\Models\StudentCertificate;
 use App\Models\StudentCourse;
 use App\Models\StudentLesson;
 use App\Models\StudentLessonAnswer;
@@ -16,7 +17,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class LessonController extends Controller
 {
@@ -157,7 +159,6 @@ class LessonController extends Controller
 
     public function homeworkView($lang, Course $course, Theme $theme, Lesson $lesson)
     {
-
         if (!empty($lesson->lesson_student)) {
             if ($lesson->lesson_student->is_access == true) {
                 return view("app.pages.student.lesson.homework_view", [
@@ -309,10 +310,9 @@ class LessonController extends Controller
                 $lesson->lesson_student->save();
 
 //                if ($lesson->type == 4){
-                    $this->finishedCourse($course);
+                $this->finishedCourse($course);
 //                }
             }
-
 
 
             return view("app.pages.student.lesson.test_results_view", [
@@ -397,10 +397,15 @@ class LessonController extends Controller
         })->whereIn('id', $lessons)->get();
 
         // Если кол-во уроков и кол-во завершенных уроков равно, то отметить курс как завершенный
-        if ($course->lessons->count() == $student_finished_lessons->count()){
+        if ($course->lessons->count() == $student_finished_lessons->count()) {
             $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $course->id)->first();
             $student_course->is_finished = true;
             $student_course->save();
+
+            if (empty(Auth::user()->certificates)) {
+                $this->saveCertificates($course, $student_course);
+            }
+
         }
     }
 
@@ -414,6 +419,42 @@ class LessonController extends Controller
             $item->is_access = true;
             $item->save();
         }
+
+    }
+
+    public function saveCertificates($course, $student_course)
+    {
+        $languages = ["ru", "kk"];
+
+        foreach ($languages as $language){
+            $data = [
+                'author_name' => $course->user->author_info->name . ' ' . $course->user->author_info->surname,
+                'student_name' => Auth::user()->student_info->name,
+                'duration' => $course->lessons->sum('duration'),
+                'course_name' => $course->name,
+                'skills' => $course->skills,
+                'certificate_id' => 1,
+            ];
+            $pdf = PDF::loadView('app.pages.page.pdf.certificate_'.$course->certificate_id.'_'.$language, ['data' => $data]);
+            $pdf = $pdf->setPaper('a4', 'portrait');
+
+            $path = public_path('users/user_' . Auth::user()->id . '');
+            $pdf->save($path . '/' . 'course_' . $course->id . '_certificate_'.$language.'.pdf');
+
+            $pdf = new \Spatie\PdfToImage\Pdf($path . '/' . 'course_' . $course->id . '_certificate_'.$language.'.pdf');
+            $pdf->saveImage($path.'/'. 'course_' . $course->id . '_image_'.$language.'.png');
+        }
+
+        $file_path = '/users/user_' . Auth::user()->id . '';
+
+        $certificate = new StudentCertificate;
+        $certificate->user_id = Auth::user()->id;
+        $certificate->course_id = $course->id;
+        $certificate->pdf_ru = $file_path.'/' . 'course_' . $course->id . '_certificate_'.$languages[0].'.pdf';
+        $certificate->pdf_kk = $file_path.'/' . 'course_' . $course->id . '_certificate_'.$languages[1].'.pdf';
+        $certificate->png_ru = $file_path.'/' . 'course_' . $course->id . '_image_'.$languages[0].'.png';
+        $certificate->png_kk = $file_path.'/' . 'course_' . $course->id . '_image_'.$languages[1].'.png';
+        $certificate->save();
 
     }
 }

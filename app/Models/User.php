@@ -88,7 +88,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class, 'permission_role','permission_id', 'role_id');
+        return $this->belongsToMany(Permission::class, 'permission_role', 'permission_id', 'role_id');
     }
 
     public function getAvatar()
@@ -100,21 +100,24 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->company_logo;
     }
 
-    public function courses() {
+    public function courses()
+    {
 
-        return $this->hasMany(Course::class,'author_id');
-
-    }
-
-    public function notifications() {
-
-        return $this->belongsToMany(Notification::class,'user_notifications');
+        return $this->hasMany(Course::class, 'author_id');
 
     }
 
-    public function skills() {
+    public function notifications()
+    {
 
-        return $this->belongsToMany(Skill::class,'student_skills','user_id', 'skill_id');
+        return $this->belongsToMany(Notification::class, 'user_notifications');
+
+    }
+
+    public function skills()
+    {
+
+        return $this->belongsToMany(Skill::class, 'student_skills', 'user_id', 'skill_id');
 
     }
 
@@ -135,7 +138,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function student_lesson()
     {
-        return $this->belongsToMany(Lesson::class,'student_lesson','student_id', 'lesson_id');
+        return $this->belongsToMany(Lesson::class, 'student_lesson', 'student_id', 'lesson_id');
     }
 
     public function sendEmailVerificationNotification()
@@ -146,6 +149,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function dialogs()
     {
         return $this->belongsToMany(Dialog::class, "dialog_members", "user_id", "dialog_id");
+    }
+
+    public function certificates()
+    {
+        return $this->belongsTo(StudentCertificate::class, 'id', 'user_id');
     }
 
 }

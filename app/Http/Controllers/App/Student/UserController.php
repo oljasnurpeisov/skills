@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Dialog;
 use App\Models\PayInformation;
+use App\Models\Role;
 use App\Models\Skill;
 use App\Models\StudentInformation;
 use App\Models\Type_of_ownership;
@@ -86,7 +87,8 @@ class UserController extends Controller
         $student_unemployed_status = json_decode($this->getUnemployedStatus($token), true);
 
         $user = User::where('email', '=', $request->email)->first();
-        $student_role = 5;
+
+        $student_role = Role::where('slug', '=', 'student')->first();
 
         if (empty($user)) {
 
@@ -96,12 +98,24 @@ class UserController extends Controller
             $item->email_verified_at = Carbon::now()->toDateTimeString();
             $item->save();
 
-            $item->roles()->sync([$student_role]);
+            $item->roles()->sync([$student_role->id]);
 
             $item_information = new StudentInformation;
             $item_information->user_id = $item->id;
-            $item_information->uid = $student_resume[0]["uid"];
-            $item_information->profession_code = $student_resume[0]["uozcodprof"];
+
+            if ($student_resume != null) {
+                $item_information->name = $student_resume[0]["FIO"];
+                $item_information->uid = $student_resume[0]["uid"];
+                $item_information->profession_code = $student_resume[0]["uozcodprof"];
+
+                $user_skills = array();
+                foreach ($student_resume[0]["compSpecList"] as $skill) {
+                    array_push($user_skills, $skill["codcomp"]);
+                }
+                $skills = Skill::whereIn('code_skill', $user_skills)->pluck('id')->toArray();
+                $item->skills()->sync($skills);
+            }
+
             if ($student_unemployed_status["response"] == null) {
                 $item_information->unemployed_status = 0;
             } else {
@@ -110,13 +124,6 @@ class UserController extends Controller
             }
             $item_information->save();
 
-            $user_skills = array();
-            foreach ($student_resume[0]["compSpecList"] as $skill) {
-                array_push($user_skills, $skill["codcomp"]);
-            }
-            $skills = Skill::whereIn('code_skill', $user_skills)->pluck('id')->toArray();
-            $item->skills()->sync($skills);
-
             $this->createTechDialog($user);
 
 
@@ -124,7 +131,8 @@ class UserController extends Controller
             Auth::login($item);
 
         } else {
-            if ($user->roles()->first()->id != $student_role) {
+
+            if ($user->roles()->first()->id != $student_role->id) {
                 return redirect()->back()->with('status', __('default.pages.auth.student_login_author_exist'));
             }
             Session::put('student_token', $token);
@@ -132,8 +140,6 @@ class UserController extends Controller
         }
 
         return redirect("/" . app()->getLocale());
-//        return redirect("/" . app()->getLocale() . "/student-profile");
-
     }
 
     public function getStudentResume($token)
