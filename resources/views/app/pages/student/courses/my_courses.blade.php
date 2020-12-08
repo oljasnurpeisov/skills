@@ -43,15 +43,22 @@
                                             <a href="/{{$lang}}/course-catalog/course/{{$item->course->id}}" title=""
                                                class="card__image">
                                                 <img src="{{$item->course->getAvatar()}}" alt="">
-                                                @php($progress = round(($item->finished_lessons_count/$item->lessons_count)*100))
+                                                <?php
+                                                if ($item->lessons_count != 0) {
+                                                    $progress = round(($item->finished_lessons_count / $item->lessons_count) * 100);
+                                                }else{
+                                                    $progress = 0;
+                                                }
+                                                ?>
                                                 <div class="card__progress mark mark--{{ $progress < 100 ? 'yellow' : 'green' }}">{{$progress}}
                                                     %
                                                 </div>
                                             </a>
                                             <div class="card__desc">
                                                 <div class="card__top">
-                                                    <h3 class="card__title"><a href="/{{$lang}}/course-catalog/course/{{$item->course->id}}"
-                                                                               title="{{$item->course->name}}">{{$item->course->name}}</a>
+                                                    <h3 class="card__title"><a
+                                                                href="/{{$lang}}/course-catalog/course/{{$item->course->id}}"
+                                                                title="{{$item->course->name}}">{{$item->course->name}}</a>
                                                     </h3>
                                                     <div class="card__author">{{$item->course->user->company_name}}</div>
                                                 </div>
