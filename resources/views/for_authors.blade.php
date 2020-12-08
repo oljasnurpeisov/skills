@@ -10,13 +10,19 @@
                     <h1>Меняйте мир к лучшему</h1>
                     <h2>Публикуйте курсы онлайн и зарабатывайте деньги, обучая людей по всему миру</h2>
 
-                    @if(Auth::user()->hasRole('author'))
-                        <a href="/{{$lang}}/profile-author-information" title="Стать автором" class="btn">Стать
-                            автором</a>
-                    @else
+                    @auth
+                        @if(Auth::user()->hasRole('author'))
+                            <a href="/{{$lang}}/profile-author-information" title="Стать автором" class="btn">Стать
+                                автором</a>
+                        @else
+                            <a href="#authorRegistration" data-fancybox="" title="Стать автором" class="btn">Стать
+                                автором</a>
+                        @endif
+                    @endauth
+                    @guest
                         <a href="#authorRegistration" data-fancybox="" title="Стать автором" class="btn">Стать
                             автором</a>
-                    @endif
+                    @endguest
 
                 </div>
             </div>
@@ -98,14 +104,20 @@
                 </div>
                 <br>
                 <div class="text-center">
-                    @if(Auth::user()->hasRole('author'))
-                        <a href="/{{$lang}}/profile-author-information" title="Стать автором"
-                           class="btn">Стать
-                            автором</a>
-                    @else
+                    @auth
+                        @if(Auth::user()->hasRole('author'))
+                            <a href="/{{$lang}}/profile-author-information" title="Стать автором"
+                               class="btn">Стать
+                                автором</a>
+                        @else
+                            <a href="#authorRegistration" data-fancybox="" title="Стать автором" class="btn">Стать
+                                автором</a>
+                        @endif
+                    @endauth
+                    @guest
                         <a href="#authorRegistration" data-fancybox="" title="Стать автором" class="btn">Стать
                             автором</a>
-                    @endif
+                    @endguest
                 </div>
             </div>
         </section>
@@ -172,13 +184,19 @@
                             labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                             laboris nisi ut aliquip ex ea commodo consequat.
                         </div>
-                        @if(Auth::user()->hasRole('author'))
-                            <a href="/{{$lang}}/profile-author-information" title="Стать автором"
-                               class="ghost-btn ghost-btn--white">Стать автором</a>
-                        @else
+                        @auth
+                            @if(Auth::user()->hasRole('author'))
+                                <a href="/{{$lang}}/profile-author-information" title="Стать автором"
+                                   class="ghost-btn ghost-btn--white">Стать автором</a>
+                            @else
+                                <a href="#authorRegistration" data-fancybox="" title="Стать автором"
+                                   class="ghost-btn ghost-btn--white">Стать автором</a>
+                            @endif
+                        @endauth
+                        @guest
                             <a href="#authorRegistration" data-fancybox="" title="Стать автором"
                                class="ghost-btn ghost-btn--white">Стать автором</a>
-                        @endif
+                        @endguest
                     </div>
                     <div class="col-sm-6">
                         <img src="/assets/img/authors-banner.svg" alt="">

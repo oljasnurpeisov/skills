@@ -38,6 +38,12 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+
+//        if (Auth::user()->hasRole('author')){
+//            $this->redirectTo = '/' . app()->getLocale() . '/profile-author-information';
+//        }else{
+//            $this->redirectTo = '/';
+//        }
         $this->redirectTo = '/' . app()->getLocale() . '/profile-author-information';
 
     }

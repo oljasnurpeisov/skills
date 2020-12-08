@@ -231,11 +231,11 @@
                                     <label class="form-group__label">{{__('default.pages.profile.certificates')}}</label>
                                     <div data-url="/ajax_upload_certificates?_token={{ csrf_token() }}"
                                          data-maxfiles="15"
-                                         data-maxsize="20" data-acceptedfiles=".pdf, .png, .jpg"
+                                         data-maxsize="20" data-acceptedfiles=".png, .jpg"
                                          id="documents-dropzone2"
                                          class="dropzone-default dropzone-multiple">
                                         <input type="hidden" name="certificates" value="">
-                                        <div class="dropzone-default__info">PDF, PNG, JPG
+                                        <div class="dropzone-default__info">PNG, JPG
                                             • {{__('default.pages.profile.max_file_title')}} 20MB
                                         </div>
                                         <div class="previews-container">

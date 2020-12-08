@@ -136,12 +136,12 @@ return [
             'recommended_skills' => 'Рекомендованные</span><br/> навыки',
 
             'course_include' => 'В курс входит',
-            'lessons_title' => 'уроков',
-            'tests_count_title' => 'тестов',
-            'homeworks_count' => 'домашних заданий',
-            'videos_count' => 'количество видео',
-            'audios_count' => 'количество аудио',
-            'attachments_count' => 'количество материалов',
+            'lessons_title' => 'Количество уроков',
+            'tests_count_title' => 'Количество тестов',
+            'homeworks_count' => 'Количество домашних заданий',
+            'videos_count' => 'Количество видео',
+            'audios_count' => 'Количество аудио',
+            'attachments_count' => 'Количество материалов',
 
             'mobile_access_title' => 'Доступ через мобильные устройства',
             'certificate_access_title' => 'Сертификат при завершени',
@@ -275,7 +275,9 @@ return [
             'email_confirm_success' => 'Вы успешно подтвердили E-mail',
             'profile_activate_error' => 'У вас пока нет доступа к этому разделу, заполните информацию в профиле.',
             'pay_info_error' => 'Для продолжения работы пожалуйста заполните данные в разделе <a style="color: #2ab5f6" href="/:lang/profile-pay-information" target="_blank">Профиль - Платежная информация</a>',
-            'pay_info_help_title' => 'Логин и пароль от платежной системы вы можете получить по адресу <a href="https://business.kassa24.kz/" target="_blank"><b>kassa24.kz</b></a>',
+            'pay_info_help_title' => 'Логин и пароль от платежной системы вы можете получить по адресу <a href="https://business.kassa24.kz/" target="_blank"><b>kassa24.kz</b></a>
+<br>Инструкцию по регистрации в системе можете просмотреть по <a href="https://www.youtube.com/watch?v=mP5mjBvRYrA&list=PLS02cGdrx8jVSrDhELXELAyii6l28Q79x&index=9" target="_blank"><b>ссылке</b></a>
+<br>В случае возникновения дополнительных вопросов, консультацию можете получить у менеджера по телефонам:<a href="tel:+7 777 666 7183"><b>+7 777 666 7183</b></a>, <a href="tel:+7 771 721 90 02"><b>+7 771 721 90 02</b></a> ',
             'organization_data' => 'Данные об организации',
             'payment_information' => 'Платежная информация',
             'registration_data' => 'Регистрационные данные',
@@ -420,7 +422,8 @@ return [
             'popular_courses' => '<span>Популярные</span><br/> курсы',
             'popular_authors' => '<span>Популярные</span><br/> авторы',
             'poor_vision_version' => 'Версия для слабовидящих',
-            'to_be_a_teacher' => 'ХОЧУ СТАТЬ АВТОРОМ КУРСОВ'
+            'to_be_a_teacher' => 'ХОЧУ СТАТЬ АВТОРОМ КУРСОВ',
+            'search_placeholder' => 'Поиск',
         ],
 
         'footer' => [

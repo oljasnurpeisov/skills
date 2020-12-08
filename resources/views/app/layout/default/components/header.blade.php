@@ -261,9 +261,9 @@
             <a href="/{{$lang}}" title="{{__('default.main_title')}}" class="logo"><img src="/assets/img/logo.svg"
                                                                                         alt=""></a>
             <div class="buttons-group">
-                <form class="input-search">
+                <form class="input-search" action="/{{$lang}}/course-catalog?search=">
                     <i class="icon-search"> </i>
-                    <input type="text" name="search" placeholder="Поиск">
+                    <input type="text" name="search" placeholder="{{__('default.pages.index.search_placeholder')}}">
                     <button type="submit" class="btn-icon small icon-chevron-right"></button>
                 </form>
                 <!--<a href="#" title="Помощь" class="ghost-btn ghost-btn&#45;&#45;blue small">Помощь</a>-->
