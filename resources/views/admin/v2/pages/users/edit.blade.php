@@ -54,7 +54,9 @@
                                 data-placeholder=" " required>
                             @foreach($types_of_ownership as $type)
                                 <option value="{{ $type->id }}"
-                                        @if($type->id==$item->type_ownership->id) selected='selected' @endif >{{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}</option>
+                                        @if($item->type_ownership && $type->id==$item->type_ownership->id) selected='selected' @endif >
+                                    {{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}
+                                </option>
                             @endforeach
                         </select>
                         @if ($errors->has('type_of_ownership'))

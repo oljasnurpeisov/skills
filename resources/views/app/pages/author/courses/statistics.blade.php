@@ -62,7 +62,7 @@
                         <div class="form-group">
                             <label class="form-group__label">{{__('default.pages.statistics.date_from')}}:</label>
                             <div class="input-group">
-                                <input type="text" name="dateFrom" value="01.01.2020" placeholder=""
+                                <input type="text" name="dateFrom" value="{{ date('d.m.Y',strtotime('-90 days')) }}" placeholder=""
                                        class="input-regular">
                                 <i class="icon-calendar"></i>
                             </div>
@@ -72,7 +72,7 @@
                         <div class="form-group">
                             <label class="form-group__label">{{__('default.pages.statistics.date_to')}}:</label>
                             <div class="input-group">
-                                <input type="text" name="dateTo" value="{{date('d.m.Y')}}" placeholder=""
+                                <input type="text" name="dateTo" value="{{ date('d.m.Y') }}" placeholder=""
                                        class="input-regular">
                                 <i class="icon-calendar"></i>
                             </div>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="income-diagram">
                     @if(Auth::user()->id == 46)
-                        <div id="chartdiv" data-url="/assets/data/author-stats.json"></div>
+                        <div id="chartdiv" data-url="/{{$lang}}/statisticForChartDemo"></div>
                     @else
                         <div id="chartdiv" data-url="/{{$lang}}/my-courses/statistics/statisticForChart"></div>
                     @endif

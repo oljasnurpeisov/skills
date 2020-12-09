@@ -27,6 +27,8 @@
                     @endif
                 </ul>
 
+                @include('.app.pages.author.courses.components.preview_alert_info')
+
                 <div class="row row--multiline">
                     <div class="col-md-8">
                         <div class="article">
@@ -41,9 +43,11 @@
                                 <span><i class="icon-lesson"></i> {{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</span>
                                 <span><i class="icon-clock"></i> {{$time .' '. __('default.pages.lessons.hour_short_title')}} </span>
                             </div>
-                            <div class="article__image">
-                                <img src="{{ $lesson->getAvatar() }}" alt="">
-                            </div>
+                            @if($lesson->image)
+                                <div class="article__image">
+                                    <img src="{{ $lesson->image }}" alt="">
+                                </div>
+                            @endif
                             <div class="plain-text">
                                 {!! $lesson->theory !!}
                             </div>

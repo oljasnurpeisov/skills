@@ -24,6 +24,8 @@
                         {{ session('error') }}
                     </div>
                 @endif
+                @include('.app.pages.author.courses.components.preview_alert_info')
+
                 <div class="row row--multiline">
                     <div class="col-md-8">
                         <div class="article">
@@ -541,13 +543,18 @@
                                     <div class="sidebar-item__body">
                                         <div class="plain-text">
                                             <ul>
-                                                <li>{{__('default.pages.courses.lessons_title')}}: {{$item->lessons->whereIn('type', [1,2])->count()}} </li>
+                                                <li>{{__('default.pages.courses.lessons_title')}}
+                                                    : {{$item->lessons->whereIn('type', [1,2])->count()}} </li>
                                                 <li>{{__('default.pages.courses.videos_count')}}: {{$videos_count}}</li>
-                                                <li>{{__('default.pages.courses.audios_count')}}: {{$audios_count}}  </li>
-                                                <li>{{__('default.pages.courses.attachments_count')}}: {{$attachments_count}}</li>
+                                                <li>{{__('default.pages.courses.audios_count')}}
+                                                    : {{$audios_count}}  </li>
+                                                <li>{{__('default.pages.courses.attachments_count')}}
+                                                    : {{$attachments_count}}</li>
                                                 {{--                                                <li>70,5 часов видео</li>--}}
-                                                <li>{{__('default.pages.courses.tests_count_title')}}: {{$item->lessons->whereIn('type', [2])->where('end_lesson_type', '=', 0)->count()}}</li>
-                                                <li>{{__('default.pages.courses.homeworks_count')}}: {{$item->lessons->where('end_lesson_type', '=', 1)->where('type', '=', 2)->count()}}</li>
+                                                <li>{{__('default.pages.courses.tests_count_title')}}
+                                                    : {{$item->lessons->whereIn('type', [2])->where('end_lesson_type', '=', 0)->count()}}</li>
+                                                <li>{{__('default.pages.courses.homeworks_count')}}
+                                                    : {{$item->lessons->where('end_lesson_type', '=', 1)->where('type', '=', 2)->count()}}</li>
                                                 @if(!empty($item->courseWork()))
                                                     <li>{{__('default.pages.courses.coursework_title')}}</li>
                                                 @endif
