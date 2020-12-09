@@ -46,7 +46,7 @@
                                 <span>{!! __('default.pages.courses.recommended_courses') !!}</h2>
                             <div class="regular-carousel courses-carousel">
                                 @foreach($courses as $course)
-                                    <a href="#" title="" class="card">
+                                    <a href="/{{$lang}}/course-catalog/course/{{$course->id}}" title="" class="card">
                                         @if($item->quota_status == 2)
                                             <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
                                         @endif
@@ -138,7 +138,7 @@
                 <h3 class="title-primary decorated"><span>Можно применить</span><br/> популярные курсы</h3>
                 <ul class="home-arrow-links">
                     @foreach($popular_courses as $item)
-                    <li><a href="#" class="arrow-link" title="{{$item->name}}">{{$item->name}}</a></li>
+                    <li><a href="/{{$lang}}/course-catalog/course/{{$item->id}}" class="arrow-link" title="{{$item->name}}">{{$item->name}}</a></li>
                     @endforeach
                     <li><a href="/{{$lang}}/course-catalog" title="Посмотреть весь каталог" class="btn">Посмотреть весь
                             каталог</a></li>
@@ -210,13 +210,13 @@
         </section>
 
         @auth
-            @if(Auth::user()->roles()->first()->slug == 'student')
+            @if(Auth::user()->hasRole('student'))
                 <section class="plain">
                     <div class="container">
                         <h2 class="title-primary decorated">{!! __('default.pages.index.popular_courses') !!}</h2>
                         <div class="regular-carousel courses-carousel">
                             @foreach($popular_courses as $item)
-                                <a href="#" title="" class="card">
+                                <a href="/{{$lang}}/course-catalog/course/{{$item->id}}" title="" class="card">
                                     @if($item->quota_status == 2)
                                         <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
                                     @endif
@@ -302,7 +302,7 @@
                     <h2 class="title-primary decorated">{!! __('default.pages.index.popular_courses') !!}</h2>
                     <div class="regular-carousel courses-carousel">
                         @foreach($popular_courses as $item)
-                            <a href="#" title="" class="card">
+                            <a href="/{{$lang}}/course-catalog/course/{{$item->id}}" title="" class="card">
                                 @if($item->quota_status == 2)
                                     <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
                                 @endif
@@ -380,7 +380,6 @@
                     </div>
                 </div>
             </section>
-        @endguest
 
         <section class="blue">
             <div class="container">
@@ -392,8 +391,7 @@
                             labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                             laboris nisi ut aliquip ex ea commodo consequat.
                         </div>
-                        <a href="#" title="ХОЧУ СТАТЬ АВТОРОМ КУРСОВ!" class="ghost-btn ghost-btn--white">ХОЧУ СТАТЬ
-                            АВТОРОМ КУРСОВ!</a>
+                        <a href="/{{$lang}}/for-authors" title="{{__('default.pages.index.to_be_a_teacher')}}!" class="ghost-btn ghost-btn--white">{{__('default.pages.index.to_be_a_teacher')}}!</a>
                     </div>
                     <div class="col-sm-6">
                         <img src="/assets/img/authors-banner.svg" alt="">
@@ -401,7 +399,7 @@
                 </div>
             </div>
         </section>
-
+        @endguest
     </main>
 @endsection
 

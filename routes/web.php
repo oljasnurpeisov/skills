@@ -158,6 +158,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
     Route::group(['prefix' => '{lang}'], function () {
         Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
             Route::get("/", "PageController@index");
+
+            Route::get("/for-authors", "PageController@for_authors");
             // Курсы
             Route::get("/course-catalog", "CourseController@courseCatalog");
             Route::get("/course-catalog/course/{item}", "CourseController@courseView");
@@ -206,8 +208,11 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     // Профиль обучающегося
                     Route::get("/student-profile", "UserController@student_profile");
                     Route::post("/update_student_profile", "UserController@update_student_profile");
+                    // Сертификаты
+                    Route::get("/student/my-certificates", "UserController@myCertificates");
                     // Курсы
                     Route::get("/student/my-courses", "CourseController@studentCourses");
+                    Route::get("/student/get-certificate/course/{course}", "CourseController@getCertificate");
                     Route::post("/course-{course}/saveCourseRate", "CourseController@saveCourseRate");
                     // Урок
                     Route::get("/course-catalog/course/{course}/lesson-{lesson}", "LessonController@lessonView");

@@ -13,6 +13,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 
 class CourseController extends Controller
@@ -109,18 +110,18 @@ class CourseController extends Controller
         // Сортировка по Дате записи на курс
         if ($start_date_from and empty($start_date_to)) {
             $query->where('created_at', '>=', date('Y-m-d 00:00:00', strtotime($start_date_from)));
-        }else if ($start_date_to and empty($start_date_from)){
+        } else if ($start_date_to and empty($start_date_from)) {
             $query->where('created_at', '<=', date('Y-m-d 23:59:59', strtotime($start_date_to)));
-        }else if ($start_date_to and $start_date_from){
-            $query->whereBetween('created_at',  [date('Y-m-d 00:00:00', strtotime($start_date_from)), date('Y-m-d 23:59:59', strtotime($start_date_to))]);
+        } else if ($start_date_to and $start_date_from) {
+            $query->whereBetween('created_at', [date('Y-m-d 00:00:00', strtotime($start_date_from)), date('Y-m-d 23:59:59', strtotime($start_date_to))]);
         }
         // Сортировка по Дате окончания курса
         if ($finish_date_to and empty($start_date_to)) {
             $query->where('updated_at', '>=', date('Y-m-d 00:00:00', strtotime($finish_date_from)))->where('is_finished', '=', true);
-        }else if ($finish_date_to and empty($finish_date_from)){
+        } else if ($finish_date_to and empty($finish_date_from)) {
             $query->where('updated_at', '<=', date('Y-m-d 23:59:59', strtotime($finish_date_to)))->where('is_finished', '=', true);
-        }else if ($finish_date_to and $finish_date_from){
-            $query->whereBetween('updated_at',  [date('Y-m-d 00:00:00', strtotime($finish_date_from)), date('Y-m-d 23:59:59', strtotime($finish_date_to))])->where('is_finished', '=', true);
+        } else if ($finish_date_to and $finish_date_from) {
+            $query->whereBetween('updated_at', [date('Y-m-d 00:00:00', strtotime($finish_date_from)), date('Y-m-d 23:59:59', strtotime($finish_date_to))])->where('is_finished', '=', true);
         }
 
         $items = $query->paginate();
@@ -149,5 +150,28 @@ class CourseController extends Controller
             "start_date_from" => $start_date_from,
             "start_date_to" => $start_date_to,
         ]);
+    }
+
+    public function getCertificate($lang, Course $course)
+    {
+        $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)
+            ->where('course_id', '=', $course->id)->first();
+        if ($student_course->is_finished == true) {
+            $data = [
+                'author_name' => $course->user->author_info->name . ' ' . $course->user->author_info->surname,
+                'student_name' => Auth::user()->student_info->name,
+                'duration' => $course->lessons->sum('duration'),
+                'course_name' => $course->name,
+                'skills' => $course->skills,
+                'certificate_id' => 1,
+                'date_of_issue' => $student_course,
+            ];
+            $pdf = PDF::loadView('app.pages.page.pdf.certificate', ['data' => $data]);
+            $pdf = $pdf->setPaper('a4', 'portrait');
+            return $pdf->stream();
+        } else {
+            return redirect()->back();
+        }
+
     }
 }

@@ -95,7 +95,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_profit')}} *</label>
-                                <textarea name="profit_desc" class="input-regular tinymce-text-here" required>
+                                <textarea name="profit_desc" class="input-regular tinymce-text-here" placeholder="{{__('default.pages.courses.course_profit_placeholder')}}" required>
                             {{$item->profit_desc}}
                         </textarea>
                             </div>
@@ -107,7 +107,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_desc')}} *</label>
-                                <textarea name="description" class="input-regular tinymce-text-here" required>
+                                <textarea name="description" class="input-regular tinymce-text-here" placeholder="{{__('default.pages.courses.course_description_placeholder')}}" required>
                             {{$item->description}}
                         </textarea>
                             </div>

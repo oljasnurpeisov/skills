@@ -270,6 +270,7 @@ return [
             'title' => 'Профиль',
             'have_quota' => 'Имеется квот',
             'my_certificates' => 'Мои сертификаты',
+            'download' => 'Скачать',
             'email_confirm_error' => 'Чтобы стать автором, подтвердите свой E-mail',
             'email_confirm_success' => 'Вы успешно подтвердили E-mail',
             'profile_activate_error' => 'У вас пока нет доступа к этому разделу, заполните информацию в профиле.',
@@ -418,7 +419,8 @@ return [
             'find_your_course' => '<span>Найдите</span><br/> Ваш курс',
             'popular_courses' => '<span>Популярные</span><br/> курсы',
             'popular_authors' => '<span>Популярные</span><br/> авторы',
-            'poor_vision_version' => 'Версия для слабовидящих'
+            'poor_vision_version' => 'Версия для слабовидящих',
+            'to_be_a_teacher' => 'ХОЧУ СТАТЬ АВТОРОМ КУРСОВ'
         ],
 
         'footer' => [
