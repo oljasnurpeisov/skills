@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.lessons.video_files')}}</label>
-                                    <div data-url="/ajax_upload_lesson_videos?_token={{ csrf_token() }}"
+                                    <div data-url="/"
                                          data-maxfiles="5"
                                          data-maxsize="50" data-acceptedfiles=".mp4" id="video"
                                          class="dropzone-default dropzone-multiple">
@@ -58,15 +58,12 @@
                                         <div class="dropzone-default__info">MP4
                                             • {{__('default.pages.courses.max_file_title')}} 50MB
                                         </div>
-                                        <a href="javascript:;"
-                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
-                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                         <div class="previews-container"></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.lessons.audio_files')}}</label>
-                                    <div data-url="/ajax_upload_lesson_audios?_token={{ csrf_token() }}"
+                                    <div data-url="/"
                                          data-maxfiles="5"
                                          data-maxsize="10" data-acceptedfiles=".mp3" id="audio"
                                          class="dropzone-default dropzone-multiple">
@@ -74,15 +71,12 @@
                                         <div class="dropzone-default__info">MP3
                                             • {{__('default.pages.courses.max_file_title')}} 10MB
                                         </div>
-                                        <a href="javascript:;"
-                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
-                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                         <div class="previews-container"></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.lessons.another_attachments')}}</label>
-                                    <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}"
+                                    <div data-url="/"
                                          data-maxfiles="20"
                                          data-maxsize="20"
                                          data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg, .rar, .zip, .7z, .mp3, .mp4, .avi, .mov"
@@ -94,15 +88,11 @@
                                             ZIP, 7z, MP3, MP4, AVI, MOV • {{__('default.pages.courses.max_file_title')}}
                                             20 MB
                                         </div>
-                                        <a href="javascript:;"
-                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
-                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                         <div class="previews-container"></div>
                                     </div>
                                 </div>
                                 <div class="buttons">
-                                    <button type="submit"
-                                            class="btn">{{__('default.pages.lessons.send_answer_title')}}</button>
+                                    <button class="btn" disabled>{{__('default.pages.lessons.send_answer_title')}}</button>
                                     <a href="{{ url()->previous() }}"
                                        title="{{__('default.pages.courses.cancel_title')}}"
                                        class="ghost-btn">{{__('default.pages.courses.cancel_title')}}</a>

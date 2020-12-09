@@ -37,7 +37,7 @@
                             </div>
                             <div class="removable-items"></div>
                             <div class="text-right pull-up">
-                                <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn" data-duplicate="skillsInputTpl"><span
+                                <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn" data-duplicate="skillsInputTpl" data-maxcount="9"><span
                                             class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span class="btn-icon small icon-plus"> </span></a>
                             </div>
                             <div class="form-group">

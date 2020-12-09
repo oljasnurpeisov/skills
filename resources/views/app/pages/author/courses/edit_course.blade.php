@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                             <div class="text-right pull-up">
-                                <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"
+                                <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn" data-maxcount="9"
                                    data-duplicate="skillsInputTpl"><span
                                             class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
                                             class="btn-icon small icon-plus"> </span></a>

@@ -66,8 +66,7 @@
 
                         </div>
                         <div class="buttons">
-                            <button type="submit"
-                                    class="btn">{{__('default.pages.lessons.done_test_btn')}}</button>
+                            <button disabled class="btn">{{__('default.pages.lessons.done_test_btn')}}</button>
                             <a href="{{ url()->previous() }}"
                                title="{{__('default.pages.courses.cancel_title')}}"
                                class="ghost-btn">{{__('default.pages.courses.cancel_title')}}</a>
@@ -153,7 +152,7 @@
                                         @foreach(json_decode($lesson->lesson_attachment->videos_link) as $video_link)
                                             @if($video_link !== null)
                                                 @php
-                                                     = \App\Extensions\YoutubeParse::parseYoutube($video_link);
+                                                    $video_id = \App\Extensions\YoutubeParse::parseYoutube($video_link);
                                                 @endphp
                                                 <div class="video-wrapper">
                                                     <iframe width="560" height="315"
