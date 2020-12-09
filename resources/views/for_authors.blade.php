@@ -180,9 +180,7 @@
                     <div class="col-sm-6">
                         <h2 class="title-primary decorated"><span>Станьте</span><br/> автором курсов</h2>
                         <div class="plain-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut aliquip ex ea commodo consequat.
+                            {{__('default.pages.index.to_be_author_description')}}
                         </div>
                         @auth
                             @if(Auth::user()->hasRole('author'))

@@ -269,8 +269,7 @@
                                     @foreach(json_decode($item->attachments->videos_link) as $video_link)
                                         @if(!empty($video_link))
                                             @php
-                                                $video_id = explode("?v=", $video_link);
-                                                $video_id = $video_id[1];
+                                                $video_id = \App\Extensions\YoutubeParse::parseYoutube($video_link);
                                             @endphp
                                             <div class="video-wrapper">
                                                 <iframe width="560" height="315"
@@ -286,8 +285,7 @@
                                     @foreach(json_decode($item->attachments->videos_poor_vision_link) as $video_link)
                                         @if(!empty($video_link))
                                             @php
-                                                $video_id = explode("?v=", $video_link);
-                                                $video_id = $video_id[1];
+                                                $video_id = \App\Extensions\YoutubeParse::parseYoutube($video_link);
                                             @endphp
                                             <div class="video-wrapper">
                                                 <iframe width="560" height="315"

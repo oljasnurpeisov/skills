@@ -89,8 +89,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.lessons.theory_title')}} *</label>
-                                <textarea name="theory" class="input-regular tinymce-text-here" required>
+                                <label class="form-group__label">{{__('default.pages.lessons.theory_title')}}</label>
+                                <textarea name="theory" class="input-regular tinymce-text-here">
                             {{ old('theory') ?? $item->theory}}
                         </textarea>
                             </div>

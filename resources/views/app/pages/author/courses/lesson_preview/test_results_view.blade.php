@@ -127,8 +127,7 @@
                                                 @foreach(json_decode($lesson->lesson_attachment->videos_link) as $video_link)
                                                     @if($video_link !== null)
                                                         @php
-                                                            $video_id = explode("?v=", $video_link);
-                                                            $video_id = $video_id[1];
+                                                            $video_id = \App\Extensions\YoutubeParse::parseYoutube($video_link);
                                                         @endphp
                                                         <div class="video-wrapper">
                                                             <iframe width="560" height="315"
@@ -188,8 +187,7 @@
                                                 @foreach(json_decode($lesson->lesson_attachment->videos_poor_vision_link) as $video_link)
                                                     @if($video_link !== null)
                                                         @php
-                                                            $video_id = explode("?v=", $video_link);
-                                                            $video_id = $video_id[1] ?? null;
+                                                            $video_id = \App\Extensions\YoutubeParse::parseYoutube($video_link);
                                                         @endphp
                                                         <div class="video-wrapper">
                                                             <iframe width="560" height="315"
