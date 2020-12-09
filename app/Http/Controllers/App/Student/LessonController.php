@@ -103,7 +103,7 @@ class LessonController extends Controller
                             $coursework = $course->lessons()->where('type', '=', 3)->first();
                             if ($coursework) {
                                 // Если есть курсовая и она завершена, дать доступ
-                                if ($coursework->lesson_student->is_finished == true) {
+                                if (!empty($coursework->lesson_student->is_finished) == true) {
                                     $this->syncUserLessons($lesson->id);
                                     // Если есть курсовая, но она не завершена, вернуть обратно
                                 } else {
@@ -123,7 +123,36 @@ class LessonController extends Controller
                 }
                 // Если все уроки доступны сразу
             } else {
-                $this->syncUserLessons($lesson->id);
+                // Проверить завершенность уроков
+                $all_course_lessons = $course->lessons()->whereNotIn('type', [3, 4])->pluck('id')->toArray();
+                $finished_lessons = Auth::user()->student_lesson()->where('course_id', '=', $course->id)->where('is_finished', '=', true)->pluck('lesson_id')->toArray();
+                switch ($lesson->type){
+                    case (3):
+                        if (array_diff($all_course_lessons, $finished_lessons) == []) {
+                            $this->syncUserLessons($lesson->id);
+                        }else{
+                            return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
+                        }
+                        break;
+                    case (4):
+                        $coursework = $course->lessons()->where('type', '=', 3)->first();
+                        if ($coursework) {
+                            // Если есть курсовая и она завершена, дать доступ
+                            if (!empty($coursework->lesson_student->is_finished) == true) {
+                                $this->syncUserLessons($lesson->id);
+                                // Если есть курсовая, но она не завершена, вернуть обратно
+                            } else {
+                                return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
+                            }
+                            // Если есть курсовой нет, то дать доступ
+                        } else {
+                            $this->syncUserLessons($lesson->id);
+                        }
+                        break;
+                    default:
+                        $this->syncUserLessons($lesson->id);
+                        break;
+                }
 
                 return $return_view;
             }
@@ -402,7 +431,9 @@ class LessonController extends Controller
             $student_course->is_finished = true;
             $student_course->save();
 
-            if (empty(Auth::user()->certificates)) {
+            $user_certificate = StudentCertificate::where('user_id', '=', Auth::user()->id)
+                ->where('course_id', '=', $course->id)->first();
+            if (empty($user_certificate)) {
                 $this->saveCertificates($course, $student_course);
             }
 

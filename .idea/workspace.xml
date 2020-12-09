@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- disable test and coursework for admin and author&#10;- update add course skills count&#10;- add kk localization to chart">
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/LessonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/LessonController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/for_authors.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/for_authors.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -267,14 +269,7 @@
       <workItem from="1606903355593" duration="54408000" />
       <workItem from="1607138985469" duration="27304000" />
       <workItem from="1607315990507" duration="28308000" />
-      <workItem from="1607398911426" duration="53053000" />
-    </task>
-    <task id="LOCAL-00066" summary="- add homework and coursework preview">
-      <created>1606728955332</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1606728955333</updated>
+      <workItem from="1607398911426" duration="55426000" />
     </task>
     <task id="LOCAL-00067" summary="- add test preview on admin page">
       <created>1606731124174</created>
@@ -612,7 +607,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607497432412</updated>
     </task>
-    <option name="localTasksCounter" value="115" />
+    <task id="LOCAL-00115" summary="- minor fix">
+      <created>1607498506234</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1607498506234</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="TodoView">
@@ -645,7 +647,6 @@
     <MESSAGE value="- add for authors page" />
     <MESSAGE value="- add certificates generate" />
     <MESSAGE value="- add certificate page" />
-    <MESSAGE value="- minor fix" />
     <MESSAGE value="- update admin panel" />
     <MESSAGE value="- update payment description&#10;- show popular courses and authors for authors" />
     <MESSAGE value="- update redirect auth&#10;- update files description" />
@@ -653,7 +654,8 @@
     <MESSAGE value="- update users in admin panel" />
     <MESSAGE value="- add youtube parser&#10;- update information for authors" />
     <MESSAGE value="- disable test and coursework for admin and author&#10;- update add course skills count&#10;- add kk localization to chart" />
-    <option name="LAST_COMMIT_MESSAGE" value="- disable test and coursework for admin and author&#10;- update add course skills count&#10;- add kk localization to chart" />
+    <MESSAGE value="- minor fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="- minor fix" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -677,11 +679,11 @@
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1607409992424" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1607497470146">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1607498504891">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1607497470146" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1607498504891" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

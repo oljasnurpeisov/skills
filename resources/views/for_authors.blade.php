@@ -205,6 +205,7 @@
 
     </main>
 
+    @auth
     <div id="authorRegistration1" style="display:none;" class="modal-form">
         <h4 class="title-primary text-center">{{__('default.pages.auth.author_register')}}</h4>
         <form action="/{{$lang}}/register" method="POST" enctype="multipart/form-data">
@@ -301,6 +302,7 @@
             </div>
         </form>
     </div>
+    @endauth
 @endsection
 
 @section('scripts')
