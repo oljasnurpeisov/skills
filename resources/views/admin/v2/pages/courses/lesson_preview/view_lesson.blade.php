@@ -2,7 +2,8 @@
 
 @section('content')
     <div class="container">
-        <div><a href="javascript:history.back();" title="{{__('admin.pages.courses.back_title')}}" class="link">{{__('admin.pages.courses.back_title')}}</a></div>
+        <div><a href="javascript:history.back();" title="{{__('admin.pages.courses.back_title')}}"
+                class="link">{{__('admin.pages.courses.back_title')}}</a></div>
         <br/>
         <div class="row row--multiline">
             <div class="col-md-8">
@@ -69,7 +70,7 @@
                                         </div>
                                         <div class="sidebar-item__body">
                                             <select name="fontFamily" class="selectize-regular custom"
-                                                    placeholder="Выберите шрифт">
+                                                    placeholder="{{__('default.pages.lessons.choose_font')}}">
                                                 <option value="">{{__('default.pages.lessons.default_title')}}</option>
                                                 <option value="Arial, sans-serif">Arial</option>
                                                 <option value="Times New Roman, sans-serif">Times New Roman
@@ -105,17 +106,19 @@
                                 <div class="sidebar-item__body">
                                     @if(!empty($lesson->lesson_attachment->videos_link))
                                         @foreach(json_decode($lesson->lesson_attachment->videos_link) as $video_link)
-                                            @php
-                                                $video_id = explode("?v=", $video_link);
-                                                $video_id = $video_id[1];
-                                            @endphp
-                                            <div class="video-wrapper">
-                                                <iframe width="560" height="315"
-                                                        src="https://www.youtube.com/embed/{{$video_id}}"
-                                                        frameborder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                        allowfullscreen></iframe>
-                                            </div>
+                                            @if($video_link !== null)
+                                                @php
+                                                    $video_id = explode("?v=", $video_link);
+                                                    $video_id = $video_id[1];
+                                                @endphp
+                                                <div class="video-wrapper">
+                                                    <iframe width="560" height="315"
+                                                            src="https://www.youtube.com/embed/{{$video_id}}"
+                                                            frameborder="0"
+                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                            allowfullscreen></iframe>
+                                                </div>
+                                            @endif
                                         @endforeach
                                     @endif
                                     @if(!empty($lesson->lesson_attachment->videos))

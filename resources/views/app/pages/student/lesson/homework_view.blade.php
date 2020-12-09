@@ -60,7 +60,7 @@
                                               required>{{old('answer')}}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.courses.video_local')}}</label>
+                                    <label class="form-group__label">{{__('default.pages.lessons.video_files')}}</label>
                                     <div data-url="/ajax_upload_lesson_videos?_token={{ csrf_token() }}"
                                          data-maxfiles="5"
                                          data-maxsize="50" data-acceptedfiles=".mp4" id="video"
@@ -76,7 +76,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.lessons.lesson_audio')}}</label>
+                                    <label class="form-group__label">{{__('default.pages.lessons.audio_files')}}</label>
                                     <div data-url="/ajax_upload_lesson_audios?_token={{ csrf_token() }}"
                                          data-maxfiles="5"
                                          data-maxsize="10" data-acceptedfiles=".mp3" id="audio"
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments')}} @if($lesson->type == 3)
+                                    <label class="form-group__label">{{__('default.pages.lessons.another_attachments')}} @if($lesson->type == 3)
                                             *@endif</label>
                                     <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}"
                                          data-maxfiles="20"
@@ -172,7 +172,7 @@
                                                 </div>
                                                 <div class="sidebar-item__body">
                                                     <select name="fontFamily" class="selectize-regular custom"
-                                                            placeholder="Выберите шрифт">
+                                                            placeholder="{{__('default.pages.lessons.choose_font')}}">
                                                         <option value="">{{__('default.pages.lessons.default_title')}}</option>
                                                         <option value="Arial, sans-serif">Arial</option>
                                                         <option value="Times New Roman, sans-serif">Times New Roman

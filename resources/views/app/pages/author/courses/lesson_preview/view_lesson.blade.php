@@ -120,7 +120,7 @@
                                                 </div>
                                                 <div class="sidebar-item__body">
                                                     <select name="fontFamily" class="selectize-regular custom"
-                                                            placeholder="Выберите шрифт">
+                                                            placeholder="{{__('default.pages.lessons.choose_font')}}">
                                                         <option value="">{{__('default.pages.lessons.default_title')}}</option>
                                                         <option value="Arial, sans-serif">Arial</option>
                                                         <option value="Times New Roman, sans-serif">Times New Roman

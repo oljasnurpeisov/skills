@@ -39,8 +39,19 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
 
-        $this->redirectTo = '/' . app()->getLocale() . '/profile-author-information';
+//        $this->redirectTo = '/' . app()->getLocale() . '/profile-author-information';
 
+    }
+
+    public function redirectTo(){
+
+        if (Auth::user()->hasRole('admin')){
+            return '/'.app()->getLocale().'/admin';
+        }else if (Auth::user()->hasRole('author')){
+            return '/' . app()->getLocale() . '/profile-author-information';
+        }else{
+            return '/';
+        }
     }
 
     protected function validateLogin(Request $request)
