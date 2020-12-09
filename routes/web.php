@@ -158,6 +158,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
         Route::post('/ajax_upload_lesson_audios', 'AjaxUploadController@ajaxUploadLessonAudios');
         // Сохранение других материалов урока
         Route::post('/ajax_upload_lesson_another_files', 'AjaxUploadController@ajaxUploadLessonAnotherFiles');
+        Route::post('/ajax_upload_lesson_another_file', 'AjaxUploadController@ajaxUploadLessonAnotherFile');
 
     });
     //
