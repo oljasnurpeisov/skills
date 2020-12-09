@@ -83,7 +83,7 @@ class CourseController extends Controller
                 $item_attachments->videos_link = json_encode($request->videos_link);
 
                 // Ссылки на видео курса для слабовидящих
-                if ($request->videos_poor_vision_link){
+                if ($request->videos_poor_vision_link) {
                     $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
                 }
 
@@ -161,7 +161,7 @@ class CourseController extends Controller
             $item_attachments->videos_link = json_encode($request->videos_link);
 
             // Ссылки на видео курса для слабовидящих
-            if ($request->videos_poor_vision_link){
+            if ($request->videos_poor_vision_link) {
                 $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
             }
 
@@ -453,7 +453,7 @@ class CourseController extends Controller
         // Ссылки на видео курса
         $item_attachments->videos_link = $request->videos_link;
         // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link){
+        if ($request->videos_poor_vision_link) {
             $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
         }
 
@@ -667,7 +667,6 @@ class CourseController extends Controller
 
     public function statisticForChart()
     {
-
         $items = StudentCourse::whereHas('course', function ($q) {
             $q->where('courses.author_id', '=', Auth::user()->id);
         })->orderBy('created_at', 'asc')->where('paid_status', '!=', 0)->get()->groupBy(function ($val) {
@@ -687,6 +686,39 @@ class CourseController extends Controller
   "data": ' . json_encode($data) . '
 }';
         return json_decode($json, true);
+    }
+
+    public function statisticForChartDemo(Request $request)
+    {
+        $data = [
+//            'title1' => __('default.author.statistic_for_chart_all'),
+//            'title2' => __('default.author.statistic_for_chart_quote'),
+            'title1' => "Общий заработок",
+            'title2' => "Заработано по квотам",
+            'color1' => '#00C608',
+            'color2' => '#F2C94C',
+            'data' => [],
+        ];
+
+        $dFrom = $request->get("date_from", Carbon::now()->subDays(90)->format('Y-m-d'));
+        $dTo = $request->get("date_to", Carbon::now()->format('Y-m-d'));
+
+        $dFrom = strtotime($dFrom);
+        $dTo = strtotime($dTo);
+
+        $dFrom = Carbon::createFromTimestamp($dFrom);
+        $dTo = Carbon::createFromTimestamp($dTo);
+
+        while ($dFrom <= $dTo) {
+            $data['data'][] = [
+                'date' => $dFrom->format("Y-m-d\TH:i:s"),
+                'value1' => rand(0, 100),
+                'value2' => rand(0, 300),
+            ];
+            $dFrom = $dFrom->addDay();
+        }
+
+        return response()->json($data);
     }
 
     public function reportingCourse(Request $request)
