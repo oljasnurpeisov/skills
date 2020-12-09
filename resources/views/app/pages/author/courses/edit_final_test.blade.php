@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label class="form-group__label">{{__('default.pages.lessons.lesson_image')}} *</label>
+                                        <label class="form-group__label">{{__('default.pages.lessons.lesson_image')}}</label>
                                         <div class="avatar lesson-image dropzone-avatar" id="lessonCover"
                                              data-url="/ajax_upload_lesson_image?_token={{ csrf_token() }}" data-maxsize="1"
                                              data-acceptedfiles="image/*">
@@ -44,7 +44,7 @@
                                             </div>
                                             <div class="lesson-image__desc dropzone-default">
                                                 <input type="text" name="image" class="avatar-path"
-                                                       value="{{ old('image') ?? $item->image }}" required>
+                                                       value="{{ old('image') ?? $item->image }}">
                                                 @if($item->image)
                                                     <div class="previews-container">
                                                         <div class="dz-preview dz-image-preview">

@@ -56,17 +56,17 @@
                     <table class="report">
                         <thead>
                         <tr>
-                            <th style="min-width: 314px;">{{__('default.pages.reporting.course_name')}}</th>
-                            <th style="min-width: 314px;">{{__('default.pages.reporting.skills')}}</th>
-                            <th style="min-width: 314px;">{{__('default.pages.reporting.professions_group')}}</th>
-                            <th style="min-width: 314px;">{{__('default.pages.reporting.course_rate')}}</th>
-                            <th style="min-width: 314px;">{{__('default.pages.reporting.course_status')}}</th>
-                            <th style="min-width: 314px;">{{__('default.pages.reporting.is_quota')}}</th>
-                            <th style="min-width: 314px;">{{__('default.pages.reporting.is_paid')}}</th>
-                            <th style="min-width: 314px;">{{__('default.pages.reporting.course_cost')}}</th>
-                            <th style="min-width: 314px;">{{__('default.pages.reporting.course_members_count')}}</th>
-                            <th style="min-width: 314px;">{{__('default.pages.reporting.got_certificate_members_count')}}</th>
-                            <th style="min-width: 314px;">{{__('default.pages.reporting.confirmed_qualifications')}}</th>
+                            <th style="min-width: 200px;">{{__('default.pages.reporting.course_name')}}</th>
+                            <th style="min-width: 230px;">{{__('default.pages.reporting.skills')}}</th>
+                            <th style="min-width: 230px;">{{__('default.pages.reporting.professions_group')}}</th>
+                            <th style="min-width: 33px;">{{__('default.pages.reporting.course_rate')}}</th>
+                            <th style="min-width: 96px;">{{__('default.pages.reporting.course_status')}}</th>
+                            <th style="min-width: 33px;">{{__('default.pages.reporting.is_quota')}}</th>
+                            <th style="min-width: 77px;">{{__('default.pages.reporting.is_paid')}}</th>
+                            <th style="min-width: 96px;">{{__('default.pages.reporting.course_cost')}}</th>
+                            <th style="min-width: 33px;">{{__('default.pages.reporting.course_members_count')}}</th>
+                            <th style="min-width: 33px;">{{__('default.pages.reporting.got_certificate_members_count')}}</th>
+                            <th style="min-width: 33px;">{{__('default.pages.reporting.confirmed_qualifications')}}</th>
                         </tr>
                         </thead>
                         <tbody>

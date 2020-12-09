@@ -38,8 +38,7 @@ class LessonController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:255',
-            'duration' => 'required|numeric|gt:0',
-            'image' => 'required'
+            'duration' => 'required|numeric|gt:0'
         ]);
 
         $last_id = Lesson::whereHas('themes', function ($q) use ($theme) {
@@ -198,8 +197,7 @@ class LessonController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:255',
-            'duration' => 'required|numeric|gt:0',
-            'image' => 'required'
+            'duration' => 'required|numeric|gt:0'
         ]);
 
         $item->name = $request->name;
@@ -376,8 +374,7 @@ class LessonController extends Controller
     public function storeCoursework($lang, Request $request, Course $course)
     {
         $this->validate($request, [
-            'duration' => 'required|numeric|gt:0',
-            'image' => 'required'
+            'duration' => 'required|numeric|gt:0'
         ]);
 
         $item = new Lesson;
@@ -467,8 +464,7 @@ class LessonController extends Controller
     public function updateCoursework($lang, Request $request, Course $course)
     {
         $this->validate($request, [
-            'duration' => 'required|numeric|gt:0',
-            'image' => 'required'
+            'duration' => 'required|numeric|gt:0'
         ]);
 
         $item = Lesson::where('course_id', '=', $course->id)->where('type', '=', 3)->first();
@@ -576,8 +572,7 @@ class LessonController extends Controller
     public function storeFinalTest($lang, Request $request, Course $course)
     {
         $this->validate($request, [
-            'duration' => 'required|numeric|gt:0',
-            'image' => 'required'
+            'duration' => 'required|numeric|gt:0'
         ]);
 
         $item = new Lesson;
@@ -694,8 +689,7 @@ class LessonController extends Controller
     {
 
         $this->validate($request, [
-            'duration' => 'required|numeric|gt:0',
-            'image' => 'required'
+            'duration' => 'required|numeric|gt:0'
         ]);
 
         $item = Lesson::where('course_id', '=', $course->id)->where('type', '=', 4)->first();
