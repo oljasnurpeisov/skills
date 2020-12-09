@@ -15,7 +15,7 @@
                             <a href="/{{$lang}}/profile-author-information" title="Стать автором" class="btn">Стать
                                 автором</a>
                         @else
-                            <a href="#authorRegistration" data-fancybox="" title="Стать автором" class="btn">Стать
+                            <a href="#authorRegistration1" data-fancybox="" title="Стать автором" class="btn">Стать
                                 автором</a>
                         @endif
                     @endauth
@@ -110,7 +110,7 @@
                                class="btn">Стать
                                 автором</a>
                         @else
-                            <a href="#authorRegistration" data-fancybox="" title="Стать автором" class="btn">Стать
+                            <a href="#authorRegistration1" data-fancybox="" title="Стать автором" class="btn">Стать
                                 автором</a>
                         @endif
                     @endauth
@@ -187,7 +187,7 @@
                                 <a href="/{{$lang}}/profile-author-information" title="Стать автором"
                                    class="ghost-btn ghost-btn--white">Стать автором</a>
                             @else
-                                <a href="#authorRegistration" data-fancybox="" title="Стать автором"
+                                <a href="#authorRegistration1" data-fancybox="" title="Стать автором"
                                    class="ghost-btn ghost-btn--white">Стать автором</a>
                             @endif
                         @endauth
@@ -205,7 +205,7 @@
 
     </main>
 
-    <div id="authorRegistration" style="display:none;" class="modal-form">
+    <div id="authorRegistration1" style="display:none;" class="modal-form">
         <h4 class="title-primary text-center">{{__('default.pages.auth.author_register')}}</h4>
         <form action="/{{$lang}}/register" method="POST" enctype="multipart/form-data">
             @csrf
