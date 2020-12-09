@@ -23,6 +23,8 @@ class RoleController extends Controller
 {
     public function index(Request $request)
     {
+        $main_roles = ['admin', 'author', 'student', 'tech_support'];
+
         $term = $request->term ? $request->term : '';
 
         $query = Role::orderBy('id', 'desc');
@@ -34,6 +36,7 @@ class RoleController extends Controller
         return view('admin.v2.pages.roles.index', [
             'items' => $items,
             'term' => $term,
+            'main_roles' => $main_roles
         ]);
     }
 

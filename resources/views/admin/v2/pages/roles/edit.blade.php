@@ -25,16 +25,17 @@
                         <span class="help-block"><strong>{{ $errors->first('name') }}</strong></span>
                     @endif
                 </div>
-
-                <div class="input-group {{ $errors->has('slug') ? ' has-error' : '' }}">
-                    <label class="input-group__title">{{ __('admin.pages.role.slug') }} *</label>
-                    <input type="text" name="slug" value="{{ $item->slug }}"
-                           placeholder="{{ __('admin.labels.fill_field',['field' => __('admin.pages.role.slug')]) }}"
-                           class="input-regular" required>
-                    @if ($errors->has('slug'))
-                        <span class="help-block"><strong>{{ $errors->first('slug') }}</strong></span>
-                    @endif
-                </div>
+                @if (!in_array($item->slug, $main_roles))
+                    <div class="input-group {{ $errors->has('slug') ? ' has-error' : '' }}">
+                        <label class="input-group__title">{{ __('admin.pages.role.slug') }} *</label>
+                        <input type="text" name="slug" value="{{ $item->slug }}"
+                               placeholder="{{ __('admin.labels.fill_field',['field' => __('admin.pages.role.slug')]) }}"
+                               class="input-regular" required>
+                        @if ($errors->has('slug'))
+                            <span class="help-block"><strong>{{ $errors->first('slug') }}</strong></span>
+                        @endif
+                    </div>
+                @endif
                 <div class="input-group {{ $errors->has('description') ? 'has-error' : '' }}">
                     <label for="description"
                            class="input-group__title">{{ __('admin.pages.role.description') }}</label>

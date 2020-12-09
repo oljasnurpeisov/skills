@@ -71,7 +71,7 @@
                                 <div class="action-buttons">
                                     <a href="/{{$lang}}/admin/role/{{$item->id}}" title="{{ __('admin.labels.edit') }}"
                                        class="icon-btn icon-btn--yellow icon-edit"></a>
-                                    @if($item->id != 1 and $item->id != 3 and $item->id != 4)
+                                    @if(!in_array($item->slug, $main_roles))
                                         <a href="/{{$lang}}/admin/role/{{ $item->id }}"
                                            title="{{ __('admin.pages.deleting.submit') }}"
                                            class="icon-btn icon-btn--pink icon-delete"></a>
