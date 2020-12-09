@@ -703,11 +703,23 @@ class CourseController extends Controller
         $dFrom = $request->get("date_from", Carbon::now()->subDays(90)->format('Y-m-d'));
         $dTo = $request->get("date_to", Carbon::now()->format('Y-m-d'));
 
-        $dFrom = strtotime($dFrom);
-        $dTo = strtotime($dTo);
-
-        $dFrom = Carbon::createFromTimestamp($dFrom);
-        $dTo = Carbon::createFromTimestamp($dTo);
+        if ($dFrom === null && $dTo === null) {
+            $dFrom = Carbon::now()->subDays(90);
+            $dTo = Carbon::now();
+        } elseif ($dFrom === null) {
+            $time = strtotime($dTo);
+            $dFrom = Carbon::createFromTimestamp($time)->subDays(90);
+            $dTo = Carbon::createFromTimestamp($time);
+        } elseif ($dTo === null) {
+            $dFrom = strtotime($dFrom);
+            $dFrom = Carbon::createFromTimestamp($dFrom);
+            $dTo = Carbon::now();
+        } else {
+            $dFrom = strtotime($dFrom);
+            $dFrom = Carbon::createFromTimestamp($dFrom);
+            $dTo = strtotime($dTo);
+            $dTo = Carbon::createFromTimestamp($dTo);
+        }
 
         while ($dFrom <= $dTo) {
             $data['data'][] = [
