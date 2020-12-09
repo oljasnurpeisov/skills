@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/LessonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/LessonController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/for_authors.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/for_authors.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,14 +269,7 @@
       <workItem from="1606903355593" duration="54408000" />
       <workItem from="1607138985469" duration="27304000" />
       <workItem from="1607315990507" duration="28308000" />
-      <workItem from="1607398911426" duration="55426000" />
-    </task>
-    <task id="LOCAL-00067" summary="- add test preview on admin page">
-      <created>1606731124174</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1606731124199</updated>
+      <workItem from="1607398911426" duration="56341000" />
     </task>
     <task id="LOCAL-00068" summary="- minor fix">
       <created>1606731449304</created>
@@ -614,7 +607,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607498506234</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="- fix lesson access">
+      <created>1607501963054</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1607501963055</updated>
+    </task>
+    <option name="localTasksCounter" value="117" />
     <servers />
   </component>
   <component name="TodoView">
@@ -630,7 +630,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- update lesson access logic" />
     <MESSAGE value="- fix next lesson logic" />
     <MESSAGE value="- add coursework student lesson&#10;- update ide-helper models&#10;- minor fix" />
     <MESSAGE value="- add test student lesson&#10;- add guest user catalog and course view&#10;- add write to author" />
@@ -655,7 +654,8 @@
     <MESSAGE value="- add youtube parser&#10;- update information for authors" />
     <MESSAGE value="- disable test and coursework for admin and author&#10;- update add course skills count&#10;- add kk localization to chart" />
     <MESSAGE value="- minor fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="- minor fix" />
+    <MESSAGE value="- fix lesson access" />
+    <option name="LAST_COMMIT_MESSAGE" value="- fix lesson access" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -679,11 +679,11 @@
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1607409992424" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1607498504891">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1607501959585">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1607498504891" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1607501959585" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -696,11 +696,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605559122928" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1607497473653">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1607501965814">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995349134" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1607497473653" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1607501965814" />
     <state x="572" y="146" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1605561054285">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

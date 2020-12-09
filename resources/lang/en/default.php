@@ -61,6 +61,7 @@ return [
             'sort_by_cost_low' => 'Стоимость - по возрастанию',
             'sort_by_cost_high' => 'Стоимость - по убыванию',
             'publish_request_message' => 'Курс направлен на рассмотрение модератору',
+            'publish_failed_message' => 'Курс должен содержать Курсовую работу или Финальное тестирование',
             'delete_request_message' => 'Курс был успешно удален',
             'reestablish_request_message' => 'Курс был успешно восстановлен',
             'create_request_message' => 'Курс успешно создан',
