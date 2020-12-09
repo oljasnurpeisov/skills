@@ -185,6 +185,9 @@ return [
 
             'pay_for_course' => 'Оплата за курс',
 
+            'show_all' => 'Показать все',
+            'hide' => 'Скрыть',
+
         ],
         'lessons' => [
             'create_request_message' => 'Урок успешно создан',
