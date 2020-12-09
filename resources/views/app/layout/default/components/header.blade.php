@@ -24,7 +24,12 @@
                 @endif
             </ul>
             <div class="buttons-group">
-                <!--<a href="#" title="Помощь" class="ghost-btn ghost-btn&#45;&#45;blue small">Помощь</a>-->
+                <form class="input-search" action="/{{$lang}}/course-catalog?search=">
+                    <i class="icon-search"> </i>
+                    <input type="text" name="search" placeholder="{{__('default.pages.index.search_placeholder')}}">
+                    <button type="submit" class="btn-icon small icon-chevron-right"></button>
+                </form>
+
                 <div class="header-dropdown notifications">
                     <div class="header-dropdown__title">
                         <a href="#" title="{{__('notifications.title')}}"
@@ -89,7 +94,7 @@
                         @if(Auth::user()->hasRole('author'))
                             <div class="name">{{Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname}}</div>
                         @elseif(Auth::user()->hasRole('student'))
-                                                    <div class="name">{{Auth::user()->student_info->name}}</div>
+                            <div class="name">{{Auth::user()->student_info->name}}</div>
                             <div class="quotas">{{__('default.pages.profile.have_quota')}}
                                 : {{Auth::user()->student_info->quota_count}}</div>
                         @endif
@@ -119,9 +124,9 @@
                                 </li>
                             @endif
                             @if(Auth::user()->hasRole('student'))
-                                    <li><a href="/{{$lang}}/student/my-certificates"
-                                           title="{{__('default.pages.profile.my_certificates')}}">{{__('default.pages.profile.my_certificates')}}</a>
-                                    </li>
+                                <li><a href="/{{$lang}}/student/my-certificates"
+                                       title="{{__('default.pages.profile.my_certificates')}}">{{__('default.pages.profile.my_certificates')}}</a>
+                                </li>
                             @endif
                             <li><a href="/{{$lang}}/dialogs"
                                    title="{{__('default.pages.dialogs.title')}}">{{__('default.pages.dialogs.title')}}</a>
@@ -176,7 +181,8 @@
                         </ul>
                     </div>
                 </div>
-                <a href="#" class="bvi-open bvi-btn" title="{{__('default.pages.index.poor_vision_version')}}"><img src="/assets/img/eye.svg" alt=""></a>
+                <a href="#" class="bvi-open bvi-btn" title="{{__('default.pages.index.poor_vision_version')}}"><img
+                            src="/assets/img/eye.svg" alt=""></a>
             </div>
             <div class="mobile-buttons">
                 <div class="notifications-btn mob-overlay-btn" data-target="notifications-mobile">
@@ -191,7 +197,7 @@
 
     <div class="mob-overlay header-mobile" id="header-mobile">
         <div class="mob-overlay__top">
-            <a href="#" title="Закрыть" class="mob-overlay__close icon-close"> </a>
+            <a href="#" title="{{__('default.pages.courses.close_title')}}" class="mob-overlay__close icon-close"> </a>
         </div>
         <div class="mob-overlay__body">
             <div class="mob-overlay__inner">
@@ -203,6 +209,13 @@
                         <img src="{{Auth::user()->student_info->getAvatar()}}" alt="">
                         <div class="name"></div>
                     @endif
+                </div>
+                <div class="mob-overlay__group">
+                    <form class="input-search" action="/{{$lang}}/course-catalog?search=">
+                        <i class="icon-search"> </i>
+                        <input type="text" name="search" placeholder="{{__('default.pages.index.search_placeholder')}}">
+                        <button type="submit" class="btn-icon small icon-chevron-right"></button>
+                    </form>
                 </div>
                 <hr>
                 <ul class="header-mobile__menu">
@@ -244,7 +257,6 @@
                     </li>
                 </ul>
                 <hr>
-                <a href="#" title="Помощь" class="ghost-btn ghost-btn--blue">Помощь</a>
                 <ul class="mob-language">
                     <li><a href="/kk{{ $uri }}" title="KZ">KZ</a></li>
                     <li><a href="/ru{{ $uri }}" title="RU">RU</a></li>
@@ -266,7 +278,7 @@
                     <input type="text" name="search" placeholder="{{__('default.pages.index.search_placeholder')}}">
                     <button type="submit" class="btn-icon small icon-chevron-right"></button>
                 </form>
-                <!--<a href="#" title="Помощь" class="ghost-btn ghost-btn&#45;&#45;blue small">Помощь</a>-->
+
                 <a href="#authorization" data-fancybox title="{{__('default.pages.auth.auth_title')}}"
                    class="btn small">{{__('default.pages.auth.auth_title')}}</a>
                 <div class="header-dropdown language">
@@ -303,7 +315,8 @@
                         </ul>
                     </div>
                 </div>
-                <a href="#" class="bvi-open bvi-btn" title="{{__('default.pages.index.poor_vision_version')}}"><img src="/assets/img/eye.svg" alt=""></a>
+                <a href="#" class="bvi-open bvi-btn" title="{{__('default.pages.index.poor_vision_version')}}"><img
+                            src="/assets/img/eye.svg" alt=""></a>
             </div>
             <div class="mobile-buttons">
                 <div class="menu-btn mob-overlay-btn" data-target="header-mobile">
@@ -322,14 +335,13 @@
                 <div class="mob-overlay__group">
                     <a href="#authorization" data-fancybox title="{{__('default.pages.auth.auth_title')}}"
                        class="btn">{{__('default.pages.auth.auth_title')}}</a>
-                    <form class="input-search">
+                    <form class="input-search" action="/{{$lang}}/course-catalog?search=">
                         <i class="icon-search"> </i>
-                        <input type="text" name="search" placeholder="Поиск">
+                        <input type="text" name="search" placeholder="{{__('default.pages.index.search_placeholder')}}">
                         <button type="submit" class="btn-icon small icon-chevron-right"></button>
                     </form>
                 </div>
                 <hr>
-                <a href="#" title="Помощь" class="ghost-btn ghost-btn--blue">Помощь</a>
                 <ul class="mob-language">
                     <li><a href="/kk{{ $uri }}" title="KZ">KZ</a></li>
                     <li><a href="/ru{{ $uri }}" title="RU">RU</a></li>

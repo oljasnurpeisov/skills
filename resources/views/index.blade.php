@@ -210,194 +210,107 @@
             </div>
         </section>
 
-        @auth
-            <section class="plain">
-                <div class="container">
-                    <h2 class="title-primary decorated">{!! __('default.pages.index.popular_courses') !!}</h2>
-                    <div class="regular-carousel courses-carousel">
-                        @foreach($popular_courses as $item)
-                            <a href="/{{$lang}}/course-catalog/course/{{$item->id}}" title="" class="card">
-                                @if($item->quota_status == 2)
-                                    <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
-                                @endif
-                                <div class="card__image">
-                                    <img src="{{$item->image}}" alt="">
-                                </div>
-                                <div class="card__desc">
-                                    <div class="card__top">
-                                        @if($item->is_paid == true)
-                                            <div class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
-                                        @else
-                                            <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
-                                        @endif
-                                        <h3 class="card__title">{{$item->name}}</h3>
-                                        <div class="card__author">{{$item->user->company_name}}</div>
-                                    </div>
-                                    <div class="card__bottom">
-                                        <div class="card__attribute">
-                                            <i class="icon-user"> </i><span>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</span>
-                                        </div>
-                                        <div class="card__attribute">
-                                            <i class="icon-star-full"> </i><span>{{$item->rate->pluck('rate')->avg() ?? 0}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                </div>
-            </section>
-
-            <section class="plain big-padding">
-                <div class="container">
-                    <h2 class="title-primary decorated">{!! __('default.pages.index.popular_authors') !!}</h2>
-                    <div class="regular-carousel courses-carousel">
-                        @foreach($popular_authors as $author)
-                            <a href="/{{$lang}}/course-catalog?authors[]={{$author->id}}" title="" class="card">
-                                <div class="card__image card__author-image">
-                                    <img src="{{$author->author_info->getAvatar()}}" alt="">
-                                </div>
-                                <div class="card__desc">
-                                    <div class="card__top">
-                                        <h3 class="card__title">{{$author->author_info->name . ' ' . $author->author_info->surname}}</h3>
-                                        <div class="card__stats">
-                                            <span>{{$author->rates ?? 0}}</span> {{__('default.pages.profile.rates_count_title')}}
-                                            <br/>
-                                            <span>{{$author->unique_members}}</span> {{__('default.pages.profile.course_members_count')}}
-                                            <br/>
-                                            <span>{{$author->courses->where('status', '=', 3)->count()}}</span> {{__('default.pages.profile.course_count')}}
-                                        </div>
-                                    </div>
-                                    <div class="card__bottom">
-                                        <div class="rating">
-                                            <div class="rating__number">{{round($author->average_rates, 1)}}</div>
-                                            <div class="rating__stars">
-                                                <?php
-                                                for ($x = 1; $x <= $author->average_rates; $x++) {
-                                                    echo '<i class="icon-star-full"> </i>';
-                                                }
-                                                if (strpos($author->average_rates, '.')) {
-                                                    echo '<i class="icon-star-half"> </i>';
-                                                    $x++;
-                                                }
-                                                while ($x <= 5) {
-                                                    echo '<i class="icon-star-empty"> </i>';
-                                                    $x++;
-                                                }
-                                                ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                </div>
-            </section>
-        @endauth
-        @guest
-            <section class="plain">
-                <div class="container">
-                    <h2 class="title-primary decorated">{!! __('default.pages.index.popular_courses') !!}</h2>
-                    <div class="regular-carousel courses-carousel">
-                        @foreach($popular_courses as $item)
-                            <a href="/{{$lang}}/course-catalog/course/{{$item->id}}" title="" class="card">
-                                @if($item->quota_status == 2)
-                                    <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
-                                @endif
-                                <div class="card__image">
-                                    <img src="{{$item->getAvatar()}}" alt="">
-                                </div>
-                                <div class="card__desc">
-                                    <div class="card__top">
-                                        @if($item->is_paid == true)
-                                            <div class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
-                                        @else
-                                            <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
-                                        @endif
-                                        <h3 class="card__title">{{$item->name}}</h3>
-                                        <div class="card__author">{{$item->user->company_name}}</div>
-                                    </div>
-                                    <div class="card__bottom">
-                                        <div class="card__attribute">
-                                            <i class="icon-user"> </i><span>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</span>
-                                        </div>
-                                        <div class="card__attribute">
-                                            <i class="icon-star-full"> </i><span>{{$item->rate->pluck('rate')->avg() ?? 0}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                </div>
-            </section>
-
-            <section class="plain big-padding">
-                <div class="container">
-                    <h2 class="title-primary decorated">{!! __('default.pages.index.popular_authors') !!}</h2>
-                    <div class="regular-carousel courses-carousel">
-                        @foreach($popular_authors as $author)
-                            <a href="/{{$lang}}/course-catalog?authors[]={{$author->id}}" title="" class="card">
-                                <div class="card__image card__author-image">
-                                    <img src="{{$author->author_info->getAvatar()}}" alt="">
-                                </div>
-                                <div class="card__desc">
-                                    <div class="card__top">
-                                        <h3 class="card__title">{{$author->author_info->name . ' ' . $author->author_info->surname}}</h3>
-                                        <div class="card__stats">
-                                            <span>{{$author->rates ?? 0}}</span> {{__('default.pages.profile.rates_count_title')}}
-                                            <br/>
-                                            <span>{{$author->unique_members}}</span> {{__('default.pages.profile.course_members_count')}}
-                                            <br/>
-                                            <span>{{$author->courses->where('status', '=', 3)->count()}}</span> {{__('default.pages.profile.course_count')}}
-                                        </div>
-                                    </div>
-                                    <div class="card__bottom">
-                                        <div class="rating">
-                                            <div class="rating__number">{{round($author->average_rates, 1)}}</div>
-                                            <div class="rating__stars">
-                                                <?php
-                                                for ($x = 1; $x <= $author->average_rates; $x++) {
-                                                    echo '<i class="icon-star-full"> </i>';
-                                                }
-                                                if (strpos($author->average_rates, '.')) {
-                                                    echo '<i class="icon-star-half"> </i>';
-                                                    $x++;
-                                                }
-                                                while ($x <= 5) {
-                                                    echo '<i class="icon-star-empty"> </i>';
-                                                    $x++;
-                                                }
-                                                ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                </div>
-            </section>
-
-            <section class="blue">
-                <div class="container">
-                    <div class="row row--multiline align-items-center">
-                        <div class="col-sm-6">
-                            <h2 class="title-primary decorated"><span>Станьте</span><br/> автором курсов</h2>
-                            <div class="plain-text">
-                                {{__('default.pages.index.to_be_author_description')}}
+        <section class="plain">
+            <div class="container">
+                <h2 class="title-primary decorated">{!! __('default.pages.index.popular_courses') !!}</h2>
+                <div class="regular-carousel courses-carousel">
+                    @foreach($popular_courses as $item)
+                        <a href="/{{$lang}}/course-catalog/course/{{$item->id}}" title="" class="card">
+                            @if($item->quota_status == 2)
+                                <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
+                            @endif
+                            <div class="card__image">
+                                <img src="{{$item->image}}" alt="">
                             </div>
-                            <a href="/{{$lang}}/for-authors" title="{{__('default.pages.index.to_be_a_teacher')}}!"
-                               class="ghost-btn ghost-btn--white">{{__('default.pages.index.to_be_a_teacher')}}!</a>
+                            <div class="card__desc">
+                                <div class="card__top">
+                                    @if($item->is_paid == true)
+                                        <div class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                                    @else
+                                        <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
+                                    @endif
+                                    <h3 class="card__title">{{$item->name}}</h3>
+                                    <div class="card__author">{{$item->user->company_name}}</div>
+                                </div>
+                                <div class="card__bottom">
+                                    <div class="card__attribute">
+                                        <i class="icon-user"> </i><span>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</span>
+                                    </div>
+                                    <div class="card__attribute">
+                                        <i class="icon-star-full"> </i><span>{{$item->rate->pluck('rate')->avg() ?? 0}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        <section class="plain big-padding">
+            <div class="container">
+                <h2 class="title-primary decorated">{!! __('default.pages.index.popular_authors') !!}</h2>
+                <div class="regular-carousel courses-carousel">
+                    @foreach($popular_authors as $author)
+                        <a href="/{{$lang}}/course-catalog?authors[]={{$author->id}}" title="" class="card">
+                            <div class="card__image card__author-image">
+                                <img src="{{$author->author_info->getAvatar()}}" alt="">
+                            </div>
+                            <div class="card__desc">
+                                <div class="card__top">
+                                    <h3 class="card__title">{{$author->author_info->name . ' ' . $author->author_info->surname}}</h3>
+                                    <div class="card__stats">
+                                        <span>{{$author->rates ?? 0}}</span> {{__('default.pages.profile.rates_count_title')}}
+                                        <br/>
+                                        <span>{{$author->unique_members}}</span> {{__('default.pages.profile.course_members_count')}}
+                                        <br/>
+                                        <span>{{$author->courses->where('status', '=', 3)->count()}}</span> {{__('default.pages.profile.course_count')}}
+                                    </div>
+                                </div>
+                                <div class="card__bottom">
+                                    <div class="rating">
+                                        <div class="rating__number">{{round($author->average_rates, 1)}}</div>
+                                        <div class="rating__stars">
+                                            <?php
+                                            for ($x = 1; $x <= $author->average_rates; $x++) {
+                                                echo '<i class="icon-star-full"> </i>';
+                                            }
+                                            if (strpos($author->average_rates, '.')) {
+                                                echo '<i class="icon-star-half"> </i>';
+                                                $x++;
+                                            }
+                                            while ($x <= 5) {
+                                                echo '<i class="icon-star-empty"> </i>';
+                                                $x++;
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        <section class="blue">
+            <div class="container">
+                <div class="row row--multiline align-items-center">
+                    <div class="col-sm-6">
+                        <h2 class="title-primary decorated"><span>Станьте</span><br/> автором курсов</h2>
+                        <div class="plain-text">
+                            {{__('default.pages.index.to_be_author_description')}}
                         </div>
-                        <div class="col-sm-6">
-                            <img src="/assets/img/authors-banner.svg" alt="">
-                        </div>
+                        <a href="/{{$lang}}/for-authors" title="{{__('default.pages.index.to_be_a_teacher')}}!"
+                           class="ghost-btn ghost-btn--white">{{__('default.pages.index.to_be_a_teacher')}}!</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <img src="/assets/img/authors-banner.svg" alt="">
                     </div>
                 </div>
-            </section>
-        @endguest
+            </div>
+        </section>
     </main>
 @endsection
 

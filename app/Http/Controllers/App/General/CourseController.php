@@ -164,6 +164,8 @@ class CourseController extends Controller
             $audios_count = [];
             $attachments_count = [];
 
+            $course_rates = CourseRate::where('course_id','=', $item->id)->paginate(2);
+
             foreach ($lessons as $lesson) {
                 if ($lesson->lesson_attachment != null) {
                     if ($lesson->lesson_attachment->videos != null) {
@@ -201,7 +203,9 @@ class CourseController extends Controller
                 "final_test" => $final_test,
                 "videos_count" => array_sum($videos_count),
                 "audios_count" => array_sum($audios_count),
-                "attachments_count" => array_sum($attachments_count)
+                "attachments_count" => array_sum($attachments_count),
+                'course_rates' => $course_rates
+
             ]);
         } else {
             return redirect("/" . app()->getLocale() . "/course-catalog");

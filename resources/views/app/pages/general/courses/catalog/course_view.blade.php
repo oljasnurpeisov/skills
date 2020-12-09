@@ -233,11 +233,11 @@
                                     </div>
                                 </div>
                             @endif
-                            @if($item->rate->count() > 0)
+                            @if($course_rates->count() > 0)
                                 <div class="article-section">
                                     <h2 class="title-secondary">{{__('default.pages.courses.feedback_title')}}</h2>
                                     <div>
-                                        @foreach($item->rate as $rate)
+                                        @foreach($course_rates as $rate)
                                             <div class="review">
                                                 <div class="review__header">
                                                     <div class="review__name">{{$rate->student->student_info->name}}</div>
@@ -265,6 +265,9 @@
                                             </div>
                                         @endforeach
                                     </div>
+                                </div>
+                                <div class="text-center">
+                                    {{ $course_rates->links('vendor.pagination.default') }}
                                 </div>
                             @endif
                         </div>
