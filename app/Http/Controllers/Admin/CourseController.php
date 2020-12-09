@@ -45,7 +45,7 @@ class CourseController extends Controller
     {
         $term = $request->term ? $request->term : '';
 
-        $query = Course::orderBy('id', 'desc')->where('status', '!=', Course::draft)->where('status', '!=', Course::deleted);
+        $query = Course::orderBy('id', 'desc');
         if ($term) {
             $query = $query->where('name', 'like', '%' . $term . '%');
         }
