@@ -36,11 +36,10 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $notShowIds = [4,5];
         $term = $request->term ? $request->term : '';
 
-        $query = User::orderBy('id', 'desc')->whereHas('roles', function($q) use($notShowIds){
-            $q->where('role_id', '<>', $notShowIds);
+        $query = User::orderBy('id', 'desc')->whereHas('roles', function($q){
+            $q->whereIn('slug', ['admin', 'moderator', 'tech_support']);
         });
         if ($term) {
             $query = $query->where('name', 'like', '%' . $term . '%');
@@ -90,8 +89,6 @@ class UserController extends Controller
 
         $item->save();
         $item->roles()->sync([$request->role_id]);
-
-//        Buffet::log('add', 'users', $item->id, $item->name);
 
         return redirect('/' . app()->getLocale() . '/admin/user/' . $item->id)->with('status', __('admin.notifications.record_stored') . '<br>' . __('admin.notifications.new_password', ['password' => $generate_password]));
     }
@@ -152,9 +149,6 @@ class UserController extends Controller
             return redirect('/' . app()->getLocale() . '/admin/user/index')->with('status', __('admin.notifications.record_deleted'));
         }
 
-
-//        Buffet::log('edit', 'users', $item->id, $item->name);
-
         return redirect('/' . app()->getLocale() . '/admin/user/' . $item->id)->with('status', __('admin.notifications.record_updated'));
     }
 
@@ -167,8 +161,6 @@ class UserController extends Controller
         $user = User::where('email', '=', $item->email)->first();
         $user->password = Hash::make($generate_password);
         $user->save();
-
-//        Buffet::log('edit', 'users', $item->id, $item->name);
 
         return redirect('/' . app()->getLocale() . '/admin/user/' . $item->id)->with('status', __('admin.notifications.new_password', ['password' => $generate_password]));
     }
@@ -224,8 +216,6 @@ class UserController extends Controller
             $user->password = $hash;
         }
         $user->save();
-
-//        Buffet::log('edit', 'users', $user->id, $user->name);
 
         return redirect('/' . app()->getLocale() . '/admin/profile');
     }

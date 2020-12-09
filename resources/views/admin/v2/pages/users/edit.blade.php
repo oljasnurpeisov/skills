@@ -147,9 +147,9 @@
                         </a>
                     </div>
                     <div>
-                        <a href="/{{$lang}}/admin/user/{{ $item->id }}" class="btn btn--red btn--delete">
-                            {{ __('admin.pages.deleting.submit') }}
-                        </a>
+{{--                        <a href="/{{$lang}}/admin/user/{{ $item->id }}" class="btn btn--red btn--delete">--}}
+{{--                            {{ __('admin.pages.deleting.submit') }}--}}
+{{--                        </a>--}}
                     </div>
                 </div>
             </div>

@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- update redirect auth&#10;- update files description">
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- update styles and scripts &#10;- update required fields">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/StudentController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/students/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/students/view.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/LessonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/LessonController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/js/ajax-select.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ajax-select.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/scripts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_coursework.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_coursework.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_final_test.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_final_test.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_lesson.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_lesson.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_coursework.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_coursework.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_final_test.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_final_test.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_lesson.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_lesson.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/reporting.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/reporting.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/layout/default/components/navigation/left.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/layout/default/components/navigation/left.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/auth/password_reset.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/auth/password_reset.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/authors/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/authors/view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/users/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/users/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/users/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/users/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +206,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Виталий/PhpstormProjects/enbek/app/Http/Controllers/App/Student/UserController.php" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/assets/js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/v2/pages/students" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -212,11 +215,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\OpenServer\domains\enbek-backend\resources\views\admin\v2\pages\students" />
       <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
       <recent name="F:\OpenServer\domains\enbek-backend\public\assets\css" />
       <recent name="F:\OpenServer\domains\enbek-backend\vendor\dompdf\dompdf\lib\fonts" />
       <recent name="F:\OpenServer\domains\enbek-backend\public\assets\fonts" />
-      <recent name="F:\OpenServer\domains\enbek-backend\storage\app\fonts" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\OpenServer\domains\enbek-backend\public\assets\pdf" />
@@ -277,14 +280,7 @@
       <workItem from="1606903355593" duration="54408000" />
       <workItem from="1607138985469" duration="27304000" />
       <workItem from="1607315990507" duration="28308000" />
-      <workItem from="1607398911426" duration="43374000" />
-    </task>
-    <task id="LOCAL-00062" summary="- add preview test&#10;- add preview coursework&#10;- change lessons routes">
-      <created>1606638192313</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1606638192313</updated>
+      <workItem from="1607398911426" duration="46165000" />
     </task>
     <task id="LOCAL-00063" summary="- minor fix">
       <created>1606641438564</created>
@@ -622,7 +618,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607486259917</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="- update styles and scripts &#10;- update required fields">
+      <created>1607488799035</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1607488799035</updated>
+    </task>
+    <option name="localTasksCounter" value="112" />
     <servers />
   </component>
   <component name="TodoView">
@@ -638,7 +641,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- update quota mail template" />
     <MESSAGE value="- add delete course on author page&#10;- add reestablish course on author page&#10;- minor fix" />
     <MESSAGE value="- add filter to student courses" />
     <MESSAGE value="- add student course payment" />
@@ -663,7 +665,8 @@
     <MESSAGE value="- update admin panel" />
     <MESSAGE value="- update payment description&#10;- show popular courses and authors for authors" />
     <MESSAGE value="- update redirect auth&#10;- update files description" />
-    <option name="LAST_COMMIT_MESSAGE" value="- update redirect auth&#10;- update files description" />
+    <MESSAGE value="- update styles and scripts &#10;- update required fields" />
+    <option name="LAST_COMMIT_MESSAGE" value="- update styles and scripts &#10;- update required fields" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -687,11 +690,11 @@
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1607409992424" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1607487859666">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1607491440333">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1607487859666" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1607491440333" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

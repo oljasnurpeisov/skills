@@ -74,6 +74,11 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post('/author/{item}', 'AuthorController@update');
                 Route::delete('/author/{item}', 'AuthorController@delete');
             });
+            // Обучающиеся
+            Route::group(['middleware' => 'check.permission:admin.users'], static function () {
+                Route::get('/student/index', 'StudentController@index');
+                Route::get('/student/{item}', 'StudentController@edit');
+            });
             // Курсы
             Route::group(['middleware' => 'check.permission:admin.courses'], static function () {
                 Route::get('/courses/index', 'CourseController@index');

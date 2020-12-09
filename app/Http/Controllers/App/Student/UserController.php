@@ -39,7 +39,7 @@ class UserController extends Controller
     public function update_student_profile(Request $request)
     {
         $request->validate([
-            'avatar' => 'required|max:255',
+            'avatar' => 'max:255',
         ]);
 
         $item = StudentInformation::where('user_id', '=', Auth::user()->getAuthIdentifier())->first();

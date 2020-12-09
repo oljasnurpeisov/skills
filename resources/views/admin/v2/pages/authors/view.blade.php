@@ -50,31 +50,13 @@
                                     <span class="help-block"><strong>{{ $errors->first('name') }}</strong></span>
                                 @endif
                             </div>
-                            <div class="input-group {{ $errors->has('patronymic') ? ' has-error' : '' }}">
-                                <label class="input-group__title">Отчество</label>
-                                <input type="text" name="patronymic" value="{{ $user_information->patronymic ?? '' }}"
-                                       placeholder=""
-                                       class="input-regular" required disabled>
-                                @if ($errors->has('patronymic'))
-                                    <span class="help-block"><strong>{{ $errors->first('patronymic') }}</strong></span>
-                                @endif
-                            </div>
                             <div class="input-group {{ $errors->has('specialization') ? ' has-error' : '' }}">
                                 <label class="input-group__title">Специализация</label>
-                                <input type="text" name="specialization" value="{{ $user_information->specialization ?? '' }}"
+                                <input type="text" name="specialization" value="{{ implode(', ', json_decode($user_information->specialization) ?? [])}}"
                                        placeholder=""
                                        class="input-regular" required disabled>
                                 @if ($errors->has('specialization'))
                                     <span class="help-block"><strong>{{ $errors->first('specialization') }}</strong></span>
-                                @endif
-                            </div>
-                            <div class="input-group {{ $errors->has('about') ? ' has-error' : '' }}">
-                                <label class="input-group__title">Расскажите о себе</label>
-                                <input type="text" name="about" value="{{ $user_information->about ?? '' }}"
-                                       placeholder=""
-                                       class="input-regular" required disabled>
-                                @if ($errors->has('about'))
-                                    <span class="help-block"><strong>{{ $errors->first('about') }}</strong></span>
                                 @endif
                             </div>
                             <div class="input-group {{ $errors->has('phone_1') ? ' has-error' : '' }}">
@@ -144,29 +126,11 @@
                         <div>
                             <div class="input-group {{ $errors->has('merchant_certificate_id') ? ' has-error' : '' }}">
                                 <label class="input-group__title">ID сертификата продавца</label>
-                                <input type="text" name="merchant_certificate_id" value="{{ $pay_information->merchant_certificate_id ?? '' }}"
+                                <input type="text" name="merchant_certificate_id" value="{{ $pay_information->merchant_login ?? '' }}"
                                        placeholder=""
                                        class="input-regular" required disabled>
                                 @if ($errors->has('merchant_certificate_id'))
                                     <span class="help-block"><strong>{{ $errors->first('merchant_certificate_id') }}</strong></span>
-                                @endif
-                            </div>
-                            <div class="input-group {{ $errors->has('merchant_name') ? ' has-error' : '' }}">
-                                <label class="input-group__title">Наименование продавца</label>
-                                <input type="text" name="merchant_name" value="{{ $pay_information->merchant_name ?? '' }}"
-                                       placeholder=""
-                                       class="input-regular" required disabled>
-                                @if ($errors->has('merchant_name'))
-                                    <span class="help-block"><strong>{{ $errors->first('merchant_name') }}</strong></span>
-                                @endif
-                            </div>
-                            <div class="input-group {{ $errors->has('merchant_id') ? ' has-error' : '' }}">
-                                <label class="input-group__title">ID продавца</label>
-                                <input type="text" name="merchant_id" value="{{ $pay_information->merchant_id ?? '' }}"
-                                       placeholder=""
-                                       class="input-regular" required disabled>
-                                @if ($errors->has('merchant_id'))
-                                    <span class="help-block"><strong>{{ $errors->first('merchant_id') }}</strong></span>
                                 @endif
                             </div>
                         </div>

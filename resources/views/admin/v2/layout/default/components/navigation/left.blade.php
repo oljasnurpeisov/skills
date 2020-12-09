@@ -22,19 +22,12 @@
                     <i class="icon-users"></i> {{ __('admin.pages.users.title') }}
                 </a>
                 <ul>
-                    <li><a href="/{{$lang}}/admin/user/index">{{ __('admin.pages.users.list') }}</a></li>
-                    <li><a href="/{{$lang}}/admin/user/create" class="add">+{{ __('admin.pages.users.create') }}</a></li>
-                </ul>
-            </li>
-            @endhasPermission
-            @hasPermission('admin.authors')
-            <li class="dropdown">
-                <a href="javascript:;" title="{{ __('admin.pages.authors.title') }}">
-                    <i class="icon-users"></i> {{ __('admin.pages.authors.title') }}
-                </a>
-                <ul>
+                    <li><a href="/{{$lang}}/admin/user/index">{{ __('admin.pages.users.admin_list') }}</a></li>
+                    @hasPermission('admin.authors')
                     <li><a href="/{{$lang}}/admin/author/index">{{ __('admin.pages.authors.list') }}</a></li>
-                    {{--<li><a href="/{{$lang}}/admin/author/create" class="add">+{{ __('admin.pages.authors.create') }}</a></li>--}}
+                    @endhasPermission
+                    <li><a href="/{{$lang}}/admin/student/index">{{ __('admin.pages.students.list') }}</a></li>
+                    <li><a href="/{{$lang}}/admin/user/create" class="add">+{{ __('admin.pages.users.create') }}</a></li>
                 </ul>
             </li>
             @endhasPermission

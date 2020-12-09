@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    {{--<img src="/assets/admin/img/logo.svg" alt="" class="logo">--}}
+    <img src="/assets/img/logo.svg" alt="" class="logo">
     <form action="/admin/login" method="POST">
         {{ csrf_field() }}
         <div class="input-group">
