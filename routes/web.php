@@ -57,6 +57,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
             // Пользователи
             Route::group(['middleware' => 'check.permission:admin.users'], static function () {
                 Route::get('/user/index', 'UserController@index');
+                Route::get('/user/index_all', 'UserController@index_all');
                 Route::get('/user/create', 'UserController@create');
                 Route::post('/user/create', 'UserController@store');
                 Route::get('/user/{item}/passwordUpdate', 'UserController@passwordUpdate');

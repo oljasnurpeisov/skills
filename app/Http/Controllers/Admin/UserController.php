@@ -8,8 +8,10 @@ namespace App\Http\Controllers\Admin;
 use App\Extensions\RandomStringGenerator;
 use App\Models\PayInformation;
 use App\Models\Role;
+use App\Models\StudentInformation;
 use App\Models\Type_of_ownership;
 use App\Models\User;
+
 //use App\Models\Log;
 
 use App\Models\UserInformation;
@@ -38,9 +40,26 @@ class UserController extends Controller
     {
         $term = $request->term ? $request->term : '';
 
-        $query = User::orderBy('id', 'desc')->whereHas('roles', function($q){
+        $query = User::orderBy('id', 'desc')->whereHas('roles', function ($q) {
             $q->whereIn('slug', ['admin', 'moderator', 'tech_support']);
         });
+        if ($term) {
+            $query = $query->where('name', 'like', '%' . $term . '%');
+        }
+        $items = $query->paginate();
+
+        return view('admin.v2.pages.users.index', [
+            'items' => $items,
+            'term' => $term,
+        ]);
+    }
+
+    public function index_all(Request $request)
+    {
+        $term = $request->term ? $request->term : '';
+
+        $query = User::orderBy('id', 'desc');
+
         if ($term) {
             $query = $query->where('name', 'like', '%' . $term . '%');
         }
@@ -70,7 +89,6 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|min:3|max:255',
             'email' => 'required|email|min:3|max:255|unique:users,email',
-            'iin' => 'required|unique:users,iin|max:12',
         ]);
 
         $generator = new RandomStringGenerator();
@@ -79,16 +97,27 @@ class UserController extends Controller
         $item = new User;
         $item->name = $request->name;
         $item->email = $request->email;
-        $item->iin = $request->iin;
-        $item->company_name = $request->company_name;
-        $item->company_logo = $request->company_logo;
         $item->password = Hash::make($generate_password);
         $item->is_activate = 1;
         $item->email_verified_at = Carbon::now()->toDateTimeString();
-        $item->type_of_ownership = $request->type_of_ownership;
+        $item->type_of_ownership = 1;
 
         $item->save();
         $item->roles()->sync([$request->role_id]);
+
+        $role = Role::where('id', '=', $request->role_id)->first();
+
+        if ($role->slug == 'author') {
+            $item_information = new UserInformation;
+            $item_information->user_id = $item->id;
+            $item_information->name = $request->name;
+            $item_information->save();
+
+            $item_pay_information = new PayInformation;
+            $item_pay_information->user_id = $item->id;
+            $item_pay_information->save();
+
+        }
 
         return redirect('/' . app()->getLocale() . '/admin/user/' . $item->id)->with('status', __('admin.notifications.record_stored') . '<br>' . __('admin.notifications.new_password', ['password' => $generate_password]));
     }
@@ -111,9 +140,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|min:3|max:255',
-            'email' => ['required', Rule::unique('users', 'email')->ignore($item->id), 'max:255'],
-            'iin' => ['required', Rule::unique('users', 'iin')->ignore($item->id), 'max:12'],
-            'company_name' => 'required|min:3|max:255',
+            'email' => ['required', Rule::unique('users', 'email')->ignore($item->id), 'max:255']
         ]);
 
         if ($request->is_activate != 2) {
@@ -124,10 +151,29 @@ class UserController extends Controller
 
             $item->name = $request->name;
             $item->email = $request->email;
-            $item->iin = $request->iin;
-            $item->company_name = $request->company_name;
-            $item->company_logo = $request->company_logo;
-            $item->type_of_ownership = $request->type_of_ownership;
+
+            $role = Role::where('id', '=', $request->role_id)->first();
+
+            if ($role->slug == 'author') {
+                $info = UserInformation::where('user_id', '=', $item->id)->first();
+                $pay_info = PayInformation::where('user_id', '=', $item->id)->first();
+                if (empty($info)) {
+                    $item_information = new UserInformation;
+                    $item_information->user_id = $item->id;
+                    $item_information->name = $request->name;
+                    $item_information->save();
+                }else{
+                    $info->name = $request->name;
+                    $info->save();
+                }
+                if (empty($pay_info)) {
+                    $item_pay_information = new PayInformation;
+                    $item_pay_information->user_id = $item->id;
+                    $item_pay_information->save();
+                }
+
+            }
+
             $item->save();
             $item->roles()->sync([$request->role_id]);
 

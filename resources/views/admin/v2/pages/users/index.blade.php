@@ -66,18 +66,15 @@
                         @php($remover = $item->remover)
                         <tr>
                             <td>{{ $item->id }}</td>
-                            <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>
+                            @if($item->hasRole('author'))
+                                <td>{{ $item->user_information->name ?? '' }}</td>
+                            @elseif($item->hasRole('student'))
+                                <td>{{ $item->student_information->name ?? '' }}</td>
+                            @else
+                                <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>
+                            @endif
                             <td><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a></td>
                             <td>{{ ($item->roles()->first()) ? $item->roles()->first()->name : '-' }}</td>
-                            {{--@if($item->is_activate == 0)--}}
-                            {{--<td>Ожидает подтверждения</td>--}}
-                            {{--@elseif($item->is_activate == 1)--}}
-                            {{--<td>Активирован</td>--}}
-                            {{--@elseif($item->is_activate == 2)--}}
-                            {{--<td>Отклонен</td>--}}
-                            {{--@else--}}
-                            {{--<td></td>--}}
-                            {{--@endif--}}
                             <td>
                                 @if($item->is_activate == 0)
                                     <div class="alert alert-warning" style="margin: 0;">
@@ -95,11 +92,22 @@
                             <td>{!! $item->updated_at . ($modifier ? '<br>'.($modifier->surname.' '.$modifier->name.' '.$modifier->middle_name) : '') !!}</td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="/{{$lang}}/admin/user/{{$item->id}}" title="{{ __('admin.labels.edit') }}"
-                                       class="icon-btn icon-btn--yellow icon-edit"></a>
-{{--                                    <a href="/{{$lang}}/admin/user/{{ $item->id }}"--}}
-{{--                                       title="{{ __('admin.pages.deleting.submit') }}"--}}
-{{--                                       class="icon-btn icon-btn--pink icon-delete"></a>--}}
+                                    @if($item->hasRole('author'))
+                                        <a href="/{{$lang}}/admin/author/{{$item->id}}"
+                                           title="{{ __('admin.labels.edit') }}"
+                                           class="icon-btn icon-btn--yellow icon-eye"></a>
+                                    @elseif($item->hasRole('student'))
+                                        <a href="/{{$lang}}/admin/student/{{$item->id}}"
+                                           title="{{ __('admin.labels.edit') }}"
+                                           class="icon-btn icon-btn--yellow icon-eye"></a>
+                                    @else
+                                        <a href="/{{$lang}}/admin/user/{{$item->id}}"
+                                           title="{{ __('admin.labels.edit') }}"
+                                           class="icon-btn icon-btn--yellow icon-edit"></a>
+                                    @endif
+                                    {{--                                    <a href="/{{$lang}}/admin/user/{{ $item->id }}"--}}
+                                    {{--                                       title="{{ __('admin.pages.deleting.submit') }}"--}}
+                                    {{--                                       class="icon-btn icon-btn--pink icon-delete"></a>--}}
                                 </div>
                             </td>
                         </tr>
