@@ -27,6 +27,8 @@
                     @endif
                 </ul>
 
+                @include('.app.pages.author.courses.components.preview_alert_info')
+
                 <div class="row row--multiline">
                     <div class="col-md-8">
                         <div class="article">
@@ -46,7 +48,7 @@
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.lessons.answer_text_title')}}
                                         *</label>
-                                    <textarea name="answer" class="input-regular tinymce-here" required></textarea>
+                                    <textarea name="answer" class="input-regular" required disabled></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.lessons.video_files')}}</label>

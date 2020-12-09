@@ -2,7 +2,6 @@
 
 @section('content')
     <main class="main">
-
         <section class="plain">
             <div class="container container--fluid">
                 <h1 class="title-primary">{{__('default.pages.reporting.title')}}</h1>
@@ -110,7 +109,6 @@
                 </div>
             </div>
         </section>
-
     </main>
 @endsection
 

@@ -23,6 +23,8 @@
                     @endif
                 </ul>
 
+                @include('.app.pages.author.courses.components.preview_alert_info')
+
                 <div class="row row--multiline">
                     <div class="col-md-8">
                         <div class="article">
