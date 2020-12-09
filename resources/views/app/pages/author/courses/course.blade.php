@@ -166,16 +166,20 @@
                                                class="btn small"
                                                data-fancybox>{{__('default.pages.courses.create_theme')}}</a>
                                         </div>
-                                        <div class="col-auto">
-                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-coursework"
-                                               title="{{__('default.pages.courses.coursework_title')}}"
-                                               class="ghost-btn ghost-btn--blue small">{{__('default.pages.courses.coursework_title')}}</a>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-final-test"
-                                               title="{{__('default.pages.courses.final_test_title')}}"
-                                               class="ghost-btn ghost-btn--blue small">{{__('default.pages.courses.final_test_title')}}</a>
-                                        </div>
+                                        @if($item->courseWork() == null)
+                                            <div class="col-auto">
+                                                <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-coursework"
+                                                   title="{{__('default.pages.courses.coursework_title')}}"
+                                                   class="ghost-btn ghost-btn--blue small">{{__('default.pages.courses.coursework_title')}}</a>
+                                            </div>
+                                        @endif
+                                        @if($item->finalTest() == null)
+                                            <div class="col-auto">
+                                                <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-final-test"
+                                                   title="{{__('default.pages.courses.final_test_title')}}"
+                                                   class="ghost-btn ghost-btn--blue small">{{__('default.pages.courses.final_test_title')}}</a>
+                                            </div>
+                                        @endif
                                     </div>
                                     @break
                                 @endswitch
@@ -577,34 +581,40 @@
                                         :
                                     </div>
                                     <div class="sidebar-item__body">
-                                        <div class="tags">
-                                            <ul>
-                                                {{--                                                {{$item->skills[0]->professions->first()}}--}}
-                                                @foreach($item->skills as $skill)
-                                                    @foreach($skill->professions as $profession)
-                                                        <li>
-                                                            <a href="/{{$lang}}/course-catalog?specialities[]={{$profession->id}}"
-                                                               title="{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}">{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}</a>
-                                                        </li>
+                                        <div class="extendable">
+                                            <div class="tags">
+                                                <ul>
+                                                    @foreach($item->skills as $skill)
+                                                        @foreach($skill->professions as $profession)
+                                                            <li>
+                                                                <a href="/{{$lang}}/course-catalog?specialities[]={{$profession->id}}"
+                                                                   title="{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}">{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}</a>
+                                                            </li>
+                                                        @endforeach
                                                     @endforeach
-                                                @endforeach
-                                            </ul>
+                                                </ul>
+                                            </div>
                                         </div>
+                                        <a href="javascript:;" title="{{__('default.pages.courses.show_all')}}" class="link small text-center" data-maxheight="300" data-alternativetitle="{{__('default.pages.courses.hide')}}" style="display:none;">{{__('default.pages.courses.show_all')}}</a>
                                     </div>
+
                                 </div>
                                 <div class="sidebar-item">
                                     <div class="sidebar-item__title">{{__('default.pages.courses.skills_title_1')}}:
                                     </div>
                                     <div class="sidebar-item__body">
-                                        <div class="tags">
-                                            <ul>
-                                                @foreach($item->skills as $skill)
-                                                    <li><a href="/{{$lang}}/course-catalog?skills[]={{$skill->id}}"
-                                                           title="{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}">{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}</a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
+                                        <div class="extendable">
+                                            <div class="tags">
+                                                <ul>
+                                                    @foreach($item->skills as $skill)
+                                                        <li><a href="/{{$lang}}/course-catalog?skills[]={{$skill->id}}"
+                                                               title="{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}">{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}</a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
                                         </div>
+                                        <a href="javascript:;" title="{{__('default.pages.courses.show_all')}}" class="link small text-center" data-maxheight="300" data-alternativetitle="{{__('default.pages.courses.hide')}}" style="display:none;">{{__('default.pages.courses.show_all')}}</a>
                                     </div>
                                 </div>
                                 <div class="sidebar-item">

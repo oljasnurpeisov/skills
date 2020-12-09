@@ -40,28 +40,32 @@
                                 </div>
                             </div>
                             <div class="removable-items">
-                                <div class="form-group">
-                                    @if(!empty($item->skills[1]))
-                                        <div class="input-addon">
-                                            <select name="skills[]"
-                                                    placeholder="{{__('default.pages.courses.choose_skill')}}"
-                                                    data-method="getSkillsByData">
-                                                @php($s = $item->skills->toArray())
-                                                @foreach(array_slice($s,1) as $skill)
+                                @if(!empty($item->skills[1]))
+                                    @php($s = $item->skills->toArray())
+                                    @foreach(array_slice($s, 1) as $skill)
+                                        <div class="form-group">
+                                            <div class="input-addon">
+                                                <select name="skills[]"
+                                                        placeholder="{{__('default.pages.courses.choose_skill')}}"
+                                                        data-method="getSkillsByData">
+
                                                     <option value="{{$skill["id"]}}"
                                                             selected="selected">{{$skill['name_'.$lang] ?? $skill['name_ru']}}
                                                     </option>
-                                                @endforeach
-                                            </select>
-                                            <div class="addon">
-                                                <div class="btn-icon small icon-close"></div>
+
+                                                </select>
+                                                <div class="addon">
+                                                    <div class="btn-icon small icon-close"></div>
+                                                </div>
                                             </div>
+
                                         </div>
-                                    @endif
-                                </div>
+                                    @endforeach
+                                @endif
                             </div>
                             <div class="text-right pull-up">
-                                <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn" data-maxcount="9"
+                                <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"
+                                   data-maxcount="9"
                                    data-duplicate="skillsInputTpl"><span
                                             class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
                                             class="btn-icon small icon-plus"> </span></a>
@@ -95,7 +99,9 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_profit')}} *</label>
-                                <textarea name="profit_desc" class="input-regular tinymce-text-here" placeholder="{{__('default.pages.courses.course_profit_placeholder')}}" required>
+                                <textarea name="profit_desc" class="input-regular tinymce-text-here"
+                                          placeholder="{{__('default.pages.courses.course_profit_placeholder')}}"
+                                          required>
                             {{$item->profit_desc}}
                         </textarea>
                             </div>
@@ -107,7 +113,9 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_desc')}} *</label>
-                                <textarea name="description" class="input-regular tinymce-text-here" placeholder="{{__('default.pages.courses.course_description_placeholder')}}" required>
+                                <textarea name="description" class="input-regular tinymce-text-here"
+                                          placeholder="{{__('default.pages.courses.course_description_placeholder')}}"
+                                          required>
                             {{$item->description}}
                         </textarea>
                             </div>
@@ -389,7 +397,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.choose_certificate')}} *</label>
+                                <label class="form-group__label">{{__('default.pages.courses.choose_certificate')}}
+                                    *</label>
                                 <div class="row row--multiline">
                                     @php($certificates = [["1","/assets/img/certificates/1_ru.jpg"], ["2", "/assets/img/certificates/2_ru.jpg"], ["3", "/assets/img/certificates/3_ru.jpg"]])
                                     @foreach($certificates as $certificate)

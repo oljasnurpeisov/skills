@@ -500,24 +500,29 @@ class CourseController extends Controller
 
     public function publishCourse($lang, Course $item)
     {
-        $item->status = 1;
-        $item->save();
+        $testworks = $item->lessons->whereIn('type', [3, 4])->first();
+        if (!empty($testworks)) {
+            $item->status = 1;
+            $item->save();
 
-        $recipients = User::whereHas('roles', function ($q) {
-            $q->where('slug', '=', 'moderator');
-        })->pluck('email')->toArray();
+            $recipients = User::whereHas('roles', function ($q) {
+                $q->where('slug', '=', 'moderator');
+            })->pluck('email')->toArray();
 
-        $data = [
-            'course_id' => $item->id,
-        ];
+            $data = [
+                'course_id' => $item->id,
+            ];
 
 
-        Mail::send('app.pages.page.emails.new_verification_course', ['data' => $data], function ($message) use ($item, $recipients) {
-            $message->from(env("MAIL_USERNAME"), 'Enbek');
-            $message->to($recipients, 'Receiver')->subject(__('notifications.course_verification_title'));
-        });
+            Mail::send('app.pages.page.emails.new_verification_course', ['data' => $data], function ($message) use ($item, $recipients) {
+                $message->from(env("MAIL_USERNAME"), 'Enbek');
+                $message->to($recipients, 'Receiver')->subject(__('notifications.course_verification_title'));
+            });
 
-        return redirect("/" . app()->getLocale() . "/my-courses/on-check")->with('status', __('default.pages.courses.publish_request_message'));
+            return redirect("/" . app()->getLocale() . "/my-courses/on-check")->with('status', __('default.pages.courses.publish_request_message'));
+        }else{
+            return redirect()->back()->with('error', __('default.pages.courses.publish_failed_message'));
+        }
     }
 
     public function deleteCourse($lang, Course $item)
