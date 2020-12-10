@@ -165,8 +165,10 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
     Route::group(['prefix' => '{lang}'], function () {
         Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
             Route::get("/", "PageController@index");
-
+            // Для авторов
             Route::get("/for-authors", "PageController@for_authors");
+            // FAQ
+            Route::get("/faq", "PageController@faq");
             // Курсы
             Route::get("/course-catalog", "CourseController@courseCatalog");
             Route::get("/course-catalog/course/{item}", "CourseController@courseView");

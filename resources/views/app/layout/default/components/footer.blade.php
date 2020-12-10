@@ -13,7 +13,7 @@
                     <li><a href="https://www.enbek.kz/docs/ru"
                            title="{{__('default.pages.footer.about_us')}}">{{__('default.pages.footer.about_us')}}</a>
                     </li>
-                    <li><a href="#" title="{{__('default.pages.footer.faq')}}">{{__('default.pages.footer.faq')}}</a>
+                    <li><a href="/{{$lang}}/faq" title="{{__('default.pages.footer.faq')}}">{{__('default.pages.footer.faq')}}</a>
                     </li>
                     @auth
                         @php

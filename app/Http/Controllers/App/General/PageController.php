@@ -105,6 +105,12 @@ class PageController extends Controller
         ]);
     }
 
+    public function faq(){
+        return view("app.pages.general.faq", [
+
+        ]);
+    }
+
     public function notifications()
     {
 
