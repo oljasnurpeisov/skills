@@ -184,10 +184,11 @@ class AjaxUploadController extends Controller
     public function ajaxUploadLessonAnotherFile(Request $request)
     {
         $file = $request->file;
-        $imageName = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files/'), $imageName);
+        $name = uniqid().'_'.$file->getClientOriginalName();
+        $file->move(public_path('files'), $name);
 
-        return Response::json(array('location' => config('APP_URL') . '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files/' . $imageName));
+        return Response::json(array('location' => config('APP_URL') . '/files/' . $name));
     }
+
 
 }
