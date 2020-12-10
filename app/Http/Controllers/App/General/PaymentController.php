@@ -28,8 +28,6 @@ class PaymentController extends Controller
                 $student_course->student_id = Auth::user()->id;
                 $student_course->save();
 
-//                $this->syncUserLessons($item->id);
-
                 return redirect()->back()->with('status', __('default.pages.courses.pay_course_success'));
             } else {
 
@@ -113,15 +111,10 @@ class PaymentController extends Controller
             }
         }
 
-
-
     }
-
-
 
     public function callbackPaymentOrder(Request $request)
     {
-
         $json = json_decode(file_get_contents('php://input'));
 
         if ($request->ip() != "35.157.105.64") {
@@ -137,7 +130,6 @@ class PaymentController extends Controller
             $item->order_id = $json->id;
             $item->status = $json->status;
             $item->save();
-
 
             if ($json->status == 1) {
                 $student_course_model = StudentCourse::where('payment_id', '=', $item->id)->first();
@@ -155,10 +147,9 @@ class PaymentController extends Controller
 
             }
 
-
             return '{"accepted":' . (($out) ? 'true' : 'false') . '}';
         } else {
-//            throw  new  Exception($out);
+
             return 0;
         }
 
@@ -188,7 +179,6 @@ class PaymentController extends Controller
                 }else{
                     $lesson_ids[$lesson->id] = ['is_access' => false];
                 }
-
 
             }
         }

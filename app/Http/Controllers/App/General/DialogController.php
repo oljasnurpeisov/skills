@@ -66,7 +66,6 @@ class DialogController extends Controller
             }
         }
 
-
         $messages = $item->messages;
 
         return view("app.pages.general.dialogs.view", [

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
 //use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Symfony\Component\Console\Input\Input;
@@ -43,6 +44,7 @@ class AjaxUploadController extends Controller
 
         return Response::json(array('location' => config('APP_URL') . '/users/user_' . Auth::user()->getAuthIdentifier() . '/profile/images/' . $imageName));
     }
+
     // Загрузка изображения компании
     public function ajaxUploadCompanyImage(Request $request)
     {
@@ -56,6 +58,7 @@ class AjaxUploadController extends Controller
 
         return Response::json(array('location' => config('APP_URL') . '/images/company/' . $imageName));
     }
+
     // Загрузка изображения курса
     public function ajaxUploadCourseImage(Request $request)
     {
@@ -69,6 +72,7 @@ class AjaxUploadController extends Controller
 
         return Response::json(array('location' => config('APP_URL') . '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/images/' . $imageName));
     }
+
     // Загрузка изображения урока
     public function ajaxUploadLessonImage(Request $request)
     {
@@ -87,11 +91,10 @@ class AjaxUploadController extends Controller
     public function ajaxUploadTestImages(Request $request)
     {
         $data = [];
-        foreach($request->file('files') as $file)
-        {
-            $name = time().uniqid().'.'.$file->getClientOriginalExtension();
+        foreach ($request->file('files') as $file) {
+            $name = time() . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/images/tests'), $name);
-            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/images/tests/'.$name);
+            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/images/tests/' . $name);
         }
 
         return Response::json(array('filenames' => $data));
@@ -106,76 +109,75 @@ class AjaxUploadController extends Controller
     public function ajaxUploadCertificates(Request $request)
     {
         $data = [];
-        foreach($request->file('files') as $file)
-        {
-            $name = uniqid().'_'.$file->getClientOriginalName();
+        foreach ($request->file('files') as $file) {
+            $name = uniqid() . '_' . $file->getClientOriginalName();
             $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/profile/files'), $name);
-            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/profile/files/'.$name);
+            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/profile/files/' . $name);
         }
 
         return Response::json(array('filenames' => $data));
     }
+
     // Загрузка видео курса
     public function ajaxUploadCourseVideos(Request $request)
     {
         $data = [];
-        foreach($request->file('files') as $file)
-        {
-            $name = uniqid().'_'.$file->getClientOriginalName();
+        foreach ($request->file('files') as $file) {
+            $name = uniqid() . '_' . $file->getClientOriginalName();
             $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/videos'), $name);
-            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/videos/'.$name);
+            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/videos/' . $name);
         }
 
         return Response::json(array('filenames' => $data));
     }
+
     // Загрузка аудио курса
     public function ajaxUploadCourseAudios(Request $request)
     {
         $data = [];
-        foreach($request->file('files') as $file)
-        {
-            $name = uniqid().'_'.$file->getClientOriginalName();
+        foreach ($request->file('files') as $file) {
+            $name = uniqid() . '_' . $file->getClientOriginalName();
             $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/courses/audios'), $name);
-            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/audios/'.$name);
+            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/courses/audios/' . $name);
         }
 
         return Response::json(array('filenames' => $data));
     }
+
     // Загрузка видео урока
     public function ajaxUploadLessonVideos(Request $request)
     {
         $data = [];
-        foreach($request->file('files') as $file)
-        {
-            $name = uniqid().'_'.$file->getClientOriginalName();
+        foreach ($request->file('files') as $file) {
+            $name = uniqid() . '_' . $file->getClientOriginalName();
             $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/videos'), $name);
-            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/videos/'.$name);
+            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/videos/' . $name);
         }
 
         return Response::json(array('filenames' => $data));
     }
+
     // Загрузка аудио урока
     public function ajaxUploadLessonAudios(Request $request)
     {
         $data = [];
-        foreach($request->file('files') as $file)
-        {
-            $name = uniqid().'_'.$file->getClientOriginalName();
+        foreach ($request->file('files') as $file) {
+            $name = uniqid() . '_' . $file->getClientOriginalName();
             $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/audios'), $name);
-            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/audios/'.$name);
+            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/audios/' . $name);
         }
 
         return Response::json(array('filenames' => $data));
     }
+
     // Загрузка других материалов урока
     public function ajaxUploadLessonAnotherFiles(Request $request)
     {
         $data = [];
-        foreach($request->file('files') as $file)
-        {
-            $name = uniqid().'_'.$file->getClientOriginalName();
+        foreach ($request->file('files') as $file) {
+            $name = uniqid() . '_' . $file->getClientOriginalName();
             $file->move(public_path('users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files'), $name);
-            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files/'.$name);
+            array_push($data, '/users/user_' . Auth::user()->getAuthIdentifier() . '/lessons/files/' . $name);
         }
 
         return Response::json(array('filenames' => $data));
@@ -184,7 +186,7 @@ class AjaxUploadController extends Controller
     public function ajaxUploadLessonAnotherFile(Request $request)
     {
         $file = $request->file;
-        $name = uniqid().'_'.$file->getClientOriginalName();
+        $name = uniqid() . '_' . $file->getClientOriginalName();
         $file->move(public_path('files'), $name);
 
         return Response::json(array('location' => config('APP_URL') . '/files/' . $name));

@@ -40,11 +40,6 @@ class Theme extends Model
         return $this->belongsTo(Course::class,'course_id', 'id');
 
     }
-//    public function courses() {
-//
-//        return $this->belongsToMany(Course::class,'course_theme');
-//
-//    }
 
     public function lessons() {
 
@@ -52,9 +47,4 @@ class Theme extends Model
 
     }
 
-//    public function lessons() {
-//
-//        return $this->belongsToMany(Lesson::class,'theme_lesson');
-//
-//    }
 }

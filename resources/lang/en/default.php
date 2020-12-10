@@ -333,8 +333,9 @@ return [
 
             'old_password' => 'Старый пароль',
             'new_password' => 'Новый пароль',
-            'confirm_new_password' => 'Повторите новый пароль'
+            'confirm_new_password' => 'Повторите новый пароль',
 
+            'student_title' => 'Обучающийся',
         ],
         'calendar' => [
             'today' => 'Сегодня',

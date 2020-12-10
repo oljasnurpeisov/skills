@@ -45,11 +45,11 @@ class Dialog extends Model
 
         if($member->roles()->first()->slug == 'author'){
             $name = $member->author_info->name;
-            $avatar = $member->author_info->avatar;
+            $avatar = $member->author_info->getAvatar();
             $slug = '';
         }else if($member->roles()->first()->slug == 'student'){
             $name = 'Обучающийся';
-            $avatar = $member->student_info->avatar;
+            $avatar = $member->student_info->getAvatar();
             $slug = '';
         }else{
             $name = $member->name;
@@ -62,7 +62,6 @@ class Dialog extends Model
             'name' => $name,
             'avatar' => $avatar,
             'slug' => $slug,
-//            'avatar' => $member->avatar,
         ];
     }
 

@@ -86,10 +86,9 @@ class CourseController extends Controller
         if ($members_count) {
             $query->whereHas('course_members', function ($q) use ($min_rating) {
                 $q->where('student_course.is_finished', '=', true)->whereIn('student_course.paid_status', [1, 2]);
-            })->withCount([
-                'course_members' => function ($q) {
-                    $q->whereIn('paid_status', [1, 2]);
-                }])->having('course_members_count', '>=', $members_count);
+            })->withCount(['course_members' => function ($q) {
+                $q->whereIn('paid_status', [1, 2]);
+            }])->having('course_members_count', '>=', $members_count);
         }
         // Получить профессии
         if ($specialities) {
@@ -164,7 +163,7 @@ class CourseController extends Controller
             $audios_count = [];
             $attachments_count = [];
 
-            $course_rates = CourseRate::where('course_id','=', $item->id)->paginate(2);
+            $course_rates = CourseRate::where('course_id', '=', $item->id)->paginate(5);
 
             foreach ($lessons as $lesson) {
                 if ($lesson->lesson_attachment != null) {
@@ -205,7 +204,6 @@ class CourseController extends Controller
                 "audios_count" => array_sum($audios_count),
                 "attachments_count" => array_sum($attachments_count),
                 'course_rates' => $course_rates
-
             ]);
         } else {
             return redirect("/" . app()->getLocale() . "/course-catalog");
@@ -214,16 +212,13 @@ class CourseController extends Controller
 
     public function getProfessionsByName(Request $request, $lang)
     {
-//        $profession_name = $request->name ?? '';
-//
-//        $professions = Professions::where('name_' . $lang, 'like', '%' . $profession_name . '%')->orderBy('name_' . $lang, 'asc')->limit(50)->get();
-//
-//        return $professions;
 
         $profession_name = $request->name ?? '';
         $page = $request->page ?? 1;
 
-        $professions = Professions::where('name_ru', 'like', '%' . $profession_name . '%')->orderBy('name_ru', 'asc')->paginate(50, ['*'], 'page', $page);
+        $professions = Professions::where('name_ru', 'like', '%' . $profession_name . '%')
+            ->orderBy('name_ru', 'asc')
+            ->paginate(50, ['*'], 'page', $page);
 
         return $professions;
     }
@@ -245,9 +240,13 @@ class CourseController extends Controller
                 ->where('uid', '=', null)
                 ->orderBy('name_' . $lang, 'asc')
                 ->paginate(50, ['*'], 'page', $page);
-//        })->where('uid', '=', null)->limit(50)->get();
         } else {
-            $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->orderBy('name_' . $lang, 'asc')->paginate(50, ['*'], 'page', $page);
+            $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')
+                ->where('fl_check', '=', '1')
+                ->where('fl_show', '=', '1')
+                ->where('uid', '=', null)
+                ->orderBy('name_' . $lang, 'asc')
+                ->paginate(50, ['*'], 'page', $page);
         }
 
 
@@ -259,9 +258,12 @@ class CourseController extends Controller
         $skill_name = $request->name ?? '';
         $page = $request->page ?? 1;
 
-        $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->where('fl_check', '=', '1')->where('fl_show', '=', '1')->where('uid', '=', null)->orderBy('name_' . $lang, 'asc')->paginate(50, ['*'], 'page', $page);
-//        })->where('uid', '=', null)->limit(50)->get();
-
+        $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')
+            ->where('fl_check', '=', '1')
+            ->where('fl_show', '=', '1')
+            ->where('uid', '=', null)
+            ->orderBy('name_' . $lang, 'asc')
+            ->paginate(50, ['*'], 'page', $page);
 
         return $skills;
     }

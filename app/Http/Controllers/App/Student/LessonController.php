@@ -36,7 +36,6 @@ class LessonController extends Controller
             "time" => $time
         ]);
 
-
         if (!empty($lesson->lesson_student)) {
             // Если доступ к курсу есть
             if ($lesson->lesson_student->is_access == true) {
@@ -158,7 +157,6 @@ class LessonController extends Controller
                 return $return_view;
             }
         }
-
 
     }
 
@@ -339,9 +337,7 @@ class LessonController extends Controller
                 $lesson->lesson_student->is_finished = true;
                 $lesson->lesson_student->save();
 
-//                if ($lesson->type == 4){
                 $this->finishedCourse($course);
-//                }
             }
 
 
@@ -389,8 +385,6 @@ class LessonController extends Controller
                 } else {
                     $coursework = $course->lessons()->where('type', '=', 3)->first();
                     $final_test = $course->lessons->where('type', '=', 4)->first();
-//                    $coursework_item = StudentLesson::where('lesson_id', '=', $coursework->id)->where('student_id', '=', Auth::user()->id)->first();
-//                    $final_test_item = StudentLesson::where('lesson_id', '=', $final_test->id)->where('student_id', '=', Auth::user()->id)->first();
 
                     if (!empty($coursework) and ($coursework->id != $lesson->id)) {
                         $this->syncUserLessons($coursework->id);
@@ -494,6 +488,5 @@ class LessonController extends Controller
         $certificate->png_ru = $file_path . '/' . 'course_' . $course->id . '_image_' . $languages[0] . '.png';
         $certificate->png_kk = $file_path . '/' . 'course_' . $course->id . '_image_' . $languages[1] . '.png';
         $certificate->save();
-
     }
 }

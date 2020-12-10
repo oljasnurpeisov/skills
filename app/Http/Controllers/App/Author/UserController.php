@@ -48,7 +48,6 @@ class UserController extends Controller
             'company_name' => 'required|max:255',
         ]);
 
-
         $user = $request->user();
         $user->name = $request->name;
         $user->email = $request->email;
@@ -144,7 +143,6 @@ class UserController extends Controller
 
             $item->save();
 
-
             return redirect("/" . app()->getLocale() . "/profile-pay-information")->with('status', __('default.pages.profile.save_success_message'));
         } else {
 
@@ -161,7 +159,6 @@ class UserController extends Controller
     public function author_data_show()
     {
         $item = UserInformation::where('user_id', '=', Auth::user()->id)->first();
-//        $certificates = json_decode($item->certificates);
         $courses = Auth::user()->courses()->get();
         // Все оценки всех курсов
         $rates = [];
@@ -192,7 +189,6 @@ class UserController extends Controller
         }
         return view("app.pages.author.profile.author_data_profile", [
             'item' => $item,
-//            'certificates' => $certificates,
             "courses" => $courses,
             "rates" => $rates,
             "average_rates" => $average_rates,

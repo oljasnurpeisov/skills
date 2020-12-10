@@ -41,7 +41,6 @@ class CourseController extends Controller
         if ($request->is_paid and $request->cost > 0) {
             if ((Auth::user()->payment_info->merchant_login != null) and (Auth::user()->payment_info->merchant_password != null)) {
 
-
                 $item = new Course;
                 $item->name = $request->name;
                 $item->author_id = Auth::user()->id;
@@ -283,10 +282,9 @@ class CourseController extends Controller
         if ($members_count) {
             $query->whereHas('course_members', function ($q) use ($min_rating) {
                 $q->where('student_course.is_finished', '=', true)->whereIn('student_course.paid_status', [1, 2]);
-            })->withCount([
-                'course_members' => function ($q) {
-                    $q->whereIn('paid_status', [1, 2]);
-                }])->having('course_members_count', '>=', $members_count);
+            })->withCount(['course_members' => function ($q) {
+                $q->whereIn('paid_status', [1, 2]);
+            }])->having('course_members_count', '>=', $members_count);
         }
         // Получить профессии
         if ($specialities) {
@@ -342,9 +340,6 @@ class CourseController extends Controller
         } else {
             $average_rates = array_sum($rates) / count($rates);
         }
-
-//        $data = [['id' => 0, 'name' => "\u0422\u0435\u043C\u0430 1", 'order'=> 0, 'lessons'=> null, 'collapsed'=> !1]];
-
 
         if ($item->author_id == Auth::user()->id) {
             $themes = $item->themes()->orderBy('index_number', 'asc')->get();
@@ -513,7 +508,6 @@ class CourseController extends Controller
                 'course_id' => $item->id,
             ];
 
-
             Mail::send('app.pages.page.emails.new_verification_course', ['data' => $data], function ($message) use ($item, $recipients) {
                 $message->from(env("MAIL_USERNAME"), 'Enbek');
                 $message->to($recipients, 'Receiver')->subject(__('notifications.course_verification_title'));
@@ -584,7 +578,6 @@ class CourseController extends Controller
             $notification->users()->sync($recipients_array);
             return redirect()->back()->with('error', trans('notifications.course_quota_access_denied', ['course_name' => '"' . $item->name . '"']));
         }
-
 
     }
 
@@ -781,7 +774,6 @@ class CourseController extends Controller
             ->endOfDay()
             ->toDateTimeString();
 
-//        $query = Auth::user()->courses();
         $query = Course::where('author_id', '=', Auth::user()->id)
             // Рейтинг
             ->with(['rate' => function ($q) use ($date_from, $date_to) {

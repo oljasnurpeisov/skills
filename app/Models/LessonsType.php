@@ -32,5 +32,4 @@ class LessonsType extends Model
 
     public $timestamps = true;
 
-
 }

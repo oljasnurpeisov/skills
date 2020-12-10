@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App\Author;
 
+use App\Extensions\FormatDate;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Lesson;
@@ -56,10 +57,12 @@ class LessonController extends Controller
         $item->course_id = $course->id;
         $item->name = $request->name;
         $item->index_number = $last_id;
+
         if ($request->type == 'theory') {
             $item->type = 1;
 
             $item->end_lesson_type = 2;
+
         } else {
             $item->type = 2;
 
@@ -109,10 +112,9 @@ class LessonController extends Controller
             $item->image = $request->image;
         }
 
-//        $item->test = $request->test;
-
         $item->save();
 
+        // Вложения к уроку
         $item_attachments = new LessonAttachments;
         $item_attachments->lesson_id = $item->id;
 
@@ -120,7 +122,7 @@ class LessonController extends Controller
         $item_attachments->videos_link = json_encode($request->videos_link);
 
         // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link){
+        if ($request->videos_poor_vision_link) {
             $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
         }
 
@@ -257,25 +259,20 @@ class LessonController extends Controller
 
         $item->save();
 
+        // Вложения к уроку
         $item_attachments = LessonAttachments::where('lesson_id', '=', $item->id)->first();
 
         // Ссылки на видео курса
         $item_attachments->videos_link = json_encode($request->videos_link);
 
         // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link){
+        if ($request->videos_poor_vision_link) {
             $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
         }
 
-        $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
-        $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);
-        $another_files = array_merge(json_decode($request->localDocuments) ?? [], $request->localDocumentsStored ?? []);
-
-        $videos_poor_vision = array_merge(json_decode($request->localVideo1) ?? [], $request->localVideoStored1 ?? []);
-        $audios_poor_vision = array_merge(json_decode($request->localAudio1) ?? [], $request->localAudioStored1 ?? []);
-        $another_files_poor_vision = array_merge(json_decode($request->localDocuments1) ?? [], $request->localDocumentsStored1 ?? []);
-
         // Видео с устройства
+        $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
+
         if ($videos != $item_attachments->videos) {
 
             $item_attachments->videos = $videos;
@@ -283,6 +280,8 @@ class LessonController extends Controller
             $item_attachments->save();
         }
         // Аудио с устройства
+        $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);
+
         if ($audios != $item_attachments->audios) {
 
             $item_attachments->audios = $audios;
@@ -290,6 +289,8 @@ class LessonController extends Controller
             $item_attachments->save();
         }
         // Другие файлы с устройства
+        $another_files = array_merge(json_decode($request->localDocuments) ?? [], $request->localDocumentsStored ?? []);
+
         if ($another_files != $item_attachments->another_files) {
 
             $item_attachments->another_files = $another_files;
@@ -297,6 +298,8 @@ class LessonController extends Controller
             $item_attachments->save();
         }
         // Видео с устройства (для слабовидящих)
+        $videos_poor_vision = array_merge(json_decode($request->localVideo1) ?? [], $request->localVideoStored1 ?? []);
+
         if ($videos_poor_vision != $item_attachments->videos_poor_vision) {
 
             $item_attachments->videos_poor_vision = $videos_poor_vision;
@@ -304,6 +307,8 @@ class LessonController extends Controller
             $item_attachments->save();
         }
         // Аудио с устройства (для слабовидящих)
+        $audios_poor_vision = array_merge(json_decode($request->localAudio1) ?? [], $request->localAudioStored1 ?? []);
+
         if ($audios_poor_vision != $item_attachments->audios_poor_vision) {
 
             $item_attachments->audios_poor_vision = $audios_poor_vision;
@@ -311,6 +316,8 @@ class LessonController extends Controller
             $item_attachments->save();
         }
         // Другие файлы с устройства (для слабовидящих)
+        $another_files_poor_vision = array_merge(json_decode($request->localDocuments1) ?? [], $request->localDocumentsStored1 ?? []);
+
         if ($another_files_poor_vision != $item_attachments->another_files_poor_vision) {
 
             $item_attachments->another_files_poor_vision = $another_files_poor_vision;
@@ -321,34 +328,6 @@ class LessonController extends Controller
         $item_attachments->save();
 
         return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id);
-    }
-
-    public function deleteLesson(Request $request)
-    {
-        Lesson::where('id', '=', $request->lesson_id)->delete();
-
-        $theme_lessons = Lesson::whereHas('themes', function ($q) use ($request) {
-            $q->where('themes.id', '=', $request->theme_id);
-        })->orderBy('index_number', 'asc')->get();
-
-        foreach ($theme_lessons as $key => $lesson) {
-            $lesson->index_number = $key;
-            $lesson->save();
-        }
-
-        $messages = ["title" => __('default.pages.courses.delete_lesson_title'), "body" => __('default.pages.courses.delete_lesson_success')];
-
-        return $messages;
-    }
-
-    public function moveLesson(Request $request)
-    {
-        $lesson_1 = Lesson::where('id', '=', $request->lesson_1_id)->first();
-        $lesson_2 = Lesson::where('id', '=', $request->lesson_2_id)->first();
-
-        [$lesson_1->index_number, $lesson_2->index_number] = [$lesson_2->index_number, $lesson_1->index_number];
-        $lesson_1->save();
-        $lesson_2->save();
     }
 
     public function createCoursework($lang, Course $item)
@@ -401,7 +380,7 @@ class LessonController extends Controller
         $item_attachments->videos_link = json_encode($request->videos_link);
 
         // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link){
+        if ($request->videos_poor_vision_link) {
             $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
         }
 
@@ -487,19 +466,13 @@ class LessonController extends Controller
         $item_attachments->videos_link = json_encode($request->videos_link);
 
         // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link){
+        if ($request->videos_poor_vision_link) {
             $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
         }
 
-        $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
-        $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);
-        $another_files = array_merge(json_decode($request->localDocuments) ?? [], $request->localDocumentsStored ?? []);
-
-        $videos_poor_vision = array_merge(json_decode($request->localVideo1) ?? [], $request->localVideoStored1 ?? []);
-        $audios_poor_vision = array_merge(json_decode($request->localAudio1) ?? [], $request->localAudioStored1 ?? []);
-        $another_files_poor_vision = array_merge(json_decode($request->localDocuments1) ?? [], $request->localDocumentsStored1 ?? []);
-
         // Видео с устройства
+        $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
+
         if ($videos != $item_attachments->videos) {
 
             $item_attachments->videos = $videos;
@@ -507,6 +480,8 @@ class LessonController extends Controller
             $item_attachments->save();
         }
         // Аудио с устройства
+        $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);
+
         if ($audios != $item_attachments->audios) {
 
             $item_attachments->audios = $audios;
@@ -514,6 +489,8 @@ class LessonController extends Controller
             $item_attachments->save();
         }
         // Другие файлы с устройства
+        $another_files = array_merge(json_decode($request->localDocuments) ?? [], $request->localDocumentsStored ?? []);
+
         if ($another_files != $item_attachments->another_files) {
 
             $item_attachments->another_files = $another_files;
@@ -521,6 +498,8 @@ class LessonController extends Controller
             $item_attachments->save();
         }
         // Видео с устройства (для слабовидящих)
+        $videos_poor_vision = array_merge(json_decode($request->localVideo1) ?? [], $request->localVideoStored1 ?? []);
+
         if ($videos_poor_vision != $item_attachments->videos_poor_vision) {
 
             $item_attachments->videos_poor_vision = $videos_poor_vision;
@@ -528,6 +507,8 @@ class LessonController extends Controller
             $item_attachments->save();
         }
         // Аудио с устройства (для слабовидящих)
+        $audios_poor_vision = array_merge(json_decode($request->localAudio1) ?? [], $request->localAudioStored1 ?? []);
+
         if ($audios_poor_vision != $item_attachments->audios_poor_vision) {
 
             $item_attachments->audios_poor_vision = $audios_poor_vision;
@@ -535,6 +516,8 @@ class LessonController extends Controller
             $item_attachments->save();
         }
         // Другие файлы с устройства (для слабовидящих)
+        $another_files_poor_vision = array_merge(json_decode($request->localDocuments1) ?? [], $request->localDocumentsStored1 ?? []);
+
         if ($another_files_poor_vision != $item_attachments->another_files_poor_vision) {
 
             $item_attachments->another_files_poor_vision = $another_files_poor_vision;
@@ -625,7 +608,7 @@ class LessonController extends Controller
         $item_attachments->videos_link = json_encode($request->videos_link);
 
         // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link){
+        if ($request->videos_poor_vision_link) {
             $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
         }
 
@@ -736,7 +719,7 @@ class LessonController extends Controller
         $item_attachments->videos_link = json_encode($request->videos_link);
 
         // Ссылки на видео курса для слабовидящих
-        if ($request->videos_poor_vision_link){
+        if ($request->videos_poor_vision_link) {
             $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
         }
 
@@ -800,12 +783,7 @@ class LessonController extends Controller
     {
         if ($course->author_id == Auth::user()->id) {
             //Конверт числа во время
-            $format = '%02d:%02d';
-
-            $hours = floor($lesson->duration / 60);
-            $minutes = ($lesson->duration % 60);
-
-            $time = sprintf($format, $hours, $minutes);
+            $time = FormatDate::convertMunitesToTime($lesson->duration);
 
             // Получить все файлы урока
             $lesson_attachments = LessonAttachments::whereId($lesson->id)->first();
@@ -874,7 +852,6 @@ class LessonController extends Controller
     {
         if ($course->author_id == Auth::user()->id) {
 
-
             return view("app.pages.author.courses.lesson_preview.test_view_lesson", [
                 "item" => $course,
                 "lesson" => $lesson
@@ -887,7 +864,6 @@ class LessonController extends Controller
     public function homeWorkView($lang, Request $request, Course $course, Lesson $lesson)
     {
         if ($course->author_id == Auth::user()->id) {
-
 
             return view("app.pages.author.courses.lesson_preview.homework_view_lesson", [
                 "item" => $course,
@@ -941,6 +917,35 @@ class LessonController extends Controller
         Lesson::where('id', '=', $lesson->id)->delete();
 
         return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.lesson_delete_success'));
+    }
+
+    // Методы для таблицы курса
+    public function deleteLesson(Request $request)
+    {
+        Lesson::where('id', '=', $request->lesson_id)->delete();
+
+        $theme_lessons = Lesson::whereHas('themes', function ($q) use ($request) {
+            $q->where('themes.id', '=', $request->theme_id);
+        })->orderBy('index_number', 'asc')->get();
+
+        foreach ($theme_lessons as $key => $lesson) {
+            $lesson->index_number = $key;
+            $lesson->save();
+        }
+
+        $messages = ["title" => __('default.pages.courses.delete_lesson_title'), "body" => __('default.pages.courses.delete_lesson_success')];
+
+        return $messages;
+    }
+
+    public function moveLesson(Request $request)
+    {
+        $lesson_1 = Lesson::where('id', '=', $request->lesson_1_id)->first();
+        $lesson_2 = Lesson::where('id', '=', $request->lesson_2_id)->first();
+
+        [$lesson_1->index_number, $lesson_2->index_number] = [$lesson_2->index_number, $lesson_1->index_number];
+        $lesson_1->save();
+        $lesson_2->save();
     }
 }
 

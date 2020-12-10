@@ -240,7 +240,7 @@
                                         @foreach($course_rates as $rate)
                                             <div class="review">
                                                 <div class="review__header">
-                                                    <div class="review__name">{{$rate->student->student_info->name}}</div>
+                                                    <div class="review__name">{{$rate->student->student_info->name ?? __('default.pages.profile.student_title')}}</div>
                                                     <div class="rating">
                                                         <div class="rating__stars">
                                                             <?php
