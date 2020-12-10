@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- minor fix rates on course page">
+      <change afterPath="$PROJECT_DIR$/app/Extensions/NotificationsHelper.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/app/pages/page/emails/course_confirm.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/PaymentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/LessonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/LessonController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Notification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Notification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/admin/vendors/echarts/test/data/disk.tree.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/admin/vendors/echarts/test/data/disk.tree.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/admin/vendors/parsleyjs/bower_components/mocha/mocha.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/admin/vendors/parsleyjs/bower_components/mocha/mocha.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/scripts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/notifications.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/notifications.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/courses/course_frame.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/courses/course_frame.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/layout/default/components/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/layout/default/components/header.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/my_courses.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/my_courses.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/reporting.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/reporting.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/statistics.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/statistics.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_catalog.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_catalog.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/notifications/notifications.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/notifications/notifications.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/page/emails/course_reject.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/page/emails/course_reject.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/page/emails/quota_confirm.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/page/emails/quota_confirm.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/page/emails/verify.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/page/emails/verify.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/page/emails/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/page/emails/view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -267,14 +294,7 @@
       <workItem from="1606903355593" duration="54408000" />
       <workItem from="1607138985469" duration="27304000" />
       <workItem from="1607315990507" duration="28308000" />
-      <workItem from="1607398911426" duration="74804000" />
-    </task>
-    <task id="LOCAL-00077" summary="- update course reject mail template">
-      <created>1606883081530</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1606883081530</updated>
+      <workItem from="1607398911426" duration="88227000" />
     </task>
     <task id="LOCAL-00078" summary="- update quota mail template">
       <created>1606883272070</created>
@@ -612,7 +632,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607574895114</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="- minor fix rates on course page">
+      <created>1607575359444</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1607575359444</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
     <servers />
   </component>
   <component name="TodoView">
@@ -628,7 +655,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- update statistic chart&#10;- add paginate to reporting page" />
     <MESSAGE value="- minor chart fix" />
     <MESSAGE value="- author profile update" />
     <MESSAGE value="- change save name of load files&#10;- minor fix" />
@@ -653,7 +679,8 @@
     <MESSAGE value="- add paginate for rates&#10;- update header" />
     <MESSAGE value="- update tinymce method" />
     <MESSAGE value="- add new skills to student after finished course" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add new skills to student after finished course" />
+    <MESSAGE value="- minor fix rates on course page" />
+    <option name="LAST_COMMIT_MESSAGE" value="- minor fix rates on course page" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -672,16 +699,20 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="509" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1607432682910" />
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1607520095866">
+    <state x="547" y="153" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1607576983749">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="547" y="153" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1607576983749" />
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1607589935868">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1607520095866" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1607574891387">
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1607589935868" />
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1607576111674">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1607574891387" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1607576111674" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

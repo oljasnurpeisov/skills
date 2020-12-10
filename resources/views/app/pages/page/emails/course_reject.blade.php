@@ -85,13 +85,12 @@
                     <td>
                         <p><b>{{__('auth.pages.greeting')}}</b></p>
                         <br>
+                        <p>{{__('default.pages.courses.course_title')}}
+                            <a href="{{env('APP_URL')}}/{{$data['lang']}}/my-courses/course/{{$data['item']['id']}}">"{{$data['item']['name']}}"</a> {{__('notifications.publish_reject')}}:</p>
+                        <br>
                         <p style="
     margin: 0;
-">{{__('notifications.course_reject_description')}}</p>
-                        <p>{{__('notifications.course_reject_reason')}}:</p>
-                        <p>{!! $data['message_text'] !!}
-                        </p>
-                        <br>
+"><i>{{$data['message_text']}}</i></p>
                     </td>
                 </tr>
                 </tbody>

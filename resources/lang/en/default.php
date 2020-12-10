@@ -12,6 +12,7 @@ return [
 
     'pages' => [
         'courses' => [
+            'course_title' => 'Курс',
             'drafts' => 'Черновики',
             'my_courses_title' => 'Мои курсы',
             'create_course' => 'Создать курс',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App\General;
 
+use App\Extensions\NotificationsHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Lesson;
@@ -34,6 +35,9 @@ class PaymentController extends Controller
 
                 $payment = new PaymentHistory;
                 $payment->save();
+
+                $notification_name = 'notifications.course_buy_status_on_process';
+                NotificationsHelper::createNotification($notification_name, $item->id, Auth::user()->id);
 
                 $data = array("merchantId" => $item->user->payment_info->merchant_login,
                     "callbackUrl" => config('payment.callbackUrl'),
@@ -97,7 +101,8 @@ class PaymentController extends Controller
                 $student_course->student_id = Auth::user()->id;
                 $student_course->save();
 
-//                $this->syncUserLessons($item->id);
+                $notification_name = 'notifications.course_buy_status_failed';
+                NotificationsHelper::createNotification($notification_name, $item->id, Auth::user()->id);
 
                 $student_info->quota_count = $student_info->quota_count - 1;
                 $student_info->save();
@@ -144,6 +149,8 @@ class PaymentController extends Controller
                     $student_course->student_id = $json->metadata->student_id;
                     $student_course->save();
 
+                    $notification_name = 'notifications.course_buy_status_success';
+                    NotificationsHelper::createNotification($notification_name, $item->id, Auth::user()->id);
                 }
 
             }

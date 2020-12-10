@@ -79,7 +79,7 @@
                 <tbody>
                 <tr>
                     <td style="padding-bottom: 30px;"><a href="{{env('APP_URL')}}" title=""><img
-                                    src="http://dev14.panama.kz/assets/img/logo.png" alt=""></a></td>
+                                    src="{{env('APP_URL')}}/assets/img/logo.png" alt=""></a></td>
                 </tr>
                 <tr>
                     <td>

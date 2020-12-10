@@ -78,7 +78,7 @@
                                 @else
                                     <td>{{implode(', ', array_filter($item->professionsBySkills()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->professionsBySkills()->pluck('name_ru')->toArray()))}}</td>
                                 @endif
-                                <td>{{$item->rate->pluck('rate')->avg() ?? 0}}</td>
+                                <td>{{round($item->rate->pluck('rate')->avg() ?? 0, 1)}}</td>
                                 <td>{{__('default.pages.reporting.statuses.'.$item->status)}}</td>
                                 <td>@if($item->quota_status == 2){{__('default.yes_title')}}@else{{__('default.no_title')}}@endif</td>
                                 <td>@if($item->is_paid == true){{__('default.pages.reporting.paid_course')}}@else{{__('default.pages.reporting.free_course')}}@endif</td>

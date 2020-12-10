@@ -45,7 +45,7 @@
                                           id="quota_confirm_form">
                                         {{ csrf_field() }}
                                         <li>
-                                            <span>{!!trans($notification->name, ['course_name' => '"'.$notification->course->name.'"'])!!}</span>
+                                            <span>{!!trans($notification->name, ['course_name' => '"'.$notification->course->name.'"', 'lang' => $lang, 'course_id' => $notification->course->id, 'message' => $notification->message])!!}</span>
                                             @if($notification->course->quota_status == 1)
                                                 <div class="buttons">
                                                     <button name="action" value="confirm"
@@ -63,7 +63,7 @@
                                     </li>
                                 @else
                                     <li>
-                                        <span>{!!trans($notification->name, ['course_name' => '"'.$notification->course->name.'"'])!!}</span>
+                                        <span>{!!trans($notification->name, ['course_name' => '"'.$notification->course->name.'"', 'lang' => $lang, 'course_id' => $notification->course->id, 'message' => $notification->message])!!}</span>
                                     </li>
                                     <li class="break">
                                         <hr>

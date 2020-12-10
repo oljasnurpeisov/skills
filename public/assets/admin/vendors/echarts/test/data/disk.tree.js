@@ -74,12 +74,12 @@ window.disk_usage_tree =
             {
                 "value": 12,
                 "name": "Notification",
-                "path": "Accounts/Notification",
+                "path": "Accounts/NotificationsHelper",
                 "children": [
                     {
                         "value": 12,
                         "name": "SPAAccountsNotificationPlugin.bundle",
-                        "path": "Accounts/Notification/SPAAccountsNotificationPlugin.bundle"
+                        "path": "Accounts/NotificationsHelper/SPAAccountsNotificationPlugin.bundle"
                     }
                 ]
             }
@@ -5083,13 +5083,13 @@ window.disk_usage_tree =
             },
             {
                 "value": 840,
-                "name": "KeychainCircle Notification.app",
-                "path": "CoreServices/KeychainCircle Notification.app",
+                "name": "KeychainCircle NotificationsHelper.app",
+                "path": "CoreServices/KeychainCircle NotificationsHelper.app",
                 "children": [
                     {
                         "value": 840,
                         "name": "Contents",
-                        "path": "CoreServices/KeychainCircle Notification.app/Contents"
+                        "path": "CoreServices/KeychainCircle NotificationsHelper.app/Contents"
                     }
                 ]
             },

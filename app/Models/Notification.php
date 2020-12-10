@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\Notification
+ * App\Models\NotificationsHelper
  *
  * @property int $id
  * @property string|null $name

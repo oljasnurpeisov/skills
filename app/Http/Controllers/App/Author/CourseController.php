@@ -640,12 +640,12 @@ class CourseController extends Controller
         if ($request->sort_by == 'sort_by_rate_low') {
             $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
                 ->select('course_rate.rate as course_rate', 'courses.*')
-                ->orderBy('course_rate.rate', 'asc');
+                ->orderBy('course_rate.rate', 'asc')->groupBy('course_id');
             // Сортировка Рейтинг - по убыванию
         } else if ($request->sort_by == 'sort_by_rate_high') {
             $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
                 ->select('course_rate.rate as course_rate', 'courses.*')
-                ->orderBy('course_rate.rate', 'desc');
+                ->orderBy('course_rate.rate', 'desc')->groupBy('course_id');
             // Сортировка Количество обучающихся - по возрастанию
         } else if ($request->sort_by == 'sort_by_members_count_low') {
             $query->withCount('course_members')->orderBy('course_members_count', 'asc');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App\Student;
 
 use App\Extensions\FormatDate;
+use App\Extensions\NotificationsHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Lesson;
@@ -440,6 +441,9 @@ class LessonController extends Controller
                 }
                 // Присвоить обучающемуся полученные навыки
                 Auth::user()->skills()->sync($course->skills->pluck('id')->toArray(), false);
+                // Отправить уведомление
+                $notification_name = "notifications.course_student_finished";
+                NotificationsHelper::createNotification($notification_name, $course->id, Auth::user()->id);
             }
         }
     }

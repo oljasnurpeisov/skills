@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 //use App\Models\Card;
 //use App\Models\Company;
 use App\Extensions\FormatDate;
+use App\Extensions\NotificationsHelper;
 use App\Extensions\RandomStringGenerator;
 use App\Mail\QuotaMessage;
 use App\Models\Course;
@@ -165,14 +166,18 @@ class CourseController extends Controller
                     $item->status = 2;
                     $item->save();
 
+                    $notification_name = "notifications.course_reject";
+                    NotificationsHelper::createNotification($notification_name, $item->id, $user->id, 0,$request->rejectMessage);
+
                     $data = [
+                        'item' => $item,
+                        'lang' => $lang,
                         'message_text' => $request->rejectMessage,
                     ];
 
-
                     Mail::send('app.pages.page.emails.course_reject', ['data' => $data], function ($message) use ($request, $item, $user) {
-                        $message->from(env("MAIL_USERNAME"), 'Enbek.kz');
-                        $message->to($user->email, 'Receiver')->subject('');
+                        $message->from(env("MAIL_USERNAME"), env('APP_NAME'));
+                        $message->to($user->email, 'Receiver')->subject(__('notifications.publish_course_title'));
                     });
 
 
@@ -184,6 +189,18 @@ class CourseController extends Controller
             $item->status = 3;
             $item->save();
 
+            $notification_name = "notifications.course_publish";
+            NotificationsHelper::createNotification($notification_name, $item->id, $user->id);
+
+            $data = [
+                'item' => $item,
+                'lang' => $lang,
+            ];
+
+            Mail::send('app.pages.page.emails.course_confirm', ['data' => $data], function ($message) use ($request, $item, $user) {
+                $message->from(env("MAIL_USERNAME"), env('APP_NAME'));
+                $message->to($user->email, 'Receiver')->subject(__('notifications.publish_course_title'));
+            });
 
             return redirect()->back()->with('status', trans('admin.pages.courses.course_published', ['course_name' => $item->name]));
         }
@@ -220,17 +237,17 @@ class CourseController extends Controller
 
                 $data = [
                     'email' => $item->user()->first()->email,
-                    'description' => 'notifications.quota_request_description',
+                    'description' => 'notifications.quota_request_description_mail',
                     'course_id' => $item->id,
                     'course_name' => $item->name,
-                    'user_id' => $item->user()->first()->id
+                    'user_id' => $item->user()->first()->id,
+                    'lang' => $lang
                 ];
 
-//                Mail::send('app.pages.page.emails.quota_confirm', ['data' => $data], function ($message) use ($item) {
-//                    $message->from(env("MAIL_USERNAME"), 'Enbek');
-//                    $message->to($item->user()->first()->email, 'Receiver')->subject('');
-//                });
-                Mail::to($item->user()->first()->email)->send(new QuotaMessage($data));
+                Mail::send('app.pages.page.emails.quota_confirm', ['data' => $data], function ($message) use ($item) {
+                    $message->from(env("MAIL_USERNAME"), env('APP_NAME'));
+                    $message->to($item->user()->first()->email, 'Receiver')->subject(__('notifications.publish_course_title'));
+                });
             }
 
             $logger = new Log;

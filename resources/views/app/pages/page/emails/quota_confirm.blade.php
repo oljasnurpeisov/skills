@@ -87,7 +87,7 @@
                         <br>
                         <p style="
     margin: 0;
-">{!! trans($data['description'], ['course_name' => $data['course_name']])!!}
+">{!! trans($data['description'], ['course_name' => $data['course_name'], 'url' => env('APP_URL').'/'.$data['lang'].'/my-courses/course/'.$data['course_id']])!!}
                         </p>
                         <br>
                     </td>
