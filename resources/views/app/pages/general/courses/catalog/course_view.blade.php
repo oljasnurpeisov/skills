@@ -247,7 +247,7 @@
                                                             for ($x = 1; $x <= $rate->rate; $x++) {
                                                                 echo '<i class="icon-star-full"> </i>';
                                                             }
-                                                            if (strpos($average_rates, '.')) {
+                                                            if (strpos($rate->rate, '.')) {
                                                                 echo '<i class="icon-star-half"> </i>';
                                                                 $x++;
                                                             }
@@ -265,9 +265,9 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                </div>
-                                <div class="text-center">
-                                    {{ $course_rates->links('vendor.pagination.default') }}
+                                    <div class="text-center">
+                                        {{ $course_rates->links('vendor.pagination.default') }}
+                                    </div>
                                 </div>
                             @endif
                         </div>

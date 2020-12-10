@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- update tinymce method">
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/AjaxUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/AjaxUploadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/LessonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/LessonController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/scripts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -270,14 +267,7 @@
       <workItem from="1606903355593" duration="54408000" />
       <workItem from="1607138985469" duration="27304000" />
       <workItem from="1607315990507" duration="28308000" />
-      <workItem from="1607398911426" duration="74129000" />
-    </task>
-    <task id="LOCAL-00076" summary="- add course catalog for students">
-      <created>1606854481843</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1606854481843</updated>
+      <workItem from="1607398911426" duration="74804000" />
     </task>
     <task id="LOCAL-00077" summary="- update course reject mail template">
       <created>1606883081530</created>
@@ -615,7 +605,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607513060239</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="- add new skills to student after finished course">
+      <created>1607574895114</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1607574895114</updated>
+    </task>
+    <option name="localTasksCounter" value="126" />
     <servers />
   </component>
   <component name="TodoView">
@@ -631,7 +628,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- minor fix&#10;- update chart&#10;- update test chart" />
     <MESSAGE value="- update statistic chart&#10;- add paginate to reporting page" />
     <MESSAGE value="- minor chart fix" />
     <MESSAGE value="- author profile update" />
@@ -656,7 +652,8 @@
     <MESSAGE value="- update create user on admin panel" />
     <MESSAGE value="- add paginate for rates&#10;- update header" />
     <MESSAGE value="- update tinymce method" />
-    <option name="LAST_COMMIT_MESSAGE" value="- update tinymce method" />
+    <MESSAGE value="- add new skills to student after finished course" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add new skills to student after finished course" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -680,11 +677,11 @@
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1607520095866" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1607572561512">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1607574891387">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1607572561512" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1607574891387" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
