@@ -26,7 +26,7 @@ return [
     'course_publish' => 'Курс <a href="/:lang/my-courses/course/:course_id">:course_name</a> успешно опубликован',
     'publish_success' => 'успешно опубликован',
     'publish_reject' => 'отклонен модератором и не был опубликован по следующей причине',
-    'course_reject' => 'Курс <a href="/:lang/my-courses/course/:course_id">:course_name</a> не был опубликован, причина отказа: <i>":message"</i>',
+    'course_reject' => 'Курс <a href="/:lang/my-courses/course/:course_id">:course_name</a> не был опубликован, причина отказа: <i>":reject_message"</i>',
 
     'course_reject_description' => 'Ваш курс был отклонен',
     'course_reject_reason' => 'Причина отклонения',
@@ -37,5 +37,6 @@ return [
     'course_buy_status_on_process' => 'Оплата курса <a href="/:lang/course-catalog/course/:course_id">:course_name</a> в обработке',
     'course_buy_status_success' => 'Вы успешно приобрели курс <a href="/:lang/course-catalog/course/:course_id">:course_name</a>',
     'course_buy_status_failed' => 'Произошла ошибка при оплате курса <a href="/:lang/course-catalog/course/:course_id">:course_name</a>',
-    'course_student_finished' => 'Поздравляем с завершением курса <a href="/:lang/course-catalog/course/:course_id">:course_name</a>. Сертификаты доступны в разделе <a href="/:lang/student/my-certificates">Мои сертификаты</a>'
+    'course_student_finished' => 'Поздравляем с завершением курса <a href="/:lang/course-catalog/course/:course_id">:course_name</a>. Сертификаты доступны в разделе <a href="/:lang/student/my-certificates">Мои сертификаты</a>',
+    'new_message' => 'У вас новое <a href="/:lang/dialog/opponent-:opponent_id">сообщение</a>'
 ];

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App\General;
 
+use App\Extensions\NotificationsHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Dialog;
@@ -82,15 +83,19 @@ class DialogController extends Controller
         $item->message = $request->get("message", "");
         $item->save();
 
-//        foreach ($item->dialog->members as $member) {
-//            $member->unreadMessages()->attach($item->id);
-//        }
-
         $dialog_item = Dialog::whereId($dialog->id)->first();
         if ($dialog_item) {
             $dialog_item->updated_at = Carbon::now();
             $dialog_item->save();
         }
+
+        $opponent = $dialog->members()->where('user_id', '!=', Auth::user()->id)->first();
+
+        $notification_data = [
+          'dialog_opponent_id' => Auth::user()->id
+        ];
+        $notification_name = 'notifications.new_message';
+        NotificationsHelper::createNotification($notification_name, null, $opponent->id, 0, $notification_data);
 
         if ($request->get("format") == "json") {
             return Response::json([

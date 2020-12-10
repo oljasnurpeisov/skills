@@ -96,7 +96,6 @@ class PageController extends Controller
             "popular_courses" => $popular_courses,
             "popular_authors" => $popular_authors,
         ]);
-//        return $popular_authors;
     }
 
     public function for_authors(){

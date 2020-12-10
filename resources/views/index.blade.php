@@ -51,7 +51,7 @@
                                             <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
                                         @endif
                                         <div class="card__image">
-                                            <img src="{{$course->image}}" alt="">
+                                            <img src="{{$course->getAvatar()}}" alt="">
                                         </div>
                                         <div class="card__desc">
                                             <div class="card__top">
@@ -220,7 +220,7 @@
                                 <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
                             @endif
                             <div class="card__image">
-                                <img src="{{$item->image}}" alt="">
+                                <img src="{{$item->getAvatar()}}" alt="">
                             </div>
                             <div class="card__desc">
                                 <div class="card__top">

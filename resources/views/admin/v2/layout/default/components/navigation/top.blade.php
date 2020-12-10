@@ -58,18 +58,18 @@
                 </ul>
             </div>
         </div>
-        <div class="dropdown_notification">
-            @php($notifications = Auth::user()->notifications()->get())
-            <div class="hidden-sm hidden-xs" style="margin-top: 20px; margin-left: 25px;">
-                <a> <i class="fa fa-bell" aria-hidden="true"></i>{{count($notifications)}}</a>
-            </div>
-            <div class="dropdown-content" style="margin: 15px">
-                @foreach($notifications as $notification)
-                        <p>{{trans($notification->name, ['course_name' => '"'.$notification->course->name.'"'])}}</p>
-                        <hr>
-                @endforeach
-            </div>
-        </div>
+{{--        <div class="dropdown_notification">--}}
+{{--            @php($notifications = Auth::user()->notifications()->get())--}}
+{{--            <div class="hidden-sm hidden-xs" style="margin-top: 20px; margin-left: 25px;">--}}
+{{--                <a> <i class="fa fa-bell" aria-hidden="true"></i>{{count($notifications)}}</a>--}}
+{{--            </div>--}}
+{{--            <div class="dropdown-content" style="margin: 15px">--}}
+{{--                @foreach($notifications as $notification)--}}
+{{--                        <p>{{trans($notification->name, ['course_name' => '"'.$notification->course->name.'"'])}}</p>--}}
+{{--                        <hr>--}}
+{{--                @endforeach--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
     </div>
 </header>

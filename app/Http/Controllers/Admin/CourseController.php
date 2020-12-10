@@ -166,8 +166,11 @@ class CourseController extends Controller
                     $item->status = 2;
                     $item->save();
 
+                    $notification_data = [
+                        'course_reject_message' => $request->rejectMessage
+                    ];
                     $notification_name = "notifications.course_reject";
-                    NotificationsHelper::createNotification($notification_name, $item->id, $user->id, 0,$request->rejectMessage);
+                    NotificationsHelper::createNotification($notification_name, $item->id, $user->id, 0, $notification_data);
 
                     $data = [
                         'item' => $item,

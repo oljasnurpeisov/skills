@@ -45,7 +45,7 @@
                                           id="quota_confirm_form">
                                         {{ csrf_field() }}
                                         <li>
-                                            <span>{!!trans($notification->name, ['course_name' => '"'.$notification->course->name.'"', 'lang' => $lang, 'course_id' => $notification->course->id, 'message' => $notification->message])!!}</span>
+                                            <span>{!!trans($notification->name, ['course_name' => '"'. optional($notification->course)->name .'"', 'lang' => $lang, 'course_id' => optional($notification->course)->id, 'opponent_id' => json_decode($notification->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($notification->data)[0]->course_reject_message ?? ''])!!}</span>
                                             @if($notification->course->quota_status == 1)
                                                 <div class="buttons">
                                                     <button name="action" value="confirm"
@@ -63,7 +63,7 @@
                                     </li>
                                 @else
                                     <li>
-                                        <span>{!!trans($notification->name, ['course_name' => '"'.$notification->course->name.'"', 'lang' => $lang, 'course_id' => $notification->course->id, 'message' => $notification->message])!!}</span>
+                                        <span>{!!trans($notification->name, ['course_name' => '"'. optional($notification->course)->name .'"', 'lang' => $lang, 'course_id' => optional($notification->course)->id, 'opponent_id' => json_decode($notification->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($notification->data)[0]->course_reject_message ?? ''])!!}</span>
                                     </li>
                                     <li class="break">
                                         <hr>
