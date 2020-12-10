@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $course_id
  * @property-read \App\Models\Course|null $course
  * @method static \Illuminate\Database\Eloquent\Builder|Notification whereCourseId($value)
+ * @property string|null $data
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification whereData($value)
  */
 class Notification extends Model
 {

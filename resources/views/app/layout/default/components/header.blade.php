@@ -40,11 +40,11 @@
                         <ul>
                             @foreach($notifications as $notification)
                                 @if($notification->type == 1)
-                                    <form method="POST"
-                                          action="/{{$lang}}/my-courses/quota-confirm-course/{{$notification->course->id}}"
-                                          id="quota_confirm_form">
-                                        {{ csrf_field() }}
-                                        <li>
+                                    <li>
+                                        <form method="POST"
+                                              action="/{{$lang}}/my-courses/quota-confirm-course/{{$notification->course->id}}"
+                                              id="quota_confirm_form">
+                                            {{ csrf_field() }}
                                             <span>{!!trans($notification->name, ['course_name' => '"'. optional($notification->course)->name .'"', 'lang' => $lang, 'course_id' => optional($notification->course)->id, 'opponent_id' => json_decode($notification->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($notification->data)[0]->course_reject_message ?? ''])!!}</span>
                                             @if($notification->course->quota_status == 1)
                                                 <div class="buttons">
@@ -56,8 +56,8 @@
                                                             class="ghost-btn small">{{__('notifications.reject_btn_title')}}</button>
                                                 </div>
                                             @endif
-                                        </li>
-                                    </form>
+                                        </form>
+                                    </li>
                                     <li class="break">
                                         <hr>
                                     </li>

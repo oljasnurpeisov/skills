@@ -13,7 +13,9 @@ class NotificationsHelper
         $notification->name = $name;
         $notification->course_id = $course_id;
         $notification->type = $type;
-        $notification->data = json_encode([$data]);
+        if ($data !== null){
+            $notification->data = json_encode([$data]);
+        }
         $notification->save();
 
         $notification->users()->sync([$recipient]);

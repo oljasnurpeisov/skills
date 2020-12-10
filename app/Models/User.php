@@ -65,6 +65,7 @@ use App\Notifications\VerifyEmail;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Models\PayInformation $payment_info
+ * @property-read \App\Models\StudentCertificate $certificates
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

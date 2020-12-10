@@ -30,6 +30,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|StudentInformation whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|StudentInformation whereUserId($value)
  * @mixin \Eloquent
+ * @property string|null $name
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentInformation whereName($value)
  */
 class StudentInformation extends Model
 {
