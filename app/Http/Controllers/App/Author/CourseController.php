@@ -520,7 +520,7 @@ class CourseController extends Controller
             });
 
             return redirect("/" . app()->getLocale() . "/my-courses/on-check")->with('status', __('default.pages.courses.publish_request_message'));
-        }else{
+        } else {
             return redirect()->back()->with('error', __('default.pages.courses.publish_failed_message'));
         }
     }
@@ -670,27 +670,56 @@ class CourseController extends Controller
         ]);
     }
 
-    public function statisticForChart()
+    public function statisticForChart(Request $request)
     {
-        $items = StudentCourse::whereHas('course', function ($q) {
-            $q->where('courses.author_id', '=', Auth::user()->id);
-        })->orderBy('created_at', 'asc')->where('paid_status', '!=', 0)->get()->groupBy(function ($val) {
-            return Carbon::parse($val->created_at)->format('d');
-        });
+        $data = [
+            'title1' => "Общий заработок",
+            'title2' => "Заработано по квотам",
+            'color1' => '#00C608',
+            'color2' => '#F2C94C',
+            'data' => [],
+        ];
 
-        $data = [];
-        foreach ($items as $item) {
-            array_push($data, ["date" => $item->first()->created_at, "value1" => $item->count(), "value2" => $item->where('paid_status', '=', 2)->count()]);
+        $dFrom = $request->get("date_from", Carbon::now()->subDays(90)->format('Y-m-d'));
+        $dTo = $request->get("date_to", Carbon::now()->format('Y-m-d'));
+
+        if ($dFrom === null && $dTo === null) {
+            $dFrom = Carbon::now()->subDays(90);
+            $dTo = Carbon::now();
+        } elseif ($dFrom === null) {
+            $time = strtotime($dTo);
+            $dFrom = Carbon::createFromTimestamp($time)->subDays(90);
+            $dTo = Carbon::createFromTimestamp($time);
+        } elseif ($dTo === null) {
+            $dFrom = strtotime($dFrom);
+            $dFrom = Carbon::createFromTimestamp($dFrom);
+            $dTo = Carbon::now();
+        } else {
+            $dFrom = strtotime($dFrom);
+            $dFrom = Carbon::createFromTimestamp($dFrom);
+            $dTo = strtotime($dTo);
+            $dTo = Carbon::createFromTimestamp($dTo);
         }
 
-        $json = '{
-  "title1": "Общий заработок",
-  "title2": "Заработано по квотам",
-  "color1": "#00C608",
-  "color2": "#F2C94C",
-  "data": ' . json_encode($data) . '
-}';
-        return json_decode($json, true);
+        $items = StudentCourse::whereHas('course', function ($q) {
+            $q->where('courses.author_id', '=', Auth::user()->id);
+        })
+            ->whereBetween('created_at', [$dFrom, $dTo->endOfDay()])
+            ->orderBy('created_at', 'asc')->where('paid_status', '!=', 0)
+            ->get()
+            ->groupBy(function ($val) {
+                return Carbon::parse($val->created_at)->format('d');
+            });
+
+
+        foreach ($items as $item) {
+            $data['data'][] = [
+                "date" => $item->first()->created_at,
+                "value1" => $item->count(),
+                "value2" => $item->where('paid_status', '=', 2)->count()];
+        }
+
+        return response()->json($data);
     }
 
     public function statisticForChartDemo(Request $request)
