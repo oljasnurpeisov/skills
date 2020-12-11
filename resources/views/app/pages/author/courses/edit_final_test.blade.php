@@ -53,8 +53,11 @@
                                                                             data-dz-name="">{{ basename($item->image) }}</span>
                                                                 </div>
                                                                 <div class="dz-size" data-dz-size="">
-                                                                    <strong> {{ $item->image ? round(filesize(public_path($item->image)) / 1024) : 0 }}</strong>
-                                                                    KB
+                                                                    @if(file_exists(public_path($item->image)))
+                                                                        <strong>{{ $item->image ? round(filesize(public_path($item->image)) / 1024) : 0 }}</strong>KB
+                                                                    @else
+                                                                        <strong>0</strong> KB
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                             <a href="javascript:undefined;"
