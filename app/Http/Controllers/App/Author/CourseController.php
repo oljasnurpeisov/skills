@@ -41,7 +41,6 @@ class CourseController extends Controller
         if ($request->is_paid and $request->cost > 0) {
             if ((Auth::user()->payment_info->merchant_login != null) and (Auth::user()->payment_info->merchant_password != null)) {
 
-
                 $item = new Course;
                 $item->name = $request->name;
                 $item->author_id = Auth::user()->id;
@@ -283,10 +282,9 @@ class CourseController extends Controller
         if ($members_count) {
             $query->whereHas('course_members', function ($q) use ($min_rating) {
                 $q->where('student_course.is_finished', '=', true)->whereIn('student_course.paid_status', [1, 2]);
-            })->withCount([
-                'course_members' => function ($q) {
-                    $q->whereIn('paid_status', [1, 2]);
-                }])->having('course_members_count', '>=', $members_count);
+            })->withCount(['course_members' => function ($q) {
+                $q->whereIn('paid_status', [1, 2]);
+            }])->having('course_members_count', '>=', $members_count);
         }
         // Получить профессии
         if ($specialities) {
@@ -342,9 +340,6 @@ class CourseController extends Controller
         } else {
             $average_rates = array_sum($rates) / count($rates);
         }
-
-//        $data = [['id' => 0, 'name' => "\u0422\u0435\u043C\u0430 1", 'order'=> 0, 'lessons'=> null, 'collapsed'=> !1]];
-
 
         if ($item->author_id == Auth::user()->id) {
             $themes = $item->themes()->orderBy('index_number', 'asc')->get();
@@ -513,14 +508,13 @@ class CourseController extends Controller
                 'course_id' => $item->id,
             ];
 
-
             Mail::send('app.pages.page.emails.new_verification_course', ['data' => $data], function ($message) use ($item, $recipients) {
                 $message->from(env("MAIL_USERNAME"), 'Enbek');
                 $message->to($recipients, 'Receiver')->subject(__('notifications.course_verification_title'));
             });
 
             return redirect("/" . app()->getLocale() . "/my-courses/on-check")->with('status', __('default.pages.courses.publish_request_message'));
-        }else{
+        } else {
             return redirect()->back()->with('error', __('default.pages.courses.publish_failed_message'));
         }
     }
@@ -585,7 +579,6 @@ class CourseController extends Controller
             return redirect()->back()->with('error', trans('notifications.course_quota_access_denied', ['course_name' => '"' . $item->name . '"']));
         }
 
-
     }
 
     public function reestablishCourse($lang, Course $item)
@@ -640,12 +633,12 @@ class CourseController extends Controller
         if ($request->sort_by == 'sort_by_rate_low') {
             $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
                 ->select('course_rate.rate as course_rate', 'courses.*')
-                ->orderBy('course_rate.rate', 'asc');
+                ->orderBy('course_rate.rate', 'asc')->groupBy('course_id');
             // Сортировка Рейтинг - по убыванию
         } else if ($request->sort_by == 'sort_by_rate_high') {
             $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
                 ->select('course_rate.rate as course_rate', 'courses.*')
-                ->orderBy('course_rate.rate', 'desc');
+                ->orderBy('course_rate.rate', 'desc')->groupBy('course_id');
             // Сортировка Количество обучающихся - по возрастанию
         } else if ($request->sort_by == 'sort_by_members_count_low') {
             $query->withCount('course_members')->orderBy('course_members_count', 'asc');
@@ -670,27 +663,56 @@ class CourseController extends Controller
         ]);
     }
 
-    public function statisticForChart()
+    public function statisticForChart(Request $request)
     {
-        $items = StudentCourse::whereHas('course', function ($q) {
-            $q->where('courses.author_id', '=', Auth::user()->id);
-        })->orderBy('created_at', 'asc')->where('paid_status', '!=', 0)->get()->groupBy(function ($val) {
-            return Carbon::parse($val->created_at)->format('d');
-        });
+        $data = [
+            'title1' => "Общий заработок",
+            'title2' => "Заработано по квотам",
+            'color1' => '#00C608',
+            'color2' => '#F2C94C',
+            'data' => [],
+        ];
 
-        $data = [];
-        foreach ($items as $item) {
-            array_push($data, ["date" => $item->first()->created_at, "value1" => $item->count(), "value2" => $item->where('paid_status', '=', 2)->count()]);
+        $dFrom = $request->get("date_from", Carbon::now()->subDays(90)->format('Y-m-d'));
+        $dTo = $request->get("date_to", Carbon::now()->format('Y-m-d'));
+
+        if ($dFrom === null && $dTo === null) {
+            $dFrom = Carbon::now()->subDays(90);
+            $dTo = Carbon::now();
+        } elseif ($dFrom === null) {
+            $time = strtotime($dTo);
+            $dFrom = Carbon::createFromTimestamp($time)->subDays(90);
+            $dTo = Carbon::createFromTimestamp($time);
+        } elseif ($dTo === null) {
+            $dFrom = strtotime($dFrom);
+            $dFrom = Carbon::createFromTimestamp($dFrom);
+            $dTo = Carbon::now();
+        } else {
+            $dFrom = strtotime($dFrom);
+            $dFrom = Carbon::createFromTimestamp($dFrom);
+            $dTo = strtotime($dTo);
+            $dTo = Carbon::createFromTimestamp($dTo);
         }
 
-        $json = '{
-  "title1": "Общий заработок",
-  "title2": "Заработано по квотам",
-  "color1": "#00C608",
-  "color2": "#F2C94C",
-  "data": ' . json_encode($data) . '
-}';
-        return json_decode($json, true);
+        $items = StudentCourse::whereHas('course', function ($q) {
+            $q->where('courses.author_id', '=', Auth::user()->id);
+        })
+            ->whereBetween('created_at', [$dFrom, $dTo->endOfDay()])
+            ->orderBy('created_at', 'asc')->where('paid_status', '!=', 0)
+            ->get()
+            ->groupBy(function ($val) {
+                return Carbon::parse($val->created_at)->format('d');
+            });
+
+
+        foreach ($items as $item) {
+            $data['data'][] = [
+                "date" => $item->first()->created_at,
+                "value1" => $item->count(),
+                "value2" => $item->where('paid_status', '=', 2)->count()];
+        }
+
+        return response()->json($data);
     }
 
     public function statisticForChartDemo(Request $request)
@@ -752,7 +774,6 @@ class CourseController extends Controller
             ->endOfDay()
             ->toDateTimeString();
 
-//        $query = Auth::user()->courses();
         $query = Course::where('author_id', '=', Auth::user()->id)
             // Рейтинг
             ->with(['rate' => function ($q) use ($date_from, $date_to) {

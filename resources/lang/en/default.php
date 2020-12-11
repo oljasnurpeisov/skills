@@ -12,6 +12,7 @@ return [
 
     'pages' => [
         'courses' => [
+            'course_title' => 'Курс',
             'drafts' => 'Черновики',
             'my_courses_title' => 'Мои курсы',
             'create_course' => 'Создать курс',
@@ -332,8 +333,9 @@ return [
 
             'old_password' => 'Старый пароль',
             'new_password' => 'Новый пароль',
-            'confirm_new_password' => 'Повторите новый пароль'
+            'confirm_new_password' => 'Повторите новый пароль',
 
+            'student_title' => 'Обучающийся',
         ],
         'calendar' => [
             'today' => 'Сегодня',
@@ -453,6 +455,10 @@ return [
             'phone' => '1411',
             'social_networks' => 'Социальные сети',
 
+        ],
+
+        'faq' => [
+            'tech_support_title' => 'Подать обращение'
         ],
 
     ],

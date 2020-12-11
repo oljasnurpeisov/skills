@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App\Student;
 
 use App\Extensions\FormatDate;
+use App\Extensions\NotificationsHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Lesson;
@@ -34,7 +35,6 @@ class LessonController extends Controller
             "theme" => $theme,
             "time" => $time
         ]);
-
 
         if (!empty($lesson->lesson_student)) {
             // Если доступ к курсу есть
@@ -126,11 +126,11 @@ class LessonController extends Controller
                 // Проверить завершенность уроков
                 $all_course_lessons = $course->lessons()->whereNotIn('type', [3, 4])->pluck('id')->toArray();
                 $finished_lessons = Auth::user()->student_lesson()->where('course_id', '=', $course->id)->where('is_finished', '=', true)->pluck('lesson_id')->toArray();
-                switch ($lesson->type){
+                switch ($lesson->type) {
                     case (3):
                         if (array_diff($all_course_lessons, $finished_lessons) == []) {
                             $this->syncUserLessons($lesson->id);
-                        }else{
+                        } else {
                             return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
                         }
                         break;
@@ -157,7 +157,6 @@ class LessonController extends Controller
                 return $return_view;
             }
         }
-
 
     }
 
@@ -338,9 +337,7 @@ class LessonController extends Controller
                 $lesson->lesson_student->is_finished = true;
                 $lesson->lesson_student->save();
 
-//                if ($lesson->type == 4){
                 $this->finishedCourse($course);
-//                }
             }
 
 
@@ -388,8 +385,6 @@ class LessonController extends Controller
                 } else {
                     $coursework = $course->lessons()->where('type', '=', 3)->first();
                     $final_test = $course->lessons->where('type', '=', 4)->first();
-//                    $coursework_item = StudentLesson::where('lesson_id', '=', $coursework->id)->where('student_id', '=', Auth::user()->id)->first();
-//                    $final_test_item = StudentLesson::where('lesson_id', '=', $final_test->id)->where('student_id', '=', Auth::user()->id)->first();
 
                     if (!empty($coursework) and ($coursework->id != $lesson->id)) {
                         $this->syncUserLessons($coursework->id);
@@ -428,15 +423,22 @@ class LessonController extends Controller
         // Если кол-во уроков и кол-во завершенных уроков равно, то отметить курс как завершенный
         if ($course->lessons->count() == $student_finished_lessons->count()) {
             $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $course->id)->first();
-            $student_course->is_finished = true;
-            $student_course->save();
+            if ($student_course->is_finished == false) {
+                $student_course->is_finished = true;
+                $student_course->save();
 
-            $user_certificate = StudentCertificate::where('user_id', '=', Auth::user()->id)
-                ->where('course_id', '=', $course->id)->first();
-            if (empty($user_certificate)) {
-                $this->saveCertificates($course, $student_course);
+                // Сохранить сертификат
+                $user_certificate = StudentCertificate::where('user_id', '=', Auth::user()->id)
+                    ->where('course_id', '=', $course->id)->first();
+                if (empty($user_certificate)) {
+                    $this->saveCertificates($course, $student_course);
+                }
+                // Присвоить обучающемуся полученные навыки
+                Auth::user()->skills()->sync($course->skills->pluck('id')->toArray(), false);
+                // Отправить уведомление
+                $notification_name = "notifications.course_student_finished";
+                NotificationsHelper::createNotification($notification_name, $course->id, Auth::user()->id);
             }
-
         }
     }
 
@@ -457,7 +459,7 @@ class LessonController extends Controller
     {
         $languages = ["ru", "kk"];
 
-        foreach ($languages as $language){
+        foreach ($languages as $language) {
             $data = [
                 'author_name' => $course->user->author_info->name . ' ' . $course->user->author_info->surname,
                 'student_name' => Auth::user()->student_info->name,
@@ -466,14 +468,14 @@ class LessonController extends Controller
                 'skills' => $course->skills,
                 'certificate_id' => 1,
             ];
-            $pdf = PDF::loadView('app.pages.page.pdf.certificate_'.$course->certificate_id.'_'.$language, ['data' => $data]);
+            $pdf = PDF::loadView('app.pages.page.pdf.certificate_' . $course->certificate_id . '_' . $language, ['data' => $data]);
             $pdf = $pdf->setPaper('a4', 'portrait');
 
             $path = public_path('users/user_' . Auth::user()->id . '');
-            $pdf->save($path . '/' . 'course_' . $course->id . '_certificate_'.$language.'.pdf');
+            $pdf->save($path . '/' . 'course_' . $course->id . '_certificate_' . $language . '.pdf');
 
-            $pdf = new \Spatie\PdfToImage\Pdf($path . '/' . 'course_' . $course->id . '_certificate_'.$language.'.pdf');
-            $pdf->saveImage($path.'/'. 'course_' . $course->id . '_image_'.$language.'.png');
+            $pdf = new \Spatie\PdfToImage\Pdf($path . '/' . 'course_' . $course->id . '_certificate_' . $language . '.pdf');
+            $pdf->saveImage($path . '/' . 'course_' . $course->id . '_image_' . $language . '.png');
         }
 
         $file_path = '/users/user_' . Auth::user()->id . '';
@@ -481,11 +483,10 @@ class LessonController extends Controller
         $certificate = new StudentCertificate;
         $certificate->user_id = Auth::user()->id;
         $certificate->course_id = $course->id;
-        $certificate->pdf_ru = $file_path.'/' . 'course_' . $course->id . '_certificate_'.$languages[0].'.pdf';
-        $certificate->pdf_kk = $file_path.'/' . 'course_' . $course->id . '_certificate_'.$languages[1].'.pdf';
-        $certificate->png_ru = $file_path.'/' . 'course_' . $course->id . '_image_'.$languages[0].'.png';
-        $certificate->png_kk = $file_path.'/' . 'course_' . $course->id . '_image_'.$languages[1].'.png';
+        $certificate->pdf_ru = $file_path . '/' . 'course_' . $course->id . '_certificate_' . $languages[0] . '.pdf';
+        $certificate->pdf_kk = $file_path . '/' . 'course_' . $course->id . '_certificate_' . $languages[1] . '.pdf';
+        $certificate->png_ru = $file_path . '/' . 'course_' . $course->id . '_image_' . $languages[0] . '.png';
+        $certificate->png_kk = $file_path . '/' . 'course_' . $course->id . '_image_' . $languages[1] . '.png';
         $certificate->save();
-
     }
 }

@@ -66,13 +66,6 @@ class Lesson extends Model
 
     public $timestamps = true;
 
-
-//    public function themes() {
-//
-//        return $this->belongsToMany(Theme::class,'theme_lesson');
-//
-//    }
-
     public function themes()
     {
         return $this->hasOne(Theme::class, 'id', 'theme_id');

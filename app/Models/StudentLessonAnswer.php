@@ -33,6 +33,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $student_lesson_id
  * @method static \Illuminate\Database\Eloquent\Builder|StudentLessonAnswer whereAnswer($value)
  * @method static \Illuminate\Database\Eloquent\Builder|StudentLessonAnswer whereStudentLessonId($value)
+ * @property string|null $videos
+ * @property string|null $audios
+ * @property string|null $another_files
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentLessonAnswer whereAnotherFiles($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentLessonAnswer whereAudios($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentLessonAnswer whereVideos($value)
  */
 class StudentLessonAnswer extends Model
 {

@@ -65,6 +65,7 @@ use App\Notifications\VerifyEmail;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Models\PayInformation $payment_info
+ * @property-read \App\Models\StudentCertificate $certificates
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -74,9 +75,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $table = 'users';
 
-//    protected $fillable = [
-//        'id', 'email', 'name', 'iin', 'type_of_ownership', 'company_name', 'company_logo', 'password', 'email_verified_at'
-//    ];
     protected $guarded = [];
 
     public $timestamps = true;

@@ -28,7 +28,7 @@
                                                   action="/{{$lang}}/my-courses/quota-confirm-course/{{$notification->course->id}}"
                                                   id="quota_confirm_form">
                                                 {{ csrf_field() }}
-                                                {!!trans($notification->name, ['course_name' => '"'.$notification->course->name.'"'])!!}
+                                                {!!trans($notification->name, ['course_name' => '"'.$notification->course->name.'"', 'lang' => $lang, 'course_id' => $notification->course->id])!!}
                                                 @if($notification->course->quota_status == 1)
                                                     <div class="buttons">
                                                         <button name="action" value="confirm" title="{{__('notifications.confirm_btn_title')}}"
@@ -44,7 +44,7 @@
                                 @else
                                     <div class="notification">
                                         <div class="notification__text">
-                                            {!!trans($notification->name, ['course_name' => '"'.$notification->course->name.'"'])!!}
+                                            {!!trans($notification->name, ['course_name' => '"'. optional($notification->course)->name .'"', 'lang' => $lang, 'course_id' => optional($notification->course)->id, 'opponent_id' => json_decode($notification->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($notification->data)[0]->course_reject_message ?? ''])!!}
                                         </div>
                                         <div class="notification__date">{{\App\Extensions\FormatDate::formatDate($notification->created_at->format("d.m.Y, H:i"))}}</div>
                                     </div>

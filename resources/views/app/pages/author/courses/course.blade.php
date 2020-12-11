@@ -44,7 +44,7 @@
                                         </div>
                                         <div class="attributes-item">
                                             <i class="icon-star-full"> </i>
-                                            <span>{{$item->rate->pluck('rate')->avg() ?? 0}}</span>
+                                            <span>{{round($item->rate->pluck('rate')->avg() ?? 0, 1)}}</span>
                                         </div>
                                     </div>
                                 </div>

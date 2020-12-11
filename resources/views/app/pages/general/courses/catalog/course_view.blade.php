@@ -38,7 +38,7 @@
                                         </div>
                                         <div class="attributes-item">
                                             <i class="icon-star-full"> </i>
-                                            <span>{{$item->rate->pluck('rate')->avg() ?? 0}}</span>
+                                            <span>{{round($item->rate->pluck('rate')->avg() ?? 0, 1)}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -233,49 +233,43 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="article-section">
-                                <h2 class="title-secondary">Отзывы</h2>
-                                <div>
-                                    <div class="review">
-                                        <div class="review__header">
-                                            <div class="review__name">Алиса Сергеевна</div>
-                                            <div class="rating">
-                                                <div class="rating__stars">
-                                                    <i class="icon-star-full"> </i>
-                                                    <i class="icon-star-full"> </i>
-                                                    <i class="icon-star-full"> </i>
-                                                    <i class="icon-star-full"> </i>
-                                                    <i class="icon-star-half"> </i>
+                            @if($course_rates->count() > 0)
+                                <div class="article-section">
+                                    <h2 class="title-secondary">{{__('default.pages.courses.feedback_title')}}</h2>
+                                    <div>
+                                        @foreach($course_rates as $rate)
+                                            <div class="review">
+                                                <div class="review__header">
+                                                    <div class="review__name">{{$rate->student->student_info->name ?? __('default.pages.profile.student_title')}}</div>
+                                                    <div class="rating">
+                                                        <div class="rating__stars">
+                                                            <?php
+                                                            for ($x = 1; $x <= $rate->rate; $x++) {
+                                                                echo '<i class="icon-star-full"> </i>';
+                                                            }
+                                                            if (strpos($rate->rate, '.')) {
+                                                                echo '<i class="icon-star-half"> </i>';
+                                                                $x++;
+                                                            }
+                                                            while ($x <= 5) {
+                                                                echo '<i class="icon-star-empty"> </i>';
+                                                                $x++;
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="review__text">
+                                                    {!! $rate->description !!}
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="review__text">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua.
-                                        </div>
+                                        @endforeach
                                     </div>
-                                    <div class="review">
-                                        <div class="review__header">
-                                            <div class="review__name">Кларинов Сергей</div>
-                                            <div class="rating">
-                                                <div class="rating__stars">
-                                                    <i class="icon-star-full"> </i>
-                                                    <i class="icon-star-full"> </i>
-                                                    <i class="icon-star-full"> </i>
-                                                    <i class="icon-star-full"> </i>
-                                                    <i class="icon-star-half"> </i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="review__text">
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                            consequat. Duis aute irure dolor in reprehenderit.
-                                        </div>
+                                    <div class="text-center">
+                                        {{ $course_rates->links('vendor.pagination.default') }}
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4">

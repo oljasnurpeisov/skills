@@ -131,8 +131,7 @@
                             <div class="step__number">1</div>
                             <div>
                                 <h4 class="step__title">Зарегистрируйтесь</h4>
-                                <div class="step__text">Quis convallis laoreet porta eget mauris non lorem etiam integer
-                                    justo phasellus senectus pellentesque
+                                <div class="step__text">Первый шаг создания партнерства с нами это - регистрация на сайте в качества разработчика курсов
                                 </div>
                             </div>
                         </div>
@@ -142,8 +141,7 @@
                             <div class="step__number">2</div>
                             <div>
                                 <h4 class="step__title">Создайте курс</h4>
-                                <div class="step__text">Mi urna pellentesque commodo nisl quis consequat, volutpat nulla
-                                    tristique fames lectus nunc nam
+                                <div class="step__text">Создайте курс заполнив поля и  загрузив аудио/видео материалы следуя подсказкам
                                 </div>
                             </div>
                         </div>
@@ -153,8 +151,7 @@
                             <div class="step__number">3</div>
                             <div>
                                 <h4 class="step__title">Пройдите модерацию</h4>
-                                <div class="step__text">Tellus aliquam, velit orci, sit aliquam tellus sed enim sit at
-                                    mauris eu, nam
+                                <div class="step__text">Для включения Вас в ряды разработчиков курсов мы проверим созданный Вами курс на соответствие критериям нашего  методологического пособия
                                 </div>
                             </div>
                         </div>
@@ -164,8 +161,7 @@
                             <div class="step__number">4</div>
                             <div>
                                 <h4 class="step__title">Начните зарабатывать</h4>
-                                <div class="step__text">Quis convallis laoreet porta eget mauris non lorem etiam integer
-                                    justo phasellus senectus pellentesque
+                                <div class="step__text">После успешного прохождения модерации - Вы часть нашей команды!
                                 </div>
                             </div>
                         </div>

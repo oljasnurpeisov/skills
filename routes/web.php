@@ -57,6 +57,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
             // Пользователи
             Route::group(['middleware' => 'check.permission:admin.users'], static function () {
                 Route::get('/user/index', 'UserController@index');
+                Route::get('/user/index_all', 'UserController@index_all');
                 Route::get('/user/create', 'UserController@create');
                 Route::post('/user/create', 'UserController@store');
                 Route::get('/user/{item}/passwordUpdate', 'UserController@passwordUpdate');
@@ -157,14 +158,17 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
         Route::post('/ajax_upload_lesson_audios', 'AjaxUploadController@ajaxUploadLessonAudios');
         // Сохранение других материалов урока
         Route::post('/ajax_upload_lesson_another_files', 'AjaxUploadController@ajaxUploadLessonAnotherFiles');
+        Route::post('/ajax_upload_lesson_another_file', 'AjaxUploadController@ajaxUploadLessonAnotherFile');
 
     });
     //
     Route::group(['prefix' => '{lang}'], function () {
         Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
             Route::get("/", "PageController@index");
-
+            // Для авторов
             Route::get("/for-authors", "PageController@for_authors");
+            // FAQ
+            Route::get("/faq", "PageController@faq");
             // Курсы
             Route::get("/course-catalog", "CourseController@courseCatalog");
             Route::get("/course-catalog/course/{item}", "CourseController@courseView");

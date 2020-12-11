@@ -57,9 +57,6 @@ class PageController extends Controller
             $author->rates = 0;
             $rates_array = [];
 
-//            $rates = $author->rates_array;
-//            $author->rates_array = [];
-
             foreach ($author->courses as $course) {
                 // Количество купленных курсов
                 foreach ($course->course_members as $member) {
@@ -89,14 +86,12 @@ class PageController extends Controller
 
         $popular_authors = $popular_authors->sortByDesc("members")->take(8);
 
-
         return view("index", [
             "courses" => $courses ?? [],
             "skills" => $skills ?? [],
             "popular_courses" => $popular_courses,
             "popular_authors" => $popular_authors,
         ]);
-//        return $popular_authors;
     }
 
     public function for_authors(){
@@ -105,9 +100,14 @@ class PageController extends Controller
         ]);
     }
 
+    public function faq(){
+        return view("app.pages.general.faq", [
+
+        ]);
+    }
+
     public function notifications()
     {
-
         $notifications = Auth::user()->notifications()->orderBy('created_at', 'desc')->paginate(5);
 
         return view("app.pages.general.notifications.notifications", [

@@ -27,6 +27,7 @@
                     <li><a href="/{{$lang}}/admin/author/index">{{ __('admin.pages.authors.list') }}</a></li>
                     @endhasPermission
                     <li><a href="/{{$lang}}/admin/student/index">{{ __('admin.pages.students.list') }}</a></li>
+                    <li><a href="/{{$lang}}/admin/user/index_all">{{ __('admin.pages.users.list') }}</a></li>
                     <li><a href="/{{$lang}}/admin/user/create" class="add">+{{ __('admin.pages.users.create') }}</a></li>
                 </ul>
             </li>

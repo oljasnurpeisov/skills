@@ -33,60 +33,6 @@
                         <span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
                     @endif
                 </div>
-                <div class="input-group {{ $errors->has('iin') ? ' has-error' : '' }}">
-                    <label class="input-group__title">{{ __('admin.pages.user.iin_bin') }} *</label>
-                    <input type="text" name="iin" value="{{ $item->iin }}"
-                           placeholder="{{ __('admin.labels.fill_field',['field' => __('admin.pages.user.iin_bin')]) }}"
-                           class="input-regular" required>
-                    @if ($errors->has('iin'))
-                        <span class="help-block"><strong>{{ $errors->first('iin') }}</strong></span>
-                    @endif
-                </div>
-                <div class="input-group {{ $errors->has('type_of_ownership') ? ' has-error' : '' }}">
-                    <label class="input-group__title">{{ __('admin.pages.user.type_of_ownership') }} *</label>
-                    <select name="type_of_ownership" id="type_of_ownership" class="input-regular chosen" data-placeholder=" " required>
-                        @foreach($types_of_ownership as $type)
-                            <option value="{{ $type->id }}">{{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}</option>
-                        @endforeach
-                    </select>
-                    @if ($errors->has('type_of_ownership'))
-                        <span class="help-block"><strong>{{ $errors->first('type_of_ownership') }}</strong></span>
-                    @endif
-                </div>
-                <div class="input-group {{ $errors->has('iin') ? ' has-error' : '' }}">
-                    <label class="input-group__title">{{ __('admin.pages.user.company_name') }} *</label>
-                    <input type="text" name="company_name" value="{{ $item->company_name }}"
-                           placeholder="{{ __('admin.labels.fill_field',['field' => __('admin.pages.user.company_name')]) }}"
-                           class="input-regular" required>
-                    @if ($errors->has('iin'))
-                        <span class="help-block"><strong>{{ $errors->first('company_name') }}</strong></span>
-                    @endif
-                </div>
-                <div class="input-group {{ $errors->has('company_logo') ? ' has-error' : '' }}">
-                    <label class="input-group__title">{{ __('admin.pages.user.company_logo') }}</label>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img src="{{$item->getAvatar()}}" id="avatar_image" class="file-upload-image" style="height: 150px">
-                        </div>
-                        <div class="col-md-10">
-                            <input type="hidden" name="company_logo" value="">
-                            <div id="avatar" class="file-upload">
-                                <div id="avatar_uploader" class="file">
-                                    <div class="progress">
-                                        <div class="progress-bar"></div>
-                                    </div>
-                                    <span class="file__name">
-                                    .png, .jpg • 1 MB<br/>
-                                    <strong>{{ __('admin.labels.upload_image') }}</strong>
-                                </span>
-                                </div>
-                            </div>
-                            @if ($errors->has('company_logo'))
-                                <span class="help-block"><strong>{{ $errors->first('company_logo') }}</strong></span>
-                            @endif
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="block">
                 <h2 class="title-secondary" style="margin-bottom: .3125em;">{{ __('admin.pages.user.role') }} *</h2>
@@ -95,6 +41,7 @@
                         {{--<option value="" selected>-</option>--}}
                         @foreach($roles as $role)
                             <option value="{{ $role->id }}"
+                                    @if ($role->slug == 'student') @continue @endif
                                     @if($role->id === 3) selected @endif>{{ $role->name }}</option>
                             {{--<option value="{{ $role->id }}">{{ $role->name }}</option>--}}
                         @endforeach
