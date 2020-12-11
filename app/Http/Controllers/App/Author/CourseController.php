@@ -704,9 +704,18 @@ class CourseController extends Controller
                 return Carbon::parse($val->created_at)->format('d');
             });
 
+        while ($dFrom <= $dTo) {
+            $data['data'][] = [
+                'date' => $dFrom->format("Y-m-d"),
+                'value1' => 0,
+                'value2' => 0,
+            ];
+            $dFrom = $dFrom->addDay();
+        }
 
         foreach ($items as $item) {
-            $data['data'][] = [
+            $key = array_search($item->first()->created_at->format("Y-m-d"), array_column($data['data'], 'date'));
+            $data['data'][$key] = [
                 "date" => $item->first()->created_at,
                 "value1" => $item->count(),
                 "value2" => $item->where('paid_status', '=', 2)->count()];

@@ -47,7 +47,17 @@
                 </ul>
             </li>
             @endhasPermission
-
+            @hasPermission('admin.pages')
+            <li class="dropdown">
+                <a href="javascript:;" title="{{ __('admin.pages.static_pages.title') }}">
+                    <i class="icon-reports"></i> {{ __('admin.pages.static_pages.title') }}
+                </a>
+                <ul>
+                    <li><a href="/{{$lang}}/admin/static-pages/main">{{ __('admin.pages.static_pages.main') }}</a></li>
+                    <li><a href="/{{$lang}}/admin/static-pages/for-authors">{{ __('admin.pages.static_pages.for_authors') }}</a></li>
+                </ul>
+            </li>
+            @endhasPermission
         </ul>
     </div>
 </aside>

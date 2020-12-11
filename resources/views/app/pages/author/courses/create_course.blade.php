@@ -57,7 +57,7 @@
                             </div>
                             <div class="form-group" id="paidFormgroup" style="display:none;">
                                 <label class="form-group__label">{{__('default.pages.courses.course_cost')}} *</label>
-                                <input type="text" name="cost" placeholder="" class="input-regular" value="{{ old('cost') }}">
+                                <input type="number" name="cost" placeholder="" class="input-regular" value="{{ old('cost') }}">
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_profit')}} *</label>

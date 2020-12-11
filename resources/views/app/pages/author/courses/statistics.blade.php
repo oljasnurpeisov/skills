@@ -62,7 +62,8 @@
                         <div class="form-group">
                             <label class="form-group__label">{{__('default.pages.statistics.date_from')}}:</label>
                             <div class="input-group">
-                                <input type="text" name="dateFrom" value="{{ date('d.m.Y',strtotime('-90 days')) }}" placeholder=""
+                                <input type="text" name="dateFrom" value="{{ date('d.m.Y',strtotime('-90 days')) }}"
+                                       placeholder=""
                                        class="input-regular">
                                 <i class="icon-calendar"></i>
                             </div>

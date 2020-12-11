@@ -104,6 +104,10 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post("/course-{course}/lesson-{lesson}/admin-test-submit", "PreviewCourseController@submitTest");
 
             });
+            // Страницы
+            Route::group(['middleware' => 'check.permission:admin.pages'], static function () {
+                Route::get('/static-pages/main', 'PageController@main');
+            });
         });
     });
 });
