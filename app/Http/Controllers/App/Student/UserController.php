@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\Dialog;
 use App\Models\PayInformation;
 use App\Models\Role;
@@ -22,6 +23,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
+use PDF;
 
 
 class UserController extends Controller
@@ -194,11 +196,28 @@ class UserController extends Controller
 
     public function myCertificates(){
 
-        $certificates = StudentCertificate::where('user_id', '=', Auth::user()->id)->get();
+//        $certificates = StudentCertificate::where('user_id', '=', Auth::user()->id)
+//            ->orderBy('created_at', 'desc')
+//            ->get();
+//
+//        return view("app.pages.student.profile.my_certificates", [
+//            'items' => $certificates
+//        ]);
 
-        return view("app.pages.student.profile.my_certificates", [
-            'items' => $certificates
-        ]);
+        $course = Course::find(27);
+
+        $data = [
+            'author_name' => $course->user->author_info->name . ' ' . $course->user->author_info->surname,
+            'student_name' => Auth::user()->student_info->name,
+            'duration' => $course->lessons->sum('duration'),
+            'course_name' => $course->name,
+            'skills' => $course->skills,
+            'certificate_id' => 1,
+            'date_of_issue' => '$student_course',
+        ];
+        $pdf = PDF::loadView('app.pages.page.pdf.certificate_1_kk', ['data' => $data]);
+        $pdf = $pdf->setPaper('a4', 'portrait');
+        return $pdf->stream();
     }
 
 }

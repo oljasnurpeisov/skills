@@ -191,7 +191,7 @@
                                                             <input type="text" name="start_date_from"
                                                                    placeholder="{{__('default.from')}}"
                                                                    class="input-regular custom-datepicker"
-                                                                   value="{{$start_date_from}}">
+                                                                   value="{{$start_date_from}}" autocomplete="off">
                                                             <i class="icon-calendar"></i>
                                                         </div>
                                                     </div>
@@ -202,7 +202,7 @@
                                                             <input type="text" name="start_date_to"
                                                                    placeholder="{{__('default.to')}}"
                                                                    class="input-regular custom-datepicker"
-                                                                   value="{{$start_date_to}}">
+                                                                   value="{{$start_date_to}}" autocomplete="off">
                                                             <i class="icon-calendar"></i>
                                                         </div>
                                                     </div>
@@ -222,7 +222,7 @@
                                                             <input type="text" name="finish_date_from"
                                                                    placeholder="{{__('default.from')}}"
                                                                    class="input-regular custom-datepicker"
-                                                                   value="{{$finish_date_from}}">
+                                                                   value="{{$finish_date_from}}" autocomplete="off">
                                                             <i class="icon-calendar"></i>
                                                         </div>
                                                     </div>
@@ -233,7 +233,7 @@
                                                             <input type="text" name="finish_date_to"
                                                                    placeholder="{{__('default.to')}}"
                                                                    class="input-regular custom-datepicker"
-                                                                   value="{{$finish_date_to}}">
+                                                                   value="{{$finish_date_to}}" autocomplete="off">
                                                             <i class="icon-calendar"></i>
                                                         </div>
                                                     </div>

@@ -8,73 +8,73 @@
     <title>Сертификат</title>
     <style>
         @font-face {
-            font-family: 'Gotham Pro';
+            font-family: 'Gotham';
             font-weight: bold;
             font-style: italic;
         }
 
         @font-face {
-            font-family: 'Gotham Pro';
+            font-family: 'Gotham';
             font-weight: normal;
             font-style: italic;
         }
 
         @font-face {
-            font-family: 'Gotham Pro';
+            font-family: 'Gotham';
             font-weight: 500;
             font-style: normal;
         }
 
         @font-face {
-            font-family: 'Gotham Pro';
+            font-family: 'Gotham';
             font-weight: 900;
             font-style: italic;
         }
 
         @font-face {
-            font-family: 'Gotham Pro';
+            font-family: 'Gotham';
             font-weight: bold;
             font-style: normal;
         }
 
         @font-face {
-            font-family: 'Gotham Pro Narrow';
+            font-family: 'Gotham';
             font-weight: bold;
             font-style: normal;
         }
 
         @font-face {
-            font-family: 'Gotham Pro Narrow';
+            font-family: 'Gotham';
             font-weight: 500;
             font-style: normal;
         }
 
         @font-face {
-            font-family: 'Gotham Pro';
+            font-family: 'Gotham';
             font-weight: 300;
             font-style: italic;
         }
 
         @font-face {
-            font-family: 'Gotham Pro';
+            font-family: 'Gotham';
             font-weight: 300;
             font-style: normal;
         }
 
         @font-face {
-            font-family: 'Gotham Pro';
+            font-family: 'Gotham';
             font-weight: 900;
             font-style: normal;
         }
 
         @font-face {
-            font-family: 'Gotham Pro';
+            font-family: 'Gotham';
             font-weight: normal;
             font-style: normal;
         }
 
         @font-face {
-            font-family: 'Gotham Pro';
+            font-family: 'Gotham';
             font-weight: 500;
             font-style: italic;
         }
@@ -88,7 +88,7 @@
         }
 
         body {
-            font-family: 'Gotham Pro';
+            font-family: 'Gotham';
             margin: 0;
             width: 793px;
             height: 100%;
@@ -219,9 +219,6 @@
             left: 98px;
         }
 
-        .custom_font {
-            font-family: "dejavu serif";
-        }
     </style>
 </head>
 <body>
@@ -241,25 +238,24 @@
                 {{$data['student_name']}}
             </div>
             <div class="diploma__text">
-                <span>{{round($data['duration'] / 60)}} са<span class="custom_font">ғ</span>ат к<span class="custom_font">ө</span>лемінде</span><br/>
+                <span>{{round($data['duration'] / 60)}} сағат көлемінде</span><br/>
                 <strong><span>«{{$data['course_name']}}»</span></strong>,<br/>
-                <strong>Enbek.kz</strong> ар<span class="custom_font">қ</span>ылы берілген,<br/>
-                курстан <span class="custom_font">ө</span>ткенін ж<span class="custom_font">ә</span>не келесі <span class="custom_font">қ</span>абілеттерге:
+                <strong>Enbek.kz</strong> арқылы берілген,<br/>
+                курстан өткенін және келесі қабілеттерге:
             </div>
-            <div class="diploma__text-cursive custom_font">
+            <div class="diploma__text-cursive">
                 @foreach($data['skills'] as $skill)
                     - {{$skill->name_kk}}<br/>
                 @endforeach
             </div>
             <div class="diploma__text">
-                ие бол<span class="custom_font">ғ</span>анын растайды
+                ие болғанын растайды
             </div>
 
-            <!--<img src="http://dev14.panama.kz/assets/img/certificates/hr.png" alt="" class="diploma__hr second">-->
             <div class="diploma__info">
-                <span>Ку<span class="custom_font">ә</span>лікті<span class="custom_font">ң</span> с<span class="custom_font">ә</span>йкестендіру н<span class="custom_font">ө</span>мірі:<br/><strong>00001012020</strong></span>
+                <span>Куәліктің сәйкестендіру нөмірі:<br/><strong>00001012020</strong></span>
                 <hr>
-                <span>Берілген к<span class="custom_font">ү</span>ні:<br/> {{date('d.m.Y')}}</span>
+                <span>Берілген күні:<br/> {{date('d.m.Y')}}</span>
             </div>
             <img src="http://dev14.panama.kz/assets/img/certificates/certificate-logo.png" alt=""
                  class="diploma__logo">

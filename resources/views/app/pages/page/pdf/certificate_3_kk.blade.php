@@ -192,37 +192,31 @@
             Сертификат
         </div>
         <div class="diploma__text">
-            Настоящим сертификатом <br/>
-            <strong><span>«очень-преочень длинное наименование автора в несколько строк»</span></strong><br>
-            подтверждает, что
+            <strong><span>«{{$data['author_name']}}»</span></strong><br>
+            осы сертификатпен
         </div>
         <div class="diploma__name">
-            ФИО обучающегося в несколько строк
+            {{$data['student_name']}}
         </div>
         <div class="diploma__text">
-            в течение 80 часов прошел(ла) курс<br/>
-            <strong><span>«наименование курса в несколько строк, чтобы убедиться, что все влезет, если оно будет длинное»</span></strong>,<br/>
-            предоставленный через <strong>Enbek.kz</strong>,<br/>
-            и получил(а) навык/навыки:
+            <span>{{round($data['duration'] / 60)}} сағат көлемінде</span><br/>
+            <strong><span>«{{$data['course_name']}}»</span></strong>,<br/>
+            <strong>Enbek.kz</strong> арқылы берілген,<br/>
+            курстан өткенін және келесі қабілеттерге:
         </div>
         <div class="diploma__text-cursive">
-            - производство биологически активных добавок<br/>
-            - внедрение легального программного обеспечения<br/>
-            - производство нетканых текстильных изделий<br/>
-            - Эмпирические социальные исследования<br/>
-            - экологическая наука и техника<br/>
-            - производство биологически активных добавок<br/>
-            - внедрение легального программного обеспечения<br/>
-            - производство нетканых текстильных изделий<br/>
-            - Эмпирические социальные исследования<br/>
-            - экологическая наука и техника
+            @foreach($data['skills'] as $skill)
+                - {{$skill->name_kk}}<br/>
+            @endforeach
+        </div>
+        <div class="diploma__text">
+            ие болғанын растайды
         </div>
 
         <div class="diploma__info">
-                            <span>Идентификационный<br/>
-                                номер сертификата<br/><strong>00001012020</strong></span>
+            <span>Куәліктің сәйкестендіру нөмірі:<br/><strong>00001012020</strong></span>
             <hr>
-            <span>Дата выдачи:<br/> 21.10.2020</span>
+            <span>Берілген күні:<br/> {{date('d.m.Y')}}</span>
         </div>
         <img src="http://dev14.panama.kz/assets/img/certificates/certificate-logo.png" alt=""
              class="diploma__logo">

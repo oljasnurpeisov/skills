@@ -155,7 +155,8 @@ class CourseController extends Controller
     public function getCertificate($lang, Course $course)
     {
         $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)
-            ->where('course_id', '=', $course->id)->first();
+            ->where('course_id', '=', $course->id)
+            ->first();
         if ($student_course->is_finished == true) {
             $data = [
                 'author_name' => $course->user->author_info->name . ' ' . $course->user->author_info->surname,

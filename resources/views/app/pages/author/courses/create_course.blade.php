@@ -49,7 +49,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="checkbox"><input type="checkbox" name="is_paid"
-                                                               value="true" id="paidCheckbox"><span>{{__('default.pages.courses.is_paid')}}</span></label>
+                                                               value="true" id="paidCheckbox"><span>{{__('default.pages.courses.is_paid')}} ({{__('default.pages.courses.default_free')}})</span></label>
                                 <label class="checkbox"><input type="checkbox" name="is_access_all"
                                                                value="true"><span>{{__('default.pages.courses.is_access_all')}}</span></label>
                                 <label class="checkbox"><input type="checkbox" name="is_poor_vision"
