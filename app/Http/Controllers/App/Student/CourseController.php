@@ -152,27 +152,4 @@ class CourseController extends Controller
         ]);
     }
 
-    public function getCertificate($lang, Course $course)
-    {
-        $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)
-            ->where('course_id', '=', $course->id)
-            ->first();
-        if ($student_course->is_finished == true) {
-            $data = [
-                'author_name' => $course->user->author_info->name . ' ' . $course->user->author_info->surname,
-                'student_name' => Auth::user()->student_info->name,
-                'duration' => $course->lessons->sum('duration'),
-                'course_name' => $course->name,
-                'skills' => $course->skills,
-                'certificate_id' => 1,
-                'date_of_issue' => $student_course,
-            ];
-            $pdf = PDF::loadView('app.pages.page.pdf.certificate', ['data' => $data]);
-            $pdf = $pdf->setPaper('a4', 'portrait');
-            return $pdf->stream();
-        } else {
-            return redirect()->back();
-        }
-
-    }
 }

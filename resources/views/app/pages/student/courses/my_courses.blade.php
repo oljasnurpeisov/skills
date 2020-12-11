@@ -77,7 +77,7 @@
                                             </div>
                                             <div class="card__additional">
                                                 @if($item->is_finished == true)
-                                                    <a href="/{{$lang}}/student/get-certificate/course/{{$item->course->id}}"
+                                                    <a href="/users/user_{{Auth::user()->id}}/course_{{$item->course->id}}_certificate_{{$lang}}.pdf" download
                                                        title="{{__('default.pages.courses.get_certificate_active')}}"
                                                        class="card__link">{{__('default.pages.courses.get_certificate_active')}}</a>
                                                     <a href="#rate" data-fancybox

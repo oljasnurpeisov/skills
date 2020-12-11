@@ -225,7 +225,6 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/student/my-certificates", "UserController@myCertificates");
                     // Курсы
                     Route::get("/student/my-courses", "CourseController@studentCourses");
-                    Route::get("/student/get-certificate/course/{course}", "CourseController@getCertificate");
                     Route::post("/course-{course}/saveCourseRate", "CourseController@saveCourseRate");
                     // Урок
                     Route::get("/course-catalog/course/{course}/lesson-{lesson}", "LessonController@lessonView");
