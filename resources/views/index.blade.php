@@ -379,25 +379,25 @@
                     </div>
                 </div>
             </section>
+        @endguest
 
-            <section class="blue">
-                <div class="container">
-                    <div class="row row--multiline align-items-center">
-                        <div class="col-sm-6">
-                            <h2 class="title-primary decorated"><span>Станьте</span><br/> автором курсов</h2>
-                            <div class="plain-text">
-                                {{__('default.pages.index.to_be_author_description')}}
-                            </div>
-                            <a href="/{{$lang}}/for-authors" title="{{__('default.pages.index.to_be_a_teacher')}}!"
-                               class="ghost-btn ghost-btn--white">{{__('default.pages.index.to_be_a_teacher')}}!</a>
+        <section class="blue">
+            <div class="container">
+                <div class="row row--multiline align-items-center">
+                    <div class="col-sm-6">
+                        <h2 class="title-primary decorated"><span>Станьте</span><br/> автором курсов</h2>
+                        <div class="plain-text">
+                            {{__('default.pages.index.to_be_author_description')}}
                         </div>
-                        <div class="col-sm-6">
-                            <img src="/assets/img/authors-banner.svg" alt="">
-                        </div>
+                        <a href="/{{$lang}}/for-authors" title="{{__('default.pages.index.to_be_a_teacher')}}!"
+                           class="ghost-btn ghost-btn--white">{{__('default.pages.index.to_be_a_teacher')}}!</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <img src="/assets/img/authors-banner.svg" alt="">
                     </div>
                 </div>
-            </section>
-        @endguest
+            </div>
+        </section>
     </main>
 @endsection
 
