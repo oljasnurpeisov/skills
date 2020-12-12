@@ -59,6 +59,7 @@ class PageController extends Controller
             $author->members = 0;
             $author->rates = 0;
             $rates_array = [];
+            $author_students = [];
 
             foreach ($author->courses as $course) {
                 // Количество купленных курсов
@@ -72,13 +73,13 @@ class PageController extends Controller
                     $rates_array[] = $rate->rate;
 
                 }
-            }
-            // Уникальные пользователи
-            foreach ($author->courses->unique('student_id') as $course) {
+                // Уникальные пользователи
                 foreach ($course->course_members as $member) {
-                    $author->unique_members = count($course->course_members);
+                    $author_students[$member['student_id']][] = $member;
                 }
             }
+            // Уникальные пользователи
+            $author->members = $author_students;
             // Оценка автора исходя из всех оценок
             if (count($rates_array) == 0) {
                 $author->average_rates = 0;
@@ -111,11 +112,12 @@ class PageController extends Controller
             "students_count" => $students_count,
             "authors_count" => $authors_count,
             "courses_count" => $courses_count,
-            "content" => $content
+            "content" => $content,
         ]);
     }
 
-    public function for_authors(){
+    public function for_authors()
+    {
         // Количество обучающихся
         $students_count = User::whereHas('roles', function ($q) {
             $q->whereSlug('student');
@@ -137,7 +139,8 @@ class PageController extends Controller
         ]);
     }
 
-    public function faq(){
+    public function faq()
+    {
         return view("app.pages.general.faq", [
 
         ]);

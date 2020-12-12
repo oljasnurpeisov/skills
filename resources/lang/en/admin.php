@@ -154,6 +154,23 @@ return [
             'btn_title' => 'Заголовок кнопки',
             'advantages' => 'Преимущества'
         ],
+        'reports' => [
+            'title' => 'Отчеты',
+            'authors_report' => 'Отчет по авторам',
+            'courses_report' => 'Отчет по курсам',
+            'students_report' => 'Отчет по обучающимся',
+            'name_title' => 'ФИО',
+            'specialization' => 'Специализация',
+            'rating' => 'Рейтинг',
+            'courses_count' => 'Количество курсов',
+            'courses_paid_count' => 'Количество платных',
+            'courses_free_count' => 'Количество бесплатных',
+            'courses_by_quota_count' => 'Количество доступных по квоте',
+            'courses_students_count' => 'Количество слушателей',
+            'courses_certificates_students_count' => 'Количество сертифицированных',
+            'courses_students_confirm_qualification_count' => 'Количество подтвердивших квалификацию',
+
+        ],
     ],
     'labels' => [
         'copyright' => '',

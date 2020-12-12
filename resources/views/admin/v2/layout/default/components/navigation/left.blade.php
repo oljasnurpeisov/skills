@@ -58,6 +58,18 @@
                 </ul>
             </li>
             @endhasPermission
+            @hasPermission('admin.reports')
+            <li class="dropdown">
+                <a href="javascript:;" title="{{ __('admin.pages.reports.title') }}">
+                    <i class="icon-reports"></i> {{ __('admin.pages.reports.title') }}
+                </a>
+                <ul>
+                    <li><a href="/{{$lang}}/admin/reports/authors">{{ __('admin.pages.reports.authors_report') }}</a></li>
+                    <li><a href="/{{$lang}}/admin/reports/courses">{{ __('admin.pages.reports.courses_report') }}</a></li>
+                    <li><a href="/{{$lang}}/admin/reports/students">{{ __('admin.pages.reports.students_report') }}</a></li>
+                </ul>
+            </li>
+            @endhasPermission
         </ul>
     </div>
 </aside>

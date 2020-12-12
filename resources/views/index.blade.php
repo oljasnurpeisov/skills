@@ -219,7 +219,7 @@
                                     <div class="card__stats">
                                         <span>{{$author->rates ?? 0}}</span> {{__('default.pages.profile.rates_count_title')}}
                                         <br/>
-                                        <span>{{$author->unique_members}}</span> {{__('default.pages.profile.course_members_count')}}
+                                        <span>{{count($author->members)}}</span> {{__('default.pages.profile.course_members_count')}}
                                         <br/>
                                         <span>{{$author->courses->where('status', '=', 3)->count()}}</span> {{__('default.pages.profile.course_count')}}
                                     </div>

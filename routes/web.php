@@ -113,6 +113,11 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/static-pages/for-authors', 'PageController@forAuthors');
                 Route::post("/static-pages/for-authors-update", "PageController@forAuthorsUpdate");
             });
+            // Отчеты
+            Route::group(['middleware' => 'check.permission:admin.reports'], static function () {
+                // Отчеты по авторам
+                Route::get('/reports/authors', 'ReportController@authorsReports');
+            });
         });
     });
 });
