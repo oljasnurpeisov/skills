@@ -11,7 +11,7 @@ const dataService = function () {
 
     let c = window.Laravel.lang, d = window.Laravel.csrfToken;
     this.getCourseData = async function (c) {
-        let a = await this.getResource("GET", "getCourseData/" + c, "", !1);
+        let a = await this.getResource("GET", window.Laravel.lang+"/getCourseData/" + c, "", !1);
         return JSON.parse(a.response).map(b)
     }, this.addTopic = async function (c, a) {
         let b = await this.getResource("POST", "create-theme", "course_id=" + c + "&name=" + a + "", !1);

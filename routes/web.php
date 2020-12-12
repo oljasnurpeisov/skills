@@ -123,8 +123,6 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
     Route::group(['middleware' => ["auth"]], static function () {
         Route::group(['middleware' => 'check.role:author'], static function () {
             Route::group(["namespace" => "Author"], function () {
-                // Получить курс
-                Route::get("/getCourseData/{course}", "CourseController@getCourseData");
                 // Тема
                 Route::post("/create-theme", "ThemeController@createTheme");
                 Route::post("/edit-theme", "ThemeController@editTheme");
@@ -246,6 +244,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             //
             Route::group(['middleware' => 'check.role:author'], static function () {
                 Route::group(["middleware" => ["web"], "namespace" => "Author"], function () {
+                    // Получить курс
+                    Route::get("/getCourseData/{course}", "CourseController@getCourseData");
                     // Мои курсы
                     Route::get("/my-courses", "CourseController@myCourses");
                     Route::get("/create-course", "CourseController@createCourse");

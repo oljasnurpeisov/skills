@@ -71,16 +71,36 @@
                                                     @foreach($theme->lessons->sortBy('index_number') as $lesson)
                                                         @if($student_course)
                                                             <div class="lesson {{ (!empty($lesson->lesson_student->is_finished) == true ? 'finished' : '') }}">
-                                                                <div class="title"><a
-                                                                            href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$lesson->id}}"
-                                                                            title="{{$lesson->name}}">{{$lesson->name}}</a>
-                                                                </div>
+                                                                @if($lesson->type != 1)
+                                                                    <div class="title"><a
+                                                                                href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$lesson->id}}"
+                                                                                title="{{$lesson->name}}">{{$lesson->name}}
+                                                                            <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}
+                                                                                {{$lesson->end_lesson_type == 0 ? ' ('.__('default.pages.lessons.test_title').')' : ' ('.__('default.pages.lessons.homework_title').')'}}</div>
+                                                                        </a>
+                                                                    </div>
+                                                                @else
+                                                                    <div class="title"><a
+                                                                                href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$lesson->id}}"
+                                                                                title="{{$lesson->name}}">{{$lesson->name}}
+                                                                            <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</div>
+                                                                        </a>
+                                                                    </div>
+                                                                @endif
                                                                 <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
                                                             </div>
                                                         @else
                                                             <div class="lesson">
-                                                                <div class="title">{{$lesson->name}}
-                                                                </div>
+                                                                @if($lesson->type != 1)
+                                                                    <div class="title">{{$lesson->name}}
+                                                                        <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}
+                                                                            {{$lesson->end_lesson_type == 0 ? ' ('.__('default.pages.lessons.test_title').')' : ' ('.__('default.pages.lessons.homework_title').')'}}</div>
+                                                                    </div>
+                                                                @else
+                                                                    <div class="title">{{$lesson->name}}
+                                                                        <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</div>
+                                                                    </div>
+                                                                @endif
                                                                 <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
                                                             </div>
                                                         @endif
@@ -397,7 +417,7 @@
                                                         @foreach($skill->professions as $profession)
                                                             <li>
                                                                 <a href="/{{$lang}}/course-catalog?specialities[]={{$profession->id}}"
-                                                                   title="{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}">{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}</a>
+                                                                   title="{{$profession->getAttribute('name_'.$lang) ?? $profession->getAttribute('name_ru')}}">{{$profession->getAttribute('name_'.$lang) ?? $profession->getAttribute('name_ru')}}</a>
                                                             </li>
                                                         @endforeach
                                                     @endforeach
@@ -419,7 +439,7 @@
                                                 <ul>
                                                     @foreach($item->skills as $skill)
                                                         <li><a href="/{{$lang}}/course-catalog?skills[]={{$skill->id}}"
-                                                               title="{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}">{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}</a>
+                                                               title="{{$skill->getAttribute('name_'.$lang) ?? $skill->getAttribute('name_ru')}}">{{$skill->getAttribute('name_'.$lang) ?? $skill->getAttribute('name_ru')}}</a>
                                                         </li>
                                                     @endforeach
                                                 </ul>

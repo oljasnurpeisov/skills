@@ -47,10 +47,22 @@
                                         <div class="topic__body">
                                             @foreach($theme->lessons->sortBy('index_number') as $lesson)
                                                 <div class="lesson">
-                                                    <div class="title"><a
-                                                                href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$lesson->id}}"
-                                                                title="{{$lesson->name}}">{{$lesson->name}}</a></div>
-                                                    <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                    @if($lesson->type != 1)
+                                                        <div class="title"><a
+                                                                    href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$lesson->id}}"
+                                                                    title="{{$lesson->name}}">{{$lesson->name}}
+                                                                <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}
+                                                                    {{$lesson->end_lesson_type == 0 ? ' ('.__('default.pages.lessons.test_title').')' : ' ('.__('default.pages.lessons.homework_title').')'}}</div>
+                                                            </a></div>
+                                                        <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                    @else
+                                                        <div class="title"><a
+                                                                    href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$lesson->id}}"
+                                                                    title="{{$lesson->name}}">{{$lesson->name}}
+                                                                <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</div>
+                                                            </a></div>
+                                                        <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                    @endif
                                                 </div>
                                             @endforeach
                                         </div>

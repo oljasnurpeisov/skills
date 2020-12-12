@@ -864,7 +864,7 @@ class CourseController extends Controller
         return Excel::download(new ReportingExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
-    public function getCourseData(Course $course)
+    public function getCourseData($lang, Course $course)
     {
         if ($course->author_id == Auth::user()->id) {
             $themes = Theme::where('course_id', '=', $course->id)->with('lessons')->get();
@@ -872,9 +872,16 @@ class CourseController extends Controller
             foreach ($themes as $theme) {
                 $theme->order = $theme->index_number;
 
-
                 foreach ($theme->lessons as $lesson) {
                     $lesson->order = $lesson->index_number;
+
+                    if ($lesson->type != 1){
+                        $lesson->type = $lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru');
+                        $lesson->type .= $lesson->end_lesson_type == 0 ? ' ('.__('default.pages.lessons.test_title').')' : ' ('.__('default.pages.lessons.homework_title').')';
+                    }else{
+                        $lesson->type = $lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru');
+                    }
+
                 }
             }
 

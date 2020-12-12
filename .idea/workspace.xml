@@ -4,44 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- download certificate update">
-      <change afterPath="$PROJECT_DIR$/app/Models/Page.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Montserrat/Montserrat-Black.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Montserrat/Montserrat-Black.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Montserrat/Montserrat-Black.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Montserrat/Montserrat-Black.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Montserrat/Montserrat-BlackItalic.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Montserrat/Montserrat-BlackItalic.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Montserrat/Montserrat-BlackItalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/fonts/Montserrat/Montserrat-BlackItalic.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/static_pages/for_authors.blade.php" afterDir="false" />
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/PageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/LessonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/LessonController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Course.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Course.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Dialog.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Dialog.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Lesson.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Lesson.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Message.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Message.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Permission.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Permission.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Theme.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Theme.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/courses/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/courses/view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/course-edit.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/course-edit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/scripts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/courses/course_frame.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/courses/course_frame.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/static_pages/for_authors.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/static_pages/for_authors.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/static_pages/main.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/static_pages/main.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/page/pdf/certificate_1_kk.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/page/pdf/certificate_1_kk.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/page/pdf/certificate_1_ru.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/page/pdf/certificate_1_ru.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/page/pdf/certificate_2_kk.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/page/pdf/certificate_2_kk.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/page/pdf/certificate_2_ru.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/page/pdf/certificate_2_ru.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/page/pdf/certificate_3_kk.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/page/pdf/certificate_3_kk.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/page/pdf/certificate_3_ru.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/page/pdf/certificate_3_ru.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/student/courses/my_courses.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/student/courses/my_courses.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/for_authors.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/for_authors.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_view.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/app/fonts/dompdf_font_family_cache.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/app/fonts/dompdf_font_family_cache.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -232,7 +207,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Виталий/PhpstormProjects/enbek/app/Http/Controllers/App/Student/UserController.php" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/assets/fonts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/assets/css" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -248,11 +223,11 @@
       <recent name="F:\OpenServer\domains\enbek-backend\resources\views\app\pages\author\courses\components\lesson" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\css" />
+      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
       <recent name="F:\OpenServer\domains\enbek-backend\public\assets\fonts" />
       <recent name="F:\OpenServer\domains\enbek-backend\storage\app\fonts" />
       <recent name="F:\OpenServer\domains\enbek-backend\storage" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\css" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -307,14 +282,7 @@
       <workItem from="1607138985469" duration="27304000" />
       <workItem from="1607315990507" duration="28308000" />
       <workItem from="1607398911426" duration="109407000" />
-      <workItem from="1607617625826" duration="70066000" />
-    </task>
-    <task id="LOCAL-00089" summary="- minor fix">
-      <created>1607063585934</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1607063585934</updated>
+      <workItem from="1607617625826" duration="77409000" />
     </task>
     <task id="LOCAL-00090" summary="- add test student lesson&#10;- add guest user catalog and course view&#10;- add write to author">
       <created>1607076488000</created>
@@ -652,7 +620,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607689207577</updated>
     </task>
-    <option name="localTasksCounter" value="138" />
+    <task id="LOCAL-00138" summary="- update certificates style&#10;- add editing content on index page and for authors page&#10;- minor fix">
+      <created>1607779891566</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1607779891566</updated>
+    </task>
+    <option name="localTasksCounter" value="139" />
     <servers />
   </component>
   <component name="TodoView">
@@ -668,7 +643,6 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- update admin panel" />
     <MESSAGE value="- update payment description&#10;- show popular courses and authors for authors" />
     <MESSAGE value="- update redirect auth&#10;- update files description" />
     <MESSAGE value="- update styles and scripts &#10;- update required fields" />
@@ -693,7 +667,8 @@
     <MESSAGE value="- update certificates" />
     <MESSAGE value="- download certificate add" />
     <MESSAGE value="- download certificate update" />
-    <option name="LAST_COMMIT_MESSAGE" value="- download certificate update" />
+    <MESSAGE value="- update certificates style&#10;- add editing content on index page and for authors page&#10;- minor fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="- update certificates style&#10;- add editing content on index page and for authors page&#10;- minor fix" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -721,11 +696,11 @@
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1607722872229" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1607768273697">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1607779875209">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1607768273697" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1607779875209" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -742,11 +717,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605559122928" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1607689210398">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1607779897718">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995349134" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1607689210398" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1607779897718" />
     <state x="572" y="146" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1605561054285">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

@@ -54,6 +54,16 @@
                                         <hr>
                                     @endforeach
                                 </div>
+                                <div class="buttons">
+                                    <div>
+                                        @if(count(json_decode($item->getAttribute('data_'.$lang_key))->advantages) < 6)
+                                            <button type="button" id="add_step_{{$lang_key}}"
+                                                    class="btn btn--blue">{{ __('admin.pages.static_pages.add_btn') }}</button>
+                                        @endif
+                                    </div>
+                                </div>
+                                <hr>
+                                <br>
                                 <h2 class="title-secondary">{{__('admin.pages.static_pages.step_by_step')}}</h2>
                                 <div id="steps_{{$lang_key}}">
                                     @foreach(json_decode($item->getAttribute('data_'.$lang_key))->step_by_step as $key => $step)
@@ -83,6 +93,7 @@
                                         @endif
                                     </div>
                                 </div>
+                                <hr>
                                 <br>
                                 <h2 class="title-secondary">{{__('admin.pages.static_pages.for_authors')}}</h2>
                                 <div class="input-group">
@@ -124,32 +135,48 @@
         languages = ['ru', 'kk', 'en']
         const max_steps = 6
 
+        step_names = [];
+        step_descriptions = [];
         for (language of languages) {
-            console.log(language);
-            const step_name = '<div class="input-group">' +
+            step_names[language] = '<div class="input-group">' +
                 '                            <label class="input-group__title">{{__('admin.pages.static_pages.step_title')}}</label>' +
                 '                            <input type="text" name="steps_' + language + '[]" value=""' +
                 '                                   placeholder="{{__('admin.pages.static_pages.step_title_placeholder')}}"' +
                 '                                   class="input-regular">' +
-                '                        </div>'
-            const step_description = '<div class="input-group">' +
+                '                        </div>';
+
+            step_descriptions[language] = '<div class="input-group">' +
                 '                            <label for="description"' +
                 '                                   class="input-group__title">{{__('admin.pages.static_pages.step_description')}}</label>' +
                 '                            <textarea name="descriptions_' + language + '[]"' +
                 '                                      placeholder="{{__('admin.pages.static_pages.step_description_placeholder')}}"' +
                 '                                      class="input-regular"></textarea>' +
                 '                        </div>'
-
-            $("#add_step_" + language).click(function () {
-                console.log(language)
-                if ($("[name='steps[]']").length < max_steps) {
-                    $("#steps_" + language).append(step_name, step_description);
-                }
-                if ($("[name='steps[]']").length === max_steps) {
-                    $("#add_step_+language").remove();
-                }
-            });
         }
 
+        $("#add_step_ru").click(function () {
+            if ($("[name='steps[]']").length < max_steps) {
+                $("#steps_ru").append(step_names['ru'], step_descriptions['ru']);
+            }
+            if ($("[name='steps[]']").length === max_steps) {
+                $("#add_step_ru").remove();
+            }
+        });
+        $("#add_step_kk").click(function () {
+            if ($("[name='steps[]']").length < max_steps) {
+                $("#steps_kk").append(step_names['kk'], step_descriptions['kk']);
+            }
+            if ($("[name='steps[]']").length === max_steps) {
+                $("#add_step_kk").remove();
+            }
+        });
+        $("#add_step_en").click(function () {
+            if ($("[name='steps[]']").length < max_steps) {
+                $("#steps_en").append(step_names['en'], step_descriptions['en']);
+            }
+            if ($("[name='steps[]']").length === max_steps) {
+                $("#add_step_en").remove();
+            }
+        });
     </script>
 @endsection
