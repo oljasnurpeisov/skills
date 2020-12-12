@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,7 @@ class ReportController extends Controller
                     $author_students[$member['student_id']][] = $member;
                     $author_students_finished[$member['student_id']][] = $member->where('is_finished', '=', true);
                 }
-                if($course->courseWork()){
+                if ($course->courseWork()) {
                     $author_students_finished_courseWork[] = $course->courseWork()->finishedLesson()->toArray();
                 }
             }
@@ -51,6 +52,39 @@ class ReportController extends Controller
             'items' => $items
 
         ]);
-//        return $author_students_finished_courseWork;
+    }
+
+    public function coursesReports()
+    {
+        $items = Course::paginate(10);
+
+        return view('admin.v2.pages.reports.courses_report', [
+            'items' => $items
+        ]);
+    }
+
+    public function studentsReports()
+    {
+        $items = User::whereHas('roles', function ($q) {
+            $q->whereSlug('student');
+        })->paginate(10);
+        $i = [];
+        foreach ($items as $item) {
+            $finishedCourseWorks = 0;
+            foreach ($item->student_course->whereIn('paid_status', [1, 2]) as $course) {
+                if ($course->course->courseWork()) {
+                    if ($item->student_lesson->where('lesson_id', '=', $course->course->courseWork()->id)) {
+                        $i[] = $course->course->courseWork();
+                        $finishedCourseWorks++;
+                    }
+                }
+            }
+            // Количество законченных курсовых работ
+            $item->finishedCourseWorkrs = $finishedCourseWorks;
+        }
+
+        return view('admin.v2.pages.reports.students_report', [
+            'items' => $items
+        ]);
     }
 }

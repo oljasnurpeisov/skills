@@ -159,7 +159,8 @@ return [
             'authors_report' => 'Отчет по авторам',
             'courses_report' => 'Отчет по курсам',
             'students_report' => 'Отчет по обучающимся',
-            'name_title' => 'ФИО',
+
+            'name_title' => 'ФИО автора',
             'specialization' => 'Специализация',
             'rating' => 'Рейтинг',
             'courses_count' => 'Количество курсов',
@@ -170,6 +171,24 @@ return [
             'courses_certificates_students_count' => 'Количество сертифицированных',
             'courses_students_confirm_qualification_count' => 'Количество подтвердивших квалификацию',
 
+            'course_name' => 'Наименование курса',
+            'author_name' => 'Наименование автора',
+            'skills' => 'Навыки',
+            'group_profession' => 'Группа професии',
+            'course_rate' => 'Рейтинг курса',
+            'course_status' => 'Статус курса',
+            'quota_access' => 'Доступен по квоте',
+            'paid_or_free' => 'Платный /Бесплатный',
+            'course_members' => 'Записано обучающихся',
+            'course_members_certificates' => 'Получили сертификат',
+            'course_members_qualification' => 'Подтвердили квалификацию',
+
+            'name_student' => 'ФИО обучающегося',
+            'unemployed' => 'Безработный',
+            'quotas_count' => 'Количество оставшихся квот',
+            'student_courses_count' => 'Записан на курсы',
+            'student_certificates_count' => 'Получил сертификатов',
+            'student_qualifications_count' => 'Подтвердил квалификацию'
         ],
     ],
     'labels' => [

@@ -117,6 +117,10 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
             Route::group(['middleware' => 'check.permission:admin.reports'], static function () {
                 // Отчеты по авторам
                 Route::get('/reports/authors', 'ReportController@authorsReports');
+                // Отчеты по курсам
+                Route::get('/reports/courses', 'ReportController@coursesReports');
+                // Отчеты по обучающимся
+                Route::get('/reports/students', 'ReportController@studentsReports');
             });
         });
     });
