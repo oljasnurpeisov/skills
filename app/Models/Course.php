@@ -160,4 +160,13 @@ class Course extends Model
         return $professions;
     }
 
+    public function studentCertificate() {
+
+        $certificate = StudentCertificate::where('course_id', '=', $this->id)
+            ->where('user_id', '=', \Auth::user()->id)->first();
+
+        return $certificate;
+
+    }
+
 }

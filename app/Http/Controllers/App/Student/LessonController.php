@@ -459,14 +459,19 @@ class LessonController extends Controller
     {
         $languages = ["ru", "kk"];
 
+        $certificate = new StudentCertificate;
+        $certificate->user_id = Auth::user()->id;
+        $certificate->course_id = $course->id;
+        $certificate->save();
+
         foreach ($languages as $language) {
             $data = [
-                'author_name' => $course->user->author_info->name . ' ' . $course->user->author_info->surname,
+                'author_name' => $course->user->company_name,
                 'student_name' => Auth::user()->student_info->name,
                 'duration' => $course->lessons->sum('duration'),
                 'course_name' => $course->name,
                 'skills' => $course->skills,
-                'certificate_id' => 1,
+                'certificate_id' => sprintf("%012d", $certificate->id).'-'.date('dmY')
             ];
             $pdf = PDF::loadView('app.pages.page.pdf.certificate_' . $course->certificate_id . '_' . $language, ['data' => $data]);
             $pdf = $pdf->setPaper('a4', 'portrait');
@@ -480,13 +485,12 @@ class LessonController extends Controller
 
         $file_path = '/users/user_' . Auth::user()->id . '';
 
-        $certificate = new StudentCertificate;
-        $certificate->user_id = Auth::user()->id;
-        $certificate->course_id = $course->id;
         $certificate->pdf_ru = $file_path . '/' . 'course_' . $course->id . '_certificate_' . $languages[0] . '.pdf';
         $certificate->pdf_kk = $file_path . '/' . 'course_' . $course->id . '_certificate_' . $languages[1] . '.pdf';
         $certificate->png_ru = $file_path . '/' . 'course_' . $course->id . '_image_' . $languages[0] . '.png';
         $certificate->png_kk = $file_path . '/' . 'course_' . $course->id . '_image_' . $languages[1] . '.png';
+
         $certificate->save();
+
     }
 }

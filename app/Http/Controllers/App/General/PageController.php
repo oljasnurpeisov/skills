@@ -4,10 +4,13 @@ namespace App\Http\Controllers\App\General;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\Page;
 use App\Models\Professions;
 use App\Models\Skill;
+use App\Models\StudentInformation;
 use App\Models\Type_of_ownership;
 use App\Models\User;
+use App\Models\UserInformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PharIo\Manifest\Author;
@@ -83,20 +86,54 @@ class PageController extends Controller
                 $author->average_rates = array_sum($rates_array) / count($rates_array);
             }
         }
-
-        $popular_authors = $popular_authors->sortByDesc("members")->take(8);
+        // Популярные авторы
+        $popular_authors = $popular_authors
+            ->sortByDesc("members")
+            ->take(8);
+        // Количество обучающихся
+        $students_count = User::whereHas('roles', function ($q) {
+            $q->whereSlug('student');
+        })->count();
+        // Количество авторов
+        $authors_count = User::whereHas('roles', function ($q) {
+            $q->whereSlug('author');
+        })->count();
+        // Количество курсов
+        $courses_count = Course::whereStatus(Course::published)->count();
+        // Контент
+        $content = Page::wherePageAlias('index')->first();
 
         return view("index", [
             "courses" => $courses ?? [],
             "skills" => $skills ?? [],
             "popular_courses" => $popular_courses,
             "popular_authors" => $popular_authors,
+            "students_count" => $students_count,
+            "authors_count" => $authors_count,
+            "courses_count" => $courses_count,
+            "content" => $content
         ]);
     }
 
     public function for_authors(){
-        return view("for_authors", [
+        // Количество обучающихся
+        $students_count = User::whereHas('roles', function ($q) {
+            $q->whereSlug('student');
+        })->count();
+        // Количество авторов
+        $authors_count = User::whereHas('roles', function ($q) {
+            $q->whereSlug('author');
+        })->count();
+        // Количество курсов
+        $courses_count = Course::whereStatus(Course::published)->count();
+        // Контент
+        $content = Page::wherePageAlias('for_authors')->first();
 
+        return view("for_authors", [
+            "students_count" => $students_count,
+            "authors_count" => $authors_count,
+            "courses_count" => $courses_count,
+            "content" => $content
         ]);
     }
 

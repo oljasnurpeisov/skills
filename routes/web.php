@@ -106,7 +106,12 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
             });
             // Страницы
             Route::group(['middleware' => 'check.permission:admin.pages'], static function () {
+                // Главная
                 Route::get('/static-pages/main', 'PageController@main');
+                Route::post("/static-pages/main-update", "PageController@mainUpdate");
+                // Для авторов
+                Route::get('/static-pages/for-authors', 'PageController@forAuthors');
+                Route::post("/static-pages/for-authors-update", "PageController@forAuthorsUpdate");
             });
         });
     });

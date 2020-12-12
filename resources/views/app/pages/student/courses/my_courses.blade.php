@@ -46,7 +46,7 @@
                                                 <?php
                                                 if ($item->lessons_count != 0) {
                                                     $progress = round(($item->finished_lessons_count / $item->lessons_count) * 100);
-                                                }else{
+                                                } else {
                                                     $progress = 0;
                                                 }
                                                 ?>
@@ -77,14 +77,25 @@
                                             </div>
                                             <div class="card__additional">
                                                 @if($item->is_finished == true)
-                                                    <a href="/users/user_{{Auth::user()->id}}/course_{{$item->course->id}}_certificate_{{$lang}}.pdf" download
-                                                       title="{{__('default.pages.courses.get_certificate_active')}}"
-                                                       class="card__link">{{__('default.pages.courses.get_certificate_active')}}</a>
-                                                    <a href="#rate" data-fancybox
-                                                       data-options='{"smallBtn": false, "buttons": [],"clickSlide": false, "clickOutside": false}'
-                                                       class="card__btn rateClick {{  ($student_rate->where('course_id', '=', $item->course_id)->count() != 0 ? ' disabled' : '') }}"
-                                                       title="{{__('default.pages.courses.write_feedback')}}"
-                                                       course_id="{{$item->course_id}}">{{__('default.pages.courses.write_feedback')}}</a>
+                                                    @if($item->course->studentCertificate())
+                                                        <a href="{{$item->course->studentCertificate()->getAttribute('pdf_'.$lang )?? ''}}"
+                                                           download
+                                                           title="{{__('default.pages.courses.get_certificate_active')}}"
+                                                           class="card__link {{$item->course->studentCertificate() ? '' : 'disabled'}}">{{__('default.pages.courses.get_certificate_active')}}</a>
+                                                        <a href="#rate" data-fancybox
+                                                           data-options='{"smallBtn": false, "buttons": [],"clickSlide": false, "clickOutside": false}'
+                                                           class="card__btn rateClick {{  ($student_rate->where('course_id', '=', $item->course_id)->count() != 0 ? ' disabled' : '') }}"
+                                                           title="{{__('default.pages.courses.write_feedback')}}"
+                                                           course_id="{{$item->course_id}}">{{__('default.pages.courses.write_feedback')}}</a>
+                                                    @else
+                                                        <a href="" title="{{__('default.pages.courses.get_certificate_active')}}"
+                                                           class="card__link disabled">{{__('default.pages.courses.get_certificate_active')}}</a>
+                                                        <a href="#rate" data-fancybox
+                                                           data-options='{"smallBtn": false, "buttons": [],"clickSlide": false, "clickOutside": false}'
+                                                           class="card__btn rateClick {{  ($student_rate->where('course_id', '=', $item->course_id)->count() != 0 ? ' disabled' : '') }}"
+                                                           title="{{__('default.pages.courses.write_feedback')}}"
+                                                           course_id="{{$item->course_id}}">{{__('default.pages.courses.write_feedback')}}</a>
+                                                    @endif
                                                 @else
                                                     <a href="#"
                                                        title="{{__('default.pages.courses.get_certificate_inactive')}}"

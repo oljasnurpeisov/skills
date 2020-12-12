@@ -31,9 +31,7 @@
                 </div>
                 <div class="tabs-contents">
                     <div class="active">
-                        <iframe id="courseFrame" onload="iframeLoaded()"
-                                src="/{{$lang}}/admin/moderator-course-iframe-{{ $item->id }}" width="100%"
-                                scrolling="no" frameborder="0"></iframe>
+                        <iframe id="page" src="/{{$lang}}/admin/moderator-course-iframe-{{ $item->id }}" frameborder="0" width="100%" height="600px"></iframe>
                     </div>
                     <div>
                         <div class="block">
@@ -148,7 +146,7 @@
                 </div>
             </div>
         </div>
-        </form>
+{{--        </form>--}}
     </div>
 
 @endsection
@@ -227,13 +225,12 @@
         });
     </script>
     <script type="text/javascript">
-        function iframeLoaded() {
-            var iFrameID = document.getElementById('courseFrame');
-            if (iFrameID) {
-                // here you can make the height, I delete it first, then I make it again
-                iFrameID.height = "";
-                iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
-            }
+        // Selecting the iframe element
+        var iframe = document.getElementById("page");
+
+        // Adjusting the iframe height onload event
+        iframe.onload = function () {
+            iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
         }
     </script>
 @endsection

@@ -203,6 +203,7 @@ class UserController extends Controller
         return view("app.pages.student.profile.my_certificates", [
             'items' => $certificates
         ]);
+
     }
 
 }

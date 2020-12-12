@@ -100,14 +100,14 @@
 
         <section class="plain big-padding">
             <div class="container">
-                <h2 class="title-primary decorated"><span>Наши</span><br/> показатели</h2>
+                <h2 class="title-primary decorated"><span>{!! __('default.pages.index.our_statistic') !!}</h2>
                 <div class="row row--multiline">
                     <div class="col-sm-4">
                         <div class="stat">
                             <img src="/assets/img/students.svg" alt="" class="stat__image">
                             <div>
-                                <div class="stat__number">3000</div>
-                                <div class="stat__label">обучающихся</div>
+                                <div class="stat__number">{{$students_count}}</div>
+                                <div class="stat__label">{{ __('default.pages.index.students_count') }}</div>
                             </div>
                         </div>
                     </div>
@@ -115,8 +115,8 @@
                         <div class="stat">
                             <img src="/assets/img/authors.svg" alt="" class="stat__image">
                             <div>
-                                <div class="stat__number">300</div>
-                                <div class="stat__label">авторов</div>
+                                <div class="stat__number">{{$authors_count}}</div>
+                                <div class="stat__label">{{ __('default.pages.index.authors_count') }}</div>
                             </div>
                         </div>
                     </div>
@@ -124,8 +124,8 @@
                         <div class="stat">
                             <img src="/assets/img/courses.svg" alt="" class="stat__image">
                             <div>
-                                <div class="stat__number">600</div>
-                                <div class="stat__label">курсов</div>
+                                <div class="stat__number">{{$courses_count}}</div>
+                                <div class="stat__label">{{ __('default.pages.index.courses_count') }}</div>
                             </div>
                         </div>
                     </div>
@@ -149,63 +149,20 @@
 
         <section class="plain">
             <div class="container">
-                <h2 class="title-primary decorated"><span>Щаг за</span><br/> шагом</h2>
+                <h2 class="title-primary decorated"><span>Шаг за</span><br/> шагом</h2>
                 <div class="row row--multiline">
-                    <div class="col-md-4 col-sm-6">
-                        <div class="step">
-                            <div class="step__number">1</div>
-                            <div>
-                                <h4 class="step__title">Подбор навыкА</h4>
-                                <div class="step__text">Quis convallis laoreet porta eget mauris non lorem etiam integer
-                                    justo phasellus senectus pellentesque
+                    @foreach(json_decode($content->getAttribute('data_'.$lang))->step_by_step as $key => $step)
+                        <div class="col-md-4 col-sm-6">
+                            <div class="step">
+                                <div class="step__number">{{$key+1}}</div>
+                                <div>
+                                    <h4 class="step__title">{{ $step->name }}</h4>
+                                    <div class="step__text">{!! $step->description !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="step">
-                            <div class="step__number">2</div>
-                            <div>
-                                <h4 class="step__title">Выбор курса</h4>
-                                <div class="step__text">Mi urna pellentesque commodo nisl quis consequat, volutpat nulla
-                                    tristique fames lectus nunc nam
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="step">
-                            <div class="step__number">3</div>
-                            <div>
-                                <h4 class="step__title">Прохождение обучения</h4>
-                                <div class="step__text">Tellus aliquam, velit orci, sit aliquam tellus sed enim sit at
-                                    mauris eu, nam
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="step">
-                            <div class="step__number">4</div>
-                            <div>
-                                <h4 class="step__title">Получение сертификата</h4>
-                                <div class="step__text">Quis convallis laoreet porta eget mauris non lorem etiam integer
-                                    justo phasellus senectus pellentesque
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="step">
-                            <div class="step__number">5</div>
-                            <div>
-                                <h4 class="step__title">Теперь вы специалист!</h4>
-                                <div class="step__text">Mi urna pellentesque commodo nisl quis consequat, volutpat nulla
-                                    tristique fames lectus nunc nam
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -300,10 +257,10 @@
                     <div class="col-sm-6">
                         <h2 class="title-primary decorated"><span>Станьте</span><br/> автором курсов</h2>
                         <div class="plain-text">
-                            {{__('default.pages.index.to_be_author_description')}}
+                            {!! json_decode($content->getAttribute('data_'.$lang))->for_authors->description !!}
                         </div>
-                        <a href="/{{$lang}}/for-authors" title="{{__('default.pages.index.to_be_a_teacher')}}!"
-                           class="ghost-btn ghost-btn--white">{{__('default.pages.index.to_be_a_teacher')}}!</a>
+                        <a href="/{{$lang}}/for-authors" title="{{json_decode($content->getAttribute('data_'.$lang))->for_authors->btn_title}}"
+                           class="ghost-btn ghost-btn--white">{{json_decode($content->getAttribute('data_'.$lang))->for_authors->btn_title}}</a>
                     </div>
                     <div class="col-sm-6">
                         <img src="/assets/img/authors-banner.svg" alt="">
