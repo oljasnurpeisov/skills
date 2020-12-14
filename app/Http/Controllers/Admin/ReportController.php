@@ -285,7 +285,7 @@ class ReportController extends Controller
             $query->whereIn('is_paid', $paid_status);
         }
 
-        if ($course_members_count_from and empty($course_members_count_ещ)) {
+        if ($course_members_count_from and empty($course_members_count_from)) {
             $query->withCount(['course_members' => function ($q) use($course_members_count_from) {
                 $q->whereIn('paid_status', [1, 2]);
             }])->having('course_members_count', '>=', $course_members_count_from);
