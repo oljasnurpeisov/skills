@@ -164,36 +164,36 @@
                                 <div class="row row--multiline">
                                     <div class="col-auto">
                                         <div class="image-choice">
-                                            <img src="/assets/img/certificates/1_ru.jpg" class="image-choice__thumbnail"
+                                            <img src="/assets/img/certificates/1-thumbnail.jpg" class="image-choice__thumbnail"
                                                  alt="">
-                                            <label class="image-choice__overflow" title="{{__('default.pages.courses.choose')}}">
-                                                <input type="radio" value="1" name="certificate_id" required>
+                                            <label class="image-choice__overflow" title="Выбрать">
+                                                <input type="radio" value="1" name="certificate" required>
                                                 <i class="icon-checkmark"> </i>
-                                                <a href="/assets/img/certificates/1_ru.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
+                                                <a href="/assets/img/certificates/1.png" data-fancybox title="Увеличить"
                                                    class="icon-zoom-in"> </a>
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-auto">
                                         <div class="image-choice">
-                                            <img src="/assets/img/certificates/2_ru.jpg" class="image-choice__thumbnail"
+                                            <img src="/assets/img/certificates/2-thumbnail.jpg" class="image-choice__thumbnail"
                                                  alt="">
-                                            <label class="image-choice__overflow" title="{{__('default.pages.courses.choose')}}">
-                                                <input type="radio" value="2" name="certificate_id">
+                                            <label class="image-choice__overflow" title="Выбрать">
+                                                <input type="radio" value="2" name="certificate">
                                                 <i class="icon-checkmark"> </i>
-                                                <a href="/assets/img/certificates/2_ru.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
+                                                <a href="/assets/img/certificates/2.png" data-fancybox title="Увеличить"
                                                    class="icon-zoom-in"> </a>
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-auto">
                                         <div class="image-choice">
-                                            <img src="/assets/img/certificates/3_ru.jpg" class="image-choice__thumbnail"
+                                            <img src="/assets/img/certificates/3-thumbnail.jpg" class="image-choice__thumbnail"
                                                  alt="">
-                                            <label class="image-choice__overflow" title="{{__('default.pages.courses.choose')}}">
-                                                <input type="radio" value="3" name="certificate_id">
+                                            <label class="image-choice__overflow" title="Выбрать">
+                                                <input type="radio" value="3" name="certificate">
                                                 <i class="icon-checkmark"> </i>
-                                                <a href="/assets/img/certificates/3_ru.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
+                                                <a href="/assets/img/certificates/3.png" data-fancybox title="Увеличить"
                                                    class="icon-zoom-in"> </a>
                                             </label>
                                         </div>

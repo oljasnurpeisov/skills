@@ -79,6 +79,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-3 col-sm-4">
+                        <div class="form-group">
+                            <label class="form-group__label hidden-xs">&nbsp;</label>
+                            <div class="input-group">
+                                <a href="#" title="" id="clear" class="ghost-btn">Сбросить</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="income-diagram">
                     @if(Auth::user()->id == 46)

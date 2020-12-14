@@ -207,11 +207,11 @@
                     <th><a href="{{request()->fullUrlWithQuery(["sortByName"=>$request->sortByName == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.name_title')}}</a></th>
                     <th>{{__('admin.pages.reports.specialization')}}</th>
                     <th>{{__('admin.pages.reports.rating')}}</th>
-                    <th><a href="{{request()->fullUrlWithQuery(["sortByName"=>$request->sortByCoursesCount == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.courses_count')}}</a></th>
-                    <th>{{__('admin.pages.reports.courses_paid_count')}}</th>
-                    <th>{{__('admin.pages.reports.courses_free_count')}}</th>
-                    <th>{{__('admin.pages.reports.courses_by_quota_count')}}</th>
-                    <th>{{__('admin.pages.reports.courses_students_count')}}</th>
+                    <th><a href="?sortByCoursesCount={{$request->sortByCoursesCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_count')}}</a></th>
+                    <th><a href="?sortByPaidCoursesCount={{$request->sortByPaidCoursesCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_paid_count')}}</a></th>
+                    <th><a href="?sortByFreeCoursesCount={{$request->sortByFreeCoursesCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_free_count')}}</a></th>
+                    <th><a href="?sortByQuotaCoursesCount={{$request->sortByQuotaCoursesCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_by_quota_count')}}</a></th>
+                    <th><a href="?sortByStudentsCount={{$request->sortByStudentsCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_students_count')}}</a></th>
                     <th>{{__('admin.pages.reports.courses_certificates_students_count')}}</th>
                     <th>{{__('admin.pages.reports.courses_students_confirm_qualification_count')}}</th>
                 </tr>
@@ -219,7 +219,7 @@
                 <tbody>
                 @foreach($items as $item)
                     <tr>
-                        <td>{{$item->author_info->name . ' ' . $item->author_info->surname}}</td>
+                        <td>{{$item->author_info->name ?? '' . ' ' . $item->author_info->surname ?? ''}}</td>
                         <td>{{ implode(', ', json_decode($item->author_info->specialization) ?? []) }}</td>
                         <td>{{round($item->average_rates, 1)}}</td>
                         <td>{{$item->courses->count()}}</td>

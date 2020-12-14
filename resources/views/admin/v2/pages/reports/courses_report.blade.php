@@ -118,8 +118,8 @@
                         <div class="input-group">
                             <label class="input-group__title">Количество обучающихся: от</label>
                             <label class="">
-                                <input type="number" name="certificates_count_from" placeholder=""
-                                       class="input-regular" value="">
+                                <input type="number" name="course_members_count_from" placeholder=""
+                                       class="input-regular" value="{{$request->course_members_count_from}}">
                             </label>
                         </div>
                     </div>
@@ -127,8 +127,8 @@
                         <div class="input-group">
                             <label class="input-group__title">до</label>
                             <label class="">
-                                <input type="number" name="certificates_count_to" placeholder=""
-                                       class="input-regular" value="">
+                                <input type="number" name="course_members_count_to" placeholder=""
+                                       class="input-regular" value="{{$request->course_members_count_to}}">
                             </label>
                         </div>
                     </div>

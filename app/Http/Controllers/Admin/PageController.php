@@ -74,6 +74,8 @@ class PageController extends Controller
                 }
             }
         }
+        $images = array_merge($request->icons_saved, $icons);
+
         foreach ($languages as $k => $language) {
 
             $data = [
@@ -98,7 +100,7 @@ class PageController extends Controller
                 if (isset($request['advantages_name_' . $language][$key])) {
 
                     $data['advantages'][] = array(
-                        'icon' => $request->icons_saved[$key] ?? $icons[$key] ?? $icons[0],
+                        'icon' => $images[$key],
                         'name' => $request['advantages_name_' . $language][$key],
                         'description' => $request['advantages_descriptions_' . $language][$key],
                     );

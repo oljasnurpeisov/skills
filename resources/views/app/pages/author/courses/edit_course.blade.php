@@ -403,11 +403,11 @@
                                 <label class="form-group__label">{{__('default.pages.courses.choose_certificate')}}
                                     *</label>
                                 <div class="row row--multiline">
-                                    @php($certificates = [["1","/assets/img/certificates/1_ru.jpg"], ["2", "/assets/img/certificates/2_ru.jpg"], ["3", "/assets/img/certificates/3_ru.jpg"]])
+                                    @php($certificates = [["1","/assets/img/certificates/1.png", "/assets/img/certificates/1-thumbnail.jpg"], ["2", "/assets/img/certificates/2.png", "/assets/img/certificates/2-thumbnail.jpg"], ["3", "/assets/img/certificates/3.png", "/assets/img/certificates/3-thumbnail.jpg"]])
                                     @foreach($certificates as $certificate)
                                         <div class="col-auto">
                                             <div class="image-choice">
-                                                <img src="{{$certificate[1]}}"
+                                                <img src="{{$certificate[2]}}"
                                                      class="image-choice__thumbnail"
                                                      alt="">
                                                 <label class="image-choice__overflow"

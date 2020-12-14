@@ -18,6 +18,10 @@ class ReportController extends Controller
         // Сортировка
         $sortByName = $request->sortByName;
         $sortByCoursesCount = $request->sortByCoursesCount;
+        $sortByPaidCoursesCount = $request->sortByPaidCoursesCount;
+        $sortByFreeCoursesCount = $request->sortByFreeCoursesCount;
+        $sortByQuotaCoursesCount = $request->sortByQuotaCoursesCount;
+        $sortByStudentsCount = $request->sortByStudentsCount;
         // Фильтрация
         $author_name = $request->author_name ? $request->author_name : '';
         $specialization = $request->specialization ? $request->specialization : '';
@@ -41,10 +45,53 @@ class ReportController extends Controller
         // Сортировка
         // Сортировка по имени автора
         if ($sortByName) {
-            $query->whereHas('author_info', function ($q) use ($sortByName) {
-                $q->orderBy('name', $sortByName);
-            });
+            $query->with('author_info')->orderBy('name', $sortByName);
         }
+        // Сортировка по количеству курсов
+        if ($sortByCoursesCount) {
+            $query->withCount('courses')->orderBy('courses_count', $sortByCoursesCount);
+        }
+        // Сортировка по количеству платных курсов
+        if ($sortByPaidCoursesCount) {
+            $query->withCount(['courses as paid_courses_count' => function ($q) {
+                $q->where('is_paid', '=', true);
+            }])->orderBy('paid_courses_count', $sortByPaidCoursesCount);
+        }
+        // Сортировка по количеству бесплатных курсов
+        if ($sortByFreeCoursesCount) {
+            $query->withCount(['courses as free_courses_count' => function ($q) {
+                $q->where('is_paid', '=', false);
+            }])->orderBy('free_courses_count', $sortByFreeCoursesCount);
+        }
+        // Сортировка по количеству курсов по квоте
+        if ($sortByQuotaCoursesCount) {
+            $query->withCount(['courses as quota_courses_count' => function ($q) {
+                $q->where('quota_status', '=', 2);
+            }])->orderBy('quota_courses_count', $sortByQuotaCoursesCount);
+        }
+        // Сортировка по количеству курсов по квоте
+        if ($sortByQuotaCoursesCount) {
+            $query->withCount(['courses as quota_courses_count' => function ($q) {
+                $q->where('quota_status', '=', 2);
+            }])->orderBy('quota_courses_count', $sortByQuotaCoursesCount);
+        }
+        // Сортировка по количеству обучающихся
+        if ($sortByStudentsCount){
+//            $query->with(['courses.course_members' => function ($q) use($sortByStudentsCount) {
+////                $q->withCount(['course_members' => function ($q) use($sortByStudentsCount) {
+//                    $q->whereIn('paid_status', [1, 2]);
+////                }])->orderBy('course_members_count', $sortByStudentsCount);;
+////
+//            }]);
+//            $query->withCount(['courses' => function ($q) use ($sortByStudentsCount) {
+//                $q->withCount(['course_members' => function ($q) use($sortByStudentsCount) {
+//                $q->whereIn('paid_status', [1,2]);
+//                }]);
+//            }])->orderBy('course_members_count', $sortByStudentsCount);
+        }
+
+
+//        return $query->get();
         // Фильтрация
         // Поиск по имени
         if ($author_name) {
@@ -55,7 +102,7 @@ class ReportController extends Controller
         // Поиск по специализации
         if ($specialization) {
             $query->whereHas('author_info', function ($q) use ($specialization) {
-                $q->where('specialization', 'like', '%' . $specialization . '%');
+                $q->where('name', 'like', '%' . $specialization . '%');
             });
         }
         // Поиск по количеству курсов
@@ -176,6 +223,8 @@ class ReportController extends Controller
         $course_status = $request->course_status;
         $quota_status = $request->quota_status ?? [];
         $paid_status = $request->paid_status ?? [];
+        $course_members_count_from = $request->course_members_count_from;
+        $course_members_count_to = $request->course_members_count_to;
         // Сортировка
         $sortByName = $request->sortByName;
         $sortByAuthor = $request->sortByAuthor;
@@ -236,6 +285,11 @@ class ReportController extends Controller
             $query->whereIn('is_paid', $paid_status);
         }
 
+        if ($course_members_count_from and empty($course_members_count_ещ)) {
+            $query->withCount(['course_members' => function ($q) use($course_members_count_from) {
+                $q->whereIn('paid_status', [1, 2]);
+            }])->having('course_members_count', '>=', $course_members_count_from);
+        }
 
         $items = $query->paginate(10);
 

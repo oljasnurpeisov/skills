@@ -445,7 +445,11 @@
                                        class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
                                 </div>
                                 <div class="col-auto">
-                                    {{--                                <a href="#" title="Отмена" class="ghost-btn">Отмена</a>--}}
+
+                                    <a href="#removeCourseModal" data-fancybox
+                                       title="{{__('default.pages.courses.delete_course')}}"
+                                       class="btn red">{{__('default.pages.courses.delete_course')}}</a>
+
                                 </div>
                                 @break
                                 @case(4)
@@ -458,8 +462,6 @@
                                                 style="background-color: white">{{__('default.pages.courses.reestablish')}}</button>
                                     </form>
                                 </div>
-                                @break
-                                @default
                                 <div class="col-auto">
 
                                     <a href="#removeCourseModal" data-fancybox
@@ -467,6 +469,9 @@
                                        class="btn red">{{__('default.pages.courses.delete_course')}}</a>
 
                                 </div>
+                                @break
+                                @default
+
                             @endswitch
                         </div>
                     </div>

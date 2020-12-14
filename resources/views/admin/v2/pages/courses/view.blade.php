@@ -35,7 +35,7 @@
                     </div>
                     <div>
                         <div class="block">
-                            @if($item->status == 1 or $item->status == 2)
+                            @if($item->status == 1)
                                 <form id="course_form" action="/{{$lang}}/admin/course/publish/{{ $item->id }}"
                                       method="post"
                                       enctype="multipart/form-data">

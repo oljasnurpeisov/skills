@@ -108,7 +108,7 @@
                     @endphp
                     <a href="/{{$lang}}/dialog/opponent-{{$tech_support->id}}" title="{{__('default.pages.faq.tech_support_title')}}" class="btn">{{__('default.pages.faq.tech_support_title')}}</a>
                 @else
-                    <a href="#authorization" title="{{__('default.pages.faq.tech_support_title')}}" class="btn">{{__('default.pages.faq.tech_support_title')}}</a>
+                    <a href="#authorization" data-fancybox title="{{__('default.pages.faq.tech_support_title')}}" class="btn">{{__('default.pages.faq.tech_support_title')}}</a>
                 @endif
 
             </div>
