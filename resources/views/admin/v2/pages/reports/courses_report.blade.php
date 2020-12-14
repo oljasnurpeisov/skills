@@ -4,110 +4,71 @@
 
 @section('content')
     <div class="container container-fluid">
-                <ul class="breadcrumbs">
-                    <li class="active">{{ __('admin.pages.reports.courses_report') }}</li>
-                </ul>
-                @include('admin.v2.partials.components.warning')
+        <ul class="breadcrumbs">
+            <li class="active">{{ __('admin.pages.reports.courses_report') }}</li>
+        </ul>
+        @include('admin.v2.partials.components.warning')
 
-                @include('admin.v2.partials.components.errors')
+        @include('admin.v2.partials.components.errors')
 
         <form class="block">
             <div class="input-group">
-                <label class="input-group__title">Поисковая фраза</label>
-                <input type="text" name="text" placeholder="" class="input-regular">
+                <label class="input-group__title">Поиск по наименованию курса</label>
+                <input type="text" name="course_name" value="{{$request->course_name}}" placeholder=""
+                       class="input-regular">
             </div>
             <div class="collapse-block collapsed" style="display: none;" id="collapse1">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="input-group">
-                            <label class="input-group__title">Организация</label>
-                            <select name="organization" class="input-regular chosen" data-placeholder=" ">
+                            <label class="input-group__title">Поиск по наименованию автора</label>
+                            <input type="text" name="author_name" value="{{$request->author_name}}" placeholder=""
+                                   class="input-regular">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <label class="input-group__title">Статус курса</label>
+                            <select name="course_status" class="input-regular chosen" data-placeholder=" ">
                                 <option value="" selected hidden></option>
-                                <option value="value1">value 1</option>
-                                <option value="value2">value 2</option>
-                                <option value="value3">value 3</option>
-                                <option value="value4">value 4</option>
-                                <option value="value5">value 5</option>
+                                <option value="1"{{$request->course_status == 1 ? 'selected' : ''}}>На модерации
+                                </option>
+                                <option value="3"{{$request->course_status == 3 ? 'selected' : ''}}>Опубликован</option>
+                                <option value="0"{{is_null($request->course_status) == 0 ? 'selected' : ''}}>Черновик
+                                </option>
+                                <option value="4"{{$request->course_status == 4 ? 'selected' : ''}}>Удален</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <label class="input-group__title">Год создания: с</label>
-                                    <label class="date">
-                                        <input type="text" name="creationDateFrom" placeholder=""
-                                               class="input-regular custom-datepicker">
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <label class="input-group__title">до</label>
-                                    <label class="date">
-                                        <input type="text" name="creationDateTo" placeholder=""
-                                               class="input-regular custom-datepicker">
-                                    </label>
-                                </div>
-                            </div>
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <label class="input-group__title">Поиск по навыкам</label>
+                            <input type="text" name="text" placeholder="" class="input-regular">
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <label class="input-group__title">Дата сдачи в архив: с</label>
-                                    <label class="date">
-                                        <input type="text" name="archiveDateFrom" placeholder=""
-                                               class="input-regular custom-datepicker">
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <label class="input-group__title">до</label>
-                                    <label class="date">
-                                        <input type="text" name="archiveDateTo" placeholder=""
-                                               class="input-regular custom-datepicker">
-                                    </label>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <label class="input-group__title">Поиск по группе профессий</label>
+                            <input type="text" name="text" placeholder="" class="input-regular">
                         </div>
+                    </div>
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="input-group">
-                                    <label class="input-group__title">Дата уничтожения: с</label>
-                                    <label class="date">
-                                        <input type="text" name="destroyDateFrom" placeholder=""
-                                               class="input-regular custom-datepicker">
+                                    <label class="input-group__title">Рейтинг курса: от</label>
+                                    <label class="">
+                                        <input type="number" name="rate_from" placeholder=""
+                                               class="input-regular" value="{{$request->rate_from}}">
                                     </label>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="input-group">
                                     <label class="input-group__title">до</label>
-                                    <label class="date">
-                                        <input type="text" name="destroyDateTo" placeholder=""
-                                               class="input-regular custom-datepicker">
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <label class="input-group__title">Дата выдачи: с</label>
-                                    <label class="date">
-                                        <input type="text" name="releaseDateFrom" placeholder=""
-                                               class="input-regular custom-datepicker">
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <label class="input-group__title">до</label>
-                                    <label class="date">
-                                        <input type="text" name="releaseDateTo" placeholder=""
-                                               class="input-regular custom-datepicker">
+                                    <label class="">
+                                        <input type="number" name="rate_to" placeholder=""
+                                               class="input-regular" value="{{$request->rate_to}}">
                                     </label>
                                 </div>
                             </div>
@@ -115,37 +76,100 @@
                     </div>
                     <div class="col-md-6">
                         <div class="input-group">
-                            <label class="input-group__title">&nbsp;</label>
+                            <label class="input-group__title">&nbsp;Доступен по квоте</label>
                             <div class="input-group">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="archived">
-                                    <span>В архиве</span>
+                                    <input type="checkbox" name="quota_status[]"
+                                           value="2" {{in_array(2, $quota_status) ? 'checked' : ''}}>
+                                    <span>Да</span>
                                 </label>
                             </div>
                             <div class="input-group">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="released">
-                                    <span>Выдано</span>
+                                    <input type="checkbox" name="quota_status[]"
+                                           value="0" {{in_array(0, $quota_status) ? 'checked' : ''}}>
+                                    <span>Нет</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <label class="input-group__title">&nbsp;Платежный статус</label>
+                            <div class="input-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="paid_status[]"
+                                           value="1" {{in_array(1, $paid_status) ? 'checked' : ''}}>
+                                    <span>Платный</span>
                                 </label>
                             </div>
                             <div class="input-group">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="storage">
-                                    <span>Оперативное хранение</span>
+                                    <input type="checkbox" name="paid_status[]"
+                                           value="0" {{in_array(0, $paid_status) ? 'checked' : ''}}>
+                                    <span>Бесплатный</span>
                                 </label>
                             </div>
-                            <div class="input-group">
-                                <label class="checkbox">
-                                    <input type="checkbox" name="destroyed">
-                                    <span>Уничтожено</span>
-                                </label>
-                            </div>
-                            <div class="input-group">
-                                <label class="checkbox">
-                                    <input type="checkbox" name="formed">
-                                    <span>Дело сформировано</span>
-                                </label>
-                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <label class="input-group__title">Количество обучающихся: от</label>
+                            <label class="">
+                                <input type="number" name="certificates_count_from" placeholder=""
+                                       class="input-regular" value="">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <label class="input-group__title">до</label>
+                            <label class="">
+                                <input type="number" name="certificates_count_to" placeholder=""
+                                       class="input-regular" value="">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <label class="input-group__title">Количество сертфикатов: от</label>
+                            <label class="">
+                                <input type="number" name="certificates_count_from" placeholder=""
+                                       class="input-regular" value="">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <label class="input-group__title">до</label>
+                            <label class="">
+                                <input type="number" name="certificates_count_to" placeholder=""
+                                       class="input-regular" value="">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <label class="input-group__title">Количество квалификаций: от</label>
+                            <label class="">
+                                <input type="number" name="qualifications_count_from" placeholder=""
+                                       class="input-regular" value="">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <label class="input-group__title">до</label>
+                            <label class="">
+                                <input type="number" name="qualifications_count_to" placeholder=""
+                                       class="input-regular" value="">
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -158,7 +182,10 @@
                     <button class="btn btn--green">Искать</button>
                 </div>
                 <div>
-                    <button class="btn btn--yellow">Сбросить</button>
+                    <a href="/{{$lang}}/admin/reports/courses" class="btn btn--yellow">Сбросить</a>
+                </div>
+                <div>
+                    <a href="/{{$lang}}/admin/export-courses-report" class="btn btn--blue">Экспорт</a>
                 </div>
             </div>
         </form>
@@ -167,23 +194,24 @@
             <h2 class="title-secondary">{{__('admin.pages.reports.authors_report')}}</h2>
             <table class="table records">
                 <colgroup>
-                    <col span="1" style="width: 20%;">
-                    <col span="1" style="width: 20%;">
-                    <col span="1" style="width: 20%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
                     <col span="1" style="width: 15%;">
                     <col span="1" style="width: 10%;">
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 20%;">
-                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 10%;">
                     <col span="1" style="width: 10%;">
                     <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
                 </colgroup>
                 <thead>
                 <tr>
-                    <th>{{__('admin.pages.reports.course_name')}}</th>
-                    <th>{{__('admin.pages.reports.author_name')}}</th>
-                    <th>{{__('admin.pages.reports.skills')}}</th>
+{{--                    <th><a href="{{request()->fullUrlWithQuery(["sortByName"=>$request->sortByName == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.course_name')}} {{$request->sortByName == 'asc' ? '↑' : ($request->sortByName == 'desc' ? '↓' : '')}}</a></th>--}}
+                    <th><a href="{{request()->fullUrlWithQuery(["sortByName"=>$request->sortByName == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.course_name')}}</a></th>
+                    <th><a href="{{request()->fullUrlWithQuery(["sortByAuthorName"=>$request->sortByAuthorName == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.author_name')}}</th>
+                    <th>{{__('admin.pages.reports.skills')}}</a></th>
                     <th>{{__('admin.pages.reports.group_profession')}}</th>
                     <th>{{__('admin.pages.reports.course_rate')}}</th>
                     <th>{{__('admin.pages.reports.course_status')}}</th>
@@ -197,7 +225,7 @@
                 <tbody>
                 @foreach($items as $item)
                     <tr>
-                        <td>{{$item->name}}</td>
+                        <td>{{ $item->name }}</td>
                         <td>{{ $item->user->company_name }}</td>
                         <td>{{implode(', ', array_filter($item->skills->pluck('name_'.$lang)->toArray())) ?: implode(', ', $item->skills->pluck('name_ru')->toArray())}}</td>
                         @if(count($item->professionsBySkills()->pluck('id')->toArray())<= 0)

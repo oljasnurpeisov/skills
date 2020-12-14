@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Page;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class PageController extends Controller
 {
@@ -58,10 +59,22 @@ class PageController extends Controller
 
     public function forAuthorsUpdate(Request $request)
     {
+
         $languages = ['ru', 'kk', 'en'];
         $item = Page::wherePageAlias('for_authors')->first();
 
-        foreach ($languages as $language) {
+        $icons = [];
+
+        if($request->hasFile('icons')) {
+            foreach ($request->file('icons') as $k => $file) {
+                if (isset($file)) {
+                    $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path() . '/images/advantages_icons/', $filename);
+                    $icons[] = $filename;
+                }
+            }
+        }
+        foreach ($languages as $k => $language) {
 
             $data = [
                 "step_by_step" => [],
@@ -77,12 +90,19 @@ class PageController extends Controller
                         'description' => $request['descriptions_' . $language][$key],
                     );
                 }
+            }
 
+
+
+            foreach ($request['advantages_name_' . $language] as $key => $advantage) {
                 if (isset($request['advantages_name_' . $language][$key])) {
+
                     $data['advantages'][] = array(
+                        'icon' => $request->icons_saved[$key] ?? $icons[$key] ?? $icons[0],
                         'name' => $request['advantages_name_' . $language][$key],
                         'description' => $request['advantages_descriptions_' . $language][$key],
                     );
+
                 }
             }
             $item['data_' . $language] = json_encode($data);

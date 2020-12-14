@@ -15,6 +15,8 @@ use App\Models\StudentLessonAnswer;
 use App\Models\Theme;
 use App\Models\User;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -471,7 +473,7 @@ class LessonController extends Controller
                 'duration' => $course->lessons->sum('duration'),
                 'course_name' => $course->name,
                 'skills' => $course->skills,
-                'certificate_id' => sprintf("%012d", $certificate->id).'-'.date('dmY')
+                'certificate_id' => sprintf("%012d", $certificate->id) . '-' . date('dmY')
             ];
             $pdf = PDF::loadView('app.pages.page.pdf.certificate_' . $course->certificate_id . '_' . $language, ['data' => $data]);
             $pdf = $pdf->setPaper('a4', 'portrait');
@@ -492,5 +494,37 @@ class LessonController extends Controller
 
         $certificate->save();
 
+        $cert = base64_encode(file_get_contents(env('APP_URL').$certificate->png_ru));
+        $this->putNewSkills(Auth::user()->student_info->uid, $course, $cert);
+
+    }
+
+    public function putNewSkills($uid, $course, $cert)
+    {
+        $data = [
+            'uid' => $uid,
+            'course' => [
+                'id' => $course->id,
+                'name' => $course->name,
+                'skills' => $course->skills->pluck('code_skill')->toArray()
+            ],
+            'cert' => $cert
+        ];
+
+        $client = new Client(['verify' => false]);
+
+        try {
+            $body = $data;
+            $response = $client->request('PUT', 'https://btest.enbek.kz/ru/api/put-navyk-from-obuch', [
+                'body' => json_encode($body),
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ]
+            ]);
+        } catch (BadResponseException $e) {
+            return $e;
+        }
+
+        return $data;
     }
 }

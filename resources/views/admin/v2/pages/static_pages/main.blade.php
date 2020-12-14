@@ -122,26 +122,26 @@
         }
 
         $("#add_step_ru").click(function () {
-            if ($("[name='steps[]']").length < max_steps) {
+            if ($("[name='steps_ru[]']").length < max_steps) {
                 $("#steps_ru").append(step_names['ru'], step_descriptions['ru']);
             }
-            if ($("[name='steps[]']").length === max_steps) {
+            if ($("[name='steps_ru[]']").length === max_steps) {
                 $("#add_step_ru").remove();
             }
         });
         $("#add_step_kk").click(function () {
-            if ($("[name='steps[]']").length < max_steps) {
+            if ($("[name='steps_kk[]']").length < max_steps) {
                 $("#steps_kk").append(step_names['kk'], step_descriptions['kk']);
             }
-            if ($("[name='steps[]']").length === max_steps) {
+            if ($("[name='steps_kk[]']").length === max_steps) {
                 $("#add_step_kk").remove();
             }
         });
         $("#add_step_en").click(function () {
-            if ($("[name='steps[]']").length < max_steps) {
+            if ($("[name='steps_en[]']").length < max_steps) {
                 $("#steps_en").append(step_names['en'], step_descriptions['en']);
             }
-            if ($("[name='steps[]']").length === max_steps) {
+            if ($("[name='steps_en[]']").length === max_steps) {
                 $("#add_step_en").remove();
             }
         });

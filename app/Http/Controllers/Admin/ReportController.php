@@ -2,18 +2,127 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\CourseReportExport;
+use App\Exports\ReportingExport;
+use App\Exports\StudentReportExport;
 use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
-    public function authorsReports()
+    public function authorsReports(Request $request)
     {
+        // Сортировка
+        $sortByName = $request->sortByName;
+        $sortByCoursesCount = $request->sortByCoursesCount;
+        // Фильтрация
+        $author_name = $request->author_name ? $request->author_name : '';
+        $specialization = $request->specialization ? $request->specialization : '';
+        $rate_from = $request->rate_from;
+        $rate_to = $request->rate_to;
+        $courses_count_from = $request->courses_count_from;
+        $courses_count_to = $request->courses_count_to;
+        $paid_courses_count_from = $request->paid_courses_count_from;
+        $paid_courses_count_to = $request->paid_courses_count_to;
+        $free_courses_count_from = $request->free_courses_count_from;
+        $free_courses_count_to = $request->free_courses_count_to;
+        $quota_courses_count_from = $request->quota_courses_count_from;
+        $quota_courses_count_to = $request->quota_courses_count_to;
+        $course_members_count_from = $request->course_members_count_from;
+        $course_members_count_to = $request->course_members_count_to;
 
-        $items = User::whereHas('roles', function ($q) {
+        $query = User::whereHas('roles', function ($q) {
             $q->whereSlug('author');
-        })->where('email_verified_at', '!=', null)->paginate(10);
+        })->where('email_verified_at', '!=', null);
+
+        // Сортировка
+        // Сортировка по имени автора
+        if ($sortByName) {
+            $query->whereHas('author_info', function ($q) use ($sortByName) {
+                $q->orderBy('name', $sortByName);
+            });
+        }
+        // Фильтрация
+        // Поиск по имени
+        if ($author_name) {
+            $query->whereHas('author_info', function ($q) use ($author_name) {
+                $q->where('name', 'like', '%' . $author_name . '%');
+            });
+        }
+        // Поиск по специализации
+        if ($specialization) {
+            $query->whereHas('author_info', function ($q) use ($specialization) {
+                $q->where('specialization', 'like', '%' . $specialization . '%');
+            });
+        }
+        // Поиск по количеству курсов
+        if ($courses_count_from and empty($courses_count_to)) {
+            $query->withCount('courses')->having('courses_count', '>=', $courses_count_from);
+        } else if ($courses_count_to and empty($courses_count_from)) {
+            $query->withCount('courses')->having('courses_count', '<=', $courses_count_to);
+        } else if ($courses_count_to and $courses_count_from) {
+            $query->withCount('courses')->having('courses_count', '>=', $courses_count_from)
+                ->having('courses_count', '<=', $courses_count_to);
+        }
+        // Поиск по количеству платных курсов
+        if ($paid_courses_count_from and empty($paid_courses_count_to)) {
+            $query->withCount(['courses as paid_courses_count' => function ($q) {
+                $q->where('is_paid', '=', true);
+            }])->having('paid_courses_count', '>=', $paid_courses_count_from);
+        } else if ($paid_courses_count_to and empty($paid_courses_count_from)) {
+            $query->withCount(['courses as paid_courses_count' => function ($q) {
+                $q->where('is_paid', '=', true);
+            }])->having('paid_courses_count', '<=', $paid_courses_count_to);
+        } else if ($paid_courses_count_to and $paid_courses_count_from) {
+            $query->withCount(['courses as paid_courses_count' => function ($q) {
+                $q->where('is_paid', '=', true);
+            }])->having('paid_courses_count', '>=', $paid_courses_count_from)
+                ->having('paid_courses_count', '<=', $paid_courses_count_to);
+        }
+        // Поиск по количеству бесплатных курсов
+        if ($free_courses_count_from and empty($free_courses_count_to)) {
+            $query->withCount(['courses as free_courses_count' => function ($q) {
+                $q->where('is_paid', '=', false);
+            }])->having('free_courses_count', '>=', $free_courses_count_from);
+        } else if ($free_courses_count_to and empty($free_courses_count_from)) {
+            $query->withCount(['courses as free_courses_count' => function ($q) {
+                $q->where('is_paid', '=', false);
+            }])->having('free_courses_count', '<=', $free_courses_count_to);
+        } else if ($free_courses_count_to and $free_courses_count_from) {
+            $query->withCount(['courses as free_courses_count' => function ($q) {
+                $q->where('is_paid', '=', false);
+            }])->having('free_courses_count', '>=', $free_courses_count_from)
+                ->having('free_courses_count', '<=', $free_courses_count_to);
+        }
+        // Поиск по количеству курсов по квоте
+        if ($quota_courses_count_from and empty($quota_courses_count_to)) {
+            $query->withCount(['courses as quota_courses_count' => function ($q) {
+                $q->where('quota_status', '=', 2);
+            }])->having('quota_courses_count', '>=', $quota_courses_count_from);
+        } else if ($quota_courses_count_to and empty($quota_courses_count_from)) {
+            $query->withCount(['courses as quota_courses_count' => function ($q) {
+                $q->where('quota_status', '=', 2);
+            }])->having('quota_courses_count', '<=', $quota_courses_count_to);
+        } else if ($quota_courses_count_to and $quota_courses_count_from) {
+            $query->withCount(['courses as quota_courses_count' => function ($q) {
+                $q->where('quota_status', '=', 2);
+            }])->having('quota_courses_count', '>=', $quota_courses_count_from)
+                ->having('quota_courses_count', '<=', $quota_courses_count_to);
+        }
+
+        // Поиск по количеству обучающихся
+        if ($course_members_count_from and empty($course_members_count_to)) {
+            $query->with(['courses' => function ($q) use($course_members_count_from) {
+                $q->withCount(['course_members' => function ($q) use($course_members_count_from) {
+                    $q->whereIn('paid_status', [1, 2]);
+                }])->having('course_members_count', '>=', $course_members_count_from);
+            }]);
+        }
+
+        $items = $query->paginate(10);
 
         foreach ($items as $item) {
             $rates_array = [];
@@ -48,26 +157,210 @@ class ReportController extends Controller
             $item->qualification_students = array_filter($author_students_finished_courseWork);
         }
 
-        return view('admin.v2.pages.reports.authors_report', [
-            'items' => $items
+        Session::put('authors_report_export', $query->get());
 
+        return view('admin.v2.pages.reports.authors_report', [
+            'items' => $items,
+            'request' => $request
         ]);
+//        return $items;
     }
 
-    public function coursesReports()
+    public function coursesReports(Request $request)
     {
-        $items = Course::paginate(10);
+        // Фильтрация
+        $course_name = $request->course_name ? $request->course_name : '';
+        $author_name = $request->author_name ? $request->author_name : '';
+        $rate_from = $request->rate_from;
+        $rate_to = $request->rate_to;
+        $course_status = $request->course_status;
+        $quota_status = $request->quota_status ?? [];
+        $paid_status = $request->paid_status ?? [];
+        // Сортировка
+        $sortByName = $request->sortByName;
+        $sortByAuthor = $request->sortByAuthor;
+
+        $query = (new Course)->newQuery();
+        // Сортировка
+        // Сортировка по названию курса
+        if ($sortByName) {
+            $query->orderBy('name', $sortByName);
+        }
+        // Сортировка по автору
+        if ($sortByAuthor) {
+            $query->whereHas('users', function ($q) use ($sortByName) {
+                $q->orderBy('company_name', $sortByName);
+            });
+        }
+        // Фильтрация
+        // Поиск по имени
+        if ($course_name) {
+            $query->where('name', 'like', '%' . $course_name . '%');
+        }
+        // Поиск по автору
+        if ($author_name) {
+            $query->whereHas('users', function ($q) use ($author_name) {
+                $q->where('company_name', 'like', '%' . $author_name . '%');
+            });
+        }
+        // Поиск по рейтингу
+        if ($rate_from and empty($rate_to)) {
+            $query->whereHas('rate', function ($q) use ($rate_from) {
+                $q->where('rate', '>=', $rate_from);
+            });
+        } else if ($rate_to and empty($rate_from)) {
+            $query->whereHas('rate', function ($q) use ($rate_to) {
+                $q->where('rate', '<=', $rate_to);
+            });
+        } else if ($rate_to and $rate_from) {
+            $query->whereHas('rate', function ($q) use ($rate_to, $rate_from) {
+                $q->whereBetween('rate', [$rate_from, $rate_to]);
+            });
+        }
+        // Поиск по статусу
+        if (isset($course_status)) {
+            $query->whereStatus($course_status);
+        }
+        // Поиск по доступности по квоте
+        if ($quota_status) {
+            if ($quota_status == ["0"]) {
+                $query->where('quota_status', '!=', 2);
+            } else if (in_array("2", $quota_status) and in_array("0", $quota_status)) {
+                $query->whereIn('quota_status', [0, 1, 2, 3]);
+            } else {
+                $query->whereIn('quota_status', $quota_status);
+            }
+        }
+        // Поиск по способу оплаты
+        if ($paid_status) {
+            $query->whereIn('is_paid', $paid_status);
+        }
+
+
+        $items = $query->paginate(10);
+
+        Session::put('courses_report_export', $query->get());
 
         return view('admin.v2.pages.reports.courses_report', [
-            'items' => $items
+            'items' => $items,
+            'request' => $request,
+            'quota_status' => $quota_status,
+            'paid_status' => $paid_status
         ]);
     }
 
-    public function studentsReports()
+    public function studentsReports(Request $request)
     {
-        $items = User::whereHas('roles', function ($q) {
+        // Фильтрация
+        $student_name = $request->student_name ? $request->student_name : '';
+        $unemployed_status = $request->unemployed_status ?? [];
+        $quota_count_from = $request->quota_count_from;
+        $quota_count_to = $request->quota_count_to;
+        $courses_count_from = $request->courses_count_from;
+        $courses_count_to = $request->courses_count_to;
+        $certificates_count_from = $request->certificates_count_from;
+        $certificates_count_to = $request->certificates_count_to;
+        // Сортировка
+        $sortByName = $request->sortByName;
+        $sortByQuota = $request->sortByQuota;
+
+        $query = User::whereHas('roles', function ($q) {
             $q->whereSlug('student');
-        })->paginate(10);
+        });
+        // Сортировка
+        // Сортировка по названию курса
+        if ($sortByName) {
+            $query->whereHas('student_info', function ($q) use ($sortByName) {
+                $q->orderBy('name', $sortByName);
+            });
+        }
+        if ($sortByQuota) {
+            $query->whereHas('student_info', function ($q) use ($sortByQuota) {
+                $q->orderBy('quota_count', $sortByQuota);
+            });
+        }
+        // Фильтрация
+        // Поиск по имени
+        if ($student_name) {
+            $query->whereHas('student_info', function ($q) use ($student_name) {
+                $q->where('name', 'like', '%' . $student_name . '%');
+            });
+        }
+        // Поиск по статусу
+        if ($unemployed_status) {
+            $query->whereHas('student_info', function ($q) use ($unemployed_status) {
+                $q->whereIn('unemployed_status', $unemployed_status);
+            });
+        }
+        // Поиск по количеству квот
+        if ($quota_count_from and empty($quota_count_to)) {
+            $query->whereHas('student_info', function ($q) use ($quota_count_from) {
+                $q->where('quota_count', '>=', $quota_count_from);
+            });
+        } else if ($quota_count_to and empty($quota_count_from)) {
+            $query->whereHas('student_info', function ($q) use ($quota_count_to) {
+                $q->where('quota_count', '>=', $quota_count_to);
+            });
+        } else if ($quota_count_to and $quota_count_from) {
+            $query->whereHas('student_info', function ($q) use ($quota_count_to, $quota_count_from) {
+                $q->whereBetween('quota_count', [$quota_count_from, $quota_count_to]);
+            });
+        }
+        // Поиск по количеству курсов
+        if ($courses_count_from and empty($courses_count_to)) {
+            $query->withCount(['student_course' => function ($q) {
+                $q->whereIn('paid_status', [1, 2]);
+            }])->with(['student_course' => function ($q) {
+                $q->whereIn('paid_status', [1, 2]);
+            }])->having('student_course_count', '>=', $courses_count_from);
+        } else if ($courses_count_to and empty($courses_count_from)) {
+            $query->withCount(['student_course' => function ($q) {
+                $q->whereIn('paid_status', [1, 2]);
+            }])->with(['student_course' => function ($q) {
+                $q->whereIn('paid_status', [1, 2]);
+            }])->having('student_course_count', '<=', $courses_count_to);
+        } else if ($courses_count_to and $courses_count_from) {
+            $query->withCount(['student_course' => function ($q) {
+                $q->whereIn('paid_status', [1, 2]);
+            }])->with(['student_course' => function ($q) {
+                $q->whereIn('paid_status', [1, 2]);
+            }])->having('student_course_count', '>=', $courses_count_from)
+                ->having('student_course_count', '<=', $courses_count_to);
+        }
+        // Поиск по количеству сертификатов
+        if ($certificates_count_from and empty($certificates_count_to)) {
+            $query->withCount(['student_course as student_course_certificates_count' => function ($q) {
+                $q->where('is_finished', '=', true);
+            }])->with(['student_course' => function ($q) {
+                $q->where('is_finished', '=', true);
+            }])->having('student_course_certificates_count', '>=', $certificates_count_from);
+        } else if ($certificates_count_to and empty($certificates_count_from)) {
+            $query->withCount(['student_course as student_course_certificates_count' => function ($q) {
+                $q->where('is_finished', '=', true);
+            }])->with(['student_course' => function ($q) {
+                $q->where('is_finished', '=', true);
+            }])->having('student_course_certificates_count', '<=', $certificates_count_to);
+        } else if ($certificates_count_to and $certificates_count_from) {
+            $query->withCount(['student_course as student_course_certificates_count' => function ($q) {
+                $q->where('is_finished', '=', true);
+            }])->with(['student_course' => function ($q) {
+                $q->where('is_finished', '=', true);
+            }])->having('student_course_certificates_count', '>=', $certificates_count_from)
+                ->having('student_course_certificates_count', '<=', $certificates_count_to);
+        }
+        // Поиск по количеству квалификаций
+        $query->with(['student_course' => function ($q) {
+            $q->where('is_finished', '=', true)->with(['course.lessons' => function ($q) {
+                $q->where('type', '=', 3)->withCount(['student_lessons as finished_courseworks' => function ($q) {
+                    $q->where('is_finished', '=', true);
+                }]);
+            }]);
+        }]);
+
+        $student_courses = [];
+        //
+        $items = $query->paginate(10);
+
         $i = [];
         foreach ($items as $item) {
             $finishedCourseWorks = 0;
@@ -82,9 +375,135 @@ class ReportController extends Controller
             // Количество законченных курсовых работ
             $item->finishedCourseWorkrs = $finishedCourseWorks;
         }
+        Session::put('students_report_export', $query->get());
 
         return view('admin.v2.pages.reports.students_report', [
-            'items' => $items
+            'items' => $items,
+            'request' => $request,
+            'unemployed_status' => $unemployed_status
         ]);
+//        return $items;
     }
+
+    public function exportStudentsReport(Request $request)
+    {
+        $query = Session::get('students_report_export');
+        $export = [[]];
+        $lang = app()->getLocale();
+        foreach ($query as $i) {
+            // ФИО обучающегося
+            $name = $i->student_info->name;
+            // Статус безработного
+            if ($i->unemployed_status == 0) {
+                $unemployed_status = __('default.yes_title');
+            } else {
+                $unemployed_status = __('default.no_title');
+            }
+            // Кол-во квот
+            $quota_count = $i->student_info->quota_count;
+            // Кол-во курсов
+            $courses_count = $i->student_course->whereIn('paid_status', [1, 2])->count();
+            // Кол-во сертификатов
+            $certificates = $i->student_course->where('is_finished', '=', true)->count();
+            // Кол-во подтвержденных квалификаций
+            $qualifications = $i->finishedCourseWorkrs;
+
+            $newElement = ['name' => $name, 'unemployed_status' => $unemployed_status, 'quota_count' => $quota_count,
+                'courses_count' => $courses_count, 'certificates' => $certificates, 'qualifications' => $qualifications];
+
+            array_push($export, $newElement);
+        }
+
+        asort($export);
+        return Excel::download(new StudentReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
+    }
+
+    public function exportCoursesReport(Request $request)
+    {
+        $query = Session::get('courses_report_export');
+        $export = [[]];
+        $lang = app()->getLocale();
+        foreach ($query as $i) {
+            // Наименование курса
+            $name = $i->name;
+            // Наименование автора
+            $author_name = $i->user->company_name;
+            // Навыки
+            $skills = implode(', ', array_filter($i->skills->pluck('name_' . $lang)->toArray())) ?: implode(', ', $i->skills->pluck('name_ru')->toArray());
+            // Группа профессий
+            if (count($i->professionsBySkills()->pluck('id')->toArray()) <= 0) {
+                $professions = '-';
+            } else {
+                $professions = implode(', ', array_filter($i->professionsBySkills()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professionsBySkills()->pluck('name_ru')->toArray()));
+            }
+            // Рейтинг курса
+            $rate = round($i->rate->pluck('rate')->avg() ?? 0, 1);
+            // Статус курса
+            $status = __('default.pages.reporting.statuses.' . $i->status);
+            // Доступен по квоте
+            $quota_access = $i->quota_status == 2 ? __('default.yes_title') : __('default.no_title');
+            // Платежный статус
+            $is_paid = $i->is_paid == true ? __('default.pages.reporting.paid_course') : __('default.pages.reporting.free_course');
+            // Записано обучающихся
+            $students_count = count($i->course_members->whereIn('paid_status', [1, 2]));
+            // Получили сертификат
+            $students_certificate_count = count($i->course_members->where('is_finished', '=', true));
+            // Подтвердили квалификацию
+            if ($i->courseWork()) {
+                $students_qualification_count = $i->courseWork()->finishedLesson()->count();
+            } else {
+                $students_qualification_count = '-';
+            }
+
+            $newElement = ['name' => $name, 'author_name' => $author_name, 'skills' => $skills,
+                'professions' => $professions, 'rate' => $rate, 'status' => $status, 'quota_access' => $quota_access,
+                'is_paid' => $is_paid, 'students_count' => $students_count, 'students_certificate_count' => $students_certificate_count,
+                'students_qualification_count' => $students_qualification_count];
+
+            array_push($export, $newElement);
+        }
+
+        asort($export);
+        return Excel::download(new CourseReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
+    }
+
+    public function exportAuthorsReport(Request $request)
+    {
+        $query = Session::get('authors_report_export');
+        $export = [[]];
+        $lang = app()->getLocale();
+        foreach ($query as $i) {
+            // ФИО автора
+            $name = $i->author_info->name . ' ' . $i->author_info->surname;
+            // Специализация
+            $specialization = implode(', ', json_decode($i->author_info->specialization) ?? []);
+            // Рейтинг
+            $rate = round($i->average_rates, 1);
+            // Количество курсов
+            $courses_count = $i->courses->count();
+            // Количество платных курсов
+            $paid_courses_count = $i->courses->where('is_paid', '=', true)->count();
+            // Количество бесплатных курсов
+            $free_courses_count = $i->courses->where('is_paid', '=', false)->count();
+            // Количество доступных по квоте
+            $quota_courses_count = $i->courses->where('quota_status', '=', 2)->count();
+            // Количество обучающихся
+            $students_count = count($i->members) ?? 0;
+            // Количество сертифицированных обучающихся
+            $students_certificate_count = count($i->certificate_members) ?? 0;
+            // Количество подтвердивших квалификацию обучающихся
+            $students_qualification_count = count($i->qualification_students) ?? 0;
+
+            $newElement = ['name' => $name, 'specialization' => $specialization, 'rate' => $rate, 'courses_count' => $courses_count,
+                'paid_courses_count' => $paid_courses_count, 'free_courses_count' => $free_courses_count, 'quota_courses_count' => $quota_courses_count,
+                'students_count' => $students_count, 'students_certificate_count' => $students_certificate_count,
+                'students_qualification_count' => $students_qualification_count];
+
+            array_push($export, $newElement);
+        }
+
+        asort($export);
+        return Excel::download(new StudentReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
+    }
+
 }

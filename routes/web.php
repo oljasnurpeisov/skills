@@ -117,10 +117,13 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
             Route::group(['middleware' => 'check.permission:admin.reports'], static function () {
                 // Отчеты по авторам
                 Route::get('/reports/authors', 'ReportController@authorsReports');
+                Route::get("/export-authors-report", "ReportController@exportAuthorsReport");
                 // Отчеты по курсам
                 Route::get('/reports/courses', 'ReportController@coursesReports');
+                Route::get("/export-courses-report", "ReportController@exportCoursesReport");
                 // Отчеты по обучающимся
                 Route::get('/reports/students', 'ReportController@studentsReports');
+                Route::get("/export-students-report", "ReportController@exportStudentsReport");
             });
         });
     });

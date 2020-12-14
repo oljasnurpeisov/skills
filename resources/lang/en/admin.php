@@ -152,8 +152,13 @@ return [
 
             'for_authors' => 'Преподаватель',
             'btn_title' => 'Заголовок кнопки',
-            'advantages' => 'Преимущества'
+            'advantages' => 'Преимущества',
+            'title_placeholder' => 'Введите заголовок',
+            'description_placeholder' => 'Введите описание',
+            'advantage_icon' => 'Иконка преймущества',
+            'upload_image' => 'Загрузить изображение'
         ],
+
         'reports' => [
             'title' => 'Отчеты',
             'authors_report' => 'Отчет по авторам',
