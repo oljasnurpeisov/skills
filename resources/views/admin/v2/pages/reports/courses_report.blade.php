@@ -217,7 +217,7 @@
                     <th>{{__('admin.pages.reports.course_status')}}</th>
                     <th>{{__('admin.pages.reports.quota_access')}}</th>
                     <th>{{__('admin.pages.reports.paid_or_free')}}</th>
-                    <th>{{__('admin.pages.reports.course_members')}}</th>
+                    <th><a href="?sortByCourseMembers={{$request->sortByCourseMembers == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_members')}}</a></th>
                     <th>{{__('admin.pages.reports.course_members_certificates')}}</th>
                     <th>{{__('admin.pages.reports.course_members_qualification')}}</th>
                 </tr>

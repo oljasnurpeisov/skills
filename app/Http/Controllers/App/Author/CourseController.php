@@ -699,6 +699,7 @@ class CourseController extends Controller
         })
             ->whereBetween('created_at', [$dFrom, $dTo->endOfDay()])
             ->orderBy('created_at', 'asc')->where('paid_status', '!=', 0)
+            ->with('course')
             ->get()
             ->groupBy(function ($val) {
                 return Carbon::parse($val->created_at)->format('d');
@@ -717,8 +718,8 @@ class CourseController extends Controller
             $key = array_search($item->first()->created_at->format("Y-m-d"), array_column($data['data'], 'date'));
             $data['data'][$key] = [
                 "date" => $item->first()->created_at,
-                "value1" => $item->count(),
-                "value2" => $item->where('paid_status', '=', 2)->count()];
+                "value1" => $item->sum('course.cost'),
+                "value2" => $item->where('paid_status', '=', 2)->sum('course.cost')];
         }
 
         return response()->json($data);
@@ -875,11 +876,11 @@ class CourseController extends Controller
                 foreach ($theme->lessons as $lesson) {
                     $lesson->order = $lesson->index_number;
 
-                    if ($lesson->type != 1){
-                        $lesson->type = $lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru');
-                        $lesson->type .= $lesson->end_lesson_type == 0 ? ' ('.__('default.pages.lessons.test_title').')' : ' ('.__('default.pages.lessons.homework_title').')';
-                    }else{
-                        $lesson->type = $lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru');
+                    if ($lesson->type != 1) {
+                        $lesson->type = $lesson->lesson_type->getAttribute('name_' . $lang) ?? $lesson->lesson_type->getAttribute('name_ru');
+                        $lesson->type .= $lesson->end_lesson_type == 0 ? ' (' . __('default.pages.lessons.test_title') . ')' : ' (' . __('default.pages.lessons.homework_title') . ')';
+                    } else {
+                        $lesson->type = $lesson->lesson_type->getAttribute('name_' . $lang) ?? $lesson->lesson_type->getAttribute('name_ru');
                     }
 
                 }
