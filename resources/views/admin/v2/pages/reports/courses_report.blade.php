@@ -43,15 +43,22 @@
                     <div class="col-md-12">
                         <div class="input-group">
                             <label class="input-group__title">Поиск по навыкам</label>
-                            <input type="text" name="text" placeholder="" class="input-regular">
+                            <input type="text" name="skill" value="{{$request->skill}}" placeholder="" class="input-regular">
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="input-group">
-                            <label class="input-group__title">Поиск по группе профессий</label>
-                            <input type="text" name="text" placeholder="" class="input-regular">
-                        </div>
-                    </div>
+{{--                    <div class="col-md-12">--}}
+{{--                        <div class="input-group">--}}
+{{--                            <label class="input-group__title">Поиск по профессии</label>--}}
+{{--                            <select name="course_professions" class="input-regular chosen" data-placeholder="{{__('default.pages.courses.choose_profession')}}">--}}
+{{--                                @if(!empty($request->specialities))--}}
+{{--                                    @foreach($professions as $profession)--}}
+{{--                                        <option value="{{$profession->id}}"--}}
+{{--                                                selected>{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                @endif--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-sm-6">

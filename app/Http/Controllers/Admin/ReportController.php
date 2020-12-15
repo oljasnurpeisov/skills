@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AuthorReportExport;
 use App\Exports\CourseReportExport;
 use App\Exports\ReportingExport;
 use App\Exports\StudentReportExport;
 use App\Models\Course;
+use App\Models\Professions;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -76,27 +78,26 @@ class ReportController extends Controller
             }])->orderBy('quota_courses_count', $sortByQuotaCoursesCount);
         }
         // Сортировка по количеству обучающихся
-        if ($sortByStudentsCount){
+        if ($sortByStudentsCount) {
 //            $query->with(['courses.course_members' => function ($q) use($sortByStudentsCount) {
 ////                $q->withCount(['course_members' => function ($q) use($sortByStudentsCount) {
 //                    $q->whereIn('paid_status', [1, 2]);
 ////                }])->orderBy('course_members_count', $sortByStudentsCount);;
 ////
 //            }]);
-//            $query->withCount(['courses' => function ($q) use ($sortByStudentsCount) {
-//                $q->withCount(['course_members' => function ($q) use($sortByStudentsCount) {
-//                $q->whereIn('paid_status', [1,2]);
-//                }]);
-//            }])->orderBy('course_members_count', $sortByStudentsCount);
+            $query->with(['courses' => function ($query) use ($sortByStudentsCount) {
+                $query->withCount(['course_members' => function ($q) use ($sortByStudentsCount) {
+                    $q->whereIn('paid_status', [1, 2]);
+                }])->orderBy('course_members_count', $sortByStudentsCount);
+            }]);
         }
 
-
-//        return $query->get();
         // Фильтрация
         // Поиск по имени
         if ($author_name) {
             $query->whereHas('author_info', function ($q) use ($author_name) {
-                $q->where('name', 'like', '%' . $author_name . '%');
+                $q->where('name', 'like', '%' . $author_name . '%')
+                    ->orWhere('surname', 'like', '%' . $author_name . '%');
             });
         }
         // Поиск по специализации
@@ -161,24 +162,24 @@ class ReportController extends Controller
         }
 
         // Поиск по количеству обучающихся
-//        if ($course_members_count_from and empty($course_members_count_to)) {
-//            $query->with(['courses' => function ($q) use($course_members_count_from) {
-//                $q->withCount(['course_members' => function ($q) use($course_members_count_from) {
-//                    $q->whereIn('paid_status', [1, 2]);
-//                }])->having('course_members_count', '>=', $course_members_count_from);
-//            }]);
-//        }else if ($course_members_count_to and empty($course_members_count_from)) {
-//            $query->with(['courses' => function ($q) use($course_members_count_to) {
-//                $q->withCount(['course_members' => function ($q) use($course_members_count_to) {
-//                    $q->whereIn('paid_status', [1, 2]);
-//                }])->having('course_members_count', '<=', $course_members_count_to);
-//            }]);
-//        } else if ($course_members_count_to and $course_members_count_from) {
-//            $query->withCount(['course_members' => function ($q) {
-//                $q->whereIn('paid_status', [1, 2]);
-//            }])->having('course_members_count', '>=', $course_members_count_from)
-//                ->having('course_members_count', '<=', $course_members_count_to);
-//        }
+        if ($course_members_count_from and empty($course_members_count_to)) {
+            $query->with(['courses' => function ($q) use ($course_members_count_from) {
+                $q->withCount(['course_members' => function ($q) use ($course_members_count_from) {
+                    $q->whereIn('paid_status', [1, 2]);
+                }])->having('course_members_count', '>=', $course_members_count_from);
+            }]);
+        } else if ($course_members_count_to and empty($course_members_count_from)) {
+            $query->with(['courses' => function ($q) use ($course_members_count_to) {
+                $q->withCount(['course_members' => function ($q) use ($course_members_count_to) {
+                    $q->whereIn('paid_status', [1, 2]);
+                }])->having('course_members_count', '<=', $course_members_count_to);
+            }]);
+        } else if ($course_members_count_to and $course_members_count_from) {
+            $query->withCount(['course_members' => function ($q) {
+                $q->whereIn('paid_status', [1, 2]);
+            }])->having('course_members_count', '>=', $course_members_count_from)
+                ->having('course_members_count', '<=', $course_members_count_to);
+        }
 
         $items = $query->paginate(10);
 
@@ -221,7 +222,6 @@ class ReportController extends Controller
             'items' => $items,
             'request' => $request
         ]);
-//        return $items;
     }
 
     public function coursesReports(Request $request)
@@ -229,6 +229,7 @@ class ReportController extends Controller
         // Фильтрация
         $course_name = $request->course_name ? $request->course_name : '';
         $author_name = $request->author_name ? $request->author_name : '';
+        $skill = $request->skill ? $request->skill : '';
         $rate_from = $request->rate_from;
         $rate_to = $request->rate_to;
         $course_status = $request->course_status;
@@ -255,7 +256,7 @@ class ReportController extends Controller
         }
         // Сортировка количеству учащихся
         if ($sortByCourseMembers) {
-            $query->withCount(['course_members' => function ($q){
+            $query->withCount(['course_members' => function ($q) {
                 $q->whereIn('paid_status', [1, 2]);
             }])->orderBy('course_members_count', $sortByCourseMembers);
         }
@@ -271,17 +272,26 @@ class ReportController extends Controller
             });
         }
         // Поиск по рейтингу
-//        if ($rate_from and empty($rate_to)) {
-//            $query->withCount('rate')->having('rate_count', '>=', round($rate_from));
-//        } else if ($rate_to and empty($rate_from)) {
-//            $query->whereHas('rate', function ($q) use ($rate_to) {
-//                $q->where('rate', '<=', round($rate_to));
-//            });
-//        } else if ($rate_to and $rate_from) {
-//            $query->whereHas('rate', function ($q) use ($rate_to, $rate_from) {
-//                $q->whereBetween('rate', [round($rate_from), round($rate_to)]);
-//            });
-//        }
+        if ($rate_from and empty($rate_to)) {
+            $query->withCount('rate')->having('rate_count', '>=', round($rate_from));
+        } else if ($rate_to and empty($rate_from)) {
+            $query->whereHas('rate', function ($q) use ($rate_to) {
+                $q->where('rate', '<=', round($rate_to));
+            });
+        } else if ($rate_to and $rate_from) {
+            $query->whereHas('rate', function ($q) use ($rate_to, $rate_from) {
+                $q->whereBetween('rate', [round($rate_from), round($rate_to)]);
+            });
+        }
+        // Поиск по навыкам
+        if ($skill) {
+            $query->whereHas('skills', function ($q) use ($skill) {
+                $q->where('name_ru', 'like', '%' . $skill . '%')
+                    ->orWhere('name_kk', 'like', '%' . $skill . '%')
+                    ->orWhere('name_en', 'like', '%' . $skill . '%');
+            });
+        }
+
         // Поиск по статусу
         if (isset($course_status)) {
             $query->whereStatus($course_status);
@@ -302,15 +312,15 @@ class ReportController extends Controller
         }
         // Поиск по количеству участников
         if ($course_members_count_from and empty($course_members_count_to)) {
-            $query->withCount(['course_members' => function ($q){
+            $query->withCount(['course_members' => function ($q) {
                 $q->whereIn('paid_status', [1, 2]);
             }])->having('course_members_count', '>=', $course_members_count_from);
-        }else if ($course_members_count_to and empty($course_members_count_from)) {
-            $query->withCount(['course_members' => function ($q){
+        } else if ($course_members_count_to and empty($course_members_count_from)) {
+            $query->withCount(['course_members' => function ($q) {
                 $q->whereIn('paid_status', [1, 2]);
             }])->having('course_members_count', '<=', $course_members_count_to);
         } else if ($course_members_count_to and $course_members_count_from) {
-            $query->withCount(['course_members' => function ($q){
+            $query->withCount(['course_members' => function ($q) {
                 $q->whereIn('paid_status', [1, 2]);
             }])->having('course_members_count', '>=', $course_members_count_from)
                 ->having('course_members_count', '<=', $course_members_count_to);
@@ -433,14 +443,13 @@ class ReportController extends Controller
             $query->where('is_finished', '=', true)->with(['course.lessons' => function ($query) {
                 $query->where('type', '=', 3)->withCount(['student_lessons as finished_courseworks' => function ($query) {
                     $query->where('is_finished', '=', true);
-                }])->having('finished_courseworks', '>=', 5);
+                }]);
             }]);
         }]);
 
         $student_courses = [];
         //
         $items = $query->paginate(10);
-        return $items;
 
         $i = [];
         foreach ($items as $item) {
@@ -471,7 +480,18 @@ class ReportController extends Controller
         $query = Session::get('students_report_export');
         $export = [[]];
         $lang = app()->getLocale();
+
         foreach ($query as $i) {
+            $finishedCourseWorks = 0;
+            foreach ($i->student_course->whereIn('paid_status', [1, 2]) as $course) {
+                if ($course->course->courseWork()) {
+                    if ($i->student_lesson->where('lesson_id', '=', $course->course->courseWork()->id)) {
+                        $finishedCourseWorks++;
+                    }
+                }
+            }
+            // Количество законченных курсовых работ
+            $i->finishedCourseWorkrs = $finishedCourseWorks;
             // ФИО обучающегося
             $name = $i->student_info->name;
             // Статус безработного
@@ -553,7 +573,40 @@ class ReportController extends Controller
         $query = Session::get('authors_report_export');
         $export = [[]];
         $lang = app()->getLocale();
+
         foreach ($query as $i) {
+            $rates_array = [];
+            $author_students = [];
+            $author_students_finished = [];
+            $author_students_finished_courseWork = [];
+
+            foreach ($i->courses as $course) {
+                // Количество отзывов
+                foreach ($course->rate as $rate) {
+                    $rates_array[] = $rate->rate;
+                }
+                // Количество обучающихся во всех курсах автора
+                foreach ($course->course_members as $member) {
+                    $author_students[$member['student_id']][] = 1;
+                    $author_students_finished[$member['student_id']][] = 1;
+                }
+                if ($course->courseWork()) {
+                    $author_students_finished_courseWork[] = $course->courseWork()->finishedLesson()->toArray();
+                }
+            }
+            // Оценка автора исходя из всех оценок
+            if (count($rates_array) == 0) {
+                $i->average_rates = 0;
+            } else {
+                $i->average_rates = array_sum($rates_array) / count($rates_array);
+            }
+            // Количество уникальных обучающихся
+            $i->members = $author_students;
+            // Количество сертифицированных
+            $i->certificate_members = $author_students_finished;
+            // Количество подтвердивших квалификацию
+            $i->qualification_students = array_filter($author_students_finished_courseWork);
+
             // ФИО автора
             $name = $i->author_info->name . ' ' . $i->author_info->surname;
             // Специализация
@@ -584,7 +637,7 @@ class ReportController extends Controller
         }
 
         asort($export);
-        return Excel::download(new StudentReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
+        return Excel::download(new AuthorReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
 }

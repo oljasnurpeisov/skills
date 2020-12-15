@@ -219,7 +219,7 @@
                 <tbody>
                 @foreach($items as $item)
                     <tr>
-                        <td>{{$item->author_info->name ?? '' . ' ' . $item->author_info->surname ?? ''}}</td>
+                        <td>{{$item->author_info->name . ' ' . $item->author_info->surname ?? ''}}</td>
                         <td>{{ implode(', ', json_decode($item->author_info->specialization) ?? []) }}</td>
                         <td>{{round($item->average_rates, 1)}}</td>
                         <td>{{$item->courses->count()}}</td>
