@@ -234,6 +234,8 @@ return [
         'XmlParser' => Orchestra\Parser\Xml\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'API' => Dingo\Api\Facade\API::class,
+        'APIRoute' => Dingo\Api\Facade\Route::class,
     ],
 
 ];

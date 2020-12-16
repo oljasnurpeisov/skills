@@ -84,9 +84,8 @@ class CourseController extends Controller
         }
         // Учеников, окончивших курс (мин)
         if ($members_count) {
-            $query->whereHas('course_members', function ($q) use ($min_rating) {
-                $q->where('student_course.is_finished', '=', true)->whereIn('student_course.paid_status', [1, 2]);
-            })->withCount(['course_members' => function ($q) {
+            $query->withCount(['course_members' => function ($q) {
+                $q->where('student_course.is_finished', '=', true);
                 $q->whereIn('paid_status', [1, 2]);
             }])->having('course_members_count', '>=', $members_count);
         }

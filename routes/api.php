@@ -17,3 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+APIRoute::version('v1', ['prefix' => 'api/service', 'namespace' => 'App\Api\V1\Controllers\Service'], function () {
+    APIRoute::group(["prefix" => "user"], function () {
+        // Навыки обучающегося
+        APIRoute::get("/skills", "ServiceController@getSkillsByUid");
+        // Обновить навыки
+        APIRoute::put("/skills-update", "ServiceController@updateSkillsByUid");
+        // Обновить количество квот
+        APIRoute::put("/quota-update", "ServiceController@updateQuotaByUid");
+    });
+    // Результат поиска
+    APIRoute::get("/search/courses", "ServiceController@getSearchResult");
+});

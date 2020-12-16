@@ -58,4 +58,11 @@ class Skill extends Model
         return $this->belongsToMany(Course::class,'course_skill', 'skill_id', 'course_id');
 
     }
+
+    public function student_skill() {
+
+        return $this->belongsToMany(User::class,'student_skills', 'skill_id', 'user_id');
+
+    }
+
 }
