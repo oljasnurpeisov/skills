@@ -112,6 +112,8 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 // Для авторов
                 Route::get('/static-pages/for-authors', 'PageController@forAuthors');
                 Route::post("/static-pages/for-authors-update", "PageController@forAuthorsUpdate");
+                // FAQ
+                Route::get('/static-pages/faq', 'PageController@faq');
             });
             // Диалоги
             Route::group(['middleware' => 'check.role:tech_support'], static function () {

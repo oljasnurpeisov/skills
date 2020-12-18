@@ -65,7 +65,7 @@ class PageController extends Controller
 
         $icons = [];
 
-        if($request->hasFile('icons')) {
+        if ($request->hasFile('icons')) {
             foreach ($request->file('icons') as $k => $file) {
                 if (isset($file)) {
                     $filename = uniqid() . '.' . $file->getClientOriginalExtension();
@@ -95,7 +95,6 @@ class PageController extends Controller
             }
 
 
-
             foreach ($request['advantages_name_' . $language] as $key => $advantage) {
                 if (isset($request['advantages_name_' . $language][$key])) {
 
@@ -113,5 +112,14 @@ class PageController extends Controller
         $item->save();
 
         return back()->with('status', __('admin.notifications.update_success'));
+    }
+
+    public function faq()
+    {
+        $item = Page::wherePageAlias('faq')->first();
+
+        return view('admin.v2.pages.static_pages.faq', [
+            'item' => $item
+        ]);
     }
 }

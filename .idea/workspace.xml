@@ -5,11 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/static_pages/faq.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Course.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Course.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/layout/default/components/navigation/left.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/layout/default/components/navigation/left.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/framework/views/0dfba1859782fa8efa28a58b0cf3e25393020251.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/0dfba1859782fa8efa28a58b0cf3e25393020251.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/framework/views/4d2c238da1bf53d1bb76a19d488fc8cfc69267cf.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/4d2c238da1bf53d1bb76a19d488fc8cfc69267cf.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/framework/views/6d34200287468a610058169dcd1d24f10bd3e648.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/6d34200287468a610058169dcd1d24f10bd3e648.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/framework/views/72f1a88ef2d62c37aba1cada5e4ab38c3fbd577b.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/72f1a88ef2d62c37aba1cada5e4ab38c3fbd577b.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +209,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Виталий/PhpstormProjects/enbek/app/Http/Controllers/App/Student/UserController.php" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/v2/pages/static_pages" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -211,19 +217,19 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Service\Controllers" />
-      <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Service" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\img\certificates" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\css" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Controllers\Service" />
       <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Controllers" />
       <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1" />
       <recent name="F:\OpenServer\domains\enbek-backend\config" />
       <recent name="F:\OpenServer\domains\enbek-backend\public\assets\pdf" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\OpenServer\domains\enbek-backend\resources\views\admin\v2\pages\static_pages" />
+      <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Service\Controllers" />
+      <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Service" />
+      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\img\certificates" />
+      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -284,14 +290,7 @@
       <workItem from="1608134820011" duration="61000" />
       <workItem from="1608134967954" duration="339000" />
       <workItem from="1608136318583" duration="2296000" />
-      <workItem from="1608228057715" duration="24187000" />
-    </task>
-    <task id="LOCAL-00100" summary="- change save name of load files&#10;- minor fix">
-      <created>1607323596309</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1607323596309</updated>
+      <workItem from="1608228057715" duration="28481000" />
     </task>
     <task id="LOCAL-00101" summary="- minor fix">
       <created>1607331832528</created>
@@ -629,14 +628,20 @@
       <option name="project" value="LOCAL" />
       <updated>1608276329724</updated>
     </task>
-    <option name="localTasksCounter" value="149" />
+    <task id="LOCAL-00149" summary="- update reestablish course">
+      <created>1608281163580</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1608281163580</updated>
+    </task>
+    <option name="localTasksCounter" value="150" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add main roles" />
     <MESSAGE value="- add course rates" />
     <MESSAGE value="- update create user on admin panel" />
     <MESSAGE value="- add paginate for rates&#10;- update header" />
@@ -661,7 +666,8 @@
     <MESSAGE value="- add any reports" />
     <MESSAGE value="- minor fix&#10;- add service api methods" />
     <MESSAGE value="- update admin reports &#10;- add tech support dialogs&#10;- update quota access" />
-    <option name="LAST_COMMIT_MESSAGE" value="- update admin reports &#10;- add tech support dialogs&#10;- update quota access" />
+    <MESSAGE value="- update reestablish course" />
+    <option name="LAST_COMMIT_MESSAGE" value="- update reestablish course" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -689,11 +695,11 @@
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1608273313047" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608276308722">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608281160635">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608276308722" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608281160635" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

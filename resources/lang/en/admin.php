@@ -143,6 +143,7 @@ return [
         'static_pages' => [
             'title' => 'Страницы',
             'edit_pages' => 'Редактирование страниц',
+            'faq' => 'FAQ',
             'main' => 'Главная',
             'step_by_step' => 'Шаг за шагом',
             'step_title' => 'Заголовок',
