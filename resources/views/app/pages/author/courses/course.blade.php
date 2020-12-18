@@ -462,13 +462,6 @@
                                                 style="background-color: white">{{__('default.pages.courses.reestablish')}}</button>
                                     </form>
                                 </div>
-                                <div class="col-auto">
-
-                                    <a href="#removeCourseModal" data-fancybox
-                                       title="{{__('default.pages.courses.delete_course')}}"
-                                       class="btn red">{{__('default.pages.courses.delete_course')}}</a>
-
-                                </div>
                                 @break
                                 @default
 
@@ -704,14 +697,6 @@
                             </form>
                         </div>
                         @break
-                        @default
-                        <div class="col-auto">
-
-                            <a href="#removeCourseModal" data-fancybox
-                               title="{{__('default.pages.courses.delete_course')}}"
-                               class="btn red">{{__('default.pages.courses.delete_course')}}</a>
-
-                        </div>
                     @endswitch
                 </div>
 

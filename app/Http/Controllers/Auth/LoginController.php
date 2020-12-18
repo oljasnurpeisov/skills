@@ -49,6 +49,8 @@ class LoginController extends Controller
             return '/'.app()->getLocale().'/admin';
         }else if (Auth::user()->hasRole('author')){
             return '/' . app()->getLocale() . '/profile-author-information';
+        }else if (Auth::user()->hasRole('tech_support')){
+            return '/' . app()->getLocale() . '/admin';
         }else{
             return '/';
         }

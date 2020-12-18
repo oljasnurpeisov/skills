@@ -70,6 +70,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereIsPoorVision($value)
+ * @property int|null $previous_status
+ * @method static \Illuminate\Database\Eloquent\Builder|Course wherePreviousStatus($value)
  */
 class Course extends Model
 {

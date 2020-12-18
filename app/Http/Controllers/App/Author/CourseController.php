@@ -522,6 +522,7 @@ class CourseController extends Controller
     public function deleteCourse($lang, Course $item)
     {
         if ($item->author_id == Auth::user()->id) {
+            $item->previous_status = $item->status;
             $item->status = 4;
             $item->save();
 
@@ -583,10 +584,20 @@ class CourseController extends Controller
 
     public function reestablishCourse($lang, Course $item)
     {
-        $item->status = Course::onCheck;
+        if ($item->previous_status === Course::draft) {
+            $item->status = Course::draft;
+        }else{
+            $item->status = Course::onCheck;
+        }
+
         $item->save();
 
-        return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('default.pages.courses.publish_request_message'));
+        if ($item->status == Course::draft){
+            return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.reestablish_request_message'));
+        }else{
+            return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('default.pages.courses.publish_request_message'));
+        }
+
     }
 
     public function statisticsCourse(Request $request)

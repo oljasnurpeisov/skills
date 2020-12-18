@@ -5,26 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/DialogController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/dialogs/dialog_frame.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/dialogs/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/dialogs/view.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PreviewCourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PreviewCourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ReportController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/notifications.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/notifications.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/layout/default/components/navigation/left.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/layout/default/components/navigation/left.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/courses/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/courses/view.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/reports/courses_report.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/reports/courses_report.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/reports/students_report.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/reports/students_report.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/dialogs/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/dialogs/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/dialogs/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/dialogs/view.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Course.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Course.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/course.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -299,14 +284,7 @@
       <workItem from="1608134820011" duration="61000" />
       <workItem from="1608134967954" duration="339000" />
       <workItem from="1608136318583" duration="2296000" />
-      <workItem from="1608228057715" duration="22011000" />
-    </task>
-    <task id="LOCAL-00099" summary="- author profile update">
-      <created>1607319740351</created>
-      <option name="number" value="00099" />
-      <option name="presentableId" value="LOCAL-00099" />
-      <option name="project" value="LOCAL" />
-      <updated>1607319740352</updated>
+      <workItem from="1608228057715" duration="24187000" />
     </task>
     <task id="LOCAL-00100" summary="- change save name of load files&#10;- minor fix">
       <created>1607323596309</created>
@@ -644,14 +622,20 @@
       <option name="project" value="LOCAL" />
       <updated>1608117572194</updated>
     </task>
-    <option name="localTasksCounter" value="148" />
+    <task id="LOCAL-00148" summary="- update admin reports &#10;- add tech support dialogs&#10;- update quota access">
+      <created>1608276329723</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
+      <option name="project" value="LOCAL" />
+      <updated>1608276329724</updated>
+    </task>
+    <option name="localTasksCounter" value="149" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- update styles and scripts &#10;- extendable component is added" />
     <MESSAGE value="- add main roles" />
     <MESSAGE value="- add course rates" />
     <MESSAGE value="- update create user on admin panel" />
@@ -676,7 +660,8 @@
     <MESSAGE value="- update chart&#10;- minor fix" />
     <MESSAGE value="- add any reports" />
     <MESSAGE value="- minor fix&#10;- add service api methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="- minor fix&#10;- add service api methods" />
+    <MESSAGE value="- update admin reports &#10;- add tech support dialogs&#10;- update quota access" />
+    <option name="LAST_COMMIT_MESSAGE" value="- update admin reports &#10;- add tech support dialogs&#10;- update quota access" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -704,11 +689,11 @@
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1608273313047" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608117549761">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608276308722">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608117549761" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608276308722" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
