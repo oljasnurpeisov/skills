@@ -146,7 +146,7 @@
                             <label class="input-group__title">Количество сертфикатов: от</label>
                             <label class="">
                                 <input type="number" name="certificates_count_from" placeholder=""
-                                       class="input-regular" value="">
+                                       class="input-regular" value="{{$request->certificates_count_from}}">
                             </label>
                         </div>
                     </div>
@@ -155,7 +155,7 @@
                             <label class="input-group__title">до</label>
                             <label class="">
                                 <input type="number" name="certificates_count_to" placeholder=""
-                                       class="input-regular" value="">
+                                       class="input-regular" value="{{$request->certificates_count_to}}">
                             </label>
                         </div>
                     </div>

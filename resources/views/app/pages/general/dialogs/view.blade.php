@@ -27,10 +27,16 @@
                                                     @elseif(Auth::user()->roles()->first()->slug == 'student')
                                                         <img src="{{Auth::user()->student_info->avatar ?? '/assets/img/author-thumbnail.png'}}"
                                                              alt="">
+                                                    @elseif(Auth::user()->roles()->first()->slug == 'tech_support')
+                                                        <span>{{__('default.pages.dialogs.tech_support_avatar_title')}}</span>
                                                     @endif
                                                 @else
-                                                    <img src="{{$item->opponent()->avatar ?? '/assets/img/author-thumbnail.png'}}"
-                                                         alt="">
+                                                    @if(\App\Models\User::whereId($message->sender_id)->first()->roles()->first()->slug == 'tech_support')
+                                                        <span>{{__('default.pages.dialogs.tech_support_avatar_title')}}</span>
+                                                    @else
+                                                        <img src="{{$item->opponent()->avatar ?? '/assets/img/author-thumbnail.png'}}"
+                                                             alt="">
+                                                    @endif
                                                 @endif
                                             </div>
                                             <div class="message__desc">

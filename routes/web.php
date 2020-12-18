@@ -113,6 +113,12 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/static-pages/for-authors', 'PageController@forAuthors');
                 Route::post("/static-pages/for-authors-update", "PageController@forAuthorsUpdate");
             });
+            // Диалоги
+            Route::group(['middleware' => 'check.role:tech_support'], static function () {
+                Route::get('/dialogs', 'DialogController@main');
+                Route::get('/dialogs/opponent-{id}', 'DialogController@view');
+                Route::get('/dialogs/dialog-iframe-{id}', 'DialogController@viewDialog');
+            });
             // Отчеты
             Route::group(['middleware' => 'check.permission:admin.reports'], static function () {
                 // Отчеты по авторам

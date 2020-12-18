@@ -84,6 +84,7 @@
                                     @endif
                                     @break
                                     @case(2)
+                                    @case(4)
                                     <form id="quota_number_form" method="POST"
                                           action="/{{$lang}}/admin/course/quota_contract/{{ $item->id }}">
                                         {{ csrf_field() }}

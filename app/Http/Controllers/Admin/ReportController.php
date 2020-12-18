@@ -79,19 +79,12 @@ class ReportController extends Controller
         }
         // Сортировка по количеству обучающихся
         if ($sortByStudentsCount) {
-//            $query->with(['courses.course_members' => function ($q) use($sortByStudentsCount) {
-////                $q->withCount(['course_members' => function ($q) use($sortByStudentsCount) {
-//                    $q->whereIn('paid_status', [1, 2]);
-////                }])->orderBy('course_members_count', $sortByStudentsCount);;
-////
-//            }]);
-            $query->with(['courses' => function ($query) use ($sortByStudentsCount) {
-                $query->withCount(['course_members' => function ($q) use ($sortByStudentsCount) {
+            $query->withCount(['courses as members_count' => function ($q) use ($sortByStudentsCount) {
+                $q->whereHas('course_members', function ($q) use ($sortByStudentsCount) {
                     $q->whereIn('paid_status', [1, 2]);
-                }])->orderBy('course_members_count', $sortByStudentsCount);
-            }]);
+                });
+            }])->orderBy('members_count', $sortByStudentsCount);
         }
-
         // Фильтрация
         // Поиск по имени
         if ($author_name) {
@@ -194,9 +187,12 @@ class ReportController extends Controller
                     $rates_array[] = $rate->rate;
                 }
                 // Количество обучающихся во всех курсах автора
-                foreach ($course->course_members as $member) {
+                foreach ($course->course_members->where('paid_status', '!=', 0) as $member) {
                     $author_students[$member['student_id']][] = $member;
-                    $author_students_finished[$member['student_id']][] = $member->where('is_finished', '=', true);
+                }
+                // Количество завершивших курсы
+                foreach ($course->course_members->where('is_finished', '=', true) as $member) {
+                    $author_students_finished[$member['student_id']][] = $member;
                 }
                 if ($course->courseWork()) {
                     $author_students_finished_courseWork[] = $course->courseWork()->finishedLesson()->toArray();
@@ -217,7 +213,7 @@ class ReportController extends Controller
         }
 
         Session::put('authors_report_export', $query->get());
-
+//        return $items;
         return view('admin.v2.pages.reports.authors_report', [
             'items' => $items,
             'request' => $request
@@ -237,6 +233,8 @@ class ReportController extends Controller
         $paid_status = $request->paid_status ?? [];
         $course_members_count_from = $request->course_members_count_from;
         $course_members_count_to = $request->course_members_count_to;
+        $certificates_count_from = $request->certificates_count_from;
+        $certificates_count_to = $request->certificates_count_to;
         // Сортировка
         $sortByName = $request->sortByName;
         $sortByAuthor = $request->sortByAuthor;
@@ -325,7 +323,6 @@ class ReportController extends Controller
             }])->having('course_members_count', '>=', $course_members_count_from)
                 ->having('course_members_count', '<=', $course_members_count_to);
         }
-        //
 
         $items = $query->paginate(10);
 
@@ -350,6 +347,8 @@ class ReportController extends Controller
         $courses_count_to = $request->courses_count_to;
         $certificates_count_from = $request->certificates_count_from;
         $certificates_count_to = $request->certificates_count_to;
+        $qualifications_count_from = $request->qualifications_count_from;
+        $qualifications_count_to = $request->qualifications_count_to;
         // Сортировка
         $sortByName = $request->sortByName;
         $sortByQuota = $request->sortByQuota;
@@ -438,15 +437,24 @@ class ReportController extends Controller
             }])->having('student_course_certificates_count', '>=', $certificates_count_from)
                 ->having('student_course_certificates_count', '<=', $certificates_count_to);
         }
-        // Поиск по количеству квалификаций
-        $query->with(['student_course' => function ($query) {
-            $query->where('is_finished', '=', true)->with(['course.lessons' => function ($query) {
-                $query->where('type', '=', 3)->withCount(['student_lessons as finished_courseworks' => function ($query) {
-                    $query->where('is_finished', '=', true);
-                }]);
-            }]);
+        $qualifications_count = $query->withCount(['student_course as qualifications_count' => function ($query) {
+            $query->whereHas('course.lessons', function ($q) {
+                $q->where('type', '=', 3);
+            });
+            $query->whereHas('course.lessons.student_lessons', function ($q) {
+                $q->where('is_finished', '=', true);
+            });
         }]);
-
+        // Поиск по количеству квалификаций
+        if ($qualifications_count_from) {
+            $qualifications_count->having('qualifications_count', '>=', $qualifications_count_from);
+        } else if ($qualifications_count_to and empty($qualifications_count_from)) {
+            $qualifications_count->having('qualifications_count', '<=', $qualifications_count_to);
+        } else if ($qualifications_count_to and $qualifications_count_from) {
+            $qualifications_count->having('qualifications_count', '>=', $qualifications_count_from)
+                ->having('qualifications_count', '<=', $qualifications_count_to);
+        }
+//        return $query->get();
         $student_courses = [];
         //
         $items = $query->paginate(10);
@@ -472,7 +480,6 @@ class ReportController extends Controller
             'request' => $request,
             'unemployed_status' => $unemployed_status
         ]);
-//        return $items;
     }
 
     public function exportStudentsReport(Request $request)
@@ -482,16 +489,6 @@ class ReportController extends Controller
         $lang = app()->getLocale();
 
         foreach ($query as $i) {
-            $finishedCourseWorks = 0;
-            foreach ($i->student_course->whereIn('paid_status', [1, 2]) as $course) {
-                if ($course->course->courseWork()) {
-                    if ($i->student_lesson->where('lesson_id', '=', $course->course->courseWork()->id)) {
-                        $finishedCourseWorks++;
-                    }
-                }
-            }
-            // Количество законченных курсовых работ
-            $i->finishedCourseWorkrs = $finishedCourseWorks;
             // ФИО обучающегося
             $name = $i->student_info->name;
             // Статус безработного
@@ -507,7 +504,7 @@ class ReportController extends Controller
             // Кол-во сертификатов
             $certificates = $i->student_course->where('is_finished', '=', true)->count();
             // Кол-во подтвержденных квалификаций
-            $qualifications = $i->finishedCourseWorkrs;
+            $qualifications = $i->qualifications_count;
 
             $newElement = ['name' => $name, 'unemployed_status' => $unemployed_status, 'quota_count' => $quota_count,
                 'courses_count' => $courses_count, 'certificates' => $certificates, 'qualifications' => $qualifications];
@@ -519,7 +516,8 @@ class ReportController extends Controller
         return Excel::download(new StudentReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
-    public function exportCoursesReport(Request $request)
+    public
+    function exportCoursesReport(Request $request)
     {
         $query = Session::get('courses_report_export');
         $export = [[]];
@@ -568,7 +566,8 @@ class ReportController extends Controller
         return Excel::download(new CourseReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
-    public function exportAuthorsReport(Request $request)
+    public
+    function exportAuthorsReport(Request $request)
     {
         $query = Session::get('authors_report_export');
         $export = [[]];
@@ -586,9 +585,12 @@ class ReportController extends Controller
                     $rates_array[] = $rate->rate;
                 }
                 // Количество обучающихся во всех курсах автора
-                foreach ($course->course_members as $member) {
-                    $author_students[$member['student_id']][] = 1;
-                    $author_students_finished[$member['student_id']][] = 1;
+                foreach ($course->course_members->where('paid_status', '!=', 0) as $member) {
+                    $author_students[$member['student_id']][] = $member;
+                }
+                // Количество завершивших курсы
+                foreach ($course->course_members->where('is_finished', '=', true) as $member) {
+                    $author_students_finished[$member['student_id']][] = $member;
                 }
                 if ($course->courseWork()) {
                     $author_students_finished_courseWork[] = $course->courseWork()->finishedLesson()->toArray();

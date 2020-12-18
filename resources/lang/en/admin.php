@@ -86,6 +86,7 @@ return [
             'quota_status_1' => 'Заявка отправлена автору',
             'quota_status_2' => 'Да',
             'quota_status_3' => 'Заявка отклонена автором',
+            'quota_status_4' => 'Ожидается подтверждение номера договора',
             'quota_request_title' => 'Запросить доступ к курсу по квотам',
             'unpublish_title' => 'Снять с публикации',
             'course_reject' => 'Курс :course_name не опубликован! Причина отклонения: :rejectMessage',
@@ -195,6 +196,14 @@ return [
             'student_certificates_count' => 'Получил сертификатов',
             'student_qualifications_count' => 'Подтвердил квалификацию'
         ],
+
+        'dialogs' => [
+            'title' => 'Диалоги',
+            'list' => 'Список диалогов',
+            'opponent_name' => 'ФИО',
+            'last_message' => 'Последнее сообщение',
+            'name_search' => 'Поиск по ФИО'
+        ]
     ],
     'labels' => [
         'copyright' => '',

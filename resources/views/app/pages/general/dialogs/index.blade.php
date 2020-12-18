@@ -15,7 +15,7 @@
                                    class="dialog-item dialog-item--tech-support">
                                     @if($item->opponent()->slug == 'tech_support')
                                         <div class="dialog-item__avatar">
-                                            <span>ТП</span>
+                                            <span>{{__('default.pages.dialogs.tech_support_avatar_title')}}</span>
                                         </div>
                                     @else
                                         <div class="dialog-item__avatar">

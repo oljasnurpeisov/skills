@@ -103,7 +103,7 @@
                                     <label class="input-group__title">Количество квалификаций: от</label>
                                     <label class="">
                                         <input type="number" name="qualifications_count_from" placeholder=""
-                                               class="input-regular" value="">
+                                               class="input-regular" value="{{$request->qualifications_count_from}}">
                                     </label>
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
                                     <label class="input-group__title">до</label>
                                     <label class="">
                                         <input type="number" name="qualifications_count_to" placeholder=""
-                                               class="input-regular" value="">
+                                               class="input-regular" value="{{$request->qualifications_count_to}}">
                                     </label>
                                 </div>
                             </div>
@@ -165,7 +165,7 @@
                         <td>{{$item->student_info->quota_count}}</td>
                         <td>{{$item->student_course->whereIn('paid_status', [1,2])->count()}}</td>
                         <td>{{$item->student_course->where('is_finished', '=', true)->count()}}</td>
-                        <td>{{$item->finishedCourseWorkrs}}</td>
+                        <td>{{$item->qualifications_count}}</td>
                     </tr>
                 @endforeach
                 </tbody>

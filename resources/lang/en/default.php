@@ -349,7 +349,8 @@ return [
             'open_dialog' => 'Открыть диалог',
             'message_text_placeholder' => 'Введите сообщение',
             'message_send_button' => 'Отправить',
-            'empty_dialog' => 'Диалог пуст'
+            'empty_dialog' => 'Диалог пуст',
+            'tech_support_avatar_title' => 'ТП',
         ],
 
         'statistics' => [

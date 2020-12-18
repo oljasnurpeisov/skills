@@ -263,8 +263,17 @@ class CourseController extends Controller
 
     public function quota_contract($lang, Course $item, Request $request)
     {
+        $item->quota_status = 2;
         $item->quota_contract_number = $request->quota_contract_number;
         $item->save();
+
+        $notification = new Notification;
+        $notification->name = 'notifications.course_quota_access';
+        $notification->course_id = $item->id;
+        $notification->type = 0;
+        $notification->save();
+
+        $notification->users()->sync([$item->author_id]);
 
         return redirect()->back()->with('status', __('admin.pages.courses.quote_contract_saved'));
     }

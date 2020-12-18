@@ -31,14 +31,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
 
-/**
- * --------------------------------------------------------------------------
- *  UserController
- * --------------------------------------------------------------------------
- *
- *  Этот контроллер отвечает за редактирование данных пользователя
- *
- */
 class PreviewCourseController extends Controller
 {
     public function viewCourse($lang, Course $item)

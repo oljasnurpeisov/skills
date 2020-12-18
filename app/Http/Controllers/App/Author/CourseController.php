@@ -546,7 +546,7 @@ class CourseController extends Controller
         }
 
         if ($request->input('action') == 'confirm') {
-            $item->quota_status = 2;
+            $item->quota_status = 4;
             $item->save();
 
             $notification = new Notification;
@@ -556,7 +556,7 @@ class CourseController extends Controller
             $notification->save();
 
             $notification_1 = new Notification;
-            $notification_1->name = 'notifications.course_quota_access';
+            $notification_1->name = 'notifications.course_quota_wait_contract';
             $notification_1->course_id = $item->id;
             $notification_1->type = 0;
             $notification_1->save();
