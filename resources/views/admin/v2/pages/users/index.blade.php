@@ -105,9 +105,9 @@
                                            title="{{ __('admin.labels.edit') }}"
                                            class="icon-btn icon-btn--yellow icon-edit"></a>
                                     @endif
-                                    {{--                                    <a href="/{{$lang}}/admin/user/{{ $item->id }}"--}}
-                                    {{--                                       title="{{ __('admin.pages.deleting.submit') }}"--}}
-                                    {{--                                       class="icon-btn icon-btn--pink icon-delete"></a>--}}
+{{--                                                                        <a href="/{{$lang}}/admin/user/{{ $item->id }}"--}}
+{{--                                                                           title="{{ __('admin.pages.deleting.submit') }}"--}}
+{{--                                                                           class="icon-btn icon-btn--pink icon-delete"></a>--}}
                                 </div>
                             </td>
                         </tr>

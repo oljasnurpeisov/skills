@@ -113,7 +113,13 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/static-pages/for-authors', 'PageController@forAuthors');
                 Route::post("/static-pages/for-authors-update", "PageController@forAuthorsUpdate");
                 // FAQ
+                Route::get('/static-pages/faq-index', 'PageController@faq_index');
+                Route::get('/static-pages/faq-create', 'PageController@create_faq_theme');
+                Route::post('/static-pages/store-faq-view/{item}', 'PageController@store_faq_theme');
+                Route::get('/static-pages/faq-view/{key}', 'PageController@faq_view');
+                Route::post('/static-pages/update-faq-view/{item}/{key}', 'PageController@update_faq_theme');
                 Route::get('/static-pages/faq', 'PageController@faq');
+                Route::delete('/static-pages/delete-faq-theme/{key}', 'PageController@faq_delete_theme');
             });
             // Диалоги
             Route::group(['middleware' => 'check.role:tech_support'], static function () {

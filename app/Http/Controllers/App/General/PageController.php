@@ -139,10 +139,19 @@ class PageController extends Controller
         ]);
     }
 
-    public function faq()
+    public function faq($lang)
     {
-        return view("app.pages.general.faq", [
+        $items = Page::wherePageAlias('faq')->first();
 
+        $data = [];
+
+        if ($items->data_ru != null) {
+            foreach (json_decode($items->data_ru) as $key => $item) {
+                $data[$key][] = $item->name;
+            }
+        }
+        return view("app.pages.general.faq", [
+            'items' => json_decode($items->getAttribute('data_'.$lang), true)
         ]);
     }
 

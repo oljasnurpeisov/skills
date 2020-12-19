@@ -158,7 +158,15 @@ return [
             'title_placeholder' => 'Введите заголовок',
             'description_placeholder' => 'Введите описание',
             'advantage_icon' => 'Иконка преймущества',
-            'upload_image' => 'Загрузить изображение'
+            'upload_image' => 'Загрузить изображение',
+
+            'faq_theme_title' => 'Наименование темы',
+            'tab_title' => 'Наименование вкладки',
+            'tab_description' => 'Описание вкладки',
+            'add_tab_btn' => 'Добавить вкладку',
+            'add_theme_btn' => 'Добавить Тему',
+            'add_theme_title' => 'Добавление темы',
+            'edit_theme_title' => 'Редактирование темы'
         ],
 
         'reports' => [

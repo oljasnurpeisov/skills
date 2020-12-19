@@ -138,4 +138,4 @@
         </div>
     </body>
 </html>
-<?php /**PATH D:\OpenServer\domains\enbek\resources\views/index.blade.php ENDPATH**/ ?>
+<?php /**PATH D:\OpenServer\domains\enbek\resources\views/faq.blade.php ENDPATH**/ ?>

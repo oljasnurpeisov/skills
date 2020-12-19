@@ -5,13 +5,14 @@
 @section('content')
     <div class="container container-fluid">
         <ul class="breadcrumbs">
-            <li>{{ __('admin.pages.static_pages.title') }}
+            <li><a href="/{{$lang}}/admin/static-pages/faq-index">{{ __('admin.pages.static_pages.faq') }}</a>
             </li>
-            <li class="active">{{ __('admin.pages.static_pages.faq') }}</li>
+            <li class="active">{{ __('admin.pages.static_pages.edit_theme_title') }}</li>
         </ul>
         @include('admin.v2.partials.components.warning')
         @include('admin.v2.partials.components.errors')
-        <form id="mainEdit" action="/{{$lang}}/admin/static-pages/for-authors-update" method="post"
+        <form id="mainEdit" action="/{{$lang}}/admin/static-pages/update-faq-view/{{$item->id}}/{{$theme_key}}"
+              method="post"
               enctype="multipart/form-data">
             @csrf
             @php($languages = ['ru' => 'Русский язык', 'kk' => 'Казахский язык', 'en' => 'Английский язык'])
@@ -33,19 +34,44 @@
                         @foreach($languages as $lang_key => $language)
                             <div class="{{$lang_key == 'ru' ? 'active' : ''}}">
                                 <h2 class="title-secondary">{{__('admin.pages.static_pages.faq')}}</h2>
-                                <div id="steps_{{$lang_key}}">
+                                <div id="faq_{{$lang_key}}">
                                     <div class="input-group">
-                                        <label class="input-group__title">{{__('admin.pages.static_pages.step_title')}} @if($key == 0)
-                                                *@endif</label>
-                                        <input type="text" name="" value=""
-                                               placeholder="{{__('admin.pages.static_pages.step_title_placeholder')}}"
-                                               class="input-regular">
+                                        <label class="input-group__title">{{__('admin.pages.static_pages.faq_theme_title')}} @if($lang_key == 'ru')*@endif</label>
+                                        <input type="text" name="theme_name_{{$lang_key}}"
+                                               value="{{json_decode($item->getAttribute('data_'.$lang_key), true)[$theme_key]['name'] ?? ''}}"
+                                               placeholder="{{__('admin.pages.static_pages.faq_theme_title')}}"
+                                               class="input-regular" {{$lang_key == 'ru' ? 'required' : ''}}>
+                                    </div>
+                                    <hr>
+                                    <div id="tabs_{{$lang_key}}">
+                                        @if(!empty(json_decode($item->getAttribute('data_'.$lang_key), true)[$theme_key]['tabs']))
+                                            @foreach(json_decode($item->getAttribute('data_'.$lang_key), true)[$theme_key]['tabs'] as $key => $tab)
+                                                <div class="input-group">
+                                                    <label class="input-group__title">{{__('admin.pages.static_pages.tab_title')}} @if($lang_key == 'ru')
+                                                            *@endif</label>
+                                                    <input type="text" name="tab_name_{{$lang_key}}[]"
+                                                           value="{{$tab['name']}}"
+                                                           placeholder="{{__('admin.pages.static_pages.tab_title')}}"
+                                                           class="input-regular" {{$lang_key == 'ru' ? 'required' : ''}}>
+                                                </div>
+                                                <div class="input-group">
+                                                    <label for="description"
+                                                           class="input-group__title">{{__('admin.pages.static_pages.tab_description')}} @if($lang_key == 'ru')
+                                                            *@endif</label>
+                                                    <textarea name="tab_description_{{$lang_key}}[]"
+                                                              placeholder="{{__('admin.pages.static_pages.tab_description')}}"
+                                                              class="input-regular" {{$lang_key == 'ru' ? 'required' : ''}}>{{ $tab['description'] }}</textarea>
+                                                </div>
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
+
                                 <div class="buttons">
                                     <div>
-                                        <button type="button" id="add_step_{{$lang_key}}"
-                                                class="btn btn--blue">Добавить тему</button>
+                                        <button type="button" id="add_tab_{{$lang_key}}"
+                                                class="btn btn--blue">{{__('admin.pages.static_pages.add_tab_btn')}}
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -66,5 +92,38 @@
 @endsection
 
 @section('scripts')
+    <script>
+        languages = ['ru', 'kk', 'en']
 
+        tab_names = [];
+        tab_descriptions = [];
+        for (language of languages) {
+            tab_names[language] = '<div class="input-group">' +
+                '                                            <label class="input-group__title">{{__('admin.pages.static_pages.tab_title')}}' +
+                '                                                    </label>' +
+                '                                            <input type="text" name="tab_name_' + language + '[]" value=""' +
+                '                                                   placeholder="{{__('admin.pages.static_pages.tab_title')}}"' +
+                '                                                   class="input-regular"' +
+                '                                        </div>';
+
+            tab_descriptions[language] = '<div class="input-group">' +
+                '                                            <label for="description"' +
+                '                                                   class="input-group__title">{{__('admin.pages.static_pages.tab_description')}}' +
+                '                                                    </label>' +
+                '                                            <textarea name="tab_description_' + language + '[]"' +
+                '                                                      placeholder="{{__('admin.pages.static_pages.tab_description')}}"' +
+                '                                                      class="input-regular"></textarea>' +
+                '                                        </div>'
+        }
+
+        $("#add_tab_ru").click(function () {
+            $("#tabs_ru").append(tab_names['ru'], tab_descriptions['ru']);
+        });
+        $("#add_tab_kk").click(function () {
+            $("#tabs_kk").append(tab_names['kk'], tab_descriptions['kk']);
+        });
+        $("#add_tab_en").click(function () {
+            $("#tabs_en").append(tab_names['en'], tab_descriptions['en']);
+        });
+    </script>
 @endsection

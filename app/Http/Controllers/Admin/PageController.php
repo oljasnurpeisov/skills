@@ -114,12 +114,128 @@ class PageController extends Controller
         return back()->with('status', __('admin.notifications.update_success'));
     }
 
-    public function faq()
+    public function faq_index()
+    {
+        $items = Page::wherePageAlias('faq')->first();
+
+        $themes = [];
+
+        if ($items->data_ru != null) {
+            foreach (json_decode($items->data_ru) as $key => $item) {
+                $themes[$key][] = $item->name;
+            }
+            foreach (json_decode($items->data_kk) as $key => $item) {
+                $themes[$key][] = $item->name;
+            }
+            foreach (json_decode($items->data_en) as $key => $item) {
+                $themes[$key][] = $item->name;
+            }
+        }
+
+        return view('admin.v2.pages.static_pages.faq_index', [
+            'items' => $themes
+        ]);
+    }
+
+    public function create_faq_theme()
+    {
+        $item = Page::wherePageAlias('faq')->first();
+
+        return view('admin.v2.pages.static_pages.faq_create', [
+            'item' => $item
+        ]);
+    }
+
+    public function store_faq_theme($lang, Request $request, Page $item)
+    {
+        $languages = ['ru', 'kk', 'en'];
+
+        foreach ($languages as $language) {
+
+            if ($request['theme_name_' . $language] != null){
+
+            $data = [
+                "name" => $request['theme_name_' . $language],
+            ];
+
+
+            foreach ($request['tab_name_' . $language] as $key => $step) {
+                if (isset($request['tab_name_' . $language][$key])) {
+                    $data['tabs'][] = array(
+                        'name' => $request['tab_name_' . $language][$key],
+                        'description' => $request['tab_description_' . $language][$key],
+                    );
+                }
+            }
+            $data_array = json_decode($item['data_' . $language]);
+            $data_array[] = $data;
+
+            $item['data_' . $language] = $data_array;
+            }
+        }
+        $item->save();
+
+        return redirect('/'.$lang.'/admin/static-pages/faq-index')->with('status', __('admin.notifications.record_stored'));
+
+    }
+
+    public function faq_view($lang, $theme_key)
     {
         $item = Page::wherePageAlias('faq')->first();
 
         return view('admin.v2.pages.static_pages.faq', [
-            'item' => $item
+            'item' => $item,
+            'theme_key' => $theme_key
         ]);
+    }
+
+    public function update_faq_theme($lang, Request $request, Page $item, $theme_key)
+    {
+//        return $request;
+        $languages = ['ru', 'kk', 'en'];
+
+        foreach ($languages as $language) {
+
+            $data = [
+                "name" => $request['theme_name_' . $language],
+            ];
+
+            if (!empty($request['tab_name_' . $language])){
+                foreach ($request['tab_name_' . $language] as $key => $step) {
+                    if (isset($request['tab_name_' . $language][$key])) {
+                        $data['tabs'][] = array(
+                            'name' => $request['tab_name_' . $language][$key],
+                            'description' => $request['tab_description_' . $language][$key],
+                        );
+                    }
+                }
+        }
+            $data_array = json_decode($item['data_' . $language]);
+            $data_array[$theme_key] = $data;
+
+            $item['data_' . $language] = $data_array;
+        }
+        $item->save();
+
+        return redirect('/'.$lang.'/admin/static-pages/faq-index')->with('status', __('admin.notifications.record_updated'));
+
+    }
+
+    public function faq_delete_theme($lang, $theme_key)
+    {
+        $item = Page::wherePageAlias('faq')->first();
+
+        $languages = ['ru', 'kk', 'en'];
+
+        foreach ($languages as $language) {
+            $data_array = json_decode($item['data_' . $language]);
+            unset($data_array[$theme_key]);
+
+            $item['data_' . $language] = $data_array;
+        }
+        $item->save();
+
+//        return $data_array;
+        return redirect()->back()->with('status', __('admin.notifications.record_deleted'));
     }
 }
