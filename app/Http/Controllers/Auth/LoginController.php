@@ -59,7 +59,7 @@ class LoginController extends Controller
     protected function validateLogin(Request $request)
     {
         $request->validate([
-            'email' => 'required|exists:users,email|max:255',
+            'email' => 'required|email|exists:users,email|max:255',
         ]);
     }
 

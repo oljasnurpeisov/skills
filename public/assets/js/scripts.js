@@ -788,7 +788,7 @@ function TinyMceInit(selector, textOnly = false) {
         selector: selector,
         menubar: false,
         plugins: [
-            'pageembed  lists link ' + additionalTools + ' table paste code wordcount'
+            'lists link ' + additionalTools + ' table paste code wordcount'
         ],
         toolbar: 'undo redo | formatselect | ' +
             'bold italic link ' + additionalTools + ' | alignleft aligncenter ' +
