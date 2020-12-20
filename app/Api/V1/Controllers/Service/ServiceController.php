@@ -21,14 +21,16 @@ class ServiceController extends BaseController
 {
     public function getSkillsByUid(Request $request)
     {
-        $uid = $request->header('uid');
+        $uid = $request->get('uid');
         $hash = $request->header("hash");
         $lang = $request->header("lang", 'ru');
         app()->setLocale($lang);
 
         // Валидация
+        $validator = Validator::make($request->all(), [
+            'uid' => 'required'
+        ]);
         $validator = Validator::make($request->header(), [
-            'uid' => 'required',
             'hash' => 'required',
         ]);
 
@@ -50,14 +52,10 @@ class ServiceController extends BaseController
         $data = [];
         foreach ($skills as $skill) {
             $data[] = [
-                'id' => $skill->id,
                 'code_skill' => $skill->code_skill,
-                'fl_check' => $skill->fl_check,
                 'name_ru' => $skill->name_ru,
                 'name_kk' => $skill->name_kk,
                 'name_en' => $skill->name_en,
-                'fl_show' => $skill->fl_show,
-                'uid' => $skill->uid
             ];
         }
 
@@ -67,15 +65,15 @@ class ServiceController extends BaseController
 
     public function getSearchResult(Request $request)
     {
-        $course_lang = $request->header('course_lang');
-        $course_sort = $request->header('sort_type');
-        $course_type = $request->header('course_type');
-        $finished_students_min = $request->header('finished_students_min');
-        $lang = $request->header("lang", 'ru');
-        $professions = $request->header('professions');
-        $rate_min = $request->header('rate_min');
-        $skills = $request->header('skills');
-        $term = $request->header('term');
+        $course_lang = $request->get('course_lang');
+        $course_sort = $request->get('sort_type');
+        $course_type = $request->get('course_type');
+        $finished_students_min = $request->get('finished_students_min');
+        $lang = $request->get("lang", 'ru');
+        $professions = $request->get('professions');
+        $rate_min = $request->get('rate_min');
+        $skills = $request->get('skills');
+        $term = $request->get('term');
 
         $hash = $request->header("hash");
 
@@ -198,13 +196,15 @@ class ServiceController extends BaseController
         $uid = $request->get('uid');
         $include_skills = $request->get('include_skills');
         $exclude_skills = $request->get('exclude_skills');
-        $lang = $request->get('lang', 'ru');
-        $hash = $request->get('hash');
+        $lang = $request->header('lang', 'ru');
+        $hash = $request->header('hash');
         app()->setLocale($lang);
 
         // Валидация
         $validator = Validator::make($request->all(), [
             'uid' => 'required',
+        ]);
+        $validator = Validator::make($request->header(), [
             'hash' => 'required'
         ]);
 
@@ -249,14 +249,16 @@ class ServiceController extends BaseController
     public function updateQuotaByUid(Request $request)
     {
         $uid = $request->get('uid');
-        $lang = $request->get('lang', 'ru');
-        $hash = $request->get('hash');
+        $lang = $request->header('lang', 'ru');
+        $hash = $request->header('hash');
         app()->setLocale($lang);
         $quota_count = 3;
 
         // Валидация
         $validator = Validator::make($request->all(), [
             'uid' => 'required',
+        ]);
+        $validator = Validator::make($request->header(), [
             'hash' => 'required'
         ]);
 

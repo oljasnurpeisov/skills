@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- minor fix">
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/SkillsUpdate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/SkillsUpdate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Api/V1/Controllers/Service/ServiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Api/V1/Controllers/Service/ServiceController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -211,19 +209,19 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\OpenServer\domains\enbek-backend\resources\views\admin\v2\pages\static_pages" />
-      <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Service\Controllers" />
-      <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Service" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\img\certificates" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Controllers\Service" />
       <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Controllers" />
       <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1" />
       <recent name="F:\OpenServer\domains\enbek-backend\config" />
       <recent name="F:\OpenServer\domains\enbek-backend\public\assets\pdf" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\OpenServer\domains\enbek-backend\resources\views\admin\v2\pages\static_pages" />
+      <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Service\Controllers" />
+      <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Service" />
+      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\img\certificates" />
+      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -287,14 +285,7 @@
       <workItem from="1608228057715" duration="28481000" />
       <workItem from="1608309224752" duration="27525000" />
       <workItem from="1608384327460" duration="6533000" />
-      <workItem from="1608392290447" duration="50853000" />
-    </task>
-    <task id="LOCAL-00103" summary="- add for authors page">
-      <created>1607342225032</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1607342225032</updated>
+      <workItem from="1608392290447" duration="52133000" />
     </task>
     <task id="LOCAL-00104" summary="- add certificates generate">
       <created>1607418917302</created>
@@ -632,14 +623,20 @@
       <option name="project" value="LOCAL" />
       <updated>1608438007970</updated>
     </task>
-    <option name="localTasksCounter" value="152" />
+    <task id="LOCAL-00152" summary="- add test data for skills">
+      <created>1608450861717</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1608450861728</updated>
+    </task>
+    <option name="localTasksCounter" value="153" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- update create user on admin panel" />
     <MESSAGE value="- add paginate for rates&#10;- update header" />
     <MESSAGE value="- update tinymce method" />
     <MESSAGE value="- add new skills to student after finished course" />
@@ -664,7 +661,8 @@
     <MESSAGE value="- update reestablish course" />
     <MESSAGE value="- add editing faq page" />
     <MESSAGE value="- minor fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="- minor fix" />
+    <MESSAGE value="- add test data for skills" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add test data for skills" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -692,11 +690,11 @@
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1608439132602" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608449025265">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608450852917">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608449025265" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608450852917" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
