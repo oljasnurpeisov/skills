@@ -166,7 +166,7 @@
                             <label class="input-group__title">Количество квалификаций: от</label>
                             <label class="">
                                 <input type="number" name="qualifications_count_from" placeholder=""
-                                       class="input-regular" value="">
+                                       class="input-regular" value="{{$request->qualifications_count_from}}">
                             </label>
                         </div>
                     </div>
@@ -175,7 +175,7 @@
                             <label class="input-group__title">до</label>
                             <label class="">
                                 <input type="number" name="qualifications_count_to" placeholder=""
-                                       class="input-regular" value="">
+                                       class="input-regular" value="{{$request->qualifications_count_to}}">
                             </label>
                         </div>
                     </div>
@@ -225,7 +225,7 @@
                     <th>{{__('admin.pages.reports.quota_access')}}</th>
                     <th>{{__('admin.pages.reports.paid_or_free')}}</th>
                     <th><a href="?sortByCourseMembers={{$request->sortByCourseMembers == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_members')}}</a></th>
-                    <th>{{__('admin.pages.reports.course_members_certificates')}}</th>
+                    <th><a href="?sortByCertificateCourseMembers={{$request->sortByCertificateCourseMembers == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_members_certificates')}}</a></th>
                     <th>{{__('admin.pages.reports.course_members_qualification')}}</th>
                 </tr>
                 </thead>

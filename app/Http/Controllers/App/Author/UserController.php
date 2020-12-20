@@ -243,7 +243,7 @@ class UserController extends Controller
         $item->user_id = Auth::user()->getAuthIdentifier();
         $item->name = $request->name;
         $item->surname = $request->surname;
-        $item->specialization = json_encode($request->specialization);
+        $item->specialization = json_encode($request->specialization, JSON_UNESCAPED_UNICODE);
         $item->about = $request->about;
         $item->phone_1 = $request->phone_1;
         $item->phone_2 = $request->phone_2;

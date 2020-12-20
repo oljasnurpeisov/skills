@@ -140,7 +140,7 @@
                             <label class="input-group__title">Количество сертфикатов: от</label>
                             <label class="">
                                 <input type="number" name="certificates_count_from" placeholder=""
-                                       class="input-regular" value="">
+                                       class="input-regular" value="{{$request->certificates_count_from}}">
                             </label>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                             <label class="input-group__title">до</label>
                             <label class="">
                                 <input type="number" name="certificates_count_to" placeholder=""
-                                       class="input-regular" value="">
+                                       class="input-regular" value="{{$request->certificates_count_to}}">
                             </label>
                         </div>
                     </div>
@@ -160,7 +160,7 @@
                             <label class="input-group__title">Количество квалификаций: от</label>
                             <label class="">
                                 <input type="number" name="qualifications_count_from" placeholder=""
-                                       class="input-regular" value="">
+                                       class="input-regular" value="{{$request->qualifications_count_from}}">
                             </label>
                         </div>
                     </div>
@@ -169,7 +169,7 @@
                             <label class="input-group__title">до</label>
                             <label class="">
                                 <input type="number" name="qualifications_count_to" placeholder=""
-                                       class="input-regular" value="">
+                                       class="input-regular" value="{{$request->qualifications_count_to}}">
                             </label>
                         </div>
                     </div>
@@ -212,7 +212,7 @@
                     <th><a href="?sortByFreeCoursesCount={{$request->sortByFreeCoursesCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_free_count')}}</a></th>
                     <th><a href="?sortByQuotaCoursesCount={{$request->sortByQuotaCoursesCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_by_quota_count')}}</a></th>
                     <th><a href="?sortByStudentsCount={{$request->sortByStudentsCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_students_count')}}</a></th>
-                    <th>{{__('admin.pages.reports.courses_certificates_students_count')}}</th>
+                    <th><a href="?sortByCertificateStudentsCount={{$request->sortByCertificateStudentsCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_certificates_students_count')}}</th>
                     <th>{{__('admin.pages.reports.courses_students_confirm_qualification_count')}}</th>
                 </tr>
                 </thead>

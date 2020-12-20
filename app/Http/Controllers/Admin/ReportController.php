@@ -24,6 +24,7 @@ class ReportController extends Controller
         $sortByFreeCoursesCount = $request->sortByFreeCoursesCount;
         $sortByQuotaCoursesCount = $request->sortByQuotaCoursesCount;
         $sortByStudentsCount = $request->sortByStudentsCount;
+        $sortByCertificateStudentsCount = $request->sortByCertificateStudentsCount;
         // Фильтрация
         $author_name = $request->author_name ? $request->author_name : '';
         $specialization = $request->specialization ? $request->specialization : '';
@@ -39,6 +40,10 @@ class ReportController extends Controller
         $quota_courses_count_to = $request->quota_courses_count_to;
         $course_members_count_from = $request->course_members_count_from;
         $course_members_count_to = $request->course_members_count_to;
+        $certificates_count_from = $request->certificates_count_from;
+        $certificates_count_to = $request->certificates_count_to;
+        $qualifications_count_from = $request->qualifications_count_from;
+        $qualifications_count_to = $request->qualifications_count_to;
 
         $query = User::whereHas('roles', function ($q) {
             $q->whereSlug('author');
@@ -85,6 +90,13 @@ class ReportController extends Controller
                 });
             }])->orderBy('members_count', $sortByStudentsCount);
         }
+        if ($sortByCertificateStudentsCount) {
+            $query->withCount(['courses as certificate_members_count' => function ($q) {
+                $q->whereHas('course_members', function ($q) {
+                    $q->where('is_finished', '=', true);
+                });
+            }])->orderBy('certificate_members_count', $sortByCertificateStudentsCount);
+        }
         // Фильтрация
         // Поиск по имени
         if ($author_name) {
@@ -96,9 +108,10 @@ class ReportController extends Controller
         // Поиск по специализации
         if ($specialization) {
             $query->whereHas('author_info', function ($q) use ($specialization) {
-                $q->where('name', 'like', '%' . $specialization . '%');
+                $q->where('specialization', 'like', '%' . $specialization . '%');
             });
         }
+//        return $query->first()->author_info;
         // Поиск по количеству курсов
         if ($courses_count_from and empty($courses_count_to)) {
             $query->withCount('courses')->having('courses_count', '>=', $courses_count_from);
@@ -156,24 +169,20 @@ class ReportController extends Controller
 
         // Поиск по количеству обучающихся
         if ($course_members_count_from and empty($course_members_count_to)) {
-            $query->with(['courses' => function ($q) use ($course_members_count_from) {
-                $q->withCount(['course_members' => function ($q) use ($course_members_count_from) {
-                    $q->whereIn('paid_status', [1, 2]);
-                }])->having('course_members_count', '>=', $course_members_count_from);
+//            $query->whereHas('courses', function ($q) use($course_members_count_from) {
+//                $q->withCount(['course_members' => function ($q) use($course_members_count_from) {
+//                    $q->whereIn('paid_status', [1, 2]);
+//                }]);
+//                    ->having('course_members_count', '>=', $course_members_count_from);
+//            });
+//            $query->withCount(['courses' => function ($q) {
+//                $q->withCount('course_members');
+//            }]);
+            $query->with(['courses' => function ($q) {
+                $q->withCount('course_members');
             }]);
-        } else if ($course_members_count_to and empty($course_members_count_from)) {
-            $query->with(['courses' => function ($q) use ($course_members_count_to) {
-                $q->withCount(['course_members' => function ($q) use ($course_members_count_to) {
-                    $q->whereIn('paid_status', [1, 2]);
-                }])->having('course_members_count', '<=', $course_members_count_to);
-            }]);
-        } else if ($course_members_count_to and $course_members_count_from) {
-            $query->withCount(['course_members' => function ($q) {
-                $q->whereIn('paid_status', [1, 2]);
-            }])->having('course_members_count', '>=', $course_members_count_from)
-                ->having('course_members_count', '<=', $course_members_count_to);
+//            $query->withCount('getCoursesStudents');
         }
-
         $items = $query->paginate(10);
 
         foreach ($items as $item) {
@@ -235,10 +244,13 @@ class ReportController extends Controller
         $course_members_count_to = $request->course_members_count_to;
         $certificates_count_from = $request->certificates_count_from;
         $certificates_count_to = $request->certificates_count_to;
+        $qualifications_count_from = $request->qualifications_count_from;
+        $qualifications_count_to = $request->qualifications_count_to;
         // Сортировка
         $sortByName = $request->sortByName;
         $sortByAuthor = $request->sortByAuthor;
         $sortByCourseMembers = $request->sortByCourseMembers;
+        $sortByCertificateCourseMembers = $request->sortByCertificateCourseMembers;
 
         $query = (new Course)->newQuery();
         // Сортировка
@@ -258,6 +270,12 @@ class ReportController extends Controller
                 $q->whereIn('paid_status', [1, 2]);
             }])->orderBy('course_members_count', $sortByCourseMembers);
         }
+        // Сортировка количеству учащихся получившие сертификат
+        if ($sortByCertificateCourseMembers) {
+            $query->withCount(['course_members' => function ($q) {
+                $q->where('is_finished', '=', true);
+            }])->orderBy('course_members_count', $sortByCertificateCourseMembers);
+        }
         // Фильтрация
         // Поиск по имени
         if ($course_name) {
@@ -271,7 +289,9 @@ class ReportController extends Controller
         }
         // Поиск по рейтингу
         if ($rate_from and empty($rate_to)) {
-            $query->withCount('rate')->having('rate_count', '>=', round($rate_from));
+            $query->whereHas('rate', function ($q) use ($rate_from) {
+                $q->where('rate', '>=', $rate_from);
+            });
         } else if ($rate_to and empty($rate_from)) {
             $query->whereHas('rate', function ($q) use ($rate_to) {
                 $q->where('rate', '<=', round($rate_to));
@@ -323,7 +343,36 @@ class ReportController extends Controller
             }])->having('course_members_count', '>=', $course_members_count_from)
                 ->having('course_members_count', '<=', $course_members_count_to);
         }
+        // Поиск по количеству получивших сертификат участников
+        if ($certificates_count_from and empty($certificates_count_to)) {
+            $query->withCount(['course_members as course_certificates_members_count' => function ($q) {
+                $q->where('is_finished', '=', true);
+            }])->having('course_certificates_members_count', '>=', $certificates_count_from);
+        } else if ($certificates_count_to and empty($certificates_count_from)) {
+            $query->withCount(['course_members as course_certificates_members_count' => function ($q) {
+                $q->where('is_finished', '=', true);
+            }])->having('course_certificates_members_count', '<=', $certificates_count_to);
+        } else if ($certificates_count_to and $certificates_count_from) {
+            $query->withCount(['course_members as course_certificates_members_count' => function ($q) {
+                $q->where('is_finished', '=', true);
+            }])->having('course_certificates_members_count', '>=', $certificates_count_from)
+                ->having('course_certificates_members_count', '<=', $certificates_count_to);
+        }
+        //
+        if ($qualifications_count_from and empty($qualifications_count_to)) {
+            $query->withCount(['course_members as course_qualifications_members_count' => function ($q) {
+//                $q->whereIn('paid_status', [1,2]);
+                $q->whereHas('students.student_lesson', function ($q) {
+                    $q->where('lessons.type', '=', 3);
+                    $q->whereHas('student_lessons', function ($q) {
+                        $q->where('student_lesson.is_finished', '=', true);
+                    });
+                });
+            }]);
+//            ->having('course_qualifications_members_count', '>=', $qualifications_count_from)
+        }
 
+//        return $query->get();
         $items = $query->paginate(10);
 
         Session::put('courses_report_export', $query->get());
