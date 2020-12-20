@@ -29,6 +29,23 @@ class SkillsUpdate extends Command
      */
     public function handle()
     {
+        // new
+//        $xml = XmlParser::load(url('https://iac2:Iac2007RBD@www.enbek.kz/feed/resume/cl_hard_skills.xml'));
+//
+//        $skills = $xml->parse([
+//            'data' => ['uses' => 'row[field(::name=@)]'],
+//        ]);
+//
+//        foreach ($skills['data'] as $skill) {
+//            $item = Skill::updateOrCreate([
+//                'code_skill' => $skill['codcomp']
+//            ], [
+//                'name_ru' => $skill['namecomp'],
+//                'name_kk' => $skill['namecomp_kz'],
+//            ]);
+//        }
+
+        // old
         $xml = XmlParser::load(url('https://iac2:Iac2007RBD@www.enbek.kz/feed/resume/cl_hard_skills.xml'));
 
         $skills = $xml->parse([

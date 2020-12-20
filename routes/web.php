@@ -212,6 +212,9 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::post("/getSkillsByData", "CourseController@getSkillsByData");
             Route::post("/getSkills", "CourseController@getSkills");
             Route::post("/getAuthorsByName", "CourseController@getAuthorsByName");
+            //
+            Route::get("/getSkills", "CourseController@getCourseSkills");
+            Route::get("/getProfessionsBySkills/{skill_id}", "CourseController@getProfessionsBySkills");
 
             Route::group(['middleware' => ["auth"]], static function () {
                 // Диалоги
