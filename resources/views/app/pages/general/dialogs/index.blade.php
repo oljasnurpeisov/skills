@@ -29,7 +29,7 @@
                                             {{ json_decode('"'.str_replace('"','\"',$item->lastMessageText()).'"') }}
                                         </div>
                                     </div>
-                                    <div class="dialog-item__date">{{\App\Extensions\FormatDate::formatDate($item->created_at->format("d.m.Y, H:i"))}}</div>
+                                    <div class="dialog-item__date">{{\App\Extensions\FormatDate::formatDate($item->lastMessageDate()->format("d.m.Y, H:i"))}}</div>
                                 </a>
                             @endforeach
                         </div>

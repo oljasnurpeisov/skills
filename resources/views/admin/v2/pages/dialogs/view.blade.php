@@ -1,6 +1,6 @@
 @extends('admin.v2.layout.default.template')
 
-@section('title',$item->name.' | '.__('admin.site_name'))
+@section('title',' | '.__('admin.site_name'))
 
 @section('content')
     <div class="container container-fluid">

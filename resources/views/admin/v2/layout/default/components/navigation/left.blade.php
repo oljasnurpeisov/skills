@@ -86,7 +86,7 @@
                 </ul>
             </li>
             @endhasPermission
-            @if (Auth::user()->hasRole('tech_support'))
+            @hasPermission('admin.tech_support')
                 <li class="dropdown">
                     <a href="javascript:;" title="{{ __('admin.pages.dialogs.title') }}">
                         <i class="fa fa-comments"></i> {{ __('admin.pages.dialogs.title') }}
@@ -97,7 +97,7 @@
                         </li>
                     </ul>
                 </li>
-            @endif
+            @endhasPermission
         </ul>
     </div>
 </aside>

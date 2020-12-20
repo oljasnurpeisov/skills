@@ -36,8 +36,13 @@ class Dialog extends Model
 
     public function opponent()
     {
+        $tech_support_user = User::whereHas('roles', function ($q) {
+            $q->where('slug', '=','tech_support');
+        })->first();
         $members = $this->members;
-        if (Auth::user()) {
+        if (Auth::user()->can('admin.tech_support')) {
+            $members = $members->where('id', '!=', $tech_support_user->id);
+        }else {
             $members = $members->where('id', '!=', Auth::user()->id);
         }
 
@@ -69,6 +74,12 @@ class Dialog extends Model
     {
         $message = $this->messages()->orderBy('created_at', 'desc')->first();
         return $message ? $message->message : "";
+    }
+
+    public function lastMessageDate()
+    {
+        $date = $this->messages()->orderBy('created_at', 'desc')->first();
+        return $date ? $date->created_at : "";
     }
 
     public function messages()

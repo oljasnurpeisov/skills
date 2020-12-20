@@ -44,7 +44,7 @@
                             </div>
                         @endif
                     </div>
-                    <form class="dialog__sender" action="/{{$lang}}/dialog-{{$item->id}}/message/create"
+                    <form class="dialog__sender" action="/{{$lang}}/admin/dialog-{{$item->id}}/message/create"
                           method="POST">
                         @csrf
                         <input type="text" name="message" class="input-regular"

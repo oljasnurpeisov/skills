@@ -86,11 +86,9 @@ class RoleController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|min:3|max:255|unique:roles,name,' . $item->id,
-            'slug' => 'required|min:3|max:255|unique:roles,slug,' . $item->id
         ]);
 
         $item->name = $request->name;
-        $item->slug = $request->slug;
         $item->description = $request->description;
         $item->save();
 

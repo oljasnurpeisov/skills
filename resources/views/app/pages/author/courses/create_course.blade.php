@@ -166,10 +166,10 @@
                                         <div class="image-choice">
                                             <img src="/assets/img/certificates/1-thumbnail.jpg" class="image-choice__thumbnail"
                                                  alt="">
-                                            <label class="image-choice__overflow" title="Выбрать">
-                                                <input type="radio" value="1" name="certificate" required>
+                                            <label class="image-choice__overflow" title="{{__('default.pages.courses.choose')}}">
+                                                <input type="radio" value="1" name="certificate_id" required>
                                                 <i class="icon-checkmark"> </i>
-                                                <a href="/assets/img/certificates/1.png" data-fancybox title="Увеличить"
+                                                <a href="/assets/img/certificates/1.png" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
                                                    class="icon-zoom-in"> </a>
                                             </label>
                                         </div>
@@ -178,10 +178,10 @@
                                         <div class="image-choice">
                                             <img src="/assets/img/certificates/2-thumbnail.jpg" class="image-choice__thumbnail"
                                                  alt="">
-                                            <label class="image-choice__overflow" title="Выбрать">
-                                                <input type="radio" value="2" name="certificate">
+                                            <label class="image-choice__overflow" title="{{__('default.pages.courses.choose')}}">
+                                                <input type="radio" value="2" name="certificate_id">
                                                 <i class="icon-checkmark"> </i>
-                                                <a href="/assets/img/certificates/2.png" data-fancybox title="Увеличить"
+                                                <a href="/assets/img/certificates/2.png" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
                                                    class="icon-zoom-in"> </a>
                                             </label>
                                         </div>
@@ -190,10 +190,10 @@
                                         <div class="image-choice">
                                             <img src="/assets/img/certificates/3-thumbnail.jpg" class="image-choice__thumbnail"
                                                  alt="">
-                                            <label class="image-choice__overflow" title="Выбрать">
-                                                <input type="radio" value="3" name="certificate">
+                                            <label class="image-choice__overflow" title="{{__('default.pages.courses.choose')}}">
+                                                <input type="radio" value="3" name="certificate_id">
                                                 <i class="icon-checkmark"> </i>
-                                                <a href="/assets/img/certificates/3.png" data-fancybox title="Увеличить"
+                                                <a href="/assets/img/certificates/3.png" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
                                                    class="icon-zoom-in"> </a>
                                             </label>
                                         </div>

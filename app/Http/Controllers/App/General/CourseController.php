@@ -258,9 +258,9 @@ class CourseController extends Controller
         $page = $request->page ?? 1;
 
         $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')
-            ->where('fl_check', '=', '1')
-            ->where('fl_show', '=', '1')
-            ->where('uid', '=', null)
+//            ->where('fl_check', '=', '1')
+//            ->where('fl_show', '=', '1')
+//            ->where('uid', '=', null)
             ->orderBy('name_' . $lang, 'asc')
             ->paginate(50, ['*'], 'page', $page);
 

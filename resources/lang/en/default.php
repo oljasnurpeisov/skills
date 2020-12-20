@@ -179,7 +179,7 @@ return [
             'close_title' => 'Закрыть',
 
             'move_up_title' => 'Поднять',
-            'move_down_title' => 'Поднять',
+            'move_down_title' => 'Спустить',
             'create_lesson' => 'Создать урок',
             'lessons_title_1' => 'Уроков',
             'total_time_lessons' => 'Общая продолжительность',

@@ -122,10 +122,11 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::delete('/static-pages/delete-faq-theme/{key}', 'PageController@faq_delete_theme');
             });
             // Диалоги
-            Route::group(['middleware' => 'check.role:tech_support'], static function () {
+            Route::group(['middleware' => 'check.permission:admin.tech_support'], static function () {
                 Route::get('/dialogs', 'DialogController@main');
                 Route::get('/dialogs/opponent-{id}', 'DialogController@view');
                 Route::get('/dialogs/dialog-iframe-{id}', 'DialogController@viewDialog');
+                Route::post('/dialog-{dialog}/message/create', 'DialogController@save');
             });
             // Отчеты
             Route::group(['middleware' => 'check.permission:admin.reports'], static function () {
