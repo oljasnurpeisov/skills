@@ -59,11 +59,11 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.profile.merchant_login')}} *</label>
-                                <input type="text" name="merchant_login" placeholder="" class="input-regular" value="{{$pay_information->merchant_login}}">
+                                <input type="text" name="merchant_login" placeholder="" class="input-regular" value="{{$pay_information->merchant_login}}" autocomplete="off">
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.profile.merchant_password')}}  *</label>
-                                <input type="password" name="merchant_password" placeholder="" class="input-regular" value="{{$pay_information->merchant_password}}">
+                                <input type="password" name="merchant_password" placeholder="" class="input-regular" value="{{$pay_information->merchant_password}}" autocomplete="off">
                             </div>
                             <div class="buttons">
                                 <button type="submit" class="btn">{{__('default.pages.profile.save_btn_title')}}</button>
