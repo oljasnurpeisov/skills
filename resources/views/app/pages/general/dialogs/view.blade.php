@@ -18,7 +18,7 @@
                             <div class="dialog__body">
                                 @if(count($messages) > 0)
                                     @foreach($messages as $message)
-                                        <div class="message green">
+                                        <div class="message @if($message->sender_id == Auth::user()->id) green @endif">
                                             <div class="message__avatar">
                                                 @if($message->sender_id == Auth::user()->id)
                                                     @if(Auth::user()->roles()->first()->slug == 'author')
