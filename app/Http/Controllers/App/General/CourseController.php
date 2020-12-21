@@ -285,7 +285,7 @@ class CourseController extends Controller
 
     public function getCourseSkills()
     {
-        $data = [[
+        $data = ['data' => [[
             'id' => 1,
             'code_skill' => 'A.b.101',
             'name_ru' => 'Навык 1 (русский)',
@@ -302,7 +302,7 @@ class CourseController extends Controller
             'name_ru' => 'Навык 3 (русский)',
             'name_kk' => 'Навык 3 (Қазақша)',
             'name_en' => 'Навык 3 (english)',
-        ]];
+        ]]];
 
         return $data;
     }
@@ -345,7 +345,9 @@ class CourseController extends Controller
             'name_en' => 'Профессия 5 (english)',
         ]];
 
-        $item = collect($data)->where('skill_id', '=', $skill_id)->pluck('name_'.$lang);
+        $item = collect($data)->where('skill_id', '=', $skill_id);
+
+        $item = ['data' => $item];
 
         return $item;
     }

@@ -30,3 +30,10 @@ APIRoute::version('v1', ['prefix' => 'api/service', 'namespace' => 'App\Api\V1\C
     // Результат поиска
     APIRoute::get("/search/courses", "ServiceController@getSearchResult");
 });
+
+APIRoute::version('v1', ['prefix' => 'api/app', 'namespace' => 'App\Api\V1\Controllers\App'], function () {
+    APIRoute::group(["prefix" => "user"], function () {
+        // Авторизация обучающегося
+        APIRoute::post("/login", "UserController@studentLogin");
+    });
+});
