@@ -35,7 +35,11 @@ class ServiceController extends BaseController
         ]);
 
         if ($hash = $this->validateHash(['uid' => $uid, 'hash' => $hash], env('APP_DEBUG'))) {
-            $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
         }
 
         if (count($validator->errors()) > 0) {
@@ -87,7 +91,11 @@ class ServiceController extends BaseController
         if ($hash = $this->validateHash(['course_lang' => $course_lang, 'course_sort' => $course_sort, 'course_type' => $course_type
             , 'finished_students_min' => $finished_students_min, 'professions' => $professions,
             'rate_min' => $rate_min, 'skills' => $skills, 'term' => $term, 'hash' => $hash], env('APP_DEBUG'))) {
-            $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
         }
 
         if (count($validator->errors()) > 0) {
@@ -170,14 +178,14 @@ class ServiceController extends BaseController
         }
 
         $professions_data = '';
-        if($professions) {
+        if ($professions) {
             foreach ($professions as $profession) {
                 $professions_data .= '&specialities[]=' . $profession . '&';
             }
         }
 
         $skills_data = '';
-        if($skills) {
+        if ($skills) {
             foreach ($skills as $skill) {
                 $skills_data .= '&skills[]=' . $skill . '&';
             }
@@ -209,7 +217,11 @@ class ServiceController extends BaseController
         ]);
 
         if ($hash = $this->validateHash(['exclude_skills' => $exclude_skills, 'include_skills' => $include_skills, 'uid' => $uid, 'hash' => $hash], env('APP_DEBUG'))) {
-            $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
         }
 
         // Получить обучающегося по uid
@@ -263,7 +275,11 @@ class ServiceController extends BaseController
         ]);
 
         if ($hash = $this->validateHash(['uid' => $uid, 'hash' => $hash], env('APP_DEBUG'))) {
-            $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
         }
 
         // Получить обучающегося по uid

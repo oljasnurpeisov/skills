@@ -145,11 +145,11 @@
                                 <label class="form-group__label">{{__('default.pages.courses.video_local')}}</label>
                                 <div data-url="/ajax_upload_lesson_videos?_token={{ csrf_token() }}"
                                      data-maxfiles="5"
-                                     data-maxsize="50" data-acceptedfiles=".mp4" id="video2"
+                                     data-maxsize="500" data-acceptedfiles=".mp4" id="video2"
                                      class="dropzone-default dropzone-multiple">
                                     <input type="hidden" name="localVideo" value="">
                                     <div class="dropzone-default__info">MP4
-                                        • {{__('default.pages.courses.max_file_title')}} 50MB
+                                        • {{__('default.pages.courses.max_file_title')}} 500MB
                                     </div>
                                     <div class="previews-container">
                                         @if($item->lesson_attachment->videos != null)

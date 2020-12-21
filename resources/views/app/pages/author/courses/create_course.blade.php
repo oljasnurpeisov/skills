@@ -108,10 +108,10 @@
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.video_local')}}</label>
                                 <div data-url="/ajax_upload_course_videos?_token={{ csrf_token() }}" data-maxfiles="5"
-                                     data-maxsize="50" data-acceptedfiles=".mp4" id="video"
+                                     data-maxsize="500" data-acceptedfiles=".mp4" id="video"
                                      class="dropzone-default dropzone-multiple">
                                     <input type="hidden" name="videos" value="">
-                                    <div class="dropzone-default__info">MP4 • {{__('default.pages.courses.max_file_title')}} 50MB</div>
+                                    <div class="dropzone-default__info">MP4 • {{__('default.pages.courses.max_file_title')}} 500MB</div>
                                     <a href="javascript:;" title="{{__('default.pages.courses.add_file_btn_title')}}" class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                     <div class="previews-container"></div>
                                 </div>
@@ -139,10 +139,10 @@
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.courses.video_local_1')}}</label>
                                     <div data-url="/ajax_upload_course_videos?_token={{ csrf_token() }}" data-maxfiles="5"
-                                         data-maxsize="50" data-acceptedfiles=".mp4" id="video2"
+                                         data-maxsize="500" data-acceptedfiles=".mp4" id="video2"
                                          class="dropzone-default dropzone-multiple">
                                         <input type="hidden" name="videos_poor_vision" value="">
-                                        <div class="dropzone-default__info">MP4 • {{__('default.pages.courses.max_file_title')}} 50MB</div>
+                                        <div class="dropzone-default__info">MP4 • {{__('default.pages.courses.max_file_title')}} 500MB</div>
                                         <a href="javascript:;" title="{{__('default.pages.courses.add_file_btn_title')}}" class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                         <div class="previews-container"></div>
                                     </div>
