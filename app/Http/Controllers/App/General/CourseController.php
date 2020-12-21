@@ -273,28 +273,17 @@ class CourseController extends Controller
         return $authors;
     }
 
-    public function getCourseSkills()
+    public function getCourseSkills($lang, Request $request)
     {
-        $data = ['data' => [[
-            'id' => 1,
-            'code_skill' => 'A.b.101',
-            'name_ru' => 'Навык 1 (русский)',
-            'name_kk' => 'Навык 1 (Қазақша)',
-            'name_en' => 'Навык 1 (english)',
-        ], [
-            'id' => 2,
-            'code_skill' => 'A.b.102',
-            'name_ru' => 'Навык 2 (русский)',
-            'name_kk' => 'Навык 2 (Қазақша)',
-            'name_en' => 'Навык 2 (english)',
-        ], ['id' => 3,
-            'code_skill' => 'A.b.103',
-            'name_ru' => 'Навык 3 (русский)',
-            'name_kk' => 'Навык 3 (Қазақша)',
-            'name_en' => 'Навык 3 (english)',
-        ]]];
 
-        return $data;
+        $skill_name = $request->name ?? '';
+        $page = $request->page ?? 1;
+
+        $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')
+            ->orderBy('name_' . $lang, 'asc')
+            ->paginate(50, ['*'], 'page', $page);
+
+        return $skills;
     }
 
     public function getProfessionsBySkills($lang, Request $request)

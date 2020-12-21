@@ -38,10 +38,13 @@ class Kernel extends ConsoleKernel
             ->daily();
 
         $schedule->command('update:professions')
-            ->daily();
+            ->daily()->withoutOverlapping();
+
+        $schedule->command('update:professions_parent')
+            ->daily()->withoutOverlapping();
 
         $schedule->command('update:profession_skill_relation')
-            ->daily();
+            ->daily()->withoutOverlapping();
 
     }
 

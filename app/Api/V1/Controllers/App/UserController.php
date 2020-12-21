@@ -273,7 +273,7 @@ class UserController extends BaseController
         foreach ($items as $item) {
             $data["items"][] = [
                 'id' => $item->id,
-                'text' => trans($item->name, ['course_name' => '"'. optional($item->course)->name .'"', 'lang' => $lang, 'course_id' => optional($item->course)->id, 'opponent_id' => json_decode($item->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($item->data)[0]->course_reject_message ?? '']),
+                'text' => strip_tags(trans($item->name, ['course_name' => '"'. optional($item->course)->name .'"', 'lang' => $lang, 'course_id' => optional($item->course)->id, 'opponent_id' => json_decode($item->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($item->data)[0]->course_reject_message ?? ''])),
                 'date' => $item->created_at
             ];
         }

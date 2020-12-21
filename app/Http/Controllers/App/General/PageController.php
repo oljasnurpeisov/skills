@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\UserInformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Orchestra\Parser\Xml\Facade as XmlParser;
 use PharIo\Manifest\Author;
 
 
@@ -150,7 +151,7 @@ class PageController extends Controller
             }
         }
         return view("app.pages.general.faq", [
-            'items' => json_decode($items->getAttribute('data_'.$lang), true)
+            'items' => json_decode($items->getAttribute('data_' . $lang), true)
         ]);
     }
 

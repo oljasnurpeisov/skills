@@ -66,6 +66,8 @@ use App\Notifications\VerifyEmail;
  * @mixin \Eloquent
  * @property-read \App\Models\PayInformation $payment_info
  * @property-read \App\Models\StudentCertificate $certificates
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StudentCourse[] $student_course
+ * @property-read int|null $student_course_count
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
