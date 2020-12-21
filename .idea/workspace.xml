@@ -4,21 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- dialog date fix">
-      <change afterPath="$PROJECT_DIR$/app/Api/V1/Controllers/App/UserController.php" afterDir="false" />
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/components/lesson/poor_vision_lesson_edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/components/lesson/poor_vision_lesson_edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_course.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_course.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_coursework.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_coursework.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_final_test.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_final_test.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_lesson.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_lesson.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_course.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_course.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_coursework.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_coursework.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_final_test.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_final_test.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_lesson.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_lesson.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/scripts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/dialogs/dialog_frame.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/dialogs/dialog_frame.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/dialogs/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/dialogs/view.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +204,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Виталий/PhpstormProjects/enbek/app/Http/Controllers/App/Student/UserController.php" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/v2/pages/static_pages" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/assets/js" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -220,19 +212,19 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
+      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\css" />
+      <recent name="F:\OpenServer\domains\enbek-backend\resources\views\admin\v2\pages\static_pages" />
+      <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Service\Controllers" />
+      <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Service" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Controllers\App" />
       <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Controllers\Service" />
       <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Controllers" />
       <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1" />
       <recent name="F:\OpenServer\domains\enbek-backend\config" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\OpenServer\domains\enbek-backend\resources\views\admin\v2\pages\static_pages" />
-      <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Service\Controllers" />
-      <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Service" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\img\certificates" />
-      <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -297,14 +289,7 @@
       <workItem from="1608309224752" duration="27525000" />
       <workItem from="1608384327460" duration="6533000" />
       <workItem from="1608392290447" duration="61730000" />
-      <workItem from="1608520684988" duration="3566000" />
-    </task>
-    <task id="LOCAL-00107" summary="- minor fix">
-      <created>1607445341449</created>
-      <option name="number" value="00107" />
-      <option name="presentableId" value="LOCAL-00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1607445341449</updated>
+      <workItem from="1608520684988" duration="4481000" />
     </task>
     <task id="LOCAL-00108" summary="- update admin panel">
       <created>1607447234517</created>
@@ -642,14 +627,20 @@
       <option name="project" value="LOCAL" />
       <updated>1608457321115</updated>
     </task>
-    <option name="localTasksCounter" value="156" />
+    <task id="LOCAL-00156" summary="- change max video size&#10;- add login api method">
+      <created>1608524857180</created>
+      <option name="number" value="00156" />
+      <option name="presentableId" value="LOCAL-00156" />
+      <option name="project" value="LOCAL" />
+      <updated>1608524857181</updated>
+    </task>
+    <option name="localTasksCounter" value="157" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add new skills to student after finished course" />
     <MESSAGE value="- minor fix rates on course page" />
     <MESSAGE value="- add notifications" />
     <MESSAGE value="- add faq page" />
@@ -674,7 +665,8 @@
     <MESSAGE value="- update api methods" />
     <MESSAGE value="- minor fix" />
     <MESSAGE value="- dialog date fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="- dialog date fix" />
+    <MESSAGE value="- change max video size&#10;- add login api method" />
+    <option name="LAST_COMMIT_MESSAGE" value="- change max video size&#10;- add login api method" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -702,11 +694,11 @@
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1608479313134" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608457347844">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608524849186">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608457347844" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608524849186" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -723,11 +715,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605559122928" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1608457352505">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1608525012857">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995349134" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1608457352505" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1608525012857" />
     <state x="572" y="146" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1605561054285">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
