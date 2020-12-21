@@ -15,6 +15,7 @@ use App\Models\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -140,6 +141,76 @@ class UserController extends BaseController
         }
 
         $message = new Message(__('api/messages.success'), 200, $data);
+        return $this->response->item($message, new MessageTransformer());
+    }
+
+    public function uploadAvatar(Request $request)
+    {
+
+        $avatar = $request->file('file');
+        $user_id = $request->header('user');
+        $hash = $request->header('hash');
+        $lang = $request->header('lang', 'ru');
+        app()->setLocale($lang);
+
+        // Валидация
+        $rules = [
+            'user' => 'required',
+            'hash' => 'required',
+            'file' => ['max:1024'],
+        ];
+        $payload = [
+            'file' => $avatar,
+            'user' => $user_id,
+            'hash' => $hash
+        ];
+
+        $validator = Validator::make($payload, $rules);
+
+        unset($payload["file"]);
+
+        if ($validator->fails()) {
+            $message = new Message($validator->errors()->first(), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        $item = StudentInformation::where('user_id', '=', $user_id)->first();
+
+        if (!$item) {
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        File::delete(public_path($item->avatar));
+
+        $file = $request->file("file");
+
+        if ($request->has('file')){
+            $imageName = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('users/user_' . $user_id . '/profile/images'), $imageName);
+
+            $item->avatar = '/users/user_' . $user_id . '/profile/images/' . $imageName;
+        }else{
+            $item->avatar = null;
+        }
+
+        $item->save();
+
+        $message = new Message(__('api/messages.success'), 200, null);
         return $this->response->item($message, new MessageTransformer());
     }
 

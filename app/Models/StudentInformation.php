@@ -52,4 +52,8 @@ class StudentInformation extends Model
         return $this->avatar;
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

@@ -307,11 +307,11 @@ class CourseController extends Controller
         return $data;
     }
 
-    public function getProfessionsBySkills($lang ,Request $request)
+    public function getProfessionsBySkills($lang, Request $request)
     {
         $skill_id = $request->skill_id;
 
-        $data = [[
+        $data = collect([[
             'id' => 1,
             'skill_id' => 1,
             'cod' => '1124-2-006',
@@ -331,25 +331,25 @@ class CourseController extends Controller
             'name_ru' => 'Профессия 3 (русский)',
             'name_kk' => 'Профессия 3 (Қазақша)',
             'name_en' => 'Профессия 3 (english)',
-        ],['id' => 4,
+        ], ['id' => 4,
             'skill_id' => 2,
             'cod' => '1124-2-009',
             'name_ru' => 'Профессия 4 (русский)',
             'name_kk' => 'Профессия 4 (Қазақша)',
             'name_en' => 'Профессия 4 (english)',
-        ],['id' => 5,
+        ], ['id' => 5,
             'skill_id' => 3,
             'cod' => '1124-2-010',
             'name_ru' => 'Профессия 5 (русский)',
             'name_kk' => 'Профессия 5 (Қазақша)',
             'name_en' => 'Профессия 5 (english)',
-        ]];
+        ]]);
 
-        $item = collect($data)->where('skill_id', '=', $skill_id);
+        $item = $data->where('skill_id', '=', $skill_id);
 
-        $item = ['data' => $item];
-
-        return collect($item);
+        return response()->json([
+        'data' => array_values($item->toArray())
+    ]);
     }
 
 }
