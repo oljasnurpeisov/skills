@@ -349,7 +349,7 @@ class CourseController extends Controller
 
         $item = ['data' => $item];
 
-        return $item;
+        return collect($item);
     }
 
 }

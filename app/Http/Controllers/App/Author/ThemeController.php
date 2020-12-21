@@ -18,19 +18,19 @@ class ThemeController extends Controller
 
     public function createTheme(Request $request){
         $last_id = Theme::whereHas('courses', function($q) use ($request){
-                $q->where('courses.id', '=', $request->course_id);
-            })->orderBy('index_number', 'desc')->latest()->first()->index_number ?? 0;
+            $q->where('courses.id', '=', $request->course_id);
+        })->orderBy('index_number', 'desc')->latest()->first();
 
-        if (!empty($last_id)) {
-            $last_id++;
+        if ($last_id) {
+            $index = $last_id->index_number + 1;
         } else {
-            $last_id = 0;
+            $index = 0;
         }
 
         $theme = new Theme;
         $theme->course_id = $request->course_id;
         $theme->name = $request->name;
-        $theme->index_number = $last_id;
+        $theme->index_number = $index;
         $theme->save();
 
         return $theme->id;

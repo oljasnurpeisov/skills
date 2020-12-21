@@ -43,20 +43,20 @@ class LessonController extends Controller
         ]);
 
         $last_id = Lesson::whereHas('themes', function ($q) use ($theme) {
-                $q->where('themes.id', '=', $theme->id);
-            })->orderBy('index_number', 'desc')->latest()->first()->index_number ?? 0;
+            $q->where('themes.id', '=', $theme->id);
+        })->orderBy('index_number', 'desc')->latest()->first();
 
-        if (!empty($last_id)) {
-            $last_id++;
+        if ($last_id) {
+            $index = $last_id->index_number + 1;
         } else {
-            $last_id = 0;
+            $index = 0;
         }
 
         $item = new Lesson;
         $item->theme_id = $theme->id;
         $item->course_id = $course->id;
         $item->name = $request->name;
-        $item->index_number = $last_id;
+        $item->index_number = $index;
 
         if ($request->type == 'theory') {
             $item->type = 1;
