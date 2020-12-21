@@ -44,7 +44,11 @@ class UserController extends BaseController
         ]);
 
         if ($hash = $this->validateHash(['login' => $login, 'password' => $password, 'hash' => $hash], env('APP_DEBUG'))) {
-            $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
         }
 
         if (count($validator->errors()) > 0) {
@@ -112,11 +116,14 @@ class UserController extends BaseController
             }
             $item_information->save();
 
-            $this->createTechDialog($user);
+            $this->createTechDialog($item->id);
 
-
-//            Session::put('student_token', $token);
-//            Auth::login($item);
+            $data = [
+                'id' => $item->id,
+                'email' => $item->email,
+                'name' => $item->student_info->name,
+                'quota_count' => $item->student_info->quota_count,
+            ];
 
         } else {
 
@@ -172,7 +179,7 @@ class UserController extends BaseController
         return $response->getBody();
     }
 
-    public function createTechDialog(User $user)
+    public function createTechDialog($user_id)
     {
         // Создание диалога с тех.поддержкой
         $tech_support = User::whereHas('roles', function ($q) {
@@ -182,6 +189,6 @@ class UserController extends BaseController
         $dialog = new Dialog;
         $dialog->save();
 
-        $dialog->members()->sync([$user->id, $tech_support->id]);
+        $dialog->members()->sync([$user_id, $tech_support->id]);
     }
 }

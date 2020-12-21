@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/scripts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/dialogs/dialog_frame.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/dialogs/dialog_frame.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/dialogs/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/dialogs/view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Api/V1/Controllers/App/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Api/V1/Controllers/App/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -289,14 +287,7 @@
       <workItem from="1608309224752" duration="27525000" />
       <workItem from="1608384327460" duration="6533000" />
       <workItem from="1608392290447" duration="61730000" />
-      <workItem from="1608520684988" duration="4481000" />
-    </task>
-    <task id="LOCAL-00108" summary="- update admin panel">
-      <created>1607447234517</created>
-      <option name="number" value="00108" />
-      <option name="presentableId" value="LOCAL-00108" />
-      <option name="project" value="LOCAL" />
-      <updated>1607447234517</updated>
+      <workItem from="1608520684988" duration="6520000" />
     </task>
     <task id="LOCAL-00109" summary="- update payment description&#10;- show popular courses and authors for authors">
       <created>1607448561773</created>
@@ -634,14 +625,20 @@
       <option name="project" value="LOCAL" />
       <updated>1608524857181</updated>
     </task>
-    <option name="localTasksCounter" value="157" />
+    <task id="LOCAL-00157" summary="- update styles and scripts &#10;- update dialog view">
+      <created>1608525791374</created>
+      <option name="number" value="00157" />
+      <option name="presentableId" value="LOCAL-00157" />
+      <option name="project" value="LOCAL" />
+      <updated>1608525791374</updated>
+    </task>
+    <option name="localTasksCounter" value="158" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- minor fix rates on course page" />
     <MESSAGE value="- add notifications" />
     <MESSAGE value="- add faq page" />
     <MESSAGE value="- notification minor fix" />
@@ -666,7 +663,8 @@
     <MESSAGE value="- minor fix" />
     <MESSAGE value="- dialog date fix" />
     <MESSAGE value="- change max video size&#10;- add login api method" />
-    <option name="LAST_COMMIT_MESSAGE" value="- change max video size&#10;- add login api method" />
+    <MESSAGE value="- update styles and scripts &#10;- update dialog view" />
+    <option name="LAST_COMMIT_MESSAGE" value="- update styles and scripts &#10;- update dialog view" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -694,11 +692,11 @@
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1608479313134" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608524849186">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608525788948">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608524849186" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608525788948" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -715,11 +713,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605559122928" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1608525012857">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1608525792807">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995349134" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1608525012857" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1608525792807" />
     <state x="572" y="146" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1605561054285">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

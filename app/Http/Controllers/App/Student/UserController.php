@@ -127,7 +127,7 @@ class UserController extends Controller
             }
             $item_information->save();
 
-            $this->createTechDialog($user);
+            $this->createTechDialog($item->id);
 
 
             Session::put('student_token', $token);
@@ -181,7 +181,7 @@ class UserController extends Controller
         return $response->getBody();
     }
 
-    public function createTechDialog(User $user)
+    public function createTechDialog($user_id)
     {
         // Создание диалога с тех.поддержкой
         $tech_support = User::whereHas('roles', function ($q) {
@@ -191,7 +191,7 @@ class UserController extends Controller
         $dialog = new Dialog;
         $dialog->save();
 
-        $dialog->members()->sync([$user->id, $tech_support->id]);
+        $dialog->members()->sync([$user_id, $tech_support->id]);
     }
 
     public function myCertificates(){
