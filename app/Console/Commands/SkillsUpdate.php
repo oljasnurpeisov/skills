@@ -29,48 +29,18 @@ class SkillsUpdate extends Command
      */
     public function handle()
     {
-        // new
-//        $xml = XmlParser::load(url('https://iac2:Iac2007RBD@www.enbek.kz/feed/resume/cl_hard_skills.xml'));
-//
-//        $skills = $xml->parse([
-//            'data' => ['uses' => 'row[field(::name=@)]'],
-//        ]);
-//
-//        foreach ($skills['data'] as $skill) {
-//            $item = Skill::updateOrCreate([
-//                'code_skill' => $skill['codcomp']
-//            ], [
-//                'name_ru' => $skill['namecomp'],
-//                'name_kk' => $skill['namecomp_kz'],
-//            ]);
-//        }
-
-        // old
         $xml = XmlParser::load(url('https://iac2:Iac2007RBD@www.enbek.kz/feed/resume/cl_hard_skills.xml'));
 
         $skills = $xml->parse([
             'data' => ['uses' => 'row[field(::name=@)]'],
         ]);
 
-        foreach (array_values($skills)[0] as $skill) {
-            if($skill['fl_check'] == 'x'){
-                $skill['fl_check'] = 0;
-            }else{
-                $skill['fl_check'] = 1;
-            }
-            if($skill['fl_show'] == null){
-                $skill['fl_show'] = 1;
-            }else{
-                $skill['fl_show'] = 0;
-            }
-            $user = Skill::updateOrCreate([
-                'code_skill' => $skill['codskill']
+        foreach ($skills['data'] as $skill) {
+            $item = Skill::updateOrCreate([
+                'code_skill' => $skill['codcomp']
             ], [
-                'fl_check' => $skill['fl_check'],
-                'name_ru' => $skill['name_skill'],
-                'name_kk' => $skill['name_skill_kz'],
-                'fl_show' => $skill['fl_show'],
-                'uid' => $skill['uid'],
+                'name_ru' => $skill['namecomp'],
+                'name_kk' => $skill['namecomp_kz'],
             ]);
         }
         return '';

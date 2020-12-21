@@ -215,8 +215,8 @@ class CourseController extends Controller
         $profession_name = $request->name ?? '';
         $page = $request->page ?? 1;
 
-        $professions = Professions::where('name_ru', 'like', '%' . $profession_name . '%')
-            ->orderBy('name_ru', 'asc')
+        $professions = Professions::where('name_' . $lang, 'like', '%' . $profession_name . '%')
+            ->orderBy('name_' . $lang, 'asc')
             ->paginate(50, ['*'], 'page', $page);
 
         return $professions;
@@ -234,20 +234,13 @@ class CourseController extends Controller
                     $q->whereIn('professions.id', $professions);
                 }
             })
-//                ->where('fl_check', '=', '1')
-//                ->where('fl_show', '=', '1')
-                ->where('uid', '=', null)
                 ->orderBy('name_' . $lang, 'asc')
                 ->paginate(50, ['*'], 'page', $page);
         } else {
             $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')
-//                ->where('fl_check', '=', '1')
-//                ->where('fl_show', '=', '1')
-                ->where('uid', '=', null)
                 ->orderBy('name_' . $lang, 'asc')
                 ->paginate(50, ['*'], 'page', $page);
         }
-
 
         return $skills;
     }
@@ -258,9 +251,6 @@ class CourseController extends Controller
         $page = $request->page ?? 1;
 
         $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')
-//            ->where('fl_check', '=', '1')
-//            ->where('fl_show', '=', '1')
-//            ->where('uid', '=', null)
             ->orderBy('name_' . $lang, 'asc')
             ->paginate(50, ['*'], 'page', $page);
 
@@ -348,8 +338,8 @@ class CourseController extends Controller
         $item = $data->where('skill_id', '=', $skill_id);
 
         return response()->json([
-        'data' => array_values($item->toArray())
-    ]);
+            'data' => array_values($item->toArray())
+        ]);
     }
 
 }
