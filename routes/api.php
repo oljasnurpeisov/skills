@@ -42,6 +42,6 @@ APIRoute::version('v1', ['prefix' => 'api/app', 'namespace' => 'App\Api\V1\Contr
         // Авторы
         APIRoute::get("/authors", "CourseController@getAuthors");
         // Оставить отзыв
-        APIRoute::get("/course-rate", "CourseController@courseRate");
+        APIRoute::post("/course-rate", "CourseController@courseRate");
     });
 });

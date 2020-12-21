@@ -30,4 +30,8 @@ return [
     'authors' => [
         'title' => 'Авторы'
     ],
+
+    'courses' => [
+        'course_rate_success' => 'Отзыв был успешно отправлен'
+    ]
 ];

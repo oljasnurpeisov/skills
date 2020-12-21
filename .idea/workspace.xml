@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- add course rate api method">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/SkillsUpdate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/SkillsUpdate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Author/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/PageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Api/V1/Controllers/App/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Api/V1/Controllers/App/CourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/api/errors.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/api/errors.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/api/messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/api/messages.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -290,14 +288,7 @@
       <workItem from="1608309224752" duration="27525000" />
       <workItem from="1608384327460" duration="6533000" />
       <workItem from="1608392290447" duration="61730000" />
-      <workItem from="1608520684988" duration="26518000" />
-    </task>
-    <task id="LOCAL-00113" summary="- add youtube parser&#10;- update information for authors">
-      <created>1607494065576</created>
-      <option name="number" value="00113" />
-      <option name="presentableId" value="LOCAL-00113" />
-      <option name="project" value="LOCAL" />
-      <updated>1607494065578</updated>
+      <workItem from="1608520684988" duration="29016000" />
     </task>
     <task id="LOCAL-00114" summary="- disable test and coursework for admin and author&#10;- update add course skills count&#10;- add kk localization to chart">
       <created>1607497432412</created>
@@ -635,14 +626,20 @@
       <option name="project" value="LOCAL" />
       <updated>1608547670986</updated>
     </task>
-    <option name="localTasksCounter" value="162" />
+    <task id="LOCAL-00162" summary="- update skills &#10;- minor fix">
+      <created>1608549925974</created>
+      <option name="number" value="00162" />
+      <option name="presentableId" value="LOCAL-00162" />
+      <option name="project" value="LOCAL" />
+      <updated>1608549925974</updated>
+    </task>
+    <option name="localTasksCounter" value="163" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- notification minor fix" />
     <MESSAGE value="- update statistic chart" />
     <MESSAGE value="- update certificates" />
     <MESSAGE value="- download certificate add" />
@@ -667,7 +664,8 @@
     <MESSAGE value="- minor fix" />
     <MESSAGE value="- add upload avatar method" />
     <MESSAGE value="- add authors api method" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add authors api method" />
+    <MESSAGE value="- update skills &#10;- minor fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="- update skills &#10;- minor fix" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -695,11 +693,11 @@
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1608536674763" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608547665785">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608552510331">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608547665785" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608552510331" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
