@@ -38,4 +38,10 @@ APIRoute::version('v1', ['prefix' => 'api/app', 'namespace' => 'App\Api\V1\Contr
         // Редактирование профиля
         APIRoute::post("/upload-avatar", "UserController@uploadAvatar");
     });
+    APIRoute::group(["prefix" => "courses"], function () {
+        // Авторы
+        APIRoute::get("/authors", "CourseController@getAuthors");
+        // Оставить отзыв
+        APIRoute::get("/course-rate", "CourseController@courseRate");
+    });
 });

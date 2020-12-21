@@ -5,19 +5,14 @@ namespace App\Api\V1\Controllers\App;
 use App\Api\V1\Classes\Message;
 use App\Api\V1\Controllers\BaseController;
 use App\Api\V1\Transformers\MessageTransformer;
-use App\Models\Course;
 use App\Models\Dialog;
-use App\Models\Professions;
 use App\Models\Role;
 use App\Models\Skill;
 use App\Models\StudentInformation;
 use App\Models\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
@@ -36,15 +31,20 @@ class UserController extends BaseController
         app()->setLocale($lang);
 
         // Валидация
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'login' => 'required',
-            'password' => 'required'
-        ]);
-        $validator = Validator::make($request->header(), [
+            'password' => 'required',
             'hash' => 'required',
-        ]);
+        ];
+        $payload = [
+            'login' => $login,
+            'password' => $password,
+            'hash' => $hash
+        ];
 
-        if ($hash = $this->validateHash(['login' => $login, 'password' => $password, 'hash' => $hash], env('APP_DEBUG'))) {
+        $validator = Validator::make($payload, $rules);
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
             if (is_bool($hash)) {
                 $validator->errors()->add('hash', __('api/errors.invalid_hash'));
             } else {
@@ -70,7 +70,7 @@ class UserController extends BaseController
             ]);
         } catch (BadResponseException $e) {
             $errors = $validator->errors()->all();
-            $message = new Message(implode(' ', $errors), 400, null);
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
             return $this->response->item($message, new MessageTransformer())->statusCode(400);
         }
 
