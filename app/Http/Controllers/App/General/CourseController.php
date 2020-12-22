@@ -89,8 +89,14 @@ class CourseController extends Controller
                 $q->whereIn('paid_status', [1, 2]);
             }])->having('course_members_count', '>=', $members_count);
         }
-        // Получить профессии
+        // Сортировка по профессиям
         if ($specialities) {
+            if (count(array_filter($specialities)) > 0) {
+                $query->whereHas('professions', function ($q) use ($request) {
+                    $q->whereIn('professions.id', $request->specialities);
+                });
+            }
+
             $professions = Professions::whereIn('id', $specialities)->get();
         }
         // Сортировка по навыкам

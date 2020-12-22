@@ -64,8 +64,14 @@ class CourseController extends Controller
                 $q->where('courses.name', 'like', '%' . $term . '%');
             });
         }
-        // Получить профессии
+        // Сортировка по профессиям
         if ($specialities) {
+            if (count(array_filter($specialities)) > 0) {
+                $query->whereHas('courses.professions', function ($q) use ($request) {
+                    $q->whereIn('professions.id', $request->specialities);
+                });
+            }
+
             $professions = Professions::whereIn('id', $specialities)->get();
         }
         // Сортировка по навыкам

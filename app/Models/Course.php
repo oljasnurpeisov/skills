@@ -117,6 +117,12 @@ class Course extends Model
 
     }
 
+    public function professions() {
+
+        return $this->belongsToMany(Professions::class,'course_skill', 'course_id', 'profession_id');
+
+    }
+
     public function course_members() {
 
         return $this->hasMany(StudentCourse::class,'course_id', 'id');
