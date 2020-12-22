@@ -386,11 +386,11 @@
                                 <div class="extendable">
                                     <div class="tags">
                                         <ul>
-                                            @foreach($item->skills as $skill)
-                                                @foreach($skill->professions as $profession)
+                                            @foreach($item->skills->groupBy('id') as $skill)
+                                                @foreach($skill[0]->professions as $profession)
                                                     <li>
                                                         <a href="#"
-                                                           title="{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}">{{$profession->getAttribute('name_'.$lang ?? 'name_ru')}}</a>
+                                                           title="{{$profession->getAttribute('name_'.$lang) ?? $profession->getAttribute('name_ru')}}">{{$profession->getAttribute('name_'.$lang) ?? $profession->getAttribute('name_ru')}}</a>
                                                     </li>
                                                 @endforeach
                                             @endforeach
@@ -410,9 +410,9 @@
                                 <div class="extendable">
                                     <div class="tags">
                                         <ul>
-                                            @foreach($item->skills as $skill)
+                                            @foreach($item->skills->groupBy('id') as $key => $skill)
                                                 <li><a href="#"
-                                                       title="{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}">{{$skill->getAttribute('name_'.$lang ?? 'name_ru')}}</a>
+                                                       title="{{$skill[0]->getAttribute('name_'.$lang) ?? $skill[0]->getAttribute('name_ru')}}">{{$skill[0]->getAttribute('name_'.$lang) ?? $skill[0]->getAttribute('name_ru')}}</a>
                                                 </li>
                                             @endforeach
                                         </ul>

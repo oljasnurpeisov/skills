@@ -149,9 +149,9 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <th><a href="{{request()->fullUrlWithQuery(["sortByName"=>$request->sortByName == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.name_student')}}</a></th>
+                    <th><a href="?sortByName={{$request->sortByName == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.name_student')}}</a></th>
                     <th>{{__('admin.pages.reports.unemployed')}}</th>
-                    <th><a href="{{request()->fullUrlWithQuery(["sortByQuota"=>$request->sortByQuota == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.quotas_count')}}</a></th>
+                    <th><a href="?sortByQuota={{$request->sortByQuota == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.quotas_count')}}</a></th>
                     <th>{{__('admin.pages.reports.student_courses_count')}}</th>
                     <th>{{__('admin.pages.reports.student_certificates_count')}}</th>
                     <th>{{__('admin.pages.reports.student_qualifications_count')}}</th>

@@ -47,7 +47,7 @@
                             <div class="regular-carousel courses-carousel">
                                 @foreach($courses as $course)
                                     <a href="/{{$lang}}/course-catalog/course/{{$course->id}}" title="" class="card">
-                                        @if($item->quota_status == 2)
+                                        @if($course->quota_status == 2)
                                             <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
                                         @endif
                                         <div class="card__image">
@@ -64,7 +64,7 @@
                                                     <i class="icon-user"> </i><span>{{count($course->course_members->whereIn('paid_status', [1,2]))}}</span>
                                                 </div>
                                                 <div class="card__attribute">
-                                                    <i class="icon-star-full"> </i><span>{{$course->rate->pluck('rate')->avg() ?? 0}}</span>
+                                                    <i class="icon-star-full"> </i><span>{{round($course->rate->pluck('rate')->avg() ?? 0, 1)}}</span>
                                                 </div>
                                             </div>
                                         </div>

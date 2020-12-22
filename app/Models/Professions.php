@@ -36,6 +36,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Professions whereTextRu($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Professions whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $parent_id
+ * @property string|null $code
+ * @method static \Illuminate\Database\Eloquent\Builder|Professions whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Professions whereParentId($value)
  */
 class Professions extends Model
 {

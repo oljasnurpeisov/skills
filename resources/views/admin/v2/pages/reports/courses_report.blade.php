@@ -220,7 +220,7 @@
                     <th><a href="{{request()->fullUrlWithQuery(["sortByAuthorName"=>$request->sortByAuthorName == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.author_name')}}</th>
                     <th>{{__('admin.pages.reports.skills')}}</a></th>
                     <th>{{__('admin.pages.reports.group_profession')}}</th>
-                    <th>{{__('admin.pages.reports.course_rate')}}</th>
+                    <th><a href="?sortByRateCourse={{$request->sortByRateCourse == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_rate')}}</a></th>
                     <th>{{__('admin.pages.reports.course_status')}}</th>
                     <th>{{__('admin.pages.reports.quota_access')}}</th>
                     <th>{{__('admin.pages.reports.paid_or_free')}}</th>

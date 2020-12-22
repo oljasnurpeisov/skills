@@ -206,7 +206,7 @@
                 <tr>
                     <th><a href="{{request()->fullUrlWithQuery(["sortByName"=>$request->sortByName == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.name_title')}}</a></th>
                     <th>{{__('admin.pages.reports.specialization')}}</th>
-                    <th>{{__('admin.pages.reports.rating')}}</th>
+                    <th><a href="?sortByRateAuthor={{$request->sortByRateAuthor == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.rating')}}</a></th>
                     <th><a href="?sortByCoursesCount={{$request->sortByCoursesCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_count')}}</a></th>
                     <th><a href="?sortByPaidCoursesCount={{$request->sortByPaidCoursesCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_paid_count')}}</a></th>
                     <th><a href="?sortByFreeCoursesCount={{$request->sortByFreeCoursesCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_free_count')}}</a></th>

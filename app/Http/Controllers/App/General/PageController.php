@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\UserInformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Orchestra\Parser\Xml\Facade as XmlParser;
 use PharIo\Manifest\Author;
 
 
@@ -36,15 +37,14 @@ class PageController extends Controller
             // Получить список навыков из списка профессий
             $skills_professions = Skill::whereHas('professions', function ($query) use ($profession_skills) {
                 $query->whereIn('profession_id', $profession_skills);
-                $query->where('fl_check', '=', 1)->where('fl_show', '=', 1)->where('uid', '=', null);
             })->pluck('id')->toArray();
 
             // Получить список курсов из списка навыков профессий
             $courses = Course::where('status', '=', Course::published)->whereHas('skills', function ($query) use ($skills_professions) {
                 $query->whereIn('skill_id', $skills_professions);
             })->limit(12)->get();
-            $skills = Skill::where('fl_check', '=', 1)->where('fl_show', '=', 1)->where('uid', '=', null)->whereIn('id', $skills_professions)->limit(18)->get();
-//            $skills = Skill::whereIn('id', $skills_professions)->limit(18)->get();
+
+            $skills = Skill::whereIn('id', $skills_professions)->limit(18)->get();
 
         }
 

@@ -215,8 +215,9 @@ class CourseController extends Controller
         $profession_name = $request->name ?? '';
         $page = $request->page ?? 1;
 
-        $professions = Professions::where('name_ru', 'like', '%' . $profession_name . '%')
-            ->orderBy('name_ru', 'asc')
+        $professions = Professions::where('name_' . $lang, 'like', '%' . $profession_name . '%')
+            ->where('parent_id', '!=', null)
+            ->orderBy('name_' . $lang, 'asc')
             ->paginate(50, ['*'], 'page', $page);
 
         return $professions;
@@ -229,25 +230,19 @@ class CourseController extends Controller
         $page = $request->page ?? 1;
 
         if ($professions != []) {
-            $skills = $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->whereHas('professions', function ($q) use ($professions) {
-                if ($professions != []) {
-                    $q->whereIn('professions.id', $professions);
-                }
-            })
-//                ->where('fl_check', '=', '1')
-//                ->where('fl_show', '=', '1')
-                ->where('uid', '=', null)
-                ->orderBy('name_' . $lang, 'asc')
-                ->paginate(50, ['*'], 'page', $page);
+            $page = $request->page ?? 1;
+
+            $professions_group = Professions::whereIn('id', $professions)->pluck('parent_id');
+            $skills = Skill::whereHas('group_professions', function ($q) use ($professions_group) {
+                $q->whereIn('profession_skills.profession_id', $professions_group);
+            })->paginate(50, ['*'], 'page', $page);
+
+            return $skills;
         } else {
             $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')
-//                ->where('fl_check', '=', '1')
-//                ->where('fl_show', '=', '1')
-                ->where('uid', '=', null)
                 ->orderBy('name_' . $lang, 'asc')
                 ->paginate(50, ['*'], 'page', $page);
         }
-
 
         return $skills;
     }
@@ -258,9 +253,6 @@ class CourseController extends Controller
         $page = $request->page ?? 1;
 
         $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')
-//            ->where('fl_check', '=', '1')
-//            ->where('fl_show', '=', '1')
-//            ->where('uid', '=', null)
             ->orderBy('name_' . $lang, 'asc')
             ->paginate(50, ['*'], 'page', $page);
 
@@ -283,73 +275,32 @@ class CourseController extends Controller
         return $authors;
     }
 
-    public function getCourseSkills()
+    public function getCourseSkills($lang, Request $request)
     {
-        $data = ['data' => [[
-            'id' => 1,
-            'code_skill' => 'A.b.101',
-            'name_ru' => 'Навык 1 (русский)',
-            'name_kk' => 'Навык 1 (Қазақша)',
-            'name_en' => 'Навык 1 (english)',
-        ], [
-            'id' => 2,
-            'code_skill' => 'A.b.102',
-            'name_ru' => 'Навык 2 (русский)',
-            'name_kk' => 'Навык 2 (Қазақша)',
-            'name_en' => 'Навык 2 (english)',
-        ], ['id' => 3,
-            'code_skill' => 'A.b.103',
-            'name_ru' => 'Навык 3 (русский)',
-            'name_kk' => 'Навык 3 (Қазақша)',
-            'name_en' => 'Навык 3 (english)',
-        ]]];
 
-        return $data;
+        $skill_name = $request->name ?? '';
+        $page = $request->page ?? 1;
+
+        $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')
+            ->orderBy('name_' . $lang, 'asc')
+            ->paginate(50, ['*'], 'page', $page);
+
+        return $skills;
     }
 
-    public function getProfessionsBySkills($lang ,Request $request)
+    public function getProfessionsBySkills($lang, Request $request)
     {
+
         $skill_id = $request->skill_id;
+        $page = $request->page ?? 1;
 
-        $data = [[
-            'id' => 1,
-            'skill_id' => 1,
-            'cod' => '1124-2-006',
-            'name_ru' => 'Профессия 1 (русский)',
-            'name_kk' => 'Профессия 1 (Қазақша)',
-            'name_en' => 'Профессия 1 (english)',
-        ], [
-            'id' => 2,
-            'skill_id' => 1,
-            'cod' => '1124-2-007',
-            'name_ru' => 'Профессия 2 (русский)',
-            'name_kk' => 'Профессия 2 (Қазақша)',
-            'name_en' => 'Профессия 2 (english)',
-        ], ['id' => 3,
-            'skill_id' => 1,
-            'cod' => '1124-2-008',
-            'name_ru' => 'Профессия 3 (русский)',
-            'name_kk' => 'Профессия 3 (Қазақша)',
-            'name_en' => 'Профессия 3 (english)',
-        ],['id' => 4,
-            'skill_id' => 2,
-            'cod' => '1124-2-009',
-            'name_ru' => 'Профессия 4 (русский)',
-            'name_kk' => 'Профессия 4 (Қазақша)',
-            'name_en' => 'Профессия 4 (english)',
-        ],['id' => 5,
-            'skill_id' => 3,
-            'cod' => '1124-2-010',
-            'name_ru' => 'Профессия 5 (русский)',
-            'name_kk' => 'Профессия 5 (Қазақша)',
-            'name_en' => 'Профессия 5 (english)',
-        ]];
+        $professions_group = Professions::whereHas('skills', function ($q) use ($skill_id) {
+            $q->where('skills.id', '=', $skill_id);
+        })->pluck('id');
+        $professions = Professions::whereIn('parent_id', $professions_group)->paginate(50, ['*'], 'page', $page);
 
-        $item = collect($data)->where('skill_id', '=', $skill_id);
+        return $professions;
 
-        $item = ['data' => $item];
-
-        return collect($item);
     }
 
 }

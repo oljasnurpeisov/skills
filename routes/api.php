@@ -35,5 +35,15 @@ APIRoute::version('v1', ['prefix' => 'api/app', 'namespace' => 'App\Api\V1\Contr
     APIRoute::group(["prefix" => "user"], function () {
         // Авторизация обучающегося
         APIRoute::post("/login", "UserController@studentLogin");
+        // Редактирование профиля
+        APIRoute::post("/upload-avatar", "UserController@uploadAvatar");
+        // Уведомления
+        APIRoute::get("/notifications", "UserController@getNotifications");
+    });
+    APIRoute::group(["prefix" => "courses"], function () {
+        // Авторы
+        APIRoute::get("/authors", "CourseController@getAuthors");
+        // Оставить отзыв
+        APIRoute::post("/course-rate", "CourseController@courseRate");
     });
 });

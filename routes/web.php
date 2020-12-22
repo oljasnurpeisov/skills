@@ -209,10 +209,10 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             // Фильтр
             Route::post("/course-catalog-filter", "CourseController@courseCatalogFilter");
 
-            Route::post("/getProfessionsByName", "CourseController@getProfessionsByName");
-            Route::post("/getSkillsByData", "CourseController@getSkillsByData");
-            Route::post("/getSkills", "CourseController@getSkills");
-            Route::post("/getAuthorsByName", "CourseController@getAuthorsByName");
+            Route::get("/getProfessionsByName", "CourseController@getProfessionsByName");
+            Route::get("/getSkillsByData", "CourseController@getSkillsByData");
+            Route::get("/getSkills", "CourseController@getSkills");
+            Route::get("/getAuthorsByName", "CourseController@getAuthorsByName");
             //
             Route::get("/getSkills", "CourseController@getCourseSkills");
             Route::get("/getProfessionsBySkills/{skill_id}", "CourseController@getProfessionsBySkills");

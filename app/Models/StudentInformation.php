@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property string|null $name
  * @method static \Illuminate\Database\Eloquent\Builder|StudentInformation whereName($value)
+ * @property-read \App\Models\User $user
  */
 class StudentInformation extends Model
 {
@@ -52,4 +53,8 @@ class StudentInformation extends Model
         return $this->avatar;
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

@@ -29,23 +29,23 @@ class ProfessionsUpdate extends Command
      */
     public function handle()
     {
-        $xml = XmlParser::load(url('https://iac2:Iac2007RBD@www.enbek.kz/feed/resume/sprprf_uoz.xml'));
+        $xml = XmlParser::load(url('https://iac2:Iac2007RBD@www.enbek.kz/feed/resume/cl_prof.xml'));
 
         $professions = $xml->parse([
             'data' => ['uses' => 'row[field(::name=@)]'],
         ]);
 
-        foreach (array_values($professions)[0] as $profession) {
+        foreach ($professions['data'] as $profession) {
+            if ((strlen($profession['Column1']) == 6) || (strlen($profession['Column1']) == 10)) {
 
-            $user = Professions::updateOrCreate([
-                'cod' => $profession['COD']
-            ], [
-                'cod_nkz' => $profession['COD_NKZ'],
-                'name_ru' => $profession['NAME_KR_R'],
-                'name_kk' => $profession['NAME_KR_K'],
-                'text_ru' => $profession['TEXT_R'],
-                'text_kk' => $profession['TEXT_K'],
-            ]);
+                $user = Professions::updateOrCreate([
+                    'code' => $profession['Column1']
+                ], [
+                    'name_ru' => $profession['prof_name'],
+//                    'name_kk' => $profession['NAME_KR_K'],
+
+                ]);
+            }
         }
         return '';
     }

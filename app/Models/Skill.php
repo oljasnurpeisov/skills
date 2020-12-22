@@ -38,6 +38,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Skill whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Skill whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $student_skill
+ * @property-read int|null $student_skill_count
  */
 class Skill extends Model
 {
@@ -47,7 +49,7 @@ class Skill extends Model
 
     public $timestamps = true;
 
-    public function professions() {
+    public function group_professions() {
 
         return $this->belongsToMany(Professions::class,'profession_skills', 'skill_id', 'profession_id');
 
@@ -62,6 +64,13 @@ class Skill extends Model
     public function student_skill() {
 
         return $this->belongsToMany(User::class,'student_skills', 'skill_id', 'user_id');
+
+    }
+
+
+    public function professions() {
+
+        return $this->belongsToMany(Professions::class,'course_skill', 'skill_id', 'profession_id');
 
     }
 
