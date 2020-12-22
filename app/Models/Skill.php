@@ -49,7 +49,7 @@ class Skill extends Model
 
     public $timestamps = true;
 
-    public function professions() {
+    public function group_professions() {
 
         return $this->belongsToMany(Professions::class,'profession_skills', 'skill_id', 'profession_id');
 
@@ -68,7 +68,7 @@ class Skill extends Model
     }
 
 
-    public function group_professions() {
+    public function professions() {
 
         return $this->belongsToMany(Professions::class,'course_skill', 'skill_id', 'profession_id');
 

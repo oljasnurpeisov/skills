@@ -292,9 +292,10 @@ class CourseController extends Controller
         $skill_id = $request->skill_id;
         $page = $request->page ?? 1;
 
-        $professions = Professions::whereHas('skills', function ($q) use ($skill_id) {
+        $professions_group = Professions::whereHas('skills', function ($q) use ($skill_id) {
             $q->where('skills.id', '=', $skill_id);
-        })->paginate(50, ['*'], 'page', $page);
+        })->pluck('id');
+        $professions = Professions::whereIn('parent_id', $professions_group)->paginate(50, ['*'], 'page', $page);
 
         return $professions;
 

@@ -594,8 +594,8 @@
                                         <div class="extendable">
                                             <div class="tags">
                                                 <ul>
-                                                    @foreach($item->skills as $skill)
-                                                        @foreach($skill->professions as $profession)
+                                                    @foreach($item->skills->groupBy('id') as $skill)
+                                                        @foreach($skill[0]->professions as $profession)
                                                             <li>
                                                                 <a href="/{{$lang}}/course-catalog?specialities[]={{$profession->id}}"
                                                                    title="{{$profession->getAttribute('name_'.$lang) ?? $profession->getAttribute('name_ru')}}">{{$profession->getAttribute('name_'.$lang) ?? $profession->getAttribute('name_ru')}}</a>
@@ -619,9 +619,9 @@
                                         <div class="extendable">
                                             <div class="tags">
                                                 <ul>
-                                                    @foreach($item->skills as $skill)
-                                                        <li><a href="/{{$lang}}/course-catalog?skills[]={{$skill->id}}"
-                                                               title="{{$skill->getAttribute('name_'.$lang) ?? $skill->getAttribute('name_ru')}}">{{$skill->getAttribute('name_'.$lang) ?? $skill->getAttribute('name_ru')}}</a>
+                                                    @foreach($item->skills->groupBy('id') as $key => $skill)
+                                                        <li><a href="/{{$lang}}/course-catalog?skills[]={{$key}}"
+                                                               title="{{$skill[0]->getAttribute('name_'.$lang) ?? $skill[0]->getAttribute('name_ru')}}">{{$skill[0]->getAttribute('name_'.$lang) ?? $skill[0]->getAttribute('name_ru')}}</a>
                                                         </li>
                                                     @endforeach
                                                 </ul>

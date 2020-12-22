@@ -55,7 +55,7 @@
                                                     placeholder="{{__('default.pages.courses.choose_professions_title')}}"
                                                     data-method="getProfessionsBySkills" data-maxitems="7"
                                                     class="professions-select" multiple required>
-                                                @foreach($skill[0]->group_professions as $profession)
+                                                @foreach($skill[0]->professions as $profession)
                                                     <option value="{{$profession->id}}"
                                                             selected="selected">{{$profession->getAttribute('name_'.$lang) ?? $profession->getAttribute('name_ru')}}</option>
                                                 @endforeach
