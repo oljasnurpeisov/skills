@@ -26,48 +26,50 @@
                                 <input type="text" name="name" placeholder="" value="{{$item->name}}"
                                        class="input-regular" required>
                             </div>
-                            <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.skills_title')}} *</label>
-                                <div class="input-addon">
-                                    <select name="skills[]" placeholder="{{__('default.pages.courses.choose_skill')}}"
-                                            data-method="getSkillsByData" id="skillsInputTpl" required>
-                                        <option value="{{$item->skills[0]->id}}"
-                                                selected="selected">{{$item->skills[0]->getAttribute('name_'.$lang) ?? $item->skills[0]->getAttribute('name_ru')}}</option>
-                                    </select>
-                                    <div class="addon">
-                                        <span class="required">*</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="removable-items">
-                                @if(!empty($item->skills[1]))
-                                    @php($s = $item->skills->toArray())
-                                    @foreach(array_slice($s, 1) as $skill)
+                            <div class="professions-container" id="professionsContainer">
+                                @foreach($item->skills->groupBy('id') as $key => $skill)
+                                    <div class="professions-group">
                                         <div class="form-group">
+                                            <label class="form-group__label" id="skillsLabel">{{__('default.pages.courses.skill_title')}}</label>
                                             <div class="input-addon">
-                                                <select name="skills[]"
-                                                        placeholder="{{__('default.pages.courses.choose_skill')}}"
-                                                        data-method="getSkillsByData">
-
-                                                    <option value="{{$skill["id"]}}"
-                                                            selected="selected">{{$skill['name_'.$lang] ?? $skill['name_ru']}}
-                                                    </option>
-
+                                                <select name="skills[{{$key}}]" id="skillsSelect"
+                                                        placeholder="{{__('default.pages.courses.choose_skill_title')}}"
+                                                        data-method="getSkills" class="skills-select" required>
+                                                    <option value="{{$key}}"
+                                                            selected="selected">{{$skill[0]['name_'.$lang] ?? $skill[0]['name_ru']}}</option>
                                                 </select>
-                                                <div class="addon">
-                                                    <div class="btn-icon small icon-close"></div>
-                                                </div>
+                                                @if ($loop->first)
+                                                    <div class="addon">
+                                                        <span class="required">*</span>
+                                                    </div>
+                                                @else
+                                                    <div class="addon">
+                                                        <div class="btn-icon icon-close small"></div>
+                                                    </div>
+                                                @endif
                                             </div>
-
                                         </div>
-                                    @endforeach
-                                @endif
+                                        <div class="form-group" style="display: block">
+                                            <label class="form-group__label" id="professionsLabel">{{__('default.pages.courses.professions_title')}}</label>
+                                            <select name="professions[{{$key}}][]" id="professionsSelect"
+                                                    placeholder="{{__('default.pages.courses.choose_professions_title')}}"
+                                                    data-method="getProfessionsBySkills" data-maxitems="7"
+                                                    class="professions-select" multiple required>
+                                                @foreach($skill[0]->group_professions as $profession)
+                                                    <option value="{{$profession->id}}"
+                                                            selected="selected">{{$profession->getAttribute('name_'.$lang) ?? $profession->getAttribute('name_ru')}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                @endforeach
+
                             </div>
                             <div class="text-right pull-up">
-                                <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"
-                                   data-maxcount="9"
-                                   data-duplicate="skillsInputTpl"><span
-                                            class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
+                                <a href="#" title="{{__('default.pages.courses.add_skill')}}" id="addProfessionGroup" data-maxitems="6"
+                                   class="add-btn"
+                                   style="margin-top: 5px"><span
+                                            class="add-btn__title">{{__('default.pages.courses.add_skill')}}</span><span
                                             class="btn-icon small icon-plus"> </span></a>
                             </div>
                             <div class="form-group">
@@ -138,7 +140,8 @@
                                                         </div>
                                                         <div class="dz-size" data-dz-size="">
                                                             @if(file_exists(public_path($item->image)))
-                                                                <strong>{{ $item->image ? round(filesize(public_path($item->image)) / 1024) : 0 }}</strong>KB
+                                                                <strong>{{ $item->image ? round(filesize(public_path($item->image)) / 1024) : 0 }}</strong>
+                                                                KB
                                                             @else
                                                                 <strong>0</strong> KB
                                                             @endif
@@ -444,27 +447,21 @@
 
 @section('scripts')
     <!--Only this page's scripts-->
+    <script src="/assets/js/professions-group.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded', function () {
-            (function ($) {
-                const skillsEl = $('[name="skills[]"]');
-                let paidCheckbox = document.querySelector('#paidCheckbox'),
-                    paidFormgroup = document.querySelector('#paidFormgroup');
+            let paidCheckbox = document.querySelector('#paidCheckbox'),
+                paidFormgroup = document.querySelector('#paidFormgroup');
 
-                skillsEl.each(function () {
-                    let skillsSelect = new ajaxSelect($(this));
-                });
-
-                paidCheckbox.addEventListener('change', function (e) {
-                    if (e.target.checked) {
-                        showEl(paidFormgroup);
-                        paidFormgroup.querySelector('input').setAttribute('required', 'required');
-                    } else {
-                        hideEl(paidFormgroup);
-                        paidFormgroup.querySelector('input').removeAttribute('required');
-                    }
-                })
-            })(jQuery);
+            paidCheckbox.addEventListener('change', function (e) {
+                if (e.target.checked) {
+                    showEl(paidFormgroup);
+                    paidFormgroup.querySelector('input').setAttribute('required', 'required');
+                } else {
+                    hideEl(paidFormgroup);
+                    paidFormgroup.querySelector('input').removeAttribute('required');
+                }
+            });
         });
     </script>
     <!---->

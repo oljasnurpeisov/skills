@@ -67,4 +67,11 @@ class Skill extends Model
 
     }
 
+
+    public function group_professions() {
+
+        return $this->belongsToMany(Professions::class,'course_skill', 'skill_id', 'profession_id');
+
+    }
+
 }

@@ -288,47 +288,16 @@ class CourseController extends Controller
 
     public function getProfessionsBySkills($lang, Request $request)
     {
+
         $skill_id = $request->skill_id;
+        $page = $request->page ?? 1;
 
-        $data = collect([[
-            'id' => 1,
-            'skill_id' => 1,
-            'cod' => '1124-2-006',
-            'name_ru' => 'Профессия 1 (русский)',
-            'name_kk' => 'Профессия 1 (Қазақша)',
-            'name_en' => 'Профессия 1 (english)',
-        ], [
-            'id' => 2,
-            'skill_id' => 1,
-            'cod' => '1124-2-007',
-            'name_ru' => 'Профессия 2 (русский)',
-            'name_kk' => 'Профессия 2 (Қазақша)',
-            'name_en' => 'Профессия 2 (english)',
-        ], ['id' => 3,
-            'skill_id' => 1,
-            'cod' => '1124-2-008',
-            'name_ru' => 'Профессия 3 (русский)',
-            'name_kk' => 'Профессия 3 (Қазақша)',
-            'name_en' => 'Профессия 3 (english)',
-        ], ['id' => 4,
-            'skill_id' => 2,
-            'cod' => '1124-2-009',
-            'name_ru' => 'Профессия 4 (русский)',
-            'name_kk' => 'Профессия 4 (Қазақша)',
-            'name_en' => 'Профессия 4 (english)',
-        ], ['id' => 5,
-            'skill_id' => 3,
-            'cod' => '1124-2-010',
-            'name_ru' => 'Профессия 5 (русский)',
-            'name_kk' => 'Профессия 5 (Қазақша)',
-            'name_en' => 'Профессия 5 (english)',
-        ]]);
+        $professions = Professions::whereHas('skills', function ($q) use ($skill_id) {
+            $q->where('skills.id', '=', $skill_id);
+        })->paginate(50, ['*'], 'page', $page);
 
-        $item = $data->where('skill_id', '=', $skill_id);
+        return $professions;
 
-        return response()->json([
-            'data' => array_values($item->toArray())
-        ]);
     }
 
 }

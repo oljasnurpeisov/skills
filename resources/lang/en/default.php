@@ -95,6 +95,11 @@ return [
 
             'course_name' => 'Название курса',
             'skills_title' => 'Навыки (мин. 1 навык)',
+            'skill_title' => 'Навык',
+            'choose_skill_title' => 'Выберите навык',
+            'professions_title' => 'Профессии (мин. 1 профессия)',
+            'choose_professions_title' => 'Выберите профессии',
+            'add_skill' => 'Добавить навык',
             'course_lang' => 'Язык курса',
             'choose_lang' => 'Выберите язык',
             'is_paid' => 'Платный',

@@ -38,9 +38,11 @@ class CourseController extends Controller
     public function storeCourse(Request $request)
     {
 
+
         if ($request->is_paid and $request->cost > 0) {
             if ((Auth::user()->payment_info->merchant_login != null) and (Auth::user()->payment_info->merchant_password != null)) {
 
+//                return $request->professions[0][0];
                 $item = new Course;
                 $item->name = $request->name;
                 $item->author_id = Auth::user()->id;
@@ -113,7 +115,11 @@ class CourseController extends Controller
 
                 $item_attachments->save();
 
-                $item->skills()->sync($request->skills, false);
+                foreach ($request->skills as $key => $skill) {
+                    foreach ($request->professions[$key] as $k => $profession) {
+                        $item->skills()->attach([$skill => ['profession_id' => $profession]]);
+                    }
+                }
 
                 return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.create_request_message'));
             }
@@ -191,7 +197,11 @@ class CourseController extends Controller
 
             $item_attachments->save();
 
-            $item->skills()->sync($request->skills, false);
+            foreach ($request->skills as $key => $skill) {
+                foreach ($request->professions[$key] as $k => $profession) {
+                    $item->skills()->attach([$skill => ['profession_id' => $profession]]);
+                }
+            }
 
             return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.create_request_message'));
         }
@@ -440,7 +450,12 @@ class CourseController extends Controller
 
             $item->image = $request->image;
         }
-        $item->skills()->sync($request->skills);
+        $item->skills()->detach();
+        foreach ($request->skills as $key => $skill) {
+            foreach ($request->professions[$key] as $k => $profession) {
+                $item->skills()->attach([$skill => ['profession_id' => $profession]]);
+            }
+        }
         $item->save();
 
         $item_attachments = CourseAttachments::where('course_id', '=', $item->id)->first();
@@ -586,15 +601,15 @@ class CourseController extends Controller
     {
         if ($item->previous_status === Course::draft) {
             $item->status = Course::draft;
-        }else{
+        } else {
             $item->status = Course::onCheck;
         }
 
         $item->save();
 
-        if ($item->status == Course::draft){
+        if ($item->status == Course::draft) {
             return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.reestablish_request_message'));
-        }else{
+        } else {
             return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('default.pages.courses.publish_request_message'));
         }
 
