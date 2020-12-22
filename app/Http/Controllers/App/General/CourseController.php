@@ -216,6 +216,7 @@ class CourseController extends Controller
         $page = $request->page ?? 1;
 
         $professions = Professions::where('name_' . $lang, 'like', '%' . $profession_name . '%')
+            ->where('parent_id', '!=', null)
             ->orderBy('name_' . $lang, 'asc')
             ->paginate(50, ['*'], 'page', $page);
 
@@ -229,13 +230,14 @@ class CourseController extends Controller
         $page = $request->page ?? 1;
 
         if ($professions != []) {
-            $skills = $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')->whereHas('professions', function ($q) use ($professions) {
-                if ($professions != []) {
-                    $q->whereIn('professions.id', $professions);
-                }
-            })
-                ->orderBy('name_' . $lang, 'asc')
-                ->paginate(50, ['*'], 'page', $page);
+            $page = $request->page ?? 1;
+
+            $professions_group = Professions::whereIn('id', $professions)->pluck('parent_id');
+            $skills = Skill::whereHas('group_professions', function ($q) use ($professions_group) {
+                $q->whereIn('profession_skills.profession_id', $professions_group);
+            })->paginate(50, ['*'], 'page', $page);
+
+            return $skills;
         } else {
             $skills = Skill::where('name_' . $lang, 'like', '%' . $skill_name . '%')
                 ->orderBy('name_' . $lang, 'asc')
