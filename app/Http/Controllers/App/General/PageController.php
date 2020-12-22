@@ -35,20 +35,21 @@ class PageController extends Controller
             })->pluck('id')->toArray();
 
             // Получить список навыков из списка профессий
-            $skills_professions = Skill::whereHas('professions', function ($query) use ($profession_skills) {
+            $skills_group_professions = Skill::whereHas('group_professions', function ($query) use ($profession_skills) {
                 $query->whereIn('profession_id', $profession_skills);
             })->pluck('id')->toArray();
 
             // Получить список курсов из списка навыков профессий
-            $courses = Course::where('status', '=', Course::published)->whereHas('skills', function ($query) use ($skills_professions) {
-                $query->whereIn('skill_id', $skills_professions);
+            $courses = Course::where('status', '=', Course::published)->whereHas('skills', function ($query) use ($skills_group_professions) {
+                $query->whereIn('skill_id', $skills_group_professions);
             })->limit(12)->get();
 
-            $skills = Skill::whereIn('id', $skills_professions)->limit(18)->get();
+            $skills = Skill::whereIn('id', $skills_group_professions)->limit(18)->get();
 
         }
 
         $popular_courses = Course::withCount('course_members')->orderBy('course_members_count', 'desc')->where('status', '=', Course::published)->limit(8)->get();
+
         $popular_authors = User::whereHas('roles', function ($q) {
             $q->where('slug', '=', 'author');
         })->whereHas('author_info', function ($q) {

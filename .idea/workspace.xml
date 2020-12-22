@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/CourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/PageController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Course.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Course.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -288,14 +288,7 @@
       <workItem from="1608309224752" duration="27525000" />
       <workItem from="1608384327460" duration="6533000" />
       <workItem from="1608392290447" duration="61730000" />
-      <workItem from="1608520684988" duration="82101000" />
-    </task>
-    <task id="LOCAL-00120" summary="- add main roles">
-      <created>1607506069927</created>
-      <option name="number" value="00120" />
-      <option name="presentableId" value="LOCAL-00120" />
-      <option name="project" value="LOCAL" />
-      <updated>1607506069927</updated>
+      <workItem from="1608520684988" duration="86106000" />
     </task>
     <task id="LOCAL-00121" summary="- add course rates">
       <created>1607507335192</created>
@@ -633,14 +626,20 @@
       <option name="project" value="LOCAL" />
       <updated>1608637787623</updated>
     </task>
-    <option name="localTasksCounter" value="169" />
+    <task id="LOCAL-00169" summary="- update course catalog filter">
+      <created>1608666410303</created>
+      <option name="number" value="00169" />
+      <option name="presentableId" value="LOCAL-00169" />
+      <option name="project" value="LOCAL" />
+      <updated>1608666410303</updated>
+    </task>
+    <option name="localTasksCounter" value="170" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- minor fix&#10;- add authors report page" />
     <MESSAGE value="- add course report &#10;- add student report" />
     <MESSAGE value="- add for authors fix&#10;- add reports (unfinished)" />
     <MESSAGE value="- update preview certificates&#10;- update scripts &#10;- update statistic page&#10;- fix auth modal on faq page&#10;- update my certificates page" />
@@ -665,7 +664,8 @@
     <MESSAGE value="- reports fix&#10;- update scripts &#10;- add profession groups in create and update course pages&#10;- minor fix&#10;- change getSkills and getProfessions methods" />
     <MESSAGE value="- fix group professions method&#10;- update course view page" />
     <MESSAGE value="- update filter professions and skills" />
-    <option name="LAST_COMMIT_MESSAGE" value="- update filter professions and skills" />
+    <MESSAGE value="- update course catalog filter" />
+    <option name="LAST_COMMIT_MESSAGE" value="- update course catalog filter" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -693,11 +693,11 @@
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1608568903808" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608637782356">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608666399627">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608637782356" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608666399627" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

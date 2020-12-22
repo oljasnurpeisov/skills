@@ -161,9 +161,10 @@ class Course extends Model
 
     public function professionsBySkills()
     {
-        $professions = Professions::whereHas('skills', function ($q) {
+        $professions_group = Professions::whereHas('skills', function ($q){
             $q->whereIn('skills.id', $this->skills->pluck('id')->toArray());
-        });
+        })->pluck('id');
+        $professions = Professions::whereIn('parent_id', $professions_group)->get();
 
         return $professions;
     }
