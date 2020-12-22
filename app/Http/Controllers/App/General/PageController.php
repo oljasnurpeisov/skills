@@ -51,7 +51,9 @@ class PageController extends Controller
         $popular_courses = Course::withCount('course_members')->orderBy('course_members_count', 'desc')->where('status', '=', Course::published)->limit(8)->get();
         $popular_authors = User::whereHas('roles', function ($q) {
             $q->where('slug', '=', 'author');
-        })->where('email_verified_at', '!=', null)->where('is_activate', '=', true)->with('courses')->get();
+        })->whereHas('author_info', function ($q) {
+            $q->where('name', '!=', null);
+        })->where('email_verified_at', '!=', null)->with('courses')->get();
 
         // Получить количество записавшихся на курсы
         foreach ($popular_authors as $author) {
@@ -151,7 +153,7 @@ class PageController extends Controller
             }
         }
         return view("app.pages.general.faq", [
-            'items' => json_decode($items->getAttribute('data_'.$lang), true)
+            'items' => json_decode($items->getAttribute('data_' . $lang), true)
         ]);
     }
 
