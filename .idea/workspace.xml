@@ -4,11 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- update recommended courses">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/PageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Course.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Course.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exports/CourseReportExport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exports/CourseReportExport.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/CourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/LessonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/LessonController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/StudentCourse.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/StudentCourse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_catalog.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_catalog.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/student/lesson/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/student/lesson/view.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -288,21 +293,7 @@
       <workItem from="1608309224752" duration="27525000" />
       <workItem from="1608384327460" duration="6533000" />
       <workItem from="1608392290447" duration="61730000" />
-      <workItem from="1608520684988" duration="86106000" />
-    </task>
-    <task id="LOCAL-00121" summary="- add course rates">
-      <created>1607507335192</created>
-      <option name="number" value="00121" />
-      <option name="presentableId" value="LOCAL-00121" />
-      <option name="project" value="LOCAL" />
-      <updated>1607507335192</updated>
-    </task>
-    <task id="LOCAL-00122" summary="- update create user on admin panel">
-      <created>1607509923639</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1607509923639</updated>
+      <workItem from="1608520684988" duration="95959000" />
     </task>
     <task id="LOCAL-00123" summary="- add paginate for rates&#10;- update header">
       <created>1607511873314</created>
@@ -633,15 +624,27 @@
       <option name="project" value="LOCAL" />
       <updated>1608666410303</updated>
     </task>
-    <option name="localTasksCounter" value="170" />
+    <task id="LOCAL-00170" summary="- update recommended courses">
+      <created>1608671380731</created>
+      <option name="number" value="00170" />
+      <option name="presentableId" value="LOCAL-00170" />
+      <option name="project" value="LOCAL" />
+      <updated>1608671380731</updated>
+    </task>
+    <task id="LOCAL-00171" summary="- add social network links">
+      <created>1608695860849</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1608695860856</updated>
+    </task>
+    <option name="localTasksCounter" value="172" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add course report &#10;- add student report" />
-    <MESSAGE value="- add for authors fix&#10;- add reports (unfinished)" />
     <MESSAGE value="- update preview certificates&#10;- update scripts &#10;- update statistic page&#10;- fix auth modal on faq page&#10;- update my certificates page" />
     <MESSAGE value="- update chart&#10;- minor fix" />
     <MESSAGE value="- add any reports" />
@@ -665,7 +668,9 @@
     <MESSAGE value="- fix group professions method&#10;- update course view page" />
     <MESSAGE value="- update filter professions and skills" />
     <MESSAGE value="- update course catalog filter" />
-    <option name="LAST_COMMIT_MESSAGE" value="- update course catalog filter" />
+    <MESSAGE value="- update recommended courses" />
+    <MESSAGE value="- add social network links" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add social network links" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -693,11 +698,11 @@
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1608568903808" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608666399627">
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608703599301">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608666399627" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608703599301" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -714,11 +719,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1608527918275" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1608637790586">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1608695041620">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995349134" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1608637790586" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1608695041620" />
     <state x="572" y="146" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1605561054285">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -732,10 +737,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="425" y="187" width="672" height="677" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1608568609712" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1608545652513">
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1608702850490">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995084536" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1608545652513" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1608702850490" />
   </component>
 </project>

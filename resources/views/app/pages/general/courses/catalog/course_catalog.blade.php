@@ -3,10 +3,11 @@
 @section('content')
     <main class="main">
 
-
-        <a href="#" title="" class="banner">
+        @if($request->page == 1)
+        <a title="" class="banner">
             <img src="/assets/img/banner.jpg" alt="">
         </a>
+        @endif
 
         <section class="plain">
             <div class="container">

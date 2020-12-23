@@ -60,8 +60,17 @@ class CourseController extends Controller
 
         // Сортировка по названию
         if ($term) {
-            $query = $query->whereHas('courses', function ($q) use ($term) {
-                $q->where('courses.name', 'like', '%' . $term . '%');
+            $query = $query->where(function ($q) use ($term) {
+                $q->whereHas('courses', function ($q) use ($term) {
+                    $q->where('courses.name', 'like', '%' . $term . '%');
+                });
+                $q->orWhereHas('courses.user', function ($s) use ($term) {
+                    $s->where('company_name', 'like', '%' . $term . '%');
+                    $s->orWhereHas('author_info', function ($k) use ($term) {
+                        $k->where('name', 'like', '%' . $term . '%');
+                        $k->orWhere('surname', 'like', '%' . $term . '%');
+                    });
+                });
             });
         }
         // Сортировка по профессиям

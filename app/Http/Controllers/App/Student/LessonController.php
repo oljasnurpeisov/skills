@@ -209,13 +209,17 @@ class LessonController extends Controller
     {
 
         if (!empty($lesson->lesson_student)) {
-            if ($lesson->lesson_student->is_access == true) {
-                return view("app.pages.student.lesson.test_view_lesson", [
-                    "item" => $course,
-                    "lesson" => $lesson
-                ]);
-            } else {
-                return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
+            if ($lesson->lesson_student->is_finished != true) {
+                if ($lesson->lesson_student->is_access == true) {
+                    return view("app.pages.student.lesson.test_view_lesson", [
+                        "item" => $course,
+                        "lesson" => $lesson
+                    ]);
+                } else {
+                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
+                }
+            }else{
+                return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.test_finished_warning'));
             }
         } else {
             return redirect('/' . $lang . '/course-catalog')->with('error', __('default.pages.lessons.access_denied_message'));

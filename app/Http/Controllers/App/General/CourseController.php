@@ -34,7 +34,16 @@ class CourseController extends Controller
 
         // Сортировка по названию
         if ($term) {
-            $query = $query->where('name', 'like', '%' . $term . '%');
+            $query = $query->where(function ($q) use ($term) {
+                $q->where('name', 'like', '%' . $term . '%');
+                $q->orWhereHas('user', function ($s) use ($term) {
+                    $s->where('company_name', 'like', '%' . $term . '%');
+                    $s->orWhereHas('author_info', function ($k) use ($term) {
+                        $k->where('name', 'like', '%' . $term . '%');
+                        $k->orWhere('surname', 'like', '%' . $term . '%');
+                    });
+                });
+            });
         }
         // Сортировка по языку
         if ($lang_ru == 1 and $lang_kk == null) {
