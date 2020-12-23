@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseRate;
+use App\Models\Lesson;
 use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCourse;
@@ -142,14 +143,24 @@ class CourseController extends Controller
         $items = $query->paginate();
 
         foreach ($items as $key => $item) {
-            $lessons_count = $item->course->lessons()->count();
-            $finished_lessons_count = $item->course->lessons()->whereHas('student_lessons', function ($q) {
-                $q->where('student_lesson.is_finished', '=', true);
-            })->get()->count();
+//            $lessons_count = $item->course->lessons()->count();
+//            $finished_lessons_count = $item->course->lessons()->whereHas('student_lessons', function ($q) {
+//                $q->where('student_lesson.is_finished', '=', true);
+//            })->get()->count();
+
+            $lessonsCount = Lesson::whereCourseId($item->course_id)
+                ->whereIn('type', [1, 2])
+                ->count();
+            $finishedLessonsCount = Lesson::whereCourseId($item->course_id)
+                ->whereIn('type', [1, 2])
+                ->whereHas('student_lessons', function ($q) {
+                    $q->where('student_lesson.is_finished', '=', true);
+                })
+                ->count();
 
             // Добавление новых полей в коллекцию
-            $item->lessons_count = $lessons_count;
-            $item->finished_lessons_count = $finished_lessons_count;
+            $item->lessons_count = $lessonsCount;
+            $item->finished_lessons_count = $finishedLessonsCount;
         }
 
         return view("app.pages.student.courses.my_courses", [

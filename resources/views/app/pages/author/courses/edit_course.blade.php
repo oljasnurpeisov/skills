@@ -66,7 +66,7 @@
 
                             </div>
                             <div class="text-right pull-up">
-                                <a href="#" title="{{__('default.pages.courses.add_skill')}}" id="addProfessionGroup" data-maxitems="6"
+                                <a href="#" title="{{__('default.pages.courses.add_skill')}}" id="addProfessionGroup" data-maxitems="7"
                                    class="add-btn"
                                    style="margin-top: 5px"><span
                                             class="add-btn__title">{{__('default.pages.courses.add_skill')}}</span><span
