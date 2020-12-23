@@ -4,16 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- update recommended courses">
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/static_pages/course_catalog.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exports/CourseReportExport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exports/CourseReportExport.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/AjaxUploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AjaxUploadController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/PageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/PageController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/General/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/App/Student/LessonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/App/Student/LessonController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/StudentCourse.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/StudentCourse.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/layout/default/components/navigation/left.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/layout/default/components/navigation/left.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/static_pages/for_authors.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/static_pages/for_authors.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/v2/pages/static_pages/main.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/v2/pages/static_pages/main.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_catalog.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/general/courses/catalog/course_catalog.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/student/lesson/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/student/lesson/view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/for_authors.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/for_authors.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -293,14 +297,7 @@
       <workItem from="1608309224752" duration="27525000" />
       <workItem from="1608384327460" duration="6533000" />
       <workItem from="1608392290447" duration="61730000" />
-      <workItem from="1608520684988" duration="95959000" />
-    </task>
-    <task id="LOCAL-00123" summary="- add paginate for rates&#10;- update header">
-      <created>1607511873314</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1607511873314</updated>
+      <workItem from="1608520684988" duration="104516000" />
     </task>
     <task id="LOCAL-00124" summary="- update tinymce method">
       <created>1607513060239</created>
@@ -638,14 +635,20 @@
       <option name="project" value="LOCAL" />
       <updated>1608695860856</updated>
     </task>
-    <option name="localTasksCounter" value="172" />
+    <task id="LOCAL-00172" summary="- minor fix report&#10;- update courses search&#10;- update test access">
+      <created>1608704414913</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1608704414913</updated>
+    </task>
+    <option name="localTasksCounter" value="173" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- update preview certificates&#10;- update scripts &#10;- update statistic page&#10;- fix auth modal on faq page&#10;- update my certificates page" />
     <MESSAGE value="- update chart&#10;- minor fix" />
     <MESSAGE value="- add any reports" />
     <MESSAGE value="- minor fix&#10;- add service api methods" />
@@ -670,7 +673,8 @@
     <MESSAGE value="- update course catalog filter" />
     <MESSAGE value="- update recommended courses" />
     <MESSAGE value="- add social network links" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add social network links" />
+    <MESSAGE value="- minor fix report&#10;- update courses search&#10;- update test access" />
+    <option name="LAST_COMMIT_MESSAGE" value="- minor fix report&#10;- update courses search&#10;- update test access" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -693,16 +697,16 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="547" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1608018037579" />
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1608568903808">
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1608716209232">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1608568903808" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608703599301">
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1608716209232" />
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608704408732">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608703599301" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608704408732" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -733,10 +737,10 @@
     </state>
     <state x="597" y="23" width="579" height="801" key="find.popup/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991104963" />
     <state x="597" y="23" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1608549875764" />
-    <state x="425" y="187" width="672" height="677" key="run.anything.popup" timestamp="1608568609712">
+    <state x="425" y="187" width="672" height="677" key="run.anything.popup" timestamp="1608716593014">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" width="672" height="677" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1608568609712" />
+    <state x="425" y="187" width="672" height="677" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1608716593014" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1608702850490">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

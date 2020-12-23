@@ -3,10 +3,10 @@
 @section('content')
     <main class="main">
 
-        @if($request->page == 1)
-        <a title="" class="banner">
-            <img src="/assets/img/banner.jpg" alt="">
-        </a>
+        @if($request->page == 1 or !$request->page)
+            <a href="{{json_decode($content->getAttribute('data_'.$lang))->course_catalog->link}}" title="" class="banner">
+                <img src="{{json_decode($content->getAttribute('data_'.$lang))->course_catalog->image}}" alt="">
+            </a>
         @endif
 
         <section class="plain">

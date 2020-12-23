@@ -4,11 +4,11 @@
     <main class="main">
 
 
-        <section class="opening opening--author">
+        <section class="opening opening--author" style="background: url({{json_decode($content->getAttribute('data_'.$lang))->for_authors_banner->image}})">
             <div class="container">
                 <div class="text-center">
-                    <h1>Меняйте мир к лучшему</h1>
-                    <h2>Публикуйте курсы онлайн и зарабатывайте деньги, обучая людей по всему миру</h2>
+                    <h1>{{json_decode($content->getAttribute('data_'.$lang))->for_authors_banner->title}}</h1>
+                    <h2>{{json_decode($content->getAttribute('data_'.$lang))->for_authors_banner->teaser}}</h2>
 
                     @auth
                         @if(Auth::user()->hasRole('author'))

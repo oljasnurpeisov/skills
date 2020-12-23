@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseRate;
 use App\Models\Lesson;
+use App\Models\Page;
 use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCourse;
@@ -127,12 +128,15 @@ class CourseController extends Controller
         }
 
         $items = $query->paginate(6);
+        // Контент
+        $content = Page::wherePageAlias('course_catalog')->first();
         return view("app.pages.general.courses.catalog.course_catalog", [
             "items" => $items,
             "request" => $request,
             "professions" => $professions ?? null,
             "skills" => $skills ?? null,
-            "authors" => $authors ?? null
+            "authors" => $authors ?? null,
+            "content" => $content
         ]);
     }
 

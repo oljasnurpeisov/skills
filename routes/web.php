@@ -23,6 +23,7 @@ Route::group(["namespace" => "Admin"], function () {
     Route::post('/ajax_upload_file', 'AjaxUploadController@ajax_upload_file');
 
     Route::post('/ajaxUploadImage', 'AjaxUploadController@ajaxUploadPic');
+    Route::post('/ajaxUploadImageContent', 'AjaxUploadController@ajaxUploadPicContent');
     Route::post('/ajaxUploadFile', 'AjaxUploadController@ajaxUploadFile');
 
     // Тест для Айтана
@@ -120,6 +121,9 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post('/static-pages/update-faq-view/{item}/{key}', 'PageController@update_faq_theme');
                 Route::get('/static-pages/faq', 'PageController@faq');
                 Route::delete('/static-pages/delete-faq-theme/{key}', 'PageController@faq_delete_theme');
+                // Каталог курсов
+                Route::get('/static-pages/course-catalog', 'PageController@courseCatalog');
+                Route::post("/static-pages/course-catalog-update", "PageController@courseCatalogUpdate");
             });
             // Диалоги
             Route::group(['middleware' => 'check.permission:admin.tech_support'], static function () {

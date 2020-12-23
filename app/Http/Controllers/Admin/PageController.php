@@ -26,8 +26,11 @@ class PageController extends Controller
         foreach ($languages as $language) {
 
             $data = [
-                "step_by_step" => [],
-                "for_authors" => ['description' => $request['for_authors_description_' . $language],
+                'main_banner' => ['title' => $request['banner_title_' . $language],
+                    'teaser' => $request['banner_teaser_' . $language],
+                    'image' => $request['avatar']],
+                'step_by_step' => [],
+                'for_authors' => ['description' => $request['for_authors_description_' . $language],
                     'btn_title' => $request['for_authors_btn_title_' . $language]]
             ];
 
@@ -83,6 +86,9 @@ class PageController extends Controller
                 "for_authors" => ['description' => $request['for_authors_description_' . $language],
                     'btn_title' => $request['for_authors_btn_title_' . $language]],
                 "advantages" => [],
+                "for_authors_banner" => ['title' => $request['banner_title_' . $language],
+                'teaser' => $request['banner_teaser_' . $language],
+                'image' => $request['avatar']]
             ];
 
             foreach ($request['steps_' . $language] as $key => $step) {
@@ -152,30 +158,30 @@ class PageController extends Controller
 
         foreach ($languages as $language) {
 
-            if ($request['theme_name_' . $language] != null){
+            if ($request['theme_name_' . $language] != null) {
 
-            $data = [
-                "name" => $request['theme_name_' . $language],
-            ];
+                $data = [
+                    "name" => $request['theme_name_' . $language],
+                ];
 
 
-            foreach ($request['tab_name_' . $language] as $key => $step) {
-                if (isset($request['tab_name_' . $language][$key])) {
-                    $data['tabs'][] = array(
-                        'name' => $request['tab_name_' . $language][$key],
-                        'description' => $request['tab_description_' . $language][$key],
-                    );
+                foreach ($request['tab_name_' . $language] as $key => $step) {
+                    if (isset($request['tab_name_' . $language][$key])) {
+                        $data['tabs'][] = array(
+                            'name' => $request['tab_name_' . $language][$key],
+                            'description' => $request['tab_description_' . $language][$key],
+                        );
+                    }
                 }
-            }
-            $data_array = json_decode($item['data_' . $language]);
-            $data_array[] = $data;
+                $data_array = json_decode($item['data_' . $language]);
+                $data_array[] = $data;
 
-            $item['data_' . $language] = $data_array;
+                $item['data_' . $language] = $data_array;
             }
         }
         $item->save();
 
-        return redirect('/'.$lang.'/admin/static-pages/faq-index')->with('status', __('admin.notifications.record_stored'));
+        return redirect('/' . $lang . '/admin/static-pages/faq-index')->with('status', __('admin.notifications.record_stored'));
 
     }
 
@@ -191,7 +197,6 @@ class PageController extends Controller
 
     public function update_faq_theme($lang, Request $request, Page $item, $theme_key)
     {
-//        return $request;
         $languages = ['ru', 'kk', 'en'];
 
         foreach ($languages as $language) {
@@ -200,7 +205,7 @@ class PageController extends Controller
                 "name" => $request['theme_name_' . $language],
             ];
 
-            if (!empty($request['tab_name_' . $language])){
+            if (!empty($request['tab_name_' . $language])) {
                 foreach ($request['tab_name_' . $language] as $key => $step) {
                     if (isset($request['tab_name_' . $language][$key])) {
                         $data['tabs'][] = array(
@@ -209,7 +214,7 @@ class PageController extends Controller
                         );
                     }
                 }
-        }
+            }
             $data_array = json_decode($item['data_' . $language]);
             $data_array[$theme_key] = $data;
 
@@ -217,7 +222,7 @@ class PageController extends Controller
         }
         $item->save();
 
-        return redirect('/'.$lang.'/admin/static-pages/faq-index')->with('status', __('admin.notifications.record_updated'));
+        return redirect('/' . $lang . '/admin/static-pages/faq-index')->with('status', __('admin.notifications.record_updated'));
 
     }
 
@@ -235,7 +240,35 @@ class PageController extends Controller
         }
         $item->save();
 
-//        return $data_array;
         return redirect()->back()->with('status', __('admin.notifications.record_deleted'));
+    }
+
+    public function courseCatalog()
+    {
+        $item = Page::wherePageAlias('course_catalog')->first();
+
+        return view('admin.v2.pages.static_pages.course_catalog', [
+            'item' => $item,
+        ]);
+    }
+
+    public function courseCatalogUpdate(Request $request)
+    {
+        $languages = ['ru', 'kk', 'en'];
+        $item = Page::wherePageAlias('course_catalog')->first();
+
+        foreach ($languages as $language) {
+
+            $data = [
+                'course_catalog' => ['link' => $request['image_link_' . $language],
+                    'image' => $request['avatar']]
+            ];
+
+            $item['data_' . $language] = json_encode($data);
+        }
+
+        $item->save();
+
+        return back()->with('status', __('admin.notifications.update_success'));
     }
 }

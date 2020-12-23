@@ -68,6 +68,9 @@
                     <li>
                         <a href="/{{$lang}}/admin/static-pages/faq-index">{{ __('admin.pages.static_pages.faq') }}</a>
                     </li>
+                    <li>
+                        <a href="/{{$lang}}/admin/static-pages/course-catalog">{{ __('admin.pages.static_pages.course_catalog') }}</a>
+                    </li>
                 </ul>
             </li>
             @endhasPermission

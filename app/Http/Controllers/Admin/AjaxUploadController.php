@@ -80,9 +80,24 @@ class AjaxUploadController extends Controller
         $imageName = time() . '.' . $file->getClientOriginalExtension();
         $file->move(public_path('images/profile_images/'), $imageName);
 
-//        Buffet::log('upload_img', '', '', $imageName);
-
         return Response::json(array('location' => config('APP_URL') . '/images/profile_images/' . $imageName));
+    }
+
+    public function ajaxUploadPicContent(Request $request)
+    {
+        if ($request->header('Origin') !== env('APP_URL')) {
+            return Response::json(array('success' => false));
+        }
+
+        $this->validate($request, [
+            "file" => "image|required|max:$this->imageMaxSize|mimes:png,jpg,jpeg"
+        ]);
+
+        $file = $request->file;
+        $imageName = time() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('images/content_images/'), $imageName);
+
+        return Response::json(array('location' => config('APP_URL') . '/images/content_images/' . $imageName));
     }
 
     public function ajaxUploadFile(Request $request)
