@@ -235,10 +235,10 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->user->company_name }}</td>
                         <td>{{implode(', ', array_filter($item->skills->pluck('name_'.$lang)->toArray())) ?: implode(', ', $item->skills->pluck('name_ru')->toArray())}}</td>
-                        @if(count($item->professionsBySkills()->pluck('id')->toArray())<= 0)
+                        @if(count($item->groupProfessionsBySkills()->pluck('id')->toArray())<= 0)
                             <td>-</td>
                         @else
-                            <td>{{implode(', ', array_filter($item->professionsBySkills()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->professionsBySkills()->pluck('name_ru')->toArray()))}}</td>
+                            <td>{{implode(', ', array_filter($item->groupProfessionsBySkills()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->groupProfessionsBySkills()->pluck('name_ru')->toArray()))}}</td>
                         @endif
                         <td>{{round($item->rate->pluck('rate')->avg() ?? 0, 1)}}</td>
                         <td>{{__('default.pages.reporting.statuses.'.$item->status)}}</td>

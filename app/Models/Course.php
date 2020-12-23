@@ -169,6 +169,15 @@ class Course extends Model
         return $professions;
     }
 
+    public function groupProfessionsBySkills()
+    {
+        $professions_group = Professions::whereHas('skills', function ($q){
+            $q->whereIn('skills.id', $this->skills->pluck('id')->toArray());
+        })->get();
+
+        return $professions_group;
+    }
+
     public function studentCertificate() {
 
         $certificate = StudentCertificate::where('course_id', '=', $this->id)
