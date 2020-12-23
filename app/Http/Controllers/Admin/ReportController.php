@@ -599,10 +599,10 @@ class ReportController extends Controller
             // Навыки
             $skills = implode(', ', array_filter($i->skills->pluck('name_' . $lang)->toArray())) ?: implode(', ', $i->skills->pluck('name_ru')->toArray());
             // Группа профессий
-            if (count($i->professionsBySkills()->pluck('id')->toArray()) <= 0) {
+            if (count($i->groupProfessionsBySkills()->pluck('id')->toArray()) <= 0) {
                 $professions = '-';
             } else {
-                $professions = implode(', ', array_filter($i->professionsBySkills()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professionsBySkills()->pluck('name_ru')->toArray()));
+                $professions = implode(', ', array_filter($i->groupProfessionsBySkills()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->groupProfessionsBySkills()->pluck('name_ru')->toArray()));
             }
             // Рейтинг курса
             $rate = round($i->rate->pluck('rate')->avg() ?? 0, 1);
