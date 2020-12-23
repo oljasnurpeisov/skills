@@ -14,6 +14,7 @@ use App\Models\StudentLesson;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class CourseController extends Controller
@@ -65,26 +66,26 @@ class CourseController extends Controller
             }
         }
         // Сортировка курса
-        if ($course_sort) {
-            // Сортировка Рейтинг - по возрастанию
-            if ($course_sort == 'sort_by_rate_low') {
-                $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
-                    ->select('course_rate.rate as course_rate', 'courses.*')
-                    ->orderBy('course_rate.rate', 'asc');
-                // Сортировка Рейтинг - по убыванию
-            } else if ($course_sort == 'sort_by_rate_low') {
-                $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
-                    ->select('course_rate.rate as course_rate', 'courses.*')
-                    ->orderBy('course_rate.rate', 'desc');
-                // Сортировка Стоимость - по убыванию
-            } else if ($course_sort == 'sort_by_rate_high') {
+        switch ($course_sort){
+            case 'sort_by_rate_high':
+                $query->withCount(['rate as average_rate' => function ($query) {
+                    $query->select(DB::raw('round(avg(rate),1)'));
+                }])->orderBy('average_rate', 'desc');
+                break;
+            case 'sort_by_rate_low':
+                $query->withCount(['rate as average_rate' => function ($query) {
+                    $query->select(DB::raw('round(avg(rate),1)'));
+                }])->orderBy('average_rate', 'asc');
+                break;
+            case 'sort_by_cost_high':
                 $query->orderBy('cost', 'desc');
-                // Сортировка Стоимость - по возрастанию
-            } else if ($course_sort == 'sort_by_cost_low') {
+                break;
+            case 'sort_by_cost_low':
                 $query->orderBy('cost', 'asc');
-            }
-        } else {
-            $query->orderBy('created_at', 'desc');
+                break;
+            default:
+                $query->orderBy('created_at', 'desc');
+                break;
         }
         // Рейтинг от
         if ($min_rating) {
