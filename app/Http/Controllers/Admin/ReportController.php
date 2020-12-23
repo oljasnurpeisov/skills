@@ -600,9 +600,15 @@ class ReportController extends Controller
             $skills = implode(', ', array_filter($i->skills->pluck('name_' . $lang)->toArray())) ?: implode(', ', $i->skills->pluck('name_ru')->toArray());
             // Группа профессий
             if (count($i->groupProfessionsBySkills()->pluck('id')->toArray()) <= 0) {
+                $group_professions = '-';
+            } else {
+                $group_professions = implode(', ', array_filter($i->groupProfessionsBySkills()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->groupProfessionsBySkills()->pluck('name_ru')->toArray()));
+            }
+            // Группа профессий
+            if (count($i->professionsBySkills()->pluck('id')->toArray()) <= 0) {
                 $professions = '-';
             } else {
-                $professions = implode(', ', array_filter($i->groupProfessionsBySkills()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->groupProfessionsBySkills()->pluck('name_ru')->toArray()));
+                $professions = implode(', ', array_filter($i->professionsBySkills()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professionsBySkills()->pluck('name_ru')->toArray()));
             }
             // Рейтинг курса
             $rate = round($i->rate->pluck('rate')->avg() ?? 0, 1);
@@ -623,7 +629,7 @@ class ReportController extends Controller
                 $students_qualification_count = '-';
             }
 
-            $newElement = ['name' => $name, 'author_name' => $author_name, 'skills' => $skills,
+            $newElement = ['name' => $name, 'author_name' => $author_name, 'skills' => $skills, 'group_professions' => $group_professions,
                 'professions' => $professions, 'rate' => $rate, 'status' => $status, 'quota_access' => $quota_access,
                 'is_paid' => $is_paid, 'students_count' => $students_count, 'students_certificate_count' => $students_certificate_count,
                 'students_qualification_count' => $students_qualification_count];

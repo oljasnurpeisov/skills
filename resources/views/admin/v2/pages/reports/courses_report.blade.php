@@ -207,6 +207,7 @@
                     <col span="1" style="width: 10%;">
                     <col span="1" style="width: 10%;">
                     <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
                     <col span="1" style="width: 15%;">
                     <col span="1" style="width: 10%;">
                     <col span="1" style="width: 10%;">
@@ -220,6 +221,7 @@
                     <th><a href="{{request()->fullUrlWithQuery(["sortByAuthorName"=>$request->sortByAuthorName == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.author_name')}}</th>
                     <th>{{__('admin.pages.reports.skills')}}</a></th>
                     <th>{{__('admin.pages.reports.group_profession')}}</th>
+                    <th>{{__('admin.pages.reports.professions')}}</th>
                     <th><a href="?sortByRateCourse={{$request->sortByRateCourse == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_rate')}}</a></th>
                     <th>{{__('admin.pages.reports.course_status')}}</th>
                     <th>{{__('admin.pages.reports.quota_access')}}</th>
@@ -239,6 +241,11 @@
                             <td>-</td>
                         @else
                             <td>{{implode(', ', array_filter($item->groupProfessionsBySkills()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->groupProfessionsBySkills()->pluck('name_ru')->toArray()))}}</td>
+                        @endif
+                        @if(count($item->professionsBySkills()->pluck('id')->toArray())<= 0)
+                            <td>-</td>
+                        @else
+                            <td>{{implode(', ', array_filter($item->professionsBySkills()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->professionsBySkills()->pluck('name_ru')->toArray()))}}</td>
                         @endif
                         <td>{{round($item->rate->pluck('rate')->avg() ?? 0, 1)}}</td>
                         <td>{{__('default.pages.reporting.statuses.'.$item->status)}}</td>

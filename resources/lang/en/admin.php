@@ -195,6 +195,7 @@ return [
             'author_name' => 'Наименование автора',
             'skills' => 'Навыки',
             'group_profession' => 'Группа професии',
+            'professions' => 'Професии',
             'course_rate' => 'Рейтинг курса',
             'course_status' => 'Статус курса',
             'quota_access' => 'Доступен по квоте',

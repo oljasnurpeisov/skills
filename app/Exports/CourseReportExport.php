@@ -29,6 +29,7 @@ class CourseReportExport implements FromArray, WithHeadings, WithColumnWidths, S
         return [
             'C' => 50,
             'D' => 50,
+            'E' => 50,
         ];
     }
 
@@ -37,6 +38,7 @@ class CourseReportExport implements FromArray, WithHeadings, WithColumnWidths, S
         $sheet->getStyle('B2:B999')->getAlignment()->setWrapText(true);
         $sheet->getStyle('C2:C999')->getAlignment()->setWrapText(true);
         $sheet->getStyle('D3:D999')->getAlignment()->setWrapText(true);
+        $sheet->getStyle('E3:E999')->getAlignment()->setWrapText(true);
         $sheet->getStyle('A1:K1')->getFont()->setBold(true);
     }
 
