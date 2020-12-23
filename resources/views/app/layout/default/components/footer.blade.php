@@ -49,10 +49,10 @@
             <div class="col-md-3">
                 <h4 class="footer__title">{{__('default.pages.footer.social_networks')}}</h4>
                 <ul class="socials">
-                    <li><a href="#" title="" class="icon-instagram"> </a></li>
-                    <li><a href="#" title="" class="icon-twitter"> </a></li>
-                    <li><a href="#" title="" class="icon-facebook"> </a></li>
-                    <li><a href="#" title="" class="icon-vk"> </a></li>
+                    <li><a href="https://www.instagram.com/enbek.kz/" title="" class="icon-instagram" target="_blank"> </a></li>
+                    <li><a href="https://twitter.com/enbekkz" title="" class="icon-twitter" target="_blank"> </a></li>
+                    <li><a href="https://www.facebook.com/www.enbek.kz/" title="" class="icon-facebook" target="_blank"> </a></li>
+                    <li><a href="https://vk.com/enbekkz" title="" class="icon-vk" target="_blank"> </a></li>
                 </ul>
                 <div class="apps-links">
                     <a href="#" target="_blank" title="Перейти"><img src="/assets/img/appstore.png" alt=""></a>
