@@ -386,13 +386,10 @@
                                 <div class="extendable">
                                     <div class="tags">
                                         <ul>
-                                            @foreach($item->skills->groupBy('id') as $skill)
-                                                @foreach($skill[0]->professions as $profession)
-                                                    <li>
-                                                        <a href="#"
-                                                           title="{{$profession->getAttribute('name_'.$lang) ?? $profession->getAttribute('name_ru')}}">{{$profession->getAttribute('name_'.$lang) ?? $profession->getAttribute('name_ru')}}</a>
-                                                    </li>
-                                                @endforeach
+                                            @foreach($item->professions->groupBy('id') as $key => $profession)
+                                                <li><a href="#"
+                                                       title="{{$profession[0]->getAttribute('name_'.$lang) ?? $profession[0]->getAttribute('name_ru')}}">{{$profession[0]->getAttribute('name_'.$lang) ?? $profession[0]->getAttribute('name_ru')}}</a>
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
