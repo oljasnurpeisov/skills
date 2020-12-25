@@ -14,6 +14,7 @@ use App\Models\Type_of_ownership;
 use App\Models\User;
 use App\Models\UserInformation;
 use Carbon\Carbon;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -29,8 +30,6 @@ use PDF;
 
 class UserController extends Controller
 {
-
-
     public function student_profile()
     {
         $item = StudentInformation::where('user_id', '=', Auth::user()->id)->first();
@@ -74,82 +73,100 @@ class UserController extends Controller
         $client = new Client(['verify' => false]);
 
         try {
-            $body = array("login" => $request->email, "password" => $request->password);
+            $body = json_encode([
+                "login" => $request->email,
+                "password" => $request->password
+            ]);
             $response = $client->request('POST', 'https://btest.enbek.kz/ru/api/auth/login', [
-                'body' => json_encode($body),
+                'body' => $body,
                 'headers' => [
                     'Content-Type' => 'application/json',
                 ]
             ]);
         } catch (BadResponseException $e) {
             return redirect()->back()->with('failed', __('auth.failed'));
+        } catch (GuzzleException $b) {
+            return redirect()->back()->with('failed', __('auth.failed'));
         }
 
-        $token = json_decode($response->getBody(), true);
-        $token = $token["response"]["token"];
-        $student_resume = json_decode($this->getStudentResume($token), true);
-        $student_unemployed_status = json_decode($this->getUnemployedStatus($token), true);
+        $authData = json_decode($response->getBody(), true);
+        $token = $authData["response"]["token"];
+        $uid = $authData["response"]["uid"];
 
-        $user = User::where('email', '=', $request->email)->first();
+        $studentUnemployedStatus = json_decode($this->getUnemployedStatus($token), true);
+        $studentResumes = json_decode($this->getStudentResume($token), true);
 
-        $student_role = Role::where('slug', '=', 'student')->first();
+        $user = User::whereEmail($request->email)->first();
+        $studentRole = Role::whereSlug('student')->first();
 
+        if (empty($user)) {
+            $user = new User;
+            $user->email = $request->email;
+            $user->is_activate = 1;
+            $user->email_verified_at = Carbon::now()->toDateTimeString();
+            $user->save();
 
+            $user->roles()->sync([$studentRole->id]);
 
-        if (!empty($user)) {
+            $this->createTechDialog($user->id);
+        }
 
-            $item = new User;
-            $item->email = $request->email;
-            $item->is_activate = 1;
-            $item->email_verified_at = Carbon::now()->toDateTimeString();
-            $item->save();
+        $studentInformation = StudentInformation::whereUserId($user->id)->first();
+        if (empty($studentInformation)) {
+            $studentInformation = new StudentInformation();
+            $studentInformation->user_id = $user->id;
+            $studentInformation->uid = $uid;
 
-            $item->roles()->sync([$student_role->id]);
+            if ($studentUnemployedStatus["response"] == null) {
+                $studentInformation->unemployed_status = 0;
+            } else {
+                $studentInformation->unemployed_status = 1;
+                $studentInformation->quota_count = 3;
+            }
 
-            $item_information = new StudentInformation;
-            $item_information->user_id = $item->id;
+            if (($studentResumes != null) && ($studentResumes != [])) {
+                $setFullNameAndIIN = true;
+                $userSkills = array();
 
-            if (($student_resume == null) or ($student_resume == [])) {
-                $item_information->name = $student_resume[0]["FIO"];
-                $item_information->uid = $student_resume[0]["uid"];
-                $item_information->iin = $student_resume[0]["iin"];
-                $item_information->profession_code = $student_resume[0]["uozcodprof"];
+                foreach ($studentResumes as $studentResume) {
+                    if ($setFullNameAndIIN) {
+                        $studentInformation->name = $studentResume["FIO"];
+                        $studentInformation->iin = $studentResume["iin"];
+                    }
 
-                $user_skills = array();
-                foreach ($student_resume[0]["compSpecList"] as $skill) {
-                    array_push($user_skills, $skill["codcomp"]);
+                    foreach ($studentResume["compSpecList"] as $skill) {
+                        array_push($userSkills, $skill["codcomp"]);
+                    }
+
+                    /** TODO add multiple profession linking */
+                    $studentInformation->profession_code = $studentResume["uozcodprof"];
                 }
-                $skills = Skill::whereIn('code_skill', $user_skills)->pluck('id')->toArray();
-                $item->skills()->sync($skills);
 
-                if ($student_unemployed_status["response"] == null) {
-                    $item_information->unemployed_status = 0;
-                } else {
-                    $item_information->unemployed_status = 1;
-                    $item_information->quota_count = 3;
-                }
-                $item_information->save();
+                $skills = Skill::whereIn('code_skill', $userSkills)->pluck('id')->toArray();
+                $user->skills()->sync($skills);
+            }
 
-                $this->createTechDialog($item->id);
+            $studentInformation->save();
+        }
 
-
-                Session::put('student_token', $token);
-                Auth::login($item);
-            }else{
-                Session::put('resume_data', $item->id);
-
+        if ($studentInformation->name == null || $studentInformation->iin == null) {
+            if (($studentResumes != null) && ($studentResumes != [])) {
+                $studentResume = $studentResumes[0];
+                $studentInformation->name = $studentResume["FIO"];
+                $studentInformation->iin = $studentResume["iin"];
+                $studentInformation->save();
+            } else {
+                Session::put('resume_data', $user->id);
                 return redirect()->back();
             }
-
-        } else {
-
-            if ($user->roles()->first()->id != $student_role->id) {
-                return redirect()->back()->with('status', __('default.pages.auth.student_login_author_exist'));
-            }
-            Session::put('student_token', $token);
-
-            Auth::login($user);
         }
+
+        if ($user->roles()->first()->id != $studentRole->id) {
+            return redirect()->back()->with('status', __('default.pages.auth.student_login_author_exist'));
+        }
+
+        Session::put('student_token', $token);
+        Auth::login($user);
 
         return redirect("/" . app()->getLocale());
     }
@@ -218,27 +235,24 @@ class UserController extends Controller
 
     public function studentDataSave($lang, $user_id, Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'resume_name' => 'required|max:255',
-            'resume_iin' => 'required|unique:users,iin|numeric|digits:12',
+            'resume_iin' => 'required|unique:student_information,iin|numeric|digits:12',
         ]);
 
         if ($validator->fails()) {
             $messages = $validator->messages();
             Session::put('resume_data', $user_id);
-
             return redirect()->back()->withErrors($messages)->withInput($request->all());
-        }else{
-            $user = User::whereId($user_id)->first();
-
-            $user->student_info->name = $request->resume_name;
-            $user->student_info->iin = $request->resume_iin;
-
-            $user->student_info->save();
-
-            Auth::login($user);
         }
+
+        StudentInformation::whereUserId($user_id)->update([
+             'name' => $request->resume_name,
+             'iin' => $request->resume_iin,
+        ]);
+
+        $user = User::whereId($user_id)->first();
+        Auth::login($user);
 
         return redirect()->back();
     }

@@ -58,4 +58,14 @@
         height: 100%;
         object-fit: contain;
     }
+
+    table.records a{
+        color: #35b0ff;
+        text-decoration: underline;
+    }
+
+    table.records a:hover{
+        color: #308bcb;
+    }
+
 </style>
