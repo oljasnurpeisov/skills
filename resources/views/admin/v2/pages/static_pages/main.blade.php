@@ -43,11 +43,11 @@
                                                class="input-regular {{$lang_key == 'ru' ? 'required' : ''}}">
                                     </div>
                                     <div class="input-group">
-                                        <label class="input-group__title">Аннотация @if($lang_key == 'ru')
+                                        <label class="input-group__title">{{__('admin.pages.static_pages.teaser_title')}} @if($lang_key == 'ru')
                                                 *@endif</label>
                                         <input type="text" name="banner_teaser_{{$lang_key}}"
                                                value="{{json_decode($item->getAttribute('data_'.$lang_key))->main_banner->teaser}}"
-                                               placeholder="Введите аннотацию"
+                                               placeholder="{{__('admin.pages.static_pages.teaser_placeholder')}}"
                                                class="input-regular {{$lang_key == 'ru' ? 'required' : ''}}">
                                     </div>
                                     @if($lang_key == 'ru')

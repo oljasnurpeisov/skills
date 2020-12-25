@@ -162,6 +162,12 @@ class PageController extends Controller
     {
         $notifications = Auth::user()->notifications()->orderBy('created_at', 'desc')->paginate(5);
 
+        // Пометить уведомления как прочитанные
+        foreach ($notifications as $item){
+            $item->is_read = true;
+            $item->save();
+        }
+
         return view("app.pages.general.notifications.notifications", [
             'notifications' => $notifications
         ]);

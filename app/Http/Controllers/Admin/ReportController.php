@@ -234,7 +234,6 @@ class ReportController extends Controller
             // Количество подтвердивших квалификацию
             $item->qualification_students = array_filter($author_students_finished_courseWork);
         }
-
         Session::put('authors_report_export', $query->get());
 //        return $items;
         return view('admin.v2.pages.reports.authors_report', [
@@ -266,6 +265,7 @@ class ReportController extends Controller
         $sortByCourseMembers = $request->sortByCourseMembers;
         $sortByCertificateCourseMembers = $request->sortByCertificateCourseMembers;
         $sortByRateCourse = $request->sortByRateCourse;
+        $sortByQualificatedStudents = $request->sortByQualificatedStudents;
 
         $query = (new Course)->newQuery();
         // Сортировка
@@ -296,6 +296,17 @@ class ReportController extends Controller
             $query->withCount(['rate as average_rate' => function ($query) {
                 $query->select(DB::raw('round(avg(rate),1)'));
             }])->orderBy('average_rate', $sortByRateCourse);
+        }
+        // Сортировка по квалифицированным обучающимся
+        if ($sortByQualificatedStudents) {
+            $query->withCount(['course_members as course_qualifications_members_count' => function ($q) {
+                $q->where('is_finished', '=', true);
+                $q->whereHas('student.student_lesson', function ($q) {
+                    $q->where('is_finished', '=', true);
+                });
+            }])->whereHas('lessons', function ($q) {
+                $q->where('type', '=', 3);
+            })->orderBy('course_qualifications_members_count', $sortByQualificatedStudents);
         }
         // Фильтрация
         // Поиск по имени
@@ -380,19 +391,36 @@ class ReportController extends Controller
             }])->having('course_certificates_members_count', '>=', $certificates_count_from)
                 ->having('course_certificates_members_count', '<=', $certificates_count_to);
         }
-        //
-//        if ($qualifications_count_from and empty($qualifications_count_to)) {
-//            $query->withCount(['course_members as course_qualifications_members_count' => function ($q) {
-//                $q->where('is_finished', '=', true);
-//                $q->whereHas('student.student_lesson', function ($q) {
-//                    $q->where('lessons.type', '=', 3);
-//                    $q->whereHas('student_lessons', function ($q) {
-//                        $q->where('student_lesson.is_finished', '=', true);
-//                    });
-//                });
-//
-//            }])->having('course_qualifications_members_count', '>=', $qualifications_count_from);
-//        }
+        // Поиск по квалифицированным участникам
+        if ($qualifications_count_from and empty($qualifications_count_to)) {
+            $query->withCount(['course_members as course_qualifications_members_count' => function ($q) {
+                $q->where('is_finished', '=', true);
+                $q->whereHas('student.student_lesson', function ($q) {
+                    $q->where('is_finished', '=', true);
+                });
+            }])->whereHas('lessons', function ($q) {
+                $q->where('type', '=', 3);
+            })->having('course_qualifications_members_count', '>=', $qualifications_count_from);
+        } else if ($qualifications_count_to and empty($qualifications_count_from)) {
+            $query->withCount(['course_members as course_qualifications_members_count' => function ($q) {
+                $q->where('is_finished', '=', true);
+                $q->whereHas('student.student_lesson', function ($q) {
+                    $q->where('is_finished', '=', true);
+                });
+            }])->whereHas('lessons', function ($q) {
+                $q->where('type', '=', 3);
+            })->having('course_qualifications_members_count', '<=', $qualifications_count_to);
+        } else if ($qualifications_count_to and $qualifications_count_from) {
+            $query->withCount(['course_members as course_qualifications_members_count' => function ($q) {
+                $q->where('is_finished', '=', true);
+                $q->whereHas('student.student_lesson', function ($q) {
+                    $q->where('is_finished', '=', true);
+                });
+            }])->whereHas('lessons', function ($q) {
+                $q->where('type', '=', 3);
+            })->having('course_qualifications_members_count', '>=', $qualifications_count_from)
+                ->having('course_qualifications_members_count', '<=', $qualifications_count_to);
+        }
 
         $items = $query->paginate(10);
 

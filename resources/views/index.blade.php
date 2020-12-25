@@ -4,7 +4,8 @@
     <main class="main">
 
 
-        <section class="opening" style="background: url({{json_decode($content->getAttribute('data_'.$lang))->main_banner->image}})">
+        <section class="opening"
+                 style="background: url({{json_decode($content->getAttribute('data_'.$lang))->main_banner->image}})">
             <div class="container">
                 <h1>{{json_decode($content->getAttribute('data_'.$lang))->main_banner->title}}<br/><span>
                         {{json_decode($content->getAttribute('data_'.$lang))->main_banner->teaser}}</span></h1>
@@ -260,7 +261,8 @@
                         <div class="plain-text">
                             {!! json_decode($content->getAttribute('data_'.$lang))->for_authors->description !!}
                         </div>
-                        <a href="/{{$lang}}/for-authors" title="{{json_decode($content->getAttribute('data_'.$lang))->for_authors->btn_title}}"
+                        <a href="/{{$lang}}/for-authors"
+                           title="{{json_decode($content->getAttribute('data_'.$lang))->for_authors->btn_title}}"
                            class="ghost-btn ghost-btn--white">{{json_decode($content->getAttribute('data_'.$lang))->for_authors->btn_title}}</a>
                     </div>
                     <div class="col-sm-6">

@@ -1,6 +1,6 @@
 @extends('admin.v2.layout.default.template')
 
-@section('title',__('admin.pages.authors.title').' | '.__('admin.site_name'))
+@section('title',__('admin.pages.courses.title').' | '.__('admin.site_name'))
 
 @section('head')
 
@@ -11,7 +11,7 @@
         <div class="title-block">
             <div class="row row--multiline align-items-center">
                 <div class="col-md-4">
-                    <h1 class="title-primary" style="margin-bottom: 0">{{ __('admin.pages.authors.title')  }}</h1>
+                    <h1 class="title-primary" style="margin-bottom: 0">{{ __('admin.pages.courses.title')  }}</h1>
                 </div>
                 <div class="col-md-8 text-right-md text-right-lg">
                     <div class="flex-form">

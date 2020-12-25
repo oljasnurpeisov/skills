@@ -33,6 +33,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $name
  * @method static \Illuminate\Database\Eloquent\Builder|StudentInformation whereName($value)
  * @property-read \App\Models\User $user
+ * @property string|null $iin
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentInformation whereIin($value)
  */
 class StudentInformation extends Model
 {

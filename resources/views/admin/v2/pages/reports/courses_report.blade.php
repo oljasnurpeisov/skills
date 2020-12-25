@@ -228,7 +228,7 @@
                     <th>{{__('admin.pages.reports.paid_or_free')}}</th>
                     <th><a href="?sortByCourseMembers={{$request->sortByCourseMembers == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_members')}}</a></th>
                     <th><a href="?sortByCertificateCourseMembers={{$request->sortByCertificateCourseMembers == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_members_certificates')}}</a></th>
-                    <th>{{__('admin.pages.reports.course_members_qualification')}}</th>
+                    <th><a href="?sortByQualificatedStudents={{$request->sortByQualificatedStudents == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_members_qualification')}}</a></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -267,6 +267,7 @@
                 {{ $items->links('vendor.pagination.bootstrap') }}
             </div>
         </div>
+
     </div>
 
 @endsection

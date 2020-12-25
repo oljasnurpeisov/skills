@@ -210,7 +210,8 @@
             @csrf
             <div class="form-group">
                 <label class="form-group__label">E-mail</label>
-                <input type="email" name="email_forgot_password" placeholder="" class="input-regular" value="{{ old('email_forgot_password') }}" required>
+                <input type="email" name="email_forgot_password" placeholder="" class="input-regular"
+                       value="{{ old('email_forgot_password') }}" required>
             </div>
             {!! $errors->first('email_forgot_password', '<div class="alert alert-danger">
                     :message
@@ -230,6 +231,37 @@
             </div>
             <div class="text-center">
                 <button type="submit" class="btn">Отправить</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="noCvModal" style="display:none;" class="modal-form">
+        <h4 class="title-primary text-center">{{__('default.pages.auth.create_resume_title')}}</h4>
+        <div class="plain-text text-center">
+            {!! __('default.pages.auth.create_resume_description') !!}
+
+        </div>
+        <form action="/{{$lang}}/save-student-data/{{session('resume_data')}}" method="post">
+            @csrf
+            <div class="form-group">
+                <label class="form-group__label">{{__('default.pages.auth.fio_title')}}</label>
+                <input type="text" name="resume_name" placeholder="" value="{{ old('resume_name') }}" class="input-regular" required>
+                {!! $errors->first('resume_name', '<div class="alert alert-danger">
+                    :message
+                </div>') !!}
+            </div>
+            <div class="form-group">
+                <label class="form-group__label">{{__('default.pages.auth.iin_resume_title')}}</label>
+                <input type="text" name="resume_iin" placeholder="" class="input-regular"
+                       onfocus="$(this).inputmask('999999999999')" value="{{ old('resume_iin') }}" required>
+                {!! $errors->first('resume_iin', '<div class="alert alert-danger">
+                    :message
+                </div>') !!}
+            </div>
+            <div class="text-center">
+                <div class="form-group">
+                    <button type="submit" class="btn">{{__('default.pages.auth.send_resume')}}</button>
+                </div>
             </div>
         </form>
     </div>

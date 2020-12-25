@@ -22,6 +22,8 @@ APIRoute::version('v1', ['prefix' => 'api/service', 'namespace' => 'App\Api\V1\C
     APIRoute::group(["prefix" => "user"], function () {
         // Навыки обучающегося
         APIRoute::get("/skills", "ServiceController@getSkillsByUid");
+        // Навыки обучающегося по ИИН
+        APIRoute::get("/skills-by-iin", "ServiceController@getSkillsByIin");
         // Обновить навыки
         APIRoute::put("/skills-update", "ServiceController@updateSkillsByUid");
         // Обновить количество квот

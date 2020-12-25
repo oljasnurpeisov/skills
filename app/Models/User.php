@@ -166,5 +166,4 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasManyThrough(CourseRate::class, Course::class, 'author_id', 'course_id');
     }
 
-
 }

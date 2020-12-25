@@ -67,6 +67,54 @@ class ServiceController extends BaseController
         return $this->response->item($message, new MessageTransformer());
     }
 
+    public function getSkillsByIin(Request $request)
+    {
+        $iin = $request->get('iin');
+        $hash = $request->header("hash");
+        $lang = $request->header("lang", 'ru');
+        app()->setLocale($lang);
+
+        // Валидация
+        $validator = Validator::make($request->all(), [
+            'uid' => 'required'
+        ]);
+        $validator = Validator::make($request->header(), [
+            'hash' => 'required',
+        ]);
+
+        if ($hash = $this->validateHash(['uid' => $iin, 'hash' => $hash], env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        // Получить навыки обучающегося
+        $skills = Skill::whereHas('student_skill.student_info', function ($q) use ($iin) {
+            $q->whereIin($iin);
+        })->get();
+
+        $data = [];
+        foreach ($skills as $skill) {
+            $data[] = [
+                'code_skill' => $skill->code_skill,
+                'name_ru' => $skill->name_ru,
+                'name_kk' => $skill->name_kk,
+                'name_en' => $skill->name_en,
+            ];
+        }
+
+        $message = new Message(__('api/messages.success'), 200, $data);
+        return $this->response->item($message, new MessageTransformer());
+    }
+
     public function getSearchResult(Request $request)
     {
         $course_lang = $request->get('course_lang');

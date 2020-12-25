@@ -156,6 +156,8 @@ return [
             'add_btn' => 'Добавить',
             'image_link' => 'Ссылка для изображения',
             'image_link_placeholder' => 'Введите ссылку для изображения',
+            'teaser_title' => 'Аннотация',
+            'teaser_placeholder' => 'Введите аннотацию',
 
             'for_authors' => 'Преподаватель',
             'btn_title' => 'Заголовок кнопки',

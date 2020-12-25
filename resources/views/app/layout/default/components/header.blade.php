@@ -30,17 +30,18 @@
                     <button type="submit" class="btn-icon small icon-chevron-right"></button>
                 </form>
 
+                @php($notifications = Auth::user()->notifications()->orderBy('created_at', 'desc')->limit(3)->get())
+                @php($notifications_count = Auth::user()->notifications()->where('is_read', '=', false)->count())
                 <div class="header-dropdown notifications">
                     <div class="header-dropdown__title">
                         <a href="#" title="{{__('notifications.title')}}"
-                           class="btn-icon small btn-icon--transparent icon-notification"> </a>
+                           class="btn-icon small btn-icon--transparent icon-notification" data-unread="{{$notifications_count}}"> </a>
                     </div>
                     <div class="header-dropdown__desc">
-                        @php($notifications = Auth::user()->notifications()->orderBy('created_at', 'desc')->limit(3)->get())
                         <ul>
                             @foreach($notifications as $notification)
                                 @if($notification->type == 1)
-                                    <li>
+                                    <li data-id="{{$notification->id}}">
                                         <form method="POST"
                                               action="/{{$lang}}/my-courses/quota-confirm-course/{{$notification->course->id}}"
                                               id="quota_confirm_form">
@@ -62,7 +63,7 @@
                                         <hr>
                                     </li>
                                 @else
-                                    <li>
+                                    <li data-id="{{$notification->id}}">
                                         <span>{!!trans($notification->name, ['course_name' => '"'. optional($notification->course)->name .'"', 'lang' => $lang, 'course_id' => optional($notification->course)->id, 'opponent_id' => json_decode($notification->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($notification->data)[0]->course_reject_message ?? ''])!!}</span>
                                     </li>
                                     <li class="break">

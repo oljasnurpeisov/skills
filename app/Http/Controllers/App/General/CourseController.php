@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseRate;
 use App\Models\Lesson;
+use App\Models\Notification;
 use App\Models\Page;
 use App\Models\Professions;
 use App\Models\Skill;
@@ -321,6 +322,21 @@ class CourseController extends Controller
 
         return $professions;
 
+    }
+
+    public function markAsReadNotifications($lang, Request $request){
+
+        $notifications = $request->data;
+        $items = Notification::whereIn('id', $notifications)->get();
+
+        foreach ($items as $item){
+            $item->is_read = true;
+            $item->save();
+        }
+
+        $unreadNotifications = Auth::user()->notifications->where('is_read', '=', false);
+
+        return $unreadNotifications->count();
     }
 
 }

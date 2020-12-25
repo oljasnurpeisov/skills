@@ -29,6 +29,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Notification whereCourseId($value)
  * @property string|null $data
  * @method static \Illuminate\Database\Eloquent\Builder|Notification whereData($value)
+ * @property int $is_read 0 - не прочитано, 1 - прочитано
+ * @method static \Illuminate\Database\Eloquent\Builder|Notification whereIsRead($value)
  */
 class Notification extends Model
 {

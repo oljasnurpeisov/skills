@@ -49,5 +49,12 @@
             touch: false
         });
         @endif
+        @if(Session::get('resume_data') or $errors->has('resume_iin') or $errors->has('resume_name'))
+        $.fancybox.open({
+            src: '#noCvModal',
+            touch: false
+        });
+        {{Session::forget('resume_data')}}
+        @endif
     </script>
 @endguest

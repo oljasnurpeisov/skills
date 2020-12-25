@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
@@ -93,7 +94,9 @@ class UserController extends Controller
 
         $student_role = Role::where('slug', '=', 'student')->first();
 
-        if (empty($user)) {
+
+
+        if (!empty($user)) {
 
             $item = new User;
             $item->email = $request->email;
@@ -106,9 +109,10 @@ class UserController extends Controller
             $item_information = new StudentInformation;
             $item_information->user_id = $item->id;
 
-            if ($student_resume != null) {
+            if (($student_resume == null) or ($student_resume == [])) {
                 $item_information->name = $student_resume[0]["FIO"];
                 $item_information->uid = $student_resume[0]["uid"];
+                $item_information->iin = $student_resume[0]["iin"];
                 $item_information->profession_code = $student_resume[0]["uozcodprof"];
 
                 $user_skills = array();
@@ -117,21 +121,25 @@ class UserController extends Controller
                 }
                 $skills = Skill::whereIn('code_skill', $user_skills)->pluck('id')->toArray();
                 $item->skills()->sync($skills);
+
+                if ($student_unemployed_status["response"] == null) {
+                    $item_information->unemployed_status = 0;
+                } else {
+                    $item_information->unemployed_status = 1;
+                    $item_information->quota_count = 3;
+                }
+                $item_information->save();
+
+                $this->createTechDialog($item->id);
+
+
+                Session::put('student_token', $token);
+                Auth::login($item);
+            }else{
+                Session::put('resume_data', $item->id);
+
+                return redirect()->back();
             }
-
-            if ($student_unemployed_status["response"] == null) {
-                $item_information->unemployed_status = 0;
-            } else {
-                $item_information->unemployed_status = 1;
-                $item_information->quota_count = 3;
-            }
-            $item_information->save();
-
-            $this->createTechDialog($item->id);
-
-
-            Session::put('student_token', $token);
-            Auth::login($item);
 
         } else {
 
@@ -139,6 +147,7 @@ class UserController extends Controller
                 return redirect()->back()->with('status', __('default.pages.auth.student_login_author_exist'));
             }
             Session::put('student_token', $token);
+
             Auth::login($user);
         }
 
@@ -194,7 +203,8 @@ class UserController extends Controller
         $dialog->members()->sync([$user_id, $tech_support->id]);
     }
 
-    public function myCertificates(){
+    public function myCertificates()
+    {
 
         $certificates = StudentCertificate::where('user_id', '=', Auth::user()->id)
             ->orderBy('created_at', 'desc')
@@ -204,6 +214,33 @@ class UserController extends Controller
             'items' => $certificates
         ]);
 
+    }
+
+    public function studentDataSave($lang, $user_id, Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'resume_name' => 'required|max:255',
+            'resume_iin' => 'required|unique:users,iin|numeric|digits:12',
+        ]);
+
+        if ($validator->fails()) {
+            $messages = $validator->messages();
+            Session::put('resume_data', $user_id);
+
+            return redirect()->back()->withErrors($messages)->withInput($request->all());
+        }else{
+            $user = User::whereId($user_id)->first();
+
+            $user->student_info->name = $request->resume_name;
+            $user->student_info->iin = $request->resume_iin;
+
+            $user->student_info->save();
+
+            Auth::login($user);
+        }
+
+        return redirect()->back();
     }
 
 }

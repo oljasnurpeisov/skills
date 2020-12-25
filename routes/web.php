@@ -220,6 +220,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             //
             Route::get("/getSkills", "CourseController@getCourseSkills");
             Route::get("/getProfessionsBySkills/{skill_id}", "CourseController@getProfessionsBySkills");
+            //
+            Route::post("/markAsReadNotifications", "CourseController@markAsReadNotifications");
 
             Route::group(['middleware' => ["auth"]], static function () {
                 // Диалоги
@@ -235,7 +237,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
         Route::group(["middleware" => ["web"], "namespace" => "Student"], function () {
             Route::get("/login_student", "UserController@studentAuth");
             Route::post("/login_student", "UserController@studentLogin");
-
+            Route::post("/save-student-data/{user_id}", "UserController@studentDataSave");
         });
         //
         Route::group(['middleware' => ["auth"]], static function () {
