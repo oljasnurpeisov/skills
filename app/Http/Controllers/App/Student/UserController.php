@@ -128,6 +128,7 @@ class UserController extends Controller
             if (($studentResumes != null) && ($studentResumes != [])) {
                 $setFullNameAndIIN = true;
                 $userSkills = array();
+                $userProfessions = array();
 
                 foreach ($studentResumes as $studentResume) {
                     if ($setFullNameAndIIN) {
@@ -139,11 +140,11 @@ class UserController extends Controller
                         array_push($userSkills, $skill["codcomp"]);
                     }
 
-                    $profession = Professions::whereCode($studentResume["uozcodprof"])->first();
-                    if ($profession) {
-                        $user->professions()->attach($profession->id);
-                    }
+                    array_push($userSkills, $skill["uozcodprof"]);
                 }
+
+                $professions = Professions::whereIn('code', $userProfessions)->pluck('id')->toArray();
+                $user->professions()->sync($professions);
 
                 $skills = Skill::whereIn('code_skill', $userSkills)->pluck('id')->toArray();
                 $user->skills()->sync($skills);

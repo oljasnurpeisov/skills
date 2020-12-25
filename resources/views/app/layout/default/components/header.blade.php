@@ -30,7 +30,7 @@
                     <button type="submit" class="btn-icon small icon-chevron-right"></button>
                 </form>
 
-                @php($notifications = Auth::user()->notifications()->orderBy('created_at', 'desc')->limit(3)->get())
+                @php($notifications = Auth::user()->notifications()->where('is_read', '=', false)->orderBy('created_at', 'asc')->limit(3)->get())
                 @php($notifications_count = Auth::user()->notifications()->where('is_read', '=', false)->count())
                 <div class="header-dropdown notifications">
                     <div class="header-dropdown__title">
