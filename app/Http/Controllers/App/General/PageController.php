@@ -24,26 +24,32 @@ class PageController extends Controller
         if (Auth::check()) {
             // Получить навыки пользователя и записать их в массив
             $user_skills = User::where('id', '=', Auth::user()->id)->with('skills')->first();
+            $user_professions = User::where('id', '=', Auth::user()->id)->with('professions')->first();
 
             $skill_ids = array();
+            $professions_ids = array();
             foreach ($user_skills->skills as $skill) {
                 array_push($skill_ids, $skill->id);
+            }
+            foreach ($user_professions->professions as $profession) {
+                array_push($professions_ids, $profession->id);
             }
             // Получить список профессий из навыков пользователя
             $profession_skills = Professions::whereHas('skills', function ($query) use ($skill_ids) {
                 $query->whereIn('skill_id', $skill_ids);
-            })->pluck('id')->toArray();
+            })->orWhereIn('id', $professions_ids)->pluck('id')->toArray();
 
             // Получить список навыков из списка профессий
             $skills_group_professions = Skill::whereHas('group_professions', function ($query) use ($profession_skills) {
                 $query->whereIn('profession_id', $profession_skills);
             })->pluck('id')->toArray();
 
-            // Получить список курсов из списка навыков профессий
+            // Получить список рекомендованных курсов из списка навыков профессий
             $courses = Course::where('status', '=', Course::published)->whereHas('skills', function ($query) use ($skills_group_professions) {
                 $query->whereIn('skill_id', $skills_group_professions);
             })->limit(12)->get();
 
+            // Получить список рекомендованных навыков из списка навыков профессий
             $skills = Skill::whereIn('id', $skills_group_professions)->limit(18)->get();
 
         }

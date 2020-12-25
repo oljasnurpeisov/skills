@@ -166,4 +166,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasManyThrough(CourseRate::class, Course::class, 'author_id', 'course_id');
     }
 
+    public function professions()
+    {
+        return $this->belongsToMany(Professions::class, 'student_professions', 'user_id', 'profession_id');
+    }
+
 }

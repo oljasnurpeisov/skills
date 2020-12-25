@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Dialog;
 use App\Models\PayInformation;
+use App\Models\Professions;
 use App\Models\Role;
 use App\Models\Skill;
 use App\Models\StudentCertificate;
@@ -138,8 +139,10 @@ class UserController extends Controller
                         array_push($userSkills, $skill["codcomp"]);
                     }
 
-                    /** TODO add multiple profession linking */
-                    $studentInformation->profession_code = $studentResume["uozcodprof"];
+                    $profession = Professions::whereCode($studentResume["uozcodprof"])->first();
+                    if ($profession) {
+                        $user->professions()->attach($profession->id);
+                    }
                 }
 
                 $skills = Skill::whereIn('code_skill', $userSkills)->pluck('id')->toArray();
@@ -247,8 +250,8 @@ class UserController extends Controller
         }
 
         StudentInformation::whereUserId($user_id)->update([
-             'name' => $request->resume_name,
-             'iin' => $request->resume_iin,
+            'name' => $request->resume_name,
+            'iin' => $request->resume_iin,
         ]);
 
         $user = User::whereId($user_id)->first();
