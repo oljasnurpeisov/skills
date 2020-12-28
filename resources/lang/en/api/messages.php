@@ -45,5 +45,13 @@ return [
 
     'certificates' => [
         'title' => 'Сертификаты'
+    ],
+
+    'professions' => [
+        'title' => 'Профессии'
+    ],
+
+    'skills' => [
+        'title' => 'Навыки'
     ]
 ];

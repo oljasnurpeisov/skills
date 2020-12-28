@@ -8,6 +8,7 @@ use App\Api\V1\Transformers\MessageTransformer;
 use App\Models\Course;
 use App\Models\CourseRate;
 use App\Models\Professions;
+use App\Models\Skill;
 use App\Models\User;
 
 use Illuminate\Http\Request;
@@ -83,6 +84,7 @@ class CourseController extends BaseController
 
     public function getProfessions(Request $request)
     {
+        $term = $request->get('term');
         $hash = $request->header("hash");
         $lang = $request->header("lang", 'ru');
         app()->setLocale($lang);
@@ -92,6 +94,7 @@ class CourseController extends BaseController
             'hash' => 'required',
         ];
         $payload = [
+            'term' => $term,
             'hash' => $hash
         ];
 
@@ -116,7 +119,10 @@ class CourseController extends BaseController
             return $this->response->item($message, new MessageTransformer())->statusCode(400);
         }
 
-        $items = Professions::where('parent_id', '!=', null)->paginate($this->per_page);
+        $items = Professions::where('name_' . $lang, 'like', '%' . $term . '%')
+            ->where('parent_id', '!=', null)
+            ->orderBy('name_' . $lang, 'asc')
+            ->paginate($this->per_page);
 
         $next_page_number = null;
         if ($items->nextPageUrl()) {
@@ -134,11 +140,88 @@ class CourseController extends BaseController
         foreach ($items as $item) {
             $data["items"][] = [
                 'id' => $item->id,
-                'name' => $item->getAttribute('name_'.$lang)
+                'name' => $item->getAttribute('name_' . $lang)
             ];
         }
 
-        $message = new Message(__('api/messages.authors.title'), 200, $data);
+        $message = new Message(__('api/messages.professions.title'), 200, $data);
+        return $this->response->item($message, new MessageTransformer());
+    }
+
+    public function getSkills(Request $request)
+    {
+        $term = $request->get('term');
+        $professions = $request->get('professions');
+        $hash = $request->header("hash");
+        $lang = $request->header("lang", 'ru');
+        app()->setLocale($lang);
+
+        // Валидация
+        $rules = [
+            'hash' => 'required',
+        ];
+        $payload = [
+            'professions' => $professions,
+            'term' => $term,
+            'hash' => $hash
+        ];
+
+        $validator = Validator::make($payload, $rules);
+
+        if ($validator->fails()) {
+            $message = new Message($validator->errors()->first(), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        if ($professions != []) {
+
+            $professions_group = Professions::whereIn('id', json_decode($professions, true))->pluck('parent_id');
+            $items = Skill::where('name_' . $lang, 'like', '%' . $term . '%')
+                ->whereHas('group_professions', function ($q) use ($professions_group) {
+                    $q->whereIn('profession_skills.profession_id', $professions_group);
+                })->paginate($this->per_page);
+
+        } else {
+            $items = Skill::where('name_' . $lang, 'like', '%' . $term . '%')
+                ->orderBy('name_' . $lang, 'asc')
+                ->paginate($this->per_page);
+        }
+
+        $next_page_number = null;
+        if ($items->nextPageUrl()) {
+            $t = parse_url($items->nextPageUrl());
+            $t = isset($t["query"]) ? $t["query"] : "";
+            $t = explode("=", $t);
+            $next_page_number = in_array("page", $t) ? $t[array_search("page", $t) + 1] : null;
+        }
+
+        $data = [
+            "items" => [],
+            "next" => $next_page_number,
+        ];
+
+        foreach ($items as $item) {
+            $data["items"][] = [
+                'id' => $item->id,
+                'name' => $item->getAttribute('name_' . $lang)
+            ];
+        }
+
+        $message = new Message(__('api/messages.skills.title'), 200, $data);
         return $this->response->item($message, new MessageTransformer());
     }
 
@@ -192,26 +275,26 @@ class CourseController extends BaseController
         $user = User::where('id', '=', $user_id)->first();
         $course = Course::where('id', '=', $course_id)->first();
 
-        if (!$user){
+        if (!$user) {
             $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
             return $this->response->item($message, new MessageTransformer())->statusCode(404);
         }
 
-        if (!$course){
+        if (!$course) {
             $message = new Message(Lang::get("api/errors.course_does_not_exist"), 404, null);
             return $this->response->item($message, new MessageTransformer())->statusCode(404);
         }
 
         $item = CourseRate::whereStudentId($user_id)->whereCourseId($course_id)->first();
 
-        if (!$item){
+        if (!$item) {
             $item = new CourseRate;
             $item->course_id = $course_id;
             $item->student_id = $user_id;
             $item->rate = $rate;
             $item->description = $description;
             $item->save();
-        }else{
+        } else {
             $message = new Message(Lang::get("api/errors.course_rate_already_exist"), 404, null);
             return $this->response->item($message, new MessageTransformer())->statusCode(404);
         }

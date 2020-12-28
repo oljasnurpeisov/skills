@@ -51,6 +51,8 @@ APIRoute::version('v1', ['prefix' => 'api/app', 'namespace' => 'App\Api\V1\Contr
         APIRoute::get("/authors", "CourseController@getAuthors");
         // Профессии
         APIRoute::get("/professions", "CourseController@getProfessions");
+        // Навыки из профессий
+        APIRoute::get("/skills", "CourseController@getSkills");
         // Оставить отзыв
         APIRoute::post("/course-rate", "CourseController@courseRate");
     });
