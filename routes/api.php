@@ -44,7 +44,7 @@ APIRoute::version('v1', ['prefix' => 'api/app', 'namespace' => 'App\Api\V1\Contr
         // Диалоги
         APIRoute::get("/dialogs", "UserController@getDialogs");
         // Сообщения
-        APIRoute::get("/dialog/opponent-{id}", "UserController@getDialog");
+        APIRoute::get("/dialog", "UserController@getDialog");
         // Сертификаты
         APIRoute::get("/certificates", "UserController@getCertificates");
     });

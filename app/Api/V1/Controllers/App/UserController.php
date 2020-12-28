@@ -10,6 +10,7 @@ use App\Models\Dialog;
 use App\Models\Notification;
 use App\Models\Role;
 use App\Models\Skill;
+use App\Models\StudentCourse;
 use App\Models\StudentInformation;
 use App\Models\User;
 use GuzzleHttp\Client;
@@ -274,7 +275,7 @@ class UserController extends BaseController
         foreach ($items as $item) {
             $data["items"][] = [
                 'id' => $item->id,
-                'text' => strip_tags(trans($item->name, ['course_name' => '"'. optional($item->course)->name .'"', 'lang' => $lang, 'course_id' => optional($item->course)->id, 'opponent_id' => json_decode($item->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($item->data)[0]->course_reject_message ?? ''])),
+                'text' => strip_tags(trans($item->name, ['course_name' => '"' . optional($item->course)->name . '"', 'lang' => $lang, 'course_id' => optional($item->course)->id, 'opponent_id' => json_decode($item->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($item->data)[0]->course_reject_message ?? ''])),
                 'date' => $item->created_at
             ];
         }
@@ -348,15 +349,15 @@ class UserController extends BaseController
         foreach ($items as $item) {
             $member = $item->members->where('id', '!=', $user->id)->first();
 
-            if($member->hasRole('author')) {
+            if ($member->hasRole('author')) {
                 $member_id = $member->id;
                 $member_name = $member->author_info->name . ' ' . $member->author_info->surname;
                 $member_avatar = $member->author_info->getAvatar();
-            }else if($member->hasRole('student')){
+            } else if ($member->hasRole('student')) {
                 $member_id = $member->id;
                 $member_name = $member->student_info->name ?? __('default.pages.profile.student_title');
                 $member_avatar = $member->student_info->getAvatar();
-            }else{
+            } else {
                 $member_id = $member->id;
                 $member_name = $member->name;
                 $member_avatar = null;
@@ -365,9 +366,131 @@ class UserController extends BaseController
                 'id' => $item->id,
                 'opponent_id' => $member_id,
                 'image' => $member_avatar,
-                'author' => $member_name,
-                'text' => json_decode('"'.str_replace('"','\"',$item->lastMessageText()).'"'),
+                'opponent_name' => $member_name,
+                'text' => json_decode('"' . str_replace('"', '\"', $item->lastMessageText()) . '"'),
                 'date' => $item->lastMessageDate()
+            ];
+        }
+
+        $message = new Message(__('api/messages.dialogs.title'), 200, $data);
+        return $this->response->item($message, new MessageTransformer());
+    }
+
+    public function getDialog(Request $request)
+    {
+        $user_id = $request->get('user');
+        $opponent_id = $request->get('opponent');
+        $hash = $request->header("hash");
+        $lang = $request->header("lang", 'ru');
+        app()->setLocale($lang);
+
+        // Валидация
+        $rules = [
+            'user' => 'required',
+            'opponent' => 'required',
+            'hash' => 'required',
+        ];
+        $payload = [
+            'opponent' => $opponent_id,
+            'user' => $user_id,
+            'hash' => $hash
+        ];
+
+        $validator = Validator::make($payload, $rules);
+
+        if ($validator->fails()) {
+            $message = new Message($validator->errors()->first(), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        $user = User::whereId($user_id)->first();
+        $opponent = User::whereId($opponent_id)->first();
+
+        if (!$user) {
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        if (!$opponent) {
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        $item = $user->dialogs()->whereHas("members", function ($q) use ($opponent) {
+            $q->where("user_id", "=", $opponent->id);
+        })->first();
+
+        if (!$item) {
+
+            if ($user->hasRole('student')) {
+                $author_course = StudentCourse::where('student_id', '=', $user->id)
+                    ->whereHas('course', function ($q) use ($opponent_id) {
+                        $q->where('author_id', '=', $opponent_id);
+                    })->get();
+                if (count($author_course) != 0) {
+                    $item = new Dialog();
+                    $item->save();
+
+                    $item->members()->attach($user->id);
+                    $item->members()->attach($opponent_id);
+                } else {
+                    $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+                    return $this->response->item($message, new MessageTransformer())->statusCode(404);
+                }
+            }
+        }
+
+        $items = $item->messages()->orderBy('created_at', 'desc')->paginate($this->per_page);
+
+        $next_page_number = null;
+        if ($items->nextPageUrl()) {
+            $t = parse_url($items->nextPageUrl());
+            $t = isset($t["query"]) ? $t["query"] : "";
+            $t = explode("=", $t);
+            $next_page_number = in_array("page", $t) ? $t[array_search("page", $t) + 1] : null;
+        }
+
+        $data = [
+            "items" => [],
+            "next" => $next_page_number,
+        ];
+
+        foreach ($items as $item) {
+            $sender = $item->sender;
+
+            if ($sender->hasRole('author')) {
+                $sender_id = $sender->id;
+                $sender_name = $sender->author_info->name . ' ' . $sender->author_info->surname;
+                $sender_avatar = $sender->author_info->getAvatar();
+            } else if ($sender->hasRole('student')) {
+                $sender_id = $sender->id;
+                $sender_name = $sender->student_info->name ?? __('default.pages.profile.student_title');
+                $sender_avatar = $sender->student_info->getAvatar();
+            } else {
+                $sender_id = $sender->id;
+                $sender_name = $sender->name;
+                $sender_avatar = null;
+            }
+            $data["items"][] = [
+                'id' => $item->id,
+                'image' => $sender_avatar,
+                'sender_name' => $sender_name,
+                'text' => $item->message,
+                'date' => $item->created_at
             ];
         }
 
