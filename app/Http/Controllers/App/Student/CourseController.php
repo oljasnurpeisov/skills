@@ -68,8 +68,16 @@ class CourseController extends Controller
                 $q->orWhereHas('courses.user', function ($s) use ($term) {
                     $s->where('company_name', 'like', '%' . $term . '%');
                     $s->orWhereHas('author_info', function ($k) use ($term) {
-                        $k->where('name', 'like', '%' . $term . '%');
-                        $k->orWhere('surname', 'like', '%' . $term . '%');
+                        $arr = explode(' ', $term);
+                        foreach ($arr as $key => $t) {
+                            if($key === 0){
+                                $k->where('name', 'like', '%' . $t . '%');
+                                $k->orWhere('surname', 'like', '%' . $t . '%');
+                            } else {
+                                $k->orWhere('name', 'like', '%' . $t . '%');
+                                $k->orWhere('surname', 'like', '%' . $t . '%');
+                            }
+                        }
                     });
                 });
             });
@@ -161,6 +169,12 @@ class CourseController extends Controller
             // Добавление новых полей в коллекцию
             $item->lessons_count = $lessonsCount;
             $item->finished_lessons_count = $finishedLessonsCount;
+
+            if ($lessonsCount === 0) {
+                $item->progress = 100;
+            } else {
+                $item->progress = round($finishedLessonsCount / $lessonsCount * 100);
+            }
         }
 
         return view("app.pages.student.courses.my_courses", [

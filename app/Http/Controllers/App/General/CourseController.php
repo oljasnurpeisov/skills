@@ -42,8 +42,16 @@ class CourseController extends Controller
                 $q->orWhereHas('user', function ($s) use ($term) {
                     $s->where('company_name', 'like', '%' . $term . '%');
                     $s->orWhereHas('author_info', function ($k) use ($term) {
-                        $k->where('name', 'like', '%' . $term . '%');
-                        $k->orWhere('surname', 'like', '%' . $term . '%');
+                        $arr = explode(' ', $term);
+                        foreach ($arr as $key => $t) {
+                            if($key === 0){
+                                $k->where('name', 'like', '%' . $t . '%');
+                                $k->orWhere('surname', 'like', '%' . $t . '%');
+                            } else {
+                                $k->orWhere('name', 'like', '%' . $t . '%');
+                                $k->orWhere('surname', 'like', '%' . $t . '%');
+                            }
+                        }
                     });
                 });
             });
@@ -67,7 +75,7 @@ class CourseController extends Controller
             }
         }
         // Сортировка курса
-        switch ($course_sort){
+        switch ($course_sort) {
             case 'sort_by_rate_high':
                 $query->withCount(['rate as average_rate' => function ($query) {
                     $query->select(DB::raw('round(avg(rate),1)'));
@@ -324,12 +332,13 @@ class CourseController extends Controller
 
     }
 
-    public function markAsReadNotifications($lang, Request $request){
+    public function markAsReadNotifications($lang, Request $request)
+    {
 
         $notifications = $request->data;
         $items = Notification::whereIn('id', $notifications)->get();
 
-        foreach ($items as $item){
+        foreach ($items as $item) {
             $item->is_read = true;
             $item->save();
         }
