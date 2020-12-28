@@ -445,11 +445,17 @@
                                        class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
                                 </div>
                                 <div class="col-auto">
-
                                     <a href="#removeCourseModal" data-fancybox
                                        title="{{__('default.pages.courses.delete_course')}}"
                                        class="btn red">{{__('default.pages.courses.delete_course')}}</a>
-
+                                </div>
+                                @break
+                                @case(1)
+                                @case(3)
+                                <div class="col-auto">
+                                    <a href="#removeCourseModal" data-fancybox
+                                       title="{{__('default.pages.courses.delete_course')}}"
+                                       class="btn red">{{__('default.pages.courses.delete_course')}}</a>
                                 </div>
                                 @break
                                 @case(4)
@@ -464,7 +470,6 @@
                                 </div>
                                 @break
                                 @default
-
                             @endswitch
                         </div>
                     </div>
@@ -680,7 +685,17 @@
                                class="ghost-btn">{{__('default.pages.courses.edit_title')}}</a>
                         </div>
                         <div class="col-auto">
-                            {{--                                <a href="#" title="Отмена" class="ghost-btn">Отмена</a>--}}
+                            <a href="#removeCourseModal" data-fancybox
+                               title="{{__('default.pages.courses.delete_course')}}"
+                               class="btn red">{{__('default.pages.courses.delete_course')}}</a>
+                        </div>
+                        @break
+                        @case(1)
+                        @case(3)
+                        <div class="col-auto">
+                            <a href="#removeCourseModal" data-fancybox
+                               title="{{__('default.pages.courses.delete_course')}}"
+                               class="btn red">{{__('default.pages.courses.delete_course')}}</a>
                         </div>
                         @break
                         @case(4)
