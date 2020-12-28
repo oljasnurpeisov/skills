@@ -41,5 +41,9 @@ return [
 
     'dialogs' => [
         'title' => 'Диалоги'
+    ],
+
+    'certificates' => [
+        'title' => 'Сертификаты'
     ]
 ];

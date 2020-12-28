@@ -375,6 +375,78 @@ class UserController extends BaseController
         return $this->response->item($message, new MessageTransformer());
     }
 
+    public function getCertificates(Request $request)
+    {
+        $user_id = $request->get('user');
+        $hash = $request->header('hash');
+        $lang = $request->header('lang', 'ru');
+        app()->setLocale($lang);
+
+        // Валидация
+        $rules = [
+            'user' => 'required',
+            'hash' => 'required',
+        ];
+        $payload = [
+            'user' => $user_id,
+            'hash' => $hash
+        ];
+
+        $validator = Validator::make($payload, $rules);
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        $user = User::whereId($user_id)->first();
+
+        if (!$user) {
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        $items = $user->certificates()->paginate($this->per_page);
+
+        $next_page_number = null;
+        if ($items->nextPageUrl()) {
+            $t = parse_url($items->nextPageUrl());
+            $t = isset($t["query"]) ? $t["query"] : "";
+            $t = explode("=", $t);
+            $next_page_number = in_array("page", $t) ? $t[array_search("page", $t) + 1] : null;
+        }
+
+        $data = [
+            "items" => [],
+            "next" => $next_page_number,
+        ];
+
+        foreach ($items as $item) {
+            $data["items"][] = [
+                'id' => $item->id,
+                'image' => $item->png_ru,
+                'pdf' => $item->pdf_ru
+            ];
+            $data["items"][] = [
+                'id' => $item->id,
+                'image' => $item->png_kk,
+                'pdf' => $item->pdf_kk
+            ];
+        }
+
+        $message = new Message(__('api/messages.certificates.title'), 200, $data);
+        return $this->response->item($message, new MessageTransformer());
+    }
+
     public function getStudentResume($token)
     {
         $client = new Client(['verify' => false]);

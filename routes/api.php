@@ -43,6 +43,8 @@ APIRoute::version('v1', ['prefix' => 'api/app', 'namespace' => 'App\Api\V1\Contr
         APIRoute::get("/notifications", "UserController@getNotifications");
         // Диалоги
         APIRoute::get("/dialogs", "UserController@getDialogs");
+        // Сертификаты
+        APIRoute::get("/certificates", "UserController@getCertificates");
     });
     APIRoute::group(["prefix" => "courses"], function () {
         // Авторы
