@@ -5,6 +5,7 @@ namespace App\Api\V1\Controllers\App;
 use App\Api\V1\Classes\Message;
 use App\Api\V1\Controllers\BaseController;
 use App\Api\V1\Transformers\MessageTransformer;
+use App\Extensions\FormatDate;
 use App\Models\Dialog;
 use App\Models\Notification;
 use App\Models\Role;
@@ -255,19 +256,19 @@ class UserController extends BaseController
             return $this->response->item($message, new MessageTransformer())->statusCode(404);
         }
 
-        $items = $user->notifications;
+        $items = $user->notifications()->paginate($this->per_page);
 
-//        $next_page_number = null;
-//        if ($items->nextPageUrl()) {
-//            $t = parse_url($items->nextPageUrl());
-//            $t = isset($t["query"]) ? $t["query"] : "";
-//            $t = explode("=", $t);
-//            $next_page_number = in_array("page", $t) ? $t[array_search("page", $t) + 1] : null;
-//        }
+        $next_page_number = null;
+        if ($items->nextPageUrl()) {
+            $t = parse_url($items->nextPageUrl());
+            $t = isset($t["query"]) ? $t["query"] : "";
+            $t = explode("=", $t);
+            $next_page_number = in_array("page", $t) ? $t[array_search("page", $t) + 1] : null;
+        }
 
         $data = [
             "items" => [],
-//            "next" => $next_page_number,
+            "next" => $next_page_number,
         ];
 
         foreach ($items as $item) {
@@ -279,6 +280,98 @@ class UserController extends BaseController
         }
 
         $message = new Message(__('api/messages.notifications.title'), 200, $data);
+        return $this->response->item($message, new MessageTransformer());
+    }
+
+    public function getDialogs(Request $request)
+    {
+        $user_id = $request->get('user');
+        $hash = $request->header("hash");
+        $lang = $request->header("lang", 'ru');
+        app()->setLocale($lang);
+
+        // Валидация
+        $rules = [
+            'user' => 'required',
+            'hash' => 'required',
+        ];
+        $payload = [
+            'user' => $user_id,
+            'hash' => $hash
+        ];
+
+        $validator = Validator::make($payload, $rules);
+
+        if ($validator->fails()) {
+            $message = new Message($validator->errors()->first(), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        $user = User::whereId($user_id)->first();
+
+        if (!$user) {
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        $items = Dialog::whereHas("members", function ($q) use ($user) {
+            $q->where("user_id", "=", $user->id);
+        })->with('members')->orderBy("updated_at", "desc")->paginate(1);
+
+        $next_page_number = null;
+        if ($items->nextPageUrl()) {
+            $t = parse_url($items->nextPageUrl());
+            $t = isset($t["query"]) ? $t["query"] : "";
+            $t = explode("=", $t);
+            $next_page_number = in_array("page", $t) ? $t[array_search("page", $t) + 1] : null;
+        }
+
+        $data = [
+            "items" => [],
+            "next" => $next_page_number,
+        ];
+
+        foreach ($items as $item) {
+            $member = $item->members->where('id', '!=', $user->id)->first();
+
+            if($member->hasRole('author')) {
+                $member_id = $member->id;
+                $member_name = $member->author_info->name . ' ' . $member->author_info->surname;
+                $member_avatar = $member->author_info->getAvatar();
+            }else if($member->hasRole('student')){
+                $member_id = $member->id;
+                $member_name = $member->student_info->name ?? __('default.pages.profile.student_title');
+                $member_avatar = $member->student_info->getAvatar();
+            }else{
+                $member_id = $member->id;
+                $member_name = $member->name;
+                $member_avatar = null;
+            }
+            $data["items"][] = [
+                'id' => $item->id,
+                'opponent_id' => $member_id,
+                'image' => $member_avatar,
+                'author' => $member_name,
+                'text' => json_decode('"'.str_replace('"','\"',$item->lastMessageText()).'"'),
+                'date' => $item->lastMessageDate()
+            ];
+        }
+
+        $message = new Message(__('api/messages.dialogs.title'), 200, $data);
         return $this->response->item($message, new MessageTransformer());
     }
 

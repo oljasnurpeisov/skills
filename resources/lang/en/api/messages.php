@@ -37,5 +37,9 @@ return [
 
     'notifications' => [
         'title' => 'Уведомления'
+    ],
+
+    'dialogs' => [
+        'title' => 'Диалоги'
     ]
 ];

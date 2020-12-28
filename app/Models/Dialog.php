@@ -53,7 +53,7 @@ class Dialog extends Model
             $avatar = $member->author_info->getAvatar();
             $slug = '';
         }else if($member->roles()->first()->slug == 'student'){
-            $name = 'Обучающийся';
+            $name = $member->student_info->name ?? __('default.pages.profile.student_title');
             $avatar = $member->student_info->getAvatar();
             $slug = '';
         }else{
