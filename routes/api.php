@@ -45,6 +45,8 @@ APIRoute::version('v1', ['prefix' => 'api/app', 'namespace' => 'App\Api\V1\Contr
         APIRoute::get("/dialogs", "UserController@getDialogs");
         // Сообщения
         APIRoute::get("/dialog", "UserController@getDialog");
+        // Создать сообщение
+        APIRoute::post("/dialog/create-message", "UserController@saveMessage");
         // Сертификаты
         APIRoute::get("/certificates", "UserController@getCertificates");
     });

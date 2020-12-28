@@ -6,6 +6,7 @@ use App\Api\V1\Classes\Message;
 use App\Api\V1\Controllers\BaseController;
 use App\Api\V1\Transformers\MessageTransformer;
 use App\Extensions\FormatDate;
+use App\Extensions\NotificationsHelper;
 use App\Models\Dialog;
 use App\Models\Notification;
 use App\Models\Role;
@@ -15,6 +16,7 @@ use App\Models\StudentInformation;
 use App\Models\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 use Illuminate\Http\Request;
@@ -331,7 +333,7 @@ class UserController extends BaseController
 
         $items = Dialog::whereHas("members", function ($q) use ($user) {
             $q->where("user_id", "=", $user->id);
-        })->with('members')->orderBy("updated_at", "desc")->paginate(1);
+        })->with('members')->orderBy("updated_at", "desc")->paginate($this->per_page);
 
         $next_page_number = null;
         if ($items->nextPageUrl()) {
@@ -567,6 +569,83 @@ class UserController extends BaseController
         }
 
         $message = new Message(__('api/messages.certificates.title'), 200, $data);
+        return $this->response->item($message, new MessageTransformer());
+    }
+
+    public function saveMessage(Request $request)
+    {
+        $user_id = $request->get('user');
+        $dialog_id = $request->get('dialog');
+        $message = $request->get('message');
+        $hash = $request->header('hash');
+        $lang = $request->header('lang', 'ru');
+        app()->setLocale($lang);
+
+        // Валидация
+        $rules = [
+            'dialog' => 'required',
+            'message' => 'required',
+            'user' => 'required',
+            'hash' => 'required',
+        ];
+        $payload = [
+            'dialog' => $dialog_id,
+            'message' => $message,
+            'user' => $user_id,
+            'hash' => $hash
+        ];
+
+        $validator = Validator::make($payload, $rules);
+
+        if ($validator->fails()) {
+            $message = new Message($validator->errors()->first(), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        $user = User::whereId($user_id)->first();
+        $dialog = Dialog::whereId($dialog_id)->first();
+
+        if (!$user) {
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+        if (!$dialog) {
+            $message = new Message(Lang::get("api/errors.dialog_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        $item = new \App\Models\Message;
+        $item->dialog_id = $dialog->id;
+        $item->sender_id = $user->id;
+        $item->message = $message;
+        $item->save();
+
+        $dialog->updated_at = Carbon::now();
+        $dialog->save();
+
+        $opponent = $dialog->members()->where('user_id', '!=', $user->id)->first();
+
+        $notification_data = [
+            'dialog_opponent_id' => $user->id
+        ];
+        $notification_name = 'notifications.new_message';
+        NotificationsHelper::createNotification($notification_name, null, $opponent->id, 0, $notification_data);
+
+        $message = new Message(__('api/messages.success'), 200, null);
         return $this->response->item($message, new MessageTransformer());
     }
 
