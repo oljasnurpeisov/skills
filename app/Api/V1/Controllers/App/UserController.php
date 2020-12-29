@@ -149,6 +149,67 @@ class UserController extends BaseController
         return $this->response->item($message, new MessageTransformer());
     }
 
+    public function saveStudentResumeData(Request $request){
+        $user_id = $request->get("user");
+        $name = $request->get("resume_name");
+        $iin = $request->get("resume_iin");
+        $hash = $request->header("hash");
+        $lang = $request->header("lang", 'ru');
+        app()->setLocale($lang);
+
+        // Валидация
+        $rules = [
+            'user' => 'required',
+            'resume_iin' => 'required|unique:student_information,iin|numeric|digits:12',
+            'resume_name' => 'required|max:255',
+            'hash' => 'required',
+        ];
+        $payload = [
+            'resume_iin' => $iin,
+            'resume_name' => $name,
+            'user' => $user_id,
+            'hash' => $hash
+        ];
+
+        $validator = Validator::make($payload, $rules);
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        $user = User::whereId($user_id)->first();
+
+        if (!$user) {
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        StudentInformation::whereUserId($user_id)->update([
+            'name' => $name,
+            'iin' => $iin,
+        ]);
+
+        $data = [
+            'id' => $user->id,
+            'email' => $user->email,
+            'name' => $user->student_info->name,
+            'quota_count' => $user->student_info->quota_count,
+        ];
+
+        $message = new Message(__('api/messages.success'), 200, $data);
+        return $this->response->item($message, new MessageTransformer());
+    }
+
     public function uploadAvatar(Request $request)
     {
 
