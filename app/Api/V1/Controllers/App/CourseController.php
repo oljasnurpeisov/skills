@@ -7,11 +7,15 @@ use App\Api\V1\Controllers\BaseController;
 use App\Api\V1\Transformers\MessageTransformer;
 use App\Models\Course;
 use App\Models\CourseRate;
+use App\Models\Lesson;
 use App\Models\Professions;
 use App\Models\Skill;
+use App\Models\StudentCertificate;
+use App\Models\StudentCourse;
 use App\Models\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 
@@ -302,6 +306,203 @@ class CourseController extends BaseController
 
         $message = new Message(__('api/messages.courses.course_rate_success'), 200, null);
         return $this->response->item($message, new MessageTransformer());
+    }
+
+    public function catalogFilter(Request $request)
+    {
+        $authors = $request->get('authors');
+        $course_lang = $request->get('course_lang');
+        $course_status = $request->get('course_status');
+        $finish_date_from = $request->get('finish_date_from');
+        $finish_date_to = $request->get('finish_date_to');
+        $professions = $request->get('professions');
+        $skills = $request->get('skills');
+        $start_date_from = $request->get('start_date_from');
+        $start_date_to = $request->get('start_date_to');
+        $term = $request->get('term');
+        $user_id = $request->get('user');
+
+        $hash = $request->header("hash");
+        $lang = $request->header("lang", 'ru');
+
+        app()->setLocale($lang);
+
+        // Валидация
+        $rules = [
+            'user' => 'required',
+            'hash' => 'required',
+        ];
+        $payload = [
+            'authors' => $authors,
+            'course_lang' => $course_lang,
+            'course_status' => $course_status,
+            'finish_date_from' => $finish_date_from,
+            'finish_date_to' => $finish_date_to,
+            'professions' => $professions,
+            'skills' => $skills,
+            'start_date_from' => $start_date_from,
+            'start_date_to' => $start_date_to,
+            'term' => $term,
+            'user' => $user_id,
+            'hash' => $hash
+        ];
+
+        $validator = Validator::make($payload, $rules);
+
+        if ($validator->fails()) {
+            $message = new Message($validator->errors()->first(), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        $query = StudentCourse::where('student_id', '=', $user_id)->where('paid_status', '!=', 0)->whereHas('course', function ($q) {
+            $q->where('status', '=', Course::published);
+        });
+        // Фильтровать по фразе
+        if ($term) {
+            $query = $query->where(function ($q) use ($term) {
+                $q->whereHas('courses', function ($q) use ($term) {
+                    $q->where('courses.name', 'like', '%' . $term . '%');
+                });
+                $q->orWhereHas('courses.user', function ($s) use ($term) {
+                    $s->where('company_name', 'like', '%' . $term . '%');
+                    $s->orWhereHas('author_info', function ($k) use ($term) {
+                        $arr = explode(' ', $term);
+                        foreach ($arr as $key => $t) {
+                            if ($key === 0) {
+                                $k->where('name', 'like', '%' . $t . '%');
+                                $k->orWhere('surname', 'like', '%' . $t . '%');
+                            } else {
+                                $k->orWhere('name', 'like', '%' . $t . '%');
+                                $k->orWhere('surname', 'like', '%' . $t . '%');
+                            }
+                        }
+                    });
+                });
+            });
+        }
+        // Сортировка по профессиям
+        if ($professions) {
+            if (count(array_filter($professions)) > 0) {
+                $query->whereHas('courses.professions', function ($q) use ($professions) {
+                    $q->whereIn('professions.id', json_decode($professions));
+                });
+            }
+        }
+        // Сортировка по навыкам
+        if ($skills) {
+            if (count(array_filter($skills)) > 0) {
+                $query->whereHas('courses.skills', function ($q) use ($skills) {
+                    $q->whereIn('skills.id', json_decode($skills));
+                });
+            }
+        }
+        // Сортировка по авторам
+        if ($authors) {
+            $query->whereHas('courses.users', function ($q) use ($authors) {
+                $q->whereIn('users.id', json_decode($authors));
+            });
+        }
+        // Сортировка по языку
+        if ($course_lang) {
+            $query = $query->whereHas('courses', function ($q) use ($course_lang) {
+                $q->whereIn('courses.lang', json_decode($course_lang));
+            });
+        }
+        // Сортировка по статусу
+        switch ($course_status) {
+            case (1):
+            case (2):
+                $query = $query->where('is_finished', '=', true);
+                break;
+            case (0):
+                $query = $query->where('is_finished', '=', false);
+                break;
+        }
+        // Сортировка по Дате записи на курс
+        if ($start_date_from and empty($start_date_to)) {
+            $query->where('created_at', '>=', date('Y-m-d 00:00:00', strtotime($start_date_from)));
+        } else if ($start_date_to and empty($start_date_from)) {
+            $query->where('created_at', '<=', date('Y-m-d 23:59:59', strtotime($start_date_to)));
+        } else if ($start_date_to and $start_date_from) {
+            $query->whereBetween('created_at', [date('Y-m-d 00:00:00', strtotime($start_date_from)), date('Y-m-d 23:59:59', strtotime($start_date_to))]);
+        }
+        // Сортировка по Дате окончания курса
+        if ($finish_date_to and empty($start_date_to)) {
+            $query->where('updated_at', '>=', date('Y-m-d 00:00:00', strtotime($finish_date_from)))->where('is_finished', '=', true);
+        } else if ($finish_date_to and empty($finish_date_from)) {
+            $query->where('updated_at', '<=', date('Y-m-d 23:59:59', strtotime($finish_date_to)))->where('is_finished', '=', true);
+        } else if ($finish_date_to and $finish_date_from) {
+            $query->whereBetween('updated_at', [date('Y-m-d 00:00:00', strtotime($finish_date_from)), date('Y-m-d 23:59:59', strtotime($finish_date_to))])->where('is_finished', '=', true);
+        }
+
+        $items = $query->paginate($this->per_page);
+
+        $next_page_number = null;
+        if ($items->nextPageUrl()) {
+            $t = parse_url($items->nextPageUrl());
+            $t = isset($t["query"]) ? $t["query"] : "";
+            $t = explode("=", $t);
+            $next_page_number = in_array("page", $t) ? $t[array_search("page", $t) + 1] : null;
+        }
+
+        $data = [
+            "items" => [],
+            "next" => $next_page_number,
+        ];
+
+        foreach ($items as $item) {
+            $lessonsCount = Lesson::whereCourseId($item->course_id)
+                ->whereIn('type', [1, 2])
+                ->count();
+            $finishedLessonsCount = Lesson::whereCourseId($item->course_id)
+                ->whereIn('type', [1, 2])
+                ->whereHas('student_lessons', function ($q) {
+                    $q->where('student_lesson.is_finished', '=', true);
+                })
+                ->count();
+
+            if ($lessonsCount === 0) {
+                $item->progress = 100;
+            } else {
+                $item->progress = round($finishedLessonsCount / $lessonsCount * 100);
+            }
+
+            if ($item->is_finished == true) {
+                $end = $item->updated_at;
+                $certificate = StudentCertificate::whereCourseId($item->course->id)->whereUserId($user_id)->first()['pdf_' . $lang] ?? null;
+            } else {
+                $end = null;
+                $certificate = null;
+            }
+            $data["items"][] = [
+                'id' => $item->id,
+                'image' => $item->course->image,
+                'name' => $item->course->name,
+                'author' => $item->course->user->author_info->name . ' ' . $item->course->user->author_info->surname,
+                'start' => $item->created_at,
+                'end' => $end,
+                'certificate' => $certificate,
+                'percent' => $item->progress
+            ];
+        }
+
+        $message = new Message(__('api/messages.courses.title'), 200, $data);
+        return $this->response->item($message, new MessageTransformer());
+
     }
 
 }

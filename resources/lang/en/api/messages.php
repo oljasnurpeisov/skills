@@ -32,6 +32,7 @@ return [
     ],
 
     'courses' => [
+        'title' => 'Курсы',
         'course_rate_success' => 'Отзыв был успешно отправлен'
     ],
 

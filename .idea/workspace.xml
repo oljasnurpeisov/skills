@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- update save professions&#10;- add student professions table&#10;- update recommended course and skills">
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- add dialog view method api (unfinished&#10;)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Api/V1/Controllers/App/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Api/V1/Controllers/App/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Dialog.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Dialog.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Api/V1/Controllers/App/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Api/V1/Controllers/App/CourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Api/V1/Controllers/Service/ServiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Api/V1/Controllers/Service/ServiceController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/api/messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/api/messages.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
@@ -208,7 +208,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -295,63 +295,11 @@
       <workItem from="1608886681207" duration="1331000" />
       <workItem from="1608889588715" duration="5488000" />
       <workItem from="1609132728114" duration="339000" />
-      <workItem from="1609133869712" duration="4619000" />
-    </task>
-    <task id="LOCAL-00130" summary="- update statistic chart">
-      <created>1607613341274</created>
-      <option name="number" value="00130" />
-      <option name="presentableId" value="LOCAL-00130" />
-      <option name="project" value="LOCAL" />
-      <updated>1607613341274</updated>
-    </task>
-    <task id="LOCAL-00131" summary="- notification minor fix">
-      <created>1607627103327</created>
-      <option name="number" value="00131" />
-      <option name="presentableId" value="LOCAL-00131" />
-      <option name="project" value="LOCAL" />
-      <updated>1607627103328</updated>
-    </task>
-    <task id="LOCAL-00132" summary="- minor fix">
-      <created>1607628199251</created>
-      <option name="number" value="00132" />
-      <option name="presentableId" value="LOCAL-00132" />
-      <option name="project" value="LOCAL" />
-      <updated>1607628199251</updated>
-    </task>
-    <task id="LOCAL-00133" summary="- minor fix">
-      <created>1607630452436</created>
-      <option name="number" value="00133" />
-      <option name="presentableId" value="LOCAL-00133" />
-      <option name="project" value="LOCAL" />
-      <updated>1607630452436</updated>
-    </task>
-    <task id="LOCAL-00134" summary="- update statistic chart">
-      <created>1607673349142</created>
-      <option name="number" value="00134" />
-      <option name="presentableId" value="LOCAL-00134" />
-      <option name="project" value="LOCAL" />
-      <updated>1607673349142</updated>
-    </task>
-    <task id="LOCAL-00135" summary="- minor fix">
-      <created>1607688191576</created>
-      <option name="number" value="00135" />
-      <option name="presentableId" value="LOCAL-00135" />
-      <option name="project" value="LOCAL" />
-      <updated>1607688191577</updated>
-    </task>
-    <task id="LOCAL-00136" summary="- update certificates">
-      <created>1607688407528</created>
-      <option name="number" value="00136" />
-      <option name="presentableId" value="LOCAL-00136" />
-      <option name="project" value="LOCAL" />
-      <updated>1607688407528</updated>
-    </task>
-    <task id="LOCAL-00137" summary="- download certificate update">
-      <created>1607689207577</created>
-      <option name="number" value="00137" />
-      <option name="presentableId" value="LOCAL-00137" />
-      <option name="project" value="LOCAL" />
-      <updated>1607689207577</updated>
+      <workItem from="1609133869712" duration="13250000" />
+      <workItem from="1609154999771" duration="41000" />
+      <workItem from="1609155063327" duration="3540000" />
+      <workItem from="1609224539724" duration="7513000" />
+      <workItem from="1609235438938" duration="2065000" />
     </task>
     <task id="LOCAL-00138" summary="- update certificates style&#10;- add editing content on index page and for authors page&#10;- minor fix">
       <created>1607779891566</created>
@@ -640,22 +588,69 @@
       <option name="project" value="LOCAL" />
       <updated>1608893194052</updated>
     </task>
-    <option name="localTasksCounter" value="179" />
+    <task id="LOCAL-00179" summary="- update notifications api method&#10;- add dialogs api method">
+      <created>1609138619231</created>
+      <option name="number" value="00179" />
+      <option name="presentableId" value="LOCAL-00179" />
+      <option name="project" value="LOCAL" />
+      <updated>1609138619232</updated>
+    </task>
+    <task id="LOCAL-00180" summary="- add certificates api method">
+      <created>1609140109726</created>
+      <option name="number" value="00180" />
+      <option name="presentableId" value="LOCAL-00180" />
+      <option name="project" value="LOCAL" />
+      <updated>1609140109726</updated>
+    </task>
+    <task id="LOCAL-00181" summary="- add professions api method">
+      <created>1609141683614</created>
+      <option name="number" value="00181" />
+      <option name="presentableId" value="LOCAL-00181" />
+      <option name="project" value="LOCAL" />
+      <updated>1609141683614</updated>
+    </task>
+    <task id="LOCAL-00182" summary="- update professions api method&#10;- add skills api method">
+      <created>1609144264698</created>
+      <option name="number" value="00182" />
+      <option name="presentableId" value="LOCAL-00182" />
+      <option name="project" value="LOCAL" />
+      <updated>1609144264698</updated>
+    </task>
+    <task id="LOCAL-00183" summary="- add dialog view method api (unfinished)">
+      <created>1609148355554</created>
+      <option name="number" value="00183" />
+      <option name="presentableId" value="LOCAL-00183" />
+      <option name="project" value="LOCAL" />
+      <updated>1609148355554</updated>
+    </task>
+    <task id="LOCAL-00184" summary="- update notifications">
+      <created>1609154305821</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1609154305821</updated>
+    </task>
+    <task id="LOCAL-00185" summary="- add dialog api method">
+      <created>1609156985531</created>
+      <option name="number" value="00185" />
+      <option name="presentableId" value="LOCAL-00185" />
+      <option name="project" value="LOCAL" />
+      <updated>1609156985532</updated>
+    </task>
+    <task id="LOCAL-00186" summary="- add message create api method">
+      <created>1609158585176</created>
+      <option name="number" value="00186" />
+      <option name="presentableId" value="LOCAL-00186" />
+      <option name="project" value="LOCAL" />
+      <updated>1609158585176</updated>
+    </task>
+    <option name="localTasksCounter" value="187" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add test data for skills" />
-    <MESSAGE value="- update api methods" />
-    <MESSAGE value="- dialog date fix" />
-    <MESSAGE value="- change max video size&#10;- add login api method" />
-    <MESSAGE value="- update styles and scripts &#10;- update dialog view" />
-    <MESSAGE value="- minor fix" />
-    <MESSAGE value="- add upload avatar method" />
-    <MESSAGE value="- add authors api method" />
-    <MESSAGE value="- update skills &#10;- minor fix" />
     <MESSAGE value="- add course rate api method" />
     <MESSAGE value="- update styles and scripts &#10;- add notifications api method (unfinished)" />
     <MESSAGE value="- update skills and professions table and relation&#10;- update ide-helper models" />
@@ -672,7 +667,16 @@
     <MESSAGE value="- add professions column in course report" />
     <MESSAGE value="- get skills by iin api method&#10;- update notifications&#10;- update models&#10;- update student auth&#10;- update styles and scripts" />
     <MESSAGE value="- update save professions&#10;- add student professions table&#10;- update recommended course and skills" />
-    <option name="LAST_COMMIT_MESSAGE" value="- update save professions&#10;- add student professions table&#10;- update recommended course and skills" />
+    <MESSAGE value="- update notifications api method&#10;- add dialogs api method" />
+    <MESSAGE value="- add certificates api method" />
+    <MESSAGE value="- add professions api method" />
+    <MESSAGE value="- update professions api method&#10;- add skills api method" />
+    <MESSAGE value="- add dialog view method api (unfinished&#10;)" />
+    <MESSAGE value="- add dialog view method api (unfinished)" />
+    <MESSAGE value="- update notifications" />
+    <MESSAGE value="- add dialog api method" />
+    <MESSAGE value="- add message create api method" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add message create api method" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
@@ -695,16 +699,16 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="547" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1608018037579" />
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1608721873892">
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1609236958507">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1608721873892" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1608922292030">
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1609236958507" />
+    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1609158583514">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608922292030" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1609158583514" />
     <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -717,10 +721,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="517" y="135" key="NewPhpClassDialog/0.0.1536.824@0.0.1536.824" timestamp="1608023294866" />
-    <state x="277" y="57" key="SettingsEditor" timestamp="1608527918275">
+    <state x="277" y="57" key="SettingsEditor" timestamp="1609155222547">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1608527918275" />
+    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1609155222547" />
     <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1608893200070">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

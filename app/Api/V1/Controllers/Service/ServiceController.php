@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
@@ -168,26 +169,26 @@ class ServiceController extends BaseController
             }
         }
         // Сортировка курса
-        if ($course_sort) {
-            // Сортировка Рейтинг - по возрастанию
-            if ($course_sort == 2) {
-                $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
-                    ->select('course_rate.rate as course_rate', 'courses.*')
-                    ->orderBy('course_rate.rate', 'asc');
-                // Сортировка Рейтинг - по убыванию
-            } else if ($course_sort == 1) {
-                $query->leftJoin('course_rate', 'courses.id', '=', 'course_rate.course_id')
-                    ->select('course_rate.rate as course_rate', 'courses.*')
-                    ->orderBy('course_rate.rate', 'desc');
-                // Сортировка Стоимость - по убыванию
-            } else if ($course_sort == 3) {
+        switch ($course_sort) {
+            case 'sort_by_rate_high':
+                $query->withCount(['rate as average_rate' => function ($query) {
+                    $query->select(DB::raw('round(avg(rate),1)'));
+                }])->orderBy('average_rate', 'desc');
+                break;
+            case 'sort_by_rate_low':
+                $query->withCount(['rate as average_rate' => function ($query) {
+                    $query->select(DB::raw('round(avg(rate),1)'));
+                }])->orderBy('average_rate', 'asc');
+                break;
+            case 'sort_by_cost_high':
                 $query->orderBy('cost', 'desc');
-                // Сортировка Стоимость - по возрастанию
-            } else if ($course_sort == 4) {
+                break;
+            case 'sort_by_cost_low':
                 $query->orderBy('cost', 'asc');
-            }
-        } else {
-            $query->orderBy('created_at', 'desc');
+                break;
+            default:
+                $query->orderBy('created_at', 'desc');
+                break;
         }
         // Учеников, окончивших курс (мин)
         if ($finished_students_min) {
@@ -240,7 +241,7 @@ class ServiceController extends BaseController
         }
 
         $data = ['results_count' => $items->count(),
-            'search_link' => env('APP_URL') . '/' . $lang . '/course-catalog?search=' . $term . $skills_data . $data_lang . '&min_rating=' . $rate_min . '&members_count=' . $finished_students_min . '&course_type=' . $course_type . '&course_sort=' . $course_sort . ''];
+            'search_link' => env('APP_URL') . '/' . $lang . '/course-catalog?search=' . $term . $skills_data .'&'. $data_lang . '&min_rating=' . $rate_min . '&members_count=' . $finished_students_min . '&course_type=' . $course_type . '&course_sort=' . $course_sort . ''];
 
 
         $message = new Message(__('api/messages.success'), 200, $data);
