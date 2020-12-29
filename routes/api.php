@@ -63,5 +63,7 @@ APIRoute::version('v1', ['prefix' => 'api/app', 'namespace' => 'App\Api\V1\Contr
         APIRoute::post("/course-rate", "CourseController@courseRate");
         // Каталог
         APIRoute::get("/catalog", "CourseController@catalogFilter");
+        // Курс
+        APIRoute::get("/view", "CourseController@courseView");
     });
 });

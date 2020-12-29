@@ -12,6 +12,7 @@ use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCertificate;
 use App\Models\StudentCourse;
+use App\Models\Theme;
 use App\Models\User;
 
 use Illuminate\Http\Request;
@@ -503,6 +504,164 @@ class CourseController extends BaseController
         $message = new Message(__('api/messages.courses.title'), 200, $data);
         return $this->response->item($message, new MessageTransformer());
 
+    }
+
+    public function courseView(Request $request)
+    {
+        $course_id = $request->get('course');
+        $user_id = $request->get('user');
+        $hash = $request->header('hash');
+        $lang = $request->header('lang', 'ru');
+        app()->setLocale($lang);
+
+        // Валидация
+        $rules = [
+            'course' => 'required',
+            'user' => 'required',
+            'hash' => 'required',
+        ];
+        $payload = [
+            'course' => $course_id,
+            'user' => $user_id,
+            'hash' => $hash
+        ];
+
+        $validator = Validator::make($payload, $rules);
+
+        if ($validator->fails()) {
+            $message = new Message($validator->errors()->first(), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        $course = Course::whereId($course_id)->first();
+        $user = User::whereId($user_id)->first();
+
+        if (!$user) {
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        if (!$course) {
+            $message = new Message(Lang::get("api/errors.course_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        $student_course = StudentCourse::whereStudentId($user->id)->whereCourseId($course->id)->first();
+        if (!$student_course) {
+            $message = new Message(Lang::get("api/errors.user_doesnt_have_course"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+        // Уроки
+        foreach ($course->themes->sortBy('index_number') as $key => $theme) {
+            foreach ($theme->lessons->sortBy('index_number') as $lesson) {
+                $end_lesson_type = $lesson->end_lesson_type == 0 ? ' (' . __('default.pages.lessons.test_title') . ')' : ' (' . __('default.pages.lessons.homework_title') . ')';
+                $lessons[$theme->name][] = [
+                    'id' => $lesson->id,
+                    'name' => $lesson->name,
+                    'type' => $lesson->lesson_type['name_' . $lang] . $end_lesson_type,
+                    'duration' => $lesson->duration
+                ];
+            }
+        }
+        // Профессии
+        foreach ($course->professions->groupBy('id') as $profession) {
+            $professions[] = [
+                'id' => $profession[0]->id,
+                'name' => $profession[0]['name_'.$lang]
+            ];
+        }
+        // Навыки
+        foreach ($course->skills->groupBy('id') as $skill) {
+            $skills[] = [
+                'id' => $skill[0]->id,
+                'name' => $skill[0]['name_'.$lang]
+            ];
+        }
+        // Приложения
+        if(!empty($course->attachments)) {
+            // Видео
+            if($course->is_poor_vision == true){
+                $videos_array = array_merge(json_decode($course->attachments->videos), json_decode($course->attachments->videos_poor_vision));
+            }else{
+                $videos_array = json_decode($course->attachments->videos);
+            }
+
+            foreach($videos_array as $video){
+                $videos[] = [
+                  'link' => $video
+                ];
+            }
+            // Видео с YouTube
+            if($course->is_poor_vision == true){
+                $youtube_videos_array = array_merge(json_decode($course->attachments->videos_link), json_decode($course->attachments->videos_poor_vision_link));
+            }else{
+                $youtube_videos_array = json_decode($course->attachments->videos_link);
+            }
+
+            foreach($youtube_videos_array as $video){
+                $youtube_videos[] = [
+                    'link' => $video
+                ];
+            }
+            // Аудио
+            if($course->is_poor_vision == true){
+                $audios_array = array_merge(json_decode($course->attachments->audios), json_decode($course->attachments->audios_poor_vision));
+            }else{
+                $audios_array = json_decode($course->attachments->audios);
+            }
+
+            foreach($audios_array as $audio){
+                $audios[] = [
+                    'link' => $audio
+                ];
+            }
+        }else{
+            $videos = null;
+            $youtube_videos = null;
+            $audios = null;
+        }
+
+        $data = [
+            'id' => $course->id,
+            'name' => $course->name,
+            'lang' => $course->lang,
+            'is_student_paid' => $student_course->paid_status != 0 ? true : false,
+            'is_access_all' => $course->is_access_all,
+            'is_poor_vision' => $course->is_poor_vision,
+            'cost' => $course->cost,
+            'profit_desc' => $course->profit_desc,
+            'teaser' => $course->teaser,
+            'description' => $course->description,
+            'image' => $course->getAvatar(),
+            'author' => [
+                'id' => $course->user->id,
+                'name' => $course->user->author_info->name . ' ' . $course->user->author_info->surname
+            ],
+            'videos' => $videos,
+            'youtube_videos' => $youtube_videos,
+            'audios' => $audios,
+            'lessons' => $lessons,
+            'professions' => $professions,
+            'skills' => $skills,
+
+        ];
+
+        $message = new Message(__('api/messages.courses.title'), 200, $data);
+        return $this->response->item($message, new MessageTransformer());
     }
 
 }
