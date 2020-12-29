@@ -51,6 +51,8 @@ APIRoute::version('v1', ['prefix' => 'api/app', 'namespace' => 'App\Api\V1\Contr
         APIRoute::post("/dialog/create-message", "UserController@saveMessage");
         // Сертификаты
         APIRoute::get("/certificates", "UserController@getCertificates");
+        // Сохранить токен для push-уведомлений
+        APIRoute::post("/update-token", "UserController@updateToken");
     });
     APIRoute::group(["prefix" => "courses"], function () {
         // Авторы
@@ -65,5 +67,13 @@ APIRoute::version('v1', ['prefix' => 'api/app', 'namespace' => 'App\Api\V1\Contr
         APIRoute::get("/catalog", "CourseController@catalogFilter");
         // Курс
         APIRoute::get("/view", "CourseController@courseView");
+    });
+    APIRoute::group(["prefix" => "lessons"], function () {
+        // Урок
+        APIRoute::get("/view", "LessonController@lessonView");
+        // Отправить домашнюю/курсовую работу
+        APIRoute::post("/send-coursework", "LessonController@sendHomeWork");
+        // Отправить тест
+        APIRoute::post("/send-test", "LessonController@sendTest");
     });
 });

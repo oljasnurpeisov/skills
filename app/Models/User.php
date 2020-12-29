@@ -68,6 +68,16 @@ use App\Notifications\VerifyEmail;
  * @property-read \App\Models\StudentCertificate $certificates
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StudentCourse[] $student_course
  * @property-read int|null $student_course_count
+ * @property string|null $ios_token
+ * @property string|null $android_token
+ * @property int $is_push_active
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CourseRate[] $author_rates
+ * @property-read int|null $author_rates_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Professions[] $professions
+ * @property-read int|null $professions_count
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereAndroidToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIosToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIsPushActive($value)
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
