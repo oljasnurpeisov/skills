@@ -6,5 +6,6 @@ return [
     'course_rate_already_exist' => 'Курс уже был оценен.',
     'dialog_does_not_exist' => 'Диалог не найден',
     'user_doesnt_have_course' => 'Пользователь не приобрел данный курс',
-    'user_doesnt_have_access_to_lesson' => 'У вас нет доступа к уроку'
+    'user_doesnt_have_access_to_lesson' => 'У вас нет доступа к уроку',
+    'request_failed' => 'Во время выполнения запроса произошла ошибка'
 ];

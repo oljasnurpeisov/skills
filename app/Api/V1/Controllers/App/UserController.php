@@ -9,6 +9,7 @@ use App\Extensions\FormatDate;
 use App\Extensions\NotificationsHelper;
 use App\Models\Dialog;
 use App\Models\Notification;
+use App\Models\Professions;
 use App\Models\Role;
 use App\Models\Skill;
 use App\Models\StudentCourse;
@@ -16,6 +17,7 @@ use App\Models\StudentInformation;
 use App\Models\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -74,76 +76,96 @@ class UserController extends BaseController
                 ]
             ]);
         } catch (BadResponseException $e) {
-            $errors = $validator->errors()->all();
-            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            $message = new Message(Lang::get("api/errors.request_failed"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        } catch (GuzzleException $b) {
+            $message = new Message(Lang::get("api/errors.request_failed"), 404, null);
             return $this->response->item($message, new MessageTransformer())->statusCode(400);
         }
 
-        $token = json_decode($response->getBody(), true);
-        $token = $token["response"]["token"];
-        $student_resume = json_decode($this->getStudentResume($token), true);
-        $student_unemployed_status = json_decode($this->getUnemployedStatus($token), true);
+        $authData = json_decode($response->getBody(), true);
+        $token = $authData["response"]["token"];
+        $uid = $authData["response"]["uid"];
 
-        $user = User::where('email', '=', $login)->first();
+        $studentUnemployedStatus = json_decode($this->getUnemployedStatus($token), true);
+        $studentResumes = json_decode($this->getStudentResume($token), true);
 
-        $student_role = Role::where('slug', '=', 'student')->first();
+        $user = User::whereEmail($login)->first();
+        $student_role = Role::whereSlug('student')->first();
 
         if (empty($user)) {
+            $user = new User;
+            $user->email = $request->email;
+            $user->is_activate = 1;
+            $user->email_verified_at = Carbon::now()->toDateTimeString();
+            $user->save();
 
-            $item = new User;
-            $item->email = $login;
-            $item->is_activate = 1;
-            $item->email_verified_at = Carbon::now()->toDateTimeString();
-            $item->save();
+            $user->roles()->sync([$student_role->id]);
 
-            $item->roles()->sync([$student_role->id]);
-
-            $item_information = new StudentInformation;
-            $item_information->user_id = $item->id;
-
-            if ($student_resume != null) {
-                $item_information->name = $student_resume[0]["FIO"];
-                $item_information->uid = $student_resume[0]["uid"];
-                $item_information->profession_code = $student_resume[0]["uozcodprof"];
-
-                $user_skills = array();
-                foreach ($student_resume[0]["compSpecList"] as $skill) {
-                    array_push($user_skills, $skill["codcomp"]);
-                }
-                $skills = Skill::whereIn('code_skill', $user_skills)->pluck('id')->toArray();
-                $item->skills()->sync($skills);
-            }
-
-            if ($student_unemployed_status["response"] == null) {
-                $item_information->unemployed_status = 0;
-            } else {
-                $item_information->unemployed_status = 1;
-                $item_information->quota_count = 3;
-            }
-            $item_information->save();
-
-            $this->createTechDialog($item->id);
-
-            $data = [
-                'id' => $item->id,
-                'email' => $item->email,
-                'name' => $item->student_info->name,
-                'quota_count' => $item->student_info->quota_count,
-            ];
-
-        } else {
-
-            if ($user->roles()->first()->id != $student_role->id) {
-                return $this->response->item(__('default.pages.auth.student_login_author_exist'), new MessageTransformer())->statusCode(400);
-            }
-
-            $data = [
-                'id' => $user->id,
-                'email' => $user->email,
-                'name' => $user->student_info->name,
-                'quota_count' => $user->student_info->quota_count,
-            ];
+            $this->createTechDialog($user->id);
         }
+
+        $studentInformation = StudentInformation::whereUserId($user->id)->first();
+        if (empty($studentInformation)) {
+            $studentInformation = new StudentInformation();
+            $studentInformation->user_id = $user->id;
+            $studentInformation->uid = $uid;
+
+            if ($studentUnemployedStatus["response"] == null) {
+                $studentInformation->unemployed_status = 0;
+            } else {
+                $studentInformation->unemployed_status = 1;
+                $studentInformation->quota_count = 3;
+            }
+
+            if (($studentResumes != null) && ($studentResumes != [])) {
+                $setFullNameAndIIN = true;
+                $userSkills = array();
+                $userProfessions = array();
+
+                foreach ($studentResumes as $studentResume) {
+                    if ($setFullNameAndIIN) {
+                        $studentInformation->name = $studentResume["FIO"];
+                        $studentInformation->iin = $studentResume["iin"];
+                    }
+
+                    foreach ($studentResume["compSpecList"] as $skill) {
+                        array_push($userSkills, $skill["codcomp"]);
+                    }
+
+                    array_push($userSkills, $skill["uozcodprof"]);
+                }
+
+                $professions = Professions::whereIn('code', $userProfessions)->pluck('id')->toArray();
+                $user->professions()->sync($professions);
+
+                $skills = Skill::whereIn('code_skill', $userSkills)->pluck('id')->toArray();
+                $user->skills()->sync($skills);
+            }
+
+            $studentInformation->save();
+        }
+
+        if ($studentInformation->name == null || $studentInformation->iin == null) {
+            if (($studentResumes != null) && ($studentResumes != [])) {
+                $studentResume = $studentResumes[0];
+                $studentInformation->name = $studentResume["FIO"];
+                $studentInformation->iin = $studentResume["iin"];
+                $studentInformation->save();
+            }
+        }
+
+        if ($user->roles()->first()->id != $student_role->id) {
+            return redirect()->back()->with('status', __('default.pages.auth.student_login_author_exist'));
+        }
+
+        $data = [
+            'id' => $user->id,
+            'email' => $user->email,
+            'name' => $user->student_info->name,
+            'iin' => $user->student_info->iin,
+            'quota_count' => $user->student_info->quota_count,
+        ];
 
         $message = new Message(__('api/messages.success'), 200, $data);
         return $this->response->item($message, new MessageTransformer());
