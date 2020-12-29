@@ -591,7 +591,7 @@ class CourseController extends BaseController
                 'name' => $skill[0]['name_'.$lang]
             ];
         }
-        // Приложения
+        // Вложения
         if(!empty($course->attachments)) {
             // Видео
             if($course->is_poor_vision == true){

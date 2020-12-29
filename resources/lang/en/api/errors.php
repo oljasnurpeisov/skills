@@ -7,5 +7,6 @@ return [
     'dialog_does_not_exist' => 'Диалог не найден',
     'user_doesnt_have_course' => 'Пользователь не приобрел данный курс',
     'user_doesnt_have_access_to_lesson' => 'У вас нет доступа к уроку',
-    'request_failed' => 'Во время выполнения запроса произошла ошибка'
+    'request_failed' => 'Во время выполнения запроса произошла ошибка',
+    'lesson_does_not_exist' => 'Урок не найден'
 ];
