@@ -52,7 +52,9 @@ APIRoute::version('v1', ['prefix' => 'api/app', 'namespace' => 'App\Api\V1\Contr
         // Сертификаты
         APIRoute::get("/certificates", "UserController@getCertificates");
         // Сохранить токен для push-уведомлений
-        APIRoute::post("/update-token", "UserController@updateToken");
+        APIRoute::put("/update-token", "UserController@updateToken");
+        // Включить/отключить push-уведомления
+        APIRoute::put("/update-push-status", "UserController@updatePushStatus");
     });
     APIRoute::group(["prefix" => "courses"], function () {
         // Авторы

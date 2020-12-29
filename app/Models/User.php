@@ -78,6 +78,8 @@ use App\Notifications\VerifyEmail;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereAndroidToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereIosToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereIsPushActive($value)
+ * @property int $is_push_activate
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIsPushActivate($value)
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
