@@ -73,6 +73,8 @@ APIRoute::version('v1', ['prefix' => 'api/app', 'namespace' => 'App\Api\V1\Contr
     APIRoute::group(["prefix" => "lessons"], function () {
         // Урок
         APIRoute::get("/view", "LessonController@lessonView");
+        // Завершить урок
+        APIRoute::post("/finish-lesson", "LessonController@lessonFinish");
         // Отправить домашнюю/курсовую работу
         APIRoute::post("/send-coursework", "LessonController@sendHomeWork");
         // Отправить тест

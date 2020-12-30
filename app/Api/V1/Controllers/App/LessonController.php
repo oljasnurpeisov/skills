@@ -95,6 +95,65 @@ class LessonController extends BaseController
 
     }
 
+    public function lessonFinish(Request $request)
+    {
+        $lesson_id = $request->get('lesson');
+        $user_id = $request->get('user');
+        $hash = $request->header('hash');
+        $lang = $request->header('lang', 'ru');
+        app()->setLocale($lang);
+
+        // Валидация
+        $rules = [
+            'lesson' => 'required',
+            'user' => 'required',
+            'hash' => 'required',
+        ];
+        $payload = [
+            'lesson' => $lesson_id,
+            'user' => $user_id,
+            'hash' => $hash
+        ];
+
+        $validator = Validator::make($payload, $rules);
+
+        if ($validator->fails()) {
+            $message = new Message($validator->errors()->first(), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        $lesson = Lesson::whereId($lesson_id)->first();
+        $user = User::whereId($user_id)->first();
+
+        if (!$user) {
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        if (!$lesson) {
+            $message = new Message(Lang::get("api/errors.lesson_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        $course = Course::whereId($lesson->course_id)->first();
+
+        return $this->nextLessonShow($lang, $course, $lesson, $user);
+    }
+
     public function sendHomeWork(Request $request)
     {
         $lesson_id = $request->get('lesson');
@@ -171,7 +230,7 @@ class LessonController extends BaseController
             if ($lesson->lesson_student->is_access == true) {
 
                 if ($lesson->type == 3) {
-                    if (!$request->has('files')){
+                    if (!$request->has('files')) {
                         $message = new Message(Lang::get("api/errors.coursework_send_failed"), 404, null);
                         return $this->response->item($message, new MessageTransformer())->statusCode(404);
                     }
@@ -233,6 +292,8 @@ class LessonController extends BaseController
 
                 if ($lesson->type == 3) {
                     $this->finishedCourse($course, $user);
+                } else {
+                    return $this->nextLessonShow($lang, $course, $lesson, $user);
                 }
 
                 $message = new Message(__('api/messages.lesson.title'), 200, null);
@@ -670,6 +731,73 @@ class LessonController extends BaseController
                 $notification_name = "notifications.course_student_finished";
                 NotificationsHelper::createNotification($notification_name, $course->id, $user->id);
             }
+        }
+    }
+
+    public function nextLessonShow($lang, $course, $lesson, $user)
+    {
+        $course_status = StudentCourse::where('course_id', '=', $course->id)->where('student_id', '=', $user->id)->first();
+        if ($course_status->is_finished == false) {
+            // Получить следующий урок
+            $theme = $lesson->themes;
+            $next_lesson_theme = Lesson::where('index_number', '>', $lesson->index_number)->where('theme_id', '=', $theme->id)->orderBy('index_number', 'asc')->first();
+            $next_theme = Theme::where('course_id', '=', $course->id)->where('index_number', '>', $theme->index_number)->orderBy('index_number', 'asc')->first();
+            if (!empty($next_theme)) {
+                $next_lesson = Lesson::where('theme_id', '=', $next_theme->id)->orderBy('index_number', 'asc')->first();
+            }
+
+            // Переход к следующему уроку
+
+            if (!empty($next_lesson_theme)) {
+                // Установка доступа к следующему уроку
+                $this->syncUserLessons($next_lesson_theme->id, $user);
+                // Проверить окончание курса
+                $this->finishedCourse($course, $user);
+
+                $data = $this->lessonAttachments($lang, $next_lesson_theme, $user);
+
+                $message = new Message(__('api/messages.lesson.title'), 200, $data);
+                return $this->response->item($message, new MessageTransformer());
+
+            } else {
+                if (!empty($next_lesson) and !empty($next_lesson->lesson_student->is_finished) == false) {
+                    // Установка доступа к следующему уроку
+                    $this->syncUserLessons($next_lesson->id, $user);
+                    // Проверить окончание курса
+                    $this->finishedCourse($course, $user);
+                    $data = $this->lessonAttachments($lang, $next_lesson, $user);
+
+                    $message = new Message(__('api/messages.lesson.title'), 200, $data);
+                    return $this->response->item($message, new MessageTransformer());
+
+                    // Если следующего урока нет
+                } else {
+                    $coursework = $course->lessons()->where('type', '=', 3)->first();
+                    $final_test = $course->lessons->where('type', '=', 4)->first();
+
+                    if (!empty($coursework) and ($coursework->id != $lesson->id)) {
+                        $this->syncUserLessons($coursework->id, $user);
+                    } else if (!empty($final_test) and empty($coursework) and ($final_test->id != $lesson->id)) {
+                        $this->syncUserLessons($final_test->id, $user);
+
+                    }
+                    if (!empty($final_test) and ($final_test->id != $lesson->id) and !empty($coursework)) {
+                        if ($coursework->is_finished == true) {
+                            $this->syncUserLessons($final_test->id, $user);
+                        }
+
+                    }
+                    // Проверить окончание курса
+                    $this->finishedCourse($course, $user);
+                    $message = new Message(__('api/messages.lesson.title'), 200, null);
+                    return $this->response->item($message, new MessageTransformer());
+                }
+
+            }
+
+        } else {
+            $message = new Message(__('api/messages.lesson.title'), 200, null);
+            return $this->response->item($message, new MessageTransformer());
         }
     }
 
