@@ -581,55 +581,67 @@ class CourseController extends BaseController
         foreach ($course->professions->groupBy('id') as $profession) {
             $professions[] = [
                 'id' => $profession[0]->id,
-                'name' => $profession[0]['name_'.$lang]
+                'name' => $profession[0]['name_' . $lang]
             ];
         }
         // Навыки
         foreach ($course->skills->groupBy('id') as $skill) {
             $skills[] = [
                 'id' => $skill[0]->id,
-                'name' => $skill[0]['name_'.$lang]
+                'name' => $skill[0]['name_' . $lang]
             ];
         }
         // Вложения
-        if(!empty($course->attachments)) {
+        if (!empty($course->attachments)) {
             // Видео
-            if($course->is_poor_vision == true){
+            if ($course->is_poor_vision == true) {
                 $videos_array = array_merge(json_decode($course->attachments->videos), json_decode($course->attachments->videos_poor_vision));
-            }else{
+            } else {
                 $videos_array = json_decode($course->attachments->videos);
             }
 
-            foreach($videos_array as $video){
-                $videos[] = [
-                  'link' => $video
-                ];
+            if ($videos_array != []) {
+                foreach ($videos_array as $video) {
+                    $videos[] = [
+                        'link' => $video
+                    ];
+                }
+            } else {
+                $videos = null;
             }
             // Видео с YouTube
-            if($course->is_poor_vision == true){
+            if ($course->is_poor_vision == true) {
                 $youtube_videos_array = array_merge(json_decode($course->attachments->videos_link), json_decode($course->attachments->videos_poor_vision_link));
-            }else{
+            } else {
                 $youtube_videos_array = json_decode($course->attachments->videos_link);
             }
 
-            foreach($youtube_videos_array as $video){
-                $youtube_videos[] = [
-                    'link' => $video
-                ];
+            if ($youtube_videos_array != []) {
+                foreach ($youtube_videos_array as $video) {
+                    $youtube_videos[] = [
+                        'link' => $video
+                    ];
+                }
+            } else {
+                $youtube_videos = null;
             }
             // Аудио
-            if($course->is_poor_vision == true){
+            if ($course->is_poor_vision == true) {
                 $audios_array = array_merge(json_decode($course->attachments->audios), json_decode($course->attachments->audios_poor_vision));
-            }else{
+            } else {
                 $audios_array = json_decode($course->attachments->audios);
             }
 
-            foreach($audios_array as $audio){
-                $audios[] = [
-                    'link' => $audio
-                ];
+            if ($audios_array != []) {
+                foreach ($audios_array as $audio) {
+                    $audios[] = [
+                        'link' => $audio
+                    ];
+                }
+            } else {
+                $audios = null;
             }
-        }else{
+        } else {
             $videos = null;
             $youtube_videos = null;
             $audios = null;

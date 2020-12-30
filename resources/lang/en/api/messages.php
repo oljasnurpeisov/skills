@@ -54,5 +54,9 @@ return [
 
     'skills' => [
         'title' => 'Навыки'
+    ],
+
+    'lesson' => [
+        'title' => 'Урок'
     ]
 ];

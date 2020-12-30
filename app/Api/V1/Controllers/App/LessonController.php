@@ -6,6 +6,7 @@ use App\Api\V1\Classes\Message;
 use App\Api\V1\Controllers\BaseController;
 use App\Api\V1\Transformers\MessageTransformer;
 use App\Extensions\FormatDate;
+use App\Extensions\NotificationsHelper;
 use App\Models\Course;
 use App\Models\CourseRate;
 use App\Models\Lesson;
@@ -14,13 +15,17 @@ use App\Models\Skill;
 use App\Models\StudentCertificate;
 use App\Models\StudentCourse;
 use App\Models\StudentLesson;
+use App\Models\StudentLessonAnswer;
 use App\Models\Theme;
 use App\Models\User;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
+use PDF;
 
 class LessonController extends BaseController
 {
@@ -92,12 +97,297 @@ class LessonController extends BaseController
 
     public function sendHomeWork(Request $request)
     {
-        return 302;
+        $lesson_id = $request->get('lesson');
+        $user_id = $request->get('user');
+        $answer = $request->get('answer');
+        $audios = $request->file('audios');
+        $videos = $request->file('videos');
+        $files = $request->file('files');
+        $hash = $request->header('hash');
+        $lang = $request->header('lang', 'ru');
+        app()->setLocale($lang);
+
+        // Валидация
+        $rules = [
+            'answer' => 'required',
+            'lesson' => 'required',
+            'user' => 'required',
+            'videos' => 'max:50000',
+            'audios' => 'max:10000',
+            'files' => 'max:20000',
+            'hash' => 'required',
+        ];
+        $payload = [
+            'answer' => $answer,
+            'audios' => $audios,
+            'files' => $files,
+            'lesson' => $lesson_id,
+            'user' => $user_id,
+            'videos' => $videos,
+            'hash' => $hash
+        ];
+
+        $validator = Validator::make($payload, $rules);
+
+        unset($payload["files"]);
+        unset($payload["videos"]);
+        unset($payload["audios"]);
+
+        if ($validator->fails()) {
+            $message = new Message($validator->errors()->first(), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        $lesson = Lesson::whereId($lesson_id)->first();
+        $user = User::whereId($user_id)->first();
+
+        if (!$user) {
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        if (!$lesson) {
+            $message = new Message(Lang::get("api/errors.lesson_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        $course = Course::whereId($lesson->course_id)->first();
+
+        if (!empty($lesson->lesson_student)) {
+            if ($lesson->lesson_student->is_access == true) {
+
+                if ($lesson->type == 3) {
+                    if (!$request->has('files')){
+                        $message = new Message(Lang::get("api/errors.coursework_send_failed"), 404, null);
+                        return $this->response->item($message, new MessageTransformer())->statusCode(404);
+                    }
+                }
+
+                $result = StudentLessonAnswer::where('student_id', '=', $user->id)
+                    ->where('lesson_id', '=', $lesson->id)->first();
+
+                if (!$result) {
+                    $user_answer = new StudentLessonAnswer;
+                } else {
+                    $user_answer = $result;
+                }
+                $user_answer->student_lesson_id = $lesson->lesson_student->id;
+                $user_answer->student_id = $user->id;
+                $user_answer->lesson_id = $lesson->id;
+                $user_answer->type = 1;
+
+                $user_answer->answer = $answer;
+
+                // Видео с устройства
+                $videos_array = [];
+                if ($request->has('videos')) {
+                    foreach ($request->file("videos") as $video) {
+                        $videoName = uniqid() . '_' . $video->getClientOriginalName();
+                        $video->move(public_path('users/user_' . $user->getAuthIdentifier() . '/lessons/videos'), $videoName);
+                        $videos_array[] = '/users/user_' . $user->getAuthIdentifier() . '/lessons/videos/' . $videoName;
+                    }
+                    $user_answer->videos = $videos_array;
+                }
+
+                // Аудио с устройства
+                $audios_array = [];
+                if ($request->has('audios')) {
+                    foreach ($request->file("audios") as $audio) {
+                        $audioName = uniqid() . '_' . $audio->getClientOriginalName();
+                        $audio->move(public_path('users/user_' . $user->getAuthIdentifier() . '/lessons/audios'), $audioName);
+                        $audios_array[] = '/users/user_' . $user->getAuthIdentifier() . '/lessons/audios/' . $audioName;
+                    }
+                    $user_answer->audios = $audios_array;
+                }
+
+                // Другие материалы
+                $files_array = [];
+                if ($request->has('files')) {
+                    foreach ($request->file("files") as $file) {
+                        $fileName = uniqid() . '_' . $file->getClientOriginalName();
+                        $file->move(public_path('users/user_' . $user->getAuthIdentifier() . '/lessons/files'), $fileName);
+                        $files_array[] = '/users/user_' . $user->getAuthIdentifier() . '/lessons/files/' . $fileName;
+                    }
+                    $user_answer->another_files = $files_array;
+                }
+
+                // Пометить урок как законченный
+                $lesson->lesson_student->is_finished = true;
+                $lesson->lesson_student->save();
+
+                $user_answer->save();
+
+                if ($lesson->type == 3) {
+                    $this->finishedCourse($course, $user);
+                }
+
+                $message = new Message(__('api/messages.lesson.title'), 200, null);
+                return $this->response->item($message, new MessageTransformer());
+
+            } else {
+                $message = new Message(Lang::get("api/errors.user_doesnt_have_access_to_lesson"), 404, null);
+                return $this->response->item($message, new MessageTransformer())->statusCode(404);
+            }
+        } else {
+            $message = new Message(Lang::get("api/errors.user_doesnt_have_access_to_lesson"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
     }
 
     public function sendTest(Request $request)
     {
-        return 302;
+        $lesson_id = $request->get('lesson');
+        $user_id = $request->get('user');
+        $answer = $request->get('answer');
+        $hash = $request->header('hash');
+        $lang = $request->header('lang', 'ru');
+        app()->setLocale($lang);
+
+        // Валидация
+        $rules = [
+            'answer' => 'required',
+            'lesson' => 'required',
+            'user' => 'required',
+            'hash' => 'required',
+        ];
+        $payload = [
+            'answer' => $answer,
+            'lesson' => $lesson_id,
+            'user' => $user_id,
+            'hash' => $hash
+        ];
+
+        $validator = Validator::make($payload, $rules);
+
+        if ($validator->fails()) {
+            $message = new Message($validator->errors()->first(), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        $lesson = Lesson::whereId($lesson_id)->first();
+        $user = User::whereId($user_id)->first();
+
+        if (!$user) {
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        if (!$lesson) {
+            $message = new Message(Lang::get("api/errors.lesson_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        $course = Course::whereId($lesson->course_id)->first();
+
+        if (!empty($lesson->lesson_student)) {
+            if ($lesson->lesson_student->is_access == true) {
+
+                $result = StudentLessonAnswer::where('student_id', '=', $user->id)
+                    ->where('lesson_id', '=', $lesson->id)->first();
+
+                if (!$result) {
+                    $user_answer = new StudentLessonAnswer;
+                } else {
+                    $user_answer = $result;
+                }
+                $user_answer->student_lesson_id = $lesson->lesson_student->id;
+                $user_answer->student_id = $user->id;
+                $user_answer->lesson_id = $lesson->id;
+                $user_answer->type = 0;
+                $user_answer->answer = $answer;
+
+                $user_answer->save();
+
+                $right_answers = [];
+                foreach (json_decode($lesson->practice)->questions as $key => $question) {
+                    $right_answers[] = $question->answers[0];
+                }
+                $answers = json_decode($user_answer->answer);
+                $test_results = array_diff($answers, $right_answers);
+                $right_answers = 0;
+
+                foreach (json_decode($lesson->practice)->questions as $key => $question) {
+                    if (!array_key_exists($key, $test_results)) {
+                        $right_answers++;
+                    }
+                }
+                // Если кол-во правильных ответов достаточно
+                if ($right_answers >= json_decode($lesson->practice)->passingScore) {
+                    // Пометить урок как законченный
+                    $lesson->lesson_student->is_finished = true;
+                    $lesson->lesson_student->save();
+
+                    $this->finishedCourse($course, $user);
+                }
+
+                if ($right_answers >= json_decode($lesson->practice)->passingScore) {
+                    $is_finished_lesson = true;
+                } else {
+                    $is_finished_lesson = false;
+                }
+
+                $test = [];
+                foreach (json_decode($lesson->practice)->questions as $key => $question) {
+                    if (!array_key_exists($key, $test_results)) {
+                        $test[] = [
+                            'name' => $question->name,
+                            'is_right' => true
+                        ];
+                    } else {
+                        $test[] = [
+                            'name' => $question->name,
+                            'is_right' => false
+                        ];
+                    }
+                }
+
+                $data = [
+                    'id' => $lesson->id,
+                    'result' => [
+                        'is_finished_lesson' => $is_finished_lesson,
+                        'test' => $test
+                    ]
+                ];
+
+                $message = new Message(__('api/messages.lesson.title'), 200, $data);
+                return $this->response->item($message, new MessageTransformer());
+
+            } else {
+                $message = new Message(Lang::get("api/errors.user_doesnt_have_access_to_lesson"), 404, null);
+                return $this->response->item($message, new MessageTransformer())->statusCode(404);
+            }
+        } else {
+            $message = new Message(Lang::get("api/errors.user_doesnt_have_access_to_lesson"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
     }
 
     public function lessonViewAccess($lang, Course $course, Lesson $lesson, User $user)
@@ -106,9 +396,9 @@ class LessonController extends BaseController
 
         $time = FormatDate::convertMunitesToTime($lesson->duration);
 
-        $data = $this->lessonAttachments($lang, $lesson);
+        $data = $this->lessonAttachments($lang, $lesson, $user);
 
-        $message = new Message(__('api/messages.courses.title'), 200, $data);
+        $message = new Message(__('api/messages.lesson.title'), 200, $data);
         $success_return = $this->response->item($message, new MessageTransformer());
 
         if (!empty($lesson->lesson_student)) {
@@ -241,7 +531,8 @@ class LessonController extends BaseController
 
     }
 
-    public function lessonAttachments($lang, Lesson $lesson){
+    public function lessonAttachments($lang, Lesson $lesson, User $user)
+    {
         // Вложения
         if (!empty($lesson->lesson_attachment)) {
             // Видео
@@ -315,14 +606,14 @@ class LessonController extends BaseController
             $another_files = null;
         }
 
-        if ($lesson->end_lesson_type == 0){
+        if ($lesson->end_lesson_type == 0) {
             $lesson->practice = json_decode($lesson->practice);
         }
 
         $data = [
             'id' => $lesson->id,
             'name' => $lesson->name,
-            'type' => $lesson->lesson_type['name_'.$lang] ?? $lesson->lesson_type->name_ru,
+            'type' => $lesson->lesson_type['name_' . $lang] ?? $lesson->lesson_type->name_ru,
             'end_lesson_type' => $lesson->end_lesson_type,
             'theory' => $lesson->theory,
             'image' => $lesson->getAvatar(),
@@ -330,8 +621,8 @@ class LessonController extends BaseController
             'videos' => $videos,
             'youtube_videos' => $youtube_videos,
             'audios' => $audios,
-            'another_files' => $another_files
-
+            'another_files' => $another_files,
+            'is_finished' => $lesson->student_lessons->where('student_id', '=', $user->id)->first()->is_finished
         ];
 
         return $data;
@@ -350,4 +641,106 @@ class LessonController extends BaseController
 
     }
 
+    public function finishedCourse($course, User $user)
+    {
+        // Получить все уроки данного курса
+        $lessons = $course->lessons->pluck('id')->toArray();
+
+        // Получить все завершенные уроки данного курса
+        $student_finished_lessons = Lesson::whereHas('student_lessons', function ($q) {
+            $q->where('student_lesson.is_finished', '=', true);
+        })->whereIn('id', $lessons)->get();
+
+        // Если кол-во уроков и кол-во завершенных уроков равно, то отметить курс как завершенный
+        if ($course->lessons->count() == $student_finished_lessons->count()) {
+            $student_course = StudentCourse::where('student_id', '=', $user->id)->where('course_id', '=', $course->id)->first();
+            if ($student_course->is_finished == false) {
+                $student_course->is_finished = true;
+                $student_course->save();
+
+                // Сохранить сертификат
+                $user_certificate = StudentCertificate::where('user_id', '=', $user->id)
+                    ->where('course_id', '=', $course->id)->first();
+                if (empty($user_certificate)) {
+                    $this->saveCertificates($course, $student_course, $user);
+                }
+                // Присвоить обучающемуся полученные навыки
+                $user->skills()->sync($course->skills->pluck('id')->toArray(), false);
+                // Отправить уведомление
+                $notification_name = "notifications.course_student_finished";
+                NotificationsHelper::createNotification($notification_name, $course->id, $user->id);
+            }
+        }
+    }
+
+    public function saveCertificates($course, $student_course, User $user)
+    {
+        $languages = ["ru", "kk"];
+
+        $certificate = new StudentCertificate;
+        $certificate->user_id = $user->id;
+        $certificate->course_id = $course->id;
+        $certificate->save();
+
+        foreach ($languages as $language) {
+            $data = [
+                'author_name' => $course->user->company_name,
+                'student_name' => $user->student_info->name,
+                'duration' => $course->lessons->sum('duration'),
+                'course_name' => $course->name,
+                'skills' => $course->skills,
+                'certificate_id' => sprintf("%012d", $certificate->id) . '-' . date('dmY')
+            ];
+            $pdf = PDF::loadView('app.pages.page.pdf.certificate_' . $course->certificate_id . '_' . $language, ['data' => $data]);
+            $pdf = $pdf->setPaper('a4', 'portrait');
+
+            $path = public_path('users/user_' . $user->id . '');
+            $pdf->save($path . '/' . 'course_' . $course->id . '_certificate_' . $language . '.pdf');
+
+            $pdf = new \Spatie\PdfToImage\Pdf($path . '/' . 'course_' . $course->id . '_certificate_' . $language . '.pdf');
+            $pdf->saveImage($path . '/' . 'course_' . $course->id . '_image_' . $language . '.png');
+        }
+
+        $file_path = '/users/user_' . $user->id . '';
+
+        $certificate->pdf_ru = $file_path . '/' . 'course_' . $course->id . '_certificate_' . $languages[0] . '.pdf';
+        $certificate->pdf_kk = $file_path . '/' . 'course_' . $course->id . '_certificate_' . $languages[1] . '.pdf';
+        $certificate->png_ru = $file_path . '/' . 'course_' . $course->id . '_image_' . $languages[0] . '.png';
+        $certificate->png_kk = $file_path . '/' . 'course_' . $course->id . '_image_' . $languages[1] . '.png';
+
+        $certificate->save();
+
+        $cert = base64_encode(file_get_contents(env('APP_URL') . $certificate->png_ru));
+        $this->putNewSkills($user->student_info->uid, $course, $cert);
+
+    }
+
+    public function putNewSkills($uid, $course, $cert)
+    {
+        $data = [
+            'uid' => $uid,
+            'course' => [
+                'id' => $course->id,
+                'name' => $course->name,
+                'skills' => $course->skills->pluck('code_skill')->toArray()
+            ],
+            'cert' => $cert
+        ];
+
+        $client = new Client(['verify' => false]);
+
+        try {
+            $body = $data;
+            $response = $client->request('PUT', 'https://btest.enbek.kz/ru/api/put-navyk-from-obuch', [
+                'body' => json_encode($body),
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ]
+            ]);
+        } catch (BadResponseException $e) {
+            return $e;
+        }
+
+        return $data;
+    }
 }
