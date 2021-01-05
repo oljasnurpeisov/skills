@@ -490,7 +490,7 @@ class CourseController extends BaseController
                 $certificate = null;
             }
             $data["items"][] = [
-                'id' => $item->id,
+                'id' => $item->course->id,
                 'image' => env('APP_URL') . $item->course->image,
                 'name' => $item->course->name,
                 'author' => $item->course->user->author_info->name . ' ' . $item->course->user->author_info->surname,
