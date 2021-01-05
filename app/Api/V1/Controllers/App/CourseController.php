@@ -78,7 +78,7 @@ class CourseController extends BaseController
             $data["items"][] = [
                 'id' => $item->id,
                 'email' => $item->email,
-                'name' => $item->author_info->name . $item->author_info->surname,
+                'name' => $item->author_info->name . " " . $item->author_info->surname,
                 'avatar' => $item->author_info->avatar
             ];
         }
@@ -483,7 +483,7 @@ class CourseController extends BaseController
             }
 
             if ($item->is_finished == true) {
-                $end = $item->updated_at;
+                $end = $item->updated_at->format('Y-m-d');
                 $certificate = StudentCertificate::whereCourseId($item->course->id)->whereUserId($user_id)->first()['pdf_' . $lang] ?? null;
             } else {
                 $end = null;
@@ -491,10 +491,10 @@ class CourseController extends BaseController
             }
             $data["items"][] = [
                 'id' => $item->id,
-                'image' => $item->course->image,
+                'image' => env('APP_URL') . $item->course->image,
                 'name' => $item->course->name,
                 'author' => $item->course->user->author_info->name . ' ' . $item->course->user->author_info->surname,
-                'start' => $item->created_at,
+                'start' => $item->created_at->format('Y-m-d'),
                 'end' => $end,
                 'certificate' => $certificate,
                 'percent' => $item->progress

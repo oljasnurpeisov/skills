@@ -438,11 +438,11 @@ class UserController extends BaseController
             if ($member->hasRole('author')) {
                 $member_id = $member->id;
                 $member_name = $member->author_info->name . ' ' . $member->author_info->surname;
-                $member_avatar = $member->author_info->getAvatar();
+                $member_avatar = env('APP_URL') . $member->author_info->getAvatar();
             } else if ($member->hasRole('student')) {
                 $member_id = $member->id;
                 $member_name = $member->student_info->name ?? __('default.pages.profile.student_title');
-                $member_avatar = $member->student_info->getAvatar();
+                $member_avatar = env('APP_URL') . $member->student_info->getAvatar();
             } else {
                 $member_id = $member->id;
                 $member_name = $member->name;
@@ -561,11 +561,11 @@ class UserController extends BaseController
             if ($sender->hasRole('author')) {
                 $sender_id = $sender->id;
                 $sender_name = $sender->author_info->name . ' ' . $sender->author_info->surname;
-                $sender_avatar = $sender->author_info->getAvatar();
+                $sender_avatar = env('APP_URL') . $sender->author_info->getAvatar();
             } else if ($sender->hasRole('student')) {
                 $sender_id = $sender->id;
                 $sender_name = $sender->student_info->name ?? __('default.pages.profile.student_title');
-                $sender_avatar = $sender->student_info->getAvatar();
+                $sender_avatar = env('APP_URL') . $sender->student_info->getAvatar();
             } else {
                 $sender_id = $sender->id;
                 $sender_name = $sender->name;
@@ -575,6 +575,7 @@ class UserController extends BaseController
                 'id' => $item->id,
                 'image' => $sender_avatar,
                 'sender_name' => $sender_name,
+                'sender_id' => $sender_id,
                 'text' => $item->message,
                 'date' => $item->created_at
             ];
@@ -642,13 +643,13 @@ class UserController extends BaseController
         foreach ($items as $item) {
             $data["items"][] = [
                 'id' => $item->id,
-                'image' => $item->png_ru,
-                'pdf' => $item->pdf_ru
+                'image' => env('APP_URL') . $item->png_ru,
+                'pdf' => env('APP_URL') . $item->pdf_ru
             ];
             $data["items"][] = [
                 'id' => $item->id,
-                'image' => $item->png_kk,
-                'pdf' => $item->pdf_kk
+                'image' => env('APP_URL') . $item->png_kk,
+                'pdf' => env('APP_URL') . $item->pdf_kk
             ];
         }
 
