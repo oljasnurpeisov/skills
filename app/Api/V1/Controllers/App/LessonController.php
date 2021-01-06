@@ -676,6 +676,7 @@ class LessonController extends BaseController
             'name' => $lesson->name,
             'type' => $lesson->type,
             'end_lesson_type' => $lesson->end_lesson_type,
+            'duration' => $lesson->duration,
             'theory' => $lesson->theory,
             'image' => $lesson->getAvatar(),
             'practice' => $lesson->practice,
