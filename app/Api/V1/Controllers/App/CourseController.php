@@ -5,6 +5,7 @@ namespace App\Api\V1\Controllers\App;
 use App\Api\V1\Classes\Message;
 use App\Api\V1\Controllers\BaseController;
 use App\Api\V1\Transformers\MessageTransformer;
+use App\Extensions\YoutubeParse;
 use App\Models\Course;
 use App\Models\CourseRate;
 use App\Models\Lesson;
@@ -19,6 +20,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 
 class CourseController extends BaseController
 {
@@ -557,9 +559,9 @@ class CourseController extends BaseController
         }
 
         $student_course = StudentCourse::whereStudentId($user->id)->whereCourseId($course->id)->first();
-        if (!$student_course) {
-            $message = new Message(Lang::get("api/errors.user_doesnt_have_course"), 404, null);
-            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        if (!$student_course or $student_course->paid_status == 0) {
+            $message = new Message(Lang::get("api/errors.user_doesnt_have_course"), 403, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(403);
         }
 
         // Уроки
@@ -603,7 +605,7 @@ class CourseController extends BaseController
             if ($videos_array != []) {
                 foreach ($videos_array as $video) {
                     $videos[] = [
-                        'link' => $video
+                        'url' => $video
                     ];
                 }
             } else {
@@ -619,7 +621,7 @@ class CourseController extends BaseController
             if ($youtube_videos_array != []) {
                 foreach ($youtube_videos_array as $video) {
                     $youtube_videos[] = [
-                        'link' => $video
+                        'id' => YoutubeParse::parseYoutube($video)
                     ];
                 }
             } else {
@@ -635,7 +637,7 @@ class CourseController extends BaseController
             if ($audios_array != []) {
                 foreach ($audios_array as $audio) {
                     $audios[] = [
-                        'link' => $audio
+                        'url' => env('APP_URL').$audio
                     ];
                 }
             } else {
@@ -647,29 +649,104 @@ class CourseController extends BaseController
             $audios = null;
         }
 
+        $courses = $course->user->courses()->get();
+        // Все оценки всех курсов
+        $rates = [];
+        foreach ($courses as $item) {
+            foreach ($item->rate as $rate) {
+                array_push($rates, $rate->rate);
+            }
+        }
+        // Все ученики автора
+        $author_students = [];
+        foreach ($courses as $item) {
+            foreach ($item->course_members as $member) {
+                $author_students[$member['student_id']][] = $member;
+            }
+        }
+        // Оценка автора исходя из всех оценок
+        if (count($rates) == 0) {
+            $average_rates = 0;
+        } else {
+            $average_rates = array_sum($rates) / count($rates);
+        }
+
+        $lessonsCount = Lesson::whereCourseId($course->id)
+            ->whereIn('type', [1, 2])
+            ->count();
+        $finishedLessonsCount = Lesson::whereCourseId($course->id)
+            ->whereIn('type', [1, 2])
+            ->whereHas('student_lessons', function ($q) {
+                $q->where('student_lesson.is_finished', '=', true);
+            })
+            ->count();
+
+        if ($lessonsCount === 0) {
+            $course->progress = 100;
+        } else {
+            $course->progress = round($finishedLessonsCount / $lessonsCount * 100);
+        }
+
+        if ($student_course->is_finished == true) {
+            $end = $student_course->updated_at->format('Y-m-d');
+            $certificate = StudentCertificate::whereCourseId($course->id)->whereUserId($user->id)->first()['pdf_' . $lang] ?? null;
+        } else {
+            $end = null;
+            $certificate = null;
+        }
+        $lessons = $course->lessons;
+        $videos_count = [];
+        $audios_count = [];
+        $attachments_count = [];
+
+        foreach ($lessons as $lesson) {
+            if ($lesson->lesson_attachment != null) {
+                if ($lesson->lesson_attachment->videos != null) {
+                    $videos_count[] = count(json_decode($lesson->lesson_attachment->videos));
+                }
+                if ($lesson->lesson_attachment->audios != null) {
+                    $audios_count[] = count(json_decode($lesson->lesson_attachment->audios));
+                }
+                if ($lesson->lesson_attachment->another_files != null) {
+                    $attachments_count[] = count(json_decode($lesson->lesson_attachment->another_files));
+                }
+            }
+
+        }
+
+        $includes = View::make("app.pages.general.courses.catalog.components.course_includes", ['item' => $course, 'videos_count' => array_sum($videos_count), 'audios_count' => array_sum($audios_count), 'attachments_count' => array_sum($attachments_count)])->render();
+
         $data = [
             'id' => $course->id,
             'name' => $course->name,
-            'lang' => $course->lang,
             'is_student_paid' => $student_course->paid_status != 0 ? true : false,
             'is_access_all' => $course->is_access_all,
             'is_poor_vision' => $course->is_poor_vision,
             'cost' => $course->cost,
-            'profit_desc' => $course->profit_desc,
+            'profit' => $course->profit_desc,
+            'start' => $course->created_at->format('Y-m-d'),
+            'end' => $end,
+            'certificate' => $certificate,
+            'percent' => $course->progress,
             'teaser' => $course->teaser,
+            'reviews' => count($rates),
+            'students' => count($author_students),
+            'rating' => round($average_rates, 1),
+            'lang' => $course->lang == 0 ? 'kk' : ($course->lang == 1 ? 'ru' : null),
             'description' => $course->description,
             'image' => $course->getAvatar(),
-            'author' => [
-                'id' => $course->user->id,
-                'name' => $course->user->author_info->name . ' ' . $course->user->author_info->surname
-            ],
-            'videos' => $videos,
-            'youtube_videos' => $youtube_videos,
-            'audios' => $audios,
+            'author' => $course->user->author_info->name . ' ' . $course->user->author_info->surname,
+            'videoLinks' => $videos,
+            'youtubeLinks' => $youtube_videos,
+            'audioLinks' => $audios,
+            'includes' => $includes,
             'lessons' => $lessons,
             'professions' => $professions,
             'skills' => $skills,
-
+            'authorId' => $course->user->id,
+            'authorImage' => env('APP_URL').$course->user->author_info->getAvatar(),
+            'authorSpeciality' => implode(', ', json_decode($course->user->author_info->specialization) ?? []),
+            'authorInfo' => $course->user->author_info->about
         ];
 
         $message = new Message(__('api/messages.courses.title'), 200, $data);
