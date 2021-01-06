@@ -149,6 +149,10 @@ class LessonController extends BaseController
             return $this->response->item($message, new MessageTransformer())->statusCode(404);
         }
 
+        $lesson_student = StudentLesson::whereLessonId($lesson->id)->whereStudentId($user->id)->first();
+        $lesson_student->is_finished = true;
+        $lesson_student->save();
+
         $course = Course::whereId($lesson->course_id)->first();
 
         return $this->nextLessonShow($lang, $course, $lesson, $user);
@@ -225,9 +229,10 @@ class LessonController extends BaseController
         }
 
         $course = Course::whereId($lesson->course_id)->first();
+        $lesson_student = StudentLesson::whereLessonId($lesson->id)->whereStudentId($user->id)->first();
 
-        if (!empty($lesson->lesson_student)) {
-            if ($lesson->lesson_student->is_access == true) {
+        if (!empty($lesson_student)) {
+            if ($lesson_student->is_access == true) {
 
                 if ($lesson->type == 3) {
                     if (!$request->has('files')) {
@@ -244,7 +249,7 @@ class LessonController extends BaseController
                 } else {
                     $user_answer = $result;
                 }
-                $user_answer->student_lesson_id = $lesson->lesson_student->id;
+                $user_answer->student_lesson_id = $lesson_student->id;
                 $user_answer->student_id = $user->id;
                 $user_answer->lesson_id = $lesson->id;
                 $user_answer->type = 1;
@@ -285,8 +290,8 @@ class LessonController extends BaseController
                 }
 
                 // Пометить урок как законченный
-                $lesson->lesson_student->is_finished = true;
-                $lesson->lesson_student->save();
+                $lesson_student->is_finished = true;
+                $lesson_student->save();
 
                 $user_answer->save();
 
@@ -368,8 +373,10 @@ class LessonController extends BaseController
 
         $course = Course::whereId($lesson->course_id)->first();
 
-        if (!empty($lesson->lesson_student)) {
-            if ($lesson->lesson_student->is_access == true) {
+        $lesson_student = StudentLesson::whereLessonId($lesson->id)->whereStudentId($user->id)->first();
+
+        if (!empty($lesson_student)) {
+            if ($lesson_student->is_access == true) {
 
                 $result = StudentLessonAnswer::where('student_id', '=', $user->id)
                     ->where('lesson_id', '=', $lesson->id)->first();
@@ -379,7 +386,7 @@ class LessonController extends BaseController
                 } else {
                     $user_answer = $result;
                 }
-                $user_answer->student_lesson_id = $lesson->lesson_student->id;
+                $user_answer->student_lesson_id = $lesson_student->id;
                 $user_answer->student_id = $user->id;
                 $user_answer->lesson_id = $lesson->id;
                 $user_answer->type = 0;
@@ -403,8 +410,8 @@ class LessonController extends BaseController
                 // Если кол-во правильных ответов достаточно
                 if ($right_answers >= json_decode($lesson->practice)->passingScore) {
                     // Пометить урок как законченный
-                    $lesson->lesson_student->is_finished = true;
-                    $lesson->lesson_student->save();
+                    $lesson_student->is_finished = true;
+                    $lesson_student->save();
 
                     $this->finishedCourse($course, $user);
                 }
