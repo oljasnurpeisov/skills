@@ -424,14 +424,8 @@ class CourseController extends BaseController
             });
         }
         // Сортировка по статусу
-        switch ($course_status) {
-            case (1):
-            case (2):
-                $query = $query->where('is_finished', '=', true);
-                break;
-            case (0):
-                $query = $query->where('is_finished', '=', false);
-                break;
+        if($course_status) {
+            $query = $query->whereIn('is_finished', json_decode($course_status));
         }
         // Сортировка по Дате записи на курс
         if ($start_date_from and empty($start_date_to)) {
@@ -494,10 +488,12 @@ class CourseController extends BaseController
                 'image' => env('APP_URL') . $item->course->image,
                 'name' => $item->course->name,
                 'author' => $item->course->user->author_info->name . ' ' . $item->course->user->author_info->surname,
+                'author_company_name' => $item->course->user->company_name,
                 'start' => $item->created_at->format('Y-m-d'),
                 'end' => $end,
                 'certificate' => $certificate,
-                'percent' => $item->progress
+                'percent' => $item->progress,
+                'is_rate' => CourseRate::whereStudentId($user_id)->whereCourseId($item->course->id)->exists()
             ];
         }
 
@@ -565,7 +561,9 @@ class CourseController extends BaseController
             $message = new Message(Lang::get("api/errors.user_doesnt_have_course"), 404, null);
             return $this->response->item($message, new MessageTransformer())->statusCode(404);
         }
+
         // Уроки
+        $lessons = [];
         foreach ($course->themes->sortBy('index_number') as $key => $theme) {
             foreach ($theme->lessons->sortBy('index_number') as $lesson) {
                 $end_lesson_type = $lesson->end_lesson_type == 0 ? ' (' . __('default.pages.lessons.test_title') . ')' : ' (' . __('default.pages.lessons.homework_title') . ')';
@@ -578,6 +576,7 @@ class CourseController extends BaseController
             }
         }
         // Профессии
+        $professions = [];
         foreach ($course->professions->groupBy('id') as $profession) {
             $professions[] = [
                 'id' => $profession[0]->id,
@@ -585,6 +584,7 @@ class CourseController extends BaseController
             ];
         }
         // Навыки
+        $skills = [];
         foreach ($course->skills->groupBy('id') as $skill) {
             $skills[] = [
                 'id' => $skill[0]->id,

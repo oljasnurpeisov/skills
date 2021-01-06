@@ -19,6 +19,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 use Illuminate\Http\Request;
@@ -163,6 +164,8 @@ class UserController extends BaseController
             'id' => $user->id,
             'email' => $user->email,
             'name' => $user->student_info->name,
+            'avatar' => env('APP_URL') . $user->student_info->avatar,
+            'is_push_activate' => $user->is_push_activate,
             'iin' => $user->student_info->iin,
             'quota_count' => $user->student_info->quota_count,
         ];
@@ -343,7 +346,7 @@ class UserController extends BaseController
             return $this->response->item($message, new MessageTransformer())->statusCode(404);
         }
 
-        $items = $user->notifications()->paginate($this->per_page);
+        $items = $user->notifications()->orderBy('created_at', 'desc')->paginate($this->per_page);
 
         $next_page_number = null;
         if ($items->nextPageUrl()) {
@@ -359,9 +362,10 @@ class UserController extends BaseController
         ];
 
         foreach ($items as $item) {
+            $opponent = User::whereId(json_decode($item->data)[0]->dialog_opponent_id ?? 0)->first();
             $data["items"][] = [
                 'id' => $item->id,
-                'text' => strip_tags(trans($item->name, ['course_name' => '"' . optional($item->course)->name . '"', 'lang' => $lang, 'course_id' => optional($item->course)->id, 'opponent_id' => json_decode($item->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($item->data)[0]->course_reject_message ?? ''])),
+                'text' => strip_tags(trans($item->name, ['course_name' => '"'. optional($item->course)->name .'"', 'lang' => $lang, 'course_id' => optional($item->course)->id, 'opponent_id' => json_decode($item->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($item->data)[0]->course_reject_message ?? '','user_name' => $opponent ? ($opponent->hasRole('author') ? $opponent->author_info->name . ' ' . $opponent->author_info->surname : $opponent->student_info->name ??  $opponent->name) : ''])),
                 'date' => $item->created_at
             ];
         }
@@ -417,7 +421,7 @@ class UserController extends BaseController
 
         $items = Dialog::whereHas("members", function ($q) use ($user) {
             $q->where("user_id", "=", $user->id);
-        })->with('members')->orderBy("updated_at", "desc")->paginate($this->per_page);
+        })->orderBy("updated_at", "desc")->paginate($this->per_page);
 
         $next_page_number = null;
         if ($items->nextPageUrl()) {
@@ -443,19 +447,34 @@ class UserController extends BaseController
                 $member_id = $member->id;
                 $member_name = $member->student_info->name ?? __('default.pages.profile.student_title');
                 $member_avatar = env('APP_URL') . $member->student_info->getAvatar();
+            } else if ($member->hasRole('tech_support')) {
+                $member_id = $member->id;
+                $member_name = $member->name;
+                $member_avatar = env('APP_URL') . '/assets/img/tech_support_avatar.png';
             } else {
                 $member_id = $member->id;
                 $member_name = $member->name;
                 $member_avatar = null;
             }
-            $data["items"][] = [
-                'id' => $item->id,
-                'opponent_id' => $member_id,
-                'image' => $member_avatar,
-                'opponent_name' => $member_name,
-                'text' => json_decode('"' . str_replace('"', '\"', $item->lastMessageText()) . '"'),
-                'date' => $item->lastMessageDate()
-            ];
+            if ($member->hasRole('tech_support')) {
+                array_unshift($data["items"], [
+                    'id' => $item->id,
+                    'opponent_id' => $member_id,
+                    'image' => $member_avatar,
+                    'opponent_name' => $member_name,
+                    'text' => json_decode('"' . str_replace('"', '\"', $item->lastMessageText()) . '"'),
+                    'date' => $item->lastMessageDate()
+                ]);
+            }else{
+                $data["items"][] = [
+                    'id' => $item->id,
+                    'opponent_id' => $member_id,
+                    'image' => $member_avatar,
+                    'opponent_name' => $member_name,
+                    'text' => json_decode('"' . str_replace('"', '\"', $item->lastMessageText()) . '"'),
+                    'date' => $item->lastMessageDate()
+                ];
+            }
         }
 
         $message = new Message(__('api/messages.dialogs.title'), 200, $data);
@@ -580,6 +599,74 @@ class UserController extends BaseController
                 'date' => $item->created_at
             ];
         }
+
+        $message = new Message(__('api/messages.dialogs.title'), 200, $data);
+        return $this->response->item($message, new MessageTransformer());
+    }
+
+    public function getDialogByOpponent(Request $request){
+        $user_id = $request->get('user');
+        $opponent_id = $request->get('opponent');
+        $hash = $request->header('hash');
+        $lang = $request->header('lang', 'ru');
+        app()->setLocale($lang);
+
+        // Валидация
+        $rules = [
+            'user' => 'required',
+            'opponent' => 'required',
+            'hash' => 'required',
+        ];
+        $payload = [
+            'opponent' => $opponent_id,
+            'user' => $user_id,
+            'hash' => $hash
+        ];
+
+        $validator = Validator::make($payload, $rules);
+
+        if ($validator->fails()) {
+            $message = new Message($validator->errors()->first(), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        $user = User::whereId($user_id)->first();
+        $opponent = User::whereId($opponent_id)->first();
+
+        if (!$user) {
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        if (!$opponent) {
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        $dialog = Dialog::whereHas('members', function ($q) use($user) {
+            $q->where('user_id', '=', $user->id);
+        });
+        $dialog = $dialog->whereHas('members', function ($q) use($opponent) {
+            $q->where('user_id', '=', $opponent->id);
+        })->first();
+
+        $data = [
+            'id' => $dialog->id,
+        ];
 
         $message = new Message(__('api/messages.dialogs.title'), 200, $data);
         return $this->response->item($message, new MessageTransformer());
@@ -787,7 +874,16 @@ class UserController extends BaseController
         $user->android_token = $android_token;
         $user->save();
 
-        $message = new Message(__('api/messages.success'), 200, null);
+        $data = [
+            'id' => $user->id,
+            'email' => $user->email,
+            'name' => $user->student_info->name,
+            'avatar' => env('APP_URL') . $user->student_info->avatar,
+            'iin' => $user->student_info->iin,
+            'quota_count' => $user->student_info->quota_count,
+        ];
+
+        $message = new Message(__('api/messages.success'), 200, $data);
         return $this->response->item($message, new MessageTransformer());
     }
 

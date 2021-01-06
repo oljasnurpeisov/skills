@@ -49,6 +49,8 @@ APIRoute::version('v1', ['prefix' => 'api/app', 'namespace' => 'App\Api\V1\Contr
         APIRoute::get("/dialog", "UserController@getDialog");
         // Создать сообщение
         APIRoute::post("/dialog/create-message", "UserController@saveMessage");
+        // Получить диалог
+        APIRoute::get("/dialog-by-opponent", "UserController@getDialogByOpponent");
         // Сертификаты
         APIRoute::get("/certificates", "UserController@getCertificates");
         // Сохранить токен для push-уведомлений
