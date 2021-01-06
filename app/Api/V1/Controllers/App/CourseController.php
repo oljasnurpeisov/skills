@@ -573,6 +573,7 @@ class CourseController extends BaseController
                     'id' => $lesson->id,
                     'name' => $lesson->name,
                     'type' => $lesson->lesson_type['name_' . $lang] . $end_lesson_type,
+                    'finished' => $lesson->lesson_student->is_finished,
                     'duration' => $lesson->duration
                 ];
             }
@@ -694,12 +695,12 @@ class CourseController extends BaseController
             $end = null;
             $certificate = null;
         }
-        $lessons = $course->lessons;
+        $course_lessons = $course->lessons;
         $videos_count = [];
         $audios_count = [];
         $attachments_count = [];
 
-        foreach ($lessons as $lesson) {
+        foreach ($course_lessons as $lesson) {
             if ($lesson->lesson_attachment != null) {
                 if ($lesson->lesson_attachment->videos != null) {
                     $videos_count[] = count(json_decode($lesson->lesson_attachment->videos));
