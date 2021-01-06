@@ -500,7 +500,7 @@ class CourseController extends BaseController
                 'authorInfo' => $item->course->user->author_info->about,
                 'start' => $item->created_at->format('Y-m-d'),
                 'end' => $end,
-                'certificate' => $certificate != null ? env('APP_URL') . $certificate : null,
+                'certificate' => $certificate,
                 'percent' => $item->progress,
                 'is_rate' => CourseRate::whereStudentId($user_id)->whereCourseId($item->course->id)->exists()
             ];
@@ -756,7 +756,7 @@ class CourseController extends BaseController
             'profit' => $course->profit_desc,
             'start' => $course->created_at->format('Y-m-d'),
             'end' => $end,
-            'certificate' => $certificate != null ? env('APP_URL') . $certificate : null,
+            'certificate' => $certificate,
             'percent' => $course->progress,
             'teaser' => $course->teaser,
             'reviews' => count($rates),
