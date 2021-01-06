@@ -579,7 +579,8 @@ class CourseController extends BaseController
                     'name' => $lesson->name,
                     'type' => $lesson->type,
                     'finished' => $lesson->lesson_student->is_finished,
-                    'duration' => $lesson->duration
+                    'duration' => $lesson->duration,
+                    'enabled' => $lesson->lesson_student->is_access
                 ];
             }
         }

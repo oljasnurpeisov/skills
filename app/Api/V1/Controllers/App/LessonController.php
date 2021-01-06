@@ -667,15 +667,10 @@ class LessonController extends BaseController
             $another_files = null;
         }
 
-        if ($lesson->end_lesson_type == 0) {
-            $lesson->practice = json_decode($lesson->practice);
-        }
-
         $data = [
             'id' => $lesson->id,
             'name' => $lesson->name,
-            'type' => $lesson->lesson_type['name_' . $lang] ?? $lesson->lesson_type->name_ru,
-            'end_lesson_type' => $lesson->end_lesson_type,
+            'type' => $lesson->type,
             'theory' => $lesson->theory,
             'image' => $lesson->getAvatar(),
             'practice' => $lesson->practice,
