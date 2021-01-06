@@ -426,7 +426,7 @@ class CourseController extends BaseController
             });
         }
         // Сортировка по статусу
-        if($course_status) {
+        if ($course_status) {
             $query = $query->whereIn('is_finished', json_decode($course_status));
         }
         // Сортировка по Дате записи на курс
@@ -492,7 +492,7 @@ class CourseController extends BaseController
                 'author' => $item->course->user->author_info->name . ' ' . $item->course->user->author_info->surname,
                 'author_company_name' => $item->course->user->company_name,
                 'authorId' => $item->course->user->id,
-                'authorImage' => env('APP_URL').$item->course->user->author_info->getAvatar(),
+                'authorImage' => env('APP_URL') . $item->course->user->author_info->getAvatar(),
                 'authorSpeciality' => implode(', ', json_decode($item->course->user->author_info->specialization) ?? []),
                 'authorInfo' => $item->course->user->author_info->about,
                 'start' => $item->created_at->format('Y-m-d'),
@@ -577,11 +577,29 @@ class CourseController extends BaseController
                 $themes[$key]['lessons'][] = [
                     'id' => $lesson->id,
                     'name' => $lesson->name,
-                    'type' => $lesson->lesson_type['name_' . $lang] . $end_lesson_type,
+                    'type' => $lesson->type,
                     'finished' => $lesson->lesson_student->is_finished,
                     'duration' => $lesson->duration
                 ];
             }
+        }
+        // Курсовая работа
+        $coursework = null;
+        if (!empty($course->courseWork())) {
+            $coursework = [
+                'id' => $course->courseWork()->id,
+                'finished' => $course->courseWork()->lesson_student->is_finished,
+                'duration' => $course->courseWork()->duration
+            ];
+        }
+        // Финальный тест
+        $final_test = null;
+        if (!empty($course->finalTest())) {
+            $final_test = [
+                'id' => $course->finalTest()->id,
+                'finished' => $course->finalTest()->lesson_student->is_finished,
+                'duration' => $course->finalTest()->duration
+            ];
         }
         // Профессии
         $professions = [];
@@ -643,7 +661,7 @@ class CourseController extends BaseController
             if ($audios_array != []) {
                 foreach ($audios_array as $audio) {
                     $audios[] = [
-                        'url' => env('APP_URL').$audio
+                        'url' => env('APP_URL') . $audio
                     ];
                 }
             } else {
@@ -747,10 +765,12 @@ class CourseController extends BaseController
             'audioLinks' => $audios,
             'includes' => $includes,
             'themes' => $themes,
+            'courseWork' => $coursework,
+            'finalTest' => $final_test,
             'professions' => $professions,
             'skills' => $skills,
             'authorId' => $course->user->id,
-            'authorImage' => env('APP_URL').$course->user->author_info->getAvatar(),
+            'authorImage' => env('APP_URL') . $course->user->author_info->getAvatar(),
             'authorSpeciality' => implode(', ', json_decode($course->user->author_info->specialization) ?? []),
             'authorInfo' => $course->user->author_info->about
         ];
