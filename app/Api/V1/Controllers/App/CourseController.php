@@ -373,7 +373,7 @@ class CourseController extends BaseController
 
         $query = StudentCourse::where('student_id', '=', $user_id)->where('paid_status', '!=', 0)->whereHas('course', function ($q) {
             $q->where('status', '=', Course::published);
-        });
+        })->orderBy('created_at', 'desc');
         // Фильтровать по фразе
         if ($term) {
             $query = $query->where(function ($q) use ($term) {
@@ -478,7 +478,7 @@ class CourseController extends BaseController
                 $item->progress = round($finishedLessonsCount / $lessonsCount * 100);
             }
 
-            if ($item->is_finished == true) {
+            if (!empty($item->is_finished) == true) {
                 $end = $item->updated_at->format('Y-m-d');
                 $certificate = StudentCertificate::whereCourseId($item->course->id)->whereUserId($user_id)->first()['pdf_' . $lang] ?? null;
             } else {
@@ -487,7 +487,7 @@ class CourseController extends BaseController
             }
             $data["items"][] = [
                 'id' => $item->course->id,
-                'image' => env('APP_URL') . $item->course->image,
+                'image' => env('APP_URL') . $item->course->getAvatar(),
                 'name' => $item->course->name,
                 'author' => $item->course->user->author_info->name . ' ' . $item->course->user->author_info->surname,
                 'author_company_name' => $item->course->user->company_name,
@@ -497,7 +497,7 @@ class CourseController extends BaseController
                 'authorInfo' => $item->course->user->author_info->about,
                 'start' => $item->created_at->format('Y-m-d'),
                 'end' => $end,
-                'certificate' => $certificate,
+                'certificate' => $certificate != null ? env('APP_URL') . $certificate : null,
                 'percent' => $item->progress,
                 'is_rate' => CourseRate::whereStudentId($user_id)->whereCourseId($item->course->id)->exists()
             ];
@@ -578,9 +578,9 @@ class CourseController extends BaseController
                     'id' => $lesson->id,
                     'name' => $lesson->name,
                     'type' => $lesson->type,
-                    'finished' => $lesson->lesson_student->is_finished,
+                    'finished' => $lesson->lesson_student->is_finished ?? 0,
                     'duration' => $lesson->duration,
-                    'enabled' => $lesson->lesson_student->is_access
+                    'enabled' => $lesson->lesson_student->is_access ?? 0
                 ];
             }
         }
@@ -589,8 +589,9 @@ class CourseController extends BaseController
         if (!empty($course->courseWork())) {
             $coursework = [
                 'id' => $course->courseWork()->id,
-                'finished' => $course->courseWork()->lesson_student->is_finished,
-                'duration' => $course->courseWork()->duration
+                'finished' => $course->courseWork()->lesson_student->is_finished ?? 0,
+                'duration' => $course->courseWork()->duration,
+                'enabled' => $course->courseWork()->lesson_student->is_access ?? 0
             ];
         }
         // Финальный тест
@@ -598,8 +599,9 @@ class CourseController extends BaseController
         if (!empty($course->finalTest())) {
             $final_test = [
                 'id' => $course->finalTest()->id,
-                'finished' => $course->finalTest()->lesson_student->is_finished,
-                'duration' => $course->finalTest()->duration
+                'finished' => $course->finalTest()->lesson_student->is_finished ?? 0,
+                'duration' => $course->finalTest()->duration,
+                'enabled' => $course->finalTest()->lesson_student->is_access ?? 0
             ];
         }
         // Профессии
@@ -712,7 +714,7 @@ class CourseController extends BaseController
             $course->progress = round($finishedLessonsCount / $lessonsCount * 100);
         }
 
-        if ($student_course->is_finished == true) {
+        if (!empty($student_course->is_finished) == true) {
             $end = $student_course->updated_at->format('Y-m-d');
             $certificate = StudentCertificate::whereCourseId($course->id)->whereUserId($user->id)->first()['pdf_' . $lang] ?? null;
         } else {
@@ -751,7 +753,7 @@ class CourseController extends BaseController
             'profit' => $course->profit_desc,
             'start' => $course->created_at->format('Y-m-d'),
             'end' => $end,
-            'certificate' => $certificate,
+            'certificate' => $certificate != null ? env('APP_URL') . $certificate : null,
             'percent' => $course->progress,
             'teaser' => $course->teaser,
             'reviews' => count($rates),
@@ -759,7 +761,7 @@ class CourseController extends BaseController
             'rating' => round($average_rates, 1),
             'lang' => $course->lang == 0 ? 'kk' : ($course->lang == 1 ? 'ru' : null),
             'description' => $course->description,
-            'image' => $course->getAvatar(),
+            'image' => env('APP_URL') . $course->getAvatar(),
             'author' => $course->user->author_info->name . ' ' . $course->user->author_info->surname,
             'videoLinks' => $videos,
             'youtubeLinks' => $youtube_videos,
