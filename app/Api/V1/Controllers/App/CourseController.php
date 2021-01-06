@@ -491,6 +491,10 @@ class CourseController extends BaseController
                 'name' => $item->course->name,
                 'author' => $item->course->user->author_info->name . ' ' . $item->course->user->author_info->surname,
                 'author_company_name' => $item->course->user->company_name,
+                'authorId' => $item->course->user->id,
+                'authorImage' => env('APP_URL').$item->course->user->author_info->getAvatar(),
+                'authorSpeciality' => implode(', ', json_decode($item->course->user->author_info->specialization) ?? []),
+                'authorInfo' => $item->course->user->author_info->about,
                 'start' => $item->created_at->format('Y-m-d'),
                 'end' => $end,
                 'certificate' => $certificate,
@@ -565,11 +569,12 @@ class CourseController extends BaseController
         }
 
         // Уроки
-        $lessons = [];
+        $themes = [];
         foreach ($course->themes->sortBy('index_number') as $key => $theme) {
+            $themes[] = ['id' => $theme->id, 'name' => $theme->name];
             foreach ($theme->lessons->sortBy('index_number') as $lesson) {
                 $end_lesson_type = $lesson->end_lesson_type == 0 ? ' (' . __('default.pages.lessons.test_title') . ')' : ' (' . __('default.pages.lessons.homework_title') . ')';
-                $lessons[$theme->name][] = [
+                $themes[$key]['lessons'][] = [
                     'id' => $lesson->id,
                     'name' => $lesson->name,
                     'type' => $lesson->lesson_type['name_' . $lang] . $end_lesson_type,
@@ -741,7 +746,7 @@ class CourseController extends BaseController
             'youtubeLinks' => $youtube_videos,
             'audioLinks' => $audios,
             'includes' => $includes,
-            'lessons' => $lessons,
+            'themes' => $themes,
             'professions' => $professions,
             'skills' => $skills,
             'authorId' => $course->user->id,
