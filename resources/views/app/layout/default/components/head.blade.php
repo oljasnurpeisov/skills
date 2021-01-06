@@ -59,3 +59,21 @@
         "lang": "{{$lang}}"
     }
 </script>
+
+<style>
+    .plain-text table {
+        border-collapse: collapse;
+    }
+
+    .plain-text table td, .plain-text table th {
+        border: 1px solid #909090;
+    }
+
+    .test .item {
+        counter-increment: number;
+    }
+
+    .test .question > *:first-child:before {
+        content: counter(number) ". ";
+    }
+</style>
