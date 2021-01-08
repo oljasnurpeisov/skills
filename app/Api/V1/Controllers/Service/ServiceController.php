@@ -118,14 +118,14 @@ class ServiceController extends BaseController
 
     public function getSearchResult(Request $request)
     {
-        $course_lang = $request->get('course_lang');
+        $course_lang = (string)$request->get('course_lang');
         $course_sort = $request->get('sort_type');
         $course_type = $request->get('course_type');
         $finished_students_min = $request->get('finished_students_min');
         $lang = $request->get("lang", 'ru');
-        $professions = $request->get('professions');
+        $professions = (string)$request->get('professions');
         $rate_min = $request->get('rate_min');
-        $skills = $request->get('skills');
+        $skills = (string)$request->get('skills');
         $term = $request->get('term');
 
         $hash = $request->header("hash");
@@ -199,7 +199,7 @@ class ServiceController extends BaseController
         }
         // Получить профессии
         if ($professions) {
-            $professions = Professions::whereIn('id', $professions)->get();
+            $professions = Professions::whereIn('id', json_decode($professions))->get();
         }
         // Сортировка по навыкам
         if ($skills) {
@@ -241,7 +241,7 @@ class ServiceController extends BaseController
         }
 
         $data = ['results_count' => $items->count(),
-            'search_link' => env('APP_URL') . '/' . $lang . '/course-catalog?search=' . $term . $skills_data .'&'. $data_lang . '&min_rating=' . $rate_min . '&members_count=' . $finished_students_min . '&course_type=' . $course_type . '&course_sort=' . $course_sort . ''];
+            'search_link' => env('APP_URL') . '/' . $lang . '/course-catalog?search=' . $term . $skills_data . '&' . $data_lang . '&min_rating=' . $rate_min . '&members_count=' . $finished_students_min . '&course_type=' . $course_type . '&course_sort=' . $course_sort . ''];
 
 
         $message = new Message(__('api/messages.success'), 200, $data);
@@ -251,8 +251,8 @@ class ServiceController extends BaseController
     public function updateSkillsByUid(Request $request)
     {
         $uid = $request->get('uid');
-        $include_skills = $request->get('include_skills');
-        $exclude_skills = $request->get('exclude_skills');
+        $include_skills = (string)$request->get('include_skills');
+        $exclude_skills = (string)$request->get('exclude_skills');
         $lang = $request->header('lang', 'ru');
         $hash = $request->header('hash');
         app()->setLocale($lang);
