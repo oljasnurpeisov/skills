@@ -132,20 +132,20 @@ class ServiceController extends BaseController
 
         app()->setLocale($lang);
 
-        // Валидация
-        $validator = Validator::make($request->header(), [
-            'hash' => 'required',
-        ]);
-
-        if ($hash = $this->validateHash(['course_lang' => $course_lang, 'course_sort' => $course_sort, 'course_type' => $course_type
-            , 'finished_students_min' => $finished_students_min, 'professions' => $professions,
-            'rate_min' => $rate_min, 'skills' => $skills, 'term' => $term, 'hash' => $hash], env('APP_DEBUG'))) {
-            if (is_bool($hash)) {
-                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
-            } else {
-                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
-            }
-        }
+//        // Валидация
+//        $validator = Validator::make($request->header(), [
+//            'hash' => 'required',
+//        ]);
+//
+//        if ($hash = $this->validateHash(['course_lang' => $course_lang, 'course_sort' => $course_sort, 'course_type' => $course_type
+//            , 'finished_students_min' => $finished_students_min, 'professions' => $professions,
+//            'rate_min' => $rate_min, 'skills' => $skills, 'term' => $term, 'hash' => $hash], env('APP_DEBUG'))) {
+//            if (is_bool($hash)) {
+//                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+//            } else {
+//                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+//            }
+//        }
 
         if (count($validator->errors()) > 0) {
             $errors = $validator->errors()->all();
@@ -271,7 +271,8 @@ class ServiceController extends BaseController
             'hash' => 'required'
         ]);
 
-        if ($hash = $this->validateHash(['exclude_skills' => $exclude_skills, 'include_skills' => $include_skills, 'uid' => $uid, 'hash' => $hash], env('APP_DEBUG'))) {
+//        if ($hash = $this->validateHash(['exclude_skills' => $exclude_skills, 'include_skills' => $include_skills, 'uid' => $uid, 'hash' => $hash], env('APP_DEBUG'))) {
+        if ($hash = $this->validateHash(['uid' => $uid, 'hash' => $hash], env('APP_DEBUG'))) {
             if (is_bool($hash)) {
                 $validator->errors()->add('hash', __('api/errors.invalid_hash'));
             } else {
