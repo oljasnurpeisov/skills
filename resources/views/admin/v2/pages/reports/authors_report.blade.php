@@ -228,7 +228,7 @@
                         <td>{{$item->courses->where('quota_status', '=', 2)->count()}}</td>
                         <td>{{count($item->members) ?? 0}}</td>
                         <td>{{count($item->certificate_members) ?? 0}}</td>
-                        <td>{{count($item->qualification_students) ?? 0}}</td>
+                        <td>{{$item->qualification_students ?? 0}}</td>
                     </tr>
                 @endforeach
                 </tbody>

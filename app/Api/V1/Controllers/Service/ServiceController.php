@@ -199,11 +199,17 @@ class ServiceController extends BaseController
         }
         // Получить профессии
         if ($professions) {
-            $professions = Professions::whereIn('id', json_decode($professions))->get();
+            $professions = Professions::whereIn('id', json_decode($professions))->pluck('id');
+            $query->whereHas('professions', function ($q) use ($professions) {
+                $q->whereIn('professions.id', json_decode($professions));
+            });
         }
         // Сортировка по навыкам
         if ($skills) {
             $skills = Skill::whereIn('code_skill', json_decode($skills))->pluck('id');
+            $query->whereHas('skills', function ($q) use ($skills) {
+                $q->whereIn('skills.id', json_decode($skills));
+            });
         }
         // Сортировка по языку
         if ($course_lang) {
@@ -241,7 +247,7 @@ class ServiceController extends BaseController
         }
 
         $data = ['results_count' => $items->count(),
-            'search_link' => env('APP_URL') . '/' . $lang . '/course-catalog?search=' . $term . $skills_data . '&' . $data_lang . '&min_rating=' . $rate_min . '&members_count=' . $finished_students_min . '&course_type=' . $course_type . '&course_sort=' . $course_sort . ''];
+            'search_link' => env('APP_URL') . '/' . $lang . '/course-catalog?search=' . $term . $professions_data . $skills_data . '&' . $data_lang . '&min_rating=' . $rate_min . '&members_count=' . $finished_students_min . '&course_type=' . $course_type . '&course_sort=' . $course_sort . ''];
 
 
         $message = new Message(__('api/messages.success'), 200, $data);

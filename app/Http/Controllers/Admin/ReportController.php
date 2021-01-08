@@ -190,13 +190,41 @@ class ReportController extends Controller
             });
         }
         // Поиск по количеству обучающихся
-//        if ($course_members_count_from and empty($course_members_count_to)) {
-//
-//            $query->whereHas('courses.course_members', function ($q) use ($course_members_count_from) {
-//                $q->havingRaw('count(id) >= ' . $course_members_count_from);
-//            });
-//
-//        }
+        if ($course_members_count_from and empty($course_members_count_to)) {
+            $query->whereHas('courses.course_members', function ($q) use ($course_members_count_from) {
+                $q->where('paid_status', '!=', 0)
+                    ->havingRaw('count(*) >= ' . $course_members_count_from);
+            });
+        } else if ($course_members_count_to and empty($course_members_count_from)) {
+            $query->whereHas('courses.course_members', function ($q) use ($course_members_count_to) {
+                $q->where('paid_status', '!=', 0)
+                    ->havingRaw('count(*) <= ' . $course_members_count_to);
+            });
+        } else if ($course_members_count_to and $course_members_count_from) {
+            $query->whereHas('courses.course_members', function ($q) use ($course_members_count_to, $course_members_count_from) {
+                $q->where('paid_status', '!=', 0)
+                    ->havingRaw('count(*) >= ' . $course_members_count_from)
+                    ->havingRaw('count(*) <= ' . $course_members_count_to);
+            });
+        }
+        // Поиск по количеству сертифицированных
+        if ($certificates_count_from and empty($certificates_count_to)) {
+            $query->whereHas('courses.course_members', function ($q) use ($certificates_count_from) {
+                $q->where('is_finished', '=', true)
+                    ->havingRaw('count(*) >= ' . $certificates_count_from);
+            });
+        } else if ($certificates_count_to and empty($certificates_count_from)) {
+            $query->whereHas('courses.course_members', function ($q) use ($certificates_count_to) {
+                $q->where('is_finished', '=', true)
+                    ->havingRaw('count(*) <= ' . $certificates_count_to);
+            });
+        } else if ($certificates_count_to and $certificates_count_from) {
+            $query->whereHas('courses.course_members', function ($q) use ($certificates_count_to, $certificates_count_from) {
+                $q->where('is_finished', '=', true)
+                    ->havingRaw('count(*) >= ' . $certificates_count_from)
+                    ->havingRaw('count(*) <= ' . $certificates_count_to);
+            });
+        }
         $items = $query->paginate(10);
 
         foreach ($items as $item) {
@@ -218,7 +246,7 @@ class ReportController extends Controller
                     $author_students_finished[$member['student_id']][] = $member;
                 }
                 if ($course->courseWork()) {
-                    $author_students_finished_courseWork[] = $course->courseWork()->finishedLesson()->toArray();
+                    $author_students_finished_courseWork[] = $course->courseWork()->finishedLesson();
                 }
             }
             // Оценка автора исходя из всех оценок
@@ -232,7 +260,11 @@ class ReportController extends Controller
             // Количество сертифицированных
             $item->certificate_members = $author_students_finished;
             // Количество подтвердивших квалификацию
-            $item->qualification_students = array_filter($author_students_finished_courseWork);
+            $author_students_finished_courseWork_count = 0;
+            foreach ($author_students_finished_courseWork as $lesson) {
+                $author_students_finished_courseWork_count += count($lesson);
+            }
+            $item->qualification_students = $author_students_finished_courseWork_count;
         }
         Session::put('authors_report_export', $query->get());
 //        return $items;
@@ -695,7 +727,7 @@ class ReportController extends Controller
                     $author_students_finished[$member['student_id']][] = $member;
                 }
                 if ($course->courseWork()) {
-                    $author_students_finished_courseWork[] = $course->courseWork()->finishedLesson()->toArray();
+                    $author_students_finished_courseWork[] = $course->courseWork()->finishedLesson();
                 }
             }
             // Оценка автора исходя из всех оценок
@@ -709,7 +741,11 @@ class ReportController extends Controller
             // Количество сертифицированных
             $i->certificate_members = $author_students_finished;
             // Количество подтвердивших квалификацию
-            $i->qualification_students = array_filter($author_students_finished_courseWork);
+            $author_students_finished_courseWork_count = 0;
+            foreach ($author_students_finished_courseWork as $lesson) {
+                $author_students_finished_courseWork_count += count($lesson);
+            }
+            $i->qualification_students = $author_students_finished_courseWork_count;
 
             // ФИО автора
             $name = $i->author_info->name . ' ' . $i->author_info->surname;
@@ -730,7 +766,7 @@ class ReportController extends Controller
             // Количество сертифицированных обучающихся
             $students_certificate_count = count($i->certificate_members) ?? 0;
             // Количество подтвердивших квалификацию обучающихся
-            $students_qualification_count = count($i->qualification_students) ?? 0;
+            $students_qualification_count = $i->qualification_students ?? 0;
 
             $newElement = ['name' => $name, 'specialization' => $specialization, 'rate' => $rate, 'courses_count' => $courses_count,
                 'paid_courses_count' => $paid_courses_count, 'free_courses_count' => $free_courses_count, 'quota_courses_count' => $quota_courses_count,
