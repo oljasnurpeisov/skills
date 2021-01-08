@@ -57,7 +57,7 @@ class CourseController extends Controller
         // Получить все курсы обучающегося
         $query = StudentCourse::where('student_id', '=', Auth::user()->id)->where('paid_status', '!=', 0)->whereHas('course', function ($q) {
             $q->where('status', '=', Course::published);
-        });
+        })->orderBy('created_at', 'desc');
 
         // Сортировка по названию
         if ($term) {

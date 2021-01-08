@@ -5,6 +5,8 @@ namespace App\Api\V1\Controllers\App;
 use App\Api\V1\Classes\Message;
 use App\Api\V1\Controllers\BaseController;
 use App\Api\V1\Transformers\MessageTransformer;
+use App\Extensions\FormatDate;
+use App\Extensions\NotificationsHelper;
 use App\Extensions\YoutubeParse;
 use App\Models\Course;
 use App\Models\CourseRate;
@@ -13,6 +15,7 @@ use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCertificate;
 use App\Models\StudentCourse;
+use App\Models\StudentLesson;
 use App\Models\Theme;
 use App\Models\User;
 
@@ -373,7 +376,7 @@ class CourseController extends BaseController
 
         $query = StudentCourse::where('student_id', '=', $user_id)->where('paid_status', '!=', 0)->whereHas('course', function ($q) {
             $q->where('status', '=', Course::published);
-        });
+        })->orderBy('created_at', 'desc');
         // Фильтровать по фразе
         if ($term) {
             $query = $query->where(function ($q) use ($term) {
@@ -478,7 +481,7 @@ class CourseController extends BaseController
                 $item->progress = round($finishedLessonsCount / $lessonsCount * 100);
             }
 
-            if ($item->is_finished == true) {
+            if (!empty($item->is_finished) == true) {
                 $end = $item->updated_at->format('Y-m-d');
                 $certificate = StudentCertificate::whereCourseId($item->course->id)->whereUserId($user_id)->first()['pdf_' . $lang] ?? null;
                 if ($certificate != null) {
@@ -490,7 +493,7 @@ class CourseController extends BaseController
             }
             $data["items"][] = [
                 'id' => $item->course->id,
-                'image' => env('APP_URL') . $item->course->image,
+                'image' => env('APP_URL') . $item->course->getAvatar(),
                 'name' => $item->course->name,
                 'author' => $item->course->user->author_info->name . ' ' . $item->course->user->author_info->surname,
                 'author_company_name' => $item->course->user->company_name,
@@ -576,14 +579,15 @@ class CourseController extends BaseController
         foreach ($course->themes->sortBy('index_number') as $key => $theme) {
             $themes[] = ['id' => $theme->id, 'name' => $theme->name];
             foreach ($theme->lessons->sortBy('index_number') as $lesson) {
+                $this->lessonViewAccess($lang, $course, $lesson, $user);
                 $end_lesson_type = $lesson->end_lesson_type == 0 ? ' (' . __('default.pages.lessons.test_title') . ')' : ' (' . __('default.pages.lessons.homework_title') . ')';
                 $themes[$key]['lessons'][] = [
                     'id' => $lesson->id,
                     'name' => $lesson->name,
                     'type' => $lesson->type,
-                    'finished' => $lesson->lesson_student->is_finished,
+                    'finished' => $lesson->lesson_student->is_finished ?? 0,
                     'duration' => $lesson->duration,
-                    'enabled' => $lesson->lesson_student->is_access
+                    'enabled' => $lesson->lesson_student->is_access ?? 0
                 ];
             }
         }
@@ -592,8 +596,9 @@ class CourseController extends BaseController
         if (!empty($course->courseWork())) {
             $coursework = [
                 'id' => $course->courseWork()->id,
-                'finished' => $course->courseWork()->lesson_student->is_finished,
-                'duration' => $course->courseWork()->duration
+                'finished' => $course->courseWork()->lesson_student->is_finished ?? 0,
+                'duration' => $course->courseWork()->duration,
+                'enabled' => $course->courseWork()->lesson_student->is_access ?? 0
             ];
         }
         // Финальный тест
@@ -601,8 +606,9 @@ class CourseController extends BaseController
         if (!empty($course->finalTest())) {
             $final_test = [
                 'id' => $course->finalTest()->id,
-                'finished' => $course->finalTest()->lesson_student->is_finished,
-                'duration' => $course->finalTest()->duration
+                'finished' => $course->finalTest()->lesson_student->is_finished ?? 0,
+                'duration' => $course->finalTest()->duration,
+                'enabled' => $course->finalTest()->lesson_student->is_access ?? 0
             ];
         }
         // Профессии
@@ -715,7 +721,7 @@ class CourseController extends BaseController
             $course->progress = round($finishedLessonsCount / $lessonsCount * 100);
         }
 
-        if ($student_course->is_finished == true) {
+        if (!empty($student_course->is_finished) == true) {
             $end = $student_course->updated_at->format('Y-m-d');
             $certificate = StudentCertificate::whereCourseId($course->id)->whereUserId($user->id)->first()['pdf_' . $lang] ?? null;
         } else {
@@ -762,7 +768,7 @@ class CourseController extends BaseController
             'rating' => round($average_rates, 1),
             'lang' => $course->lang == 0 ? 'kk' : ($course->lang == 1 ? 'ru' : null),
             'description' => $course->description,
-            'image' => $course->getAvatar(),
+            'image' => env('APP_URL') . $course->getAvatar(),
             'author' => $course->user->author_info->name . ' ' . $course->user->author_info->surname,
             'videoLinks' => $videos,
             'youtubeLinks' => $youtube_videos,
@@ -783,4 +789,116 @@ class CourseController extends BaseController
         return $this->response->item($message, new MessageTransformer());
     }
 
+    public function lessonViewAccess($lang, Course $course, Lesson $lesson, User $user)
+    {
+        $theme = $lesson->themes;
+
+        $time = FormatDate::convertMunitesToTime($lesson->duration);
+
+        // Если все уроки не доступны сразу
+        if ($course->is_access_all == false) {
+            if ($theme) {
+                // Получить первый урок и первую тему из курса
+                $first_theme = Theme::where('course_id', '=', $course->id)->orderBy('index_number', 'asc')->first();
+                $first_lesson = Lesson::where('theme_id', '=', $theme->id)->orderBy('index_number', 'asc')->first();
+
+                // Проверить является ли урок первым в курсе
+                if (($theme->id == $first_theme->id) and ($first_lesson->id == $lesson->id)) {
+
+                    $this->syncUserLessons($lesson->id, $user);
+
+                    // Если урок не является первым в курсе
+                } else {
+                    // Получить предыдущую тему и урок из этой темы
+                    $previous_theme = Theme::where('course_id', '=', $course->id)->where('index_number', '<', $theme->index_number)->orderBy('index_number', 'desc')->first();
+                    $previous_lesson_theme = Lesson::where('index_number', '<', $lesson->index_number)->where('theme_id', '=', $theme->id)->orderBy('index_number', 'desc')->first();
+                    // Если предыдущая тема есть, то получить урок из предыдущей темы
+                    if (!empty($previous_theme)) {
+                        $previous_lesson = Lesson::where('theme_id', '=', $previous_theme->id)->orderBy('index_number', 'desc')->first();
+                    }
+                    // Если есть урок из предыдущей темы и он завершен, дать доступ к текущему уроку
+                    if (!empty($previous_lesson_theme)) {
+                        if (!empty($previous_lesson_theme->lesson_student->is_finished) == true) {
+                            $this->syncUserLessons($lesson->id, $user);
+
+                        }
+                    } else {
+                        // Если есть урок и он завершен, дать доступ к текущему уроку
+                        if (!empty($previous_lesson) and !empty($previous_lesson->lesson_student->is_finished) == true) {
+                            $this->syncUserLessons($lesson->id, $user);
+
+                        }
+                    }
+                }
+            } else {
+                // Проверить завершенность уроков
+                $all_course_lessons = $course->lessons()->whereNotIn('type', [3, 4])->pluck('id')->toArray();
+                $finished_lessons = $user->student_lesson()->where('course_id', '=', $course->id)->where('is_finished', '=', true)->pluck('lesson_id')->toArray();
+                // Если все курсы завершены
+                if (array_diff($all_course_lessons, $finished_lessons) == []) {
+                    // Если это курсовая работа, дать доступ
+                    if ($lesson->type == 3) {
+                        $this->syncUserLessons($lesson->id, $user);
+                        // Если это финальный тест, проверить завершена ли курсовая
+                    } else if ($lesson->type == 4) {
+                        $coursework = $course->lessons()->where('type', '=', 3)->first();
+                        if ($coursework) {
+                            // Если есть курсовая и она завершена, дать доступ
+                            if (!empty($coursework->lesson_student->is_finished) == true) {
+                                $this->syncUserLessons($lesson->id, $user);
+                            }
+                            // Если есть курсовой нет, то дать доступ
+                        } else {
+                            $this->syncUserLessons($lesson->id, $user);
+                        }
+                    }
+
+                }
+
+            }
+            // Если все уроки доступны сразу
+        } else {
+            // Проверить завершенность уроков
+            $all_course_lessons = $course->lessons()->whereNotIn('type', [3, 4])->pluck('id')->toArray();
+            $finished_lessons = $user->student_lesson()->where('course_id', '=', $course->id)->where('is_finished', '=', true)->pluck('lesson_id')->toArray();
+            switch ($lesson->type) {
+                case (3):
+                    if (array_diff($all_course_lessons, $finished_lessons) == []) {
+                        $this->syncUserLessons($lesson->id, $user);
+                    }
+                    break;
+                case (4):
+                    $coursework = $course->lessons()->where('type', '=', 3)->first();
+                    if ($coursework) {
+                        // Если есть курсовая и она завершена, дать доступ
+                        if (!empty($coursework->lesson_student->is_finished) == true) {
+                            $this->syncUserLessons($lesson->id, $user);
+                            // Если есть курсовая, но она не завершена, вернуть обратно
+                        }
+                        // Если есть курсовой нет, то дать доступ
+                    } else {
+                        $this->syncUserLessons($lesson->id, $user);
+                    }
+                    break;
+                default:
+                    $this->syncUserLessons($lesson->id, $user);
+                    break;
+            }
+
+        }
+
+    }
+
+    public function syncUserLessons(int $lesson_id, User $user)
+    {
+        $item = StudentLesson::where('lesson_id', '=', $lesson_id)->where('student_id', '=', $user->id)->first();
+        if (empty($item)) {
+            $item = new StudentLesson;
+            $item->lesson_id = $lesson_id;
+            $item->student_id = $user->id;
+            $item->is_access = true;
+            $item->save();
+        }
+
+    }
 }
