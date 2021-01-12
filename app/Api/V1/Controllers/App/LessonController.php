@@ -684,6 +684,10 @@ class LessonController extends BaseController
             }
             $practice['mixAnswers'] = json_decode($lesson->practice)->mixAnswers == "true" ? 1 : 0;
 
+        }else if ($lesson->end_lesson_type == 1) {
+            $practice = [
+                    'theory' => $lesson->practice
+                ];
         }
 
         $data = [
