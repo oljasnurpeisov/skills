@@ -587,7 +587,8 @@ class CourseController extends BaseController
                     'type' => $lesson->type,
                     'finished' => $lesson->lesson_student->is_finished ?? 0,
                     'duration' => $lesson->duration,
-                    'enabled' => $lesson->lesson_student->is_access ?? 0
+                    'enabled' => $lesson->lesson_student->is_access ?? 0,
+                    'end_lesson_type' => $lesson->end_lesson_type
                 ];
             }
         }
@@ -598,7 +599,8 @@ class CourseController extends BaseController
                 'id' => $course->courseWork()->id,
                 'finished' => $course->courseWork()->lesson_student->is_finished ?? 0,
                 'duration' => $course->courseWork()->duration,
-                'enabled' => $course->courseWork()->lesson_student->is_access ?? 0
+                'enabled' => $course->courseWork()->lesson_student->is_access ?? 0,
+                'end_lesson_type' => $course->courseWork()->end_lesson_type
             ];
         }
         // Финальный тест
@@ -608,7 +610,8 @@ class CourseController extends BaseController
                 'id' => $course->finalTest()->id,
                 'finished' => $course->finalTest()->lesson_student->is_finished ?? 0,
                 'duration' => $course->finalTest()->duration,
-                'enabled' => $course->finalTest()->lesson_student->is_access ?? 0
+                'enabled' => $course->finalTest()->lesson_student->is_access ?? 0,
+                'end_lesson_type' => $course->finalTest()->end_lesson_type
             ];
         }
         // Профессии
