@@ -766,7 +766,7 @@ class UserController extends BaseController
             return $this->response->item($message, new MessageTransformer())->statusCode(404);
         }
 
-        $items = $user->certificates()->paginate($this->per_page);
+        $items = $user->certificates()->orderBy('created_at', 'desc')->paginate($this->per_page);
 
         $next_page_number = null;
         if ($items->nextPageUrl()) {
