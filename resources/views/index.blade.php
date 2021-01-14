@@ -57,7 +57,11 @@
                                         </div>
                                         <div class="card__desc">
                                             <div class="card__top">
-                                                <div class="card__price mark mark--blue">{{number_format($course->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                                                @if($course->is_paid == true)
+                                                    <div class="card__price mark mark--blue">{{number_format($course->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                                                @else
+                                                    <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
+                                                @endif
                                                 <h3 class="card__title">{{$course->name}}</h3>
                                                 <div class="card__author">{{$course->user->company_name}}</div>
                                             </div>
@@ -137,21 +141,20 @@
 
         <section class="gray">
             <div class="container">
-                <h3 class="title-primary decorated"><span>Можно применить</span><br/> популярные курсы</h3>
+                <h3 class="title-primary decorated">{!! __('default.pages.index.popular_courses_catalog') !!}</h3>
                 <ul class="home-arrow-links">
                     @foreach($popular_courses as $item)
                         <li><a href="/{{$lang}}/course-catalog/course/{{$item->id}}" class="arrow-link"
                                title="{{$item->name}}">{{$item->name}}</a></li>
                     @endforeach
-                    <li><a href="/{{$lang}}/course-catalog" title="Посмотреть весь каталог" class="btn">Посмотреть весь
-                            каталог</a></li>
+                    <li><a href="/{{$lang}}/course-catalog" title="{!! __('default.pages.index.popular_courses_catalog_btn') !!}" class="btn">{!! __('default.pages.index.popular_courses_catalog_btn') !!}</a></li>
                 </ul>
             </div>
         </section>
 
         <section class="plain">
             <div class="container">
-                <h2 class="title-primary decorated"><span>Шаг за</span><br/> шагом</h2>
+                <h2 class="title-primary decorated">{!! __('default.pages.index.step_by_step') !!}</h2>
                 <div class="row row--multiline">
                     @foreach(json_decode($content->getAttribute('data_'.$lang))->step_by_step as $key => $step)
                         <div class="col-md-4 col-sm-6">
@@ -257,7 +260,7 @@
             <div class="container">
                 <div class="row row--multiline align-items-center">
                     <div class="col-sm-6">
-                        <h2 class="title-primary decorated"><span>Станьте</span><br/> автором курсов</h2>
+                        <h2 class="title-primary decorated">{!! __('default.pages.index.to_be_a_teacher') !!}</h2>
                         <div class="plain-text">
                             {!! json_decode($content->getAttribute('data_'.$lang))->for_authors->description !!}
                         </div>
