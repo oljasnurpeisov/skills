@@ -483,7 +483,7 @@ class CourseController extends BaseController
 
             if (!empty($item->is_finished) == true) {
                 $end = $item->updated_at->format('Y-m-d');
-                $certificate = StudentCertificate::whereCourseId($item->course->id)->whereUserId($user_id)->first()['pdf_' . $lang] ?? null;
+                $certificate = StudentCertificate::whereCourseId($item->course->id)->whereUserId($user_id)->first()['pdf_' . $lang] ?? StudentCertificate::whereCourseId($item->course->id)->whereUserId($user_id)->first()['pdf_ru'];
                 if ($certificate != null) {
                     $certificate = env('APP_URL') . $certificate;
                 }

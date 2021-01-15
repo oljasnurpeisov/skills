@@ -54,6 +54,9 @@
                                             *</label>
                                         <input type="number" name="duration" placeholder="" class="input-regular"
                                                value="{{ old('duration') }}" required>
+                                        <label class="form-group__label"
+                                               style="color: #828282;margin-top: 5px">{{__('default.pages.lessons.duration_teaser')}}
+                                        </label>
                                     </div>
                                     {!! $errors->first('duration', '<div class="alert alert-danger">
                     :message

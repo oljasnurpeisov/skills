@@ -267,7 +267,7 @@ class ReportController extends Controller
             $item->qualification_students = $author_students_finished_courseWork_count;
         }
         Session::put('authors_report_export', $query->get());
-//        return $items;
+
         return view('admin.v2.pages.reports.authors_report', [
             'items' => $items,
             'request' => $request
@@ -679,7 +679,11 @@ class ReportController extends Controller
             // Платежный статус
             $is_paid = $i->is_paid == true ? __('default.pages.reporting.paid_course') : __('default.pages.reporting.free_course');
             // Записано обучающихся
-            $students_count = count($i->course_members->whereIn('paid_status', [1, 2]));
+            if($i->quota_status == 2 and $i->is_paid == true){
+                $students_count = count($i->course_members->where('paid_status', '=', 1)) . "/" . count($i->course_members->where('paid_status', '=', 2));
+            }else{
+                $students_count = count($i->course_members->whereIn('paid_status', [1, 2]));
+            }
             // Получили сертификат
             $students_certificate_count = count($i->course_members->where('is_finished', '=', true));
             // Подтвердили квалификацию

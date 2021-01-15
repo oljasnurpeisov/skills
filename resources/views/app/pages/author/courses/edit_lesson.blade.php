@@ -17,7 +17,8 @@
 
                 <div class="row row--multiline">
                     <div class="col-md-8">
-                        <form action="/{{$lang}}/course-{{$course->id}}/edit-lesson-{{$item->id}}" method="POST" enctype="multipart/form-data">
+                        <form action="/{{$lang}}/course-{{$course->id}}/edit-lesson-{{$item->id}}" method="POST"
+                              enctype="multipart/form-data">
                             @csrf
                             <div class="row row--multiline">
                                 <div class="col-md-8">
@@ -50,6 +51,9 @@
                                             *</label>
                                         <input type="number" name="duration" placeholder="" class="input-regular"
                                                value="{{ old('duration') ?? $item->duration}}" required>
+                                        <label class="form-group__label"
+                                               style="color: #828282;margin-top: 5px">{{__('default.pages.lessons.duration_teaser')}}
+                                        </label>
                                     </div>
                                     {!! $errors->first('duration', '<div class="alert alert-danger">
                     :message
@@ -79,9 +83,10 @@
                                                                 </div>
                                                                 <div class="dz-size" data-dz-size="">
                                                                     @if(file_exists(public_path($item->image)))
-                                                                    <strong>{{ $item->image ? round(filesize(public_path($item->image)) / 1024) : 0 }}</strong>KB
+                                                                        <strong>{{ $item->image ? round(filesize(public_path($item->image)) / 1024) : 0 }}</strong>
+                                                                        KB
                                                                     @else
-                                                                    <strong>0</strong> KB
+                                                                        <strong>0</strong> KB
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -238,7 +243,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments')}}</label>
-                                <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}" data-maxfiles="20"
+                                <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}"
+                                     data-maxfiles="20"
                                      data-maxsize="20"
                                      data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg, .rar, .zip, .7z, .mp3, .mp4, .avi, .mov"
                                      id="documents-dropzone"
@@ -276,22 +282,23 @@
                                        class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                 </div>
                             </div>
-{{--                            @if($course->is_poor_vision == true)--}}
-                                @include('app.pages.author.courses.components.lesson.poor_vision_lesson_edit',['item' => $item])
-{{--                            @endif--}}
+                            {{--                            @if($course->is_poor_vision == true)--}}
+                            @include('app.pages.author.courses.components.lesson.poor_vision_lesson_edit',['item' => $item])
+                            {{--                            @endif--}}
                             <div id="optionalFields">
-{{--                                @if($item->end_lesson_type == 1)--}}
-                                    <div id="homework" @if($item->end_lesson_type == 1) style="display: block" @else style="display: none" @endif>
-                                        <div class="form-group">
-                                            <label class="form-group__label">{{__('default.pages.lessons.homework')}}
-                                                *</label>
-                                            <textarea name="homework" class="input-regular tinymce-here"
-                                                      required>{{$item->practice}}</textarea>
-                                        </div>
+                                {{--                                @if($item->end_lesson_type == 1)--}}
+                                <div id="homework" @if($item->end_lesson_type == 1) style="display: block"
+                                     @else style="display: none" @endif>
+                                    <div class="form-group">
+                                        <label class="form-group__label">{{__('default.pages.lessons.homework')}}
+                                            *</label>
+                                        <textarea name="homework" class="input-regular tinymce-here"
+                                                  required>{{$item->practice}}</textarea>
                                     </div>
-{{--                                @elseif($item->end_lesson_type == 0)--}}
-                                    @include('app.pages.author.courses.components.lesson.test_lesson_edit',['item' => $item])
-{{--                                @endif--}}
+                                </div>
+                                {{--                                @elseif($item->end_lesson_type == 0)--}}
+                                @include('app.pages.author.courses.components.lesson.test_lesson_edit',['item' => $item])
+                                {{--                                @endif--}}
                             </div>
 
                             <div class="buttons">

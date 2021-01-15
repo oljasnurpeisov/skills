@@ -251,7 +251,11 @@
                         <td>{{__('default.pages.reporting.statuses.'.$item->status)}}</td>
                         <td>@if($item->quota_status == 2){{__('default.yes_title')}}@else{{__('default.no_title')}}@endif</td>
                         <td>@if($item->is_paid == true){{__('default.pages.reporting.paid_course')}}@else{{__('default.pages.reporting.free_course')}}@endif</td>
-                        <td>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</td>
+                        @if($item->quota_status == 2 and $item->is_paid == true)
+                            <td>{{count($item->course_members->where('paid_status', '=', 1))}}/{{count($item->course_members->where('paid_status', '=', 2))}}</td>
+                        @else
+                            <td>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</td>
+                        @endif
                         <td>{{count($item->course_members->where('is_finished', '=', true))}}</td>
                         @if($item->courseWork())
                             <td>{{$item->courseWork()->finishedLesson()->count()}}</td>

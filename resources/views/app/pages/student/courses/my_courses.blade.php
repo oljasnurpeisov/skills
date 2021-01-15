@@ -71,7 +71,7 @@
                                             <div class="card__additional">
                                                 @if($item->is_finished == true)
                                                     @if($item->course->studentCertificate())
-                                                        <a href="{{$item->course->studentCertificate()->getAttribute('pdf_'.$lang )?? ''}}"
+                                                        <a href="{{$item->course->studentCertificate()->getAttribute('pdf_'.$lang ) ?? $item->course->studentCertificate()->getAttribute('pdf_ru')}}"
                                                            download
                                                            title="{{__('default.pages.courses.get_certificate_active')}}"
                                                            class="card__link {{$item->course->studentCertificate() ? '' : 'disabled'}}">{{__('default.pages.courses.get_certificate_active')}}</a>
