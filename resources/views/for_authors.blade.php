@@ -4,7 +4,8 @@
     <main class="main">
 
 
-        <section class="opening opening--author" style="background: url({{json_decode($content->getAttribute('data_'.$lang))->for_authors_banner->image}})">
+        <section class="opening opening--author"
+                 style="background: url({{json_decode($content->getAttribute('data_'.$lang))->for_authors_banner->image}})">
             <div class="container">
                 <div class="text-center">
                     <h1>{{json_decode($content->getAttribute('data_'.$lang))->for_authors_banner->title}}</h1>
@@ -12,16 +13,19 @@
 
                     @auth
                         @if(Auth::user()->hasRole('author'))
-                            <a href="/{{$lang}}/profile-author-information" title="Стать автором" class="btn">Стать
-                                автором</a>
+                            <a href="/{{$lang}}/profile-author-information"
+                               title="{{__('default.pages.footer.to_be_author')}}"
+                               class="btn">{{__('default.pages.footer.to_be_author')}}</a>
                         @else
-                            <a href="#authorRegistration1" data-fancybox="" title="Стать автором" class="btn">Стать
-                                автором</a>
+                            <a href="#authorRegistration1" data-fancybox=""
+                               title="{{__('default.pages.footer.to_be_author')}}"
+                               class="btn">{{__('default.pages.footer.to_be_author')}}</a>
                         @endif
                     @endauth
                     @guest
-                        <a href="#authorRegistration" data-fancybox="" title="Стать автором" class="btn">Стать
-                            автором</a>
+                        <a href="#authorRegistration" data-fancybox=""
+                           title="{{__('default.pages.footer.to_be_author')}}"
+                           class="btn">{{__('default.pages.footer.to_be_author')}}</a>
                     @endguest
 
                 </div>
@@ -65,7 +69,7 @@
 
         <section class="gray">
             <div class="container">
-                <h3 class="title-primary decorated"><span>Преимущества</span><br/> Раскройте свой потенциал</h3>
+                <h3 class="title-primary decorated"><span>{!! __('default.pages.index.advantages') !!}</h3>
                 <div class="row row--multiline">
                     @foreach(json_decode($content->getAttribute('data_'.$lang))->advantages as $key => $advantages)
                         <div class="col-sm-6 col-md-{{12/count(json_decode($content->getAttribute('data_'.$lang))->advantages)}}">
@@ -85,17 +89,20 @@
                 <div class="text-center">
                     @auth
                         @if(Auth::user()->hasRole('author'))
-                            <a href="/{{$lang}}/profile-author-information" title="Стать автором"
+                            <a href="/{{$lang}}/profile-author-information"
+                               title="{{__('default.pages.footer.to_be_author')}}"
                                class="btn">Стать
                                 автором</a>
                         @else
-                            <a href="#authorRegistration1" data-fancybox="" title="Стать автором" class="btn">Стать
-                                автором</a>
+                            <a href="#authorRegistration1" data-fancybox=""
+                               title="{{__('default.pages.footer.to_be_author')}}"
+                               class="btn">{{__('default.pages.footer.to_be_author')}}</a>
                         @endif
                     @endauth
                     @guest
-                        <a href="#authorRegistration" data-fancybox="" title="Стать автором" class="btn">Стать
-                            автором</a>
+                        <a href="#authorRegistration" data-fancybox=""
+                           title="{{__('default.pages.footer.to_be_author')}}"
+                           class="btn">{{__('default.pages.footer.to_be_author')}}</a>
                     @endguest
                 </div>
             </div>
@@ -103,7 +110,7 @@
 
         <section class="plain big-padding">
             <div class="container">
-                <h2 class="title-primary decorated"><span>Шаг за</span><br/> шагом</h2>
+                <h2 class="title-primary decorated">{!! __('default.pages.index.step_by_step') !!}</h2>
                 <div class="row row--multiline">
                     @foreach(json_decode($content->getAttribute('data_'.$lang))->step_by_step as $key => $step)
                         <div class="col-md-{{12/count(json_decode($content->getAttribute('data_'.$lang))->step_by_step)}} col-sm-6">
@@ -121,11 +128,183 @@
             </div>
         </section>
 
+        <section class="plain big-padding">
+            <div class="container">
+                <h2 class="title-primary decorated">{!! __('default.pages.calculator.title') !!}</h2>
+                <div class="plain-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua.
+                </div>
+
+                <div class="calculator" id="calculator">
+                    <div class="calculator__section white">
+                        <div class="form-group">
+                            <label class="form-group__label big">{{__('default.pages.calculator.duration')}}</label>
+                            <input type="number" name="duration" class="input-big">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label big">{{__('default.pages.calculator.format')}}</label>
+                            <div class="radio-group">
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="format" value="60"
+                                               data-kk="10"><span>{{__('default.pages.calculator.format_section_1')}}</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="format" value="30"
+                                               data-kk="5"><span>{{__('default.pages.calculator.format_section_2')}}</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="format" value="0"
+                                               data-kk="0"><span>{{__('default.pages.calculator.format_section_3')}}</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="hint gray">
+                                {{__('default.pages.calculator.format_description')}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label big">{{__('default.pages.calculator.general_tests')}}</label>
+                            <div class="radio-group">
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="tests"
+                                               value="4"><span>{{__('default.pages.calculator.general_tests_section_1')}}</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="tests"
+                                               value="2"><span>{{__('default.pages.calculator.general_tests_section_2')}}</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="tests"
+                                               value="0"><span>{{__('default.pages.calculator.general_tests_section_3')}}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label big">{{__('default.pages.calculator.final_test')}}</label>
+                            <div class="radio-group">
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="finalTest"
+                                               value="6"><span>{{__('default.pages.calculator.final_test_section_1')}}</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="finalTest"
+                                               value="3"><span>{{__('default.pages.calculator.final_test_section_2')}}</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="finalTest"
+                                               value="0"><span>{{__('default.pages.calculator.final_test_section_3')}}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label big">{{__('default.pages.calculator.course_rate')}}</label>
+                            <div class="radio-group">
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="rating"
+                                               value="0"><span>{{__('default.pages.calculator.course_rate_section_1')}}</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="rating"
+                                               value="5"><span>{{__('default.pages.calculator.course_rate_section_2')}}</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="rating"
+                                               value="10"><span>{{__('default.pages.calculator.course_rate_section_3')}}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label big">{{__('default.pages.calculator.language')}}</label>
+                            <div class="radio-group">
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="language" value=""
+                                               class="calculator-kk-radio"><span>{{__('default.pages.calculator.language_section_1')}}</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="language"
+                                               value="0"><span>{{__('default.pages.calculator.language_section_2')}}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label big">{{__('default.pages.calculator.poor_vision')}}</label>
+                            <div class="radio-group">
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="vi-version"
+                                               value="5"><span>{{__('default.pages.calculator.poor_vision_section_1')}}</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="radio" name="vi-version"
+                                               value="0"><span>{{__('default.pages.calculator.poor_vision_section_2')}}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="calculator__section gray">
+                        <div class="form-group">
+                            <label class="form-group__label big">{{__('default.pages.calculator.pay_for_student')}}</label>
+                            <input type="text" class="input-big" name="costPerPerson" required value="0" disabled>
+                        </div>
+                    </div>
+                    <div class="separator">
+                        X
+                    </div>
+                    <div class="calculator__section white">
+                        <div class="form-group">
+                            <label class="form-group__label big">{{__('default.pages.calculator.students_count')}}</label>
+                            <input type="number" name="quantity" class="input-big">
+                        </div>
+                    </div>
+                    <div class="separator">
+                        II
+                    </div>
+                    <div class="calculator__section blue">
+                        <div class="form-group">
+                            <label class="form-group__label big">{{__('default.pages.calculator.total_cost')}}</label>
+                            <div class="calculator__result"><span>0</span> {{__('default.tenge_title')}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="blue">
             <div class="container">
                 <div class="row row--multiline align-items-center">
                     <div class="col-sm-6">
-                        <h2 class="title-primary decorated"><span>Станьте</span><br/> автором курсов</h2>
+                        <h2 class="title-primary decorated">{!! __('default.pages.index.to_be_a_teacher') !!}</h2>
                         <div class="plain-text">
                             {!! json_decode($content->getAttribute('data_'.$lang))->for_authors->description !!}
                         </div>
@@ -258,6 +437,15 @@
 @endsection
 
 @section('scripts')
-
+    <!--Only this page's scripts-->
+    <script src="/assets/js/calculator.js"></script>
+    <script>
+        let calculator = new Calculator({
+            calculatorId: '#calculator',
+            basePrice: 2001.05
+        });
+        calculator.init();
+    </script>
+    <!---->
 @endsection
 
