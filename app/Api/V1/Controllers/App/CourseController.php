@@ -400,33 +400,42 @@ class CourseController extends BaseController
                 });
             });
         }
+
         // Сортировка по профессиям
         if ($professions) {
+            $professions = json_decode($professions);
             if (count(array_filter($professions)) > 0) {
                 $query->whereHas('courses.professions', function ($q) use ($professions) {
-                    $q->whereIn('professions.id', json_decode($professions));
+                    $q->whereIn('professions.id', $professions);
                 });
             }
         }
         // Сортировка по навыкам
         if ($skills) {
+            $skills = json_decode($skills);
             if (count(array_filter($skills)) > 0) {
                 $query->whereHas('courses.skills', function ($q) use ($skills) {
-                    $q->whereIn('skills.id', json_decode($skills));
+                    $q->whereIn('skills.id', $skills);
                 });
             }
         }
         // Сортировка по авторам
         if ($authors) {
-            $query->whereHas('courses.users', function ($q) use ($authors) {
-                $q->whereIn('users.id', json_decode($authors));
-            });
+            $authors = json_decode($authors);
+            if (count(array_filter($authors)) > 0) {
+                $query->whereHas('courses.users', function ($q) use ($authors) {
+                    $q->whereIn('users.id', $authors);
+                });
+            }
         }
         // Сортировка по языку
         if ($course_lang) {
-            $query = $query->whereHas('courses', function ($q) use ($course_lang) {
-                $q->whereIn('courses.lang', json_decode($course_lang));
-            });
+            $authors = json_decode($authors);
+            if (count(array_filter($authors)) > 0) {
+                $query = $query->whereHas('courses', function ($q) use ($course_lang) {
+                    $q->whereIn('courses.lang', $course_lang);
+                });
+            }
         }
         // Сортировка по статусу
         if ($course_status) {
@@ -483,7 +492,7 @@ class CourseController extends BaseController
 
             if (!empty($item->is_finished) == true) {
                 $end = $item->updated_at->format('Y-m-d');
-                $certificate = StudentCertificate::whereCourseId($item->course->id)->whereUserId($user_id)->first()['pdf_' . $lang] ?? null;
+                $certificate = StudentCertificate::whereCourseId($item->course->id)->whereUserId($user_id)->first()['pdf_' . $lang] ?? StudentCertificate::whereCourseId($item->course->id)->whereUserId($user_id)->first()['pdf_ru'];
                 if ($certificate != null) {
                     $certificate = env('APP_URL') . $certificate;
                 }
@@ -587,7 +596,8 @@ class CourseController extends BaseController
                     'type' => $lesson->type,
                     'finished' => $lesson->lesson_student->is_finished ?? 0,
                     'duration' => $lesson->duration,
-                    'enabled' => $lesson->lesson_student->is_access ?? 0
+                    'enabled' => $lesson->lesson_student->is_access ?? 0,
+                    'end_lesson_type' => $lesson->end_lesson_type
                 ];
             }
         }
@@ -598,7 +608,8 @@ class CourseController extends BaseController
                 'id' => $course->courseWork()->id,
                 'finished' => $course->courseWork()->lesson_student->is_finished ?? 0,
                 'duration' => $course->courseWork()->duration,
-                'enabled' => $course->courseWork()->lesson_student->is_access ?? 0
+                'enabled' => $course->courseWork()->lesson_student->is_access ?? 0,
+                'end_lesson_type' => $course->courseWork()->end_lesson_type
             ];
         }
         // Финальный тест
@@ -608,7 +619,8 @@ class CourseController extends BaseController
                 'id' => $course->finalTest()->id,
                 'finished' => $course->finalTest()->lesson_student->is_finished ?? 0,
                 'duration' => $course->finalTest()->duration,
-                'enabled' => $course->finalTest()->lesson_student->is_access ?? 0
+                'enabled' => $course->finalTest()->lesson_student->is_access ?? 0,
+                'end_lesson_type' => $course->finalTest()->end_lesson_type
             ];
         }
         // Профессии
