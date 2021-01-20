@@ -871,7 +871,11 @@ class CourseController extends Controller
             // Стоимость курса
             $course_cost = $i->cost ?? '-';
             // Участников курса
-            $course_members_count = count($i->course_members->whereIn('paid_status', [1, 2]));
+            if($i->quota_status == 2 and $i->is_paid == true){
+                $course_members_count = count($i->course_members->where('paid_status', '=', 1)) . "/" . count($i->course_members->where('paid_status', '=', 2));
+            }else{
+                $course_members_count = count($i->course_members->whereIn('paid_status', [1, 2]));
+            }
             // Получили сертификат
             $got_certificate_members_count = count($i->course_members->where('is_finished', '=', true));
             if ($i->courseWork()) {

@@ -675,23 +675,36 @@ class LessonController extends BaseController
         }
 
         if ($lesson->end_lesson_type == 0) {
-            $lesson->practice = json_decode($lesson->practice);
+            foreach (json_decode($lesson->practice)->questions as $item) {
+                $practice['questions'][] = [
+                    'name' => $item->name,
+                    'is_pictures' => $item->is_pictures,
+                    'answers' => $item->answers,
+                ];
+            }
+            $practice['mixAnswers'] = json_decode($lesson->practice)->mixAnswers == "true" ? 1 : 0;
+
+        }else if ($lesson->end_lesson_type == 1) {
+            $practice = [
+                    'theory' => $lesson->practice
+                ];
         }
 
         $data = [
             'id' => $lesson->id,
             'name' => $lesson->name,
             'type' => $lesson->type,
-            'end_lesson_type' => $lesson->end_lesson_type,
+            'finished' => $lesson->student_lessons->where('student_id', '=', $user->id)->first()->is_finished,
             'duration' => $lesson->duration,
-            'theory' => $lesson->theory,
+            'enabled' => $lesson->student_lessons->where('student_id', '=', $user->id)->first()->is_access,
+            'end_lesson_type' => $lesson->end_lesson_type,
             'image' => $lesson->getAvatar(),
-            'practice' => $lesson->practice,
-            'videos' => $videos,
-            'youtube_videos' => $youtube_videos,
-            'audios' => $audios,
-            'another_files' => $another_files,
-            'is_finished' => $lesson->student_lessons->where('student_id', '=', $user->id)->first()->is_finished
+            'theory' => $lesson->theory,
+            'youtubeLinks' => $youtube_videos,
+            'videoLinks' => $videos,
+            'audioLinks' => $audios,
+            'attachments' => $another_files,
+            'practice' => $practice ?? null,
         ];
 
         return $data;

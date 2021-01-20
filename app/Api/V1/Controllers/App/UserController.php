@@ -30,6 +30,60 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends BaseController
 {
+    public function studentInfo(Request $request)
+    {
+        $user_id = $request->get('user');
+        $hash = $request->header("hash");
+        $lang = $request->header("lang", 'ru');
+        app()->setLocale($lang);
+
+        // Валидация
+        $rules = [
+            'user' => 'required',
+            'hash' => 'required',
+        ];
+        $payload = [
+            'user' => $user_id,
+            'hash' => $hash
+        ];
+
+        $validator = Validator::make($payload, $rules);
+
+        if ($hash = $this->validateHash($payload, env('APP_DEBUG'))) {
+            if (is_bool($hash)) {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash'));
+            } else {
+                $validator->errors()->add('hash', __('api/errors.invalid_hash') . ' ' . implode(' | ', $hash));
+            }
+        }
+
+        if (count($validator->errors()) > 0) {
+            $errors = $validator->errors()->all();
+            $message = new Message(implode(' ', $errors), 400, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(400);
+        }
+
+        $user = User::whereId($user_id)->first();
+
+        if (!$user) {
+            $message = new Message(Lang::get("api/errors.user_does_not_exist"), 404, null);
+            return $this->response->item($message, new MessageTransformer())->statusCode(404);
+        }
+
+        $data = [
+            'id' => $user->id,
+            'email' => $user->email,
+            'name' => $user->student_info->name,
+            'avatar' => env('APP_URL') . $user->student_info->avatar,
+            'is_push_activate' => $user->is_push_activate,
+            'iin' => $user->student_info->iin,
+            'quota_count' => $user->student_info->quota_count,
+        ];
+
+        $message = new Message(__('api/messages.success'), 200, $data);
+        return $this->response->item($message, new MessageTransformer());
+    }
+
     public function studentLogin(Request $request)
     {
         $login = $request->get('login');
@@ -712,7 +766,7 @@ class UserController extends BaseController
             return $this->response->item($message, new MessageTransformer())->statusCode(404);
         }
 
-        $items = $user->certificates()->paginate($this->per_page);
+        $items = $user->certificates()->orderBy('created_at', 'desc')->paginate($this->per_page);
 
         $next_page_number = null;
         if ($items->nextPageUrl()) {

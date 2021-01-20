@@ -221,6 +221,7 @@ return [
 
             'coursework_create_title' => 'Создание курсовой работы',
             'duration_title' => 'Продолжительность урока, минуты',
+            'duration_teaser' => 'Продолжительность урока с учетом длительности всех форматов (аудио, видео, материалов и текста) контента урока',
             'lesson_image' => 'Картинка урока',
             'theory_title' => 'Теория',
             'theory_with_practic_title' => 'Теория с практическим заданием',
@@ -451,14 +452,56 @@ return [
             'find_your_course' => '<span>Найдите</span><br/> Ваш курс',
             'popular_courses' => '<span>Популярные</span><br/> курсы',
             'popular_authors' => '<span>Популярные</span><br/> авторы',
+            'popular_courses_catalog' => '<span>Можно применить</span><br/> популярные курсы',
+            'popular_courses_catalog_btn' => 'Посмотреть весь каталог',
             'poor_vision_version' => 'Версия для слабовидящих',
-            'to_be_a_teacher' => 'ХОЧУ СТАТЬ АВТОРОМ КУРСОВ',
+            'step_by_step' => '<span>Шаг за</span><br/> шагом',
+            'to_be_a_teacher' => '<span>Станьте</span><br/> автором курсов',
             'search_placeholder' => 'Поиск по курсам',
             'to_be_author_description' => 'Станьте партнёром Министерства труда и получите уникальную возможность реализовать свои онлайн курсы без вложений в создание платформ для и продаж.  Поддержка минтруда это гарантированные клиенты ваших курсов',
             'our_statistic' => 'Наши</span><br/> показатели',
             'students_count' => 'обучающихся',
             'authors_count' => 'авторов',
-            'courses_count' => 'курсов'
+            'courses_count' => 'курсов',
+            'advantages' => 'Преимущества</span><br/> Раскройте свой потенциал',
+        ],
+
+        'calculator' => [
+            'title' => '<span>Онлайн</span><br/> калькулятор',
+            'duration' => 'Продолжительность курса (ч)',
+            'format' => 'Формат учебного контента',
+            'format_section_1' => 'учебный контент содержит 3 и более форм',
+            'format_section_2' => 'учебный контент содержит 1-2 формы',
+            'format_section_3' => 'учебный контент представлен в формате текстового документа',
+            'format_description' => 'Учебный контент курса содержит несколько форм (текст, изображение, аудио, видео, презентация)',
+
+            'general_tests' => 'Промежуточные тесты',
+            'general_tests_section_1' => 'промежуточные тесты после каждого модуля',
+            'general_tests_section_2' => 'промежуточные тесты разработаны к отдельным модулям',
+            'general_tests_section_3' => 'промежуточные тесты отсутвуют',
+
+            'final_test' => 'Итоговый тест',
+            'final_test_section_1' => 'количество заданий в итоговом тесте более 25',
+            'final_test_section_2' => 'количество заданий в итоговом тесте 20-25',
+            'final_test_section_3' => 'итоговый тест отсуствует',
+
+            'course_rate' => 'Рейтинг курса',
+            'course_rate_section_1' => 'менее 30%',
+            'course_rate_section_2' => '31-50%',
+            'course_rate_section_3' => 'более 51%',
+
+            'language' => 'Языковая среда',
+            'language_section_1' => 'Каз',
+            'language_section_2' => 'Рус',
+
+            'poor_vision' => 'Версия для слабовидящих',
+            'poor_vision_section_1' => 'Версия для слабовидящих',
+            'poor_vision_section_2' => 'Версия для слабовидящих',
+
+            'pay_for_student' => 'Оплата за одного учащегося (тг)',
+            'students_count' => 'Количество обучающихся',
+            'total_cost' => 'Итого'
+
         ],
 
         'footer' => [
@@ -476,7 +519,7 @@ return [
             'phone_title' => 'Телефон',
             'phone' => '1411',
             'social_networks' => 'Социальные сети',
-
+            'to_be_author' => 'Стать автором'
         ],
 
         'faq' => [
