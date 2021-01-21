@@ -87,57 +87,66 @@ class Course extends Model
     public $timestamps = true;
 
 
-    public function user() {
+    public function user()
+    {
 
         return $this->hasOne(User::class, 'id', 'author_id');
 
     }
 
-    public function users() {
+    public function users()
+    {
 
-        return $this->hasMany(User::class,'id', 'author_id');
-
-    }
-
-    public function themes() {
-
-        return $this->hasMany(Theme::class,'course_id', 'id');
+        return $this->hasMany(User::class, 'id', 'author_id');
 
     }
 
-    public function lessons() {
+    public function themes()
+    {
 
-        return $this->hasMany(Lesson::class,'course_id', 'id');
-
-    }
-
-    public function skills() {
-
-        return $this->belongsToMany(Skill::class,'course_skill', 'course_id', 'skill_id');
+        return $this->hasMany(Theme::class, 'course_id', 'id');
 
     }
 
-    public function professions() {
+    public function lessons()
+    {
 
-        return $this->belongsToMany(Professions::class,'course_skill', 'course_id', 'profession_id');
-
-    }
-
-    public function course_members() {
-
-        return $this->hasMany(StudentCourse::class,'course_id', 'id');
+        return $this->hasMany(Lesson::class, 'course_id', 'id');
 
     }
 
-    public function rate() {
+    public function skills()
+    {
 
-        return $this->hasMany(CourseRate::class,'course_id', 'id');
+        return $this->belongsToMany(Skill::class, 'course_skill', 'course_id', 'skill_id');
 
     }
 
-    public function attachments() {
+    public function professions()
+    {
 
-        return $this->hasOne(CourseAttachments::class,'course_id', 'id');
+        return $this->belongsToMany(Professions::class, 'course_skill', 'course_id', 'profession_id');
+
+    }
+
+    public function course_members()
+    {
+
+        return $this->hasMany(StudentCourse::class, 'course_id', 'id');
+
+    }
+
+    public function rate()
+    {
+
+        return $this->hasMany(CourseRate::class, 'course_id', 'id');
+
+    }
+
+    public function attachments()
+    {
+
+        return $this->hasOne(CourseAttachments::class, 'course_id', 'id');
 
     }
 
@@ -161,7 +170,7 @@ class Course extends Model
 
     public function professionsBySkills()
     {
-        $professions_group = Professions::whereHas('skills', function ($q){
+        $professions_group = Professions::whereHas('skills', function ($q) {
             $q->whereIn('skills.id', $this->skills->pluck('id')->toArray());
         })->pluck('id');
         $professions = Professions::whereIn('parent_id', $professions_group)->get();
@@ -171,20 +180,26 @@ class Course extends Model
 
     public function groupProfessionsBySkills()
     {
-        $professions_group = Professions::whereHas('skills', function ($q){
+        $professions_group = Professions::whereHas('skills', function ($q) {
             $q->whereIn('skills.id', $this->skills->pluck('id')->toArray());
         })->get();
 
         return $professions_group;
     }
 
-    public function studentCertificate() {
+    public function studentCertificate()
+    {
 
         $certificate = StudentCertificate::where('course_id', '=', $this->id)
             ->where('user_id', '=', \Auth::user()->id)->first();
 
         return $certificate;
 
+    }
+
+    public function quotaCost()
+    {
+        return $this->hasMany(CourseQuotaCost::class, 'course_id', 'id');
     }
 
 }

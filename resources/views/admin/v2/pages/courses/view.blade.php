@@ -64,7 +64,9 @@
                                 <p><b>{{ __('admin.pages.courses.course_quota_title') }}
                                         :</b> {{ __('admin.pages.courses.quota_status_'.$item->quota_status) }}</p>
                                 <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
-                                        :</b> {{$item->quota_cost}} {{__('default.tenge_title')}}</p>
+                                        :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>
+                                <p><b>{{ __('admin.pages.courses.course_quota_cost_person') }}
+                                        :</b> {{$item->quotaCost->last()->person_cost ?? 0}} {{__('default.tenge_title')}}</p>
 
                                 @switch($item->quota_status)
                                     @case(0)

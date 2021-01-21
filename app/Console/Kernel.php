@@ -3,7 +3,9 @@
 namespace App\Console;
 
 use App\Console\Commands\ProfessionSkillRelation;
+use App\Console\Commands\ProfessionsParentUpdate;
 use App\Console\Commands\ProfessionsUpdate;
+use App\Console\Commands\ReCalculateCourseQuotaCost;
 use App\Console\Commands\SkillsUpdate;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -20,7 +22,9 @@ class Kernel extends ConsoleKernel
         RemoveUnconfirmedEmailUsers::class,
         SkillsUpdate::class,
         ProfessionsUpdate::class,
-        ProfessionSkillRelation::class
+        ProfessionSkillRelation::class,
+        ReCalculateCourseQuotaCost::class,
+        ProfessionsParentUpdate::class
     ];
 
     /**
@@ -44,6 +48,9 @@ class Kernel extends ConsoleKernel
             ->daily()->withoutOverlapping();
 
         $schedule->command('update:profession_skill_relation')
+            ->daily()->withoutOverlapping();
+
+        $schedule->command('update:course_quota_cost')
             ->daily()->withoutOverlapping();
 
     }
