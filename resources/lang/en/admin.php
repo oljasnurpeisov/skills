@@ -87,6 +87,7 @@ return [
             'quota_status_2' => 'Да',
             'quota_status_3' => 'Заявка отклонена автором',
             'quota_status_4' => 'Ожидается подтверждение номера договора',
+            'course_quota_cost' => 'Стоимость курса по квоте',
             'quota_request_title' => 'Запросить доступ к курсу по квотам',
             'unpublish_title' => 'Снять с публикации',
             'course_reject' => 'Курс :course_name не опубликован! Причина отклонения: :rejectMessage',

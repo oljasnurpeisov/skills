@@ -63,6 +63,8 @@
                                         :</b> {{ __('admin.pages.courses.'.$item->status) }}</p>
                                 <p><b>{{ __('admin.pages.courses.course_quota_title') }}
                                         :</b> {{ __('admin.pages.courses.quota_status_'.$item->quota_status) }}</p>
+                                <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
+                                        :</b> {{$item->quota_cost}} {{__('default.tenge_title')}}</p>
 
                                 @switch($item->quota_status)
                                     @case(0)

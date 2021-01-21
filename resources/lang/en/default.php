@@ -495,8 +495,8 @@ return [
             'language_section_2' => 'Рус',
 
             'poor_vision' => 'Версия для слабовидящих',
-            'poor_vision_section_1' => 'Версия для слабовидящих',
-            'poor_vision_section_2' => 'Версия для слабовидящих',
+            'poor_vision_section_1' => 'Да',
+            'poor_vision_section_2' => 'Нет',
 
             'pay_for_student' => 'Оплата за одного учащегося (тг)',
             'students_count' => 'Количество обучающихся',
