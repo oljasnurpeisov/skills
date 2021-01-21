@@ -202,10 +202,7 @@ class CalculateQuotaCost
         $course_cost = $course_cost + $increase_cost;
         $course_cost_person = $course_cost / $group_members_count;
 
-        return [
-            'course_cost' => round($course_cost, 4),
-            'course_cost_person' => round($course_cost_person)
-        ];
+        return round($course_cost_person);
     }
 
 }

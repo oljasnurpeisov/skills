@@ -200,8 +200,7 @@ class CourseController extends Controller
                 $calculate_quota_cost = CalculateQuotaCost::calculate_quota_cost($item, false);
                 $qouta_cost_item = new CourseQuotaCost;
                 $qouta_cost_item->course_id = $item->id;
-                $qouta_cost_item->cost = $calculate_quota_cost['course_cost'];
-                $qouta_cost_item->person_cost = $calculate_quota_cost['course_cost_person'];
+                $qouta_cost_item->cost = $calculate_quota_cost;
                 $qouta_cost_item->save();
             }
 
