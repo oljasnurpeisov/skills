@@ -400,33 +400,42 @@ class CourseController extends BaseController
                 });
             });
         }
+
         // Сортировка по профессиям
         if ($professions) {
+            $professions = json_decode($professions);
             if (count(array_filter($professions)) > 0) {
                 $query->whereHas('courses.professions', function ($q) use ($professions) {
-                    $q->whereIn('professions.id', json_decode($professions));
+                    $q->whereIn('professions.id', $professions);
                 });
             }
         }
         // Сортировка по навыкам
         if ($skills) {
+            $skills = json_decode($skills);
             if (count(array_filter($skills)) > 0) {
                 $query->whereHas('courses.skills', function ($q) use ($skills) {
-                    $q->whereIn('skills.id', json_decode($skills));
+                    $q->whereIn('skills.id', $skills);
                 });
             }
         }
         // Сортировка по авторам
         if ($authors) {
-            $query->whereHas('courses.users', function ($q) use ($authors) {
-                $q->whereIn('users.id', json_decode($authors));
-            });
+            $authors = json_decode($authors);
+            if (count(array_filter($authors)) > 0) {
+                $query->whereHas('courses.users', function ($q) use ($authors) {
+                    $q->whereIn('users.id', $authors);
+                });
+            }
         }
         // Сортировка по языку
         if ($course_lang) {
-            $query = $query->whereHas('courses', function ($q) use ($course_lang) {
-                $q->whereIn('courses.lang', json_decode($course_lang));
-            });
+            $authors = json_decode($authors);
+            if (count(array_filter($authors)) > 0) {
+                $query = $query->whereHas('courses', function ($q) use ($course_lang) {
+                    $q->whereIn('courses.lang', $course_lang);
+                });
+            }
         }
         // Сортировка по статусу
         if ($course_status) {
