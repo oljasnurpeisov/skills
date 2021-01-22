@@ -28,6 +28,9 @@ class PaymentController extends Controller
                 $student_course->student_id = Auth::user()->id;
                 $student_course->save();
 
+                $notification_name = 'notifications.course_buy_status_success';
+                NotificationsHelper::createNotification($notification_name, $item->id, Auth::user()->id);
+
                 return redirect()->back()->with('status', __('default.pages.courses.pay_course_success'));
             } else {
 
@@ -104,7 +107,7 @@ class PaymentController extends Controller
                 $item_payment->status = 1;
                 $item_payment->save();
 
-                $notification_name = 'notifications.course_buy_status_failed';
+                $notification_name = 'notifications.course_buy_status_success';
                 NotificationsHelper::createNotification($notification_name, $item->id, Auth::user()->id);
 
                 $student_info->quota_count = $student_info->quota_count - 1;
@@ -150,6 +153,9 @@ class PaymentController extends Controller
                     NotificationsHelper::createNotification($notification_name, $item->id, Auth::user()->id);
                 }
 
+            }else{
+                $notification_name = 'notifications.course_buy_status_failed';
+                NotificationsHelper::createNotification($notification_name, $item->id, Auth::user()->id);
             }
 
             return '{"accepted":' . (($out) ? 'true' : 'false') . '}';
