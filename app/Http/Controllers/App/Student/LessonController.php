@@ -27,6 +27,8 @@ class LessonController extends Controller
 {
     public function lessonView($lang, Course $course, Lesson $lesson)
     {
+        $lesson_student = StudentLesson::whereLessonId($lesson->id)->whereStudentId(Auth::user()->id)->first();
+
         $theme = $lesson->themes;
 
         $time = FormatDate::convertMunitesToTime($lesson->duration);
@@ -38,9 +40,9 @@ class LessonController extends Controller
             "time" => $time
         ]);
 
-        if (!empty($lesson->lesson_student)) {
+        if (!empty($lesson_student)) {
             // Если доступ к курсу есть
-            if ($lesson->lesson_student->is_access == true) {
+            if ($lesson_student->is_access == true) {
                 return $return_view;
                 // Если доступа нет, вернуться обратно
             } else {
@@ -71,7 +73,7 @@ class LessonController extends Controller
                         }
                         // Если есть урок из предыдущей темы и он завершен, дать доступ к текущему уроку
                         if (!empty($previous_lesson_theme)) {
-                            if (!empty($previous_lesson_theme->lesson_student->is_finished) == true) {
+                            if (!empty($previous_lesson_theme->lesson_student->whereStudentId(Auth::user()->id)->is_finished) == true) {
                                 $this->syncUserLessons($lesson->id);
 
                                 return $return_view;
@@ -81,7 +83,7 @@ class LessonController extends Controller
                             }
                         } else {
                             // Если есть урок и он завершен, дать доступ к текущему уроку
-                            if (!empty($previous_lesson) and !empty($previous_lesson->lesson_student->is_finished) == true) {
+                            if (!empty($previous_lesson) and !empty($previous_lesson->whereStudentId(Auth::user()->id)->is_finished) == true) {
                                 $this->syncUserLessons($lesson->id);
 
                                 return $return_view;
@@ -105,7 +107,7 @@ class LessonController extends Controller
                             $coursework = $course->lessons()->where('type', '=', 3)->first();
                             if ($coursework) {
                                 // Если есть курсовая и она завершена, дать доступ
-                                if (!empty($coursework->lesson_student->is_finished) == true) {
+                                if (!empty($coursework->lesson_student->whereStudentId(Auth::user()->id)->first()->is_finished)== true) {
                                     $this->syncUserLessons($lesson->id);
                                     // Если есть курсовая, но она не завершена, вернуть обратно
                                 } else {
@@ -140,7 +142,7 @@ class LessonController extends Controller
                         $coursework = $course->lessons()->where('type', '=', 3)->first();
                         if ($coursework) {
                             // Если есть курсовая и она завершена, дать доступ
-                            if (!empty($coursework->lesson_student->is_finished) == true) {
+                            if (!empty($coursework->lesson_student->whereStudentId(Auth::user()->id)->first()->is_finished) == true) {
                                 $this->syncUserLessons($lesson->id);
                                 // Если есть курсовая, но она не завершена, вернуть обратно
                             } else {
@@ -164,12 +166,13 @@ class LessonController extends Controller
 
     public function lessonFinished($lang, Request $request, Course $course, Lesson $lesson)
     {
+        $lesson_student = StudentLesson::whereLessonId($lesson->id)->whereStudentId(Auth::user()->id)->first();
         switch ($request->input('action')) {
             // Переход к следующему уроку
             case 'next_lesson':
                 // Пометить урок как прочитанный
-                $lesson->lesson_student->is_finished = true;
-                $lesson->lesson_student->save();
+                $lesson_student->is_finished = true;
+                $lesson_student->save();
                 // Переход к следующему уроку
                 return $this->nextLessonShow($lang, $course, $lesson);
                 break;
@@ -189,8 +192,9 @@ class LessonController extends Controller
 
     public function homeworkView($lang, Course $course, Theme $theme, Lesson $lesson)
     {
-        if (!empty($lesson->lesson_student)) {
-            if ($lesson->lesson_student->is_access == true) {
+        $lesson_student = StudentLesson::whereLessonId($lesson->id)->whereStudentId(Auth::user()->id)->first();
+        if (!empty($lesson_student)) {
+            if ($lesson_student->is_access == true) {
                 return view("app.pages.student.lesson.homework_view", [
                     "item" => $course,
                     "lesson" => $lesson,
@@ -207,10 +211,10 @@ class LessonController extends Controller
 
     public function testView($lang, Course $course, Lesson $lesson)
     {
-
-        if (!empty($lesson->lesson_student)) {
-            if ($lesson->lesson_student->is_finished != true) {
-                if ($lesson->lesson_student->is_access == true) {
+        $lesson_student = StudentLesson::whereLessonId($lesson->id)->whereStudentId(Auth::user()->id)->first();
+        if (!empty($lesson_student)) {
+            if ($lesson_student->is_finished != true) {
+                if ($lesson_student->is_access == true) {
                     return view("app.pages.student.lesson.test_view_lesson", [
                         "item" => $course,
                         "lesson" => $lesson
@@ -228,8 +232,9 @@ class LessonController extends Controller
 
     public function answerSend($lang, Request $request, Course $course, Lesson $lesson)
     {
-        if (!empty($lesson->lesson_student)) {
-            if ($lesson->lesson_student->is_access == true) {
+        $lesson_student = StudentLesson::whereLessonId($lesson->id)->whereStudentId(Auth::user()->id)->first();
+        if (!empty($lesson_student)) {
+            if ($lesson_student->is_access == true) {
 
                 if ($lesson->type == 3) {
                     $request->validate([
@@ -246,7 +251,7 @@ class LessonController extends Controller
                 } else {
                     $answer = $result;
                 }
-                $answer->student_lesson_id = $lesson->lesson_student->id;
+                $answer->student_lesson_id = $lesson_student->id;
                 $answer->student_id = Auth::user()->id;
                 $answer->lesson_id = $lesson->id;
                 switch ($request->input('action')) {
@@ -276,8 +281,8 @@ class LessonController extends Controller
                         }
 
                         // Пометить урок как законченный
-                        $lesson->lesson_student->is_finished = true;
-                        $lesson->lesson_student->save();
+                        $lesson_student->is_finished = true;
+                        $lesson_student->save();
 
                         break;
 
@@ -314,6 +319,7 @@ class LessonController extends Controller
 
     public function testResultView($lang, Request $request, Course $course, Lesson $lesson)
     {
+        $lesson_student = StudentLesson::whereLessonId($lesson->id)->whereStudentId(Auth::user()->id)->first();
 
         $result = StudentLessonAnswer::where('student_id', '=', Auth::user()->id)
             ->where('lesson_id', '=', $lesson->id)->first();
@@ -340,8 +346,8 @@ class LessonController extends Controller
             // Если кол-во правильных ответов достаточно
             if ($right_answers >= json_decode($lesson->practice)->passingScore) {
                 // Пометить урок как законченный
-                $lesson->lesson_student->is_finished = true;
-                $lesson->lesson_student->save();
+                $lesson_student->is_finished = true;
+                $lesson_student->save();
 
                 $this->finishedCourse($course);
             }
@@ -360,6 +366,7 @@ class LessonController extends Controller
 
     public function nextLessonShow($lang, $course, $lesson)
     {
+        $lesson_student = StudentLesson::whereLessonId($lesson->id)->whereStudentId(Auth::user()->id)->first();
         $course_status = StudentCourse::where('course_id', '=', $course->id)->first();
         if ($course_status->is_finished == false) {
             // Получить следующий урок
@@ -380,7 +387,7 @@ class LessonController extends Controller
                 return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-' . $next_lesson_theme->id);
 
             } else {
-                if (!empty($next_lesson) and !empty($next_lesson->lesson_student->is_finished) == false) {
+                if (!empty($next_lesson) and !empty($next_lesson->whereStudentId(Auth::user()->id)->is_finished) == false) {
                     // Установка доступа к следующему уроку
                     $this->syncUserLessons($next_lesson->id);
                     // Проверить окончание курса
