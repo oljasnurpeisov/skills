@@ -239,7 +239,12 @@ class CourseController extends Controller
             $author_course = $item->user()->first()->id;
 
             if ($item->quota_status != 1 and $item->cost > 0) {
+                $notification_data = [
+                    'course_quota_cost' => $item->quotaCost->last()->cost ?? 0
+                ];
+
                 $notification = new Notification;
+                $notification->data = json_encode([$notification_data]);
                 $notification->name = "notifications.quota_request_description";
                 $notification->course_id = $item->id;
                 $notification->type = 1;

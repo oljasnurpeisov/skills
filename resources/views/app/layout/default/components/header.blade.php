@@ -35,7 +35,8 @@
                 <div class="header-dropdown notifications">
                     <div class="header-dropdown__title">
                         <a href="#" title="{{__('notifications.title')}}"
-                           class="btn-icon small btn-icon--transparent icon-notification" data-unread="{{$notifications_count}}"> </a>
+                           class="btn-icon small btn-icon--transparent icon-notification"
+                           data-unread="{{$notifications_count}}"> </a>
                     </div>
                     <div class="header-dropdown__desc">
                         <ul>
@@ -46,7 +47,7 @@
                                               action="/{{$lang}}/my-courses/quota-confirm-course/{{$notification->course->id}}"
                                               id="quota_confirm_form">
                                             {{ csrf_field() }}
-                                            <span>{!!trans($notification->name, ['course_name' => '"'. optional($notification->course)->name .'"', 'lang' => $lang, 'course_id' => optional($notification->course)->id, 'opponent_id' => json_decode($notification->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($notification->data)[0]->course_reject_message ?? ''])!!}</span>
+                                            <span>{!!trans($notification->name, ['course_name' => '"'. optional($notification->course)->name .'"', 'lang' => $lang, 'course_id' => optional($notification->course)->id, 'opponent_id' => json_decode($notification->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($notification->data)[0]->course_reject_message ?? '', 'course_quota_cost' => json_decode($notification->data)[0]->course_quota_cost ?? 0])!!}</span>
                                             @if($notification->course->quota_status == 1)
                                                 <div class="buttons">
                                                     <button name="action" value="confirm"
@@ -63,13 +64,23 @@
                                         <hr>
                                     </li>
                                 @else
+
                                     <li data-id="{{$notification->id}}">
                                         @php($opponent = \App\Models\User::whereId(json_decode($notification->data)[0]->dialog_opponent_id ?? 0)->first())
-                                        <span>{!!trans($notification->name, ['course_name' => '"'. optional($notification->course)->name .'"', 'lang' => $lang, 'course_id' => optional($notification->course)->id, 'opponent_id' => json_decode($notification->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($notification->data)[0]->course_reject_message ?? '','user_name' => $opponent ? ($opponent->hasRole('author') ? $opponent->author_info->name . ' ' . $opponent->author_info->surname : $opponent->student_info->name ??  $opponent->name) : ''])!!}</span>
+                                        <span>{!!trans($notification->name, ['course_name' => '"'. optional($notification->course)->name .'"', 'lang' => $lang, 'course_id' => optional($notification->course)->id, 'opponent_id' => json_decode($notification->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($notification->data)[0]->course_reject_message ?? '','user_name' => $opponent ? ($opponent->hasRole('author') ? $opponent->author_info->name . ' ' . $opponent->author_info->surname : $opponent->student_info->name ??  $opponent->name) : '', 'course_quota_cost' => json_decode($notification->data)[0]->course_quota_cost ?? 0])!!}</span>
                                     </li>
                                     <li class="break">
                                         <hr>
                                     </li>
+                                @endif
+                                @if (Auth::user()->hasRole('author'))
+                                    <div id="rulesQuotaModal{{optional($notification->course)->id}}"
+                                         style="display:none; width: 500px" class="modal-form">
+                                        <h4 class="title-primary text-center">{{__('notifications.quota_rules_title')}}</h4>
+                                        <div class="plain-text" style="font-size: 1em">
+                                            {!! trans(__('notifications.quota_rules_description'), ['course_id' => optional($notification->course)->id,'course_name' => optional($notification->course)->name, 'author_name' => Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname, 'course_quota_cost' => json_decode($notification->data)[0]->course_quota_cost ?? 0, 'lang' => $lang])!!}
+                                        </div>
+                                    </div>
                                 @endif
                             @endforeach
                             <li><a href="/{{$lang}}/notifications"

@@ -4,13 +4,21 @@ return [
     'title' => 'Уведомления',
     'all_notifications' => 'Все уведомления',
     'quota_request_description' => 'Администрация Платформы предлагает сделать курс <a href="/:lang/my-courses/course/:course_id">:course_name</a> доступным по квоте. С условиями предоставления доступа к
-курсам по квоте Вы можете ознакомиться в <a href="#">правилах</a>. В случае
+курсам по квоте Вы можете ознакомиться в <a href="#rulesQuotaModal:course_id" data-fancybox>правилах</a>. В случае
 согласия с Вами свяжутся по указанному контактному телефону для
 заключения договора.',
     'quota_request_description_mail' => 'Администрация Платформы предлагает сделать курс <a href=":url">":course_name"</a> доступным по квоте. С условиями предоставления доступа к
 курсам по квоте Вы можете ознакомиться в <a href="#">правилах</a>. В случае
 согласия с Вами свяжутся по указанному контактному телефону для
 заключения договора.',
+    'quota_rules_title' => 'Правила публикации курса по квоте',
+    'quota_rules_description' => 'Уважаемый «<b>:author_name</b>»
+Платформа краткосрочных онлайн курсов Enbek Skills предлагает Вам рассмотреть возможность предоставления Вашего курса «<b>:course_name</b>» 
+по специальной квоте для определенных групп населения, утвержденных Министерством труда и социальной защиты населения.
+Базовая стоимость Вашего курса по специальной квоте - <b>:course_quota_cost</b> тг.
+<br><br>
+Стоимость курса по квоте рассчитывается автоматически в зависимости от формата и длительности Вашего курса учётом соответствующих коэффициентов качетсва учебного контента при помощи утвержденного <a href="/:lang/for-authors" target="_blank">калькулятора</a> стоимости. 
+Предоставление Вашего курса по специальной квоте количество охвата потенциальных обучающихся по Вашим курсам.',
 
     'confirm_btn_title' => 'Согласен',
     'reject_btn_title' => 'Не согласен',
@@ -39,5 +47,7 @@ return [
     'course_buy_status_success' => 'Вы успешно приобрели курс <a href="/:lang/course-catalog/course/:course_id">:course_name</a>',
     'course_buy_status_failed' => 'Произошла ошибка при оплате курса <a href="/:lang/course-catalog/course/:course_id">:course_name</a>',
     'course_student_finished' => 'Поздравляем с завершением курса <a href="/:lang/course-catalog/course/:course_id">:course_name</a>. Сертификаты доступны в разделе <a href="/:lang/student/my-certificates">Мои сертификаты</a>',
-    'new_message' => 'У вас новое <a href="/:lang/dialog/opponent-:opponent_id">сообщение </a> от <i>:user_name</i>'
+    'new_message' => 'У вас новое <a href="/:lang/dialog/opponent-:opponent_id">сообщение </a> от <i>:user_name</i>',
+
+    're_calculate_quota_cost_message' => 'Стоимость курса :course_name по квоте была обновлена. Текущая стоимость курса по квоте: :course_quota_cost тг.'
 ];
