@@ -23,7 +23,7 @@ class PaymentController extends Controller
 
             if ($item->is_paid == 0) {
                 $student_course = new StudentCourse;
-                $student_course->paid_status = 1;
+                $student_course->paid_status = 3;
                 $student_course->course_id = $item->id;
                 $student_course->student_id = Auth::user()->id;
                 $student_course->save();
@@ -98,6 +98,11 @@ class PaymentController extends Controller
                 $student_course->course_id = $item->id;
                 $student_course->student_id = Auth::user()->id;
                 $student_course->save();
+
+                $item_payment = new PaymentHistory;
+                $item_payment->amount = $item->quotaCost->last()->cost ?? 0;
+                $item_payment->status = 1;
+                $item_payment->save();
 
                 $notification_name = 'notifications.course_buy_status_failed';
                 NotificationsHelper::createNotification($notification_name, $item->id, Auth::user()->id);
