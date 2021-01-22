@@ -346,7 +346,7 @@
             {{$data['student_name']}}
         </div>
         <div class="diploma__text">
-            в течение {{round($data['duration'] / 60)}} часов прошел(ла) курс<br/>
+            в течение {{round($data['duration'] / 60)}} часа/ов прошел(ла) курс<br/>
             <strong><span>«{{$data['course_name']}}»</span></strong>,<br/>
             предоставленный через <strong>Enbek.kz</strong>,<br/>
             и получил(а) навык/навыки:
