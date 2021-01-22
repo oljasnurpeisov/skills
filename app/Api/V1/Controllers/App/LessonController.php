@@ -22,7 +22,6 @@ use App\Models\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
@@ -461,8 +460,6 @@ class LessonController extends BaseController
 
     public function lessonViewAccess($lang, Course $course, Lesson $lesson, User $user)
     {
-        $lesson_student = StudentLesson::whereLessonId($lesson->id)->whereStudentId($user->id)->first();
-
         $theme = $lesson->themes;
 
         $time = FormatDate::convertMunitesToTime($lesson->duration);
@@ -471,6 +468,8 @@ class LessonController extends BaseController
 
         $message = new Message(__('api/messages.lesson.title'), 200, $data);
         $success_return = $this->response->item($message, new MessageTransformer());
+
+        $lesson_student = StudentLesson::whereLessonId($lesson->id)->whereStudentId($user->id)->first();
 
         if (!empty($lesson_student)) {
             // Если доступ к курсу есть
@@ -506,7 +505,7 @@ class LessonController extends BaseController
                         }
                         // Если есть урок из предыдущей темы и он завершен, дать доступ к текущему уроку
                         if (!empty($previous_lesson_theme)) {
-                            if (!empty($previous_lesson_theme->lesson_student->whereStudentId($user->id)->first()->is_finished) == true) {
+                            if (!empty(optional($previous_lesson_theme->lesson_student)->whereStudentId($user->id)->is_finished) == true) {
                                 $this->syncUserLessons($lesson->id, $user);
 
                                 return $success_return;
@@ -517,7 +516,7 @@ class LessonController extends BaseController
                             }
                         } else {
                             // Если есть урок и он завершен, дать доступ к текущему уроку
-                            if (!empty($previous_lesson) and !empty($previous_lesson->lesson_student->whereStudentId($user->id)->first()->is_finished) == true) {
+                            if (!empty($previous_lesson) and !empty(optional($previous_lesson->lesson_student)->whereStudentId($user->id)->is_finished) == true) {
                                 $this->syncUserLessons($lesson->id, $user);
 
                                 return $success_return;
@@ -542,7 +541,7 @@ class LessonController extends BaseController
                             $coursework = $course->lessons()->where('type', '=', 3)->first();
                             if ($coursework) {
                                 // Если есть курсовая и она завершена, дать доступ
-                                if (!empty($coursework->lesson_student->whereStudentId($user->id)->first()->is_finished) == true) {
+                                if (!empty(optional($coursework->lesson_student)->whereStudentId($user->id)->is_finished) == true) {
                                     $this->syncUserLessons($lesson->id, $user);
                                     // Если есть курсовая, но она не завершена, вернуть обратно
                                 } else {
@@ -579,7 +578,7 @@ class LessonController extends BaseController
                         $coursework = $course->lessons()->where('type', '=', 3)->first();
                         if ($coursework) {
                             // Если есть курсовая и она завершена, дать доступ
-                            if (!empty($coursework->lesson_student->whereStudentId($user->id)->first()->is_finished) == true) {
+                            if (!empty(optional($coursework->lesson_student)->whereStudentId($user->id)->is_finished) == true) {
                                 $this->syncUserLessons($lesson->id, $user);
                                 // Если есть курсовая, но она не завершена, вернуть обратно
                             } else {
@@ -677,7 +676,7 @@ class LessonController extends BaseController
             $another_files = null;
         }
 
-        if ($lesson->end_lesson_type == 0) {
+        if ($lesson->end_lesson_type == 0 and $lesson->type != 1) {
             foreach (json_decode($lesson->practice)->questions as $item) {
                 $practice['questions'][] = [
                     'name' => $item->name,
@@ -784,7 +783,7 @@ class LessonController extends BaseController
                 return $this->response->item($message, new MessageTransformer());
 
             } else {
-                if (!empty($next_lesson) and !empty($next_lesson->lesson_student->whereStudentId($user->id)->first()->is_finished) == false) {
+                if (!empty($next_lesson) and !empty(optional($next_lesson->lesson_student)->whereStudentId($user->id)->is_finished) == false) {
                     // Установка доступа к следующему уроку
                     $this->syncUserLessons($next_lesson->id, $user);
                     // Проверить окончание курса

@@ -299,6 +299,10 @@ class LessonController extends Controller
 
                 if ($lesson->type == 3) {
                     $this->finishedCourse($course);
+                    // Подтвердить квалификацию
+                    $student_course = StudentCourse::where('student_id', '=', Auth::user()->id)->where('course_id', '=', $course->id)->first();
+                    $student_course->is_qualificated = true;
+                    $student_course->save();
                     return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('status', __('default.pages.lessons.coursework_send_success'));
                 } else if ($lesson->type == 4) {
                     return redirect('/' . $lang . '/course-catalog/course/' . $course->id . '/lesson-' . $lesson->id . '/test-result');
