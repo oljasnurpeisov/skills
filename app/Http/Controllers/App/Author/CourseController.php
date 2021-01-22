@@ -6,6 +6,7 @@ use App\Exports\ReportingExport;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseAttachments;
+use App\Models\CourseQuotaCost;
 use App\Models\Lesson;
 use App\Models\Notification;
 use App\Models\Professions;
@@ -646,12 +647,8 @@ class CourseController extends Controller
         $all_cost_courses = [];
         $quota_cost_courses = [];
         foreach ($items as $course) {
-            foreach ($course->course_members as $member) {
-                array_push($all_cost_courses, $member->course->cost);
-            }
-            foreach ($course->course_members->where('paid_status', '=', '2') as $member) {
-                array_push($quota_cost_courses, $member->course->cost);
-            }
+            $all_cost_courses[] = $course->course_members->whereIn('paid_status', [1,2])->sum('payment.amount');
+            $quota_cost_courses[] = $course->course_members->where('paid_status', '=', 2)->sum('payment.amount');
         }
 
         $query = Auth::user()->courses()->where('status', '=', Course::published);
@@ -744,8 +741,8 @@ class CourseController extends Controller
             $key = array_search($item->first()->created_at->format("Y-m-d"), array_column($data['data'], 'date'));
             $data['data'][$key] = [
                 "date" => $item->first()->created_at,
-                "value1" => $item->sum('course.cost'),
-                "value2" => $item->where('paid_status', '=', 2)->sum('course.cost')];
+                "value1" => $item->whereIn('paid_status', [1,2])->sum('payment.amount'),
+                "value2" => $item->where('paid_status', '=', 2)->sum('payment.amount')];
         }
 
         return response()->json($data);
@@ -816,7 +813,9 @@ class CourseController extends Controller
                 $q->whereBetween('course_rate.created_at', [$date_from, $date_to]);
                 // Записавшиеся
             }])->with(['course_members' => function ($q) use ($date_from, $date_to) {
-                $q->whereBetween('student_course.updated_at', [$date_from, $date_to]);
+                $q->whereBetween('student_course.created_at', [$date_from, $date_to]);
+            }])->with(['quotaCost' => function ($q) use ($date_from, $date_to) {
+                $q->whereBetween('course_quota_cost.created_at', [$date_from, $date_to]);
             }]);
 
         $items = $query->paginate(5);
@@ -883,10 +882,31 @@ class CourseController extends Controller
             } else {
                 $confirmed_qualifications = '-';
             }
+            // Тип курса
+            $course_type = $i->is_paid == true ? __('default.pages.reporting.paid_course') : __('default.pages.reporting.free_course');
+            // Стоимость по квоте
+            $quota_cost = $i->quotaCost->last()->cost ?? '-';
+            // Записано обучающихся
+            $members_free = $i->course_members->where('paid_status', '=', 3)->count();
+            $members_paid = $i->course_members->where('paid_status', '=', 1)->count();
+            $members_quota = $i->course_members->where('paid_status', '=', 2)->count();
+            // Подтвердили квалификацию
+            $qualificated_free = $i->course_members->where('paid_status', '=', 3)->where('is_qualificated', '=', true)->count();
+            $qualificated_paid = $i->course_members->where('paid_status', '=', 1)->where('is_qualificated', '=', true)->count();
+            $qualificated_quota = $i->course_members->where('paid_status', '=', 2)->where('is_qualificated', '=', true)->count();
+            // Получили сертификат
+            $certificate_free = $i->course_members->where('paid_status', '=', 3)->where('is_finished', '=', true)->count();
+            $certificate_paid = $i->course_members->where('paid_status', '=', 1)->where('is_finished', '=', true)->count();
+            $certificate_quota = $i->course_members->where('paid_status', '=', 2)->where('is_finished', '=', true)->count();
+            // Итого получено за курсы
+            $total_get_paid = $i->course_members->where('paid_status', '=', 1)->sum('payment.amount');
+            $total_get_quota = $i->course_members->where('paid_status', '=', 2)->sum('payment.amount');
 
             $newElement = ['name' => $name, 'skills' => $skills, 'professions_group' => $professions_group, 'course_rate' => $course_rate,
-                'course_status' => $course_status, 'is_quota' => $is_quota, 'is_paid' => $is_paid, 'course_cost' => $course_cost, 'course_members_count' => $course_members_count,
-                'got_certificate_members_count' => $got_certificate_members_count, 'confirmed_qualifications' => $confirmed_qualifications];
+                'course_status' => $course_status, 'course_type' => $course_type, 'course_cost' => $course_cost, 'is_quota' => $is_quota, 'quota_cost' => $quota_cost,
+                'members_free' => $members_free, 'certificate_free' => $certificate_free, 'qualificated_free' => $qualificated_free,
+                'members_paid' => $members_paid, 'certificate_paid' => $certificate_paid, 'qualificated_paid' => $qualificated_paid, 'total_get_paid' => $total_get_paid,
+                'members_quota' => $members_quota, 'certificate_quota' => $certificate_quota, 'qualificated_quota' => $qualificated_quota, 'total_get_quota' => $total_get_quota];
 
             array_push($export, $newElement);
         }
