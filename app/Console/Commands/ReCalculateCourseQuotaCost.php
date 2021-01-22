@@ -32,7 +32,10 @@ class ReCalculateCourseQuotaCost extends Command
      */
     public function handle()
     {
-        $courses = CourseQuotaCost::where('created_at', '<=', Carbon::now()->subMonths(3)->toDateTimeString())->get();
+        $courses = CourseQuotaCost::where('created_at', '<=', Carbon::now()->subMonths(3)->toDateTimeString())
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->unique('course_id');
 
         foreach ($courses as $course) {
             $calculate_quota_cost = CalculateQuotaCost::calculate_quota_cost($course, true);
