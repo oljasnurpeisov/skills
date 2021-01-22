@@ -39,10 +39,14 @@
                                                         <div class="dz-filename"><span
                                                                     data-dz-name="">{{basename($item->getAvatar())}}</span>
                                                         </div>
-                                                        <div class="dz-size" data-dz-size="">
-                                                            <strong>{{ round(filesize(public_path($item->avatar)) / 1024) }}</strong>
-                                                            MB
-                                                        </div>
+                                                        @if(file_exists(public_path($item->avatar)))
+                                                            <div class="dz-size" data-dz-size="">
+                                                                <strong>{{ round(filesize(public_path($item->avatar)) / 1024) }}</strong>
+                                                                MB
+                                                            </div>
+                                                        @else
+                                                            <strong>0</strong> KB
+                                                        @endif
                                                     </div>
                                                     <a href="javascript:undefined;"
                                                        title="{{__('default.pages.profile.delete')}}"

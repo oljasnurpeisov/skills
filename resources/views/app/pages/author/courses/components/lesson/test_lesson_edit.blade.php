@@ -39,18 +39,26 @@
                                                                         <img data-dz-thumbnail=""
                                                                              alt=""
                                                                              src="{{ $answer }}">
-                                                                        <div class="dz-filename"><span data-dz-name="">{{basename($answer)}}</span>
+                                                                        <div class="dz-filename"><span
+                                                                                    data-dz-name="">{{basename($answer)}}</span>
                                                                         </div>
-                                                                        <div class="dz-size" data-dz-size="">
-                                                                            <strong> {{ round(filesize(public_path($answer)) / 1024) }}</strong>
-                                                                            KB
-                                                                        </div>
+                                                                        @if(file_exists(public_path($answer)))
+                                                                            <div class="dz-size" data-dz-size="">
+                                                                                <strong> {{ round(filesize(public_path($answer)) / 1024) }}</strong>
+                                                                                KB
+                                                                            </div>
+                                                                        @else
+                                                                            <strong>0</strong> KB
+                                                                        @endif
                                                                     </div>
-                                                                    <a href="javascript:undefined;" title="{{__('default.pages.courses.delete')}}"
-                                                                       class="link red" data-dz-remove="">{{__('default.pages.courses.delete')}}</a>
+                                                                    <a href="javascript:undefined;"
+                                                                       title="{{__('default.pages.courses.delete')}}"
+                                                                       class="link red"
+                                                                       data-dz-remove="">{{__('default.pages.courses.delete')}}</a>
                                                                 </div>
                                                             </div>
-                                                            <a href="javascript:;" title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                                            <a href="javascript:;"
+                                                               title="{{__('default.pages.courses.add_file_btn_title')}}"
                                                                class="dropzone-default__link dz-clickable">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                                         </div>
                                                         <div class="addon small">
@@ -124,7 +132,7 @@
                             <div class="answers-bar">
                                 <span>{{__('default.pages.lessons.answers_title')}}</span>
                                 <label class="checkbox"><input type="checkbox" name="isPictures[1]"
-                                                               value="true" ><span>{{__('default.pages.lessons.pictures_type_title')}}</span></label>
+                                                               value="true"><span>{{__('default.pages.lessons.pictures_type_title')}}</span></label>
                             </div>
                             <div class="answers-wrapper">
                                 <div class="answers">
