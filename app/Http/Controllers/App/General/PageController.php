@@ -164,6 +164,22 @@ class PageController extends Controller
         ]);
     }
 
+    public function help($lang)
+    {
+        $items = Page::wherePageAlias('help')->first();
+
+        $data = [];
+
+        if ($items->data_ru != null) {
+            foreach (json_decode($items->data_ru) as $key => $item) {
+                $data[$key][] = $item->name;
+            }
+        }
+        return view("app.pages.general.help", [
+            'items' => json_decode($items->getAttribute('data_' . $lang), true)
+        ]);
+    }
+
     public function notifications()
     {
         $notifications = Auth::user()->notifications()->orderBy('created_at', 'desc')->paginate(5);

@@ -121,6 +121,13 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post('/static-pages/update-faq-view/{item}/{key}', 'PageController@update_faq_theme');
                 Route::get('/static-pages/faq', 'PageController@faq');
                 Route::delete('/static-pages/delete-faq-theme/{key}', 'PageController@faq_delete_theme');
+                // Помощь
+                Route::get('/static-pages/help-index', 'PageController@help_index');
+                Route::get('/static-pages/help-create', 'PageController@create_help_theme');
+                Route::post('/static-pages/store-help-view/{item}', 'PageController@store_help_theme');
+                Route::get('/static-pages/help-view/{key}', 'PageController@help_view');
+                Route::post('/static-pages/update-help-view/{item}/{key}', 'PageController@update_help_theme');
+                Route::delete('/static-pages/delete-help-theme/{key}', 'PageController@help_delete_theme');
                 // Каталог курсов
                 Route::get('/static-pages/course-catalog', 'PageController@courseCatalog');
                 Route::post("/static-pages/course-catalog-update", "PageController@courseCatalogUpdate");
@@ -207,6 +214,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::get("/for-authors", "PageController@for_authors");
             // FAQ
             Route::get("/faq", "PageController@faq");
+            // Помощь
+            Route::get("/help", "PageController@help");
             // Курсы
             Route::get("/course-catalog", "CourseController@courseCatalog");
             Route::get("/course-catalog/course/{item}", "CourseController@courseView");

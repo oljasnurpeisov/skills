@@ -271,4 +271,127 @@ class PageController extends Controller
 
         return back()->with('status', __('admin.notifications.update_success'));
     }
+
+    public function help_index()
+    {
+        $items = Page::wherePageAlias('help')->first();
+
+        $themes = [];
+
+        if ($items->data_ru != null) {
+            foreach (json_decode($items->data_ru) as $key => $item) {
+                $themes[$key][] = $item->name;
+            }
+            foreach (json_decode($items->data_kk) as $key => $item) {
+                $themes[$key][] = $item->name;
+            }
+            foreach (json_decode($items->data_en) as $key => $item) {
+                $themes[$key][] = $item->name;
+            }
+        }
+
+        return view('admin.v2.pages.static_pages.help_index', [
+            'items' => $themes
+        ]);
+    }
+
+    public function create_help_theme()
+    {
+        $item = Page::wherePageAlias('help')->first();
+
+        return view('admin.v2.pages.static_pages.help_create', [
+            'item' => $item
+        ]);
+    }
+
+    public function store_help_theme($lang, Request $request, Page $item)
+    {
+        $languages = ['ru', 'kk', 'en'];
+
+        foreach ($languages as $language) {
+
+            if ($request['theme_name_' . $language] != null) {
+
+                $data = [
+                    "name" => $request['theme_name_' . $language],
+                ];
+
+
+                foreach ($request['tab_name_' . $language] as $key => $step) {
+                    if (isset($request['tab_name_' . $language][$key])) {
+                        $data['tabs'][] = array(
+                            'name' => $request['tab_name_' . $language][$key],
+                            'description' => $request['tab_description_' . $language][$key],
+                        );
+                    }
+                }
+                $data_array = json_decode($item['data_' . $language]);
+                $data_array[] = $data;
+
+                $item['data_' . $language] = $data_array;
+            }
+        }
+        $item->save();
+
+        return redirect('/' . $lang . '/admin/static-pages/help-index')->with('status', __('admin.notifications.record_stored'));
+
+    }
+
+    public function help_view($lang, $theme_key)
+    {
+        $item = Page::wherePageAlias('help')->first();
+
+        return view('admin.v2.pages.static_pages.help', [
+            'item' => $item,
+            'theme_key' => $theme_key
+        ]);
+    }
+
+    public function update_help_theme($lang, Request $request, Page $item, $theme_key)
+    {
+        $languages = ['ru', 'kk', 'en'];
+
+        foreach ($languages as $language) {
+
+            $data = [
+                "name" => $request['theme_name_' . $language],
+            ];
+
+            if (!empty($request['tab_name_' . $language])) {
+                foreach ($request['tab_name_' . $language] as $key => $step) {
+                    if (isset($request['tab_name_' . $language][$key])) {
+                        $data['tabs'][] = array(
+                            'name' => $request['tab_name_' . $language][$key],
+                            'description' => $request['tab_description_' . $language][$key],
+                        );
+                    }
+                }
+            }
+            $data_array = json_decode($item['data_' . $language]);
+            $data_array[$theme_key] = $data;
+
+            $item['data_' . $language] = $data_array;
+        }
+        $item->save();
+
+        return redirect('/' . $lang . '/admin/static-pages/help-index')->with('status', __('admin.notifications.record_updated'));
+
+    }
+
+    public function help_delete_theme($lang, $theme_key)
+    {
+        $item = Page::wherePageAlias('help')->first();
+
+        $languages = ['ru', 'kk', 'en'];
+
+        foreach ($languages as $language) {
+            $data_array = json_decode($item['data_' . $language]);
+            unset($data_array[$theme_key]);
+
+            $item['data_' . $language] = $data_array;
+        }
+        $item->save();
+
+        return redirect()->back()->with('status', __('admin.notifications.record_deleted'));
+    }
 }

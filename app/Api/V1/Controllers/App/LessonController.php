@@ -264,7 +264,7 @@ class LessonController extends BaseController
                         $video->move(public_path('users/user_' . $user->getAuthIdentifier() . '/lessons/videos'), $videoName);
                         $videos_array[] = '/users/user_' . $user->getAuthIdentifier() . '/lessons/videos/' . $videoName;
                     }
-                    $user_answer->videos = $videos_array;
+                    $user_answer->videos = json_encode($videos_array);
                 }
 
                 // Аудио с устройства
@@ -275,7 +275,7 @@ class LessonController extends BaseController
                         $audio->move(public_path('users/user_' . $user->getAuthIdentifier() . '/lessons/audios'), $audioName);
                         $audios_array[] = '/users/user_' . $user->getAuthIdentifier() . '/lessons/audios/' . $audioName;
                     }
-                    $user_answer->audios = $audios_array;
+                    $user_answer->audios = json_encode($audios_array);
                 }
 
                 // Другие материалы
@@ -286,7 +286,7 @@ class LessonController extends BaseController
                         $file->move(public_path('users/user_' . $user->getAuthIdentifier() . '/lessons/files'), $fileName);
                         $files_array[] = '/users/user_' . $user->getAuthIdentifier() . '/lessons/files/' . $fileName;
                     }
-                    $user_answer->another_files = $files_array;
+                    $user_answer->another_files = json_encode($files_array);
                 }
 
                 // Пометить урок как законченный
@@ -296,6 +296,10 @@ class LessonController extends BaseController
                 $user_answer->save();
 
                 if ($lesson->type == 3) {
+                    // Подтвердить квалификацию
+                    $student_course = StudentCourse::where('student_id', '=', $user->id)->where('course_id', '=', $course->id)->first();
+                    $student_course->is_qualificated = true;
+                    $student_course->save();
                     $this->finishedCourse($course, $user);
                 } else {
                     return $this->nextLessonShow($lang, $course, $lesson, $user);

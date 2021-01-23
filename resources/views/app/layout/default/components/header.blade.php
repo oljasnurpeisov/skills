@@ -151,6 +151,9 @@
                             @endif
                             <li><a href="/{{$lang}}/notifications"
                                    title="{{__('notifications.title')}}">{{__('notifications.title')}}</a></li>
+                                <li><a href="/{{$lang}}/help"
+                                       title="{{__('default.pages.footer.help')}}">{{__('default.pages.footer.help')}}</a>
+                                </li>
                             <li class="break">
                                 <hr>
                             </li>
@@ -265,6 +268,9 @@
                     @endif
                     <li><a href="/{{$lang}}/notifications"
                            title="{{__('notifications.title')}}">{{__('notifications.title')}}</a></li>
+                        <li><a href="/{{$lang}}/help"
+                               title="{{__('default.pages.footer.help')}}">{{__('default.pages.footer.help')}}</a>
+                        </li>
                     <li><a href="/{{$lang}}/logout"
                            title="{{__('default.pages.profile.logout_title')}}">{{__('default.pages.profile.logout_title')}}</a>
                     </li>

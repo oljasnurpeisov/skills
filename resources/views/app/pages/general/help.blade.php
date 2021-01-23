@@ -6,7 +6,7 @@
 
         <section class="plain big-padding">
             <div class="container">
-                <h1 class="title-primary">{{__('default.pages.footer.questions_answers')}}</h1>
+                <h1 class="title-primary">{{__('default.pages.footer.help')}}</h1>
 
                 <br>
                 @foreach($items as $key => $item)
@@ -33,20 +33,6 @@
                         </div>
                     </div>
                 @endforeach
-                @auth
-                    @php
-                        $tech_support = App\Models\User::whereHas('roles', function ($q) {
-            $q->where('slug', '=', 'tech_support');
-        })->first();
-                    @endphp
-                    <a href="/{{$lang}}/dialog/opponent-{{$tech_support->id}}"
-                       title="{{__('default.pages.faq.tech_support_title')}}"
-                       class="btn">{{__('default.pages.faq.tech_support_title')}}</a>
-                @else
-                    <a href="#authorization" data-fancybox title="{{__('default.pages.faq.tech_support_title')}}"
-                       class="btn">{{__('default.pages.faq.tech_support_title')}}</a>
-                @endif
-
             </div>
         </section>
 

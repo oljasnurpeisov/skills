@@ -10,6 +10,8 @@
                     <li><a href="/{{$lang}}/for-authors"
                            title="{{__('default.pages.footer.teacher_title')}}">{{__('default.pages.footer.teacher_title')}}</a>
                     </li>
+                    <li><a href="/{{$lang}}/help" title="{{__('default.pages.footer.help')}}">{{__('default.pages.footer.help')}}</a>
+                    </li>
                     <li><a href="https://www.enbek.kz/docs/ru"
                            title="{{__('default.pages.footer.about_us')}}">{{__('default.pages.footer.about_us')}}</a>
                     </li>
