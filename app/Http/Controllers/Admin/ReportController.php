@@ -279,6 +279,8 @@ class ReportController extends Controller
         // Фильтрация
         $course_name = $request->course_name ? $request->course_name : '';
         $author_name = $request->author_name ? $request->author_name : '';
+        $cost_from = $request->cost_from;
+        $cost_to = $request->cost_to;
         $skill = $request->skill ? $request->skill : '';
         $rate_from = $request->rate_from;
         $rate_to = $request->rate_to;
@@ -294,6 +296,7 @@ class ReportController extends Controller
         // Сортировка
         $sortByName = $request->sortByName;
         $sortByAuthor = $request->sortByAuthor;
+        $sortByCost = $request->sortByCost;
         $sortByCourseMembers = $request->sortByCourseMembers;
         $sortByCertificateCourseMembers = $request->sortByCertificateCourseMembers;
         $sortByRateCourse = $request->sortByRateCourse;
@@ -310,6 +313,10 @@ class ReportController extends Controller
             $query->whereHas('users', function ($q) use ($sortByName) {
                 $q->orderBy('company_name', $sortByName);
             });
+        }
+        // Сортировка по стоимости курса
+        if ($sortByCost) {
+            $query->orderBy('cost', $sortByCost);
         }
         // Сортировка количеству учащихся
         if ($sortByCourseMembers) {
@@ -350,6 +357,15 @@ class ReportController extends Controller
             $query->whereHas('users', function ($q) use ($author_name) {
                 $q->where('company_name', 'like', '%' . $author_name . '%');
             });
+        }
+        // Поиск по стоимости
+        if ($cost_from and empty($cost_to)) {
+            $query->where('cost', '>=', $cost_from);
+        } else if ($cost_to and empty($cost_from)) {
+            $query->where('cost', '<=', $cost_to);
+        } else if ($cost_to and $cost_from) {
+            $query->where('cost', '>=', $cost_from);
+            $query->where('cost', '<=', $cost_to);
         }
         // Поиск по рейтингу
         if ($rate_from and empty($rate_to)) {
@@ -396,15 +412,15 @@ class ReportController extends Controller
         // Поиск по количеству участников
         if ($course_members_count_from and empty($course_members_count_to)) {
             $query->withCount(['course_members' => function ($q) {
-                $q->whereIn('paid_status', [1, 2]);
+                $q->whereIn('paid_status', [1, 2, 3]);
             }])->having('course_members_count', '>=', $course_members_count_from);
         } else if ($course_members_count_to and empty($course_members_count_from)) {
             $query->withCount(['course_members' => function ($q) {
-                $q->whereIn('paid_status', [1, 2]);
+                $q->whereIn('paid_status', [1, 2, 3]);
             }])->having('course_members_count', '<=', $course_members_count_to);
         } else if ($course_members_count_to and $course_members_count_from) {
             $query->withCount(['course_members' => function ($q) {
-                $q->whereIn('paid_status', [1, 2]);
+                $q->whereIn('paid_status', [1, 2, 3]);
             }])->having('course_members_count', '>=', $course_members_count_from)
                 ->having('course_members_count', '<=', $course_members_count_to);
         }
@@ -426,31 +442,16 @@ class ReportController extends Controller
         // Поиск по квалифицированным участникам
         if ($qualifications_count_from and empty($qualifications_count_to)) {
             $query->withCount(['course_members as course_qualifications_members_count' => function ($q) {
-                $q->where('is_finished', '=', true);
-                $q->whereHas('student.student_lesson', function ($q) {
-                    $q->where('is_finished', '=', true);
-                });
-            }])->whereHas('lessons', function ($q) {
-                $q->where('type', '=', 3);
-            })->having('course_qualifications_members_count', '>=', $qualifications_count_from);
+                $q->where('is_qualificated', '=', true);
+            }])->having('course_qualifications_members_count', '>=', $qualifications_count_from);
         } else if ($qualifications_count_to and empty($qualifications_count_from)) {
             $query->withCount(['course_members as course_qualifications_members_count' => function ($q) {
-                $q->where('is_finished', '=', true);
-                $q->whereHas('student.student_lesson', function ($q) {
-                    $q->where('is_finished', '=', true);
-                });
-            }])->whereHas('lessons', function ($q) {
-                $q->where('type', '=', 3);
-            })->having('course_qualifications_members_count', '<=', $qualifications_count_to);
+                $q->where('is_qualificated', '=', true);
+            }])->having('course_qualifications_members_count', '<=', $qualifications_count_to);
         } else if ($qualifications_count_to and $qualifications_count_from) {
             $query->withCount(['course_members as course_qualifications_members_count' => function ($q) {
-                $q->where('is_finished', '=', true);
-                $q->whereHas('student.student_lesson', function ($q) {
-                    $q->where('is_finished', '=', true);
-                });
-            }])->whereHas('lessons', function ($q) {
-                $q->where('type', '=', 3);
-            })->having('course_qualifications_members_count', '>=', $qualifications_count_from)
+                $q->where('is_qualificated', '=', true);
+            }])->having('course_qualifications_members_count', '>=', $qualifications_count_from)
                 ->having('course_qualifications_members_count', '<=', $qualifications_count_to);
         }
 
@@ -656,6 +657,12 @@ class ReportController extends Controller
             $name = $i->name;
             // Наименование автора
             $author_name = $i->user->company_name;
+            // Квота
+            if ($i->quota_status == 2) {
+                $is_quota = __('default.yes_title');
+            } else {
+                $is_quota = __('default.no_title');
+            }
             // Навыки
             $skills = implode(', ', array_filter($i->skills->pluck('name_' . $lang)->toArray())) ?: implode(', ', $i->skills->pluck('name_ru')->toArray());
             // Группа профессий
@@ -679,9 +686,9 @@ class ReportController extends Controller
             // Платежный статус
             $is_paid = $i->is_paid == true ? __('default.pages.reporting.paid_course') : __('default.pages.reporting.free_course');
             // Записано обучающихся
-            if($i->quota_status == 2 and $i->is_paid == true){
+            if ($i->quota_status == 2 and $i->is_paid == true) {
                 $students_count = count($i->course_members->where('paid_status', '=', 1)) . "/" . count($i->course_members->where('paid_status', '=', 2));
-            }else{
+            } else {
                 $students_count = count($i->course_members->whereIn('paid_status', [1, 2]));
             }
             // Получили сертификат
@@ -692,11 +699,34 @@ class ReportController extends Controller
             } else {
                 $students_qualification_count = '-';
             }
+            // Тип курса
+            $course_type = $i->is_paid == true ? __('default.pages.reporting.paid_course') : __('default.pages.reporting.free_course');
+            // Стоимость по квоте
+            $quota_cost = $i->quotaCost->last()->cost ?? '-';
+            // Записано обучающихся
+            $members_free = $i->course_members->where('paid_status', '=', 3)->count();
+            $members_paid = $i->course_members->where('paid_status', '=', 1)->count();
+            $members_quota = $i->course_members->where('paid_status', '=', 2)->count();
+            // Подтвердили квалификацию
+            $qualificated_free = $i->course_members->where('paid_status', '=', 3)->where('is_qualificated', '=', true)->count();
+            $qualificated_paid = $i->course_members->where('paid_status', '=', 1)->where('is_qualificated', '=', true)->count();
+            $qualificated_quota = $i->course_members->where('paid_status', '=', 2)->where('is_qualificated', '=', true)->count();
+            // Получили сертификат
+            $certificate_free = $i->course_members->where('paid_status', '=', 3)->where('is_finished', '=', true)->count();
+            $certificate_paid = $i->course_members->where('paid_status', '=', 1)->where('is_finished', '=', true)->count();
+            $certificate_quota = $i->course_members->where('paid_status', '=', 2)->where('is_finished', '=', true)->count();
+            // Итого получено за курсы
+            $total_get_paid = $i->course_members->where('paid_status', '=', 1)->sum('payment.amount');
+            $total_get_quota = $i->course_members->where('paid_status', '=', 2)->sum('payment.amount');
+            // Стоимость курса
+            $course_cost = $i->cost ?? '-';
 
             $newElement = ['name' => $name, 'author_name' => $author_name, 'skills' => $skills, 'group_professions' => $group_professions,
-                'professions' => $professions, 'rate' => $rate, 'status' => $status, 'quota_access' => $quota_access,
-                'is_paid' => $is_paid, 'students_count' => $students_count, 'students_certificate_count' => $students_certificate_count,
-                'students_qualification_count' => $students_qualification_count];
+                'professions' => $professions, 'course_rate' => $rate, 'course_status' => $status,
+                'course_type' => $course_type, 'course_cost' => $course_cost, 'is_quota' => $is_quota, 'quota_cost' => $quota_cost,
+                'members_free' => $members_free, 'certificate_free' => $certificate_free, 'qualificated_free' => $qualificated_free,
+                'members_paid' => $members_paid, 'certificate_paid' => $certificate_paid, 'qualificated_paid' => $qualificated_paid, 'total_get_paid' => $total_get_paid,
+                'members_quota' => $members_quota, 'certificate_quota' => $certificate_quota, 'qualificated_quota' => $qualificated_quota, 'total_get_quota' => $total_get_quota];
 
             array_push($export, $newElement);
         }

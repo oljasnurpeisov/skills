@@ -39,7 +39,7 @@ class CourseReportExport implements FromArray, WithHeadings, WithColumnWidths, S
         $sheet->getStyle('C2:C999')->getAlignment()->setWrapText(true);
         $sheet->getStyle('D3:D999')->getAlignment()->setWrapText(true);
         $sheet->getStyle('E3:E999')->getAlignment()->setWrapText(true);
-        $sheet->getStyle('A1:K1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:V1')->getFont()->setBold(true);
     }
 
 
@@ -56,13 +56,24 @@ class CourseReportExport implements FromArray, WithHeadings, WithColumnWidths, S
             __('admin.pages.reports.author_name'),
             __('admin.pages.reports.skills'),
             __('admin.pages.reports.group_profession'),
-            __('admin.pages.reports.course_rate'),
-            __('admin.pages.reports.course_status'),
-            __('admin.pages.reports.quota_access'),
-            __('admin.pages.reports.paid_or_free'),
-            __('admin.pages.reports.course_members'),
-            __('admin.pages.reports.course_members_certificates'),
-            __('admin.pages.reports.course_members_qualification'),
+            __('admin.pages.reports.professions'),
+            __('default.pages.reporting.course_rate'),
+            __('default.pages.reporting.course_status'),
+            __('default.pages.reporting.course_type'),
+            __('default.pages.reporting.course_cost'),
+            __('default.pages.reporting.is_quota'),
+            __('default.pages.reporting.cost_by_quota'),
+            __('default.pages.reporting.members_free'),
+            __('default.pages.reporting.certificate_free'),
+            __('default.pages.reporting.qualificated_free'),
+            __('default.pages.reporting.members_paid'),
+            __('default.pages.reporting.certificate_paid'),
+            __('default.pages.reporting.qualificated_paid'),
+            __('default.pages.reporting.total_get_paid'),
+            __('default.pages.reporting.members_quota'),
+            __('default.pages.reporting.certificate_quota'),
+            __('default.pages.reporting.qualificated_quota'),
+            __('default.pages.reporting.total_get_quota')
         ];
     }
 

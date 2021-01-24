@@ -245,7 +245,8 @@
             @csrf
             <div class="form-group">
                 <label class="form-group__label">{{__('default.pages.auth.fio_title')}}</label>
-                <input type="text" name="resume_name" placeholder="" value="{{ old('resume_name') }}" class="input-regular" required>
+                <input type="text" name="resume_name" placeholder="" value="{{ old('resume_name') }}"
+                       class="input-regular" required>
                 {!! $errors->first('resume_name', '<div class="alert alert-danger">
                     :message
                 </div>') !!}

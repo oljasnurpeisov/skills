@@ -374,6 +374,7 @@ return [
             'sort_by_members_count_high' => 'Количество обучающихся - по убыванию',
             'date_from' => 'Дата (от)',
             'date_to' => 'Дата (до)',
+            'clear_btn' => 'Сбросить'
         ],
 
         'reporting' => [
@@ -385,7 +386,7 @@ return [
             'author_name' => 'Автор',
             'course_name' => 'Наименование курса',
             'skills' => 'Навыки',
-            'professions_group' => 'Группа професии',
+            'professions_group' => 'Группа професий',
             'course_rate' => 'Рейтинг курса',
             'course_status' => 'Статус курса',
             'is_paid' => 'Платный /Бесплатный',
@@ -409,7 +410,19 @@ return [
                 '3' => 'Опубликован',
                 '4' => 'Удален'
             ],
-
+            'course_type' => 'Тип курса',
+            'cost_by_quota' => 'Стоимость по квоте тг.',
+            'members_free' => 'Записано обучающихся (бесплатно)',
+            'certificate_free' => 'Получили сертификат (бесплатно)',
+            'qualificated_free' => 'Подтвердили квалификацию (бесплатно)',
+            'members_paid' => 'Записано обучающихся (платно)',
+            'certificate_paid' => 'Получили сертификат (платно)',
+            'qualificated_paid' => 'Подтвердили квалификацию (платно)',
+            'total_get_paid' => 'Итого тг. (платно)',
+            'members_quota' => 'Записано обучающихся (по квоте)',
+            'certificate_quota' => 'Получили сертификат (по квоте)',
+            'qualificated_quota' => 'Подтвердили квалификацию (по квоте)',
+            'total_get_quota' => 'Итого тг. (по квоте)',
         ],
 
         'auth' => [
@@ -519,7 +532,9 @@ return [
             'phone_title' => 'Телефон',
             'phone' => '1411',
             'social_networks' => 'Социальные сети',
-            'to_be_author' => 'Стать автором'
+            'to_be_author' => 'Стать автором',
+            'help' => 'Помощь',
+            'questions_answers' => 'Вопросы и ответы'
         ],
 
         'faq' => [

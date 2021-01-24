@@ -83,7 +83,7 @@
                         <div class="form-group">
                             <label class="form-group__label hidden-xs">&nbsp;</label>
                             <div class="input-group">
-                                <a href="#" title="" id="clear" class="ghost-btn">Сбросить</a>
+                                <a href="#" title="" id="clear" class="ghost-btn">{{__('default.pages.statistics.clear_btn')}}</a>
                             </div>
                         </div>
                     </div>

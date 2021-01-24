@@ -54,12 +54,21 @@ class ReportingExport implements FromArray, WithHeadings, ShouldAutoSize, WithCo
             __('default.pages.reporting.professions_group'),
             __('default.pages.reporting.course_rate'),
             __('default.pages.reporting.course_status'),
-            __('default.pages.reporting.is_quota'),
-            __('default.pages.reporting.is_paid'),
+            __('default.pages.reporting.course_type'),
             __('default.pages.reporting.course_cost'),
-            __('default.pages.reporting.course_members_count'),
-            __('default.pages.reporting.got_certificate_members_count'),
-            __('default.pages.reporting.confirmed_qualifications'),
+            __('default.pages.reporting.is_quota'),
+            __('default.pages.reporting.cost_by_quota'),
+            __('default.pages.reporting.members_free'),
+            __('default.pages.reporting.certificate_free'),
+            __('default.pages.reporting.qualificated_free'),
+            __('default.pages.reporting.members_paid'),
+            __('default.pages.reporting.certificate_paid'),
+            __('default.pages.reporting.qualificated_paid'),
+            __('default.pages.reporting.total_get_paid'),
+            __('default.pages.reporting.members_quota'),
+            __('default.pages.reporting.certificate_quota'),
+            __('default.pages.reporting.qualificated_quota'),
+            __('default.pages.reporting.total_get_quota')
         ];
     }
 
