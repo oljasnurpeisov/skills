@@ -147,7 +147,7 @@
                                     </div>
                                     <div class="card__bottom">
                                         <div class="card__attribute">
-                                            <i class="icon-user"> </i><span>{{count($course->course_members->whereIn('paid_status', [1,2]))}}</span>
+                                            <i class="icon-user"> </i><span>{{count($course->course_members->whereIn('paid_status', [1,2,3]))}}</span>
                                         </div>
                                         <div class="card__attribute">
                                             <i class="icon-star-full"> </i><span>{{round($course->rate->pluck('rate')->avg() ?? 0, 1)}}</span>

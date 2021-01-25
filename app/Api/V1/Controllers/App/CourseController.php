@@ -703,19 +703,6 @@ class CourseController extends BaseController
                 array_push($rates, $rate->rate);
             }
         }
-        // Все ученики автора
-        $author_students = [];
-        foreach ($courses as $item) {
-            foreach ($item->course_members as $member) {
-                $author_students[$member['student_id']][] = $member;
-            }
-        }
-        // Оценка автора исходя из всех оценок
-        if (count($rates) == 0) {
-            $average_rates = 0;
-        } else {
-            $average_rates = array_sum($rates) / count($rates);
-        }
 
         $lessonsCount = Lesson::whereCourseId($course->id)
             ->whereIn('type', [1, 2])
@@ -776,8 +763,8 @@ class CourseController extends BaseController
             'percent' => $course->progress,
             'teaser' => $course->teaser,
             'reviews' => count($rates),
-            'students' => count($author_students),
-            'rating' => round($average_rates, 1),
+            'students' => count($course->course_members->whereIn('paid_status', [1,2,3])),
+            'rating' => round($course->rate->pluck('rate')->avg() ?? 0, 1),
             'lang' => $course->lang == 0 ? 'kk' : ($course->lang == 1 ? 'ru' : null),
             'description' => $course->description,
             'image' => env('APP_URL') . $course->getAvatar(),

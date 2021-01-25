@@ -12,7 +12,7 @@
                             <div class="attributes">
                                 <div class="attributes-item">
                                     <i class="icon-user"> </i>
-                                    <span>{{count($item->course_members->whereIn('paid_status', [1,2]))}}</span>
+                                    <span>{{count($item->course_members->whereIn('paid_status', [1,2,3]))}}</span>
                                 </div>
                                 <div class="attributes-item">
                                     <i class="icon-star-full"> </i>
