@@ -43,7 +43,7 @@ class ReCalculateCourseQuotaCost extends Command
             $calculate_quota_cost = CalculateQuotaCost::calculate_quota_cost($item, true);
 
             $qouta_cost_item = new CourseQuotaCost;
-            $qouta_cost_item->course_id = $course->id;
+            $qouta_cost_item->course_id = $course->course_id;
             $qouta_cost_item->cost = $calculate_quota_cost;
             $qouta_cost_item->save();
 
