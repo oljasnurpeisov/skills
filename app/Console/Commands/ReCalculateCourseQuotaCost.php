@@ -35,8 +35,8 @@ class ReCalculateCourseQuotaCost extends Command
     {
         $courses = CourseQuotaCost::where('created_at', '<=', Carbon::now()->subMonths(3)->toDateTimeString())
             ->orderBy('created_at', 'desc')
-            ->get()
-            ->unique('course_id');
+            ->where('processed', '=', 0)
+            ->get();
 
         foreach ($courses as $course) {
             $calculate_quota_cost = CalculateQuotaCost::calculate_quota_cost($course, true);
@@ -44,6 +44,9 @@ class ReCalculateCourseQuotaCost extends Command
             $qouta_cost_item->course_id = $course->id;
             $qouta_cost_item->cost = $calculate_quota_cost;
             $qouta_cost_item->save();
+
+            $course->processed = true;
+            $course->save();
 
             // Если курс доступен по квоте, уведомить автора
             if ($course->quota_status == 2) {
