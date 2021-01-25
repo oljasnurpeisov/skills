@@ -17,6 +17,24 @@
                 <input type="text" name="course_name" value="{{$request->course_name}}" placeholder=""
                        class="input-regular">
             </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <label class="input-group__title">Дата начала отчетного периода:</label>
+                        <label class="date">
+                            <input type="text" data-date-format="dd.mm.yyyy" name="date_from" value="{{$request->date_from}}" placeholder="" class="input-regular custom-datepicker" autocomplete="off">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <label class="input-group__title">Дата окончания отчетного периода:</label>
+                        <label class="date">
+                            <input type="text" data-date-format="dd.mm.yyyy" name="date_to" value="{{$request->date_to}}" placeholder="" class="input-regular custom-datepicker" autocomplete="off">
+                        </label>
+                    </div>
+                </div>
+            </div>
             <div class="collapse-block collapsed" style="display: none;" id="collapse1">
                 <div class="row">
                     <div class="col-md-12">

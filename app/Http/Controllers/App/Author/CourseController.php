@@ -816,6 +816,8 @@ class CourseController extends Controller
                 $q->whereBetween('student_course.created_at', [$date_from, $date_to]);
             }])->with(['quotaCost' => function ($q) use ($date_from, $date_to) {
                 $q->whereBetween('course_quota_cost.created_at', [$date_from, $date_to]);
+            }])->with(['course_members' => function ($q) use ($date_from, $date_to) {
+                $q->whereBetween('student_course.created_at', [$date_from, $date_to]);
             }]);
 
         $items = $query->paginate(5);

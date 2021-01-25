@@ -9,6 +9,7 @@ use App\Exports\StudentReportExport;
 use App\Models\Course;
 use App\Models\Professions;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -302,7 +303,27 @@ class ReportController extends Controller
         $sortByRateCourse = $request->sortByRateCourse;
         $sortByQualificatedStudents = $request->sortByQualificatedStudents;
 
-        $query = (new Course)->newQuery();
+        $from = $request->date_from;
+        $to = $request->date_to;
+
+        $date_from = Carbon::parse($from ?? '01.01.2020')
+            ->startOfDay()
+            ->toDateTimeString();
+        $date_to = Carbon::parse($to)
+            ->endOfDay()
+            ->toDateTimeString();
+
+        $query = (new Course)->newQuery()
+        ->with(['rate' => function ($q) use ($date_from, $date_to) {
+            $q->whereBetween('course_rate.created_at', [$date_from, $date_to]);
+            // Записавшиеся
+        }])->with(['course_members' => function ($q) use ($date_from, $date_to) {
+            $q->whereBetween('student_course.created_at', [$date_from, $date_to]);
+        }])->with(['quotaCost' => function ($q) use ($date_from, $date_to) {
+            $q->whereBetween('course_quota_cost.created_at', [$date_from, $date_to]);
+        }])->with(['course_members' => function ($q) use ($date_from, $date_to) {
+            $q->whereBetween('student_course.created_at', [$date_from, $date_to]);
+        }]);
         // Сортировка
         // Сортировка по названию курса
         if ($sortByName) {
