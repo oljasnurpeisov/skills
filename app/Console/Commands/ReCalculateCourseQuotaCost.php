@@ -39,7 +39,9 @@ class ReCalculateCourseQuotaCost extends Command
             ->get();
 
         foreach ($courses as $course) {
-            $calculate_quota_cost = CalculateQuotaCost::calculate_quota_cost($course, true);
+            $item = Course::whereId($course->course_id)->first();
+            $calculate_quota_cost = CalculateQuotaCost::calculate_quota_cost($item, true);
+
             $qouta_cost_item = new CourseQuotaCost;
             $qouta_cost_item->course_id = $course->id;
             $qouta_cost_item->cost = $calculate_quota_cost;
