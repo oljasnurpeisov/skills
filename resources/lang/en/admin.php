@@ -146,6 +146,7 @@ return [
             'edit_pages' => 'Редактирование страниц',
             'faq' => 'FAQ',
             'help' => 'Помощь',
+            'calculator' => 'Калькулятор',
             'course_catalog' => 'Каталог курсов',
             'main' => 'Главная',
             'step_by_step' => 'Шаг за шагом',
@@ -160,6 +161,7 @@ return [
             'image_link_placeholder' => 'Введите ссылку для изображения',
             'teaser_title' => 'Аннотация',
             'teaser_placeholder' => 'Введите аннотацию',
+            'calculator_teaser' => 'Краткое описание',
 
             'for_authors' => 'Преподаватель',
             'btn_title' => 'Заголовок кнопки',

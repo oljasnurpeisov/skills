@@ -132,10 +132,9 @@
             <div class="container">
                 <h2 class="title-primary decorated">{!! __('default.pages.calculator.title') !!}</h2>
                 <div class="plain-text">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua.
+                    @php($calculator_teaser = json_decode($calculator->getAttribute('data_'.$lang))->calculator->teaser ?? json_decode($calculator->getAttribute('data_ru'))->calculator->teaser)
+                    {!!nl2br(e($calculator_teaser)) !!}
                 </div>
-
                 <div class="calculator" id="calculator">
                     <div class="calculator__section white">
                         <div class="form-group">

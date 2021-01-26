@@ -139,12 +139,14 @@ class PageController extends Controller
         $courses_count = Course::whereStatus(Course::published)->count();
         // Контент
         $content = Page::wherePageAlias('for_authors')->first();
+        $calculator = Page::wherePageAlias('calculator')->first();
 
         return view("for_authors", [
             "students_count" => $students_count,
             "authors_count" => $authors_count,
             "courses_count" => $courses_count,
-            "content" => $content
+            "content" => $content,
+            "calculator" => $calculator
         ]);
     }
 

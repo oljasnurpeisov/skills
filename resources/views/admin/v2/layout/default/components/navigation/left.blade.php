@@ -74,6 +74,9 @@
                     <li>
                         <a href="/{{$lang}}/admin/static-pages/help-index">{{ __('admin.pages.static_pages.help') }}</a>
                     </li>
+                    <li>
+                        <a href="/{{$lang}}/admin/static-pages/calculator">{{ __('admin.pages.static_pages.calculator') }}</a>
+                    </li>
                 </ul>
             </li>
             @endhasPermission

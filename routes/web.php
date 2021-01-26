@@ -128,6 +128,9 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/static-pages/help-view/{key}', 'PageController@help_view');
                 Route::post('/static-pages/update-help-view/{item}/{key}', 'PageController@update_help_theme');
                 Route::delete('/static-pages/delete-help-theme/{key}', 'PageController@help_delete_theme');
+                // Калькулятор
+                Route::get('/static-pages/calculator', 'PageController@calculator_view');
+                Route::post("/static-pages/calculator", "PageController@calculator_update");
                 // Каталог курсов
                 Route::get('/static-pages/course-catalog', 'PageController@courseCatalog');
                 Route::post("/static-pages/course-catalog-update", "PageController@courseCatalogUpdate");

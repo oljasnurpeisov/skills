@@ -87,8 +87,8 @@ class PageController extends Controller
                     'btn_title' => $request['for_authors_btn_title_' . $language]],
                 "advantages" => [],
                 "for_authors_banner" => ['title' => $request['banner_title_' . $language],
-                'teaser' => $request['banner_teaser_' . $language],
-                'image' => $request['avatar']]
+                    'teaser' => $request['banner_teaser_' . $language],
+                    'image' => $request['avatar']]
             ];
 
             foreach ($request['steps_' . $language] as $key => $step) {
@@ -393,5 +393,33 @@ class PageController extends Controller
         $item->save();
 
         return redirect()->back()->with('status', __('admin.notifications.record_deleted'));
+    }
+
+    public function calculator_view($lang)
+    {
+        $item = Page::wherePageAlias('calculator')->first();
+
+        return view('admin.v2.pages.static_pages.calculator', [
+            'item' => $item
+        ]);
+    }
+
+    public function calculator_update(Request $request)
+    {
+        $languages = ['ru', 'kk', 'en'];
+        $item = Page::wherePageAlias('calculator')->first();
+
+        foreach ($languages as $language) {
+
+            $data = [
+                'calculator' => ['teaser' => $request['teaser_' . $language]]
+            ];
+
+            $item['data_' . $language] = json_encode($data);
+        }
+
+        $item->save();
+
+        return back()->with('status', __('admin.notifications.update_success'));
     }
 }
