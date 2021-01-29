@@ -221,6 +221,7 @@ class PageController extends Controller
 
                 $item['data_' . $language] = $data_array;
             }
+
         }
         $item->save();
 
