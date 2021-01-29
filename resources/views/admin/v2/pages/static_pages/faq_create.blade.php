@@ -46,19 +46,16 @@
                                     <div id="tabs_{{$lang_key}}">
                                         {{--                                    @foreach(json_decode($item->getAttribute('data_'.$lang_key), true)[$theme_key]['tabs'] as $key => $tab)--}}
                                         <div class="input-group">
-                                            <label class="input-group__title">{{__('admin.pages.static_pages.tab_title')}} @if($lang_key == 'ru')
-                                                    *@endif</label>
+                                            <label class="input-group__title">{{__('admin.pages.static_pages.tab_title')}}</label>
                                             <input type="text" name="tab_name_{{$lang_key}}[]" value=""
                                                    placeholder="{{__('admin.pages.static_pages.tab_title')}}"
-                                                   class="input-regular" {{$lang_key == 'ru' ? 'required' : ''}}>
+                                                   class="input-regular">
                                         </div>
                                         <div class="input-group">
-                                            <label for="description"
-                                                   class="input-group__title">{{__('admin.pages.static_pages.tab_description')}} @if($lang_key == 'ru')
-                                                    *@endif</label>
+                                            <label for="description" class="input-group__title"></label>
                                             <textarea name="tab_description_{{$lang_key}}[]"
                                                       placeholder="{{__('admin.pages.static_pages.tab_description')}}"
-                                                      class="input-regular" {{$lang_key == 'ru' ? 'required' : ''}}></textarea>
+                                                      class="input-regular"></textarea>
                                         </div>
                                         {{--                                    @endforeach--}}
                                     </div>
