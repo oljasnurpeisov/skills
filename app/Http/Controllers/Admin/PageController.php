@@ -173,6 +173,7 @@ class PageController extends Controller
                         );
                     }
                 }
+
                 $data_array = json_decode($item['data_' . $language]);
                 $data_array[] = $data;
 
@@ -200,25 +201,27 @@ class PageController extends Controller
         $languages = ['ru', 'kk', 'en'];
 
         foreach ($languages as $language) {
+            if ($request['theme_name_' . $language] != null) {
+                $data = [
+                    "name" => $request['theme_name_' . $language],
+                ];
 
-            $data = [
-                "name" => $request['theme_name_' . $language],
-            ];
-
-            if (!empty($request['tab_name_' . $language])) {
-                foreach ($request['tab_name_' . $language] as $key => $step) {
-                    if (isset($request['tab_name_' . $language][$key])) {
-                        $data['tabs'][] = array(
-                            'name' => $request['tab_name_' . $language][$key],
-                            'description' => $request['tab_description_' . $language][$key],
-                        );
+                if (!empty($request['tab_name_' . $language])) {
+                    foreach ($request['tab_name_' . $language] as $key => $step) {
+                        if (isset($request['tab_name_' . $language][$key]) && $request['tab_name_' . $language][$key] != '' && $request['tab_name_' . $language][$key] != null) {
+                            $data['tabs'][] = array(
+                                'name' => $request['tab_name_' . $language][$key],
+                                'description' => $request['tab_description_' . $language][$key],
+                            );
+                        }
                     }
                 }
-            }
-            $data_array = json_decode($item['data_' . $language]);
-            $data_array[$theme_key] = $data;
+                $data_array = json_decode($item['data_' . $language]);
+                $data_array[$theme_key] = $data;
 
-            $item['data_' . $language] = $data_array;
+                $item['data_' . $language] = $data_array;
+            }
+
         }
         $item->save();
 
@@ -236,7 +239,7 @@ class PageController extends Controller
             $data_array = json_decode($item['data_' . $language]);
             unset($data_array[$theme_key]);
 
-            $item['data_' . $language] = $data_array;
+            $item['data_' . $language] = array_values($data_array);
         }
         $item->save();
 
