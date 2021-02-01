@@ -430,16 +430,16 @@ class CourseController extends BaseController
         }
         // Сортировка по языку
         if ($course_lang) {
-            $authors = json_decode($authors);
-            if (count(array_filter($authors)) > 0) {
-                $query = $query->whereHas('courses', function ($q) use ($course_lang) {
+            $course_lang = json_decode($course_lang);
+            if (count(array_filter($course_lang)) > 0) {
+                $query->whereHas('courses', function ($q) use ($course_lang) {
                     $q->whereIn('courses.lang', $course_lang);
                 });
             }
         }
         // Сортировка по статусу
         if ($course_status) {
-            $query = $query->whereIn('is_finished', json_decode($course_status));
+            $query->whereIn('is_finished', json_decode($course_status));
         }
         // Сортировка по Дате записи на курс
         if ($start_date_from and empty($start_date_to)) {
