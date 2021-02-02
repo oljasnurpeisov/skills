@@ -8,7 +8,7 @@
 
 @section('content')
     <img src="/assets/img/logo.svg" alt="" class="logo">
-    <form action="/admin/login" method="POST">
+    <form action="/{{ $lang }}/admin/login" method="POST">
         {{ csrf_field() }}
         <div class="input-group">
             <input type="email" name="email" placeholder="{{ __('admin.labels.email') }}" class="input-regular"

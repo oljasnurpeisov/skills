@@ -619,7 +619,7 @@ class LessonController extends BaseController
             if ($videos_array != []) {
                 foreach ($videos_array as $video) {
                     $videos[] = [
-                        'link' => $video
+                        'url' => env('APP_URL') . $video
                     ];
                 }
             } else {
@@ -635,7 +635,7 @@ class LessonController extends BaseController
             if ($youtube_videos_array != []) {
                 foreach ($youtube_videos_array as $video) {
                     $youtube_videos[] = [
-                        'link' => $video
+                        'url' => env('APP_URL') . $video
                     ];
                 }
             } else {
@@ -651,7 +651,7 @@ class LessonController extends BaseController
             if ($audios_array != []) {
                 foreach ($audios_array as $audio) {
                     $audios[] = [
-                        'link' => $audio
+                        'url' => env('APP_URL') . $audio
                     ];
                 }
             } else {
@@ -667,7 +667,7 @@ class LessonController extends BaseController
             if ($another_files_array != []) {
                 foreach ($another_files_array as $another_file) {
                     $another_files[] = [
-                        'link' => $another_file
+                        'url' => env('APP_URL') . $another_file
                     ];
                 }
             } else {

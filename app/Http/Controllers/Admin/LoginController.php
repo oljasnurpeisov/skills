@@ -32,6 +32,11 @@ class LoginController extends Controller
      */
     protected $redirectTo = "/admin";
 
+    public function redirectTo()
+    {
+        return '/' . app()->getLocale() . '/admin';
+    }
+
     /**
      * Create a new controller instance.
      *
@@ -76,6 +81,6 @@ class LoginController extends Controller
         $user->password = Hash::make($generate_password);
         $user->save();
 
-        return redirect('/'.app()->getLocale().'/admin/login');
+        return redirect('/' . app()->getLocale() . '/admin/login');
     }
 }

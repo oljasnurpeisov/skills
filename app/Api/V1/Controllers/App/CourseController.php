@@ -651,7 +651,7 @@ class CourseController extends BaseController
             if ($videos_array != []) {
                 foreach ($videos_array as $video) {
                     $videos[] = [
-                        'url' => $video
+                        'url' => env('APP_URL') . $video
                     ];
                 }
             } else {
