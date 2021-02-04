@@ -431,7 +431,7 @@ class CourseController extends BaseController
         // Сортировка по языку
         if ($course_lang) {
             $course_lang = json_decode($course_lang);
-            if (count(array_filter($course_lang)) > 0) {
+            if (count($course_lang) > 0) {
                 $query->whereHas('courses', function ($q) use ($course_lang) {
                     $q->whereIn('courses.lang', $course_lang);
                 });
@@ -763,7 +763,7 @@ class CourseController extends BaseController
             'percent' => $course->progress,
             'teaser' => $course->teaser,
             'reviews' => count($rates),
-            'students' => count($course->course_members->whereIn('paid_status', [1,2,3])),
+            'students' => count($course->course_members->whereIn('paid_status', [1, 2, 3])),
             'rating' => round($course->rate->pluck('rate')->avg() ?? 0, 1),
             'lang' => $course->lang == 0 ? 'kk' : ($course->lang == 1 ? 'ru' : null),
             'description' => $course->description,
