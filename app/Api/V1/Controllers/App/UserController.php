@@ -924,8 +924,12 @@ class UserController extends BaseController
             return $this->response->item($message, new MessageTransformer())->statusCode(404);
         }
 
-        $user->ios_token = $ios_token;
-        $user->android_token = $android_token;
+        if ($ios_token != null) {
+            $user->ios_token = $ios_token;
+        }
+        if ($android_token != null){
+            $user->android_token = $android_token;
+        }
         $user->save();
 
         $data = [
