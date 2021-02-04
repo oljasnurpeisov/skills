@@ -188,7 +188,7 @@ class UserController extends BaseController
                         array_push($userSkills, $skill["codcomp"]);
                     }
 
-                    array_push($userSkills, $skill["uozcodprof"]);
+                    array_push($userSkills, $studentResume["uozcodprof"]);
                 }
 
                 $professions = Professions::whereIn('code', $userProfessions)->pluck('id')->toArray();
@@ -924,20 +924,15 @@ class UserController extends BaseController
             return $this->response->item($message, new MessageTransformer())->statusCode(404);
         }
 
-        $user->ios_token = $ios_token;
-        $user->android_token = $android_token;
+        if ($ios_token != null) {
+            $user->ios_token = $ios_token;
+        }
+        if ($android_token != null){
+            $user->android_token = $android_token;
+        }
         $user->save();
 
-        $data = [
-            'id' => $user->id,
-            'email' => $user->email,
-            'name' => $user->student_info->name,
-            'avatar' => env('APP_URL') . $user->student_info->avatar,
-            'iin' => $user->student_info->iin,
-            'quota_count' => $user->student_info->quota_count,
-        ];
-
-        $message = new Message(__('api/messages.success'), 200, $data);
+        $message = new Message(__('api/messages.success'), 200, null);
         return $this->response->item($message, new MessageTransformer());
     }
 

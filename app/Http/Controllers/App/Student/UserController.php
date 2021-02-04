@@ -140,7 +140,7 @@ class UserController extends Controller
                         array_push($userSkills, $skill["codcomp"]);
                     }
 
-                    array_push($userSkills, $skill["uozcodprof"]);
+                    array_push($userSkills, $studentResume["uozcodprof"]);
                 }
 
                 $professions = Professions::whereIn('code', $userProfessions)->pluck('id')->toArray();
