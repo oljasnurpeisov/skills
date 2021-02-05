@@ -19,7 +19,7 @@ return [
             'creation_course' => 'Создание курса',
             'edit_course' => 'Редактирование курса',
             'my_courses' => 'Опубликованные',
-            'my_courses_unpublished' => 'Неопубликованные курсы',
+            'my_courses_unpublished' => 'Отклоненные курсы',
             'my_courses_onCheck' => 'На проверке',
             'my_courses_deleted' => 'Удаленные курсы',
             'profit_title' => 'Чему вы научитесь?',

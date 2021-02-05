@@ -63,7 +63,7 @@ return [
             'title' => 'Курсы',
             'list' => 'Список курсов',
             'wait_publish_list' => 'Ожидающие проверки',
-            'unpublish_list' => 'Неопубликованные курсы',
+            'unpublish_list' => 'Отклоненные курсы',
             'publish_list' => 'Опубликованные курсы',
             'drafts_list' => 'Черновики',
             'deleted_list' => 'Удаленные курсы',

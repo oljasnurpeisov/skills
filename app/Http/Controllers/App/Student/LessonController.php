@@ -62,18 +62,24 @@ class LessonController extends Controller
                         $this->syncUserLessons($lesson->id);
 
                         return $return_view;
-                        // Если урок не является первым в курсе
                     } else {
+                        // Если урок не является первым в курсе
                         // Получить предыдущую тему и урок из этой темы
-                        $previous_theme = Theme::where('course_id', '=', $course->id)->where('index_number', '<', $theme->index_number)->orderBy('index_number', 'desc')->first();
-                        $previous_lesson_theme = Lesson::where('index_number', '<', $lesson->index_number)->where('theme_id', '=', $theme->id)->orderBy('index_number', 'desc')->first();
+                        $previous_theme = Theme::where('course_id', '=', $course->id)
+                            ->where('index_number', '<', $theme->index_number)
+                            ->orderBy('index_number', 'desc')
+                            ->first();
+                        $previous_lesson_theme = Lesson::where('index_number', '<', $lesson->index_number)
+                            ->where('theme_id', '=', $theme->id)
+                            ->orderBy('index_number', 'desc')
+                            ->first();
                         // Если предыдущая тема есть, то получить урок из предыдущей темы
                         if (!empty($previous_theme)) {
                             $previous_lesson = Lesson::where('theme_id', '=', $previous_theme->id)->orderBy('index_number', 'desc')->first();
                         }
                         // Если есть урок из предыдущей темы и он завершен, дать доступ к текущему уроку
                         if (!empty($previous_lesson_theme)) {
-                            if (!empty($previous_lesson_theme->lesson_student->whereStudentId(Auth::user()->id)->is_finished) == true) {
+                            if (!empty($previous_lesson_theme->lesson_student) && !empty($previous_lesson_theme->lesson_student->whereStudentId(Auth::user()->id)->is_finished) == true) {
                                 $this->syncUserLessons($lesson->id);
 
                                 return $return_view;
@@ -107,7 +113,7 @@ class LessonController extends Controller
                             $coursework = $course->lessons()->where('type', '=', 3)->first();
                             if ($coursework) {
                                 // Если есть курсовая и она завершена, дать доступ
-                                if (!empty($coursework->lesson_student->whereStudentId(Auth::user()->id)->first()->is_finished)== true) {
+                                if (!empty($coursework->lesson_student->whereStudentId(Auth::user()->id)->first()->is_finished) == true) {
                                     $this->syncUserLessons($lesson->id);
                                     // Если есть курсовая, но она не завершена, вернуть обратно
                                 } else {
@@ -222,7 +228,7 @@ class LessonController extends Controller
                 } else {
                     return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.access_denied_message'));
                 }
-            }else{
+            } else {
                 return redirect('/' . $lang . '/course-catalog/course/' . $course->id)->with('error', __('default.pages.lessons.test_finished_warning'));
             }
         } else {
@@ -372,13 +378,22 @@ class LessonController extends Controller
     {
         $lesson_student = StudentLesson::whereLessonId($lesson->id)->whereStudentId(Auth::user()->id)->first();
         $course_status = StudentCourse::where('course_id', '=', $course->id)->first();
+
         if ($course_status->is_finished == false) {
             // Получить следующий урок
             $theme = $lesson->themes;
-            $next_lesson_theme = Lesson::where('index_number', '>', $lesson->index_number)->where('theme_id', '=', $theme->id)->orderBy('index_number', 'asc')->first();
-            $next_theme = Theme::where('course_id', '=', $course->id)->where('index_number', '>', $theme->index_number)->orderBy('index_number', 'asc')->first();
+            $next_lesson_theme = Lesson::where('index_number', '>', $lesson->index_number)
+                ->where('theme_id', '=', $theme->id)
+                ->orderBy('index_number', 'asc')
+                ->first();
+            $next_theme = Theme::where('course_id', '=', $course->id)
+                ->where('index_number', '>', $theme->index_number)
+                ->orderBy('index_number', 'asc')
+                ->first();
             if (!empty($next_theme)) {
-                $next_lesson = Lesson::where('theme_id', '=', $next_theme->id)->orderBy('index_number', 'asc')->first();
+                $next_lesson = Lesson::where('theme_id', '=', $next_theme->id)
+                    ->orderBy('index_number', 'asc')
+                    ->first();
             }
 
             // Переход к следующему уроку
@@ -509,7 +524,7 @@ class LessonController extends Controller
 
         $certificate->save();
 
-        $cert = base64_encode(file_get_contents(env('APP_URL').$certificate->png_ru));
+        $cert = base64_encode(file_get_contents(env('APP_URL') . $certificate->png_ru));
         $this->putNewSkills(Auth::user()->student_info->uid, $course, $cert);
 
     }
