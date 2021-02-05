@@ -146,19 +146,19 @@
                             <div class="radio-group">
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="format" value="60"
+                                        <input type="checkbox" name="format" value="60"
                                                data-kk="10"><span>{{__('default.pages.calculator.format_section_1')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="format" value="30"
+                                        <input type="checkbox" name="format" value="30"
                                                data-kk="5"><span>{{__('default.pages.calculator.format_section_2')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="format" value="0"
+                                        <input type="checkbox" name="format" value="0"
                                                data-kk="0"><span>{{__('default.pages.calculator.format_section_3')}}</span>
                                     </label>
                                 </div>
@@ -172,19 +172,19 @@
                             <div class="radio-group">
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="tests"
+                                        <input type="checkbox" name="tests"
                                                value="4"><span>{{__('default.pages.calculator.general_tests_section_1')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="tests"
+                                        <input type="checkbox" name="tests"
                                                value="2"><span>{{__('default.pages.calculator.general_tests_section_2')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="tests"
+                                        <input type="checkbox" name="tests"
                                                value="0"><span>{{__('default.pages.calculator.general_tests_section_3')}}</span>
                                     </label>
                                 </div>
@@ -195,19 +195,19 @@
                             <div class="radio-group">
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="finalTest"
+                                        <input type="checkbox" name="finalTest"
                                                value="6"><span>{{__('default.pages.calculator.final_test_section_1')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="finalTest"
+                                        <input type="checkbox" name="finalTest"
                                                value="3"><span>{{__('default.pages.calculator.final_test_section_2')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="finalTest"
+                                        <input type="checkbox" name="finalTest"
                                                value="0"><span>{{__('default.pages.calculator.final_test_section_3')}}</span>
                                     </label>
                                 </div>
@@ -218,19 +218,19 @@
                             <div class="radio-group">
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="rating"
+                                        <input type="checkbox" name="rating"
                                                value="0"><span>{{__('default.pages.calculator.course_rate_section_1')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="rating"
+                                        <input type="checkbox" name="rating"
                                                value="5"><span>{{__('default.pages.calculator.course_rate_section_2')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="rating"
+                                        <input type="checkbox" name="rating"
                                                value="10"><span>{{__('default.pages.calculator.course_rate_section_3')}}</span>
                                     </label>
                                 </div>
@@ -241,13 +241,13 @@
                             <div class="radio-group">
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="language" value=""
+                                        <input type="checkbox" name="language" value=""
                                                class="calculator-kk-radio"><span>{{__('default.pages.calculator.language_section_1')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="language"
+                                        <input type="checkbox" name="language"
                                                value="0"><span>{{__('default.pages.calculator.language_section_2')}}</span>
                                     </label>
                                 </div>
@@ -258,13 +258,13 @@
                             <div class="radio-group">
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="vi-version"
+                                        <input type="checkbox" name="vi-version"
                                                value="5"><span>{{__('default.pages.calculator.poor_vision_section_1')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="radio" name="vi-version"
+                                        <input type="checkbox" name="vi-version"
                                                value="0"><span>{{__('default.pages.calculator.poor_vision_section_2')}}</span>
                                     </label>
                                 </div>
