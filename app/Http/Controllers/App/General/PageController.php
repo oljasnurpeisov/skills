@@ -11,6 +11,7 @@ use App\Models\StudentInformation;
 use App\Models\Type_of_ownership;
 use App\Models\User;
 use App\Models\UserInformation;
+use Edujugon\PushNotification\PushNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Orchestra\Parser\Xml\Facade as XmlParser;
@@ -187,7 +188,7 @@ class PageController extends Controller
         $notifications = Auth::user()->notifications()->orderBy('created_at', 'desc')->paginate(5);
 
         // Пометить уведомления как прочитанные
-        foreach ($notifications as $item){
+        foreach ($notifications as $item) {
             $item->is_read = true;
             $item->save();
         }

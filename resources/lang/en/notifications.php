@@ -2,6 +2,7 @@
 
 return [
     'title' => 'Уведомления',
+    'warning' => 'Внимание',
     'all_notifications' => 'Все уведомления',
     'quota_request_description' => 'Администрация Платформы предлагает сделать курс <a href="/:lang/my-courses/course/:course_id">:course_name</a> доступным по квоте. С условиями предоставления доступа к
 курсам по квоте Вы можете ознакомиться в <a href="#rulesQuotaModal:course_id" data-fancybox>правилах</a>. В случае
