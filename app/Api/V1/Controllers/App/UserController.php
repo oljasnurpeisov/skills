@@ -1003,7 +1003,16 @@ class UserController extends BaseController
         }
         $user->save();
 
-        $message = new Message(__('api/messages.success'), 200, null);
+        $data = [
+            'id' => $user->id,
+            'email' => $user->email,
+            'name' => $user->student_info->name,
+            'avatar' => env('APP_URL') . $user->student_info->avatar,
+            'iin' => $user->student_info->iin,
+            'quota_count' => $user->student_info->quota_count,
+        ];
+
+        $message = new Message(__('api/messages.success'), 200, $data);
         return $this->response->item($message, new MessageTransformer());
     }
 
