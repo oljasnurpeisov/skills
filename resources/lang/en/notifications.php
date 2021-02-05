@@ -5,7 +5,7 @@ return [
     'warning' => 'Внимание',
     'all_notifications' => 'Все уведомления',
     'quota_request_description' => 'Администрация Платформы предлагает сделать курс <a href="/:lang/my-courses/course/:course_id">:course_name</a> доступным по квоте. С условиями предоставления доступа к
-курсам по квоте Вы можете ознакомиться в <a href="#rulesQuotaModal:course_id" data-fancybox>правилах</a>. В случае
+курсам по квоте Вы можете ознакомиться в <a href="#rulesQuotaModal:course_id-:notification_id" data-fancybox>правилах</a>. В случае
 согласия с Вами свяжутся по указанному контактному телефону для
 заключения договора.',
     'quota_request_description_mail' => 'Администрация Платформы предлагает сделать курс <a href=":url">":course_name"</a> доступным по квоте. С условиями предоставления доступа к
