@@ -19,7 +19,7 @@ class DialogController extends Controller
     public function main(Request $request)
     {
         $tech_support_user = User::whereHas('roles', function ($q) {
-            $q->where('slug', '=','tech_support');
+            $q->where('slug', '=', 'tech_support');
         })->first();
 
         $query = Dialog::whereHas("members", function ($q) use ($tech_support_user) {
@@ -37,7 +37,7 @@ class DialogController extends Controller
     {
 
         $user = $tech_support_user = User::whereHas('roles', function ($q) {
-            $q->where('slug', '=','tech_support');
+            $q->where('slug', '=', 'tech_support');
         })->first();
 
         if (!$user) {
@@ -81,7 +81,7 @@ class DialogController extends Controller
     public function viewDialog(Request $request, $lang, $id = null)
     {
         $user = $tech_support_user = User::whereHas('roles', function ($q) {
-            $q->where('slug', '=','tech_support');
+            $q->where('slug', '=', 'tech_support');
         })->first();
 
         if (!$user) {
@@ -127,7 +127,7 @@ class DialogController extends Controller
     public function save(Request $request, $lang, Dialog $dialog)
     {
         $user = $tech_support_user = User::whereHas('roles', function ($q) {
-            $q->where('slug', '=','tech_support');
+            $q->where('slug', '=', 'tech_support');
         })->first();
 
         $item = new Message;
@@ -145,7 +145,7 @@ class DialogController extends Controller
         $opponent = $dialog->members()->where('user_id', '!=', $user->id)->first();
 
         $notification_data = [
-            'dialog_opponent_id' => Auth::user()->id
+            'dialog_opponent_id' => $user->id
         ];
         $notification_name = 'notifications.new_message';
         NotificationsHelper::createNotification($notification_name, null, $opponent->id, 0, $notification_data);

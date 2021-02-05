@@ -415,11 +415,50 @@ class UserController extends BaseController
             "next" => $next_page_number,
         ];
 
+        /** @var Notification $item */
         foreach ($items as $item) {
             $opponent = User::whereId(json_decode($item->data)[0]->dialog_opponent_id ?? 0)->first();
+            $userName = '';
+            if ($opponent) {
+                if ($opponent->hasRole('author')) {
+                    $userName = $opponent->author_info->name . ' ' . $opponent->author_info->surname;
+                } else {
+                    $userName = $opponent->student_info->name ?? $opponent->name;
+                }
+            }
+
+            switch ($item->name) {
+                case 'notifications.new_message':
+                    $link = [
+                        'type' => $item->name,
+                        'id' => json_decode($item->data)[0]->dialog_opponent_id ?? null,
+                        'name' => $userName,
+                    ];
+                    break;
+                case 'notifications.course_student_finished':
+                case 'notifications.course_buy_status_success':
+                    $link = [
+                        'type' => $item->name,
+                        'id' => optional($item->course)->id,
+                        'name' => optional($item->course)->name
+                    ];
+                    break;
+                default:
+                    $link = null;
+                    break;
+            }
+
             $data["items"][] = [
                 'id' => $item->id,
-                'text' => strip_tags(trans($item->name, ['course_name' => '"'. optional($item->course)->name .'"', 'lang' => $lang, 'course_id' => optional($item->course)->id, 'opponent_id' => json_decode($item->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($item->data)[0]->course_reject_message ?? '','user_name' => $opponent ? ($opponent->hasRole('author') ? $opponent->author_info->name . ' ' . $opponent->author_info->surname : $opponent->student_info->name ??  $opponent->name) : ''])),
+                'text' => strip_tags(trans($item->name, [
+                    'course_name' => '"' . optional($item->course)->name . '"',
+                    'lang' => $lang,
+                    'course_id' => optional($item->course)->id,
+                    'opponent_id' => json_decode($item->data)[0]->dialog_opponent_id ?? 0,
+                    'reject_message' => json_decode($item->data)[0]->course_reject_message ?? '',
+                    'user_name' => $userName
+                ])),
+                'link' => $link,
                 'date' => $item->created_at
             ];
         }
@@ -473,9 +512,12 @@ class UserController extends BaseController
             return $this->response->item($message, new MessageTransformer())->statusCode(404);
         }
 
-        $items = Dialog::whereHas("members", function ($q) use ($user) {
-            $q->where("user_id", "=", $user->id);
-        })->orderBy("updated_at", "desc")->paginate($this->per_page);
+        $items = Dialog::whereIsTs(0)
+            ->whereHas("members", function ($q) use ($user) {
+                $q->where("user_id", "=", $user->id);
+            })
+            ->orderBy("updated_at", "desc")
+            ->paginate($this->per_page);
 
         $next_page_number = null;
         if ($items->nextPageUrl()) {
@@ -489,6 +531,33 @@ class UserController extends BaseController
             "items" => [],
             "next" => $next_page_number,
         ];
+
+        $curPage = $request->get('page', null);
+        if ($curPage == null || $curPage == 1) {
+            $d = Dialog::whereIsTs(1)
+                ->whereHas("members", function ($q) use ($user) {
+                    $q->where("user_id", "=", $user->id);
+                })->first();
+
+            if ($d) {
+                /** @var User $member */
+                $member = $d->members->where('id', '!=', $user->id)->first();
+
+                $member_id = $member->id;
+                $member_name = $member->name;
+                $member_avatar = env('APP_URL') . '/assets/img/tech_support_avatar.png';
+
+                $data["items"][] = [
+                    'id' => $d->id,
+                    'opponent_id' => $member_id,
+                    'image' => $member_avatar,
+                    'opponent_name' => $member_name,
+                    'text' => json_decode('"' . str_replace('"', '\"', $d->lastMessageText()) . '"'),
+                    'date' => $d->lastMessageDate()
+                ];
+            }
+
+        }
 
         foreach ($items as $item) {
             $member = $item->members->where('id', '!=', $user->id)->first();
@@ -510,6 +579,7 @@ class UserController extends BaseController
                 $member_name = $member->name;
                 $member_avatar = null;
             }
+
             if ($member->hasRole('tech_support')) {
                 array_unshift($data["items"], [
                     'id' => $item->id,
@@ -519,7 +589,7 @@ class UserController extends BaseController
                     'text' => json_decode('"' . str_replace('"', '\"', $item->lastMessageText()) . '"'),
                     'date' => $item->lastMessageDate()
                 ]);
-            }else{
+            } else {
                 $data["items"][] = [
                     'id' => $item->id,
                     'opponent_id' => $member_id,
@@ -658,7 +728,8 @@ class UserController extends BaseController
         return $this->response->item($message, new MessageTransformer());
     }
 
-    public function getDialogByOpponent(Request $request){
+    public function getDialogByOpponent(Request $request)
+    {
         $user_id = $request->get('user');
         $opponent_id = $request->get('opponent');
         $hash = $request->header('hash');
@@ -711,10 +782,10 @@ class UserController extends BaseController
             return $this->response->item($message, new MessageTransformer())->statusCode(404);
         }
 
-        $dialog = Dialog::whereHas('members', function ($q) use($user) {
+        $dialog = Dialog::whereHas('members', function ($q) use ($user) {
             $q->where('user_id', '=', $user->id);
         });
-        $dialog = $dialog->whereHas('members', function ($q) use($opponent) {
+        $dialog = $dialog->whereHas('members', function ($q) use ($opponent) {
             $q->where('user_id', '=', $opponent->id);
         })->first();
 
@@ -927,7 +998,7 @@ class UserController extends BaseController
         if ($ios_token != null) {
             $user->ios_token = $ios_token;
         }
-        if ($android_token != null){
+        if ($android_token != null) {
             $user->android_token = $android_token;
         }
         $user->save();
@@ -1034,6 +1105,7 @@ class UserController extends BaseController
         })->first();
 
         $dialog = new Dialog;
+        $dialog->is_ts = 1;
         $dialog->save();
 
         $dialog->members()->sync([$user_id, $tech_support->id]);
