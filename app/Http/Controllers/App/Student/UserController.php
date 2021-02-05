@@ -219,6 +219,7 @@ class UserController extends Controller
         })->first();
 
         $dialog = new Dialog;
+        $dialog->is_ts = 1;
         $dialog->save();
 
         $dialog->members()->sync([$user_id, $tech_support->id]);
