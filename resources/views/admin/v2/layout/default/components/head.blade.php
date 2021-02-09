@@ -50,39 +50,6 @@
 <script src="/assets/admin/libs/jquery/dist/jquery.js"></script>
 
 <script src="https://cdn.tiny.cloud/1/dypqwpg7c59aateufscg61hqfrr4d8ylm54905fckvunt7pg/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-<!-- Tiny-mce -->
-<script>
-    tinymce.init({
-        mode : "textareas",
-        menubar:false,
-        plugins: 'image code link',
-        toolbar: 'undo redo | formatselect | bold italic link image | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat | help',
-        image_title: true,
-        automatic_uploads: true,
-        file_picker_types: 'file image media',
-        file_picker_callback: function (cb, value, meta) {
-            var input = document.createElement('input');
-            input.setAttribute('type', 'file');
-            input.setAttribute('accept', 'image/*');
-
-            input.onchange = function () {
-                var file = this.files[0];
-
-                var reader = new FileReader();
-                reader.onload = function () {
-                    var id = 'blobid' + (new Date()).getTime();
-                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-                    var base64 = reader.result.split(',')[1];
-                    var blobInfo = blobCache.create(id, file, base64);
-                    blobCache.add(blobInfo);
-                    cb(blobInfo.blobUri(), { title: file.name });
-                };
-                reader.readAsDataURL(file);
-            };
-            input.click();
-        },
-    });
-</script>
 
 <style>
     .hidden{
