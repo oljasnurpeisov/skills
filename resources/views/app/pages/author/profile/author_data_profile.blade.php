@@ -228,7 +228,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.profile.certificates')}}</label>
+                                    <label class="form-group__label">{{__('default.pages.profile.certificates_resume')}}</label>
                                     <div data-url="/ajax_upload_certificates?_token={{ csrf_token() }}"
                                          data-maxfiles="15"
                                          data-maxsize="20" data-acceptedfiles=".png, .jpg"
