@@ -49,7 +49,7 @@
 
 <script src="/assets/admin/libs/jquery/dist/jquery.js"></script>
 
-<script src="https://cdn.tiny.cloud/1/qnsjp2xsx64128r57rwz20b8qltklkg8u00z7vt42rnjgv7d/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.tiny.cloud/1/dypqwpg7c59aateufscg61hqfrr4d8ylm54905fckvunt7pg/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <!-- Tiny-mce -->
 <script>
     tinymce.init({
