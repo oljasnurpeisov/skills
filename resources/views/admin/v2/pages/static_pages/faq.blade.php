@@ -116,12 +116,27 @@
 
         $("#add_tab_ru").click(function () {
             $("#tabs_ru").append(tab_names['ru'], tab_descriptions['ru']);
+            tinymce.remove();
+            tinymce.init({
+                mode : "textareas",
+                menubar:false,
+            });
         });
         $("#add_tab_kk").click(function () {
             $("#tabs_kk").append(tab_names['kk'], tab_descriptions['kk']);
+            tinymce.remove();
+            tinymce.init({
+                mode : "textareas",
+                menubar:false,
+            });
         });
         $("#add_tab_en").click(function () {
             $("#tabs_en").append(tab_names['en'], tab_descriptions['en']);
+            tinymce.remove();
+            tinymce.init({
+                mode : "textareas",
+                menubar:false,
+            });
         });
     </script>
 @endsection
