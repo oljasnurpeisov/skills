@@ -36,7 +36,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        $lang = ['ru', 'kk', 'en'];
+//        , 'en'
+        $lang = ['ru', 'kk'];
         $currentPath = Request::path();
         if (in_array(Request::segment(1), $lang, true)) {
             $locale = Request::segment(1);

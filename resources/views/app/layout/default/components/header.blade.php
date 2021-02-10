@@ -183,16 +183,16 @@
                                 <li><a href="/ru{{ $uri }}" title="RU">RU</a></li>
                             @elseif($lang == 'kk')
                                 <li><a href="/ru{{ $uri }}" title="RU">RU</a></li>
-                                <li class="break">
-                                    <hr>
-                                </li>
-                                <li><a href="/en{{ $uri }}" title="EN">EN</a></li>
+{{--                                <li class="break">--}}
+{{--                                    <hr>--}}
+{{--                                </li>--}}
+{{--                                <li><a href="/en{{ $uri }}" title="EN">EN</a></li>--}}
                             @else
                                 <li><a href="/kk{{ $uri }}" title="KZ">KZ</a></li>
-                                <li class="break">
-                                    <hr>
-                                </li>
-                                <li><a href="/en{{ $uri }}" title="EN">EN</a></li>
+{{--                                <li class="break">--}}
+{{--                                    <hr>--}}
+{{--                                </li>--}}
+{{--                                <li><a href="/en{{ $uri }}" title="EN">EN</a></li>--}}
                             @endif
                         </ul>
                     </div>
@@ -279,7 +279,7 @@
                 <ul class="mob-language">
                     <li><a href="/kk{{ $uri }}" title="KZ">KZ</a></li>
                     <li><a href="/ru{{ $uri }}" title="RU">RU</a></li>
-                    <li><a href="/en{{ $uri }}" title="EN">EN</a></li>
+{{--                    <li><a href="/en{{ $uri }}" title="EN">EN</a></li>--}}
                 </ul>
             </div>
         </div>
@@ -320,16 +320,16 @@
                                 <li><a href="/ru{{ $uri }}" title="RU">RU</a></li>
                             @elseif($lang == 'kk')
                                 <li><a href="/ru{{ $uri }}" title="RU">RU</a></li>
-                                <li class="break">
-                                    <hr>
-                                </li>
-                                <li><a href="/en{{ $uri }}" title="EN">EN</a></li>
+{{--                                <li class="break">--}}
+{{--                                    <hr>--}}
+{{--                                </li>--}}
+{{--                                <li><a href="/en{{ $uri }}" title="EN">EN</a></li>--}}
                             @else
                                 <li><a href="/kk{{ $uri }}" title="KZ">KZ</a></li>
-                                <li class="break">
-                                    <hr>
-                                </li>
-                                <li><a href="/en{{ $uri }}" title="EN">EN</a></li>
+{{--                                <li class="break">--}}
+{{--                                    <hr>--}}
+{{--                                </li>--}}
+{{--                                <li><a href="/en{{ $uri }}" title="EN">EN</a></li>--}}
                             @endif
                         </ul>
                     </div>
@@ -364,7 +364,7 @@
                 <ul class="mob-language">
                     <li><a href="/kk{{ $uri }}" title="KZ">KZ</a></li>
                     <li><a href="/ru{{ $uri }}" title="RU">RU</a></li>
-                    <li><a href="/en{{ $uri }}" title="EN">EN</a></li>
+{{--                    <li><a href="/en{{ $uri }}" title="EN">EN</a></li>--}}
                 </ul>
             </div>
         </div>
