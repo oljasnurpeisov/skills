@@ -93,6 +93,7 @@ return [
             'get_certificate_inactive' => 'Сертификат не доступен',
             'write_feedback' => 'Оставить отзыв',
 
+            'instruction' => 'Инструкция для Авторов',
             'course_name' => 'Название курса',
             'skills_title' => 'Навыки (мин. 1 навык)',
             'skill_title' => 'Навык',

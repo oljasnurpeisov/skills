@@ -4,13 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- add dialog view method api (unfinished&#10;)">
+    <list default="true" id="b31d3280-22dd-4e95-9176-ba3a9bde00eb" name="Default Changelist" comment="- added instruction to author">
+      <change afterPath="$PROJECT_DIR$/public/files/instructions.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/enbek.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/enbek.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Api/V1/Controllers/App/CourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Api/V1/Controllers/App/CourseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Api/V1/Controllers/Service/ServiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Api/V1/Controllers/Service/ServiceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/api/messages.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/api/messages.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/default.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/default.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_course.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/create_course.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_course.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app/pages/author/courses/edit_course.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,11 +206,11 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Виталий/PhpstormProjects/enbek/app/Http/Controllers/App/Student/UserController.php" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/assets/js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/files" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -220,11 +222,11 @@
       <recent name="F:\OpenServer\domains\enbek-backend\config" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Work\Backend\Laravel\enbek-backend\public\files" />
+      <recent name="D:\Work\Backend\Laravel\enbek-backend\public\assets\js" />
+      <recent name="D:\Work\Backend\Laravel\enbek-backend\public\testing" />
       <recent name="F:\OpenServer\domains\enbek-backend\public\assets\js" />
       <recent name="F:\OpenServer\domains\enbek-backend\public\assets\css" />
-      <recent name="F:\OpenServer\domains\enbek-backend\resources\views\admin\v2\pages\static_pages" />
-      <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Service\Controllers" />
-      <recent name="F:\OpenServer\domains\enbek-backend\app\Api\V1\Service" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -291,64 +293,49 @@
       <workItem from="1608392290447" duration="61730000" />
       <workItem from="1608520684988" duration="112107000" />
       <workItem from="1608739926593" duration="32174000" />
-      <workItem from="1608828873516" duration="15271000" />
-      <workItem from="1608886681207" duration="1331000" />
-      <workItem from="1608889588715" duration="5488000" />
-      <workItem from="1609132728114" duration="339000" />
-      <workItem from="1609133869712" duration="13250000" />
-      <workItem from="1609154999771" duration="41000" />
-      <workItem from="1609155063327" duration="3540000" />
-      <workItem from="1609224539724" duration="7513000" />
-      <workItem from="1609235438938" duration="2065000" />
-    </task>
-    <task id="LOCAL-00138" summary="- update certificates style&#10;- add editing content on index page and for authors page&#10;- minor fix">
-      <created>1607779891566</created>
-      <option name="number" value="00138" />
-      <option name="presentableId" value="LOCAL-00138" />
-      <option name="project" value="LOCAL" />
-      <updated>1607779891566</updated>
-    </task>
-    <task id="LOCAL-00139" summary="- update styles and scripts&#10;- add types of lessons on course page">
-      <created>1607787805022</created>
-      <option name="number" value="00139" />
-      <option name="presentableId" value="LOCAL-00139" />
-      <option name="project" value="LOCAL" />
-      <updated>1607787805022</updated>
-    </task>
-    <task id="LOCAL-00140" summary="- minor fix&#10;- add authors report page">
-      <created>1607807405129</created>
-      <option name="number" value="00140" />
-      <option name="presentableId" value="LOCAL-00140" />
-      <option name="project" value="LOCAL" />
-      <updated>1607807405129</updated>
-    </task>
-    <task id="LOCAL-00141" summary="- add course report &#10;- add student report">
-      <created>1607812160043</created>
-      <option name="number" value="00141" />
-      <option name="presentableId" value="LOCAL-00141" />
-      <option name="project" value="LOCAL" />
-      <updated>1607812160043</updated>
-    </task>
-    <task id="LOCAL-00142" summary="- add for authors fix&#10;- add reports (unfinished)">
-      <created>1607918814975</created>
-      <option name="number" value="00142" />
-      <option name="presentableId" value="LOCAL-00142" />
-      <option name="project" value="LOCAL" />
-      <updated>1607918814976</updated>
-    </task>
-    <task id="LOCAL-00143" summary="- update preview certificates&#10;- update scripts &#10;- update statistic page&#10;- fix auth modal on faq page&#10;- update my certificates page">
-      <created>1607938862854</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1607938862854</updated>
-    </task>
-    <task id="LOCAL-00144" summary="- minor fix">
-      <created>1607939087892</created>
-      <option name="number" value="00144" />
-      <option name="presentableId" value="LOCAL-00144" />
-      <option name="project" value="LOCAL" />
-      <updated>1607939087892</updated>
+      <workItem from="1608828873516" duration="14969000" />
+      <workItem from="1609902314271" duration="815000" />
+      <workItem from="1609903479453" duration="2054000" />
+      <workItem from="1609908441050" duration="28000" />
+      <workItem from="1609908543047" duration="36000" />
+      <workItem from="1609908587676" duration="5242000" />
+      <workItem from="1610077289053" duration="600000" />
+      <workItem from="1610077904449" duration="19000" />
+      <workItem from="1610077937843" duration="5886000" />
+      <workItem from="1610202745346" duration="243000" />
+      <workItem from="1610335985814" duration="2095000" />
+      <workItem from="1610424682617" duration="2500000" />
+      <workItem from="1610511803749" duration="2915000" />
+      <workItem from="1610600359256" duration="616000" />
+      <workItem from="1610613131482" duration="755000" />
+      <workItem from="1610683597526" duration="4108000" />
+      <workItem from="1610942246996" duration="3930000" />
+      <workItem from="1611028799412" duration="5455000" />
+      <workItem from="1611121288206" duration="2365000" />
+      <workItem from="1611202437934" duration="3654000" />
+      <workItem from="1611545701958" duration="820000" />
+      <workItem from="1611549771150" duration="2663000" />
+      <workItem from="1611633811234" duration="1215000" />
+      <workItem from="1611900075924" duration="4131000" />
+      <workItem from="1611919885632" duration="602000" />
+      <workItem from="1612248101706" duration="5342000" />
+      <workItem from="1612324671950" duration="1967000" />
+      <workItem from="1612410964030" duration="940000" />
+      <workItem from="1612419366433" duration="1563000" />
+      <workItem from="1612430516305" duration="5234000" />
+      <workItem from="1612497714291" duration="5702000" />
+      <workItem from="1612512502745" duration="1177000" />
+      <workItem from="1612514051104" duration="972000" />
+      <workItem from="1612517886989" duration="5029000" />
+      <workItem from="1612756146677" duration="2510000" />
+      <workItem from="1612772829553" duration="3354000" />
+      <workItem from="1612846493674" duration="601000" />
+      <workItem from="1612853462471" duration="4762000" />
+      <workItem from="1612946582445" duration="974000" />
+      <workItem from="1612955743053" duration="777000" />
+      <workItem from="1613108748752" duration="256000" />
+      <workItem from="1613110183852" duration="3360000" />
+      <workItem from="1613129456182" duration="362000" />
     </task>
     <task id="LOCAL-00145" summary="- update chart&#10;- minor fix">
       <created>1607946408073</created>
@@ -574,90 +561,135 @@
       <option name="project" value="LOCAL" />
       <updated>1608738830844</updated>
     </task>
-    <task id="LOCAL-00177" summary="- get skills by iin api method&#10;- update notifications&#10;- update models&#10;- update student auth&#10;- update styles and scripts">
-      <created>1608879187098</created>
+    <task id="LOCAL-00177" summary="- date format fix&#10;- image path fix&#10;- authors name fix">
+      <created>1609838714164</created>
       <option name="number" value="00177" />
       <option name="presentableId" value="LOCAL-00177" />
       <option name="project" value="LOCAL" />
-      <updated>1608879187099</updated>
+      <updated>1609838714164</updated>
     </task>
-    <task id="LOCAL-00178" summary="- update save professions&#10;- add student professions table&#10;- update recommended course and skills">
-      <created>1608893194052</created>
+    <task id="LOCAL-00178" summary="- get course id">
+      <created>1609842472526</created>
       <option name="number" value="00178" />
       <option name="presentableId" value="LOCAL-00178" />
       <option name="project" value="LOCAL" />
-      <updated>1608893194052</updated>
+      <updated>1609842472526</updated>
     </task>
-    <task id="LOCAL-00179" summary="- update notifications api method&#10;- add dialogs api method">
-      <created>1609138619231</created>
+    <task id="LOCAL-00179" summary="- certificate base path added&#10;- some css added">
+      <created>1609928460919</created>
       <option name="number" value="00179" />
       <option name="presentableId" value="LOCAL-00179" />
       <option name="project" value="LOCAL" />
-      <updated>1609138619232</updated>
+      <updated>1609928460920</updated>
     </task>
-    <task id="LOCAL-00180" summary="- add certificates api method">
-      <created>1609140109726</created>
+    <task id="LOCAL-00180" summary="values type fix">
+      <created>1610094362237</created>
       <option name="number" value="00180" />
       <option name="presentableId" value="LOCAL-00180" />
       <option name="project" value="LOCAL" />
-      <updated>1609140109726</updated>
+      <updated>1610094362239</updated>
     </task>
-    <task id="LOCAL-00181" summary="- add professions api method">
-      <created>1609141683614</created>
+    <task id="LOCAL-00181" summary="- hash validation simplified">
+      <created>1610102456959</created>
       <option name="number" value="00181" />
       <option name="presentableId" value="LOCAL-00181" />
       <option name="project" value="LOCAL" />
-      <updated>1609141683614</updated>
+      <updated>1610102456960</updated>
     </task>
-    <task id="LOCAL-00182" summary="- update professions api method&#10;- add skills api method">
-      <created>1609144264698</created>
+    <task id="LOCAL-00182" summary="- courses filter fix">
+      <created>1611143525074</created>
       <option name="number" value="00182" />
       <option name="presentableId" value="LOCAL-00182" />
       <option name="project" value="LOCAL" />
-      <updated>1609144264698</updated>
+      <updated>1611143525075</updated>
     </task>
-    <task id="LOCAL-00183" summary="- add dialog view method api (unfinished)">
-      <created>1609148355554</created>
+    <task id="LOCAL-00183" summary="- quota cost recalculation small fix">
+      <created>1611551892444</created>
       <option name="number" value="00183" />
       <option name="presentableId" value="LOCAL-00183" />
       <option name="project" value="LOCAL" />
-      <updated>1609148355554</updated>
+      <updated>1611551892444</updated>
     </task>
-    <task id="LOCAL-00184" summary="- update notifications">
-      <created>1609154305821</created>
+    <task id="LOCAL-00184" summary="- faq fix">
+      <created>1611904719926</created>
       <option name="number" value="00184" />
       <option name="presentableId" value="LOCAL-00184" />
       <option name="project" value="LOCAL" />
-      <updated>1609154305821</updated>
+      <updated>1611904719926</updated>
     </task>
-    <task id="LOCAL-00185" summary="- add dialog api method">
-      <created>1609156985531</created>
+    <task id="LOCAL-00185" summary="- update php version">
+      <created>1611909741064</created>
       <option name="number" value="00185" />
       <option name="presentableId" value="LOCAL-00185" />
       <option name="project" value="LOCAL" />
-      <updated>1609156985532</updated>
+      <updated>1611909741064</updated>
     </task>
-    <task id="LOCAL-00186" summary="- add message create api method">
-      <created>1609158585176</created>
+    <task id="LOCAL-00186" summary="- admin login fix&#10;- course and lesson path fix">
+      <created>1612251268175</created>
       <option name="number" value="00186" />
       <option name="presentableId" value="LOCAL-00186" />
       <option name="project" value="LOCAL" />
-      <updated>1609158585176</updated>
+      <updated>1612251268175</updated>
     </task>
-    <option name="localTasksCounter" value="187" />
+    <task id="LOCAL-00187" summary="- getting resume data fix">
+      <created>1612419726133</created>
+      <option name="number" value="00187" />
+      <option name="presentableId" value="LOCAL-00187" />
+      <option name="project" value="LOCAL" />
+      <updated>1612419726134</updated>
+    </task>
+    <task id="LOCAL-00188" summary="- course lang fix">
+      <created>1612433337676</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1612433337676</updated>
+    </task>
+    <task id="LOCAL-00189" summary="- notifications modifies&#10;- dialog system fix">
+      <created>1612501182310</created>
+      <option name="number" value="00189" />
+      <option name="presentableId" value="LOCAL-00189" />
+      <option name="project" value="LOCAL" />
+      <updated>1612501182310</updated>
+    </task>
+    <task id="LOCAL-00190" summary="- revert update token response">
+      <created>1612507247152</created>
+      <option name="number" value="00190" />
+      <option name="presentableId" value="LOCAL-00190" />
+      <option name="project" value="LOCAL" />
+      <updated>1612507247152</updated>
+    </task>
+    <task id="LOCAL-00191" summary="- localization fix&#10;- lesson checking fix">
+      <created>1612515230495</created>
+      <option name="number" value="00191" />
+      <option name="presentableId" value="LOCAL-00191" />
+      <option name="project" value="LOCAL" />
+      <updated>1612515230495</updated>
+    </task>
+    <task id="LOCAL-00192" summary="- course rule fix">
+      <created>1612524662798</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1612524662799</updated>
+    </task>
+    <task id="LOCAL-00193" summary="- public en disabled&#10;- tinymce fix">
+      <created>1612867907288</created>
+      <option name="number" value="00193" />
+      <option name="presentableId" value="LOCAL-00193" />
+      <option name="project" value="LOCAL" />
+      <updated>1612867907290</updated>
+    </task>
+    <option name="localTasksCounter" value="194" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add course rate api method" />
-    <MESSAGE value="- update styles and scripts &#10;- add notifications api method (unfinished)" />
-    <MESSAGE value="- update skills and professions table and relation&#10;- update ide-helper models" />
-    <MESSAGE value="- reports fix&#10;- update scripts &#10;- add profession groups in create and update course pages&#10;- minor fix&#10;- change getSkills and getProfessions methods" />
-    <MESSAGE value="- fix group professions method&#10;- update course view page" />
-    <MESSAGE value="- update filter professions and skills" />
-    <MESSAGE value="- update course catalog filter" />
     <MESSAGE value="- update recommended courses" />
     <MESSAGE value="- add social network links" />
     <MESSAGE value="- minor fix report&#10;- update courses search&#10;- update test access" />
@@ -665,24 +697,32 @@
     <MESSAGE value="- fix filter by rate" />
     <MESSAGE value="- fix course report" />
     <MESSAGE value="- add professions column in course report" />
-    <MESSAGE value="- get skills by iin api method&#10;- update notifications&#10;- update models&#10;- update student auth&#10;- update styles and scripts" />
-    <MESSAGE value="- update save professions&#10;- add student professions table&#10;- update recommended course and skills" />
-    <MESSAGE value="- update notifications api method&#10;- add dialogs api method" />
-    <MESSAGE value="- add certificates api method" />
-    <MESSAGE value="- add professions api method" />
-    <MESSAGE value="- update professions api method&#10;- add skills api method" />
-    <MESSAGE value="- add dialog view method api (unfinished&#10;)" />
-    <MESSAGE value="- add dialog view method api (unfinished)" />
-    <MESSAGE value="- update notifications" />
-    <MESSAGE value="- add dialog api method" />
-    <MESSAGE value="- add message create api method" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add message create api method" />
+    <MESSAGE value="- date format fix&#10;- image path fix&#10;- authors name fix" />
+    <MESSAGE value="- get course id" />
+    <MESSAGE value="- certificate base path added&#10;- some css added" />
+    <MESSAGE value="values type fix" />
+    <MESSAGE value="- hash validation simplified" />
+    <MESSAGE value="- courses filter fix" />
+    <MESSAGE value="- quota cost recalculation small fix" />
+    <MESSAGE value="- faq fix" />
+    <MESSAGE value="- update php version" />
+    <MESSAGE value="- admin login fix&#10;- course and lesson path fix" />
+    <MESSAGE value="- getting resume data fix" />
+    <MESSAGE value="- course lang fix" />
+    <MESSAGE value="- notifications modifies&#10;- dialog system fix" />
+    <MESSAGE value="- revert update token response" />
+    <MESSAGE value="- get skills by iin api method&#10;-" />
+    <MESSAGE value="- localization fix&#10;- lesson checking fix" />
+    <MESSAGE value="- course rule fix" />
+    <MESSAGE value="- public en disabled&#10;- tinymce fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="- public en disabled&#10;- tinymce fix" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="361" y="70" key="#Deployment" timestamp="1605538453693">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="451" y="88" key="#Deployment" timestamp="1611138888158">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="361" y="70" key="#Deployment/0.0.1536.824@0.0.1536.824" timestamp="1605538453693" />
+    <state x="451" y="88" key="#Deployment/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611138888158" />
     <state x="444" y="93" key="#Options" timestamp="1605513997949">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -699,46 +739,72 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="547" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1608018037579" />
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1609236958507">
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1608721873892">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991889952" />
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1609236958507" />
-    <state x="421" y="0" key="CommitChangelistDialog2" timestamp="1609158583514">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1608721873892" />
+    <state x="-1219" y="42" width="1085" height="961" key="CommitChangelistDialog2" timestamp="1613129799838">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995341107" />
-    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1609158583514" />
-    <state x="175" y="64" key="DiffContextDialog" timestamp="1606308430101">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="421" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1608879015102" />
+    <state x="-1394" y="0" width="1085" height="961" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1612507246511" />
+    <state x="-1219" y="42" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1613129799837" />
+    <state x="526" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1612524662237" />
+    <state x="219" y="81" width="1536" height="860" key="DiffContextDialog" timestamp="1612864873255">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="175" y="64" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1606308430101" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1607518392696">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="219" y="81" width="1536" height="860" key="DiffContextDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1612864873255" />
+    <state x="219" y="81" width="1536" height="860" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1611550120783" />
+    <state x="686" y="211" key="FileChooserDialogImpl" timestamp="1612756786010">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1607518392696" />
+    <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1612756786010" />
+    <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1612522337826" />
+    <state x="184" y="86" width="1550" height="868" key="MergeDialog" timestamp="1613129610802">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1736" y="86" key="MergeDialog/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1612507280112" />
+    <state x="184" y="86" width="1550" height="868" key="MergeDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1613129610802" />
+    <state x="184" y="86" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1612513584882" />
     <state x="517" y="135" key="NewPhpClassDialog" timestamp="1608023294866">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="517" y="135" key="NewPhpClassDialog/0.0.1536.824@0.0.1536.824" timestamp="1608023294866" />
-    <state x="277" y="57" key="SettingsEditor" timestamp="1609155222547">
+    <state x="277" y="57" key="SettingsEditor" timestamp="1608527918275">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1609155222547" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1608893200070">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1608527918275" />
+    <state x="451" y="183" key="Vcs.Push.Dialog.v2" timestamp="1612867910768">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606995349134" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1608893200070" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1608747710697" />
+    <state x="-1469" y="183" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1612507249930" />
+    <state x="451" y="183" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1612867910768" />
+    <state x="451" y="183" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1612524675376" />
     <state x="572" y="146" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1605561054285">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="572" y="146" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.1536.824@0.0.1536.824" timestamp="1605561054285" />
-    <state x="597" y="23" width="579" height="801" key="find.popup" timestamp="1609135299886">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1612864698135">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1612864698135" />
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1611633814005" />
+    <state x="-1174" y="29" width="724" height="1011" key="find.popup" timestamp="1613110313601">
+      <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="597" y="23" width="579" height="801" key="find.popup/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1606991104963" />
-    <state x="597" y="23" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1609135299886" />
+    <state x="597" y="23" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1608549875764" />
+    <state x="-1174" y="29" width="724" height="1011" key="find.popup/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1613110313601" />
+    <state x="744" y="160" key="ftp.server.browser" timestamp="1611138886059">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="744" y="160" key="ftp.server.browser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1611138886059" />
     <state x="425" y="187" width="672" height="677" key="run.anything.popup" timestamp="1608846914608">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

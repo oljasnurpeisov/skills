@@ -22,6 +22,13 @@
                               enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
+                                <label class="form-group__label">
+                                    <a href="/files/instructions.pdf" target="_blank" style="color: #2ab5f6;">
+                                        {{ __('default.pages.courses.instruction') }}
+                                    </a>
+                                </label>
+                            </div>
+                            <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_name')}} *</label>
                                 <input type="text" name="name" placeholder="" value="{{$item->name}}"
                                        class="input-regular" required>

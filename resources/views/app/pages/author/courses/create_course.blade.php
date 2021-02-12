@@ -24,6 +24,13 @@
                         <form action="/{{$lang}}/create-course" method="POST">
                             @csrf
                             <div class="form-group">
+                                <label class="form-group__label">
+                                    <a href="/files/instructions.pdf" target="_blank" style="color: #2ab5f6;">
+                                        {{ __('default.pages.courses.instruction') }}
+                                    </a>
+                                </label>
+                            </div>
+                            <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_name')}} *</label>
                                 <input type="text" name="name" placeholder="" class="input-regular"
                                        value="{{ old('name') }}" required>
@@ -34,7 +41,8 @@
                                         <label class="form-group__label"
                                                id="skillsLabel">{{__('default.pages.courses.skill_title')}}</label>
                                         <div class="input-addon">
-                                            <select name="skills[0]" id="skillsSelect" placeholder="{{__('default.pages.courses.choose_skill_title')}}"
+                                            <select name="skills[0]" id="skillsSelect"
+                                                    placeholder="{{__('default.pages.courses.choose_skill_title')}}"
                                                     data-method="getSkills" class="skills-select" required>
                                             </select>
                                             <div class="addon">
@@ -43,7 +51,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group" style="display: none">
-                                        <label class="form-group__label" id="professionsLabel">{{__('default.pages.courses.professions_title')}}</label>
+                                        <label class="form-group__label"
+                                               id="professionsLabel">{{__('default.pages.courses.professions_title')}}</label>
                                         <select name="professions[0][]" id="professionsSelect"
                                                 placeholder="{{__('default.pages.courses.choose_professions_title')}}"
                                                 data-method="getProfessionsBySkills" data-maxitems="7"
@@ -53,7 +62,8 @@
                                 </div>
                             </div>
                             <div class="text-right pull-up">
-                                <a href="#" title="{{__('default.pages.courses.add_skill')}}" id="addProfessionGroup" data-maxitems="7"
+                                <a href="#" title="{{__('default.pages.courses.add_skill')}}" id="addProfessionGroup"
+                                   data-maxitems="7"
                                    class="add-btn"
                                    style="margin-top: 5px"><span
                                             class="add-btn__title">{{__('default.pages.courses.add_skill')}}</span><span
