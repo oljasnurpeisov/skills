@@ -238,7 +238,7 @@
         </form>
 
         <div class="block">
-            <h2 class="title-secondary">{{__('admin.pages.reports.authors_report')}}</h2>
+            <h2 class="title-secondary">{{__('admin.pages.reports.courses_report')}}</h2>
             <table class="table records " style="display: block;
     overflow-x: auto; max-width: 1550px">
                 <colgroup>
