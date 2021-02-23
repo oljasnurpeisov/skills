@@ -1,0 +1,476 @@
+@extends('app.layout.default.template')
+
+@section('content')
+
+    <main class="main">
+        <section class="plain">
+            <div class="container">
+                <ul class="breadcrumbs">
+                    <li><a href="/{{$lang}}/my-courses/"
+                           title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
+                    </li>
+                    @include('app.pages.author.courses.components.breadcrumb_course_type',['item' => $item])
+                    <li><a href="/{{$lang}}/my-courses/course/{{$item->id}}" title="{{$item->name}}">{{$item->name}}</a>
+                    </li>
+                    <li><span>{{__('default.pages.courses.edit_course')}}</span></li>
+                </ul>
+                <h1 class="title-primary">{{__('default.pages.courses.edit_course')}}</h1>
+
+                <div class="row row--multiline">
+                    <div class="col-md-8">
+                        <form action="/{{$lang}}/my-courses/edit-course/{{$item->id}}" method="POST"
+                              enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <label class="form-group__label">
+                                    <a href="/files/instructions.pdf" target="_blank" style="color: #2ab5f6;">
+                                        {{ __('default.pages.courses.instruction') }}
+                                    </a>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.course_name')}} *</label>
+                                <input type="text" name="name" placeholder="" value="{{$item->name}}"
+                                       class="input-regular" required>
+                            </div>
+                            <div class="professions-container" id="professionsContainer">
+                                @foreach($item->skills->groupBy('id') as $key => $skill)
+                                    <div class="professions-group">
+                                        <div class="form-group">
+                                            <label class="form-group__label" id="skillsLabel">{{__('default.pages.courses.skill_title')}}</label>
+                                            <div class="input-addon">
+                                                <select name="skills[{{$key}}]" id="skillsSelect"
+                                                        placeholder="{{__('default.pages.courses.choose_skill_title')}}"
+                                                        data-method="getSkills" class="skills-select" required>
+                                                    <option value="{{$key}}"
+                                                            selected="selected">{{$skill[0]['name_'.$lang] ?? $skill[0]['name_ru']}}</option>
+                                                </select>
+                                                @if ($loop->first)
+                                                    <div class="addon">
+                                                        <span class="required">*</span>
+                                                    </div>
+                                                @else
+                                                    <div class="addon">
+                                                        <div class="btn-icon icon-close small"></div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="display: block">
+                                            <label class="form-group__label" id="professionsLabel">{{__('default.pages.courses.professions_title')}}</label>
+                                            <select name="professions[{{$key}}][]" id="professionsSelect"
+                                                    placeholder="{{__('default.pages.courses.choose_professions_title')}}"
+                                                    data-method="getProfessionsBySkills" data-maxitems="7"
+                                                    class="professions-select" multiple required>
+                                                @foreach($skill[0]->professions as $profession)
+                                                    <option value="{{$profession->id}}"
+                                                            selected="selected">{{$profession->getAttribute('name_'.$lang) ?? $profession->getAttribute('name_ru')}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                            <div class="text-right pull-up">
+                                <a href="#" title="{{__('default.pages.courses.add_skill')}}" id="addProfessionGroup" data-maxitems="7"
+                                   class="add-btn"
+                                   style="margin-top: 5px"><span
+                                            class="add-btn__title">{{__('default.pages.courses.add_skill')}}</span><span
+                                            class="btn-icon small icon-plus"> </span></a>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.course_lang')}}</label>
+                                <select name="lang" placeholder="{{__('default.pages.courses.choose_lang')}}"
+                                        class="selectize-regular" required>
+                                    @php($languages = [["Қазақша","0"], ["Русский","1"]])
+                                    @foreach($languages as $key => $language)
+                                        <option value="{{ $language[1] }}"
+                                                @if($language[1]==$item->lang) selected='selected' @endif >{{ $language[0] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox"><input type="checkbox" name="is_paid"
+                                                               value="true" id="paidCheckbox"
+                                            {{ ($item->is_paid == true ? ' checked' : '') }}><span>{{__('default.pages.courses.is_paid')}}  ({{__('default.pages.courses.default_free')}})</span></label>
+                                <label class="checkbox"><input type="checkbox" name="is_access_all"
+                                                               value="true" {{ ($item->is_access_all == true ? ' checked' : '') }}><span>{{__('default.pages.courses.is_access_all')}}</span></label>
+                                <label class="checkbox"><input type="checkbox" name="is_poor_vision"
+                                                               value="true"
+                                                               data-toggle="poorVision" {{ ($item->is_poor_vision == true ? ' checked' : '') }}><span>{{__('default.pages.courses.is_vision_version')}}</span></label>
+                            </div>
+                            <div class="form-group" id="paidFormgroup" style="display:block;">
+                                <label class="form-group__label">{{__('default.pages.courses.course_cost')}} *</label>
+                                <input type="text" name="cost" placeholder="" value="{{$item->cost}}"
+                                       class="input-regular"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.course_profit')}} *</label>
+                                <textarea name="profit_desc" class="input-regular tinymce-text-here"
+                                          placeholder="{{__('default.pages.courses.course_profit_placeholder')}}"
+                                          required>
+                            {{$item->profit_desc}}
+                        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.course_teaser')}} *</label>
+                                <textarea name="teaser" class="input-regular tinymce-text-here" required>
+                            {{$item->teaser}}
+                        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.course_desc')}} *</label>
+                                <textarea name="description" class="input-regular tinymce-text-here"
+                                          placeholder="{{__('default.pages.courses.course_description_placeholder')}}"
+                                          required>
+                            {{$item->description}}
+                        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.course_image')}}</label>
+                                <div class="avatar course-image dropzone-avatar" id="courseCover"
+                                     data-url="/ajax_upload_course_image?_token={{ csrf_token() }}" data-maxsize="1"
+                                     data-acceptedfiles="image/*">
+                                    <img src="{{ $item->image ?? "/assets/img/course-thumbnail.jpg" }}"
+                                         data-defaultsrc="/assets/img/course-thumbnail.jpg"
+                                         class="course-image__preview avatar-preview" alt="">
+                                    <div class="course-image__desc dropzone-default">
+                                        <input type="text" name="image" class="avatar-path" value="{{ $item->image }}">
+                                        @if($item->image)
+                                            <div class="previews-container">
+                                                <div class="dz-preview dz-image-preview">
+                                                    <div class="dz-details">
+                                                        <div class="dz-filename">
+                                                            <span data-dz-name="">{{ basename($item->image) }}</span>
+                                                        </div>
+                                                        <div class="dz-size" data-dz-size="">
+                                                            @if(file_exists(public_path($item->image)))
+                                                                <strong>{{ $item->image ? round(filesize(public_path($item->image)) / 1024) : 0 }}</strong>
+                                                                KB
+                                                            @else
+                                                                <strong>0</strong> KB
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <a href="javascript:undefined;"
+                                                       title="{{__('default.pages.courses.delete')}}"
+                                                       class="author-picture__link red"
+                                                       data-dz-remove="">{{__('default.pages.courses.delete')}}</a>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="previews-container"></div>
+                                        @endif
+                                        <div class="dropzone-default__info">PNG, JPG
+                                            • {{__('default.pages.courses.max_file_title')}} 1MB
+                                        </div>
+                                        <div class="course-image__link avatar-pick dropzone-default__link dz-clickable">
+                                            {{__('default.pages.courses.choose_photo')}}
+                                        </div>
+                                    </div>
+                                    <div class="avatar-preview-template" style="display:none;">
+                                        <div class="dz-preview dz-file-preview">
+                                            <div class="dz-details">
+                                                <div class="dz-filename"><span data-dz-name></span></div>
+                                                <div class="dz-size" data-dz-size></div>
+                                                <div class="dz-progress"><span class="dz-upload"
+                                                                               data-dz-uploadprogress></span></div>
+                                            </div>
+                                            <div class="alert alert-danger"><span data-dz-errormessage> </span>
+                                            </div>
+                                            <a href="javascript:undefined;"
+                                               title="{{__('default.pages.courses.delete')}}"
+                                               class="author-picture__link red"
+                                               data-dz-remove>{{__('default.pages.courses.delete')}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.video_link')}}</label>
+                                @if($item->attachments->videos_link != null)
+                                    <input type="url" name="videos_link[]" placeholder="" class="input-regular"
+                                           value="{{json_decode($item->attachments->videos_link)[0]}}" id="courseVideo">
+                                @else
+                                    <input type="url" name="videos_link[]" placeholder="" class="input-regular"
+                                           value="" id="courseVideo">
+                                @endif
+
+                            </div>
+                            <div class="removable-items">
+                                <div class="form-group">
+                                    @if($item->attachments->videos_link != null)
+                                        <div class="input-addon">
+                                            @foreach(array_slice(json_decode($item->attachments->videos_link),1) as $video_link)
+                                                <input type="url" name="videos_link[]" placeholder=""
+                                                       class="input-regular"
+                                                       value="{{$video_link}}">
+
+                                                <div class="addon">
+                                                    <div class="btn-icon small icon-close"></div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="text-right pull-up">
+                                <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"
+                                   data-duplicate="courseVideo"
+                                   data-maxcount="4"><span
+                                            class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span><span
+                                            class="btn-icon small icon-plus"> </span></a>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.video_local')}}</label>
+                                <div data-url="/ajax_upload_lesson_videos?_token={{ csrf_token() }}"
+                                     data-maxfiles="5"
+                                     data-maxsize="500" data-acceptedfiles=".mp4" id="video2"
+                                     class="dropzone-default dropzone-multiple">
+                                    <input type="hidden" name="localVideo" value="">
+                                    <div class="dropzone-default__info">MP4
+                                        • {{__('default.pages.courses.max_file_title')}} 500MB
+                                    </div>
+                                    <div class="previews-container">
+                                        @if($item->attachments->videos != null)
+                                            @foreach(json_decode($item->attachments->videos) as $video)
+                                                <div class="dz-preview dz-image-preview dz-stored">
+                                                    <div class="dz-details">
+                                                        <input type="text" name="localVideoStored[]"
+                                                               value="{{$video}}" placeholder="">
+                                                        <div class="dz-filename"><span
+                                                                    data-dz-name="">{{substr(basename($video), 14)}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <a href="javascript:undefined;"
+                                                       title="{{__('default.pages.courses.delete')}}"
+                                                       class="link red">{{__('default.pages.courses.delete')}}</a>
+                                                    <a href="javascript:undefined;"
+                                                       title="{{__('default.pages.courses.reestablish')}}"
+                                                       class="link green"
+                                                       style="display:none;">{{__('default.pages.courses.reestablish')}}</a>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <a href="javascript:;"
+                                       title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                       class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.course_audio')}}</label>
+                                <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}" data-maxfiles="5"
+                                     data-maxsize="10" data-acceptedfiles=".mp3" id="audio"
+                                     class="dropzone-default dropzone-multiple">
+                                    <input type="text" name="localAudio" value="">
+                                    <div class="dropzone-default__info">MP3
+                                        • {{__('default.pages.courses.max_file_title')}} 10MB
+                                    </div>
+                                    <div class="previews-container">
+                                        @if($item->attachments->audios != null)
+                                            @foreach(json_decode($item->attachments->audios) as $audio)
+                                                <div class="dz-preview dz-image-preview dz-stored">
+                                                    <div class="dz-details">
+                                                        <input type="text" name="localAudioStored[]"
+                                                               value="{{$audio}}"
+                                                               placeholder="">
+                                                        <div class="dz-filename"><span
+                                                                    data-dz-name="">{{substr(basename($audio), 14)}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <a href="javascript:undefined;"
+                                                       title="{{__('default.pages.courses.delete')}}"
+                                                       class="link red">{{__('default.pages.courses.delete')}}</a>
+                                                    <a href="javascript:undefined;"
+                                                       title="{{__('default.pages.courses.reestablish')}}"
+                                                       class="link green"
+                                                       style="display:none;">{{__('default.pages.courses.reestablish')}}</a>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <a href="javascript:;" title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                       class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                </div>
+                            </div>
+                            <div id="poorVision" @if($item->is_poor_vision == true) style="display: block"
+                                 @else style="display: none" @endif>
+                                <div class="form-group">
+                                    <label class="form-group__label">{{__('default.pages.courses.video_link_1')}}</label>
+                                    @if($item->attachments->videos_poor_vision_link != null)
+                                        <input type="url" name="videos_poor_vision_link[]" placeholder=""
+                                               class="input-regular"
+                                               value="{{json_decode($item->attachments->videos_poor_vision_link)[0]}}"
+                                               id="courseVideo1">
+                                    @else
+                                        <input type="url" name="videos_poor_vision_link[]" placeholder=""
+                                               class="input-regular"
+                                               value="" id="courseVideo1">
+                                    @endif
+                                </div>
+                                <div class="removable-items">
+                                    <div class="form-group">
+                                        @if($item->attachments->videos_poor_vision_link != null)
+                                            <div class="input-addon">
+                                                @foreach(array_slice(json_decode($item->attachments->videos_poor_vision_link),1) as $video_poor_vision_link)
+                                                    <input type="url" name="videos_poor_vision_link[]" placeholder=""
+                                                           class="input-regular"
+                                                           value="{{$video_poor_vision_link}}">
+                                                    <div class="addon">
+                                                        <div class="btn-icon small icon-close"></div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="text-right pull-up">
+                                    <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"
+                                       data-duplicate="courseVideo1"
+                                       data-maxcount="4"><span
+                                                class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span><span
+                                                class="btn-icon small icon-plus"> </span></a>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-group__label">{{__('default.pages.courses.video_local_1')}}</label>
+                                    <div data-url="/ajax_upload_course_videos?_token={{ csrf_token() }}"
+                                         data-maxfiles="5"
+                                         data-maxsize="500" data-acceptedfiles=".mp4" id="video2"
+                                         class="dropzone-default dropzone-multiple">
+                                        <input type="hidden" name="localVideo1" value="">
+                                        <div class="dropzone-default__info">MP4
+                                            • {{__('default.pages.courses.max_file_title')}} 500MB
+                                        </div>
+                                        <div class="previews-container">
+                                            @if($item->attachments->videos_poor_vision != null)
+                                                @foreach(json_decode($item->attachments->videos_poor_vision) as $video_poor_vision)
+                                                    <div class="dz-preview dz-image-preview dz-stored">
+                                                        <div class="dz-details">
+                                                            <input type="text" name="localVideoStored1[]"
+                                                                   value="{{{$video_poor_vision}}}" placeholder="">
+                                                            <div class="dz-filename"><span
+                                                                        data-dz-name="">{{substr(basename($video_poor_vision), 14)}}</span>
+                                                            </div>
+                                                        </div>
+                                                        <a href="javascript:undefined;"
+                                                           title="{{__('default.pages.courses.delete')}}"
+                                                           class="link red">{{__('default.pages.courses.delete')}}</a>
+                                                        <a href="javascript:undefined;"
+                                                           title="{{__('default.pages.courses.reestablish')}}"
+                                                           class="link green"
+                                                           style="display:none;">{{__('default.pages.courses.reestablish')}}</a>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <a href="javascript:;"
+                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-group__label">{{__('default.pages.courses.course_audio_1')}}</label>
+                                    <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
+                                         data-maxfiles="5"
+                                         data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
+                                         class="dropzone-default dropzone-multiple">
+                                        <input type="hidden" name="localAudio1" value="">
+                                        <div class="dropzone-default__info">MP3
+                                            • {{__('default.pages.courses.max_file_title')}} 10MB
+                                        </div>
+                                        <div class="previews-container">
+                                            @if($item->attachments->audios_poor_vision != null)
+                                                @foreach(json_decode($item->attachments->audios_poor_vision) as $audio_poor_vision)
+                                                    <div class="dz-preview dz-image-preview dz-stored">
+                                                        <div class="dz-details">
+                                                            <input type="text" name="localAudioStored1[]"
+                                                                   value="{{$audio_poor_vision}}" placeholder="">
+                                                            <div class="dz-filename"><span
+                                                                        data-dz-name="">{{substr(basename($audio_poor_vision), 14)}}</span>
+                                                            </div>
+                                                        </div>
+                                                        <a href="javascript:undefined;"
+                                                           title="{{__('default.pages.courses.delete')}}"
+                                                           class="link red">{{__('default.pages.courses.delete')}}</a>
+                                                        <a href="javascript:undefined;"
+                                                           title="{{__('default.pages.courses.reestablish')}}"
+                                                           class="link green"
+                                                           style="display:none;">{{__('default.pages.courses.reestablish')}}</a>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <a href="javascript:;"
+                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.choose_certificate')}}
+                                    *</label>
+                                <div class="row row--multiline">
+                                    @php($certificates = [["1","/assets/img/certificates/1.png", "/assets/img/certificates/1-thumbnail.jpg"], ["2", "/assets/img/certificates/2.png", "/assets/img/certificates/2-thumbnail.jpg"], ["3", "/assets/img/certificates/3.png", "/assets/img/certificates/3-thumbnail.jpg"]])
+                                    @foreach($certificates as $certificate)
+                                        <div class="col-auto">
+                                            <div class="image-choice">
+                                                <img src="{{$certificate[2]}}"
+                                                     class="image-choice__thumbnail"
+                                                     alt="">
+                                                <label class="image-choice__overflow"
+                                                       title="{{__('default.pages.courses.choose')}}">
+                                                    <input type="radio" value="{{$certificate[0]}}"
+                                                           name="certificate_id"
+                                                           {{ ($item->certificate_id == $certificate[0] ? ' checked' : '') }}
+                                                           required>
+                                                    <i class="icon-checkmark"> </i>
+                                                    <a href="{{$certificate[1]}}" data-fancybox
+                                                       title="{{__('default.pages.courses.zoom_certificate')}}"
+                                                       class="icon-zoom-in"> </a>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <div class="buttons">
+                                <button type="submit"
+                                        class="btn">{{__('default.pages.profile.save_btn_title')}}</button>
+                                <a href="/{{$lang}}/my-courses/course/{{$item->id}}"
+                                   title="{{__('default.pages.courses.cancel_title')}}"
+                                   class="ghost-btn">{{__('default.pages.courses.cancel_title')}}</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+@endsection
+
+@section('scripts')
+    <!--Only this page's scripts-->
+    <script src="/assets/js/professions-group.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            let paidCheckbox = document.querySelector('#paidCheckbox'),
+                paidFormgroup = document.querySelector('#paidFormgroup');
+
+            paidCheckbox.addEventListener('change', function (e) {
+                if (e.target.checked) {
+                    showEl(paidFormgroup);
+                    paidFormgroup.querySelector('input').setAttribute('required', 'required');
+                } else {
+                    hideEl(paidFormgroup);
+                    paidFormgroup.querySelector('input').removeAttribute('required');
+                }
+            });
+        });
+    </script>
+    <!---->
+@endsection
+
