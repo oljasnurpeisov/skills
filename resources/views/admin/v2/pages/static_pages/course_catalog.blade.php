@@ -34,44 +34,40 @@
                             <div class="{{$lang_key == 'ru' ? 'active' : ''}}">
                                 <div id="main_banner_{{$lang_key}}">
                                     <div class="input-group">
-                                        <label class="input-group__title">{{__('admin.pages.static_pages.image_link')}} @if($lang_key == 'ru')
+                                        <label
+                                            class="input-group__title">{{__('admin.pages.static_pages.image_link')}} @if($lang_key == 'ru')
                                                 *@endif</label>
                                         <input type="text" name="image_link_{{$lang_key}}"
                                                value="{{json_decode($item->getAttribute('data_'.$lang_key))->course_catalog->link}}"
                                                placeholder="{{__('admin.pages.static_pages.image_link_placeholder')}}"
                                                class="input-regular {{$lang_key == 'ru' ? 'required' : ''}}">
                                     </div>
-                                    @if($lang_key == 'ru')
-                                        <div class="input-group {{ $errors->has('avatar') ? ' has-error' : '' }}">
-                                            <label class="input-group__title">{{ __('admin.pages.static_pages.main_banner_image') }}
-                                                *</label>
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    <img src="{{json_decode($item->getAttribute('data_'.$lang_key))->course_catalog->image}}"
-                                                         id="avatar_image" class="file-upload-image"
-                                                         style="height: 150px">
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <input type="hidden" name="avatar"
-                                                           value="{{json_decode($item->getAttribute('data_'.$lang_key))->course_catalog->image}}">
-                                                    <div id="avatar" class="file-upload">
-                                                        <div id="avatar_uploader" class="file">
-                                                            <div class="progress">
-                                                                <div class="progress-bar"></div>
-                                                            </div>
-                                                            <span class="file__name">
-                                    .png, .jpg • 25 MB<br/>
-                                    <strong>{{ __('admin.pages.static_pages.upload_image') }}</strong>
-                                </span>
+                                    <div class="input-group {{ $errors->has('avatar') ? ' has-error' : '' }}">
+                                        <label class="input-group__title">Изображение</label>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <img src="{{json_decode($item->getAttribute('data_'.$lang_key))->course_catalog->image}}"
+                                                     id="avatar_{{$lang_key}}_image" class="file-upload-image" style="height: 150px">
+                                            </div>
+                                            <div class="col-md-10">
+                                                <input type="hidden" name="image_{{$lang_key}}" value="{{json_decode($item->getAttribute('data_'.$lang_key))->course_catalog->image}}">
+                                                <div id="avatar_{{$lang_key}}" class="file-upload">
+                                                    <div id="avatar_{{$lang_key}}_uploader" class="file">
+                                                        <div class="progress">
+                                                            <div class="progress-bar"></div>
                                                         </div>
+                                                        <span class="file__name">
+                                    .png, .jpg • 25 MB<br/>
+                                    <strong>Загрузить изображение</strong>
+                                </span>
                                                     </div>
-                                                    @if ($errors->has('avatar'))
-                                                        <span class="help-block"><strong>{{ $errors->first('avatar') }}</strong></span>
-                                                    @endif
                                                 </div>
+                                                @if ($errors->has('avatar'))
+                                                    <span class="help-block"><strong>{{ $errors->first('avatar') }}</strong></span>
+                                                @endif
                                             </div>
                                         </div>
-                                    @endif
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
@@ -101,21 +97,19 @@
                     progressBar = el.find('.progress-bar'),
                     input = el.siblings('input'),
                     fileUploadPlaceholder = $("#" + el.attr("id") + "_image");
-
                 var uploader = new plupload.Uploader({
                     runtimes: 'gears,html5,flash,silverlight,browserplus',
                     browse_button: button,
-                    drop_element: button,
-                    max_file_size: '25mb',
-                    url: "/ajaxUploadImageContent?_token={{ csrf_token() }}",
-                    flash_swf_url: '/assets/admin/libs/plupload/js/Moxie.swf',
-                    silverlight_xap_url: '/assets/admin/libs/plupload/js/Moxie.xap',
+                    max_file_size: '10mb',
+                    url: '/ajaxUploadImageContent?_token={{ csrf_token() }}',
+                    flash_swf_url: 'http://www.plupload.com/plupload/js/plupload.flash.swf',
+                    silverlight_xap_url: 'http://www.plupload.com/plupload/js/plupload.silverlight.xap',
                     filters: [
-                        {title: "Image files", extensions: "png,jpg,jpeg"}
-                    ],
-                    unique_names: true,
-                    multiple_queues: false,
-                    multi_selection: false
+                        {
+                            title: "Image files",
+                            extensions: "jpg,gif,png"
+                        }
+                    ]
                 });
 
                 uploader.bind('FilesAdded', function (up, files) {
@@ -134,6 +128,7 @@
                     fileUploadPlaceholder.attr('src', obj.location);
                     el.removeClass('disabled').removeClass('error').addClass('success');
                     up.refresh();
+                    console.log(obj.location);
                 });
 
                 uploader.bind("Error", function (up, err) {
@@ -150,4 +145,5 @@
 
         initUploaders(uploaders);
     </script>
+    {{--    /ajaxUploadImageContent?_token={{ csrf_token() }}--}}
 @endsection
