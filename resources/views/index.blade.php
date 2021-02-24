@@ -139,18 +139,18 @@
             </div>
         </section>
 
-        <section class="gray">
-            <div class="container">
-                <h3 class="title-primary decorated">{!! __('default.pages.index.popular_courses_catalog') !!}</h3>
-                <ul class="home-arrow-links">
-                    @foreach($popular_courses as $item)
-                        <li><a href="/{{$lang}}/course-catalog/course/{{$item->id}}" class="arrow-link"
-                               title="{{$item->name}}">{{$item->name}}</a></li>
-                    @endforeach
-                    <li><a href="/{{$lang}}/course-catalog" title="{!! __('default.pages.index.popular_courses_catalog_btn') !!}" class="btn">{!! __('default.pages.index.popular_courses_catalog_btn') !!}</a></li>
-                </ul>
-            </div>
-        </section>
+{{--        <section class="gray">--}}
+{{--            <div class="container">--}}
+{{--                <h3 class="title-primary decorated">{!! __('default.pages.index.popular_courses_catalog') !!}</h3>--}}
+{{--                <ul class="home-arrow-links">--}}
+{{--                    @foreach($popular_courses as $item)--}}
+{{--                        <li><a href="/{{$lang}}/course-catalog/course/{{$item->id}}" class="arrow-link"--}}
+{{--                               title="{{$item->name}}">{{$item->name}}</a></li>--}}
+{{--                    @endforeach--}}
+{{--                    <li><a href="/{{$lang}}/course-catalog" title="{!! __('default.pages.index.popular_courses_catalog_btn') !!}" class="btn">{!! __('default.pages.index.popular_courses_catalog_btn') !!}</a></li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--        </section>--}}
 
         <section class="plain">
             <div class="container">
