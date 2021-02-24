@@ -263,7 +263,7 @@ class PageController extends Controller
 
             $data = [
                 'course_catalog' => ['link' => $request['image_link_' . $language],
-                    'image' => $request['avatar']]
+                    'image' => $request['image_' . $language]]
             ];
 
             $item['data_' . $language] = json_encode($data);
