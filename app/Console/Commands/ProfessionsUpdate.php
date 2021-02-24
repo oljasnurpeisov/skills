@@ -36,14 +36,13 @@ class ProfessionsUpdate extends Command
         ]);
 
         foreach ($professions['data'] as $profession) {
-            if ((strlen($profession['Column1']) == 6) || (strlen($profession['Column1']) == 10)) {
+            if ((strlen($profession['COD_NKZ']) == 6) || (strlen($profession['COD_NKZ']) == 10)) {
 
                 $user = Professions::updateOrCreate([
-                    'code' => $profession['Column1']
+                    'code' => $profession['COD_NKZ']
                 ], [
-                    'name_ru' => $profession['prof_name'],
-//                    'name_kk' => $profession['NAME_KR_K'],
-
+                    'name_ru' => $profession['TEXT_R'],
+                    'name_kk' => $profession['TEXT_K'],
                 ]);
             }
         }

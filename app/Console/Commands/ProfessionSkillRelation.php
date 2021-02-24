@@ -36,7 +36,7 @@ class ProfessionSkillRelation extends Command
             'data' => ['uses' => 'row[field(::name=@)]'],
         ]);
         foreach (array_values($profession_skills)[0] as $profession_skill) {
-            $profession = Professions::where('code', '=', $profession_skill['cod_nkz'])->first();
+            $profession = Professions::where('code', '=', $profession_skill['codprof'])->first();
             $skill = Skill::where('code_skill', '=', $profession_skill['codcomp'])->first();
             if ($skill and $profession_skills and $profession) {
                 $profession->skills()->sync([$skill->id], false);
