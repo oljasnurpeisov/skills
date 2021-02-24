@@ -545,7 +545,7 @@ class LessonController extends Controller
 
         try {
             $body = $data;
-            $response = $client->request('PUT', 'https://btest.enbek.kz/ru/api/put-navyk-from-obuch', [
+            $response = $client->request('PUT', config('enbek.base_url').'/ru/api/put-navyk-from-obuch', [
                 'body' => json_encode($body),
                 'headers' => [
                     'Content-Type' => 'application/json',

@@ -78,7 +78,7 @@ class UserController extends Controller
                 "login" => $request->email,
                 "password" => $request->password
             ]);
-            $response = $client->request('POST', 'https://btest.enbek.kz/ru/api/auth/login', [
+            $response = $client->request('POST', config('enbek.base_url').'/ru/api/auth/login', [
                 'body' => $body,
                 'headers' => [
                     'Content-Type' => 'application/json',
@@ -180,7 +180,7 @@ class UserController extends Controller
         $client = new Client(['verify' => false]);
 
         try {
-            $response = $client->request('GET', 'https://btest.enbek.kz/ru/api/resume-for-obuch', [
+            $response = $client->request('GET', config('enbek.base_url').'/ru/api/resume-for-obuch', [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'token' => $token
@@ -198,7 +198,7 @@ class UserController extends Controller
         $client = new Client(['verify' => false]);
 
         try {
-            $response = $client->request('GET', 'http://btest.enbek.kz/ru/api/bezrab-for-obuch', [
+            $response = $client->request('GET', config('enbek.base_url').'/ru/api/bezrab-for-obuch', [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'token' => $token
