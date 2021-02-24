@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'base_url' => 'https://btest.enbek.kz'
+    'base_url' => 'https://www.enbek.kz'
 ];
