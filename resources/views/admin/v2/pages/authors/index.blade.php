@@ -50,7 +50,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
-{{--                        <th>{{ __('admin.pages.user.surname').' '.__('admin.pages.user.name').' '.__('admin.pages.user.middle_name') }}</th>--}}
+                        {{--                        <th>{{ __('admin.pages.user.surname').' '.__('admin.pages.user.name').' '.__('admin.pages.user.middle_name') }}</th>--}}
                         <th>{{ __('admin.pages.user.email') }}</th>
                         <th>{{ __('admin.pages.user.role') }}</th>
                         <th>{{ __('admin.pages.user.status') }}</th>
@@ -66,7 +66,7 @@
                         @php($remover = $item->remover)
                         <tr>
                             <td>{{ $item->id }}</td>
-{{--                            <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>--}}
+                            {{--                            <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>--}}
                             <td><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a></td>
                             <td>{{ ($item->roles()->first()) ? $item->roles()->first()->name : '-' }}</td>
                             {{--@if($item->is_activate == 0)--}}
@@ -79,29 +79,28 @@
                             {{--<td></td>--}}
                             {{--@endif--}}
                             <td>
-                                @if($item->is_activate == 0)
+                                @if($item->email_verified_at == null)
                                     <div class="alert alert-warning" style="margin: 0;">
-                                        @elseif($item->is_activate == 1)
-                                            <div class="alert alert-success" style="margin: 0;">
-                                                @else
-                                                    <div class="alert alert-danger" style="margin: 0;">
-                                                        @endif
-                                                        {{ __("admin.pages.user.statuses.$item->is_activate") }}
-                                                    </div>
-                                            </div>
+                                        {{ __("admin.pages.user.statuses.0") }}
                                     </div>
+                                @else
+                                    <div class="alert alert-success" style="margin: 0;">
+                                        {{ __("admin.pages.user.statuses.1") }}
+                                    </div>
+                                @endif
                             </td>
                             <td>{!! $item->created_at . ($creator ? '<br>'.($creator->surname.' '.$creator->name.' '.$creator->middle_name) : '') !!}</td>
                             <td>{!! $item->updated_at . ($modifier ? '<br>'.($modifier->surname.' '.$modifier->name.' '.$modifier->middle_name) : '') !!}</td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="/{{$lang}}/admin/author/{{$item->id}}" title="{{ __('admin.labels.view') }}"
+                                    <a href="/{{$lang}}/admin/author/{{$item->id}}"
+                                       title="{{ __('admin.labels.view') }}"
                                        class="icon-btn icon-btn--yellow icon-eye"></a>
                                     {{--<a href="/{{$lang}}/admin/author/{{$item->id}}" title="{{ __('admin.labels.edit') }}"--}}
-                                       {{--class="icon-btn icon-btn--green icon-check"></a>--}}
+                                    {{--class="icon-btn icon-btn--green icon-check"></a>--}}
                                     {{--<a href="/{{$lang}}/admin/author/{{ $item->id }}"--}}
-                                       {{--title="{{ __('admin.pages.deleting.submit') }}"--}}
-                                       {{--class="icon-btn icon-btn--pink icon-delete"></a>--}}
+                                    {{--title="{{ __('admin.pages.deleting.submit') }}"--}}
+                                    {{--class="icon-btn icon-btn--pink icon-delete"></a>--}}
                                 </div>
                             </td>
                         </tr>
