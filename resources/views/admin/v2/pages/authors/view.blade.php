@@ -197,23 +197,23 @@
                             </div>
                         </div>
                     </div>
-                    @if($item->is_activate == 0)
-                        <div class="block">
-                            <div class="buttons">
-                                <div>
-                                    <button type="submit" name="action" value="activate"
-                                            class="btn btn--green">{{ __('admin.pages.authors.activate_button') }}</button>
-                                </div>
-                                <div>
-                                    {{--<button type="submit" name="action" value="reject" class="btn btn--red btn--delete">{{ __('admin.pages.authors.reject_button') }}</button>--}}
-                                    <a href="/{{$lang}}/admin/author/{{ $item->id }}"
-                                       title="{{ __('admin.pages.authors.reject_button') }}"
-                                       class="btn btn--red btn--delete"
-                                       id="rejectBtn">{{ __('admin.pages.authors.reject_button') }}</a>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
+{{--                    @if($item->is_activate == 0)--}}
+{{--                        <div class="block">--}}
+{{--                            <div class="buttons">--}}
+{{--                                <div>--}}
+{{--                                    <button type="submit" name="action" value="activate"--}}
+{{--                                            class="btn btn--green">{{ __('admin.pages.authors.activate_button') }}</button>--}}
+{{--                                </div>--}}
+{{--                                <div>--}}
+{{--                                    --}}{{--<button type="submit" name="action" value="reject" class="btn btn--red btn--delete">{{ __('admin.pages.authors.reject_button') }}</button>--}}
+{{--                                    <a href="/{{$lang}}/admin/author/{{ $item->id }}"--}}
+{{--                                       title="{{ __('admin.pages.authors.reject_button') }}"--}}
+{{--                                       class="btn btn--red btn--delete"--}}
+{{--                                       id="rejectBtn">{{ __('admin.pages.authors.reject_button') }}</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
                     <div id="dialog-confirm-reject" class="modal" style="display: none;">
                         <h4 class="title-secondary">{{ __('admin.pages.reject.title') }}</h4>
                         <hr>
