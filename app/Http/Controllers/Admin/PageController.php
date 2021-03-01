@@ -66,19 +66,6 @@ class PageController extends Controller
         $languages = ['ru', 'kk', 'en'];
         $item = Page::wherePageAlias('for_authors')->first();
 
-        $icons = [];
-
-        if ($request->hasFile('icons')) {
-            foreach ($request->file('icons') as $k => $file) {
-                if (isset($file)) {
-                    $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path() . '/images/advantages_icons/', $filename);
-                    $icons[] = $filename;
-                }
-            }
-        }
-        $images = array_merge($request->icons_saved, $icons);
-
         foreach ($languages as $k => $language) {
 
             $data = [
@@ -105,7 +92,7 @@ class PageController extends Controller
                 if (isset($request['advantages_name_' . $language][$key])) {
 
                     $data['advantages'][] = array(
-                        'icon' => $images[$key],
+                        'icon' => $request['icon_' . $language . '_'.$key],
                         'name' => $request['advantages_name_' . $language][$key],
                         'description' => $request['advantages_descriptions_' . $language][$key],
                     );
@@ -221,7 +208,6 @@ class PageController extends Controller
 
                 $item['data_' . $language] = $data_array;
             }
-
         }
         $item->save();
 
@@ -264,7 +250,7 @@ class PageController extends Controller
 
             $data = [
                 'course_catalog' => ['link' => $request['image_link_' . $language],
-                    'image' => $request['avatar']]
+                    'image' => $request['image_' . $language]]
             ];
 
             $item['data_' . $language] = json_encode($data);

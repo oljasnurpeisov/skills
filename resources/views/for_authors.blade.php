@@ -75,7 +75,7 @@
                         <div class="col-sm-6 col-md-{{12/count(json_decode($content->getAttribute('data_'.$lang))->advantages)}}">
                             <div class="privilege">
                                 <div class="privilege__img">
-                                    <img src="/images/advantages_icons/{{$advantages->icon}}" alt="">
+                                    <img src="{{$advantages->icon}}" alt="">
                                 </div>
                                 <h4 class="privilege__title">{{$advantages->name}}</h4>
                                 <div class="privilege__text">

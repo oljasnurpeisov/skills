@@ -90,7 +90,7 @@ class AjaxUploadController extends Controller
         }
 
         $this->validate($request, [
-            "file" => "image|required|max:$this->imageMaxSize|mimes:png,jpg,jpeg"
+            "file" => "image|required|max:$this->imageMaxSize|mimes:png,jpg,jpeg,svg"
         ]);
 
         $file = $request->file;
