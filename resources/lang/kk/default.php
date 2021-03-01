@@ -450,7 +450,7 @@ return [
             'fio_title' => 'ТАӘ',
             'iin_resume_title' => 'ЖСН',
             'send_resume' => 'Жіберу'
-          
+
         ],
         'index' => [
             'index_title' => 'Өз дағдыларынды жақсарт! <br/><span>Enbek.kz-пен бірге</span>',
@@ -468,7 +468,7 @@ return [
             'students_count' => 'білім алушылардың',
             'authors_count' => 'авторлардың',
             'courses_count' => 'курстардың',
-            'advantages' => 'Артықшылықтары</span><br/> Өзіңіздің потенциалыңызды ашыңыз',
+            'advantages' => 'Жоба Артықшылықтары</span><br/> Өзіңіздің потенциалыңызды дамытыңыз',
         ],
 
         'calculator' => [

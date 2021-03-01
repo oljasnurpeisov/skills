@@ -520,7 +520,7 @@ return [
         ],
 
         'footer' => [
-            'teacher_title' => 'Преподаватель',
+            'teacher_title' => 'Автор',
             'about_us' => 'О нас',
             'enbek_kz' => 'Enbek.kz',
             'faq' => 'FAQ',
