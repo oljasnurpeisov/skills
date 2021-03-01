@@ -35,7 +35,8 @@
                                 <h2 class="title-secondary">{{__('admin.pages.static_pages.main_banner_title')}}</h2>
                                 <div id="for_authors_banner_{{$lang_key}}">
                                     <div class="input-group">
-                                        <label class="input-group__title">{{__('admin.pages.static_pages.step_title')}} @if($lang_key == 'ru')
+                                        <label
+                                            class="input-group__title">{{__('admin.pages.static_pages.step_title')}} @if($lang_key == 'ru')
                                                 *@endif</label>
                                         <input type="text" name="banner_title_{{$lang_key}}"
                                                value="{{json_decode($item->getAttribute('data_'.$lang_key))->for_authors_banner->title}}"
@@ -43,7 +44,8 @@
                                                class="input-regular {{$lang_key == 'ru' ? 'required' : ''}}">
                                     </div>
                                     <div class="input-group">
-                                        <label class="input-group__title">{{__('admin.pages.static_pages.teaser_title')}} @if($lang_key == 'ru')
+                                        <label
+                                            class="input-group__title">{{__('admin.pages.static_pages.teaser_title')}} @if($lang_key == 'ru')
                                                 *@endif</label>
                                         <input type="text" name="banner_teaser_{{$lang_key}}"
                                                value="{{json_decode($item->getAttribute('data_'.$lang_key))->for_authors_banner->teaser}}"
@@ -52,14 +54,19 @@
                                     </div>
                                     @if($lang_key == 'ru')
                                         <div class="input-group {{ $errors->has('avatar') ? ' has-error' : '' }}">
-                                            <label class="input-group__title">{{ __('admin.pages.static_pages.main_banner_image') }} *</label>
+                                            <label
+                                                class="input-group__title">{{ __('admin.pages.static_pages.main_banner_image') }}
+                                                *</label>
                                             <div class="row">
                                                 <div class="col-md-2">
-                                                    <img src="{{json_decode($item->getAttribute('data_'.$lang_key))->for_authors_banner->image}}"
-                                                         id="avatar_image" class="file-upload-image" style="height: 150px">
+                                                    <img
+                                                        src="{{json_decode($item->getAttribute('data_'.$lang_key))->for_authors_banner->image}}"
+                                                        id="avatar_image" class="file-upload-image"
+                                                        style="height: 150px">
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <input type="hidden" name="avatar" value="{{json_decode($item->getAttribute('data_'.$lang_key))->for_authors_banner->image}}">
+                                                    <input type="hidden" name="avatar"
+                                                           value="{{json_decode($item->getAttribute('data_'.$lang_key))->for_authors_banner->image}}">
                                                     <div id="avatar" class="file-upload">
                                                         <div id="avatar_uploader" class="file">
                                                             <div class="progress">
@@ -72,7 +79,8 @@
                                                         </div>
                                                     </div>
                                                     @if ($errors->has('avatar'))
-                                                        <span class="help-block"><strong>{{ $errors->first('avatar') }}</strong></span>
+                                                        <span
+                                                            class="help-block"><strong>{{ $errors->first('avatar') }}</strong></span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -84,16 +92,40 @@
                                 <div id="advantages_{{$lang_key}}">
                                     @foreach(json_decode($item->getAttribute('data_'.$lang_key))->advantages as $key => $advantage)
                                         @if($lang_key == 'ru')
-                                            <div class="input-group">
-                                                <label class="input-group__title">{{__('admin.pages.static_pages.advantage_icon')}} @if($key == 0)
-                                                        *@endif</label>
-                                                <img src="/images/advantages_icons/{{ $advantage->icon }}">
-                                                <input type="file" name="icons[]" accept="image/*"/>
-                                                <input name="icons_saved[]" value="{{ $advantage->icon }}" hidden>
+                                            <div class="input-group {{ $errors->has('avatar') ? ' has-error' : '' }}">
+                                                <label class="input-group__title">Изображение</label>
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <img src="{{$advantage->icon}}"
+                                                             id="icon_{{$lang_key}}_{{$key}}" class="file-upload-image"
+                                                             style="height: 150px">
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <input type="hidden" name="icon_{{$lang_key}}_{{$key}}"
+                                                               value="{{$advantage->icon}}">
+                                                        <div id="icon_{{$lang_key}}_{{$key}}" class="file-upload-icon">
+                                                            <div id="icon_{{$lang_key}}_{{$key}}_uploader" class="file">
+                                                                <div class="progress">
+                                                                    <div class="progress-bar"></div>
+                                                                </div>
+                                                                <span class="file__name">
+                                    .png, .jpg • 25 MB<br/>
+                                    <strong>Загрузить изображение</strong>
+                                </span>
+                                                            </div>
+                                                        </div>
+                                                        @if ($errors->has('avatar'))
+                                                            <span
+                                                                class="help-block"><strong>{{ $errors->first('avatar') }}</strong></span>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
+
                                         @endif
                                         <div class="input-group">
-                                            <label class="input-group__title">{{__('admin.pages.static_pages.step_title')}} @if($key == 0)
+                                            <label
+                                                class="input-group__title">{{__('admin.pages.static_pages.step_title')}} @if($key == 0)
                                                     *@endif</label>
                                             <input type="text" name="advantages_name_{{$lang_key}}[]"
                                                    value="{{ $advantage->name }}"
@@ -113,7 +145,7 @@
                                 </div>
                                 <div class="buttons">
                                     <div>
-                                        @if(count(json_decode($item->getAttribute('data_'.$lang_key))->advantages) < 6)
+                                        @if(count(json_decode($item->getAttribute('data_'.$lang_key))->advantages) < 4)
                                             <button type="button" id="add_advantage_{{$lang_key}}"
                                                     class="btn btn--blue">{{ __('admin.pages.static_pages.add_btn') }}</button>
                                         @endif
@@ -125,7 +157,8 @@
                                 <div id="steps_{{$lang_key}}">
                                     @foreach(json_decode($item->getAttribute('data_'.$lang_key))->step_by_step as $key => $step)
                                         <div class="input-group">
-                                            <label class="input-group__title">{{__('admin.pages.static_pages.step_title')}} @if($key == 0)
+                                            <label
+                                                class="input-group__title">{{__('admin.pages.static_pages.step_title')}} @if($key == 0)
                                                     *@endif</label>
                                             <input type="text" name="steps_{{$lang_key}}[]" value="{{ $step->name }}"
                                                    placeholder="{{__('admin.pages.static_pages.step_title_placeholder')}}"
@@ -229,11 +262,8 @@
                 '                        </div>'
         }
 
-        var advantages_icons = '<div class="input-group">' +
-            '                                                <label class="input-group__title"></label>' +
-            '                                                <img src="">' +
-            '                                                <input type="file" name="icons[]" accept="image/*" required/>' +
-            '                                            </div>'
+        var advantages_count = ($('#advantages_ru').children('div').length) / 3
+        var advantages_icons = '<div class="input-group {{ $errors->has('avatar') ? ' has-error' : '' }}"> <label class="input-group__title">Изображение</label> <div class="row"> <div class="col-md-2"> <img src="" id="icon_ru_'+ advantages_count +'" class="file-upload-image" style="height: 150px"> </div> <div class="col-md-10"> <input type="hidden" name="icon_ru_'+ advantages_count +'" value=""> <div id="icon_ru_'+ advantages_count +'" class="file-upload-icon"> <div id="icon_ru_'+ advantages_count +'_uploader" class="file"> <div class="progress"> <div class="progress-bar"></div> </div> <span class="file__name"> .png, .jpg • 25 MB<br/> <strong>Загрузить изображение</strong> </span> </div> </div> @if ($errors->has('avatar')) <span class="help-block"><strong>{{ $errors->first('avatar') }}</strong></span> @endif </div> </div> </div>'
 
         $("#add_step_ru").click(function () {
             if ($("[name='steps_ru[]']").length < max_steps) {
@@ -267,6 +297,63 @@
             if ($("[name='advantages_name_ru[]']").length === max_advantages) {
                 $("#add_advantage_ru").remove();
             }
+            var uploaders = new Array();
+
+            initUploaders = function (uploaders) {
+                $(".file-upload-icon").each(function () {
+                    var el = $(this),
+                        button = el.attr("id") + "_uploader",
+                        progressBar = el.find('.progress-bar'),
+                        input = el.siblings('input'),
+                        fileUploadPlaceholder = $("#" + el.attr("id"));
+                    var uploader = new plupload.Uploader({
+                        runtimes: 'gears,html5,flash,silverlight,browserplus',
+                        browse_button: button,
+                        max_file_size: '10mb',
+                        url: '/ajaxUploadImageContent?_token={{ csrf_token() }}',
+                        flash_swf_url: 'http://www.plupload.com/plupload/js/plupload.flash.swf',
+                        silverlight_xap_url: 'http://www.plupload.com/plupload/js/plupload.silverlight.xap',
+                        filters: [
+                            {
+                                title: "Image files",
+                                extensions: "jpg,gif,png,svg"
+                            }
+                        ]
+                    });
+
+                    uploader.bind('FilesAdded', function (up, files) {
+                        progressBar.css({width: 0});
+                        el.removeClass('error').removeClass('success').addClass('disabled');
+                        uploader.start();
+                    });
+
+                    uploader.bind("UploadProgress", function (up, file) {
+                        progressBar.css({width: file.percent + "%"});
+                    });
+
+                    uploader.bind("FileUploaded", function (up, file, response) {
+                        var obj = $.parseJSON(response.response.replace(/^.*?({.*}).*?$/gi, "$1"));
+                        input.val(obj.location);
+                        fileUploadPlaceholder.attr('src', obj.location);
+                        el.removeClass('disabled').removeClass('error').addClass('success');
+                        up.refresh();
+                        console.log(obj.location);
+                    });
+
+                    uploader.bind("Error", function (up, err) {
+                        progressBar.css({width: 0});
+                        el.removeClass('disabled').removeClass('success').addClass('error');
+                        up.refresh();
+                    });
+
+                    uploader.init();
+
+                    uploaders.push(uploader);
+                });
+            };
+
+            initUploaders(uploaders);
+            advantages_count++;
         });
         $("#add_advantage_kk").click(function () {
             if ($("[name='advantages_name_kk[]']").length < max_advantages) {
@@ -275,6 +362,7 @@
             if ($("[name='advantages_name_kk[]']").length === max_advantages) {
                 $("#add_advantage_kk").remove();
             }
+            advantages_count++;
         });
         $("#add_advantage_en").click(function () {
             if ($("[name='advantages_name_en[]']").length < max_advantages) {
@@ -283,6 +371,7 @@
             if ($("[name='advantages_name_en[]']").length === max_advantages) {
                 $("#add_advantage_en").remove();
             }
+            advantages_count++;
         });
     </script>
     <script>
@@ -344,4 +433,63 @@
 
         initUploaders(uploaders);
     </script>
+    <script>
+        var uploaders = new Array();
+
+        initUploaders = function (uploaders) {
+            $(".file-upload-icon").each(function () {
+                var el = $(this),
+                    button = el.attr("id") + "_uploader",
+                    progressBar = el.find('.progress-bar'),
+                    input = el.siblings('input'),
+                    fileUploadPlaceholder = $("#" + el.attr("id"));
+                var uploader = new plupload.Uploader({
+                    runtimes: 'gears,html5,flash,silverlight,browserplus',
+                    browse_button: button,
+                    max_file_size: '10mb',
+                    url: '/ajaxUploadImageContent?_token={{ csrf_token() }}',
+                    flash_swf_url: 'http://www.plupload.com/plupload/js/plupload.flash.swf',
+                    silverlight_xap_url: 'http://www.plupload.com/plupload/js/plupload.silverlight.xap',
+                    filters: [
+                        {
+                            title: "Image files",
+                            extensions: "jpg,gif,png,svg"
+                        }
+                    ]
+                });
+
+                uploader.bind('FilesAdded', function (up, files) {
+                    progressBar.css({width: 0});
+                    el.removeClass('error').removeClass('success').addClass('disabled');
+                    uploader.start();
+                });
+
+                uploader.bind("UploadProgress", function (up, file) {
+                    progressBar.css({width: file.percent + "%"});
+                });
+
+                uploader.bind("FileUploaded", function (up, file, response) {
+                    var obj = $.parseJSON(response.response.replace(/^.*?({.*}).*?$/gi, "$1"));
+                    input.val(obj.location);
+                    fileUploadPlaceholder.attr('src', obj.location);
+                    el.removeClass('disabled').removeClass('error').addClass('success');
+                    up.refresh();
+                    console.log(obj.location);
+                });
+
+                uploader.bind("Error", function (up, err) {
+                    progressBar.css({width: 0});
+                    el.removeClass('disabled').removeClass('success').addClass('error');
+                    up.refresh();
+                });
+
+                uploader.init();
+
+                uploaders.push(uploader);
+            });
+        };
+
+        initUploaders(uploaders);
+    </script>
+
 @endsection
