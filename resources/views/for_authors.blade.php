@@ -2,10 +2,8 @@
 
 @section('content')
     <main class="main">
-
-
         <section class="opening opening--author"
-                 style="background: url({{json_decode($content->getAttribute('data_'.$lang))->for_authors_banner->image}})">
+                 style="background: url({{json_decode($content->getAttribute('data_'.$lang))->for_authors_banner->image}}) center center no-repeat; background-size: cover;">
             <div class="container">
                 <div class="text-center">
                     <h1>{{json_decode($content->getAttribute('data_'.$lang))->for_authors_banner->title}}</h1>
