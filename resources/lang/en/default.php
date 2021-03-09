@@ -22,7 +22,7 @@ return [
             'my_courses_unpublished' => 'Отклоненные курсы',
             'my_courses_onCheck' => 'На проверке',
             'my_courses_deleted' => 'Удаленные курсы',
-            'profit_title' => 'Чему вы научитесь?',
+            'profit_title' => 'Структура курса',
             'course_materials' => 'Содержание курса',
             'course_description' => 'Описание курса',
             'course_description_placeholder' => 'Опишите содержание курса',

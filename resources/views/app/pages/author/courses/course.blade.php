@@ -119,29 +119,6 @@
                                         @break
                                     @endswitch
 
-                                    @if($item->courseWork() !== null)
-                                        <div class="topic">
-                                            <div class="topic__header">
-                                                <div class="title"><a
-                                                            href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
-                                                </div>
-                                                <div class="duration"></div>
-                                                @switch($item->status)
-                                                    @case(0)
-                                                    @case(2)
-                                                    <div class="edit-buttons">
-                                                        <a href="#removeCourseWorkModal" data-fancybox
-                                                           title="{{__('default.pages.courses.delete_title')}}"
-                                                           class="btn-icon small btn-icon--ghost icon-trash-can"></a>
-                                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}/edit-coursework"
-                                                           title="{{__('default.pages.courses.edit_title')}}"
-                                                           class="btn-icon small btn-icon--ghost icon-edit"> </a>
-                                                    </div>
-                                                    @break
-                                                @endswitch
-                                            </div>
-                                        </div>
-                                    @endif
                                     @if($item->finalTest() !== null)
                                         <div class="topic">
                                             <div class="topic__header">
@@ -178,13 +155,6 @@
                                                class="btn small"
                                                data-fancybox>{{__('default.pages.courses.create_theme')}}</a>
                                         </div>
-                                        @if($item->courseWork() == null)
-                                            <div class="col-auto">
-                                                <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-coursework"
-                                                   title="{{__('default.pages.courses.coursework_title')}}"
-                                                   class="ghost-btn ghost-btn--blue small">{{__('default.pages.courses.coursework_title')}}</a>
-                                            </div>
-                                        @endif
                                         @if($item->finalTest() == null)
                                             <div class="col-auto">
                                                 <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-final-test"
