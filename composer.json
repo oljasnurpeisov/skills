@@ -20,7 +20,8 @@
         "league/fractal": "^0.19.2",
         "maatwebsite/excel": "^3.1",
         "orchestra/parser": "^6.0",
-        "spatie/pdf-to-image": "^2.1"
+        "spatie/pdf-to-image": "^2.1",
+        "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",

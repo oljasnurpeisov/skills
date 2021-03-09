@@ -2,8 +2,6 @@
 
 @section('content')
     <main class="main">
-
-
         <section class="plain">
             <div class="container">
                 <ul class="breadcrumbs">
@@ -125,46 +123,34 @@
 
                                     @if($item->courseWork() !== null)
                                         <div class="topic">
-                                            <form
-                                                action="/{{$lang}}/course-{{$item->id}}/lesson-{{$item->courseWork()->id}}/delete-lesson-form"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <div class="topic__header">
-                                                    @if($student_course)
-                                                        <div class="title"><a
-                                                                href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
-                                                        </div>
-                                                    @else
-                                                        <div
-                                                            class="title">{{__('default.pages.lessons.coursework_title')}}
-                                                        </div>
-                                                    @endif
-                                                    <div class="duration"></div>
-                                                </div>
-                                            </form>
+                                            <div class="topic__header">
+                                                @if($student_course)
+                                                    <div class="title"><a
+                                                            href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
+                                                    </div>
+                                                @else
+                                                    <div
+                                                        class="title">{{__('default.pages.lessons.coursework_title')}}
+                                                    </div>
+                                                @endif
+                                                <div class="duration"></div>
+                                            </div>
                                         </div>
                                     @endif
                                     @if($item->finalTest() !== null)
                                         <div class="topic">
-                                            <form
-                                                action="/{{$lang}}/course-{{$item->id}}/lesson-{{$item->finalTest()->id}}/delete-lesson-form"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <div class="topic__header">
-                                                    @if($student_course)
-                                                        <div class="title"><a
-                                                                href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
-                                                        </div>
-                                                    @else
-                                                        <div
-                                                            class="title">{{__('default.pages.courses.final_test_title')}}
-                                                        </div>
-                                                    @endif
-                                                    <div class="duration"></div>
-                                                </div>
-                                            </form>
+                                            <div class="topic__header">
+                                                @if($student_course)
+                                                    <div class="title"><a
+                                                            href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
+                                                    </div>
+                                                @else
+                                                    <div
+                                                        class="title">{{__('default.pages.courses.final_test_title')}}
+                                                    </div>
+                                                @endif
+                                                <div class="duration"></div>
+                                            </div>
                                         </div>
                                     @endif
                                 </div>
@@ -576,7 +562,6 @@
                 </div>
             @endif
         @endauth
-
 
         <div id="buyConfirm" style="display:none;">
             <form action="/createPaymentOrder/{{$item->id}}" method="POST">
