@@ -39,6 +39,8 @@ class CourseController extends Controller
 
     public function studentCourses(Request $request, $lang)
     {
+        $user = Auth::user();
+
         $lang_ru = $request->lang_ru ?? null;
         $lang_kk = $request->lang_kk ?? null;
         $specialities = $request->specialities;
@@ -70,7 +72,7 @@ class CourseController extends Controller
                     $s->orWhereHas('author_info', function ($k) use ($term) {
                         $arr = explode(' ', $term);
                         foreach ($arr as $key => $t) {
-                            if($key === 0){
+                            if ($key === 0) {
                                 $k->where('name', 'like', '%' . $t . '%');
                                 $k->orWhere('surname', 'like', '%' . $t . '%');
                             } else {
@@ -161,8 +163,9 @@ class CourseController extends Controller
                 ->count();
             $finishedLessonsCount = Lesson::whereCourseId($item->course_id)
                 ->whereIn('type', [1, 2])
-                ->whereHas('student_lessons', function ($q) {
+                ->whereHas('student_lessons', function ($q) use ($user) {
                     $q->where('student_lesson.is_finished', '=', true);
+                    $q->where('student_lesson.student_id', '=', $user->id);
                 })
                 ->count();
 
