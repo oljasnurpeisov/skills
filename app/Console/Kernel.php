@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ProfessionalAreaProfessionRelation;
+use App\Console\Commands\ProfessionalAreasUpdate;
 use App\Console\Commands\ProfessionSkillRelation;
 use App\Console\Commands\ProfessionsParentUpdate;
 use App\Console\Commands\ProfessionsUpdate;
@@ -24,7 +26,9 @@ class Kernel extends ConsoleKernel
         ProfessionsUpdate::class,
         ProfessionSkillRelation::class,
         ReCalculateCourseQuotaCost::class,
-        ProfessionsParentUpdate::class
+        ProfessionsParentUpdate::class,
+        ProfessionalAreasUpdate::class,
+        ProfessionalAreaProfessionRelation::class
     ];
 
     /**
@@ -38,6 +42,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('remove:user')
             ->everySixHours();
 
+        $schedule->command('update:professional_areas')
+            ->daily()->withoutOverlapping();
+
         $schedule->command('update:skills')
             ->daily();
 
@@ -48,6 +55,9 @@ class Kernel extends ConsoleKernel
             ->daily()->withoutOverlapping();
 
         $schedule->command('update:profession_skill_relation')
+            ->daily()->withoutOverlapping();
+
+        $schedule->command('update:professional_area_profession_relation')
             ->daily()->withoutOverlapping();
 
         $schedule->command('update:course_quota_cost')

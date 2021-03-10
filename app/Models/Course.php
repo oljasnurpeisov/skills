@@ -72,6 +72,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereIsPoorVision($value)
  * @property int|null $previous_status
  * @method static \Illuminate\Database\Eloquent\Builder|Course wherePreviousStatus($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Professions[] $professions
+ * @property-read int|null $professions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CourseQuotaCost[] $quotaCost
+ * @property-read int|null $quota_cost_count
  */
 class Course extends Model
 {
