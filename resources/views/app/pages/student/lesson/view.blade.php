@@ -251,13 +251,13 @@
                                         <button type="submit" class="sidebar-btn" name="action"
                                                 value="homework">{{__('default.pages.lessons.get_task_btn')}}</button>
                                     @elseif($lesson->type == 2 and $lesson->end_lesson_type == 0)
-                                        <button type="submit" class="sidebar-btn {{!empty($lesson->lesson_student->is_finished) == true ? 'disabled' : ''}}" name="action"
+                                        <button type="submit" class="sidebar-btn {{ $lesson->finishedByCurrentUser() ? 'disabled' : ''}}" name="action"
                                                 value="test">{{__('default.pages.lessons.get_test_btn')}}</button>
                                     @elseif($lesson->type == 3)
                                         <button type="submit" class="sidebar-btn" name="action"
                                                 value="coursework">{{__('default.pages.lessons.get_task_btn')}}</button>
                                     @elseif($lesson->type == 4)
-                                        <button type="submit" class="sidebar-btn {{!empty($lesson->lesson_student->is_finished) == true ? 'disabled' : ''}}" name="action"
+                                        <button type="submit" class="sidebar-btn {{ $lesson->finishedByCurrentUser() ? 'disabled' : ''}}" name="action"
                                                 value="final-test">{{__('default.pages.lessons.get_test_btn')}}</button>
                                     @endif
                                 </div>

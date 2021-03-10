@@ -61,7 +61,8 @@
                                         </div>
                                         <div id="poorVision" style="display:none;">
                                             <div class="sidebar-item">
-                                                <div class="sidebar-item__title">{{__('default.pages.lessons.font_size_title')}}
+                                                <div
+                                                        class="sidebar-item__title">{{__('default.pages.lessons.font_size_title')}}
                                                     :
                                                 </div>
                                                 <div class="sidebar-item__body">
@@ -73,7 +74,8 @@
                                                 </div>
                                             </div>
                                             <div class="sidebar-item">
-                                                <div class="sidebar-item__title">{{__('default.pages.lessons.line_spacing')}}
+                                                <div
+                                                        class="sidebar-item__title">{{__('default.pages.lessons.line_spacing')}}
                                                     :
                                                 </div>
                                                 <div class="sidebar-item__body">
@@ -90,7 +92,8 @@
                                                 <div class="sidebar-item__body">
                                                     <select name="fontFamily" class="selectize-regular custom"
                                                             placeholder="{{__('default.pages.lessons.choose_font')}}">
-                                                        <option value="">{{__('default.pages.lessons.default_title')}}</option>
+                                                        <option
+                                                                value="">{{__('default.pages.lessons.default_title')}}</option>
                                                         <option value="Arial, sans-serif">Arial</option>
                                                         <option value="Times New Roman, sans-serif">Times New Roman
                                                         </option>
@@ -98,15 +101,19 @@
                                                 </div>
                                             </div>
                                             <div class="sidebar-item">
-                                                <div class="sidebar-item__title">{{__('default.pages.lessons.color_palette')}}
+                                                <div
+                                                        class="sidebar-item__title">{{__('default.pages.lessons.color_palette')}}
                                                     :
                                                 </div>
                                                 <div class="sidebar-item__body">
                                                     <select name="colorScheme" class="selectize-regular custom color"
                                                             placeholder="{{__('default.pages.lessons.choose_palette')}}">
-                                                        <option value="black-white">{{__('default.pages.lessons.default_title')}}</option>
-                                                        <option value="white-black">{{__('default.pages.lessons.white_on_black_palette')}}</option>
-                                                        <option value="yellow-blue">{{__('default.pages.lessons.yellow_on_blue_palette')}}</option>
+                                                        <option
+                                                                value="black-white">{{__('default.pages.lessons.default_title')}}</option>
+                                                        <option
+                                                                value="white-black">{{__('default.pages.lessons.white_on_black_palette')}}</option>
+                                                        <option
+                                                                value="yellow-blue">{{__('default.pages.lessons.yellow_on_blue_palette')}}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -119,7 +126,8 @@
                             <div class="sidebar__inner">
                                 <div id="regularMaterials">
                                     <div class="sidebar-item">
-                                        <div class="sidebar-item__title">{{__('default.pages.courses.media_attachments')}}
+                                        <div
+                                                class="sidebar-item__title">{{__('default.pages.courses.media_attachments')}}
                                             :
                                         </div>
                                         <div class="sidebar-item__body">
@@ -163,7 +171,8 @@
                                                         @foreach(json_decode($lesson->lesson_attachment->another_files) as $file)
                                                             <li><a href="{{env('APP_URL').$file}}"
                                                                    title="{{substr(basename($file), 14)}}"
-                                                                   target="_blank">{{substr(basename($file), 14)}}&nbsp;</a>
+                                                                   target="_blank">{{substr(basename($file), 14)}}
+                                                                    &nbsp;</a>
                                                                 ({{ round(File::size(public_path($file))/1000000, 1) }}
                                                                 MB)
                                                             </li>
@@ -176,7 +185,8 @@
                                 </div>
                                 <div id="poorVisionMaterials" style="display:none;">
                                     <div class="sidebar-item">
-                                        <div class="sidebar-item__title">{{__('default.pages.lessons.media_attachments_poor_vision')}}
+                                        <div
+                                                class="sidebar-item__title">{{__('default.pages.lessons.media_attachments_poor_vision')}}
                                             :
                                         </div>
                                         <div class="sidebar-item__body">
@@ -213,7 +223,8 @@
                                         </div>
                                     </div>
                                     <div class="sidebar-item">
-                                        <div class="sidebar-item__title">{{__('default.pages.lessons.lesson_files_poor_vision')}}
+                                        <div
+                                                class="sidebar-item__title">{{__('default.pages.lessons.lesson_files_poor_vision')}}
                                             :
                                         </div>
                                         <div class="sidebar-item__body">
@@ -223,7 +234,8 @@
                                                         @foreach(json_decode($lesson->lesson_attachment->another_files_poor_vision) as $file)
                                                             <li><a href="{{env('APP_URL').$file}}"
                                                                    title="{{substr(basename($file), 14)}}"
-                                                                   target="_blank">{{substr(basename($file), 14)}}&nbsp;</a>
+                                                                   target="_blank">{{substr(basename($file), 14)}}
+                                                                    &nbsp;</a>
                                                                 ({{ round(File::size(public_path($file))/1000000, 1) }}
                                                                 MB)
                                                             </li>
@@ -240,11 +252,12 @@
                                       method="POST">
                                     @csrf
                                     <div class="sidebar__buttons">
-                                        @if($lesson->lesson_student->is_finished == true)
+                                        @if($lesson->finishedByCurrentUser())
                                             <button type="submit" class="sidebar-btn" name="action"
                                                     value="next_lesson">{{__('default.pages.lessons.next_lesson')}}</button>
                                         @else
-                                            <button class="sidebar-btn disabled">{{__('default.pages.lessons.next_lesson')}}</button>
+                                            <button
+                                                    class="sidebar-btn disabled">{{__('default.pages.lessons.next_lesson')}}</button>
                                         @endif
                                     </div>
                                 </form>

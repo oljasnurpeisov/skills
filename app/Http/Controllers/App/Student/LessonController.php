@@ -147,10 +147,14 @@ class LessonController extends Controller
 
     public function lessonFinished($lang, Request $request, Course $course, Lesson $lesson)
     {
-        $lesson_student = StudentLesson::whereLessonId($lesson->id)->whereStudentId(Auth::user()->id)->first();
         switch ($request->input('action')) {
             // Переход к следующему уроку
             case 'next_lesson':
+                $user = Auth::user();
+                $lesson_student = StudentLesson::whereLessonId($lesson->id)
+                    ->whereStudentId($user->id)
+                    ->first();
+
                 // Пометить урок как пройденный
                 $lesson_student->is_finished = true;
                 $lesson_student->save();
