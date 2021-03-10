@@ -92,7 +92,7 @@ class PageController extends Controller
                 if (isset($request['advantages_name_' . $language][$key])) {
 
                     $data['advantages'][] = array(
-                        'icon' => $request['icon_' . $language . '_'.$key],
+                        'icon' => $request['icon_' . $language . '_' . $key],
                         'name' => $request['advantages_name_' . $language][$key],
                         'description' => $request['advantages_descriptions_' . $language][$key],
                     );
@@ -410,5 +410,10 @@ class PageController extends Controller
         $item->save();
 
         return back()->with('status', __('admin.notifications.update_success'));
+    }
+
+    public function phpInfo()
+    {
+        phpinfo();
     }
 }
