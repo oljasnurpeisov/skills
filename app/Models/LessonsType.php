@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 /**
  * App\Models\LessonsType
@@ -31,5 +32,19 @@ class LessonsType extends Model
     protected $table = 'lessons_type';
 
     public $timestamps = true;
+
+    public function getAttribute($key)
+    {
+        $array = ['name'];
+        if (in_array($key, $array)) {
+            if (!empty(parent::getAttribute($key . '_' . App::getLocale()))) {
+                $key .= '_' . App::getLocale();
+            } else {
+                $key .= '_ru';
+            }
+        }
+
+        return parent::getAttribute($key);
+    }
 
 }
