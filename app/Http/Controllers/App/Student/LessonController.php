@@ -518,6 +518,7 @@ class LessonController extends Controller
                 $pngPath = $path . '/' . 'course_' . $course->id . '_image_' . $language . '.png';
                 $pdfToImage->saveImage($pngPath);
             } catch (\InvalidArgumentException $e) {
+                dd($e);
                 $e->getMessage();
             }
         }
@@ -535,6 +536,7 @@ class LessonController extends Controller
             $cert = base64_encode(file_get_contents(env('APP_URL') . $certificate->png_ru));
             $this->putNewSkills($user->student_info->uid, $course, $cert);
         } catch (\ErrorException $e) {
+            dd($e);
             $e->getMessage();
         }
     }
