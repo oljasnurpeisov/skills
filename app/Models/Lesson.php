@@ -78,11 +78,6 @@ class Lesson extends Model
 
     public function lesson_student()
     {
-//        $user = \Auth::user();
-//        if ($user == null) {
-//            return null;
-//        }
-//        return $this->student_lessons()->where('student_id', '=', $user->id)->first();
         return $this->hasOne(StudentLesson::class, 'lesson_id', 'id');
     }
 
@@ -108,7 +103,6 @@ class Lesson extends Model
 
     public function finishedLesson()
     {
-
         return $this->student_lessons()->where('is_finished', '=', true)->get();
     }
 
@@ -121,8 +115,8 @@ class Lesson extends Model
         }
 
         /** @var StudentLesson $lessonStudent */
-        $lessonStudent = $this->lesson_student()->where('student_id', '=', $user->id)->first();
+        $lessonStudent = $this->student_lessons()->where('student_id', '=', $user->id)->first();
 
-        return $lessonStudent != null ? $lessonStudent->is_finished : false;
+        return ($lessonStudent != null) ? $lessonStudent->is_finished : false;
     }
 }
