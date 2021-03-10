@@ -78,12 +78,12 @@ class Lesson extends Model
 
     public function lesson_student()
     {
-        $user = \Auth::user();
-        if ($user == null) {
-            return null;
-        }
-        return $this->student_lessons()->where('student_id', '=', $user->id)->first();
-//        return $this->hasOne(StudentLesson::class, 'lesson_id', 'id');
+//        $user = \Auth::user();
+//        if ($user == null) {
+//            return null;
+//        }
+//        return $this->student_lessons()->where('student_id', '=', $user->id)->first();
+        return $this->hasOne(StudentLesson::class, 'lesson_id', 'id');
     }
 
     public function student_lessons()
