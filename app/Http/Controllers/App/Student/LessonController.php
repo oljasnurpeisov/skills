@@ -531,8 +531,12 @@ class LessonController extends Controller
 
         $certificate->save();
 
-        $cert = base64_encode(file_get_contents(env('APP_URL') . $certificate->png_ru));
-        $this->putNewSkills($user->student_info->uid, $course, $cert);
+        try {
+            $cert = base64_encode(file_get_contents(env('APP_URL') . $certificate->png_ru));
+            $this->putNewSkills($user->student_info->uid, $course, $cert);
+        } catch (\ErrorException $e) {
+            $e->getMessage();
+        }
     }
 
     private function putNewSkills($uid, Course $course, $cert)
