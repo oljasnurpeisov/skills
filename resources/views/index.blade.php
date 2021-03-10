@@ -2,10 +2,8 @@
 
 @section('content')
     <main class="main">
-
-
         <section class="opening"
-                 style="background: url({{json_decode($content->getAttribute('data_'.$lang))->main_banner->image}})">
+                 style="background: url({{json_decode($content->getAttribute('data_'.$lang))->main_banner->image}}) center center no-repeat; background-size: cover;">
             <div class="container">
                 <h1>{{json_decode($content->getAttribute('data_'.$lang))->main_banner->title}}<br/><span>
                         {{json_decode($content->getAttribute('data_'.$lang))->main_banner->teaser}}</span></h1>
@@ -50,7 +48,8 @@
                                 @foreach($courses as $course)
                                     <a href="/{{$lang}}/course-catalog/course/{{$course->id}}" title="" class="card">
                                         @if($course->quota_status == 2)
-                                            <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
+                                            <div
+                                                    class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
                                         @endif
                                         <div class="card__image">
                                             <img src="{{$course->getAvatar()}}" alt="">
@@ -58,9 +57,11 @@
                                         <div class="card__desc">
                                             <div class="card__top">
                                                 @if($course->is_paid == true)
-                                                    <div class="card__price mark mark--blue">{{number_format($course->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                                                    <div
+                                                            class="card__price mark mark--blue">{{number_format($course->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
                                                 @else
-                                                    <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
+                                                    <div
+                                                            class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
                                                 @endif
                                                 <h3 class="card__title">{{$course->name}}</h3>
                                                 <div class="card__author">{{$course->user->company_name}}</div>
@@ -139,18 +140,18 @@
             </div>
         </section>
 
-        <section class="gray">
-            <div class="container">
-                <h3 class="title-primary decorated">{!! __('default.pages.index.popular_courses_catalog') !!}</h3>
-                <ul class="home-arrow-links">
-                    @foreach($popular_courses as $item)
-                        <li><a href="/{{$lang}}/course-catalog/course/{{$item->id}}" class="arrow-link"
-                               title="{{$item->name}}">{{$item->name}}</a></li>
-                    @endforeach
-                    <li><a href="/{{$lang}}/course-catalog" title="{!! __('default.pages.index.popular_courses_catalog_btn') !!}" class="btn">{!! __('default.pages.index.popular_courses_catalog_btn') !!}</a></li>
-                </ul>
-            </div>
-        </section>
+        {{--        <section class="gray">--}}
+        {{--            <div class="container">--}}
+        {{--                <h3 class="title-primary decorated">{!! __('default.pages.index.popular_courses_catalog') !!}</h3>--}}
+        {{--                <ul class="home-arrow-links">--}}
+        {{--                    @foreach($popular_courses as $item)--}}
+        {{--                        <li><a href="/{{$lang}}/course-catalog/course/{{$item->id}}" class="arrow-link"--}}
+        {{--                               title="{{$item->name}}">{{$item->name}}</a></li>--}}
+        {{--                    @endforeach--}}
+        {{--                    <li><a href="/{{$lang}}/course-catalog" title="{!! __('default.pages.index.popular_courses_catalog_btn') !!}" class="btn">{!! __('default.pages.index.popular_courses_catalog_btn') !!}</a></li>--}}
+        {{--                </ul>--}}
+        {{--            </div>--}}
+        {{--        </section>--}}
 
         <section class="plain">
             <div class="container">
@@ -179,7 +180,8 @@
                     @foreach($popular_courses as $item)
                         <a href="/{{$lang}}/course-catalog/course/{{$item->id}}" title="" class="card">
                             @if($item->quota_status == 2)
-                                <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
+                                <div
+                                        class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
                             @endif
                             <div class="card__image">
                                 <img src="{{$item->getAvatar()}}" alt="">
@@ -187,9 +189,11 @@
                             <div class="card__desc">
                                 <div class="card__top">
                                     @if($item->is_paid == true)
-                                        <div class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                                        <div
+                                                class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
                                     @else
-                                        <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
+                                        <div
+                                                class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
                                     @endif
                                     <h3 class="card__title">{{$item->name}}</h3>
                                     <div class="card__author">{{$item->user->company_name}}</div>
