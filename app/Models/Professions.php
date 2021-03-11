@@ -55,4 +55,10 @@ class Professions extends Model
 
     }
 
+    public function professional_areas() {
+
+        return $this->belongsToMany(ProfessionalArea::class,'professional_area_professions', 'profession_id', 'professional_area_id');
+
+    }
+
 }

@@ -24,6 +24,13 @@
                         <form action="/{{$lang}}/create-course" method="POST">
                             @csrf
                             <div class="form-group">
+                                <label class="form-group__label">
+                                    <a href="/files/instructions.pdf" target="_blank" style="color: #2ab5f6;">
+                                        {{ __('default.pages.courses.instruction') }}
+                                    </a>
+                                </label>
+                            </div>
+                            <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_name')}} *</label>
                                 <input type="text" name="name" placeholder="" class="input-regular"
                                        value="{{ old('name') }}" required>
@@ -32,10 +39,11 @@
                                 <div class="professions-group">
                                     <div class="form-group">
                                         <label class="form-group__label"
-                                               id="skillsLabel">{{__('default.pages.courses.skill_title')}}</label>
+                                               id="skillsLabel">{{__('default.pages.courses.professional_area_title')}}</label>
                                         <div class="input-addon">
-                                            <select name="skills[0]" id="skillsSelect" placeholder="{{__('default.pages.courses.choose_skill_title')}}"
-                                                    data-method="getSkills" class="skills-select" required>
+                                            <select name="professional_areas" id="professionalAreasSelect"
+                                                    placeholder="{{__('default.pages.courses.choose_professional_area_title')}}"
+                                                    data-method="getProfessionalAreaByName" class="professional-areas-select" required>
                                             </select>
                                             <div class="addon">
                                                 <span class="required">*</span>
@@ -43,21 +51,28 @@
                                         </div>
                                     </div>
                                     <div class="form-group" style="display: none">
-                                        <label class="form-group__label" id="professionsLabel">{{__('default.pages.courses.professions_title')}}</label>
-                                        <select name="professions[0][]" id="professionsSelect"
-                                                placeholder="{{__('default.pages.courses.choose_professions_title')}}"
-                                                data-method="getProfessionsBySkills" data-maxitems="7"
-                                                class="professions-select" multiple required>
+                                        <label class="form-group__label"
+                                               id="professionsLabel">{{__('default.pages.courses.profession_title')}}</label>
+                                        <div class="input-addon">
+                                            <select name="professions" id="professionsSelect"
+                                                    placeholder="{{__('default.pages.courses.choose_profession_title')}}"
+                                                    data-method="getProfessionsByProfessionalArea" class="professions-select" required>
+                                            </select>
+                                            <div class="addon">
+                                                <span class="required">*</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display: none">
+                                        <label class="form-group__label"
+                                               id="skillsLabel">{{__('default.pages.courses.skills_title')}}</label>
+                                        <select name="skills[]" id="skillsSelect"
+                                                placeholder="{{__('default.pages.courses.choose_skills_title')}}"
+                                                data-method="getSkillsByProfession" data-maxitems="7"
+                                                class="skills-select" multiple required>
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="text-right pull-up">
-                                <a href="#" title="{{__('default.pages.courses.add_skill')}}" id="addProfessionGroup" data-maxitems="7"
-                                   class="add-btn"
-                                   style="margin-top: 5px"><span
-                                            class="add-btn__title">{{__('default.pages.courses.add_skill')}}</span><span
-                                            class="btn-icon small icon-plus"> </span></a>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_lang')}}</label>
@@ -82,12 +97,6 @@
                                        value="{{ old('cost') }}">
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.course_profit')}} *</label>
-                                <textarea name="profit_desc" class="input-regular tinymce-text-here"
-                                          placeholder="{{__('default.pages.courses.course_profit_placeholder')}}"
-                                          required>{{ old('profit_desc') }}</textarea>
-                            </div>
-                            <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_teaser')}} *</label>
                                 <textarea name="teaser" class="input-regular tinymce-text-here"
                                           required>{{ old('teaser') }}</textarea>
@@ -97,6 +106,12 @@
                                 <textarea name="description" class="input-regular tinymce-text-here"
                                           placeholder="{{__('default.pages.courses.course_description_placeholder')}}"
                                           required>{{ old('description') }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.course_profit')}} *</label>
+                                <textarea name="profit_desc" class="input-regular tinymce-text-here"
+                                          placeholder="{{__('default.pages.courses.course_profit_placeholder')}}"
+                                          required>{{ old('profit_desc') }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_image')}}</label>
@@ -296,7 +311,6 @@
             });
         });
     </script>
-
     <!---->
 @endsection
 

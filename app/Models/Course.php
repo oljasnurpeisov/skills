@@ -133,6 +133,13 @@ class Course extends Model
 
     }
 
+    public function professional_areas()
+    {
+
+        return $this->belongsToMany(ProfessionalArea::class, 'course_skill', 'course_id', 'professional_area_id');
+
+    }
+
     public function course_members()
     {
 

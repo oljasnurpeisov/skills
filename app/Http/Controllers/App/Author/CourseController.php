@@ -117,9 +117,7 @@ class CourseController extends Controller
                 $item_attachments->save();
 
                 foreach ($request->skills as $key => $skill) {
-                    foreach ($request->professions[$key] as $k => $profession) {
-                        $item->skills()->attach([$skill => ['profession_id' => $profession]]);
-                    }
+                    $item->skills()->attach([$skill => ['profession_id' => $request->professions, 'professional_area_id' => $request->professional_areas]]);
                 }
 
                 return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.create_request_message'));
@@ -199,9 +197,7 @@ class CourseController extends Controller
             $item_attachments->save();
 
             foreach ($request->skills as $key => $skill) {
-                foreach ($request->professions[$key] as $k => $profession) {
-                    $item->skills()->attach([$skill => ['profession_id' => $profession]]);
-                }
+                $item->skills()->attach([$skill => ['profession_id' => $request->professions, 'professional_area_id' => $request->professional_areas]]);
             }
 
             return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.create_request_message'));
@@ -453,9 +449,7 @@ class CourseController extends Controller
         }
         $item->skills()->detach();
         foreach ($request->skills as $key => $skill) {
-            foreach ($request->professions[$key] as $k => $profession) {
-                $item->skills()->attach([$skill => ['profession_id' => $profession]]);
-            }
+            $item->skills()->attach([$skill => ['profession_id' => $request->professions, 'professional_area_id' => $request->professional_areas]]);
         }
         $item->save();
 
@@ -647,7 +641,7 @@ class CourseController extends Controller
         $all_cost_courses = [];
         $quota_cost_courses = [];
         foreach ($items as $course) {
-            $all_cost_courses[] = $course->course_members->whereIn('paid_status', [1,2])->sum('payment.amount');
+            $all_cost_courses[] = $course->course_members->whereIn('paid_status', [1, 2])->sum('payment.amount');
             $quota_cost_courses[] = $course->course_members->where('paid_status', '=', 2)->sum('payment.amount');
         }
 
@@ -741,7 +735,7 @@ class CourseController extends Controller
             $key = array_search($item->first()->created_at->format("Y-m-d"), array_column($data['data'], 'date'));
             $data['data'][$key] = [
                 "date" => $item->first()->created_at,
-                "value1" => $item->whereIn('paid_status', [1,2])->sum('payment.amount'),
+                "value1" => $item->whereIn('paid_status', [1, 2])->sum('payment.amount'),
                 "value2" => $item->where('paid_status', '=', 2)->sum('payment.amount')];
         }
 
@@ -872,9 +866,9 @@ class CourseController extends Controller
             // Стоимость курса
             $course_cost = $i->cost ?? '-';
             // Участников курса
-            if($i->quota_status == 2 and $i->is_paid == true){
+            if ($i->quota_status == 2 and $i->is_paid == true) {
                 $course_members_count = count($i->course_members->where('paid_status', '=', 1)) . "/" . count($i->course_members->where('paid_status', '=', 2));
-            }else{
+            } else {
                 $course_members_count = count($i->course_members->whereIn('paid_status', [1, 2]));
             }
             // Получили сертификат

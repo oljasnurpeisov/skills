@@ -8,6 +8,7 @@ use App\Models\CourseRate;
 use App\Models\Lesson;
 use App\Models\Notification;
 use App\Models\Page;
+use App\Models\ProfessionalArea;
 use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCourse;
@@ -44,7 +45,7 @@ class CourseController extends Controller
                     $s->orWhereHas('author_info', function ($k) use ($term) {
                         $arr = explode(' ', $term);
                         foreach ($arr as $key => $t) {
-                            if($key === 0){
+                            if ($key === 0) {
                                 $k->where('name', 'like', '%' . $t . '%');
                                 $k->orWhere('surname', 'like', '%' . $t . '%');
                             } else {
@@ -346,6 +347,42 @@ class CourseController extends Controller
         $unreadNotifications = Auth::user()->notifications->where('is_read', '=', false);
 
         return $unreadNotifications->count();
+    }
+
+    public function getProfessionalAreaByName(Request $request, $lang)
+    {
+        $professional_area_name = $request->name ?? '';
+        $page = $request->page ?? 1;
+
+        $professions = ProfessionalArea::where('name_' . $lang, 'like', '%' . $professional_area_name . '%')
+            ->orderBy('name_' . $lang, 'asc')
+            ->paginate(50, ['*'], 'page', $page);
+
+        return $professions;
+    }
+
+    public function getProfessionsByProfessionalArea($lang, Request $request)
+    {
+        $professional_area_id = $request->professional_area_id;
+        $page = $request->page ?? 1;
+
+        $professions = Professions::whereHas('professional_areas', function ($q) use ($professional_area_id) {
+            $q->where('professional_areas.id', '=', $professional_area_id);
+        })->paginate(50, ['*'], 'page', $page);
+
+        return $professions;
+    }
+
+    public function getSkillsByProfession($lang, Request $request)
+    {
+        $profession = $request->profession_id;
+        $page = $request->page ?? 1;
+
+        $skills = Skill::whereHas('group_professions', function ($q) use ($profession) {
+            $q->where('profession_skills.profession_id', '=', $profession);
+        })->paginate(50, ['*'], 'page', $page);
+
+        return $skills;
     }
 
 }
