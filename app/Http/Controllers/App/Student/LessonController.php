@@ -542,8 +542,8 @@ class LessonController extends Controller
         $certificate->save();
 
         try {
-            $cert = Storage::get(public_path($certificate->png_ru));
-            $cert = base64_encode($cert);
+            $path = env('APP_URL', 'https://skills.enbek.kz') . $certificate->png_ru;
+            $cert = base64_encode(file_get_contents($path));
             $this->putNewSkills($user->student_info->uid, $course, $cert);
         } catch (\ErrorException $e) {
             dd($e);
