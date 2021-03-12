@@ -393,6 +393,8 @@ return [
             'author_name' => 'Автор',
             'course_name' => 'Наименование курса',
             'skills' => 'Навыки',
+            'profession' => 'Профессия',
+            'professional_area' => 'Проф.область',
             'professions_group' => 'Группа професий',
             'course_rate' => 'Рейтинг курса',
             'course_status' => 'Статус курса',

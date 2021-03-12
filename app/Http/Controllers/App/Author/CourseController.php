@@ -829,10 +829,10 @@ class CourseController extends Controller
                 $q->whereBetween('student_course.created_at', [$date_from, $date_to]);
             }]);
 
-        $items = $query->paginate(5);
-
         Session::put('export_reporting', $query->get());
         Session::put('export_reporting_dates', [$date_from, $date_to]);
+
+        $items = $query->paginate(5);
 
         return view("app.pages.author.courses.reporting", [
             'items' => $items,
@@ -868,11 +868,17 @@ class CourseController extends Controller
             $name = $i->name;
             // Навыки
             $skills = implode(', ', array_filter($i->skills->pluck('name_' . $lang)->toArray())) ?: implode(', ', $i->skills->pluck('name_ru')->toArray());
-            // Профессии по навыкам
-            if (count($i->professionsBySkills()->pluck('id')->toArray()) <= 0) {
-                $professions_group = '-';
+            // Профессия
+            if (count($i->professions()->pluck('name_ru')->toArray()) <= 0) {
+                $professions = '-';
             } else {
-                $professions_group = implode(', ', array_filter($i->professionsBySkills()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professionsBySkills()->pluck('name_ru')->toArray()));
+                $professions= implode(', ', array_filter($i->professions()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professions()->pluck('name_ru')->toArray()));
+            }
+            // Проф.область
+            if (count($i->professional_areas()->pluck('name_ru')->toArray()) <= 0) {
+                $professional_areas = '-';
+            } else {
+                $professional_areas = implode(', ', array_filter($i->professional_areas()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professional_areas()->pluck('name_ru')->toArray()));
             }
             // Рейтинг курса
             $course_rate = $i->rate->pluck('rate')->avg() ?? 0;
@@ -913,7 +919,7 @@ class CourseController extends Controller
             $total_get_paid = $i->course_members->where('paid_status', '=', 1)->sum('payment.amount');
             $total_get_quota = $i->course_members->where('paid_status', '=', 2)->sum('payment.amount');
 
-            $newElement = ['name' => $name, 'skills' => $skills, 'professions_group' => $professions_group, 'course_rate' => $course_rate,
+            $newElement = ['name' => $name, 'professional_areas' => $professional_areas, 'professions' => $professions, 'skills' => $skills, 'course_rate' => $course_rate,
                 'course_status' => $course_status, 'course_type' => $course_type, 'course_cost' => $course_cost, 'is_quota' => $is_quota, 'quota_cost' => $quota_cost,
                 'members_free' => $members_free, 'certificate_free' => $certificate_free, 'qualificated_free' => $qualificated_free,
                 'members_paid' => $members_paid, 'certificate_paid' => $certificate_paid, 'qualificated_paid' => $qualificated_paid, 'total_get_paid' => $total_get_paid,

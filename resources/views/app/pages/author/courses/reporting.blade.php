@@ -57,8 +57,9 @@
                         <thead>
                         <tr>
                             <th style="min-width: 200px;">{{__('default.pages.reporting.course_name')}}</th>
+                            <th style="min-width: 230px;">{{__('default.pages.reporting.professional_area')}}</th>
+                            <th style="min-width: 230px;">{{__('default.pages.reporting.profession')}}</th>
                             <th style="min-width: 230px;">{{__('default.pages.reporting.skills')}}</th>
-                            <th style="min-width: 230px;">{{__('default.pages.reporting.professions_group')}}</th>
                             <th style="min-width: 33px;">{{__('default.pages.reporting.course_rate')}}</th>
                             <th style="min-width: 96px;">{{__('default.pages.reporting.course_status')}}</th>
                             <th style="min-width: 96px;">{{__('default.pages.reporting.course_type')}}</th>
@@ -82,11 +83,20 @@
                         @foreach($items as $key => $item)
                             <tr>
                                 <td>{{$item->name}}</td>
-                                <td>{{implode(', ', array_filter($item->skills->pluck('name_'.$lang)->toArray())) ?: implode(', ', $item->skills->pluck('name_ru')->toArray())}}</td>
-                                @if(count($item->professionsBySkills()->pluck('id')->toArray())<= 0)
+                                @if(count($item->professional_areas()->pluck('name_ru')->toArray())<= 0)
                                     <td>-</td>
                                 @else
-                                    <td>{{implode(', ', array_filter($item->professionsBySkills()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->professionsBySkills()->pluck('name_ru')->toArray()))}}</td>
+                                    <td>{{implode(', ', array_filter($item->professional_areas->pluck('name_'.$lang)->toArray())) ?: implode(', ', $item->professional_areas->pluck('name_ru')->toArray())}}</td>
+                                @endif
+                                @if(count($item->professions()->pluck('name_ru')->toArray())<= 0)
+                                    <td>-</td>
+                                @else
+                                    <td>{{implode(', ', array_filter($item->professions()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->professions()->pluck('name_ru')->toArray()))}}</td>
+                                @endif
+                                @if(count($item->skills()->pluck('name_ru')->toArray())<= 0)
+                                    <td>-</td>
+                                @else
+                                    <td>{{implode(', ', array_filter($item->skills->pluck('name_'.$lang)->toArray())) ?: implode(', ', $item->skills->pluck('name_ru')->toArray())}}</td>
                                 @endif
                                 <td>{{round($item->rate->pluck('rate')->avg() ?? 0, 1)}}</td>
                                 <td>{{__('default.pages.reporting.statuses.'.$item->status)}}</td>

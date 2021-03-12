@@ -50,8 +50,9 @@ class ReportingExport implements FromArray, WithHeadings, ShouldAutoSize, WithCo
     {
         return [
             __('default.pages.reporting.course_name'),
+            __('default.pages.reporting.professional_area'),
+            __('default.pages.reporting.profession'),
             __('default.pages.reporting.skills'),
-            __('default.pages.reporting.professions_group'),
             __('default.pages.reporting.course_rate'),
             __('default.pages.reporting.course_status'),
             __('default.pages.reporting.course_type'),
