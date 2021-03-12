@@ -65,7 +65,7 @@
                         <button type="submit" class="btn btn--green">{{ __('admin.labels.save') }}</button>
                     </div>
                     <div>
-                        @if($item->id != 1 and $item->id != 3 and $item->id != 4)
+                        @if(!in_array($item->slug, $main_roles))
                             <a href="/{{$lang}}/admin/role/{{ $item->id }}" class="btn btn--red btn--delete">
                                 {{ __('admin.pages.deleting.submit') }}
                             </a>
