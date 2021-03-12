@@ -23,7 +23,7 @@ class RoleController extends Controller
 {
     public function index(Request $request)
     {
-        $main_roles = ['admin', 'author', 'student', 'tech_support'];
+        $main_roles = ['admin', 'user', 'author', 'student', 'tech_support'];
 
         $term = $request->term ? $request->term : '';
 
@@ -67,12 +67,12 @@ class RoleController extends Controller
 
 //        Buffet::log('add', 'roles', $item->id, $item->name);
 
-        return redirect('/'.app()->getLocale().'/admin/role/' . $item->id)->with('status', __('admin.notifications.record_stored'));
+        return redirect('/' . app()->getLocale() . '/admin/role/' . $item->id)->with('status', __('admin.notifications.record_stored'));
     }
 
     public function edit($lang, Role $item)
     {
-        $main_roles = ['admin', 'author', 'student', 'tech_support'];
+        $main_roles = ['admin', 'user', 'author', 'student', 'tech_support'];
 
         $permissions = Permission::orderBy('id', 'asc')->get();
         return view('admin.v2.pages.roles.edit', [
@@ -82,7 +82,7 @@ class RoleController extends Controller
         ]);
     }
 
-    public function update(Request $request, $lang,Role $item)
+    public function update(Request $request, $lang, Role $item)
     {
         $this->validate($request, [
             'name' => 'required|min:3|max:255|unique:roles,name,' . $item->id,
@@ -97,13 +97,18 @@ class RoleController extends Controller
 
 //        Buffet::log('edit', 'roles', $item->id, $item->name);
 
-        return redirect('/'.app()->getLocale().'/admin/role/' . $item->id)->with('status', __('admin.notifications.record_updated'));
+        return redirect('/' . app()->getLocale() . '/admin/role/' . $item->id)->with('status', __('admin.notifications.record_updated'));
     }
 
     public function delete($lang, Role $item)
     {
+        $main_roles = ['admin', 'user', 'author', 'student', 'tech_support'];
+        if (in_array($item->slug, $main_roles)) {
+            return back('/' . app()->getLocale() . '/admin/role/index')->with('status', 'Нельзя удалить системную запись');
+        }
+
 //        $item->deleted = true;
         $item->delete();
-        return redirect('/'.app()->getLocale().'/admin/role/index')->with('status', __('admin.notifications.record_deleted'));
+        return redirect('/' . app()->getLocale() . '/admin/role/index')->with('status', __('admin.notifications.record_deleted'));
     }
 }
