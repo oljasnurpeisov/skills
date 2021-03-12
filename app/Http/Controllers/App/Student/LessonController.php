@@ -18,6 +18,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -504,6 +505,8 @@ class LessonController extends Controller
             'certificate_id' => sprintf("%012d", $certificate->id) . '-' . date('dmY')
         ];
 
+        $filePath = '/users/user_' . $user->id;
+
         foreach ($languages as $language) {
             try {
                 $template = 'app.pages.page.pdf.certificate_' . $course->certificate_id . '_' . $language;
@@ -513,7 +516,19 @@ class LessonController extends Controller
                 $path = public_path('users/user_' . $user->id . '');
                 $pdfPath = $path . '/' . 'course_' . $course->id . '_certificate_' . $language . '.pdf';
                 $pdf->save($pdfPath);
+            } catch (\InvalidArgumentException $e) {
+                $e->getMessage();
+            }
+        }
 
+        $certificate->pdf_ru = $filePath . '/' . 'course_' . $course->id . '_certificate_ru.pdf';
+        $certificate->pdf_kk = $filePath . '/' . 'course_' . $course->id . '_certificate_kk.pdf';
+        $certificate->save();
+
+        foreach ($languages as $language) {
+            try {
+                $path = public_path('users/user_' . $user->id . '');
+                $pdfPath = $path . '/' . 'course_' . $course->id . '_certificate_' . $language . '.pdf';
                 $pdfToImage = new \Spatie\PdfToImage\Pdf($pdfPath);
                 $pngPath = $path . '/' . 'course_' . $course->id . '_image_' . $language . '.png';
                 $pdfToImage->saveImage($pngPath);
@@ -522,19 +537,19 @@ class LessonController extends Controller
             }
         }
 
-        $filePath = '/users/user_' . $user->id;
-
-        $certificate->pdf_ru = $filePath . '/' . 'course_' . $course->id . '_certificate_ru.pdf';
-        $certificate->pdf_kk = $filePath . '/' . 'course_' . $course->id . '_certificate_kk.pdf';
         $certificate->png_ru = $filePath . '/' . 'course_' . $course->id . '_image_ru.png';
         $certificate->png_kk = $filePath . '/' . 'course_' . $course->id . '_image_kk.png';
-
         $certificate->save();
 
         try {
-            $cert = base64_encode(file_get_contents(env('APP_URL') . $certificate->png_ru));
+            $cert = Storage::get(public_path($certificate->png_ru));
+            $cert = base64_encode($cert);
             $this->putNewSkills($user->student_info->uid, $course, $cert);
         } catch (\ErrorException $e) {
+            dd($e);
+            $e->getMessage();
+        } catch (FileNotFoundException $e) {
+            dd($e);
             $e->getMessage();
         }
     }
