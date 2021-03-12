@@ -48,18 +48,24 @@ class Dialog extends Model
         }
 
         $member = $members->first();
-        $roles = $member->roles();
-        if ($roles != null) {
-            $memberRole = $roles->first();
-            if ($memberRole != null) {
-                if ($memberRole->slug == 'author') {
-                    $name = $member->author_info->name;
-                    $avatar = $member->author_info->getAvatar();
-                    $slug = '';
-                } else if ($memberRole->slug == 'student') {
-                    $name = $member->student_info->name ?? __('default.pages.profile.student_title');
-                    $avatar = $member->student_info->getAvatar();
-                    $slug = '';
+        if ($member != null) {
+            $roles = $member->roles();
+            if ($roles != null) {
+                $memberRole = $roles->first();
+                if ($memberRole != null) {
+                    if ($memberRole->slug == 'author') {
+                        $name = $member->author_info->name;
+                        $avatar = $member->author_info->getAvatar();
+                        $slug = '';
+                    } else if ($memberRole->slug == 'student') {
+                        $name = $member->student_info->name ?? __('default.pages.profile.student_title');
+                        $avatar = $member->student_info->getAvatar();
+                        $slug = '';
+                    } else {
+                        $name = $member->name;
+                        $avatar = '';
+                        $slug = 'tech_support';
+                    }
                 } else {
                     $name = $member->name;
                     $avatar = '';
@@ -71,7 +77,7 @@ class Dialog extends Model
                 $slug = 'tech_support';
             }
         } else {
-            $name = $member->name;
+            $name = '';
             $avatar = '';
             $slug = 'tech_support';
         }
