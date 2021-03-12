@@ -412,6 +412,28 @@
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.professional_area_title')}}:
+                                    </div>
+                                    <div class="sidebar-item__body">
+                                        <div class="extendable">
+                                            <div class="tags">
+                                                <ul>
+                                                    @foreach($item->professional_areas->groupBy('id') as $key => $profession_area)
+                                                        <li><a href=""
+                                                               title="{{$profession_area[0]->getAttribute('name_'.$lang) ?? $profession_area[0]->getAttribute('name_ru')}}">{{$profession_area[0]->getAttribute('name_'.$lang) ?? $profession_area[0]->getAttribute('name_ru')}}</a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <a href="javascript:;" title="{{__('default.pages.courses.show_all')}}"
+                                           class="link small text-center" data-maxheight="300"
+                                           data-alternativetitle="{{__('default.pages.courses.hide')}}"
+                                           style="display:none;">{{__('default.pages.courses.show_all')}}</a>
+                                    </div>
+
+                                </div>
+                                <div class="sidebar-item">
                                     <div class="sidebar-item__title">{{__('default.pages.courses.professions_title_1')}}
                                         :
                                     </div>
