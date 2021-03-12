@@ -378,9 +378,33 @@ class CourseController extends Controller
         $profession = $request->profession_id;
         $page = $request->page ?? 1;
 
-        $skills = Skill::whereHas('group_professions', function ($q) use ($profession) {
-            $q->where('profession_skills.profession_id', '=', $profession);
+        $professions_group = Professions::whereIn('id', [$profession])->pluck('parent_id');
+        $skills = Skill::whereHas('group_professions', function ($q) use ($professions_group) {
+            $q->whereIn('profession_skills.profession_id', $professions_group);
         })->paginate(50, ['*'], 'page', $page);
+
+        return $skills;
+    }
+
+    public function getProfessionsByData(Request $request, $lang)
+    {
+        $professional_areas = $request->professional_areas;
+        $profession_name = $request->name ?? '';
+        $page = $request->page ?? 1;
+
+        if ($professional_areas != []) {
+            $page = $request->page ?? 1;
+
+            $professions = Professions::whereHas('professional_areas', function ($q) use ($professional_areas) {
+                $q->whereIn('professional_areas.id', $professional_areas);
+            })->paginate(50, ['*'], 'page', $page);
+
+            return $professions;
+        } else {
+            $skills = Professions::where('name_' . $lang, 'like', '%' . $profession_name . '%')
+                ->orderBy('name_' . $lang, 'asc')
+                ->paginate(50, ['*'], 'page', $page);
+        }
 
         return $skills;
     }

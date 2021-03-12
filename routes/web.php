@@ -234,6 +234,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::get("/getSkills", "CourseController@getCourseSkills");
             Route::get("/getProfessionsBySkills/{skill_id}", "CourseController@getProfessionsBySkills");
             Route::get("/getProfessionsByProfessionalArea/{professional_area_id}", "CourseController@getProfessionsByProfessionalArea");
+            Route::get("/getProfessionsByData", "CourseController@getProfessionsByData");
             Route::get("/getSkillsByProfession/{profession_id}", "CourseController@getSkillsByProfession");
             //
             Route::post("/markAsReadNotifications", "CourseController@markAsReadNotifications");

@@ -9,6 +9,7 @@ use App\Models\CourseAttachments;
 use App\Models\CourseQuotaCost;
 use App\Models\Lesson;
 use App\Models\Notification;
+use App\Models\ProfessionalArea;
 use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCourse;
@@ -237,6 +238,7 @@ class CourseController extends Controller
         $min_rating = $request->min_rating ?? 0;
         $members_count = $request->members_count ?? 0;
         $specialities = $request->specialities;
+        $professional_areas = $request->professional_areas;
         $skills = $request->skills;
 
         // Сортировка по языку
@@ -293,9 +295,21 @@ class CourseController extends Controller
                 $q->whereIn('paid_status', [1, 2]);
             }])->having('course_members_count', '>=', $members_count);
         }
+        // Получить проф.области
+        if ($professional_areas) {
+            $professional_areas = ProfessionalArea::whereIn('id', $professional_areas)->get();
+
+            $query->whereHas('professional_areas', function ($q) use ($request) {
+                $q->whereIn('professional_areas.id', $request->professional_areas);
+            });
+        }
         // Получить профессии
         if ($specialities) {
             $professions = Professions::whereIn('id', $specialities)->get();
+
+            $query->whereHas('professions', function ($q) use ($request) {
+                $q->whereIn('professions.id', $request->specialities);
+            });
         }
         // Сортировка по навыкам
         if ($skills) {
@@ -313,7 +327,8 @@ class CourseController extends Controller
             "page_name" => $page_name,
             "request" => $request,
             "professions" => $professions ?? null,
-            "skills" => $skills ?? null
+            "skills" => $skills ?? null,
+            "professional_areas" => $professional_areas ?? null
         ]);
     }
 
