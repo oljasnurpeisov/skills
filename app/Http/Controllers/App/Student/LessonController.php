@@ -505,17 +505,21 @@ class LessonController extends Controller
         ];
 
         foreach ($languages as $language) {
-            $template = 'app.pages.page.pdf.certificate_' . $course->certificate_id . '_' . $language;
-            $pdf = PDF::loadView($template, ['data' => $data]);
-            $pdf = $pdf->setPaper('a4', 'portrait');
+            try {
+                $template = 'app.pages.page.pdf.certificate_' . $course->certificate_id . '_' . $language;
+                $pdf = PDF::loadView($template, ['data' => $data]);
+                $pdf = $pdf->setPaper('a4', 'portrait');
 
-            $path = public_path('users/user_' . $user->id . '');
-            $pdfPath = $path . '/' . 'course_' . $course->id . '_certificate_' . $language . '.pdf';
-            $pdf->save($pdfPath);
+                $path = public_path('users/user_' . $user->id . '');
+                $pdfPath = $path . '/' . 'course_' . $course->id . '_certificate_' . $language . '.pdf';
+                $pdf->save($pdfPath);
 
-            $pdfToImage = new \Spatie\PdfToImage\Pdf($pdfPath);
-            $pngPath = $path . '/' . 'course_' . $course->id . '_image_' . $language . '.png';
-            $pdfToImage->saveImage($pngPath);
+                $pdfToImage = new \Spatie\PdfToImage\Pdf($pdfPath);
+                $pngPath = $path . '/' . 'course_' . $course->id . '_image_' . $language . '.png';
+                $pdfToImage->saveImage($pngPath);
+            } catch (\InvalidArgumentException $e) {
+                $e->getMessage();
+            }
         }
 
         $filePath = '/users/user_' . $user->id;
