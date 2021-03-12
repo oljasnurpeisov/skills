@@ -77,6 +77,7 @@ class Dialog extends Model
                 $slug = 'tech_support';
             }
         } else {
+            dd($this->id);
             $name = '';
             $avatar = '';
             $slug = 'tech_support';
