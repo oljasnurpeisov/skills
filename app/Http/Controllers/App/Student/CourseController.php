@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseRate;
 use App\Models\Lesson;
+use App\Models\ProfessionalArea;
 use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCourse;
@@ -53,6 +54,7 @@ class CourseController extends Controller
         $start_date_to = $request->start_date_to;
         $finish_date_from = $request->finish_date_from;
         $finish_date_to = $request->finish_date_to;
+        $professional_areas = $request->professional_areas;
 
         // Оценка курса обучающегося
         $student_rate = CourseRate::where('student_id', '=', Auth::user()->id)->get();
@@ -82,6 +84,14 @@ class CourseController extends Controller
                         }
                     });
                 });
+            });
+        }
+        // Получить проф.области
+        if ($professional_areas) {
+            $professional_areas = ProfessionalArea::whereIn('id', $professional_areas)->get();
+
+            $query->whereHas('courses.professional_areas', function ($q) use ($request) {
+                $q->whereIn('professional_areas.id', $request->professional_areas);
             });
         }
         // Сортировка по профессиям
@@ -192,6 +202,7 @@ class CourseController extends Controller
             "finish_date_to" => $finish_date_to,
             "start_date_from" => $start_date_from,
             "start_date_to" => $start_date_to,
+            "professional_areas" => $professional_areas ?? null
         ]);
     }
 
