@@ -35,6 +35,7 @@ class CourseController extends Controller
         $skills = $request->skills;
         $term = $request->search ? $request->search : '';
         $authors = $request->authors;
+        $professional_areas = $request->professional_areas;
 
         // Сортировка по названию
         if ($term) {
@@ -110,6 +111,14 @@ class CourseController extends Controller
                 $q->whereIn('paid_status', [1, 2]);
             }])->having('course_members_count', '>=', $members_count);
         }
+        // Получить проф.области
+        if ($professional_areas) {
+            $professional_areas = ProfessionalArea::whereIn('id', $professional_areas)->get();
+
+            $query->whereHas('professional_areas', function ($q) use ($request) {
+                $q->whereIn('professional_areas.id', $request->professional_areas);
+            });
+        }
         // Сортировка по профессиям
         if ($specialities) {
             if (count(array_filter($specialities)) > 0) {
@@ -147,7 +156,8 @@ class CourseController extends Controller
             "professions" => $professions ?? null,
             "skills" => $skills ?? null,
             "authors" => $authors ?? null,
-            "content" => $content
+            "content" => $content,
+            "professional_areas" => $professional_areas ?? null
         ]);
     }
 
