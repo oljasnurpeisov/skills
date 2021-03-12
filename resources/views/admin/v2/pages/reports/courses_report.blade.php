@@ -260,19 +260,9 @@
 {{--                    <th><a href="{{request()->fullUrlWithQuery(["sortByName"=>$request->sortByName == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.course_name')}} {{$request->sortByName == 'asc' ? '↑' : ($request->sortByName == 'desc' ? '↓' : '')}}</a></th>--}}
                     <th><a href="{{request()->fullUrlWithQuery(["sortByName"=>$request->sortByName == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.course_name')}}</a></th>
                     <th><a href="{{request()->fullUrlWithQuery(["sortByAuthorName"=>$request->sortByAuthorName == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.author_name')}}</th>
-{{--                    <th>{{__('admin.pages.reports.skills')}}</a></th>--}}
-{{--                    <th>{{__('admin.pages.reports.group_profession')}}</th>--}}
-{{--                    <th>{{__('admin.pages.reports.professions')}}</th>--}}
-{{--                    <th><a href="?sortByRateCourse={{$request->sortByRateCourse == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_rate')}}</a></th>--}}
-{{--                    <th>{{__('admin.pages.reports.course_status')}}</th>--}}
-{{--                    <th>{{__('admin.pages.reports.quota_access')}}</th>--}}
-{{--                    <th>{{__('admin.pages.reports.paid_or_free')}}</th>--}}
-{{--                    <th><a href="?sortByCourseMembers={{$request->sortByCourseMembers == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_members')}}</a></th>--}}
-{{--                    <th><a href="?sortByCertificateCourseMembers={{$request->sortByCertificateCourseMembers == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_members_certificates')}}</a></th>--}}
-{{--                    <th><a href="?sortByQualificatedStudents={{$request->sortByQualificatedStudents == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_members_qualification')}}</a></th>--}}
+                    <th style="min-width: 230px;">{{__('default.pages.reporting.professional_area')}}</th>
+                    <th style="min-width: 230px;">{{__('default.pages.reporting.profession')}}</th>
                     <th style="min-width: 230px;">{{__('default.pages.reporting.skills')}}</th>
-                    <th style="min-width: 230px;">{{__('default.pages.reporting.professions_group')}}</th>
-                    <th>{{__('admin.pages.reports.professions')}}</th>
                     <th style="min-width: 33px;"><a href="?sortByRateCourse={{$request->sortByRateCourse == 'asc' ? 'desc' : 'asc'}}">{{__('default.pages.reporting.course_rate')}}</a></th>
                     <th style="min-width: 96px;">{{__('default.pages.reporting.course_status')}}</th>
                     <th style="min-width: 96px;">{{__('default.pages.reporting.course_type')}}</th>
@@ -297,17 +287,17 @@
                     <tr>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->user->company_name }}</td>
+                        @if(count($item->professional_areas()->pluck('name_ru')->toArray())<= 0)
+                            <td>-</td>
+                        @else
+                            <td>{{implode(', ', array_filter($item->professional_areas()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->professional_areas()->pluck('name_ru')->toArray()))}}</td>
+                        @endif
+                        @if(count($item->professions()->pluck('name_ru')->toArray())<= 0)
+                            <td>-</td>
+                        @else
+                            <td>{{implode(', ', array_filter($item->professions()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->professions()->pluck('name_ru')->toArray()))}}</td>
+                        @endif
                         <td>{{implode(', ', array_filter($item->skills->pluck('name_'.$lang)->toArray())) ?: implode(', ', $item->skills->pluck('name_ru')->toArray())}}</td>
-                        @if(count($item->groupProfessionsBySkills()->pluck('id')->toArray())<= 0)
-                            <td>-</td>
-                        @else
-                            <td>{{implode(', ', array_filter($item->groupProfessionsBySkills()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->groupProfessionsBySkills()->pluck('name_ru')->toArray()))}}</td>
-                        @endif
-                        @if(count($item->professionsBySkills()->pluck('id')->toArray())<= 0)
-                            <td>-</td>
-                        @else
-                            <td>{{implode(', ', array_filter($item->professionsBySkills()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->professionsBySkills()->pluck('name_ru')->toArray()))}}</td>
-                        @endif
                         <td>{{round($item->rate->pluck('rate')->avg() ?? 0, 1)}}</td>
                         <td>{{__('default.pages.reporting.statuses.'.$item->status)}}</td>
                         <td>{{$item->is_paid == true ? __('default.pages.reporting.paid_course') : __('default.pages.reporting.free_course')}}</td>

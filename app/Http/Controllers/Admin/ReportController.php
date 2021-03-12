@@ -226,6 +226,8 @@ class ReportController extends Controller
                     ->havingRaw('count(*) <= ' . $certificates_count_to);
             });
         }
+        Session::put('authors_report_export', $query->get());
+
         $items = $query->paginate(10);
 
         foreach ($items as $item) {
@@ -267,7 +269,6 @@ class ReportController extends Controller
             }
             $item->qualification_students = $author_students_finished_courseWork_count;
         }
-        Session::put('authors_report_export', $query->get());
 
         return view('admin.v2.pages.reports.authors_report', [
             'items' => $items,
@@ -476,9 +477,9 @@ class ReportController extends Controller
                 ->having('course_qualifications_members_count', '<=', $qualifications_count_to);
         }
 
-        $items = $query->paginate(10);
-
         Session::put('courses_report_export', $query->get());
+
+        $items = $query->paginate(10);
 
         return view('admin.v2.pages.reports.courses_report', [
             'items' => $items,
@@ -606,9 +607,9 @@ class ReportController extends Controller
             $qualifications_count->having('qualifications_count', '>=', $qualifications_count_from)
                 ->having('qualifications_count', '<=', $qualifications_count_to);
         }
-//        return $query->get();
-        $student_courses = [];
-        //
+
+        Session::put('students_report_export', $query->get());
+
         $items = $query->paginate(10);
 
         $i = [];
@@ -625,7 +626,6 @@ class ReportController extends Controller
             // Количество законченных курсовых работ
             $item->finishedCourseWorkrs = $finishedCourseWorks;
         }
-        Session::put('students_report_export', $query->get());
 
         return view('admin.v2.pages.reports.students_report', [
             'items' => $items,
@@ -686,17 +686,17 @@ class ReportController extends Controller
             }
             // Навыки
             $skills = implode(', ', array_filter($i->skills->pluck('name_' . $lang)->toArray())) ?: implode(', ', $i->skills->pluck('name_ru')->toArray());
-            // Группа профессий
-            if (count($i->groupProfessionsBySkills()->pluck('id')->toArray()) <= 0) {
-                $group_professions = '-';
-            } else {
-                $group_professions = implode(', ', array_filter($i->groupProfessionsBySkills()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->groupProfessionsBySkills()->pluck('name_ru')->toArray()));
-            }
-            // Группа профессий
-            if (count($i->professionsBySkills()->pluck('id')->toArray()) <= 0) {
+            // Профессия
+            if (count($i->professions()->pluck('name_ru')->toArray()) <= 0) {
                 $professions = '-';
             } else {
-                $professions = implode(', ', array_filter($i->professionsBySkills()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professionsBySkills()->pluck('name_ru')->toArray()));
+                $professions= implode(', ', array_filter($i->professions()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professions()->pluck('name_ru')->toArray()));
+            }
+            // Проф.область
+            if (count($i->professional_areas()->pluck('name_ru')->toArray()) <= 0) {
+                $professional_areas = '-';
+            } else {
+                $professional_areas = implode(', ', array_filter($i->professional_areas()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professional_areas()->pluck('name_ru')->toArray()));
             }
             // Рейтинг курса
             $rate = round($i->rate->pluck('rate')->avg() ?? 0, 1);
@@ -742,8 +742,8 @@ class ReportController extends Controller
             // Стоимость курса
             $course_cost = $i->cost ?? '-';
 
-            $newElement = ['name' => $name, 'author_name' => $author_name, 'skills' => $skills, 'group_professions' => $group_professions,
-                'professions' => $professions, 'course_rate' => $rate, 'course_status' => $status,
+            $newElement = ['name' => $name, 'author_name' => $author_name, 'professional_areas' => $professional_areas,
+                'professions' => $professions, 'skills' => $skills, 'course_rate' => $rate, 'course_status' => $status,
                 'course_type' => $course_type, 'course_cost' => $course_cost, 'is_quota' => $is_quota, 'quota_cost' => $quota_cost,
                 'members_free' => $members_free, 'certificate_free' => $certificate_free, 'qualificated_free' => $qualificated_free,
                 'members_paid' => $members_paid, 'certificate_paid' => $certificate_paid, 'qualificated_paid' => $qualificated_paid, 'total_get_paid' => $total_get_paid,

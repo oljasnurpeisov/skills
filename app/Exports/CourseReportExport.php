@@ -54,9 +54,9 @@ class CourseReportExport implements FromArray, WithHeadings, WithColumnWidths, S
         return [
             __('admin.pages.reports.course_name'),
             __('admin.pages.reports.author_name'),
-            __('admin.pages.reports.skills'),
-            __('admin.pages.reports.group_profession'),
-            __('admin.pages.reports.professions'),
+            __('default.pages.reporting.professional_area'),
+            __('default.pages.reporting.profession'),
+            __('default.pages.reporting.skills'),
             __('default.pages.reporting.course_rate'),
             __('default.pages.reporting.course_status'),
             __('default.pages.reporting.course_type'),
