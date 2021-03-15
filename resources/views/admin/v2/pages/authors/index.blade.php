@@ -79,17 +79,15 @@
                             {{--<td></td>--}}
                             {{--@endif--}}
                             <td>
-                                @if($item->is_activate == 0)
+                                @if($item->email_verified_at == null)
                                     <div class="alert alert-warning" style="margin: 0;">
-                                        @elseif($item->is_activate == 1)
-                                            <div class="alert alert-success" style="margin: 0;">
-                                                @else
-                                                    <div class="alert alert-danger" style="margin: 0;">
-                                                        @endif
-                                                        {{ __("admin.pages.user.statuses.$item->is_activate") }}
-                                                    </div>
-                                            </div>
+                                        {{ __("admin.pages.user.statuses.0") }}
                                     </div>
+                                @else
+                                    <div class="alert alert-success" style="margin: 0;">
+                                        {{ __("admin.pages.user.statuses.1") }}
+                                    </div>
+                                @endif
                             </td>
                             <td>{!! $item->created_at . ($creator ? '<br>'.($creator->surname.' '.$creator->name.' '.$creator->middle_name) : '') !!}</td>
                             <td>{!! $item->updated_at . ($modifier ? '<br>'.($modifier->surname.' '.$modifier->name.' '.$modifier->middle_name) : '') !!}</td>
