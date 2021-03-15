@@ -154,7 +154,7 @@
                     <th><a href="?sortByQuota={{$request->sortByQuota == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.quotas_count')}}</a></th>
                     <th>{{__('admin.pages.reports.student_courses_count')}}</th>
                     <th>{{__('admin.pages.reports.student_certificates_count')}}</th>
-                    <th>{{__('admin.pages.reports.student_qualifications_count')}}</th>
+{{--                    <th>{{__('admin.pages.reports.student_qualifications_count')}}</th>--}}
                 </tr>
                 </thead>
                 <tbody>
@@ -165,7 +165,7 @@
                         <td>{{$item->student_info->quota_count}}</td>
                         <td>{{$item->student_course->whereIn('paid_status', [1,2,3])->count()}}</td>
                         <td>{{$item->student_course->where('is_finished', '=', true)->count()}}</td>
-                        <td>{{$item->qualifications_count}}</td>
+{{--                        <td>{{$item->qualifications_count}}</td>--}}
                     </tr>
                 @endforeach
                 </tbody>

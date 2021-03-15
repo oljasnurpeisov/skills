@@ -193,7 +193,7 @@
                     <th><a href="?sortByQuotaCoursesCount={{$request->sortByQuotaCoursesCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_by_quota_count')}}</a></th>
                     <th><a href="?sortByStudentsCount={{$request->sortByStudentsCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_students_count')}}</a></th>
                     <th><a href="?sortByCertificateStudentsCount={{$request->sortByCertificateStudentsCount == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.courses_certificates_students_count')}}</th>
-                    <th>{{__('admin.pages.reports.courses_students_confirm_qualification_count')}}</th>
+{{--                    <th>{{__('admin.pages.reports.courses_students_confirm_qualification_count')}}</th>--}}
                 </tr>
                 </thead>
                 <tbody>
@@ -208,7 +208,7 @@
                         <td>{{$item->courses->where('quota_status', '=', 2)->count()}}</td>
                         <td>{{count($item->members) ?? 0}}</td>
                         <td>{{count($item->certificate_members) ?? 0}}</td>
-                        <td>{{$item->qualification_students ?? 0}}</td>
+{{--                        <td>{{$item->qualification_students ?? 0}}</td>--}}
                     </tr>
                 @endforeach
                 </tbody>

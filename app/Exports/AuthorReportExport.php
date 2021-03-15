@@ -57,7 +57,7 @@ class AuthorReportExport implements FromArray, WithHeadings, WithColumnWidths, S
             __('admin.pages.reports.courses_by_quota_count'),
             __('admin.pages.reports.courses_students_count'),
             __('admin.pages.reports.courses_certificates_students_count'),
-            __('admin.pages.reports.courses_students_confirm_qualification_count')
+//            __('admin.pages.reports.courses_students_confirm_qualification_count')
         ];
     }
 

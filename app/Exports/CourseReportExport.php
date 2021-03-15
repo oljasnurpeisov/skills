@@ -65,14 +65,14 @@ class CourseReportExport implements FromArray, WithHeadings, WithColumnWidths, S
             __('default.pages.reporting.cost_by_quota'),
             __('default.pages.reporting.members_free'),
             __('default.pages.reporting.certificate_free'),
-            __('default.pages.reporting.qualificated_free'),
+//            __('default.pages.reporting.qualificated_free'),
             __('default.pages.reporting.members_paid'),
             __('default.pages.reporting.certificate_paid'),
-            __('default.pages.reporting.qualificated_paid'),
+//            __('default.pages.reporting.qualificated_paid'),
             __('default.pages.reporting.total_get_paid'),
             __('default.pages.reporting.members_quota'),
             __('default.pages.reporting.certificate_quota'),
-            __('default.pages.reporting.qualificated_quota'),
+//            __('default.pages.reporting.qualificated_quota'),
             __('default.pages.reporting.total_get_quota')
         ];
     }

@@ -659,7 +659,7 @@ class ReportController extends Controller
             $qualifications = $i->qualifications_count;
 
             $newElement = ['name' => $name, 'unemployed_status' => $unemployed_status, 'quota_count' => $quota_count,
-                'courses_count' => $courses_count, 'certificates' => $certificates, 'qualifications' => $qualifications];
+                'courses_count' => $courses_count, 'certificates' => $certificates];
 
             array_push($export, $newElement);
         }
@@ -745,9 +745,9 @@ class ReportController extends Controller
             $newElement = ['name' => $name, 'author_name' => $author_name, 'professional_areas' => $professional_areas,
                 'professions' => $professions, 'skills' => $skills, 'course_rate' => $rate, 'course_status' => $status,
                 'course_type' => $course_type, 'course_cost' => $course_cost, 'is_quota' => $is_quota, 'quota_cost' => $quota_cost,
-                'members_free' => $members_free, 'certificate_free' => $certificate_free, 'qualificated_free' => $qualificated_free,
-                'members_paid' => $members_paid, 'certificate_paid' => $certificate_paid, 'qualificated_paid' => $qualificated_paid, 'total_get_paid' => $total_get_paid,
-                'members_quota' => $members_quota, 'certificate_quota' => $certificate_quota, 'qualificated_quota' => $qualificated_quota, 'total_get_quota' => $total_get_quota];
+                'members_free' => $members_free, 'certificate_free' => $certificate_free, 'members_paid' => $members_paid,
+                'certificate_paid' => $certificate_paid, 'total_get_paid' => $total_get_paid, 'members_quota' => $members_quota,
+                'certificate_quota' => $certificate_quota, 'total_get_quota' => $total_get_quota];
 
             array_push($export, $newElement);
         }
@@ -825,8 +825,7 @@ class ReportController extends Controller
 
             $newElement = ['name' => $name, 'specialization' => $specialization, 'rate' => $rate, 'courses_count' => $courses_count,
                 'paid_courses_count' => $paid_courses_count, 'free_courses_count' => $free_courses_count, 'quota_courses_count' => $quota_courses_count,
-                'students_count' => $students_count, 'students_certificate_count' => $students_certificate_count,
-                'students_qualification_count' => $students_qualification_count];
+                'students_count' => $students_count, 'students_certificate_count' => $students_certificate_count];
 
             array_push($export, $newElement);
         }

@@ -46,7 +46,7 @@ class StudentReportExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
             __('admin.pages.reports.quotas_count'),
             __('admin.pages.reports.student_courses_count'),
             __('admin.pages.reports.student_certificates_count'),
-            __('admin.pages.reports.student_qualifications_count')
+//            __('admin.pages.reports.student_qualifications_count')
         ];
     }
 

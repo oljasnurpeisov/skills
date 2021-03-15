@@ -36,7 +36,7 @@ class ReportingExport implements FromArray, WithHeadings, ShouldAutoSize, WithCo
     {
         $sheet->getStyle('B2:B999')->getAlignment()->setWrapText(true);
         $sheet->getStyle('C2:C999')->getAlignment()->setWrapText(true);
-        $sheet->getStyle('A1:K1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:R1')->getFont()->setBold(true);
     }
 
 
@@ -61,14 +61,14 @@ class ReportingExport implements FromArray, WithHeadings, ShouldAutoSize, WithCo
             __('default.pages.reporting.cost_by_quota'),
             __('default.pages.reporting.members_free'),
             __('default.pages.reporting.certificate_free'),
-            __('default.pages.reporting.qualificated_free'),
+//            __('default.pages.reporting.qualificated_free'),
             __('default.pages.reporting.members_paid'),
             __('default.pages.reporting.certificate_paid'),
-            __('default.pages.reporting.qualificated_paid'),
+//            __('default.pages.reporting.qualificated_paid'),
             __('default.pages.reporting.total_get_paid'),
             __('default.pages.reporting.members_quota'),
             __('default.pages.reporting.certificate_quota'),
-            __('default.pages.reporting.qualificated_quota'),
+//            __('default.pages.reporting.qualificated_quota'),
             __('default.pages.reporting.total_get_quota')
         ];
     }

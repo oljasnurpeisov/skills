@@ -68,14 +68,14 @@
                             <th style="min-width: 96px;">{{__('default.pages.reporting.cost_by_quota')}}</th>
                             <th style="min-width: 96px;">{{__('default.pages.reporting.members_free')}}</th>
                             <th style="min-width: 96px;">{{__('default.pages.reporting.certificate_free')}}</th>
-                            <th style="min-width: 96px;">{{__('default.pages.reporting.qualificated_free')}}</th>
+{{--                            <th style="min-width: 96px;">{{__('default.pages.reporting.qualificated_free')}}</th>--}}
                             <th style="min-width: 96px;">{{__('default.pages.reporting.members_paid')}}</th>
                             <th style="min-width: 96px;">{{__('default.pages.reporting.certificate_paid')}}</th>
-                            <th style="min-width: 96px;">{{__('default.pages.reporting.qualificated_paid')}}</th>
+{{--                            <th style="min-width: 96px;">{{__('default.pages.reporting.qualificated_paid')}}</th>--}}
                             <th style="min-width: 96px;">{{__('default.pages.reporting.total_get_paid')}}</th>
                             <th style="min-width: 96px;">{{__('default.pages.reporting.members_quota')}}</th>
                             <th style="min-width: 96px;">{{__('default.pages.reporting.certificate_quota')}}</th>
-                            <th style="min-width: 96px;">{{__('default.pages.reporting.qualificated_quota')}}</th>
+{{--                            <th style="min-width: 96px;">{{__('default.pages.reporting.qualificated_quota')}}</th>--}}
                             <th style="min-width: 96px;">{{__('default.pages.reporting.total_get_quota')}}</th>
                         </tr>
                         </thead>
@@ -110,14 +110,14 @@
                                 @endif
                                 <td>{{$item->course_members->where('paid_status', '=', 3)->count()}}</td>
                                 <td>{{$item->course_members->where('paid_status', '=', 3)->where('is_finished', '=', true)->count()}}</td>
-                                <td>{{$item->course_members->where('paid_status', '=', 3)->where('is_qualificated', '=', true)->count()}}</td>
+{{--                                <td>{{$item->course_members->where('paid_status', '=', 3)->where('is_qualificated', '=', true)->count()}}</td>--}}
                                 <td>{{$item->course_members->where('paid_status', '=', 1)->count()}}</td>
                                 <td>{{$item->course_members->where('paid_status', '=', 1)->where('is_finished', '=', true)->count()}}</td>
-                                <td>{{$item->course_members->where('paid_status', '=', 1)->where('is_qualificated', '=', true)->count()}}</td>
+{{--                                <td>{{$item->course_members->where('paid_status', '=', 1)->where('is_qualificated', '=', true)->count()}}</td>--}}
                                 <td>{{number_format($item->course_members->where('paid_status', '=', 1)->sum('payment.amount'), 0, ',', ' ')}}</td>
                                 <td>{{$item->course_members->where('paid_status', '=', 2)->count()}}</td>
                                 <td>{{$item->course_members->where('paid_status', '=', 2)->where('is_finished', '=', true)->count()}}</td>
-                                <td>{{$item->course_members->where('paid_status', '=', 2)->where('is_qualificated', '=', true)->count()}}</td>
+{{--                                <td>{{$item->course_members->where('paid_status', '=', 2)->where('is_qualificated', '=', true)->count()}}</td>--}}
                                 <td>{{number_format($item->course_members->where('paid_status', '=', 2)->sum('payment.amount'), 0, ',', ' ')}}</td>
                             </tr>
                         @endforeach

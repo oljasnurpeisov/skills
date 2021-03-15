@@ -921,9 +921,9 @@ class CourseController extends Controller
 
             $newElement = ['name' => $name, 'professional_areas' => $professional_areas, 'professions' => $professions, 'skills' => $skills, 'course_rate' => $course_rate,
                 'course_status' => $course_status, 'course_type' => $course_type, 'course_cost' => $course_cost, 'is_quota' => $is_quota, 'quota_cost' => $quota_cost,
-                'members_free' => $members_free, 'certificate_free' => $certificate_free, 'qualificated_free' => $qualificated_free,
-                'members_paid' => $members_paid, 'certificate_paid' => $certificate_paid, 'qualificated_paid' => $qualificated_paid, 'total_get_paid' => $total_get_paid,
-                'members_quota' => $members_quota, 'certificate_quota' => $certificate_quota, 'qualificated_quota' => $qualificated_quota, 'total_get_quota' => $total_get_quota];
+                'members_free' => $members_free, 'certificate_free' => $certificate_free,'members_paid' => $members_paid,
+                'certificate_paid' => $certificate_paid, 'total_get_paid' => $total_get_paid,'members_quota' => $members_quota,
+                'certificate_quota' => $certificate_quota, 'total_get_quota' => $total_get_quota];
 
             array_push($export, $newElement);
         }
