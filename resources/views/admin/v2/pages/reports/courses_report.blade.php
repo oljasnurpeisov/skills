@@ -183,7 +183,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="input-group">
-                            <label class="input-group__title">Количество сертфикатов: от</label>
+                            <label class="input-group__title">Количество сертификатов: от</label>
                             <label class="">
                                 <input type="number" name="certificates_count_from" placeholder=""
                                        class="input-regular" value="{{$request->certificates_count_from}}">
@@ -200,26 +200,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="input-group">
-                            <label class="input-group__title">Количество квалификаций: от</label>
-                            <label class="">
-                                <input type="number" name="qualifications_count_from" placeholder=""
-                                       class="input-regular" value="{{$request->qualifications_count_from}}">
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="input-group">
-                            <label class="input-group__title">до</label>
-                            <label class="">
-                                <input type="number" name="qualifications_count_to" placeholder=""
-                                       class="input-regular" value="{{$request->qualifications_count_to}}">
-                            </label>
-                        </div>
-                    </div>
-                </div>
+{{--                <div class="row">--}}
+{{--                    <div class="col-sm-6">--}}
+{{--                        <div class="input-group">--}}
+{{--                            <label class="input-group__title">Количество квалификаций: от</label>--}}
+{{--                            <label class="">--}}
+{{--                                <input type="number" name="qualifications_count_from" placeholder=""--}}
+{{--                                       class="input-regular" value="{{$request->qualifications_count_from}}">--}}
+{{--                            </label>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-sm-6">--}}
+{{--                        <div class="input-group">--}}
+{{--                            <label class="input-group__title">до</label>--}}
+{{--                            <label class="">--}}
+{{--                                <input type="number" name="qualifications_count_to" placeholder=""--}}
+{{--                                       class="input-regular" value="{{$request->qualifications_count_to}}">--}}
+{{--                            </label>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
             <div class="input-group">
                 <a href="javascript:;" title="Расширенный фильтр" class="grey-link small collapse-btn"
