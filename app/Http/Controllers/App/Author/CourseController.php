@@ -943,6 +943,7 @@ class CourseController extends Controller
 
             foreach ($themes as $theme) {
                 $theme->order = $theme->index_number;
+                $theme->item_type = 'theme';
 
                 foreach ($theme->lessons as $lesson) {
                     $lesson->order = $lesson->index_number;
@@ -959,6 +960,7 @@ class CourseController extends Controller
 
             foreach ($unthemes_lessons as $unthemes_lesson) {
                 $unthemes_lesson->order = $unthemes_lesson->index_number;
+                $unthemes_lesson->item_type = 'lesson';
 
                 $unthemes_lesson->lessons = [];
             }

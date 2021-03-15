@@ -70,17 +70,8 @@ class ThemeController extends Controller
 
     public function moveTheme(Request $request)
     {
-//        return $request;
         $theme_1 = Theme::where('id', '=', $request->theme_1_id)->first();
         $theme_2 = Theme::where('id', '=', $request->theme_2_id)->first();
-
-//        // Если это не тема, то вернуть урок без темы
-//        if (!$theme_1) {
-//            $theme_1 = Lesson::where('id', '=', $request->theme_1_id)->where('theme_id', '=', null)->first();
-//        }
-//        if (!$theme_2) {
-//            $theme_2 = Lesson::where('id', '=', $request->theme_2_id)->where('theme_id', '=', null)->first();
-//        }
 
         [$theme_1->index_number, $theme_2->index_number] = [$theme_2->index_number, $theme_1->index_number];
         $theme_1->save();
@@ -89,39 +80,33 @@ class ThemeController extends Controller
 
     public function moveItem(Request $request)
     {
-        $theme_1 = $request->theme_1_id;
-        $theme_2 = $request->theme_2_id;
-        $lesson_1 = $request->lesson_1_id;
-        $lesson_2 = $request->lesson_2_id;
-        $items = [];
+        $item_1_id = $request->item_1_id;
+        $item_2_id = $request->item_2_id;
+        $item_1_type = $request->item_1_type;
+        $item_2_type = $request->item_2_type;
 
-        if ($theme_1) {
-            $items[] = Theme::where('id', '=', $request->theme_1_id)->first();
+        if ($item_1_type == 'theme') {
+            $item_1 = Theme::where('id', '=', $item_1_id)->first();
+        } else {
+            $item_1 = Lesson::where('id', '=', $item_1_id)->where('theme_id', '=', null)->first();
         }
-        if ($theme_2) {
-            $items[] = Theme::where('id', '=', $request->theme_2_id)->first();
-        }
-        if ($lesson_1) {
-            $items[] = Lesson::where('id', '=', $request->lesson_1_id)->where('theme_id', '=', null)->first();
-        }
-        if ($lesson_2) {
-            $items[] = Lesson::where('id', '=', $request->lesson_2_id)->where('theme_id', '=', null)->first();
+
+        if ($item_2_type == 'theme') {
+            $item_2 = Theme::where('id', '=', $item_2_id)->first();
+        } else {
+            $item_2 = Lesson::where('id', '=', $item_2_id)->where('theme_id', '=', null)->first();
         }
 
         /** Добавить тут проверку автора на владение курса */
 
-        if (count($items) == 2) {
-            if ($items[0] and $items[1]) {
-                [$items[0]->index_number, $items[1]->index_number] = [$items[1]->index_number, $items[0]->index_number];
-                $items[0]->save();
-                $items[1]->save();
+        if ($item_1 and $item_2) {
+            [$item_1->index_number, $item_2->index_number] = [$item_2->index_number, $item_1->index_number];
+            $item_1->save();
+            $item_2->save();
 
-                return 200;
-            } else {
-                return 'Не удалось выполнить запрос, один или несколько объектов не были найдены';
-            }
+            return 200;
         } else {
-            return 'Для выполнения запроса необходимо передать 2 объекта';
+            return 'Не удалось выполнить запрос, один или несколько объектов не были найдены';
         }
 
     }
