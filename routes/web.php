@@ -175,6 +175,10 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             });
         });
     });
+    /** Для смены урока без авторизации автора, для теста(позже удалить) */
+    Route::group(["namespace" => "Author"], function () {
+        Route::post("/move-item", "ThemeController@moveItem");
+    });
     // Оплата курса
     Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
         Route::get("/", "PageController@index");

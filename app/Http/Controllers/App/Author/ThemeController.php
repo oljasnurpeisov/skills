@@ -16,8 +16,9 @@ use Illuminate\Support\Facades\File;
 class ThemeController extends Controller
 {
 
-    public function createTheme(Request $request){
-        $last_id = Theme::whereHas('courses', function($q) use ($request){
+    public function createTheme(Request $request)
+    {
+        $last_id = Theme::whereHas('courses', function ($q) use ($request) {
             $q->where('courses.id', '=', $request->course_id);
         })->orderBy('index_number', 'desc')->latest()->first();
 
@@ -52,11 +53,11 @@ class ThemeController extends Controller
     {
         Theme::where('id', '=', $request->theme_id)->delete();
 
-        $course_themes = Theme::whereHas('courses', function($q) use ($request){
+        $course_themes = Theme::whereHas('courses', function ($q) use ($request) {
             $q->where('courses.id', '=', $request->course_id);
         })->orderBy('index_number', 'asc')->get();
 
-        foreach ($course_themes as $key => $theme){
+        foreach ($course_themes as $key => $theme) {
             $theme->index_number = $key;
             $theme->save();
         }
@@ -67,12 +68,61 @@ class ThemeController extends Controller
         return $messages;
     }
 
-    public function moveTheme(Request $request){
+    public function moveTheme(Request $request)
+    {
+//        return $request;
         $theme_1 = Theme::where('id', '=', $request->theme_1_id)->first();
         $theme_2 = Theme::where('id', '=', $request->theme_2_id)->first();
+
+//        // Если это не тема, то вернуть урок без темы
+//        if (!$theme_1) {
+//            $theme_1 = Lesson::where('id', '=', $request->theme_1_id)->where('theme_id', '=', null)->first();
+//        }
+//        if (!$theme_2) {
+//            $theme_2 = Lesson::where('id', '=', $request->theme_2_id)->where('theme_id', '=', null)->first();
+//        }
 
         [$theme_1->index_number, $theme_2->index_number] = [$theme_2->index_number, $theme_1->index_number];
         $theme_1->save();
         $theme_2->save();
+    }
+
+    public function moveItem(Request $request)
+    {
+        $theme_1 = $request->theme_1_id;
+        $theme_2 = $request->theme_2_id;
+        $lesson_1 = $request->lesson_1_id;
+        $lesson_2 = $request->lesson_2_id;
+        $items = [];
+
+        if ($theme_1) {
+            $items[] = Theme::where('id', '=', $request->theme_1_id)->first();
+        }
+        if ($theme_2) {
+            $items[] = Theme::where('id', '=', $request->theme_2_id)->first();
+        }
+        if ($lesson_1) {
+            $items[] = Lesson::where('id', '=', $request->lesson_1_id)->where('theme_id', '=', null)->first();
+        }
+        if ($lesson_2) {
+            $items[] = Lesson::where('id', '=', $request->lesson_2_id)->where('theme_id', '=', null)->first();
+        }
+
+        /** Добавить тут проверку автора на владение курса */
+
+        if (count($items) == 2) {
+            if ($items[0] and $items[1]) {
+                [$items[0]->index_number, $items[1]->index_number] = [$items[1]->index_number, $items[0]->index_number];
+                $items[0]->save();
+                $items[1]->save();
+
+                return 200;
+            } else {
+                return 'Не удалось выполнить запрос, один или несколько объектов не были найдены';
+            }
+        } else {
+            return 'Для выполнения запроса необходимо передать 2 объекта';
+        }
+
     }
 }

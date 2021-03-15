@@ -936,6 +936,10 @@ class CourseController extends Controller
     {
         if ($course->author_id == Auth::user()->id) {
             $themes = Theme::where('course_id', '=', $course->id)->with('lessons')->get();
+            $unthemes_lessons = Lesson::where('theme_id', '=', null)
+                ->where('course_id', '=', $course->id)
+                ->whereNotIn('type', [3,4])
+                ->get();
 
             foreach ($themes as $theme) {
                 $theme->order = $theme->index_number;
@@ -952,6 +956,14 @@ class CourseController extends Controller
 
                 }
             }
+
+            foreach ($unthemes_lessons as $unthemes_lesson) {
+                $unthemes_lesson->order = $unthemes_lesson->index_number;
+
+                $unthemes_lesson->lessons = [];
+            }
+
+            $themes = $themes->merge($unthemes_lessons);
 
             return $themes;
         }
