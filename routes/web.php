@@ -322,8 +322,11 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::post("/my-courses/quota-confirm-course/{item}", "CourseController@quotaConfirm");
                     // Урок
                     Route::get("/my-courses/course/{item}/theme-{theme}/create-lesson", "LessonController@createLesson");
+                    Route::get("/my-courses/course/{item}/create-lesson", "LessonController@createUnthemeLesson");
                     Route::get("/my-courses/course/{course}/edit-lesson-{lesson}", "LessonController@editLesson");
+                    Route::get("/my-courses/course/{course}/edit-untheme-lesson-{lesson}", "LessonController@editUnthemeLesson");
 //                    Route::get("/my-courses/course/{course}/theme-{theme}/view-lesson-{lesson}", "LessonController@viewLesson");
+                    Route::post("/create-lesson/{course}", "LessonController@storeUnthemeLesson");
                     Route::post("/create-lesson/{course}/{theme}", "LessonController@storeLesson");
                     Route::post("/course-{course}/edit-lesson-{item}", "LessonController@updateLesson");
                     Route::delete("/course-{course}/theme-{theme}/lesson-{lesson}/delete-lesson-form", "LessonController@deleteLessonForm");

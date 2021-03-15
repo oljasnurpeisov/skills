@@ -155,6 +155,11 @@
                                                class="btn small"
                                                data-fancybox>{{__('default.pages.courses.create_theme')}}</a>
                                         </div>
+                                        <div class="col-auto">
+                                            <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-lesson"
+                                               title="{{__('default.pages.courses.create_lesson')}}"
+                                               class="btn small">{{__('default.pages.courses.create_lesson')}}</a>
+                                        </div>
                                         @if($item->finalTest() == null)
                                             <div class="col-auto">
                                                 <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-final-test"

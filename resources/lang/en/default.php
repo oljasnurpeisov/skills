@@ -26,7 +26,7 @@ return [
             'course_materials' => 'Содержание курса',
             'course_description' => 'Описание курса',
             'course_description_placeholder' => 'Опишите содержание курса',
-            'create_theme' => 'Создать тему',
+            'create_theme' => 'Создать модуль',
             'coursework_title' => 'Курсовая работа',
             'final_test_title' => 'Итоговое тестирование',
 

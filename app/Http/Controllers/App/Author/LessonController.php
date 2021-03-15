@@ -35,6 +35,20 @@ class LessonController extends Controller
         }
     }
 
+    public function createUnthemeLesson($lang, Course $item)
+    {
+        $lessons_type = LessonsType::all();
+        if ($item->author_id == Auth::user()->id) {
+            return view("app.pages.author.courses.create_lesson", [
+                "item" => $item,
+                "theme" => null,
+                "lessons_type" => $lessons_type
+            ]);
+        } else {
+            return redirect("/" . $lang . "/my-courses");
+        }
+    }
+
     public function storeLesson($lang, Request $request, Course $course, Theme $theme)
     {
         $this->validate($request, [
@@ -168,6 +182,147 @@ class LessonController extends Controller
         return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.create_request_message'));
     }
 
+    public function storeUnthemeLesson($lang, Request $request, Course $course)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'duration' => 'required|numeric|gt:0'
+        ]);
+
+        // Получить послений index из тем и уроков без тем
+        $last_theme_index_id = Theme::whereCourseId($course->id)->get();
+        $last_lesson_index_id = Lesson::whereCourseId($course->id)
+            ->whereThemeId(null)
+            ->whereNotIn('type', [3,4])
+            ->get();
+        $last_index = $last_theme_index_id
+            ->merge($last_lesson_index_id)
+            ->pluck('index_number')
+            ->toArray();
+        sort($last_index);
+        $last_index = end($last_index);
+
+        if ($last_index) {
+            $index = $last_index + 1;
+        } else {
+            $index = 0;
+        }
+
+        $item = new Lesson;
+        $item->course_id = $course->id;
+        $item->name = $request->name;
+        $item->index_number = $index;
+
+        if ($request->type == 'theory') {
+            $item->type = 1;
+
+            $item->end_lesson_type = 2;
+
+        } else {
+            $item->type = 2;
+
+            if ($request->practiceType == 'test') {
+                $item->end_lesson_type = 0;
+
+                $data = array(
+                    "questions" => array(),
+                    "passingScore" => $request->passingScore,
+                    "mixAnswers" => $request->mixAnswers
+                );
+
+                foreach ($request->questions as $key => $question) {
+                    $answers = $request->answers[$key];
+
+                    if (isset($request->isPictures[$key])) {
+                        foreach ($answers as $k => $answer) {
+                            if (is_array(json_decode($answer))) {
+                                $answers[$k] = json_decode($answer)[0];
+                            }
+                        }
+                    }
+
+                    $data['questions'][] = array(
+                        'name' => $request->questions[$key],
+                        'is_pictures' => isset($request->isPictures[$key]),
+                        'answers' => $answers
+                    );
+                }
+
+                $item->practice = json_encode($data);
+
+
+            } else if ($request->practiceType == 'homework') {
+                $item->end_lesson_type = 1;
+
+                $item->practice = $request->homework;
+            }
+        }
+
+        $item->duration = $request->duration;
+        $item->theory = $request->theory;
+
+        if (($request->image != $item->image)) {
+            File::delete(public_path($item->image));
+
+            $item->image = $request->image;
+        }
+
+        $item->save();
+
+        // Вложения к уроку
+        $item_attachments = new LessonAttachments;
+        $item_attachments->lesson_id = $item->id;
+
+        // Ссылки на видео курса
+        $item_attachments->videos_link = json_encode($request->videos_link);
+
+        // Ссылки на видео курса для слабовидящих
+        if ($request->videos_poor_vision_link) {
+            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        }
+
+        // Видео с устройства
+        if (($request->videos != $item_attachments->videos)) {
+            File::delete(public_path($item_attachments->videos));
+
+            $item_attachments->videos = $request->videos;
+        }
+        // Видео с устройства для слабовидящих
+        if (($request->videos_poor_vision != $item_attachments->videos_poor_vision)) {
+            File::delete(public_path($item_attachments->videos_poor_vision));
+
+            $item_attachments->videos_poor_vision = $request->videos_poor_vision;
+        }
+        // Аудио с устройства
+        if (($request->audios != $item_attachments->audios)) {
+            File::delete(public_path($item_attachments->audios));
+
+            $item_attachments->audios = $request->audios;
+        }
+        // Аудио с устройства для слабовидящих
+        if (($request->audios_poor_vision != $item_attachments->audios_poor_vision)) {
+            File::delete(public_path($item_attachments->audios_poor_vision));
+
+            $item_attachments->audios_poor_vision = $request->audios_poor_vision;
+        }
+        // Другие материалы
+        if (($request->another_files != $item_attachments->another_files)) {
+            File::delete(public_path($item_attachments->another_files));
+
+            $item_attachments->another_files = $request->another_files;
+        }
+        // Другие материалы для слабовидящих
+        if (($request->another_files_poor_vision != $item_attachments->another_files_poor_vision)) {
+            File::delete(public_path($item_attachments->another_files_poor_vision));
+
+            $item_attachments->another_files_poor_vision = $request->another_files_poor_vision;
+        }
+
+        $item_attachments->save();
+
+        return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.create_request_message'));
+    }
+
     public function editLesson($lang, Course $course, Lesson $lesson)
     {
 
@@ -185,6 +340,22 @@ class LessonController extends Controller
         if (($course->author_id == Auth::user()->id) and (!empty($lesson_theme->lessons->first()->id) == $lesson->id)) {
             return view("app.pages.author.courses.edit_lesson", [
                 "theme" => $theme,
+                "item" => $lesson,
+                "lessons_type" => $lessons_type,
+                "course" => $course
+            ]);
+        } else {
+            return redirect("/" . app()->getLocale() . "/my-courses");
+        }
+
+    }
+
+    public function editUnthemeLesson($lang, Course $course, Lesson $lesson)
+    {
+        $lessons_type = LessonsType::all();
+
+        if (($course->author_id == Auth::user()->id) and ($lesson->theme_id == null)) {
+            return view("app.pages.author.courses.edit_lesson", [
                 "item" => $lesson,
                 "lessons_type" => $lessons_type,
                 "course" => $course
