@@ -185,6 +185,7 @@ return [
             'authors_report' => 'Отчет по авторам',
             'courses_report' => 'Отчет по курсам',
             'students_report' => 'Отчет по обучающимся',
+            'certificates_report' => 'Отчет по сертификатам',
 
             'name_title' => 'ФИО автора',
             'specialization' => 'Специализация',

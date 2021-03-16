@@ -134,6 +134,7 @@
                     <a href="/{{$lang}}/admin/export-students-report" class="btn btn--blue">Экспорт</a>
                 </div>
             </div>
+        </form>
 
 
         <div class="block">

@@ -92,6 +92,8 @@
                     </li>
                     <li><a href="/{{$lang}}/admin/reports/students">{{ __('admin.pages.reports.students_report') }}</a>
                     </li>
+                    <li><a href="/{{$lang}}/admin/reports/certificates">{{ __('admin.pages.reports.certificates_report') }}</a>
+                    </li>
                 </ul>
             </li>
             @endhasPermission

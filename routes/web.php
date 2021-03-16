@@ -153,6 +153,9 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 // Отчеты по обучающимся
                 Route::get('/reports/students', 'ReportController@studentsReports');
                 Route::get("/export-students-report", "ReportController@exportStudentsReport");
+                // Отчеты по сертификатам
+                Route::get('/reports/certificates', 'ReportController@certificatesReports');
+                Route::get("/export-certificates-report", "ReportController@exportCertificates");
             });
         });
     });
