@@ -172,7 +172,8 @@ class UserController extends Controller
         Session::put('student_token', $token);
         Auth::login($user);
 
-        return redirect("/" . app()->getLocale());
+        return redirect()->back();
+//        return redirect("/" . app()->getLocale());
     }
 
     public function getStudentResume($token)
