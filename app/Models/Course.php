@@ -76,6 +76,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int|null $professions_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CourseQuotaCost[] $quotaCost
  * @property-read int|null $quota_cost_count
+ * @property int $is_poor_hearing
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProfessionalArea[] $professional_areas
+ * @property-read int|null $professional_areas_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereIsPoorHearing($value)
  */
 class Course extends Model
 {

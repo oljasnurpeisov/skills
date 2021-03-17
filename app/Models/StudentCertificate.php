@@ -31,6 +31,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|StudentCertificate whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|StudentCertificate whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Course $courses
+ * @property-read \App\Models\User $students
  */
 class StudentCertificate extends Model
 {

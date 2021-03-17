@@ -34,6 +34,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CourseAttachments whereVideosPoorVision($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CourseAttachments whereVideosPoorVisionLink($value)
  * @mixin \Eloquent
+ * @property string|null $videos_poor_hearing_link
+ * @property string|null $videos_poor_hearing
+ * @property string|null $audios_poor_hearing
+ * @method static \Illuminate\Database\Eloquent\Builder|CourseAttachments whereAudiosPoorHearing($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CourseAttachments whereVideosPoorHearing($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CourseAttachments whereVideosPoorHearingLink($value)
  */
 class CourseAttachments extends Model
 {
