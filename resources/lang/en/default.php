@@ -31,6 +31,7 @@ return [
             'final_test_title' => 'Итоговое тестирование',
 
             'show_filter_title' => 'Показать/скрыть фильтрацию',
+            'choose_professional_area' => 'Выберите проф.область',
             'profession' => 'Профессия',
             'choose_profession' => 'Выберите профессию',
             'skill' => 'Навык',
@@ -486,6 +487,7 @@ return [
             'authors_count' => 'авторов',
             'courses_count' => 'курсов',
             'advantages' => 'Преимущества</span><br/> Раскройте свой потенциал',
+            'nothing_to_show' => 'Ничего не найдено'
         ],
 
         'calculator' => [
