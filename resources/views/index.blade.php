@@ -18,15 +18,15 @@
                             <div class="row row--multiline">
                                 <div class="col-md-4">
                                     <label class="form-group__label">{{__('default.pages.courses.choose_professional_area')}}</label>
-                                    <select name="professional_areas[]" placeholder="{{__('default.pages.courses.choose_professional_area')}}" data-method="getProfessionalAreaByName" data-default="{{__('default.pages.courses.sort_by_default')}}" class="white" data-noresults="{{__('default.pages.courses.nothing_to_show')}}"> </select>
+                                    <select name="professional_areas[]" placeholder="{{__('default.pages.courses.choose_professional_area')}}" data-method="getProfessionalAreaByName" data-default="{{__('default.pages.courses.sort_by_default')}}" class="white" data-noresults="{{__('default.pages.index.nothing_to_show')}}"> </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-group__label">{{__('default.pages.courses.choose_profession')}}</label>
-                                    <select name="specialities[]" placeholder="{{__('default.pages.courses.choose_profession')}}" data-method="getProfessionsByData" data-default="{{__('default.pages.courses.sort_by_default')}}" class="white" data-noresults="{{__('default.pages.courses.nothing_to_show')}}"> </select>
+                                    <select name="specialities[]" placeholder="{{__('default.pages.courses.choose_profession')}}" data-method="getProfessionsByData" data-default="{{__('default.pages.courses.sort_by_default')}}" class="white" data-noresults="{{__('default.pages.index.nothing_to_show')}}"> </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-group__label">{{__('default.pages.courses.choose_skill')}}</label>
-                                    <select name="skills[]" placeholder="{{__('default.pages.courses.choose_skill')}}" data-method="getSkillsByData" data-default="{{__('default.pages.courses.sort_by_default')}}" class="white" data-noresults="{{__('default.pages.courses.nothing_to_show')}}"> </select>
+                                    <select name="skills[]" placeholder="{{__('default.pages.courses.choose_skill')}}" data-method="getSkillsByData" data-default="{{__('default.pages.courses.sort_by_default')}}" class="white" data-noresults="{{__('default.pages.index.nothing_to_show')}}"> </select>
                                 </div>
                             </div>
                         </div>

@@ -31,70 +31,104 @@
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.course_name')}} *</label>
-                                <input type="text" name="name" placeholder="" class="input-regular"
-                                       value="{{ old('name') }}" required>
+                                <label class="form-group__label">{{__('default.pages.courses.course_name')}}</label>
+                                <div class="input-addon">
+                                    <input type="text" name="name" placeholder="" value="{{ old('name') }}"
+                                           class="input-regular" required>
+                                    <div class="addon">
+                                        <span class="required">*</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="professions-container" id="professionsContainer">
-                                <div class="professions-group">
-                                    <div class="form-group">
-                                        <label class="form-group__label"
-                                               id="skillsLabel">{{__('default.pages.courses.professional_area_title')}}</label>
-                                        <div class="input-addon">
-                                            <select name="professional_areas" id="professionalAreasSelect"
-                                                    placeholder="{{__('default.pages.courses.choose_professional_area_title')}}"
-                                                    data-method="getProfessionalAreaByName" class="professional-areas-select" required>
-                                            </select>
-                                            <div class="addon">
-                                                <span class="required">*</span>
-                                            </div>
-                                        </div>
+                            <div class="form-group">
+                                <label class="form-group__label">Выберите профобласть</label>
+                                <div class="input-addon">
+                                    <select name="professional_areas"
+                                            placeholder="{{__('default.pages.courses.choose_professional_area_title')}}"
+                                            data-method="getProfessionalAreaByName"
+                                            class="professional-areas-select"
+                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" required>
+                                    </select>
+                                    <div class="addon">
+                                        <span class="required">*</span>
                                     </div>
-                                    <div class="form-group" style="display: none">
-                                        <label class="form-group__label"
-                                               id="professionsLabel">{{__('default.pages.courses.profession_title')}}</label>
-                                        <div class="input-addon">
-                                            <select name="professions" id="professionsSelect"
-                                                    placeholder="{{__('default.pages.courses.choose_profession_title')}}"
-                                                    data-method="getProfessionsByProfessionalArea" class="professions-select" required>
-                                            </select>
-                                            <div class="addon">
-                                                <span class="required">*</span>
-                                            </div>
-                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">Выберите профессию</label>
+                                <div class="input-addon">
+                                    <select name="professions"
+                                            placeholder="{{__('default.pages.courses.choose_profession_title')}}"
+                                            data-method="getProfessionsByData"
+                                            class="professions-select"
+                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" required>
+                                    </select>
+                                    <div class="addon">
+                                        <span class="required">*</span>
                                     </div>
-                                    <div class="form-group" style="display: none">
-                                        <label class="form-group__label"
-                                               id="skillsLabel">{{__('default.pages.courses.skills_title')}}</label>
-                                        <select name="skills[]" id="skillsSelect"
-                                                placeholder="{{__('default.pages.courses.choose_skills_title')}}"
-                                                data-method="getSkillsByProfession" data-maxitems="7"
-                                                class="skills-select" multiple required>
-                                        </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">Выберите навык</label>
+                                <div class="input-addon">
+                                    <select name="skills[]" id="skillsSelect"
+                                            placeholder="{{__('default.pages.courses.choose_skills_title')}}"
+                                            data-method="getSkillsByData" data-maxitems="7"
+                                            class="skills-select"
+                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" multiple
+                                            required>
+                                    </select>
+                                    <div class="addon">
+                                        <span class="required">*</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_lang')}}</label>
-                                <select name="lang" placeholder="{{__('default.pages.courses.choose_lang')}}"
-                                        class="selectize-regular">
-                                    <option value="1">Русский</option>
-                                    <option value="0">Қазақша</option>
-                                </select>
+                                <div class="input-addon">
+                                    <select name="lang" placeholder="{{__('default.pages.courses.choose_lang')}}"
+                                            class="selectize-regular" required>
+                                        <option value="1">Русский</option>
+                                        <option value="0">Казахский</option>
+                                    </select>
+                                    <div class="addon">
+                                        <span class="required">*</span>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="form-group">
-                                <label class="checkbox"><input type="checkbox" name="is_paid"
-                                                               value="true" id="paidCheckbox"><span>{{__('default.pages.courses.is_paid')}} ({{__('default.pages.courses.default_free')}})</span></label>
-                                <label class="checkbox"><input type="checkbox" name="is_access_all"
-                                                               value="true"><span>{{__('default.pages.courses.is_access_all')}}</span></label>
-                                <label class="checkbox"><input type="checkbox" name="is_poor_vision"
-                                                               value="true"
-                                                               data-toggle="poorVision"><span>{{__('default.pages.courses.is_vision_version')}}</span></label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="checkbox"><input type="checkbox" name="is_paid"
+                                                                       value="true" data-toggle="paidFormgroup"><span>{{__('default.pages.courses.is_paid')}} ({{__('default.pages.courses.default_free')}})</span></label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox"><input type="checkbox" name="is_access_all"
+                                                                       value="true"><span>{{__('default.pages.courses.is_access_all')}}</span></label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox"><input type="checkbox" name="is_poor_vision"
+                                                                       value="true"
+                                                                       data-toggle="poorVision"><span>{{__('default.pages.courses.is_vision_version')}}</span></label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox"><input type="checkbox" name="is_poor_hearing"
+                                                                       value="true"
+                                                                       data-toggle="poorHearing"><span>{{__('default.pages.courses.is_poor_hearing')}}</span></label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group" id="paidFormgroup" style="display:none;">
-                                <label class="form-group__label">{{__('default.pages.courses.course_cost')}} *</label>
-                                <input type="number" name="cost" placeholder="" class="input-regular"
-                                       value="{{ old('cost') }}">
+                                <label class="form-group__label">{{__('default.pages.courses.course_cost')}}</label>
+                                <div class="input-addon">
+                                    <input type="number" name="cost" placeholder="" class="input-regular"
+                                           value="{{ old('cost') }}" required disabled="">
+                                    <div class="addon">
+                                        <span class="required">*</span>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_teaser')}} *</label>
@@ -150,6 +184,7 @@
                                 <input type="url" name="videos_link[]" placeholder="" class="input-regular"
                                        id="courseVideo">
                             </div>
+                            <div class="removable-items"></div>
                             <div class="text-right pull-up">
                                 <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"
                                    data-duplicate="courseVideo" data-maxcount="4"><span
@@ -185,11 +220,13 @@
                                 </div>
                             </div>
                             <div id="poorVision" style="display: none">
+                                <h3 class="title-tertiary">{{__('default.pages.courses.is_vision_version')}}</h3>
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.courses.video_link_1')}}</label>
                                     <input type="url" name="videos_poor_vision_link[]" placeholder=""
-                                           class="input-regular" id="courseVideo1">
+                                           class="input-regular" id="courseVideo1" required disabled>
                                 </div>
+                                <div class="removable-items"></div>
                                 <div class="text-right pull-up">
                                     <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"
                                        data-duplicate="courseVideo1" data-maxcount="4"><span
@@ -200,7 +237,7 @@
                                     <label class="form-group__label">{{__('default.pages.courses.video_local_1')}}</label>
                                     <div data-url="/ajax_upload_course_videos?_token={{ csrf_token() }}"
                                          data-maxfiles="5"
-                                         data-maxsize="500" data-acceptedfiles=".mp4" id="video2"
+                                         data-maxsize="500" data-acceptedfiles=".mp4" id="video1"
                                          class="dropzone-default dropzone-multiple">
                                         <input type="hidden" name="videos_poor_vision" value="">
                                         <div class="dropzone-default__info">MP4
@@ -216,7 +253,7 @@
                                     <label class="form-group__label">{{__('default.pages.courses.course_audio_1')}}</label>
                                     <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
                                          data-maxfiles="5"
-                                         data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
+                                         data-maxsize="10" data-acceptedfiles=".mp3" id="audio1"
                                          class="dropzone-default dropzone-multiple">
                                         <input type="hidden" name="audios_poor_vision" value="">
                                         <div class="dropzone-default__info">MP3
@@ -229,54 +266,52 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.choose_certificate')}}
-                                    *</label>
-                                <div class="row row--multiline">
-                                    <div class="col-auto">
-                                        <div class="image-choice">
-                                            <img src="/assets/img/certificates/1-thumbnail.jpg"
-                                                 class="image-choice__thumbnail"
-                                                 alt="">
-                                            <label class="image-choice__overflow"
-                                                   title="{{__('default.pages.courses.choose')}}">
-                                                <input type="radio" value="1" name="certificate_id" required>
-                                                <i class="icon-checkmark"> </i>
-                                                <a href="/assets/img/certificates/1.png" data-fancybox
-                                                   title="{{__('default.pages.courses.zoom_certificate')}}"
-                                                   class="icon-zoom-in"> </a>
-                                            </label>
+                            <div id="poorHearing" style="display: none">
+                                <h3 class="title-tertiary">{{__('default.pages.courses.is_poor_hearing')}}</h3>
+                                <div class="form-group">
+                                    <label class="form-group__label">{{__('default.pages.courses.video_link_2')}}</label>
+                                    <input type="url" name="videos_poor_hearing_link[]" placeholder="" class="input-regular"
+                                           id="courseVideo2" required disabled>
+                                </div>
+                                <div class="removable-items"></div>
+                                <div class="text-right pull-up">
+                                    <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn" data-duplicate="courseVideo1"
+                                       data-maxcount="4"><span
+                                                class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span><span
+                                                class="btn-icon small icon-plus"> </span></a>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-group__label">{{__('default.pages.courses.video_local_2')}}</label>
+                                    <div data-url="/ajax_upload_course_videos?_token={{ csrf_token() }}"
+                                         data-maxfiles="5"
+                                         data-maxsize="50" data-acceptedfiles=".mp4" id="video2"
+                                         class="dropzone-default dropzone-multiple">
+                                        <input type="hidden" name="videos_poor_hearing" value="">
+                                        <div class="dropzone-default__info">MP4
+                                            • {{__('default.pages.courses.max_file_title')}} 50MB
                                         </div>
+                                        <a href="javascript:;"
+                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}
+                                        </a>
+                                        <div class="previews-container"></div>
                                     </div>
-                                    <div class="col-auto">
-                                        <div class="image-choice">
-                                            <img src="/assets/img/certificates/2-thumbnail.jpg"
-                                                 class="image-choice__thumbnail"
-                                                 alt="">
-                                            <label class="image-choice__overflow"
-                                                   title="{{__('default.pages.courses.choose')}}">
-                                                <input type="radio" value="2" name="certificate_id">
-                                                <i class="icon-checkmark"> </i>
-                                                <a href="/assets/img/certificates/2.png" data-fancybox
-                                                   title="{{__('default.pages.courses.zoom_certificate')}}"
-                                                   class="icon-zoom-in"> </a>
-                                            </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-group__label">{{__('default.pages.courses.course_audio_2')}}</label>
+                                    <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
+                                         data-maxfiles="5"
+                                         data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
+                                         class="dropzone-default dropzone-multiple">
+                                        <input type="hidden" name="audios_poor_hearing" value="">
+                                        <div class="dropzone-default__info">MP3
+                                            • {{__('default.pages.courses.max_file_title')}} 10MB
                                         </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="image-choice">
-                                            <img src="/assets/img/certificates/3-thumbnail.jpg"
-                                                 class="image-choice__thumbnail"
-                                                 alt="">
-                                            <label class="image-choice__overflow"
-                                                   title="{{__('default.pages.courses.choose')}}">
-                                                <input type="radio" value="3" name="certificate_id">
-                                                <i class="icon-checkmark"> </i>
-                                                <a href="/assets/img/certificates/3.png" data-fancybox
-                                                   title="{{__('default.pages.courses.zoom_certificate')}}"
-                                                   class="icon-zoom-in"> </a>
-                                            </label>
-                                        </div>
+                                        <a href="javascript:;"
+                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}
+                                        </a>
+                                        <div class="previews-container"></div>
                                     </div>
                                 </div>
                             </div>
@@ -294,22 +329,31 @@
 
 @section('scripts')
     <!--Only this page's scripts-->
-    <script src="/assets/js/professions-group.js"></script>
     <script>
-        window.addEventListener('DOMContentLoaded', function () {
-            let paidCheckbox = document.querySelector('#paidCheckbox'),
-                paidFormgroup = document.querySelector('#paidFormgroup');
+        const professionalAreaEl = $('[name="professional_areas"]'),
+            specialityEl = $('[name="professions"]'),
+            skillsEl = $('[name="skills[]"]');
 
-            paidCheckbox.addEventListener('change', function (e) {
-                if (e.target.checked) {
-                    showEl(paidFormgroup);
-                    paidFormgroup.querySelector('input').setAttribute('required', 'required');
-                } else {
-                    hideEl(paidFormgroup);
-                    paidFormgroup.querySelector('input').removeAttribute('required');
-                }
-            });
+        let professionAreaSelect = new ajaxSelect(professionalAreaEl);
+        let specialitySelect = new ajaxSelect(specialityEl, professionalAreaEl);
+        let skillsSelect = new ajaxSelect(skillsEl, specialityEl, true, 7);
+
+        professionalAreaEl.change(function () {
+            specialitySelect.update($(this).val() ? {"professional_areas": toArray($(this).val())} : null);
+            specialitySelect.clear();
+            skillsSelect.clear();
+            setTimeout(function () {
+                specialitySelect.removeMessage();
+            }, 3000);
         });
+
+        specialityEl.change(function () {
+            skillsSelect.update($(this).val() ? {"professions": toArray($(this).val())} : null);
+            skillsSelect.clear();
+            setTimeout(function () {
+                skillsSelect.removeMessage();
+            }, 3000);
+        })
     </script>
     <!---->
 @endsection
