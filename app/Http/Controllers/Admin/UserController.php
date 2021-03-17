@@ -2,23 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-//use App\Helpers\Buffet;
-//use App\Models\Card;
-//use App\Models\Company;
 use App\Extensions\RandomStringGenerator;
 use App\Models\PayInformation;
 use App\Models\Role;
-use App\Models\StudentInformation;
 use App\Models\Type_of_ownership;
 use App\Models\User;
-
-//use App\Models\Log;
 
 use App\Models\UserInformation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -162,7 +154,7 @@ class UserController extends Controller
                     $item_information->user_id = $item->id;
                     $item_information->name = $request->name;
                     $item_information->save();
-                }else{
+                } else {
                     $info->name = $request->name;
                     $info->save();
                 }
@@ -200,7 +192,6 @@ class UserController extends Controller
 
     public function passwordUpdate($lang, User $item)
     {
-
         $generator = new RandomStringGenerator();
         $generate_password = $generator->generateString();
 
@@ -265,6 +256,5 @@ class UserController extends Controller
 
         return redirect('/' . app()->getLocale() . '/admin/profile');
     }
-
 
 }

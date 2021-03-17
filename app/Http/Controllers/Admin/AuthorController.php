@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-//use App\Helpers\Buffet;
-//use App\Models\Card;
-//use App\Models\Company;
 use App\Extensions\RandomStringGenerator;
 use App\Models\PayInformation;
 use App\Models\Role;
 use App\Models\Type_of_ownership;
 use App\Models\User;
-//use App\Models\Log;
 
 use App\Models\UserInformation;
 use Carbon\Carbon;
@@ -38,7 +34,7 @@ class AuthorController extends Controller
     {
         $term = $request->term ? $request->term : '';
 
-        $query = User::orderBy('id', 'desc')->whereHas('roles', function($q){
+        $query = User::orderBy('id', 'desc')->whereHas('roles', function ($q) {
             $q->where('role_id', '=', 4);
         });
         if ($term) {
@@ -50,7 +46,7 @@ class AuthorController extends Controller
         foreach ($items as $key => $item) {
             $fill_user_info = UserInformation::where('user_id', '=', $item->id)->first();
             $fill_pay_info = PayInformation::where('user_id', '=', $item->id)->first();
-            if(empty($fill_user_info) and empty($fill_pay_info)){
+            if (empty($fill_user_info) and empty($fill_pay_info)) {
                 $items->forget($key);
             }
         }
@@ -98,8 +94,6 @@ class AuthorController extends Controller
 
         $item->save();
         $item->roles()->sync([$request->role_id]);
-
-//        Buffet::log('add', 'users', $item->id, $item->name);
 
         return redirect('/' . app()->getLocale() . '/admin/user/' . $item->id)->with('status', __('admin.notifications.record_stored') . '<br>' . __('admin.notifications.new_password', ['password' => $generate_password]));
     }
@@ -160,8 +154,6 @@ class AuthorController extends Controller
         $user->password = Hash::make($generate_password);
         $user->save();
 
-//        Buffet::log('edit', 'users', $item->id, $item->name);
-
         return redirect('/' . app()->getLocale() . '/admin/user/' . $item->id)->with('status', __('admin.notifications.new_password', ['password' => $generate_password]));
     }
 
@@ -216,8 +208,6 @@ class AuthorController extends Controller
             $user->password = $hash;
         }
         $user->save();
-
-//        Buffet::log('edit', 'users', $user->id, $user->name);
 
         return redirect('/' . app()->getLocale() . '/admin/profile');
     }

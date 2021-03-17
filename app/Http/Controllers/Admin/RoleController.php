@@ -4,14 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Permission;
 use App\Models\Role;
-use App\Models\User;
-use App\Models\Log;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * --------------------------------------------------------------------------
@@ -65,8 +59,6 @@ class RoleController extends Controller
 
         $item->permissions()->sync($request->get('permissions', []));
 
-//        Buffet::log('add', 'roles', $item->id, $item->name);
-
         return redirect('/' . app()->getLocale() . '/admin/role/' . $item->id)->with('status', __('admin.notifications.record_stored'));
     }
 
@@ -92,10 +84,7 @@ class RoleController extends Controller
         $item->description = $request->description;
         $item->save();
 
-//        $item->syncPermissions($request->permissions);
         $item->permissions()->sync($request->get('permissions', []));
-
-//        Buffet::log('edit', 'roles', $item->id, $item->name);
 
         return redirect('/' . app()->getLocale() . '/admin/role/' . $item->id)->with('status', __('admin.notifications.record_updated'));
     }
@@ -107,7 +96,6 @@ class RoleController extends Controller
             return back('/' . app()->getLocale() . '/admin/role/index')->with('status', 'Нельзя удалить системную запись');
         }
 
-//        $item->deleted = true;
         $item->delete();
         return redirect('/' . app()->getLocale() . '/admin/role/index')->with('status', __('admin.notifications.record_deleted'));
     }

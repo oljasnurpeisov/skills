@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\AuthorReportExport;
 use App\Exports\CourseReportExport;
-use App\Exports\ReportingExport;
 use App\Exports\StudentReportExport;
 use App\Models\Course;
-use App\Models\Professions;
 use App\Models\StudentCertificate;
 use App\Models\StudentCourse;
 use App\Models\User;
@@ -15,7 +13,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 use ZipArchive;
@@ -729,7 +726,6 @@ class ReportController extends Controller
             array_push($export, $newElement);
         }
 
-//        asort($export);
         return Excel::download(new StudentReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
@@ -817,7 +813,6 @@ class ReportController extends Controller
             array_push($export, $newElement);
         }
 
-//        asort($export);
         return Excel::download(new CourseReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
@@ -895,7 +890,6 @@ class ReportController extends Controller
             array_push($export, $newElement);
         }
 
-//        asort($export);
         return Excel::download(new AuthorReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
