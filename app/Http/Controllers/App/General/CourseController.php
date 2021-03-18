@@ -409,14 +409,13 @@ class CourseController extends Controller
                 $q->whereIn('professional_areas.id', $professional_areas);
             })->where('name_' . $lang, 'like', '%' . $profession_name . '%')->paginate(50, ['*'], 'page', $page);
 
-            return $professions;
         } else {
-            $skills = Professions::where('name_' . $lang, 'like', '%' . $profession_name . '%')
+            $professions = Professions::where('name_' . $lang, 'like', '%' . $profession_name . '%')
                 ->orderBy('name_' . $lang, 'asc')
                 ->paginate(50, ['*'], 'page', $page);
         }
 
-        return $skills;
+        return $professions;
     }
 
 }
