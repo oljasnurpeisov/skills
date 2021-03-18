@@ -6,7 +6,6 @@ use App\Exports\ReportingExport;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseAttachments;
-use App\Models\CourseQuotaCost;
 use App\Models\Lesson;
 use App\Models\Notification;
 use App\Models\ProfessionalArea;
@@ -14,7 +13,6 @@ use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCourse;
 use App\Models\Theme;
-use App\Models\Type_of_ownership;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -621,7 +619,6 @@ class CourseController extends Controller
 
         }
         return redirect("/" . app()->getLocale() . "/my-courses");
-
     }
 
     public function quotaConfirm($lang, Course $item, Request $request)
@@ -670,7 +667,6 @@ class CourseController extends Controller
             $notification->users()->sync($recipients_array);
             return redirect()->back()->with('error', trans('notifications.course_quota_access_denied', ['course_name' => '"' . $item->name . '"']));
         }
-
     }
 
     public function reestablishCourse($lang, Course $item)
@@ -688,12 +684,10 @@ class CourseController extends Controller
         } else {
             return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('default.pages.courses.publish_request_message'));
         }
-
     }
 
     public function statisticsCourse(Request $request)
     {
-
         $items = Auth::user()->courses()->get();
 
         // Все оценки всех курсов
@@ -826,8 +820,6 @@ class CourseController extends Controller
     public function statisticForChartDemo(Request $request)
     {
         $data = [
-//            'title1' => __('default.author.statistic_for_chart_all'),
-//            'title2' => __('default.author.statistic_for_chart_quote'),
             'title1' => "Общий заработок",
             'title2' => "Заработано по квотам",
             'color1' => '#00C608',
@@ -870,7 +862,6 @@ class CourseController extends Controller
 
     public function reportingCourse(Request $request)
     {
-
         $from = $request->date_from;
         $to = $request->date_to;
         $all_time = $request->all_time;
@@ -908,7 +899,6 @@ class CourseController extends Controller
             'date_from' => $date_from,
             'date_to' => $date_to,
         ]);
-
     }
 
     public function exportReporting(Request $request)
