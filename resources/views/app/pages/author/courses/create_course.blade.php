@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">Выберите профобласть</label>
+                                <label class="form-group__label">{{__('default.pages.courses.choose_professional_area_title')}}</label>
                                 <div class="input-addon">
                                     <select name="professional_areas"
                                             placeholder="{{__('default.pages.courses.choose_professional_area_title')}}"
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">Выберите профессию</label>
+                                <label class="form-group__label">{{__('default.pages.courses.choose_profession_title')}}</label>
                                 <div class="input-addon">
                                     <select name="professions"
                                             placeholder="{{__('default.pages.courses.choose_profession_title')}}"
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">Выберите навык</label>
+                                <label class="form-group__label">{{__('default.pages.courses.choose_skills_title')}}</label>
                                 <div class="input-addon">
                                     <select name="skills[]" id="skillsSelect"
                                             placeholder="{{__('default.pages.courses.choose_skills_title')}}"
@@ -95,7 +95,6 @@
                                         <span class="required">*</span>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="form-group">
                                 <div class="row">
@@ -128,7 +127,6 @@
                                         <span class="required">*</span>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_teaser')}} *</label>
@@ -284,7 +282,7 @@
                                     <label class="form-group__label">{{__('default.pages.courses.video_local_2')}}</label>
                                     <div data-url="/ajax_upload_course_videos?_token={{ csrf_token() }}"
                                          data-maxfiles="5"
-                                         data-maxsize="50" data-acceptedfiles=".mp4" id="video2"
+                                         data-maxsize="500" data-acceptedfiles=".mp4" id="video2"
                                          class="dropzone-default dropzone-multiple">
                                         <input type="hidden" name="videos_poor_hearing" value="">
                                         <div class="dropzone-default__info">MP4
