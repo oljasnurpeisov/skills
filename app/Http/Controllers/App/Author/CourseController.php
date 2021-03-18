@@ -491,6 +491,11 @@ class CourseController extends Controller
         } else {
             $item->is_poor_vision = 0;
         }
+        if ($request->is_poor_hearing) {
+            $item->is_poor_hearing = 1;
+        } else {
+            $item->is_poor_hearing = 0;
+        }
         $item->cost = $request->cost;
         $item->profit_desc = $request->profit_desc;
         $item->teaser = $request->teaser;
@@ -517,12 +522,19 @@ class CourseController extends Controller
         if ($request->videos_poor_vision_link) {
             $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
         }
+        // Ссылки на видео курса для лиц с нарушениями слуха
+        if ($request->videos_poor_hearing_link) {
+            $item_attachments->videos_poor_hearing_link = json_encode($request->videos_poor_hearing_link);
+        }
 
         $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
         $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);
 
         $videos_poor_vision = array_merge(json_decode($request->localVideo1) ?? [], $request->localVideoStored1 ?? []);
         $audios_poor_vision = array_merge(json_decode($request->localAudio1) ?? [], $request->localAudioStored1 ?? []);
+
+        $videos_poor_hearing = array_merge(json_decode($request->localVideo2) ?? [], $request->localVideoStored2 ?? []);
+        $audios_poor_hearing = array_merge(json_decode($request->localAudio2) ?? [], $request->localAudioStored2 ?? []);
 
         // Видео с устройства
         if ($videos != $item_attachments->videos) {
@@ -549,6 +561,19 @@ class CourseController extends Controller
         if ($audios_poor_vision != $item_attachments->audios_poor_vision) {
 
             $item_attachments->audios_poor_vision = $audios_poor_vision;
+
+            $item_attachments->save();
+        }
+        // Видео с устройства для лиц с нарушениями слуха
+        if ($videos_poor_hearing != $item_attachments->videos_poor_hearing) {
+            $item_attachments->videos_poor_hearing = $videos_poor_hearing;
+
+            $item_attachments->save();
+        }
+        // Аудио с устройства для лиц с нарушениями слуха
+        if ($audios_poor_hearing != $item_attachments->audios_poor_hearing) {
+
+            $item_attachments->audios_poor_hearing = $audios_poor_hearing;
 
             $item_attachments->save();
         }
