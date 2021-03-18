@@ -224,7 +224,12 @@ return [
             'opponent_name' => 'ФИО',
             'last_message' => 'Последнее сообщение',
             'name_search' => 'Поиск по ФИО'
-        ]
+        ],
+
+        'help' => [
+            'title' => 'Помощь',
+            'video' => 'Видеоинструкция',
+        ],
     ],
     'labels' => [
         'copyright' => '',
