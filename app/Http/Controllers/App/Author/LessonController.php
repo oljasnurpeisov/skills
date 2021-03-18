@@ -1093,15 +1093,35 @@ class LessonController extends Controller
     // Методы для таблицы курса
     public function deleteLesson(Request $request)
     {
-        Lesson::where('id', '=', $request->lesson_id)->delete();
+        $lesson = Lesson::find($request->lesson_id);
 
-        $theme_lessons = Lesson::whereHas('themes', function ($q) use ($request) {
-            $q->where('themes.id', '=', $request->theme_id);
-        })->orderBy('index_number', 'asc')->get();
+        if ($lesson->theme_id != null) {
+            $lesson->delete();
 
-        foreach ($theme_lessons as $key => $lesson) {
-            $lesson->index_number = $key;
-            $lesson->save();
+            $theme_lessons = Lesson::whereHas('themes', function ($q) use ($request) {
+                $q->where('themes.id', '=', $request->theme_id);
+            })->orderBy('index_number', 'asc')->get();
+
+            foreach ($theme_lessons as $key => $lesson) {
+                $lesson->index_number = $key;
+                $lesson->save();
+            }
+        } else {
+            $lesson->delete();
+
+            $themes = Theme::whereCourseId($lesson->course_id)
+                ->orderBy('index_number', 'asc')
+                ->get();
+            $untheme_lessons = Lesson::whereCourseId($lesson->course_id)
+                ->whereThemeId(null)
+                ->orderBy('index_number', 'asc')
+                ->get();
+            $themes = $themes->merge($untheme_lessons)->sortBy('index_number');
+
+            foreach ($themes as $key => $theme) {
+                $theme->index_number = $key;
+                $theme->save();
+            }
         }
 
         $messages = ["title" => __('default.pages.courses.delete_lesson_title'), "body" => __('default.pages.courses.delete_lesson_success')];
