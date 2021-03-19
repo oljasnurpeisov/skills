@@ -1,26 +1,26 @@
-<div id="poorVision" @if($course->is_poor_vision == true) style="display: block" @else style="display: none" @endif>
-    <h3 class="title-tertiary">{{__('default.pages.courses.is_vision_version')}}</h3>
+<div id="poorHearing" @if($course->is_poor_hearing == true) style="display: block" @else style="display: none" @endif>
+    <h3 class="title-tertiary">{{__('default.pages.courses.is_poor_hearing')}}</h3>
     <div class="form-group">
-        <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link_1')}}</label>
-        @if($item->lesson_attachment->videos_poor_vision_link != null)
-            <input type="url" name="videos_poor_vision_link[]" placeholder=""
+        <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link_2')}}</label>
+        @if($item->lesson_attachment->videos_poor_hearing_link != null)
+            <input type="url" name="videos_poor_hearing_link[]" placeholder=""
                    class="input-regular"
-                   value="{{json_decode($item->lesson_attachment->videos_poor_vision_link)[0]}}"
-                   id="courseVideo1">
+                   value="{{json_decode($item->lesson_attachment->videos_poor_hearing_link)[0]}}"
+                   id="courseVideo2">
         @else
-            <input type="url" name="videos_poor_vision_link[]" placeholder=""
+            <input type="url" name="videos_poor_hearing_link[]" placeholder=""
                    class="input-regular"
-                   value="" id="courseVideo1">
+                   value="" id="courseVideo2">
         @endif
     </div>
     <div class="removable-items">
-        @if($item->lesson_attachment->videos_poor_vision_link != null)
-            @foreach(array_slice(json_decode($item->lesson_attachment->videos_poor_vision_link),1) as $video_poor_vision_link)
+        @if($item->lesson_attachment->videos_poor_hearing_link != null)
+            @foreach(array_slice(json_decode($item->lesson_attachment->videos_poor_hearing_link),1) as $video_poor_hearing_link)
                 <div class="form-group">
                     <div class="input-addon">
-                        <input type="url" name="videos_poor_vision_link[]" placeholder=""
+                        <input type="url" name="videos_poor_hearing_link[]" placeholder=""
                                class="input-regular"
-                               value="{{$video_poor_vision_link}}">
+                               value="{{$video_poor_hearing_link}}">
                         <div class="addon">
                             <div class="btn-icon small icon-close"></div>
                         </div>
@@ -32,30 +32,30 @@
     </div>
     <div class="text-right pull-up">
         <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"
-           data-duplicate="courseVideo1"
+           data-duplicate="courseVideo2"
            data-maxcount="4"><span
                     class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span><span
                     class="btn-icon small icon-plus"> </span></a>
     </div>
     <div class="form-group">
-        <label class="form-group__label">{{__('default.pages.courses.video_local_1')}}</label>
+        <label class="form-group__label">{{__('default.pages.courses.video_local_2')}}</label>
         <div data-url="/ajax_upload_course_videos?_token={{ csrf_token() }}"
              data-maxfiles="5"
              data-maxsize="500" data-acceptedfiles=".mp4" id="video2"
              class="dropzone-default dropzone-multiple">
-            <input type="hidden" name="localVideo1" value="">
+            <input type="hidden" name="localVideo2" value="">
             <div class="dropzone-default__info">MP4
                 • {{__('default.pages.courses.max_file_title')}} 500MB
             </div>
             <div class="previews-container">
-                @if($item->lesson_attachment->videos_poor_vision != null)
-                    @foreach(json_decode($item->lesson_attachment->videos_poor_vision) as $video_poor_vision)
+                @if($item->lesson_attachment->videos_poor_hearing != null)
+                    @foreach(json_decode($item->lesson_attachment->videos_poor_hearing) as $video_poor_hearing)
                         <div class="dz-preview dz-image-preview dz-stored">
                             <div class="dz-details">
-                                <input type="text" name="localVideoStored1[]"
-                                       value="{{{$video_poor_vision}}}" placeholder="">
+                                <input type="text" name="localVideoStored2[]"
+                                       value="{{{$video_poor_hearing}}}" placeholder="">
                                 <div class="dz-filename"><span
-                                            data-dz-name="">{{substr(basename($video_poor_vision), 14)}}</span>
+                                            data-dz-name="">{{substr(basename($video_poor_hearing), 14)}}</span>
                                 </div>
                             </div>
                             <a href="javascript:undefined;"
@@ -80,19 +80,19 @@
              data-maxfiles="5"
              data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
              class="dropzone-default dropzone-multiple">
-            <input type="hidden" name="localAudio1" value="">
+            <input type="hidden" name="localAudio2" value="">
             <div class="dropzone-default__info">MP3
                 • {{__('default.pages.courses.max_file_title')}} 10MB
             </div>
             <div class="previews-container">
-                @if($item->lesson_attachment->audios_poor_vision != null)
-                    @foreach(json_decode($item->lesson_attachment->audios_poor_vision) as $audio_poor_vision)
+                @if($item->lesson_attachment->audios_poor_hearing != null)
+                    @foreach(json_decode($item->lesson_attachment->audios_poor_hearing) as $audio_poor_hearing)
                         <div class="dz-preview dz-image-preview dz-stored">
                             <div class="dz-details">
-                                <input type="text" name="localAudioStored1[]"
-                                       value="{{$audio_poor_vision}}" placeholder="">
+                                <input type="text" name="localAudioStored2[]"
+                                       value="{{$audio_poor_hearing}}" placeholder="">
                                 <div class="dz-filename"><span
-                                            data-dz-name="">{{substr(basename($audio_poor_vision), 14)}}</span>
+                                            data-dz-name="">{{substr(basename($audio_poor_hearing), 14)}}</span>
                                 </div>
                             </div>
                             <a href="javascript:undefined;"
@@ -111,24 +111,24 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments_1')}}</label>
+        <label class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments_2')}}</label>
         <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}" data-maxfiles="20"
              data-maxsize="20"
              data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg, .rar, .zip, .7z, .mp3, .mp4, .avi, .mov"
              id="documents-dropzone"
              class="dropzone-default dropzone-multiple">
-            <input type="text" name="localDocuments1" value="">
+            <input type="text" name="localDocuments2" value="">
             <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX, PPTX, PNG, JPG,
                 RAR,
                 ZIP, 7z, MP3, MP4, AVI, MOV • {{__('default.pages.courses.max_file_title')}} 20
                 MB
             </div>
             <div class="previews-container">
-                @if($item->lesson_attachment->another_files_poor_vision != null)
-                    @foreach(json_decode($item->lesson_attachment->another_files_poor_vision) as $file)
+                @if($item->lesson_attachment->another_files_poor_hearing != null)
+                    @foreach(json_decode($item->lesson_attachment->another_files_poor_hearing) as $file)
                         <div class="dz-preview dz-image-preview dz-stored">
                             <div class="dz-details">
-                                <input type="text" name="localDocumentsStored1[]"
+                                <input type="text" name="localDocumentsStored2[]"
                                        value="{{$file}}"
                                        placeholder="">
                                 <div class="dz-filename"><span
