@@ -175,12 +175,10 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                 // Урок
                 Route::delete("/delete-lesson", "LessonController@deleteLesson");
                 Route::post("/move-lesson", "LessonController@moveLesson");
+                // Урок без темы
+                Route::post("/move-item", "ThemeController@moveItem");
             });
         });
-    });
-    /** Для смены урока без авторизации автора, для теста(позже удалить) */
-    Route::group(["namespace" => "Author"], function () {
-        Route::post("/move-item", "ThemeController@moveItem");
     });
     // Оплата курса
     Route::group(["middleware" => ["web"], "namespace" => "General"], function () {
@@ -328,7 +326,6 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-courses/course/{item}/create-lesson", "LessonController@createUnthemeLesson");
                     Route::get("/my-courses/course/{course}/edit-lesson-{lesson}", "LessonController@editLesson");
                     Route::get("/my-courses/course/{course}/edit-untheme-lesson-{lesson}", "LessonController@editUnthemeLesson");
-//                    Route::get("/my-courses/course/{course}/theme-{theme}/view-lesson-{lesson}", "LessonController@viewLesson");
                     Route::post("/create-lesson/{course}", "LessonController@storeUnthemeLesson");
                     Route::post("/create-lesson/{course}/{theme}", "LessonController@storeLesson");
                     Route::post("/course-{course}/edit-lesson-{item}", "LessonController@updateLesson");

@@ -1033,47 +1033,4 @@ class CourseController extends Controller
         }
         return abort(404);
     }
-
-    public function getCourseDataTest($lang, Course $course)
-    {
-        $themes = Theme::where('course_id', '=', $course->id)->with('lessons')->get();
-        $unthemes_lessons = Lesson::where('theme_id', '=', null)
-            ->where('course_id', '=', $course->id)
-            ->whereNotIn('type', [3, 4])
-            ->get();
-
-        foreach ($themes as $theme) {
-            $theme->order = $theme->index_number;
-            $theme->item_type = 'theme';
-
-            foreach ($theme->lessons as $lesson) {
-                $lesson->order = $lesson->index_number;
-
-                if ($lesson->type != 1) {
-                    $lesson->type = $lesson->lesson_type->getAttribute('name_' . $lang) ?? $lesson->lesson_type->getAttribute('name_ru');
-                    $lesson->type .= $lesson->end_lesson_type == 0 ? ' (' . __('default.pages.lessons.test_title') . ')' : ' (' . __('default.pages.lessons.homework_title') . ')';
-                } else {
-                    $lesson->type = $lesson->lesson_type->getAttribute('name_' . $lang) ?? $lesson->lesson_type->getAttribute('name_ru');
-                }
-
-            }
-        }
-
-        foreach ($unthemes_lessons as $unthemes_lesson) {
-            $unthemes_lesson->order = $unthemes_lesson->index_number;
-            $unthemes_lesson->item_type = 'lesson';
-
-            $unthemes_lesson->lessons = [];
-            if ($unthemes_lesson->type != 1) {
-                $unthemes_lesson->type = $unthemes_lesson->lesson_type->getAttribute('name_' . $lang) ?? $unthemes_lesson->lesson_type->getAttribute('name_ru');
-                $unthemes_lesson->type .= $unthemes_lesson->end_lesson_type == 0 ? ' (' . __('default.pages.lessons.test_title') . ')' : ' (' . __('default.pages.lessons.homework_title') . ')';
-            } else {
-                $unthemes_lesson->type = $unthemes_lesson->lesson_type->getAttribute('name_' . $lang) ?? $unthemes_lesson->lesson_type->getAttribute('name_ru');
-            }
-        }
-
-        $themes = $themes->merge($unthemes_lessons);
-
-        return $themes;
-    }
 }
