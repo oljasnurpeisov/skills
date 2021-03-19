@@ -1114,9 +1114,10 @@ class LessonController extends Controller
                 ->get();
             $untheme_lessons = Lesson::whereCourseId($lesson->course_id)
                 ->whereThemeId(null)
+                ->whereNotIn('type', [3,4])
                 ->orderBy('index_number', 'asc')
                 ->get();
-            $themes = $themes->merge($untheme_lessons)->sortBy('index_number');
+            $themes = $themes->merge($untheme_lessons)->sortBy('index_number')->values();
 
             foreach ($themes as $key => $theme) {
                 $theme->index_number = $key;

@@ -18,12 +18,24 @@ class ThemeController extends Controller
 
     public function createTheme(Request $request)
     {
-        $last_id = Theme::whereHas('courses', function ($q) use ($request) {
-            $q->where('courses.id', '=', $request->course_id);
-        })->orderBy('index_number', 'desc')->latest()->first();
+        $untheme_lessons = Lesson::whereCourseId($request->course_id)
+            ->whereThemeId(null)
+            ->whereNotIn('type', [3,4])
+            ->orderBy('index_number', 'asc')
+            ->get();
+
+        $themes = Theme::whereCourseId($request->course_id)
+            ->orderBy('index_number', 'asc')
+            ->get();
+
+        $themes = $themes->merge($untheme_lessons)
+            ->sortBy('index_number')
+            ->last();
+
+        $last_id = $themes->index_number;
 
         if ($last_id) {
-            $index = $last_id->index_number + 1;
+            $index = $last_id + 1;
         } else {
             $index = 0;
         }
@@ -51,17 +63,24 @@ class ThemeController extends Controller
 
     public function deleteTheme(Request $request)
     {
-        Theme::where('id', '=', $request->theme_id)->delete();
+        $theme = Theme::find($request->theme_id);
 
-        $course_themes = Theme::whereHas('courses', function ($q) use ($request) {
-            $q->where('courses.id', '=', $request->course_id);
-        })->orderBy('index_number', 'asc')->get();
+        $theme->delete();
 
-        foreach ($course_themes as $key => $theme) {
+        $themes = Theme::whereCourseId($theme->course_id)
+            ->orderBy('index_number', 'asc')
+            ->get();
+        $untheme_lessons = Lesson::whereCourseId($theme->course_id)
+            ->whereThemeId(null)
+            ->whereNotIn('type', [3,4])
+            ->orderBy('index_number', 'asc')
+            ->get();
+        $themes = $themes->merge($untheme_lessons)->sortBy('index_number')->values();
+
+        foreach ($themes as $key => $theme) {
             $theme->index_number = $key;
             $theme->save();
         }
-
 
         $messages = ["title" => __('default.pages.courses.delete_theme_title'), "body" => __('default.pages.courses.delete_theme_success')];
 
