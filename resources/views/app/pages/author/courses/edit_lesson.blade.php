@@ -66,7 +66,7 @@
                                           required>{{ old('theory') ?? $item->theory}}</textarea>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.video_link')}}</label>
+                                <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link')}}</label>
                                 @if($item->lesson_attachment->videos_link != null)
                                     <input type="url" name="videos_link[]" placeholder=""
                                            class="input-regular"
@@ -214,11 +214,9 @@
                                        class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                 </div>
                             </div>
-                            {{--                            @if($course->is_poor_vision == true)--}}
                             @include('app.pages.author.courses.components.lesson.poor_vision_lesson_edit',['item' => $item])
-                            {{--                            @endif--}}
+                            @include('app.pages.author.courses.components.lesson.poor_hearing_lesson_edit',['item' => $item])
                             <div id="optionalFields">
-                                {{--                                @if($item->end_lesson_type == 1)--}}
                                 <div id="homework" @if($item->end_lesson_type == 1) style="display: block"
                                      @else style="display: none" @endif>
                                     <div class="form-group">
@@ -228,9 +226,7 @@
                                                   required>{{$item->practice}}</textarea>
                                     </div>
                                 </div>
-                                {{--                                @elseif($item->end_lesson_type == 0)--}}
                                 @include('app.pages.author.courses.components.lesson.test_lesson_edit',['item' => $item])
-                                {{--                                @endif--}}
                             </div>
 
                             <div class="buttons">

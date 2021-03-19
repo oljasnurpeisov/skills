@@ -145,12 +145,14 @@
                                             </div>
                                         </div>
                                         @if($item->is_poor_vision == true)
+                                            <h3 class="title-tertiary">{{__('default.pages.courses.is_vision_version')}}</h3>
                                             <div class="form-group">
                                                 <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link_1')}}</label>
                                                 <input type="url" name="videos_poor_vision_link[]" placeholder=""
                                                        class="input-regular"
                                                        id="courseVideo1">
                                             </div>
+                                            <div class="removable-items"></div>
                                             <div class="text-right pull-up">
                                                 <a href="#" title="{{__('default.pages.profile.add_btn_title')}}"
                                                    class="add-btn"
@@ -162,7 +164,7 @@
                                                 <label class="form-group__label">{{__('default.pages.lessons.video_local_1')}}</label>
                                                 <div data-url="/ajax_upload_lesson_videos?_token={{ csrf_token() }}"
                                                      data-maxfiles="5"
-                                                     data-maxsize="500" data-acceptedfiles=".mp4" id="video2"
+                                                     data-maxsize="500" data-acceptedfiles=".mp4" id="video1"
                                                      class="dropzone-default dropzone-multiple">
                                                     <input type="hidden" name="videos_poor_vision" value="">
                                                     <div class="dropzone-default__info">MP4
@@ -178,7 +180,7 @@
                                                 <label class="form-group__label">{{__('default.pages.lessons.lesson_audio_1')}}</label>
                                                 <div data-url="/ajax_upload_lesson_audios?_token={{ csrf_token() }}"
                                                      data-maxfiles="5"
-                                                     data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
+                                                     data-maxsize="10" data-acceptedfiles=".mp3" id="audio1"
                                                      class="dropzone-default dropzone-multiple">
                                                     <input type="hidden" name="audios_poor_vision" value="">
                                                     <div class="dropzone-default__info">MP3
@@ -199,6 +201,77 @@
                                                      id="documents-dropzone2"
                                                      class="dropzone-default dropzone-multiple">
                                                     <input type="hidden" name="another_files_poor_vision" value="">
+                                                    <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX,
+                                                        PPTX, PNG,
+                                                        JPG, RAR,
+                                                        ZIP, 7z, MP3, MP4, AVI, MOV
+                                                        • {{__('default.pages.courses.max_file_title')}}
+                                                        20 MB
+                                                    </div>
+                                                    <a href="javascript:;"
+                                                       title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                                       class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                                    <div class="previews-container"></div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if($item->is_poor_hearing == true)
+                                            <h3 class="title-tertiary">{{__('default.pages.courses.is_poor_hearing')}}</h3>
+                                            <div class="form-group">
+                                                <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link_2')}}</label>
+                                                <input type="url" name="videos_poor_hearing_link[]" placeholder=""
+                                                       class="input-regular"
+                                                       id="courseVideo2">
+                                            </div>
+                                            <div class="removable-items"></div>
+                                            <div class="text-right pull-up">
+                                                <a href="#" title="{{__('default.pages.profile.add_btn_title')}}"
+                                                   class="add-btn"
+                                                   data-duplicate="courseVideo2" data-maxcount="4"><span
+                                                            class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
+                                                            class="btn-icon small icon-plus"> </span></a>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-group__label">{{__('default.pages.courses.video_local_2')}}</label>
+                                                <div data-url="/ajax_upload_lesson_videos?_token={{ csrf_token() }}"
+                                                     data-maxfiles="5"
+                                                     data-maxsize="500" data-acceptedfiles=".mp4" id="video2"
+                                                     class="dropzone-default dropzone-multiple">
+                                                    <input type="hidden" name="videos_poor_hearing" value="">
+                                                    <div class="dropzone-default__info">MP4
+                                                        • {{__('default.pages.courses.max_file_title')}} 500MB
+                                                    </div>
+                                                    <a href="javascript:;"
+                                                       title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                                       class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                                    <div class="previews-container"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-group__label">{{__('default.pages.lessons.lesson_audio_2')}}</label>
+                                                <div data-url="/ajax_upload_lesson_audios?_token={{ csrf_token() }}"
+                                                     data-maxfiles="5"
+                                                     data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
+                                                     class="dropzone-default dropzone-multiple">
+                                                    <input type="hidden" name="audios_poor_hearing" value="">
+                                                    <div class="dropzone-default__info">MP3
+                                                        • {{__('default.pages.courses.max_file_title')}} 10MB
+                                                    </div>
+                                                    <a href="javascript:;"
+                                                       title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                                       class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                                    <div class="previews-container"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments_2')}}</label>
+                                                <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}"
+                                                     data-maxfiles="20"
+                                                     data-maxsize="20"
+                                                     data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg, .rar, .zip, .7z, .mp3, .mp4, .avi, .mov"
+                                                     id="documents-dropzone2"
+                                                     class="dropzone-default dropzone-multiple">
+                                                    <input type="hidden" name="another_files_poor_hearing" value="">
                                                     <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX,
                                                         PPTX, PNG,
                                                         JPG, RAR,
