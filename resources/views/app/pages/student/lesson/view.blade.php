@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        @include('admin.v2.pages.courses.lesson_preview.components.media_attachments',['item' => $item, 'sidebar_btn' => true])
+                        @include('app.pages.student.lesson.components.media_attachments',['item' => $item, 'sidebar_btn' => true])
                     </div>
                 </div>
             </div>
