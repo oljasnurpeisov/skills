@@ -274,6 +274,7 @@ return [
             'mix_answers' => 'Перемешать ответы',
 
             'poor_vision_title' => 'Версия для лиц с нарушениями зрения',
+            'poor_hearing_title' => 'Версия для лиц с нарушениями слуха',
             'hour_short_title' => 'ч.',
             'font_size_title' => 'Размер шрифта',
             'line_spacing' => 'Межстрочный интервал',

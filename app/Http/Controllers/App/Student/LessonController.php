@@ -374,22 +374,32 @@ class LessonController extends Controller
         if ($studentCourse != null && $studentCourse->is_finished == false) {
             // Получить следующий урок
             $currentTheme = $lesson->themes;
-            $nextLesson = Lesson::where('index_number', '>', $lesson->index_number)
-                ->where('theme_id', '=', $currentTheme->id)
-                ->orderBy('index_number', 'asc')
-                ->first();
-
-            if ($nextLesson == null) {
-                $nextTheme = Theme::where('course_id', '=', $course->id)
-                    ->where('index_number', '>', $currentTheme->index_number)
+            if ($currentTheme != null) {
+                $nextLesson = Lesson::where('index_number', '>', $lesson->index_number)
+                    ->where('theme_id', '=', $currentTheme->id)
                     ->orderBy('index_number', 'asc')
                     ->first();
-                if ($nextTheme != null) {
-                    $nextLesson = Lesson::where('theme_id', '=', $nextTheme->id)
+
+                if ($nextLesson == null) {
+                    $nextTheme = Theme::where('course_id', '=', $course->id)
+                        ->where('index_number', '>', $currentTheme->index_number)
                         ->orderBy('index_number', 'asc')
                         ->first();
+                    if ($nextTheme != null) {
+                        $nextLesson = Lesson::where('theme_id', '=', $nextTheme->id)
+                            ->orderBy('index_number', 'asc')
+                            ->first();
+                    }
                 }
+            } else {
+                $nextLesson = Lesson::where('index_number', '>', $lesson->index_number)
+                    ->whereCourseId($course->id)
+                    ->whereThemeId(null)
+                    ->whereNotIn('type', [3, 4])
+                    ->orderBy('index_number', 'asc')
+                    ->first();
             }
+
 
             // Переход к следующему уроку
             if ($nextLesson != null) {
