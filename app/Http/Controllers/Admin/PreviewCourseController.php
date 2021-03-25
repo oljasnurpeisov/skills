@@ -68,6 +68,22 @@ class PreviewCourseController extends Controller
 
         }
 
+        $untheme_lessons = Lesson::whereCourseId($item->id)
+            ->whereThemeId(null)
+            ->whereNotIn('type', [3, 4])
+            ->orderBy('index_number', 'asc')
+            ->get();
+
+        foreach ($themes as $theme) {
+            $theme->item_type = 'theme';
+        }
+
+        foreach ($untheme_lessons as $unthemes_lesson) {
+            $unthemes_lesson->item_type = 'lesson';
+        }
+
+        $course_data_items = $themes->merge($untheme_lessons)->sortBy('index_number')->values();
+
         return view('admin.v2.pages.courses.course_frame', [
             "item" => $item,
             "themes" => $themes,
@@ -80,6 +96,7 @@ class PreviewCourseController extends Controller
             "videos_count" => array_sum($videos_count),
             "audios_count" => array_sum($audios_count),
             "attachments_count" => array_sum($attachments_count),
+            'course_data_items' => $course_data_items
         ]);
 
     }

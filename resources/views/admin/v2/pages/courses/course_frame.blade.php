@@ -38,48 +38,61 @@
 
                         <div class="course">
                             <div class="course" id="courseDataContainer">
-                                @foreach($item->themes->sortBy('index_number') as $theme)
-                                    <div class="topic spoiler">
-                                        <div class="topic__header">
-                                            <div class="title">{{$theme->name}}</div>
-                                            <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->where('theme_id', '=', $theme->id)->sum('duration'))}}</div>
+                                @foreach($course_data_items as $course_item)
+                                    @if($course_item->item_type == 'theme')
+                                        <div class="topic spoiler">
+                                            <div class="topic__header">
+                                                <div class="title">{{$course_item->name}}</div>
+                                                <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->where('theme_id', '=', $course_item->id)->sum('duration'))}}</div>
+                                            </div>
+                                            <div class="topic__body">
+                                                @foreach($course_item->lessons->sortBy('index_number') as $lesson)
+                                                    <div class="lesson">
+                                                        @if($lesson->type != 1)
+                                                            <div class="title"><a
+                                                                        href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$lesson->id}}"
+                                                                        title="{{$lesson->name}}">{{$lesson->name}}
+                                                                    <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}
+                                                                        {{$lesson->end_lesson_type == 0 ? ' ('.__('default.pages.lessons.test_title').')' : ' ('.__('default.pages.lessons.homework_title').')'}}</div>
+                                                                </a></div>
+                                                            <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                        @else
+                                                            <div class="title"><a
+                                                                        href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$lesson->id}}"
+                                                                        title="{{$lesson->name}}">{{$lesson->name}}
+                                                                    <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</div>
+                                                                </a></div>
+                                                            <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                        @endif
+                                                    </div>
+                                                @endforeach
+                                            </div>
                                         </div>
+                                    @else
                                         <div class="topic__body">
-                                            @foreach($theme->lessons->sortBy('index_number') as $lesson)
-                                                <div class="lesson">
-                                                    @if($lesson->type != 1)
-                                                        <div class="title"><a
-                                                                    href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$lesson->id}}"
-                                                                    title="{{$lesson->name}}">{{$lesson->name}}
-                                                                <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}
-                                                                    {{$lesson->end_lesson_type == 0 ? ' ('.__('default.pages.lessons.test_title').')' : ' ('.__('default.pages.lessons.homework_title').')'}}</div>
-                                                            </a></div>
-                                                        <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
-                                                    @else
-                                                        <div class="title"><a
-                                                                    href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$lesson->id}}"
-                                                                    title="{{$lesson->name}}">{{$lesson->name}}
-                                                                <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</div>
-                                                            </a></div>
-                                                        <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
+                                            <div class="lesson">
+                                                @if($course_item->type != 1)
+                                                    <div class="title"><a
+                                                                href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$course_item->id}}"
+                                                                title="{{$course_item->name}}">{{$course_item->name}}
+                                                            <div class="type">{{$course_item->lesson_type->getAttribute('name_'.$lang) ?? $course_item->lesson_type->getAttribute('name_ru')}}
+                                                                {{$course_item->end_lesson_type == 0 ? ' ('.__('default.pages.lessons.test_title').')' : ' ('.__('default.pages.lessons.homework_title').')'}}</div>
+                                                        </a>
+                                                    </div>
+                                                @else
+                                                    <div class="title"><a
+                                                                href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$course_item->id}}"
+                                                                title="{{$course_item->name}}">{{$course_item->name}}
+                                                            <div class="type">{{$course_item->lesson_type->getAttribute('name_'.$lang) ?? $course_item->lesson_type->getAttribute('name_ru')}}</div>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                                <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($course_item->duration)}}</div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 @endforeach
                             </div>
-
-                            @if($item->courseWork() !== null)
-                                <div class="topic">
-                                    <div class="topic__header">
-                                        <div class="title"><a
-                                                    href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
-                                        </div>
-                                        <div class="duration"></div>
-                                    </div>
-                                </div>
-                            @endif
                             @if($item->finalTest() !== null)
                                 <div class="topic">
                                     <div class="topic__header">
