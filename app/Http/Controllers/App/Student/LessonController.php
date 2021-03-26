@@ -54,45 +54,105 @@ class LessonController extends Controller
         }
 
         // Если все уроки не доступны сразу
-        if ($course->is_access_all == false && $theme != null) {
-            // Получить первый урок и первую тему из курса
-            $firstTheme = Theme::where('course_id', '=', $course->id)->orderBy('index_number', 'asc')->first();
-            $firstLesson = Lesson::where('theme_id', '=', $theme->id)->orderBy('index_number', 'asc')->first();
-
-            // Проверить является ли урок первым в курсе
-            if (($theme->id == $firstTheme->id) and ($firstLesson->id == $lesson->id)) {
-                $this->syncUserLessons($lesson->id);
-                return $view;
-            }
-
-            // Если урок не является первым в курсе, получить предыдущий урок из этой темы
-            $previousLesson = Lesson::where('index_number', '<', $lesson->index_number)
-                ->where('theme_id', '=', $theme->id)
-                ->orderBy('index_number', 'desc')
-                ->first();
-            if ($previousLesson == null) {
-                // Если урока нет, получить предыдущую тему и урок из этой предыдущей темы
-                $previousTheme = Theme::where('course_id', '=', $course->id)
-                    ->where('index_number', '<', $theme->index_number)
-                    ->orderBy('index_number', 'desc')
-                    ->first();
-                $previousLesson = Lesson::where('theme_id', '=', $previousTheme->id)
-                    ->orderBy('index_number', 'desc')
-                    ->first();
-            }
-
-            if ($previousLesson != null) {
-                // Проверяем пройден ли предыдущий урок
-                /** @var StudentLesson $studentLesson */
-                $studentLesson = $previousLesson->student_lessons()->where('student_id', '=', $user->id)->first();
-                if ($studentLesson != null && $studentLesson->is_finished == true) {
+        if ($lesson->type != 4) {
+            if ($course->is_access_all == false && $theme != null) {
+                // Получить первый урок из темы
+                $firstLesson = Lesson::whereThemeId($theme->id)->orderBy('index_number', 'asc')->first();
+                // Проверить является ли урок первым в курсе
+                if ($theme->index_number == 0 && $firstLesson->id == $lesson->id) {
                     $this->syncUserLessons($lesson->id);
                     return $view;
                 }
-            }
+                // Если урок не является первым в курсе, получить предыдущий урок из этой темы
+                $previousLesson = Lesson::where('index_number', '<', $lesson->index_number)
+                    ->where('theme_id', '=', $theme->id)
+                    ->orderBy('index_number', 'desc')
+                    ->first();
 
-            return redirect('/' . $lang . '/course-catalog/course/' . $course->id)
-                ->with('error', __('default.pages.lessons.access_denied_message'));
+                if ($previousLesson == null) {
+                    // Если урока нет, получить предыдущую тему
+                    $previousTheme = Theme::where('course_id', '=', $course->id)
+                        ->where('index_number', '<', $theme->index_number)
+                        ->orderBy('index_number', 'desc')
+                        ->first();
+                    // Получить предыдущий урок без темы
+                    $previousUnthemeLesson = Lesson::whereCourseId($course->id)
+                        ->where('index_number', '<', $theme->index_number)
+                        ->whereNotIn('type', [3, 4])
+                        ->orderBy('index_number', 'desc')
+                        ->first();
+                    if ($previousTheme != null && $previousUnthemeLesson != null) {
+                        if ($previousTheme->index_number > $previousUnthemeLesson->index_number) {
+                            $previousLesson = Lesson::where('theme_id', '=', $previousTheme->id)
+                                ->orderBy('index_number', 'desc')
+                                ->first();
+                        } else {
+                            $previousLesson = $previousUnthemeLesson;
+                        }
+                    } else if ($previousTheme != null && $previousUnthemeLesson == null) {
+                        $previousLesson = Lesson::where('theme_id', '=', $previousTheme->id)
+                            ->orderBy('index_number', 'desc')
+                            ->first();
+                    } else {
+                        $previousLesson = $previousUnthemeLesson;
+                    }
+                }
+
+                if ($previousLesson != null) {
+                    // Проверяем пройден ли предыдущий урок
+                    /** @var StudentLesson $studentLesson */
+                    $studentLesson = $previousLesson->student_lessons()->where('student_id', '=', $user->id)->first();
+                    if ($studentLesson != null && $studentLesson->is_finished == true) {
+                        $this->syncUserLessons($lesson->id);
+                        return $view;
+                    }
+                }
+
+                return redirect('/' . $lang . '/course-catalog/course/' . $course->id)
+                    ->with('error', __('default.pages.lessons.access_denied_message'));
+            } else if ($course->is_access_all == false && $theme == null) {
+                if ($lesson->index_number == 0 && $lesson->theme_id == null) {
+                    $this->syncUserLessons($lesson->id);
+                    return $view;
+                }
+                // Если урок не является первым в курсе, получить предыдущий урок
+                $previousTheme = Theme::where('index_number', '<', $lesson->index_number)
+                    ->orderBy('index_number', 'desc')
+                    ->first();
+                $previousUnthemeLesson = Lesson::whereCourseId($course->id)
+                    ->where('index_number', '<', $lesson->index_number)
+                    ->whereNotIn('type', [3, 4])
+                    ->orderBy('index_number', 'desc')
+                    ->first();
+
+                if ($previousTheme != null && $previousUnthemeLesson != null) {
+                    if ($previousTheme->index_number < $previousUnthemeLesson->index_number) {
+                        $previousLesson = Lesson::where('theme_id', '=', $previousTheme->id)
+                            ->orderBy('index_number', 'desc')
+                            ->first();
+                    } else {
+                        $previousLesson = $previousUnthemeLesson;
+                    }
+                } else if ($previousTheme != null && $previousUnthemeLesson == null) {
+                    $previousLesson = Lesson::where('theme_id', '=', $previousTheme->id)
+                        ->orderBy('index_number', 'desc')
+                        ->first();
+                } else {
+                    $previousLesson = $previousUnthemeLesson;
+                }
+                if ($previousLesson != null) {
+                    // Проверяем пройден ли предыдущий урок
+                    /** @var StudentLesson $studentLesson */
+                    $studentLesson = $previousLesson->student_lessons()->where('student_id', '=', $user->id)->first();
+                    if ($studentLesson != null && $studentLesson->is_finished == true) {
+                        $this->syncUserLessons($lesson->id);
+                        return $view;
+                    }
+                }
+
+                return redirect('/' . $lang . '/course-catalog/course/' . $course->id)
+                    ->with('error', __('default.pages.lessons.access_denied_message'));
+            }
         }
 
         // Если все уроки доступны сразу
@@ -385,21 +445,55 @@ class LessonController extends Controller
                         ->where('index_number', '>', $currentTheme->index_number)
                         ->orderBy('index_number', 'asc')
                         ->first();
-                    if ($nextTheme != null) {
+                    $nextUnthemeLesson = Lesson::where('index_number', '>', $lesson->index_number)
+                        ->whereCourseId($course->id)
+                        ->whereThemeId(null)
+                        ->whereNotIn('type', [3, 4])
+                        ->orderBy('index_number', 'asc')
+                        ->first();
+                    if ($nextTheme != null && $nextUnthemeLesson != null) {
+                        if ($nextTheme->index_number < $nextUnthemeLesson->index_number) {
+                            $nextLesson = Lesson::where('theme_id', '=', $nextTheme->id)
+                                ->orderBy('index_number', 'desc')
+                                ->first();
+                        } else {
+                            $nextLesson = $nextUnthemeLesson;
+                        }
+                    } else if ($nextTheme != null && $nextUnthemeLesson == null) {
                         $nextLesson = Lesson::where('theme_id', '=', $nextTheme->id)
-                            ->orderBy('index_number', 'asc')
+                            ->orderBy('index_number', 'desc')
                             ->first();
+                    } else {
+                        $nextLesson = $nextUnthemeLesson;
                     }
                 }
             } else {
-                $nextLesson = Lesson::where('index_number', '>', $lesson->index_number)
+                $nextTheme = Theme::where('course_id', '=', $course->id)
+                    ->where('index_number', '>', $lesson->index_number)
+                    ->orderBy('index_number', 'asc')
+                    ->first();
+                $nextUnthemeLesson = Lesson::where('index_number', '>', $lesson->index_number)
                     ->whereCourseId($course->id)
                     ->whereThemeId(null)
                     ->whereNotIn('type', [3, 4])
                     ->orderBy('index_number', 'asc')
                     ->first();
+                if ($nextTheme != null && $nextUnthemeLesson != null) {
+                    if ($nextTheme->index_number < $nextUnthemeLesson->index_number) {
+                        $nextLesson = Lesson::where('theme_id', '=', $nextTheme->id)
+                            ->orderBy('index_number', 'desc')
+                            ->first();
+                    } else {
+                        $nextLesson = $nextUnthemeLesson;
+                    }
+                } else if ($nextTheme != null && $nextUnthemeLesson == null) {
+                    $nextLesson = Lesson::where('theme_id', '=', $nextTheme->id)
+                        ->orderBy('index_number', 'desc')
+                        ->first();
+                } else {
+                    $nextLesson = $nextUnthemeLesson;
+                }
             }
-
 
             // Переход к следующему уроку
             if ($nextLesson != null) {
@@ -427,6 +521,19 @@ class LessonController extends Controller
                 ->where('type', '=', 4)
                 ->first();
             if ($finalTest != null && $finalTest->id != $lesson->id) {
+                $courseLessons = $course->lessons()
+                    ->whereNotIn('type', [3, 4])
+                    ->pluck('id')
+                    ->toArray();
+                $finishedLessons = $user->student_lesson()
+                    ->where('course_id', '=', $course->id)
+                    ->where('is_finished', '=', true)
+                    ->pluck('lesson_id')
+                    ->toArray();
+                // Проверить завершенность уроков
+                if (array_diff($courseLessons, $finishedLessons) != []) {
+                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id);
+                }
                 // Установка доступа к следующему уроку
                 $this->syncUserLessons($finalTest->id);
                 // Проверить окончание курса
