@@ -6,7 +6,7 @@ let courseController=function(a,b){function c(a,b){return{id:a,name:b,order:H.le
                                         <a href="#" title="${q}" class="btn-icon small btn-icon--ghost icon-trash-can"> </a>
                                         <a href="#" title="${p}" class="btn-icon small btn-icon--ghost icon-chevron-down"> </a>
                                         <a href="#" title="${r}" class="btn-icon small btn-icon--ghost icon-edit"> </a>
-                                        <a href="${`/${n}/my-courses/course/${a}/create-lesson`}" title="${s}" class="btn-icon small icon-plus"> </a>
+                                        <a href="${`/${n}/my-courses/course/${a}/theme-${g}/create-lesson`}" title="${s}" class="btn-icon small icon-plus"> </a>
                                     </div>
                                 </div>`,w.querySelector(".icon-trash-can").addEventListener("click",function(a){a.preventDefault(),I=g,$.fancybox.open({src:C,touch:!1})}),w.querySelector(".icon-edit").addEventListener("click",function(a){a.preventDefault(),J=g,z.value=k,$.fancybox.open({src:B,touch:!1})}),m){let e=w.querySelector(".title"),h=w.querySelector(".duration"),k=document.createElement("div"),l=0;w.classList.add("spoiler"),k.className="topic__body";let s=m.sort(function(c,a){return c.order-a.order});s.forEach(function({id:c,name:d,duration:e,type:f}){let h=document.createElement("div");h.className="lesson",h.innerHTML=`<div class="title"><a href="${`/${n}/my-courses/course/${a}/view-lesson-${c}`}" title="${d}">${d} <div class="type">${f}</div></a></div>
                                       <div class="duration">${j(e)}</div>
