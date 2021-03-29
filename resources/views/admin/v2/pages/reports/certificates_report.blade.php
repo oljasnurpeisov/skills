@@ -40,7 +40,9 @@
                                 <div class="input-group">
                                     <label class="input-group__title">Дата выдачи: от</label>
                                     <label class="">
-                                        <input type="text" data-date-format="dd.mm.yyyy" name="date_from" value="{{$request->date_from}}" placeholder="" class="input-regular custom-datepicker" autocomplete="off">
+                                        <input type="text" data-date-format="dd.mm.yyyy" name="date_from"
+                                               value="{{$request->date_from}}" placeholder=""
+                                               class="input-regular custom-datepicker" autocomplete="off">
                                     </label>
                                 </div>
                             </div>
@@ -48,7 +50,9 @@
                                 <div class="input-group">
                                     <label class="input-group__title">до</label>
                                     <label class="">
-                                        <input type="text" data-date-format="dd.mm.yyyy" name="date_to" value="{{$request->date_to}}" placeholder="" class="input-regular custom-datepicker" autocomplete="off">
+                                        <input type="text" data-date-format="dd.mm.yyyy" name="date_to"
+                                               value="{{$request->date_to}}" placeholder=""
+                                               class="input-regular custom-datepicker" autocomplete="off">
                                     </label>
                                 </div>
                             </div>
@@ -87,6 +91,7 @@
                     <th>{{__('admin.pages.reports.name_student')}}</th>
                     <th>Дата выдачи</th>
                     <th>Тип оплаты за курс</th>
+                    <th>Сертификаты</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -96,6 +101,25 @@
                         <td>{{$item->students->student_info->name}}</td>
                         <td>{{ date('d.m.Y', strtotime($item->created_at)) }}</td>
                         <td>{{$item->payment_type == 1 ? 'Оплачен' : ($item->payment_type == 2 ? 'Приобретен по квоте' : 'Приобретен бесплатно')}}</td>
+                        <td>
+                            @if($item->pdf_kk != null)
+                                @if(is_file(public_path($item->pdf_kk)))
+                                    <a href="{{$item->pdf_kk}}"
+                                       title="Қаз" target="_blank">Қаз</a>
+                                @endif
+                                @if(is_file(public_path($item->pdf_ru)))
+                                    <a href="{{$item->pdf_ru}}"
+                                       title="Рус"
+                                       style="margin-left: 15px" target="_blank">Рус</a>
+                                @endif
+                            @else
+                                @if(is_file(public_path($item->pdf_ru)))
+                                    <a href="{{$item->pdf_ru}}"
+                                       title="Просмотр"
+                                       style="margin-left: 15px" target="_blank">Просмотр</a>
+                                @endif
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
