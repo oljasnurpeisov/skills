@@ -99,11 +99,27 @@
                         <form class="sidebar" data-toggle-title="{{__('default.pages.courses.show_filter_title')}}">
                             <div class="sidebar__inner">
                                 <div class="sidebar-item">
+                                    <div class="sidebar-item__title">{{__('default.pages.courses.professional_area_title')}}:</div>
+                                    <div class="sidebar-item__body">
+                                        <select name="professional_areas[]"
+                                                placeholder="{{__('default.pages.courses.choose_professional_area_title')}}"
+                                                data-method="getProfessionalAreaByName"
+                                                class="custom" multiple>
+                                            @if(!empty($request->professional_areas))
+                                                @foreach($professional_areas as $professional_area)
+                                                    <option value="{{$professional_area->id}}"
+                                                            selected>{{$professional_area->getAttribute('name_'.$lang ?? 'name_ru')}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="sidebar-item">
                                     <div class="sidebar-item__title">{{__('default.pages.courses.profession')}}:</div>
                                     <div class="sidebar-item__body">
                                         <select name="specialities[]"
                                                 placeholder="{{__('default.pages.courses.choose_profession')}}"
-                                                data-method="getProfessionsByName"
+                                                data-method="getProfessionsByData"
                                                 class="custom" multiple>
                                             @if(!empty($request->specialities))
                                                 @foreach($professions as $profession)
@@ -112,8 +128,6 @@
                                                 @endforeach
                                             @endif
                                         </select>
-
-
                                     </div>
                                 </div>
                                 <div class="sidebar-item">
@@ -121,7 +135,7 @@
                                     <div class="sidebar-item__body">
                                         <select name="skills[]"
                                                 placeholder="{{__('default.pages.courses.choose_skill')}}"
-                                                data-method="getSkillsByData?_token={{ csrf_token() }}"
+                                                data-method="getSkillsByData"
                                                 class="custom" multiple>
                                             @if(!empty($request->skills))
                                                 @foreach($skills as $skill)
@@ -209,11 +223,17 @@
 @section('scripts')
     <!--Only this page's scripts-->
     <script>
-        const specialityEl = $('[name="specialities[]"]'),
+        const professionalAreaEl = $('[name="professional_areas[]"]'),
+            specialityEl = $('[name="specialities[]"]'),
             skillsEl = $('[name="skills[]"]');
 
+        let professionalAreaSelect = new ajaxSelect(professionalAreaEl);
         let specialitySelect = new ajaxSelect(specialityEl);
         let skillsSelect = new ajaxSelect(skillsEl, specialityEl);
+
+        professionalAreaEl.change(function () {
+            specialitySelect.update($(this).val() ? {"professional_areas": toArray($(this).val())} : null);
+        })
 
         specialityEl.change(function () {
             skillsSelect.update($(this).val() ? {"professions": toArray($(this).val())} : null);

@@ -1,0 +1,1 @@
+<?php /**PATH D:\OpenServer\domains\enbek\resources\views/admin/v2/layout/default/components/modals.blade.php ENDPATH**/ ?>

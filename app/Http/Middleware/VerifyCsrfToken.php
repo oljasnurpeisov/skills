@@ -31,6 +31,7 @@ class VerifyCsrfToken extends Middleware
 
         '/ru/getCourseData/*',
         '/move-theme',
+        '/move-item',
         '/delete-theme',
         '/edit-theme',
         '/create-theme',

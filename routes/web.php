@@ -157,6 +157,9 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 // Отчеты по обучающимся
                 Route::get('/reports/students', 'ReportController@studentsReports');
                 Route::get("/export-students-report", "ReportController@exportStudentsReport");
+                // Отчеты по сертификатам
+                Route::get('/reports/certificates', 'ReportController@certificatesReports');
+                Route::get("/export-certificates-report", "ReportController@exportCertificates");
             });
         });
     });
@@ -176,6 +179,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                 // Урок
                 Route::delete("/delete-lesson", "LessonController@deleteLesson");
                 Route::post("/move-lesson", "LessonController@moveLesson");
+                // Урок без темы
+                Route::post("/move-item", "ThemeController@moveItem");
             });
         });
     });
@@ -230,12 +235,16 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::post("/course-catalog-filter", "CourseController@courseCatalogFilter");
 
             Route::get("/getProfessionsByName", "CourseController@getProfessionsByName");
+            Route::get("/getProfessionalAreaByName", "CourseController@getProfessionalAreaByName");
             Route::get("/getSkillsByData", "CourseController@getSkillsByData");
             Route::get("/getSkills", "CourseController@getSkills");
             Route::get("/getAuthorsByName", "CourseController@getAuthorsByName");
             //
             Route::get("/getSkills", "CourseController@getCourseSkills");
             Route::get("/getProfessionsBySkills/{skill_id}", "CourseController@getProfessionsBySkills");
+            Route::get("/getProfessionsByProfessionalArea/{professional_area_id}", "CourseController@getProfessionsByProfessionalArea");
+            Route::get("/getProfessionsByData", "CourseController@getProfessionsByData");
+            Route::get("/getSkillsByProfession/{profession_id}", "CourseController@getSkillsByProfession");
             //
             Route::post("/markAsReadNotifications", "CourseController@markAsReadNotifications");
 
@@ -318,8 +327,10 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::post("/my-courses/quota-confirm-course/{item}", "CourseController@quotaConfirm");
                     // Урок
                     Route::get("/my-courses/course/{item}/theme-{theme}/create-lesson", "LessonController@createLesson");
+                    Route::get("/my-courses/course/{item}/create-lesson", "LessonController@createUnthemeLesson");
                     Route::get("/my-courses/course/{course}/edit-lesson-{lesson}", "LessonController@editLesson");
-//                    Route::get("/my-courses/course/{course}/theme-{theme}/view-lesson-{lesson}", "LessonController@viewLesson");
+                    Route::get("/my-courses/course/{course}/edit-untheme-lesson-{lesson}", "LessonController@editUnthemeLesson");
+                    Route::post("/create-lesson/{course}", "LessonController@storeUnthemeLesson");
                     Route::post("/create-lesson/{course}/{theme}", "LessonController@storeLesson");
                     Route::post("/course-{course}/edit-lesson-{item}", "LessonController@updateLesson");
                     Route::delete("/course-{course}/theme-{theme}/lesson-{lesson}/delete-lesson-form", "LessonController@deleteLessonForm");

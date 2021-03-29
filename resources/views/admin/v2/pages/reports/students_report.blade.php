@@ -97,26 +97,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <label class="input-group__title">Количество квалификаций: от</label>
-                                    <label class="">
-                                        <input type="number" name="qualifications_count_from" placeholder=""
-                                               class="input-regular" value="{{$request->qualifications_count_from}}">
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <label class="input-group__title">до</label>
-                                    <label class="">
-                                        <input type="number" name="qualifications_count_to" placeholder=""
-                                               class="input-regular" value="{{$request->qualifications_count_to}}">
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+{{--                        <div class="row">--}}
+{{--                            <div class="col-sm-6">--}}
+{{--                                <div class="input-group">--}}
+{{--                                    <label class="input-group__title">Количество квалификаций: от</label>--}}
+{{--                                    <label class="">--}}
+{{--                                        <input type="number" name="qualifications_count_from" placeholder=""--}}
+{{--                                               class="input-regular" value="{{$request->qualifications_count_from}}">--}}
+{{--                                    </label>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-sm-6">--}}
+{{--                                <div class="input-group">--}}
+{{--                                    <label class="input-group__title">до</label>--}}
+{{--                                    <label class="">--}}
+{{--                                        <input type="number" name="qualifications_count_to" placeholder=""--}}
+{{--                                               class="input-regular" value="{{$request->qualifications_count_to}}">--}}
+{{--                                    </label>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
             </div>
@@ -134,6 +134,7 @@
                     <a href="/{{$lang}}/admin/export-students-report" class="btn btn--blue">Экспорт</a>
                 </div>
             </div>
+        </form>
 
 
         <div class="block">
@@ -154,7 +155,7 @@
                     <th><a href="?sortByQuota={{$request->sortByQuota == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.quotas_count')}}</a></th>
                     <th>{{__('admin.pages.reports.student_courses_count')}}</th>
                     <th>{{__('admin.pages.reports.student_certificates_count')}}</th>
-                    <th>{{__('admin.pages.reports.student_qualifications_count')}}</th>
+{{--                    <th>{{__('admin.pages.reports.student_qualifications_count')}}</th>--}}
                 </tr>
                 </thead>
                 <tbody>
@@ -165,7 +166,7 @@
                         <td>{{$item->student_info->quota_count}}</td>
                         <td>{{$item->student_course->whereIn('paid_status', [1,2,3])->count()}}</td>
                         <td>{{$item->student_course->where('is_finished', '=', true)->count()}}</td>
-                        <td>{{$item->qualifications_count}}</td>
+{{--                        <td>{{$item->qualifications_count}}</td>--}}
                     </tr>
                 @endforeach
                 </tbody>

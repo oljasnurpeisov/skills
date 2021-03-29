@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Eloquent\Builder|Dialog query()
  * @method static \Illuminate\Database\Eloquent\Builder|Dialog whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Dialog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Dialog whereIsTs($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Dialog whereUpdatedAt($value)
  * @mixin \Eloquent
  */

@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Extensions\NotificationsHelper;
-use App\Models\Course;
 use App\Models\Dialog;
 use App\Models\Message;
 use App\Models\StudentCourse;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 
 class DialogController extends Controller

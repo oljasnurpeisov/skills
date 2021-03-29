@@ -6,14 +6,13 @@ use App\Exports\ReportingExport;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseAttachments;
-use App\Models\CourseQuotaCost;
 use App\Models\Lesson;
 use App\Models\Notification;
+use App\Models\ProfessionalArea;
 use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCourse;
 use App\Models\Theme;
-use App\Models\Type_of_ownership;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -63,12 +62,17 @@ class CourseController extends Controller
                 } else {
                     $item->is_poor_vision = 0;
                 }
+                if ($request->is_poor_hearing) {
+                    $item->is_poor_hearing = 1;
+                } else {
+                    $item->is_poor_hearing = 0;
+                }
                 $item->cost = $request->cost ?? 0;
                 $item->profit_desc = $request->profit_desc;
                 $item->teaser = $request->teaser;
                 $item->description = $request->description;
                 $item->course_includes = $request->course_includes;
-                $item->certificate_id = $request->certificate_id;
+                $item->certificate_id = 1;
 
                 if (($request->image != $item->image)) {
                     File::delete(public_path($item->image));
@@ -89,6 +93,11 @@ class CourseController extends Controller
                     $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
                 }
 
+                // Ссылки на видео курса для лиц с нарушениями слуха
+                if ($request->videos_poor_hearing_link) {
+                    $item_attachments->videos_poor_hearing_link = json_encode($request->videos_poor_hearing_link);
+                }
+
                 // Видео с устройства
                 if (($request->videos != $item_attachments->videos)) {
                     File::delete(public_path($item_attachments->videos));
@@ -101,6 +110,12 @@ class CourseController extends Controller
 
                     $item_attachments->videos_poor_vision = $request->videos_poor_vision;
                 }
+                // Видео с устройства для лиц с нарушениями слуха
+                if (($request->videos_poor_hearing != $item_attachments->videos_poor_hearing)) {
+                    File::delete(public_path($item_attachments->videos_poor_hearing));
+
+                    $item_attachments->videos_poor_hearing = $request->videos_poor_hearing;
+                }
                 // Аудио с устройства
                 if (($request->audios != $item_attachments->audios)) {
                     File::delete(public_path($item_attachments->audios));
@@ -111,15 +126,19 @@ class CourseController extends Controller
                 if (($request->audios_poor_vision != $item_attachments->audios_poor_vision)) {
                     File::delete(public_path($item_attachments->audios_poor_vision));
 
-                    $item_attachments->audios = $request->audios_poor_vision;
+                    $item_attachments->audios_poor_vision = $request->audios_poor_vision;
+                }
+                // Аудио с устройства для лиц с нарушениями слуха
+                if (($request->audios_poor_hearing != $item_attachments->audios_poor_hearing)) {
+                    File::delete(public_path($item_attachments->audios_poor_hearing));
+
+                    $item_attachments->audios_poor_hearing = $request->audios_poor_hearing;
                 }
 
                 $item_attachments->save();
 
                 foreach ($request->skills as $key => $skill) {
-                    foreach ($request->professions[$key] as $k => $profession) {
-                        $item->skills()->attach([$skill => ['profession_id' => $profession]]);
-                    }
+                    $item->skills()->attach([$skill => ['profession_id' => $request->professions, 'professional_area_id' => $request->professional_areas]]);
                 }
 
                 return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.create_request_message'));
@@ -145,12 +164,17 @@ class CourseController extends Controller
             } else {
                 $item->is_poor_vision = 0;
             }
+            if ($request->is_poor_hearing) {
+                $item->is_poor_hearing = 1;
+            } else {
+                $item->is_poor_hearing = 0;
+            }
             $item->cost = $request->cost ?? 0;
             $item->profit_desc = $request->profit_desc;
             $item->teaser = $request->teaser;
             $item->description = $request->description;
             $item->course_includes = $request->course_includes;
-            $item->certificate_id = $request->certificate_id;
+            $item->certificate_id = 1;
 
             if (($request->image != $item->image)) {
                 File::delete(public_path($item->image));
@@ -171,6 +195,11 @@ class CourseController extends Controller
                 $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
             }
 
+            // Ссылки на видео курса для лиц с нарушениями слуха
+            if ($request->videos_poor_hearing_link) {
+                $item_attachments->videos_poor_hearing_link = json_encode($request->videos_poor_hearing_link);
+            }
+
             // Видео с устройства
             if (($request->videos != $item_attachments->videos)) {
                 File::delete(public_path($item_attachments->videos));
@@ -183,6 +212,12 @@ class CourseController extends Controller
 
                 $item_attachments->videos_poor_vision = $request->videos_poor_vision;
             }
+            // Видео с устройства для лиц с нарушениями слуха
+            if (($request->videos_poor_hearing != $item_attachments->videos_poor_hearing)) {
+                File::delete(public_path($item_attachments->videos_poor_hearing));
+
+                $item_attachments->videos_poor_hearing = $request->videos_poor_hearing;
+            }
             // Аудио с устройства
             if (($request->audios != $item_attachments->audios)) {
                 File::delete(public_path($item_attachments->audios));
@@ -193,15 +228,19 @@ class CourseController extends Controller
             if (($request->audios_poor_vision != $item_attachments->audios_poor_vision)) {
                 File::delete(public_path($item_attachments->audios_poor_vision));
 
-                $item_attachments->audios = $request->audios_poor_vision;
+                $item_attachments->audios_poor_vision = $request->audios_poor_vision;
+            }
+            // Аудио с устройства для лиц с нарушениями слуха
+            if (($request->audios_poor_hearing != $item_attachments->audios_poor_hearing)) {
+                File::delete(public_path($item_attachments->audios_poor_hearing));
+
+                $item_attachments->audios_poor_hearing = $request->audios_poor_hearing;
             }
 
             $item_attachments->save();
 
             foreach ($request->skills as $key => $skill) {
-                foreach ($request->professions[$key] as $k => $profession) {
-                    $item->skills()->attach([$skill => ['profession_id' => $profession]]);
-                }
+                $item->skills()->attach([$skill => ['profession_id' => $request->professions, 'professional_area_id' => $request->professional_areas]]);
             }
 
             return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.create_request_message'));
@@ -241,6 +280,7 @@ class CourseController extends Controller
         $min_rating = $request->min_rating ?? 0;
         $members_count = $request->members_count ?? 0;
         $specialities = $request->specialities;
+        $professional_areas = $request->professional_areas;
         $skills = $request->skills;
 
         // Сортировка по языку
@@ -297,9 +337,21 @@ class CourseController extends Controller
                 $q->whereIn('paid_status', [1, 2]);
             }])->having('course_members_count', '>=', $members_count);
         }
+        // Получить проф.области
+        if ($professional_areas) {
+            $professional_areas = ProfessionalArea::whereIn('id', $professional_areas)->get();
+
+            $query->whereHas('professional_areas', function ($q) use ($request) {
+                $q->whereIn('professional_areas.id', $request->professional_areas);
+            });
+        }
         // Получить профессии
         if ($specialities) {
             $professions = Professions::whereIn('id', $specialities)->get();
+
+            $query->whereHas('professions', function ($q) use ($request) {
+                $q->whereIn('professions.id', $request->specialities);
+            });
         }
         // Сортировка по навыкам
         if ($skills) {
@@ -317,7 +369,8 @@ class CourseController extends Controller
             "page_name" => $page_name,
             "request" => $request,
             "professions" => $professions ?? null,
-            "skills" => $skills ?? null
+            "skills" => $skills ?? null,
+            "professional_areas" => $professional_areas ?? null
         ]);
     }
 
@@ -376,6 +429,22 @@ class CourseController extends Controller
 
             }
 
+            $untheme_lessons = Lesson::whereCourseId($item->id)
+                ->whereThemeId(null)
+                ->whereNotIn('type', [3, 4])
+                ->orderBy('index_number', 'asc')
+                ->get();
+
+            foreach ($themes as $theme) {
+                $theme->item_type = 'theme';
+            }
+
+            foreach ($untheme_lessons as $unthemes_lesson) {
+                $unthemes_lesson->item_type = 'lesson';
+            }
+
+            $course_data_items = $themes->merge($untheme_lessons)->sortBy('index_number')->values();
+
             return view("app.pages.author.courses.course", [
                 "item" => $item,
                 "themes" => $themes,
@@ -387,7 +456,8 @@ class CourseController extends Controller
                 "average_rates" => $average_rates,
                 "videos_count" => array_sum($videos_count),
                 "audios_count" => array_sum($audios_count),
-                "attachments_count" => array_sum($attachments_count)
+                "attachments_count" => array_sum($attachments_count),
+                'course_data_items' => $course_data_items
             ]);
         } else {
             return redirect("/" . app()->getLocale() . "/my-courses");
@@ -439,12 +509,17 @@ class CourseController extends Controller
         } else {
             $item->is_poor_vision = 0;
         }
+        if ($request->is_poor_hearing) {
+            $item->is_poor_hearing = 1;
+        } else {
+            $item->is_poor_hearing = 0;
+        }
         $item->cost = $request->cost;
         $item->profit_desc = $request->profit_desc;
         $item->teaser = $request->teaser;
         $item->description = $request->description;
 
-        $item->certificate_id = $request->certificate_id;
+        $item->certificate_id = 1;
 
         if (($request->image != $item->image)) {
             File::delete(public_path($item->image));
@@ -453,9 +528,7 @@ class CourseController extends Controller
         }
         $item->skills()->detach();
         foreach ($request->skills as $key => $skill) {
-            foreach ($request->professions[$key] as $k => $profession) {
-                $item->skills()->attach([$skill => ['profession_id' => $profession]]);
-            }
+            $item->skills()->attach([$skill => ['profession_id' => $request->professions, 'professional_area_id' => $request->professional_areas]]);
         }
         $item->save();
 
@@ -467,12 +540,19 @@ class CourseController extends Controller
         if ($request->videos_poor_vision_link) {
             $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
         }
+        // Ссылки на видео курса для лиц с нарушениями слуха
+        if ($request->videos_poor_hearing_link) {
+            $item_attachments->videos_poor_hearing_link = json_encode($request->videos_poor_hearing_link);
+        }
 
         $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
         $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);
 
         $videos_poor_vision = array_merge(json_decode($request->localVideo1) ?? [], $request->localVideoStored1 ?? []);
         $audios_poor_vision = array_merge(json_decode($request->localAudio1) ?? [], $request->localAudioStored1 ?? []);
+
+        $videos_poor_hearing = array_merge(json_decode($request->localVideo2) ?? [], $request->localVideoStored2 ?? []);
+        $audios_poor_hearing = array_merge(json_decode($request->localAudio2) ?? [], $request->localAudioStored2 ?? []);
 
         // Видео с устройства
         if ($videos != $item_attachments->videos) {
@@ -499,6 +579,19 @@ class CourseController extends Controller
         if ($audios_poor_vision != $item_attachments->audios_poor_vision) {
 
             $item_attachments->audios_poor_vision = $audios_poor_vision;
+
+            $item_attachments->save();
+        }
+        // Видео с устройства для лиц с нарушениями слуха
+        if ($videos_poor_hearing != $item_attachments->videos_poor_hearing) {
+            $item_attachments->videos_poor_hearing = $videos_poor_hearing;
+
+            $item_attachments->save();
+        }
+        // Аудио с устройства для лиц с нарушениями слуха
+        if ($audios_poor_hearing != $item_attachments->audios_poor_hearing) {
+
+            $item_attachments->audios_poor_hearing = $audios_poor_hearing;
 
             $item_attachments->save();
         }
@@ -546,7 +639,6 @@ class CourseController extends Controller
 
         }
         return redirect("/" . app()->getLocale() . "/my-courses");
-
     }
 
     public function quotaConfirm($lang, Course $item, Request $request)
@@ -595,7 +687,6 @@ class CourseController extends Controller
             $notification->users()->sync($recipients_array);
             return redirect()->back()->with('error', trans('notifications.course_quota_access_denied', ['course_name' => '"' . $item->name . '"']));
         }
-
     }
 
     public function reestablishCourse($lang, Course $item)
@@ -613,12 +704,10 @@ class CourseController extends Controller
         } else {
             return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('default.pages.courses.publish_request_message'));
         }
-
     }
 
     public function statisticsCourse(Request $request)
     {
-
         $items = Auth::user()->courses()->get();
 
         // Все оценки всех курсов
@@ -647,7 +736,7 @@ class CourseController extends Controller
         $all_cost_courses = [];
         $quota_cost_courses = [];
         foreach ($items as $course) {
-            $all_cost_courses[] = $course->course_members->whereIn('paid_status', [1,2])->sum('payment.amount');
+            $all_cost_courses[] = $course->course_members->whereIn('paid_status', [1, 2])->sum('payment.amount');
             $quota_cost_courses[] = $course->course_members->where('paid_status', '=', 2)->sum('payment.amount');
         }
 
@@ -741,7 +830,7 @@ class CourseController extends Controller
             $key = array_search($item->first()->created_at->format("Y-m-d"), array_column($data['data'], 'date'));
             $data['data'][$key] = [
                 "date" => $item->first()->created_at,
-                "value1" => $item->whereIn('paid_status', [1,2])->sum('payment.amount'),
+                "value1" => $item->whereIn('paid_status', [1, 2])->sum('payment.amount'),
                 "value2" => $item->where('paid_status', '=', 2)->sum('payment.amount')];
         }
 
@@ -751,8 +840,6 @@ class CourseController extends Controller
     public function statisticForChartDemo(Request $request)
     {
         $data = [
-//            'title1' => __('default.author.statistic_for_chart_all'),
-//            'title2' => __('default.author.statistic_for_chart_quote'),
             'title1' => "Общий заработок",
             'title2' => "Заработано по квотам",
             'color1' => '#00C608',
@@ -820,10 +907,10 @@ class CourseController extends Controller
                 $q->whereBetween('student_course.created_at', [$date_from, $date_to]);
             }]);
 
-        $items = $query->paginate(5);
-
         Session::put('export_reporting', $query->get());
         Session::put('export_reporting_dates', [$date_from, $date_to]);
+
+        $items = $query->paginate(5);
 
         return view("app.pages.author.courses.reporting", [
             'items' => $items,
@@ -833,7 +920,6 @@ class CourseController extends Controller
             'date_from' => $date_from,
             'date_to' => $date_to,
         ]);
-
     }
 
     public function exportReporting(Request $request)
@@ -859,11 +945,17 @@ class CourseController extends Controller
             $name = $i->name;
             // Навыки
             $skills = implode(', ', array_filter($i->skills->pluck('name_' . $lang)->toArray())) ?: implode(', ', $i->skills->pluck('name_ru')->toArray());
-            // Профессии по навыкам
-            if (count($i->professionsBySkills()->pluck('id')->toArray()) <= 0) {
-                $professions_group = '-';
+            // Профессия
+            if (count($i->professions()->pluck('name_ru')->toArray()) <= 0) {
+                $professions = '-';
             } else {
-                $professions_group = implode(', ', array_filter($i->professionsBySkills()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professionsBySkills()->pluck('name_ru')->toArray()));
+                $professions = implode(', ', array_filter($i->professions()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professions()->pluck('name_ru')->toArray()));
+            }
+            // Проф.область
+            if (count($i->professional_areas()->pluck('name_ru')->toArray()) <= 0) {
+                $professional_areas = '-';
+            } else {
+                $professional_areas = implode(', ', array_filter($i->professional_areas()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professional_areas()->pluck('name_ru')->toArray()));
             }
             // Рейтинг курса
             $course_rate = $i->rate->pluck('rate')->avg() ?? 0;
@@ -872,9 +964,9 @@ class CourseController extends Controller
             // Стоимость курса
             $course_cost = $i->cost ?? '-';
             // Участников курса
-            if($i->quota_status == 2 and $i->is_paid == true){
+            if ($i->quota_status == 2 and $i->is_paid == true) {
                 $course_members_count = count($i->course_members->where('paid_status', '=', 1)) . "/" . count($i->course_members->where('paid_status', '=', 2));
-            }else{
+            } else {
                 $course_members_count = count($i->course_members->whereIn('paid_status', [1, 2]));
             }
             // Получили сертификат
@@ -904,11 +996,11 @@ class CourseController extends Controller
             $total_get_paid = $i->course_members->where('paid_status', '=', 1)->sum('payment.amount');
             $total_get_quota = $i->course_members->where('paid_status', '=', 2)->sum('payment.amount');
 
-            $newElement = ['name' => $name, 'skills' => $skills, 'professions_group' => $professions_group, 'course_rate' => $course_rate,
+            $newElement = ['name' => $name, 'professional_areas' => $professional_areas, 'professions' => $professions, 'skills' => $skills, 'course_rate' => $course_rate,
                 'course_status' => $course_status, 'course_type' => $course_type, 'course_cost' => $course_cost, 'is_quota' => $is_quota, 'quota_cost' => $quota_cost,
-                'members_free' => $members_free, 'certificate_free' => $certificate_free, 'qualificated_free' => $qualificated_free,
-                'members_paid' => $members_paid, 'certificate_paid' => $certificate_paid, 'qualificated_paid' => $qualificated_paid, 'total_get_paid' => $total_get_paid,
-                'members_quota' => $members_quota, 'certificate_quota' => $certificate_quota, 'qualificated_quota' => $qualificated_quota, 'total_get_quota' => $total_get_quota];
+                'members_free' => $members_free, 'certificate_free' => $certificate_free, 'members_paid' => $members_paid,
+                'certificate_paid' => $certificate_paid, 'total_get_paid' => $total_get_paid, 'members_quota' => $members_quota,
+                'certificate_quota' => $certificate_quota, 'total_get_quota' => $total_get_quota];
 
             array_push($export, $newElement);
         }
@@ -921,9 +1013,14 @@ class CourseController extends Controller
     {
         if ($course->author_id == Auth::user()->id) {
             $themes = Theme::where('course_id', '=', $course->id)->with('lessons')->get();
+            $unthemes_lessons = Lesson::where('theme_id', '=', null)
+                ->where('course_id', '=', $course->id)
+                ->whereNotIn('type', [3, 4])
+                ->get();
 
             foreach ($themes as $theme) {
                 $theme->order = $theme->index_number;
+                $theme->item_type = 'theme';
 
                 foreach ($theme->lessons as $lesson) {
                     $lesson->order = $lesson->index_number;
@@ -937,6 +1034,21 @@ class CourseController extends Controller
 
                 }
             }
+
+            foreach ($unthemes_lessons as $unthemes_lesson) {
+                $unthemes_lesson->order = $unthemes_lesson->index_number;
+                $unthemes_lesson->item_type = 'lesson';
+
+                $unthemes_lesson->lessons = [];
+                if ($unthemes_lesson->type != 1) {
+                    $unthemes_lesson->type = $unthemes_lesson->lesson_type->getAttribute('name_' . $lang) ?? $unthemes_lesson->lesson_type->getAttribute('name_ru');
+                    $unthemes_lesson->type .= $unthemes_lesson->end_lesson_type == 0 ? ' (' . __('default.pages.lessons.test_title') . ')' : ' (' . __('default.pages.lessons.homework_title') . ')';
+                } else {
+                    $unthemes_lesson->type = $unthemes_lesson->lesson_type->getAttribute('name_' . $lang) ?? $unthemes_lesson->lesson_type->getAttribute('name_ru');
+                }
+            }
+
+            $themes = $themes->merge($unthemes_lessons);
 
             return $themes;
         }

@@ -4,16 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\AuthorReportExport;
 use App\Exports\CourseReportExport;
-use App\Exports\ReportingExport;
 use App\Exports\StudentReportExport;
 use App\Models\Course;
-use App\Models\Professions;
+use App\Models\StudentCertificate;
+use App\Models\StudentCourse;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
+use ZipArchive;
 
 class ReportController extends Controller
 {
@@ -226,6 +229,8 @@ class ReportController extends Controller
                     ->havingRaw('count(*) <= ' . $certificates_count_to);
             });
         }
+        Session::put('authors_report_export', $query->get());
+
         $items = $query->paginate(10);
 
         foreach ($items as $item) {
@@ -267,7 +272,6 @@ class ReportController extends Controller
             }
             $item->qualification_students = $author_students_finished_courseWork_count;
         }
-        Session::put('authors_report_export', $query->get());
 
         return view('admin.v2.pages.reports.authors_report', [
             'items' => $items,
@@ -313,17 +317,17 @@ class ReportController extends Controller
             ->endOfDay()
             ->toDateTimeString();
 
-        $query = (new Course)->newQuery()
-        ->with(['rate' => function ($q) use ($date_from, $date_to) {
-            $q->whereBetween('course_rate.created_at', [$date_from, $date_to]);
-            // Записавшиеся
-        }])->with(['course_members' => function ($q) use ($date_from, $date_to) {
-            $q->whereBetween('student_course.created_at', [$date_from, $date_to]);
-        }])->with(['quotaCost' => function ($q) use ($date_from, $date_to) {
-            $q->whereBetween('course_quota_cost.created_at', [$date_from, $date_to]);
-        }])->with(['course_members' => function ($q) use ($date_from, $date_to) {
-            $q->whereBetween('student_course.created_at', [$date_from, $date_to]);
-        }]);
+        $query = Course::orderBy('created_at', 'DESC')
+            ->with(['rate' => function ($q) use ($date_from, $date_to) {
+                $q->whereBetween('course_rate.created_at', [$date_from, $date_to]);
+                // Записавшиеся
+            }])->with(['course_members' => function ($q) use ($date_from, $date_to) {
+                $q->whereBetween('student_course.created_at', [$date_from, $date_to]);
+            }])->with(['quotaCost' => function ($q) use ($date_from, $date_to) {
+                $q->whereBetween('course_quota_cost.created_at', [$date_from, $date_to]);
+            }])->with(['course_members' => function ($q) use ($date_from, $date_to) {
+                $q->whereBetween('student_course.created_at', [$date_from, $date_to]);
+            }]);
         // Сортировка
         // Сортировка по названию курса
         if ($sortByName) {
@@ -476,9 +480,9 @@ class ReportController extends Controller
                 ->having('course_qualifications_members_count', '<=', $qualifications_count_to);
         }
 
-        $items = $query->paginate(10);
-
         Session::put('courses_report_export', $query->get());
+
+        $items = $query->paginate(10);
 
         return view('admin.v2.pages.reports.courses_report', [
             'items' => $items,
@@ -606,9 +610,9 @@ class ReportController extends Controller
             $qualifications_count->having('qualifications_count', '>=', $qualifications_count_from)
                 ->having('qualifications_count', '<=', $qualifications_count_to);
         }
-//        return $query->get();
-        $student_courses = [];
-        //
+
+        Session::put('students_report_export', $query->get());
+
         $items = $query->paginate(10);
 
         $i = [];
@@ -625,12 +629,71 @@ class ReportController extends Controller
             // Количество законченных курсовых работ
             $item->finishedCourseWorkrs = $finishedCourseWorks;
         }
-        Session::put('students_report_export', $query->get());
 
         return view('admin.v2.pages.reports.students_report', [
             'items' => $items,
             'request' => $request,
             'unemployed_status' => $unemployed_status
+        ]);
+    }
+
+    public function certificatesReports(Request $request)
+    {
+        $student_name = $request->student_name ? $request->student_name : '';
+        $payment_type = $request->payment_type;
+        $date_from = $request->get("date_from", Carbon::now()->subDays(90)->format('Y-m-d'));
+        $date_to = $request->get("date_to", Carbon::now()->format('Y-m-d'));
+
+        if ($date_from === null && $date_to === null) {
+            $date_from = Carbon::now()->subDays(90);
+            $date_to = Carbon::now();
+        } elseif ($date_from === null) {
+            $time = strtotime($date_to);
+            $date_from = Carbon::createFromTimestamp($time)->subDays(90);
+            $date_to = Carbon::createFromTimestamp($time);
+        } elseif ($date_to === null) {
+            $date_from = strtotime($date_from);
+            $date_from = Carbon::createFromTimestamp($date_from);
+            $date_to = Carbon::now();
+        } else {
+            $date_from = strtotime($date_from);
+            $date_from = Carbon::createFromTimestamp($date_from);
+            $date_to = strtotime($date_to);
+            $date_to = Carbon::createFromTimestamp($date_to);
+        }
+
+        $query = StudentCertificate::orderBy('id', 'DESC')
+            ->whereBetween('created_at', [$date_from, $date_to->endOfDay()]);
+
+        // Поиск по ФИО обучающегося
+        if ($student_name) {
+            $query->whereHas('students.student_info', function ($q) use ($student_name) {
+                $q->where('name', 'like', '%' . $student_name . '%');
+            });
+        }
+        // Поиск по типу оплаты за курс
+        if ($payment_type) {
+            $query->whereHas('students.student_course', function ($q) use ($payment_type) {
+                $q->where('paid_status', '=', $payment_type);
+            })->whereHas('courses.course_members', function ($q) use ($payment_type) {
+                $q->where('paid_status', '=', $payment_type);
+            });;
+        }
+
+        Session::put('certificates_export', $query->get());
+
+        $items = $query->paginate(10);
+
+        foreach ($items as $certificate) {
+            $pay_type = StudentCourse::whereCourseId($certificate->course_id)
+                ->whereStudentId($certificate->user_id)->latest()->first();
+            // Тип оплаты за курс
+            $certificate->payment_type = $pay_type->paid_status;
+        }
+
+        return view('admin.v2.pages.reports.certificates_report', [
+            'items' => $items,
+            'request' => $request
         ]);
     }
 
@@ -659,12 +722,11 @@ class ReportController extends Controller
             $qualifications = $i->qualifications_count;
 
             $newElement = ['name' => $name, 'unemployed_status' => $unemployed_status, 'quota_count' => $quota_count,
-                'courses_count' => $courses_count, 'certificates' => $certificates, 'qualifications' => $qualifications];
+                'courses_count' => $courses_count, 'certificates' => $certificates];
 
             array_push($export, $newElement);
         }
 
-//        asort($export);
         return Excel::download(new StudentReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
@@ -686,17 +748,17 @@ class ReportController extends Controller
             }
             // Навыки
             $skills = implode(', ', array_filter($i->skills->pluck('name_' . $lang)->toArray())) ?: implode(', ', $i->skills->pluck('name_ru')->toArray());
-            // Группа профессий
-            if (count($i->groupProfessionsBySkills()->pluck('id')->toArray()) <= 0) {
-                $group_professions = '-';
-            } else {
-                $group_professions = implode(', ', array_filter($i->groupProfessionsBySkills()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->groupProfessionsBySkills()->pluck('name_ru')->toArray()));
-            }
-            // Группа профессий
-            if (count($i->professionsBySkills()->pluck('id')->toArray()) <= 0) {
+            // Профессия
+            if (count($i->professions()->pluck('name_ru')->toArray()) <= 0) {
                 $professions = '-';
             } else {
-                $professions = implode(', ', array_filter($i->professionsBySkills()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professionsBySkills()->pluck('name_ru')->toArray()));
+                $professions = implode(', ', array_filter($i->professions()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professions()->pluck('name_ru')->toArray()));
+            }
+            // Проф.область
+            if (count($i->professional_areas()->pluck('name_ru')->toArray()) <= 0) {
+                $professional_areas = '-';
+            } else {
+                $professional_areas = implode(', ', array_filter($i->professional_areas()->pluck('name_' . $lang)->toArray())) ?: implode(', ', array_filter($i->professional_areas()->pluck('name_ru')->toArray()));
             }
             // Рейтинг курса
             $rate = round($i->rate->pluck('rate')->avg() ?? 0, 1);
@@ -742,17 +804,16 @@ class ReportController extends Controller
             // Стоимость курса
             $course_cost = $i->cost ?? '-';
 
-            $newElement = ['name' => $name, 'author_name' => $author_name, 'skills' => $skills, 'group_professions' => $group_professions,
-                'professions' => $professions, 'course_rate' => $rate, 'course_status' => $status,
+            $newElement = ['name' => $name, 'author_name' => $author_name, 'professional_areas' => $professional_areas,
+                'professions' => $professions, 'skills' => $skills, 'course_rate' => $rate, 'course_status' => $status,
                 'course_type' => $course_type, 'course_cost' => $course_cost, 'is_quota' => $is_quota, 'quota_cost' => $quota_cost,
-                'members_free' => $members_free, 'certificate_free' => $certificate_free, 'qualificated_free' => $qualificated_free,
-                'members_paid' => $members_paid, 'certificate_paid' => $certificate_paid, 'qualificated_paid' => $qualificated_paid, 'total_get_paid' => $total_get_paid,
-                'members_quota' => $members_quota, 'certificate_quota' => $certificate_quota, 'qualificated_quota' => $qualificated_quota, 'total_get_quota' => $total_get_quota];
+                'members_free' => $members_free, 'certificate_free' => $certificate_free, 'members_paid' => $members_paid,
+                'certificate_paid' => $certificate_paid, 'total_get_paid' => $total_get_paid, 'members_quota' => $members_quota,
+                'certificate_quota' => $certificate_quota, 'total_get_quota' => $total_get_quota];
 
             array_push($export, $newElement);
         }
 
-//        asort($export);
         return Excel::download(new CourseReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
@@ -825,14 +886,55 @@ class ReportController extends Controller
 
             $newElement = ['name' => $name, 'specialization' => $specialization, 'rate' => $rate, 'courses_count' => $courses_count,
                 'paid_courses_count' => $paid_courses_count, 'free_courses_count' => $free_courses_count, 'quota_courses_count' => $quota_courses_count,
-                'students_count' => $students_count, 'students_certificate_count' => $students_certificate_count,
-                'students_qualification_count' => $students_qualification_count];
+                'students_count' => $students_count, 'students_certificate_count' => $students_certificate_count];
 
             array_push($export, $newElement);
         }
 
-//        asort($export);
         return Excel::download(new AuthorReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
+    public function exportCertificates(Request $request)
+    {
+        $zip = new ZipArchive;
+
+        $fileName = 'Отчет по сертификатам.zip';
+
+        File::ensureDirectoryExists(public_path('/users/user_' . Auth::user()->id));
+
+        if ($zip->open(public_path('/users/user_' . Auth::user()->id . '/' . $fileName), ZipArchive::CREATE) === TRUE) {
+            $certificates = Session::get('certificates_export');
+            $files = [];
+
+            foreach ($certificates as $certificate) {
+                $file_ru = public_path($certificate->pdf_ru);
+                $file_kk = public_path($certificate->pdf_kk);
+                if ($certificate->pdf_kk == null) {
+                    if (file_exists($file_ru) && is_file($file_ru)) {
+                        $zip->addFile($file_ru, str_replace(' ', '_', $certificate->students->student_info->name) . '-' . date('Y_m_d', strtotime($certificate->created_at)) . '-' . $certificate->course_id . '.pdf');
+                    }
+                } else {
+                    if (file_exists($file_ru) && is_file($file_ru)) {
+                        $zip->addFile($file_ru, str_replace(' ', '_', $certificate->students->student_info->name) . '-' . date('Y_m_d', strtotime($certificate->created_at)) . '-' . $certificate->course_id . '-ru.pdf');
+                    }
+                    if (file_exists($file_kk) && is_file($file_kk)) {
+                        $zip->addFile($file_kk, str_replace(' ', '_', $certificate->students->student_info->name) . '-' . date('Y_m_d', strtotime($certificate->created_at)) . '-' . $certificate->course_id . '-kk.pdf');
+                    }
+                }
+
+            }
+
+            $zip->close();
+        }
+
+        try {
+
+            return response()->download(public_path('/users/user_' . Auth::user()->id . '/' . $fileName))->deleteFileAfterSend(true);
+
+        } catch (\Exception $e) {
+
+            return back()->with('status', 'При экспорте произошла ошибка. Попробуйте позже');
+        }
+
+    }
 }

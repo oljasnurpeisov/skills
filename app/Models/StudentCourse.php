@@ -35,6 +35,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Course[] $courses
  * @property-read int|null $courses_count
+ * @property int $is_qualificated
+ * @method static \Illuminate\Database\Eloquent\Builder|StudentCourse whereIsQualificated($value)
  */
 class StudentCourse extends Model
 {

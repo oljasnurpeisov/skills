@@ -183,7 +183,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="input-group">
-                            <label class="input-group__title">Количество сертфикатов: от</label>
+                            <label class="input-group__title">Количество сертификатов: от</label>
                             <label class="">
                                 <input type="number" name="certificates_count_from" placeholder=""
                                        class="input-regular" value="{{$request->certificates_count_from}}">
@@ -200,26 +200,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="input-group">
-                            <label class="input-group__title">Количество квалификаций: от</label>
-                            <label class="">
-                                <input type="number" name="qualifications_count_from" placeholder=""
-                                       class="input-regular" value="{{$request->qualifications_count_from}}">
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="input-group">
-                            <label class="input-group__title">до</label>
-                            <label class="">
-                                <input type="number" name="qualifications_count_to" placeholder=""
-                                       class="input-regular" value="{{$request->qualifications_count_to}}">
-                            </label>
-                        </div>
-                    </div>
-                </div>
+{{--                <div class="row">--}}
+{{--                    <div class="col-sm-6">--}}
+{{--                        <div class="input-group">--}}
+{{--                            <label class="input-group__title">Количество квалификаций: от</label>--}}
+{{--                            <label class="">--}}
+{{--                                <input type="number" name="qualifications_count_from" placeholder=""--}}
+{{--                                       class="input-regular" value="{{$request->qualifications_count_from}}">--}}
+{{--                            </label>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-sm-6">--}}
+{{--                        <div class="input-group">--}}
+{{--                            <label class="input-group__title">до</label>--}}
+{{--                            <label class="">--}}
+{{--                                <input type="number" name="qualifications_count_to" placeholder=""--}}
+{{--                                       class="input-regular" value="{{$request->qualifications_count_to}}">--}}
+{{--                            </label>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
             <div class="input-group">
                 <a href="javascript:;" title="Расширенный фильтр" class="grey-link small collapse-btn"
@@ -260,19 +260,9 @@
 {{--                    <th><a href="{{request()->fullUrlWithQuery(["sortByName"=>$request->sortByName == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.course_name')}} {{$request->sortByName == 'asc' ? '↑' : ($request->sortByName == 'desc' ? '↓' : '')}}</a></th>--}}
                     <th><a href="{{request()->fullUrlWithQuery(["sortByName"=>$request->sortByName == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.course_name')}}</a></th>
                     <th><a href="{{request()->fullUrlWithQuery(["sortByAuthorName"=>$request->sortByAuthorName == 'asc' ? 'desc' : 'asc'])}}">{{__('admin.pages.reports.author_name')}}</th>
-{{--                    <th>{{__('admin.pages.reports.skills')}}</a></th>--}}
-{{--                    <th>{{__('admin.pages.reports.group_profession')}}</th>--}}
-{{--                    <th>{{__('admin.pages.reports.professions')}}</th>--}}
-{{--                    <th><a href="?sortByRateCourse={{$request->sortByRateCourse == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_rate')}}</a></th>--}}
-{{--                    <th>{{__('admin.pages.reports.course_status')}}</th>--}}
-{{--                    <th>{{__('admin.pages.reports.quota_access')}}</th>--}}
-{{--                    <th>{{__('admin.pages.reports.paid_or_free')}}</th>--}}
-{{--                    <th><a href="?sortByCourseMembers={{$request->sortByCourseMembers == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_members')}}</a></th>--}}
-{{--                    <th><a href="?sortByCertificateCourseMembers={{$request->sortByCertificateCourseMembers == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_members_certificates')}}</a></th>--}}
-{{--                    <th><a href="?sortByQualificatedStudents={{$request->sortByQualificatedStudents == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.course_members_qualification')}}</a></th>--}}
+                    <th style="min-width: 230px;">{{__('default.pages.reporting.professional_area')}}</th>
+                    <th style="min-width: 230px;">{{__('default.pages.reporting.profession')}}</th>
                     <th style="min-width: 230px;">{{__('default.pages.reporting.skills')}}</th>
-                    <th style="min-width: 230px;">{{__('default.pages.reporting.professions_group')}}</th>
-                    <th>{{__('admin.pages.reports.professions')}}</th>
                     <th style="min-width: 33px;"><a href="?sortByRateCourse={{$request->sortByRateCourse == 'asc' ? 'desc' : 'asc'}}">{{__('default.pages.reporting.course_rate')}}</a></th>
                     <th style="min-width: 96px;">{{__('default.pages.reporting.course_status')}}</th>
                     <th style="min-width: 96px;">{{__('default.pages.reporting.course_type')}}</th>
@@ -281,14 +271,14 @@
                     <th style="min-width: 96px;">{{__('default.pages.reporting.cost_by_quota')}}</th>
                     <th style="min-width: 96px;">{{__('default.pages.reporting.members_free')}}</th>
                     <th style="min-width: 96px;">{{__('default.pages.reporting.certificate_free')}}</th>
-                    <th style="min-width: 96px;">{{__('default.pages.reporting.qualificated_free')}}</th>
+{{--                    <th style="min-width: 96px;">{{__('default.pages.reporting.qualificated_free')}}</th>--}}
                     <th style="min-width: 96px;">{{__('default.pages.reporting.members_paid')}}</th>
                     <th style="min-width: 96px;">{{__('default.pages.reporting.certificate_paid')}}</th>
-                    <th style="min-width: 96px;">{{__('default.pages.reporting.qualificated_paid')}}</th>
+{{--                    <th style="min-width: 96px;">{{__('default.pages.reporting.qualificated_paid')}}</th>--}}
                     <th style="min-width: 96px;">{{__('default.pages.reporting.total_get_paid')}}</th>
                     <th style="min-width: 96px;">{{__('default.pages.reporting.members_quota')}}</th>
                     <th style="min-width: 96px;">{{__('default.pages.reporting.certificate_quota')}}</th>
-                    <th style="min-width: 96px;">{{__('default.pages.reporting.qualificated_quota')}}</th>
+{{--                    <th style="min-width: 96px;">{{__('default.pages.reporting.qualificated_quota')}}</th>--}}
                     <th style="min-width: 96px;">{{__('default.pages.reporting.total_get_quota')}}</th>
                 </tr>
                 </thead>
@@ -297,17 +287,17 @@
                     <tr>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->user->company_name }}</td>
+                        @if(count($item->professional_areas()->pluck('name_ru')->toArray())<= 0)
+                            <td>-</td>
+                        @else
+                            <td>{{implode(', ', array_filter($item->professional_areas()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->professional_areas()->pluck('name_ru')->toArray()))}}</td>
+                        @endif
+                        @if(count($item->professions()->pluck('name_ru')->toArray())<= 0)
+                            <td>-</td>
+                        @else
+                            <td>{{implode(', ', array_filter($item->professions()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->professions()->pluck('name_ru')->toArray()))}}</td>
+                        @endif
                         <td>{{implode(', ', array_filter($item->skills->pluck('name_'.$lang)->toArray())) ?: implode(', ', $item->skills->pluck('name_ru')->toArray())}}</td>
-                        @if(count($item->groupProfessionsBySkills()->pluck('id')->toArray())<= 0)
-                            <td>-</td>
-                        @else
-                            <td>{{implode(', ', array_filter($item->groupProfessionsBySkills()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->groupProfessionsBySkills()->pluck('name_ru')->toArray()))}}</td>
-                        @endif
-                        @if(count($item->professionsBySkills()->pluck('id')->toArray())<= 0)
-                            <td>-</td>
-                        @else
-                            <td>{{implode(', ', array_filter($item->professionsBySkills()->pluck('name_'.$lang)->toArray())) ?: implode(', ', array_filter($item->professionsBySkills()->pluck('name_ru')->toArray()))}}</td>
-                        @endif
                         <td>{{round($item->rate->pluck('rate')->avg() ?? 0, 1)}}</td>
                         <td>{{__('default.pages.reporting.statuses.'.$item->status)}}</td>
                         <td>{{$item->is_paid == true ? __('default.pages.reporting.paid_course') : __('default.pages.reporting.free_course')}}</td>
@@ -316,14 +306,14 @@
                         <td>{{$item->quotaCost->last()->cost ?? '-'}}</td>
                         <td>{{$item->course_members->where('paid_status', '=', 3)->count()}}</td>
                         <td>{{$item->course_members->where('paid_status', '=', 3)->where('is_finished', '=', true)->count()}}</td>
-                        <td>{{$item->course_members->where('paid_status', '=', 3)->where('is_qualificated', '=', true)->count()}}</td>
+{{--                        <td>{{$item->course_members->where('paid_status', '=', 3)->where('is_qualificated', '=', true)->count()}}</td>--}}
                         <td>{{$item->course_members->where('paid_status', '=', 1)->count()}}</td>
                         <td>{{$item->course_members->where('paid_status', '=', 1)->where('is_finished', '=', true)->count()}}</td>
-                        <td>{{$item->course_members->where('paid_status', '=', 1)->where('is_qualificated', '=', true)->count()}}</td>
+{{--                        <td>{{$item->course_members->where('paid_status', '=', 1)->where('is_qualificated', '=', true)->count()}}</td>--}}
                         <td>{{$item->course_members->where('paid_status', '=', 1)->sum('payment.amount')}}</td>
                         <td>{{$item->course_members->where('paid_status', '=', 2)->count()}}</td>
                         <td>{{$item->course_members->where('paid_status', '=', 2)->where('is_finished', '=', true)->count()}}</td>
-                        <td>{{$item->course_members->where('paid_status', '=', 2)->where('is_qualificated', '=', true)->count()}}</td>
+{{--                        <td>{{$item->course_members->where('paid_status', '=', 2)->where('is_qualificated', '=', true)->count()}}</td>--}}
                         <td>{{$item->course_members->where('paid_status', '=', 2)->sum('payment.amount')}}</td>
                     </tr>
                 @endforeach

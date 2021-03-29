@@ -12131,7 +12131,7 @@ exports.version = '1.4.1'
  *
  * Options:
  *
- *  - title   Notification title
+ *  - title   NotificationsHelper title
  *  - sticky  Make the notification stick (defaults to false)
  *  - priority  Specify an int or named key (default is 0)
  *  - name    Application name (defaults to growlnotify)

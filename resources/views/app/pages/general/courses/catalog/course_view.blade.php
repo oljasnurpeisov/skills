@@ -52,72 +52,124 @@
 
                                 <div class="article__info">
                                     <span>{{__('default.pages.courses.lessons_title_1')}}: <span
-                                            id="lessonsCount">{{$item->lessons->whereIn('type', [1,2])->count()}}</span></span>
+                                                id="lessonsCount">{{$item->lessons->whereIn('type', [1,2])->count()}}</span></span>
                                     <span>{{__('default.pages.courses.total_time_lessons')}}: <span
-                                            id="courseDuration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->whereIn('type', [1,2])->sum('duration'))}}</span> {{__('default.pages.courses.hours_title')}}</span>
+                                                id="courseDuration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->whereIn('type', [1,2])->sum('duration'))}}</span> {{__('default.pages.courses.hours_title')}}</span>
                                 </div>
 
                                 <div class="course">
                                     <div class="course">
-                                        @foreach($item->themes->sortBy('index_number') as $theme)
-                                            <div class="topic spoiler">
-                                                <div class="topic__header">
-                                                    <div class="title">{{$theme->name}}</div>
-                                                    <div
-                                                        class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->where('theme_id', '=', $theme->id)->sum('duration'))}}</div>
-                                                </div>
-                                                <div class="topic__body">
-                                                    @foreach($theme->lessons->sortBy('index_number') as $lesson)
-                                                        @if($student_course)
-                                                            <div
-                                                                class="lesson {{ $lesson->finishedByCurrentUser() ? 'finished' : '' }}">
-                                                                @if($lesson->type != 1)
-                                                                    <div class="title">
-                                                                        <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$lesson->id}}"
-                                                                           title="{{$lesson->name}}">
-                                                                            {{$lesson->name}}
+                                        @foreach($course_data_items as $course_item)
+                                            @if($course_item->item_type == 'theme')
+                                                <div class="topic spoiler">
+                                                    <div class="topic__header">
+                                                        <div class="title">{{$course_item->name}}</div>
+                                                        <div
+                                                                class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->where('theme_id', '=', $course_item->id)->sum('duration'))}}</div>
+                                                    </div>
+                                                    <div class="topic__body">
+                                                        @foreach($course_item->lessons->sortBy('index_number') as $lesson)
+                                                            @if($student_course)
+                                                                <div
+                                                                        class="lesson {{ $lesson->finishedByCurrentUser() ? 'finished' : '' }}">
+                                                                    @if($lesson->type != 1)
+                                                                        <div class="title">
+                                                                            <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$lesson->id}}"
+                                                                               title="{{$lesson->name}}">
+                                                                                {{$lesson->name}}
+                                                                                <div class="type">
+                                                                                    {{ $lesson->lesson_type->name.' ('.($lesson->end_lesson_type == 0 ? __('default.pages.lessons.test_title') : __('default.pages.lessons.homework_title')).')' }}
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                    @else
+                                                                        <div class="title">
+                                                                            <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$lesson->id}}"
+                                                                               title="{{$lesson->name}}">
+                                                                                {{$lesson->name}}
+                                                                                <div class="type">
+                                                                                    {{ $lesson->lesson_type->name }}
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                    @endif
+                                                                    <div
+                                                                            class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                                </div>
+                                                            @else
+                                                                <div class="lesson">
+                                                                    @if($lesson->type != 1)
+                                                                        <div class="title">{{$lesson->name}}
                                                                             <div class="type">
                                                                                 {{ $lesson->lesson_type->name.' ('.($lesson->end_lesson_type == 0 ? __('default.pages.lessons.test_title') : __('default.pages.lessons.homework_title')).')' }}
                                                                             </div>
-                                                                        </a>
-                                                                    </div>
-                                                                @else
-                                                                    <div class="title">
-                                                                        <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$lesson->id}}"
-                                                                           title="{{$lesson->name}}">
+                                                                        </div>
+                                                                    @else
+                                                                        <div class="title">
                                                                             {{$lesson->name}}
                                                                             <div class="type">
                                                                                 {{ $lesson->lesson_type->name }}
                                                                             </div>
-                                                                        </a>
-                                                                    </div>
-                                                                @endif
-                                                                <div
-                                                                    class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
-                                                            </div>
-                                                        @else
-                                                            <div class="lesson">
-                                                                @if($lesson->type != 1)
-                                                                    <div class="title">{{$lesson->name}}
-                                                                        <div class="type">
-                                                                            {{ $lesson->lesson_type->name.' ('.($lesson->end_lesson_type == 0 ? __('default.pages.lessons.test_title') : __('default.pages.lessons.homework_title')).')' }}
                                                                         </div>
-                                                                    </div>
-                                                                @else
-                                                                    <div class="title">
-                                                                        {{$lesson->name}}
-                                                                        <div class="type">
-                                                                            {{ $lesson->lesson_type->name }}
-                                                                        </div>
-                                                                    </div>
-                                                                @endif
-                                                                <div
-                                                                    class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
-                                                            </div>
-                                                        @endif
-                                                    @endforeach
+                                                                    @endif
+                                                                    <div
+                                                                            class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @else
+                                                <div class="topic__body">
+                                                    @if($student_course)
+                                                        <div
+                                                                class="lesson {{ $course_item->finishedByCurrentUser() ? 'finished' : '' }}">
+                                                            @if($course_item->type != 1)
+                                                                <div class="title">
+                                                                    <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$course_item->id}}"
+                                                                       title="{{$course_item->name}}">
+                                                                        {{$course_item->name}}
+                                                                        <div class="type">
+                                                                            {{ $course_item->lesson_type->name.' ('.($course_item->end_lesson_type == 0 ? __('default.pages.lessons.test_title') : __('default.pages.lessons.homework_title')).')' }}
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            @else
+                                                                <div class="title">
+                                                                    <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$course_item->id}}"
+                                                                       title="{{$course_item->name}}">
+                                                                        {{$course_item->name}}
+                                                                        <div class="type">
+                                                                            {{ $course_item->lesson_type->name }}
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            @endif
+                                                            <div
+                                                                    class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($course_item->duration)}}</div>
+                                                        </div>
+                                                    @else
+                                                        <div class="lesson">
+                                                            @if($course_item->type != 1)
+                                                                <div class="title">{{$course_item->name}}
+                                                                    <div class="type">
+                                                                        {{ $course_item->lesson_type->name.' ('.($course_item->end_lesson_type == 0 ? __('default.pages.lessons.test_title') : __('default.pages.lessons.homework_title')).')' }}
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="title">
+                                                                    {{$course_item->name}}
+                                                                    <div class="type">
+                                                                        {{ $course_item->lesson_type->name }}
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                            <div
+                                                                    class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($course_item->duration)}}</div>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            @endif
                                         @endforeach
                                     </div>
 
@@ -126,11 +178,11 @@
                                             <div class="topic__header">
                                                 @if($student_course)
                                                     <div class="title"><a
-                                                            href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
+                                                                href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
                                                     </div>
                                                 @else
                                                     <div
-                                                        class="title">{{__('default.pages.lessons.coursework_title')}}
+                                                            class="title">{{__('default.pages.lessons.coursework_title')}}
                                                     </div>
                                                 @endif
                                                 <div class="duration"></div>
@@ -142,11 +194,11 @@
                                             <div class="topic__header">
                                                 @if($student_course)
                                                     <div class="title"><a
-                                                            href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
+                                                                href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
                                                     </div>
                                                 @else
                                                     <div
-                                                        class="title">{{__('default.pages.courses.final_test_title')}}
+                                                            class="title">{{__('default.pages.courses.final_test_title')}}
                                                     </div>
                                                 @endif
                                                 <div class="duration"></div>
@@ -187,28 +239,28 @@
                                     </div>
                                     <div class="personal-card__right">
                                         <div
-                                            class="personal-card__name">{{ $item->user->author_info->name . ' ' . $item->user->author_info->surname  }}</div>
+                                                class="personal-card__name">{{ $item->user->author_info->name . ' ' . $item->user->author_info->surname  }}</div>
                                         <div
-                                            class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->author_info->specialization) ?? []) }}</div>
+                                                class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->author_info->specialization) ?? []) }}</div>
                                         <div class="plain-text">
                                             {!! $item->user->author_info->about !!}
                                         </div>
                                         <div class="personal-card__characteristics">
                                             <div>
                                                 <span
-                                                    class="blue">{{count($rates)}}</span> {{__('default.pages.profile.rates_count_title')}}
+                                                        class="blue">{{count($rates)}}</span> {{__('default.pages.profile.rates_count_title')}}
                                             </div>
                                             <div>
                                                 <span
-                                                    class="blue">{{count($author_students)}}</span> {{__('default.pages.profile.course_members_count')}}
+                                                        class="blue">{{count($author_students)}}</span> {{__('default.pages.profile.course_members_count')}}
                                             </div>
                                             <div>
                                                 <span
-                                                    class="blue">{{count($courses->where('status', '=', 3))}}</span> {{__('default.pages.profile.course_count')}}
+                                                        class="blue">{{count($courses->where('status', '=', 3))}}</span> {{__('default.pages.profile.course_count')}}
                                             </div>
                                             <div>
                                                 <span
-                                                    class="blue">{{count($author_students_finished)}}</span> {{__('default.pages.profile.issued_certificates')}}
+                                                        class="blue">{{count($author_students_finished)}}</span> {{__('default.pages.profile.issued_certificates')}}
                                             </div>
                                         </div>
                                         <div class="rating">
@@ -266,7 +318,7 @@
                                             <div class="review">
                                                 <div class="review__header">
                                                     <div
-                                                        class="review__name">{{$rate->student->student_info->name ?? __('default.pages.profile.student_title')}}</div>
+                                                            class="review__name">{{$rate->student->student_info->name ?? __('default.pages.profile.student_title')}}</div>
                                                     <div class="rating">
                                                         <div class="rating__stars">
                                                             <?php
@@ -300,231 +352,7 @@
                     </div>
                     <div class="col-md-4">
                         <form class="sidebar">
-                            <div class="sidebar__inner">
-                                <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.media_attachments')}}
-                                        :
-                                    </div>
-                                    <div class="sidebar-item__body">
-                                        @if(!empty($item->attachments->videos_link))
-                                            @foreach(json_decode($item->attachments->videos_link) as $video_link)
-                                                @if(!empty($video_link))
-                                                    @php
-                                                        $video_id = \App\Extensions\YoutubeParse::parseYoutube($video_link);
-                                                    @endphp
-                                                    <div class="video-wrapper">
-                                                        <iframe width="560" height="315"
-                                                                src="https://www.youtube.com/embed/{{$video_id}}"
-                                                                frameborder="0"
-                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                                allowfullscreen></iframe>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                        @if(!empty($item->attachments->videos_poor_vision_link) and $item->is_poor_vision == true)
-                                            @foreach(json_decode($item->attachments->videos_poor_vision_link) as $video_link)
-                                                @if(!empty($video_link))
-                                                    @php
-                                                        $video_id = \App\Extensions\YoutubeParse::parseYoutube($video_link);
-                                                    @endphp
-                                                    <div class="video-wrapper">
-                                                        <iframe width="560" height="315"
-                                                                src="https://www.youtube.com/embed/{{$video_id}}"
-                                                                frameborder="0"
-                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                                allowfullscreen></iframe>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                        @if(!empty($item->attachments->videos))
-                                            @foreach(json_decode($item->attachments->videos) as $video)
-                                                <div class="video-wrapper">
-                                                    <video controls
-                                                           src="{{$video}}"></video>
-                                                </div>
-                                            @endforeach
-                                        @endif
-                                        @if(!empty($item->attachments->videos_poor_vision) and $item->is_poor_vision == true)
-                                            @foreach(json_decode($item->attachments->videos_poor_vision) as $video)
-                                                <div class="video-wrapper">
-                                                    <video controls
-                                                           src="{{$video}}"></video>
-                                                </div>
-                                            @endforeach
-                                        @endif
-                                        @if(!empty($item->attachments->audios))
-                                            @foreach(json_decode($item->attachments->audios) as $audio)
-                                                <audio controls
-                                                       src="{{$audio}}"></audio>
-                                            @endforeach
-                                        @endif
-                                        @if(!empty($item->attachments->audios_poor_vision) and $item->is_poor_vision == true)
-                                            @foreach(json_decode($item->attachments->audios_poor_vision) as $audio)
-                                                <audio controls
-                                                       src="{{$audio}}"></audio>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.course_lang')}}:
-                                    </div>
-                                    <div class="sidebar-item__body">
-                                        <div class="plain-text">
-                                            @if($item->lang == 0)
-                                                Қазақша
-                                            @elseif($item->lang == 1)
-                                                Русский
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.course_include')}}:
-                                    </div>
-                                    <div class="sidebar-item__body">
-                                        <div class="plain-text">
-                                            <ul>
-                                                <li>{{ __('default.pages.courses.lessons_title').': '.$item->lessons->whereIn('type', [1,2])->count() }} </li>
-                                                <li>{{ __('default.pages.courses.videos_count').': '.$videos_count }}</li>
-                                                <li>{{ __('default.pages.courses.audios_count').': '.$audios_count }}</li>
-                                                <li>{{ __('default.pages.courses.attachments_count').': '.$attachments_count }}</li>
-                                                {{--                                                <li>70,5 часов видео</li>--}}
-                                                <li>{{ __('default.pages.courses.tests_count_title').': '.$item->lessons->whereIn('type', [2])->where('end_lesson_type', '=', 0)->count() }}</li>
-                                                <li>{{ __('default.pages.courses.homeworks_count').': '.$item->lessons->where('end_lesson_type', '=', 1)->where('type', '=', 2)->count() }}</li>
-                                                @if(!empty($item->courseWork()))
-                                                    <li>{{ __('default.pages.courses.coursework_title') }}</li>
-                                                @endif
-                                                @if(!empty($item->finalTest()))
-                                                    <li>{{ __('default.pages.courses.final_test_title') }}</li>
-                                                @endif
-                                                {{--                                                <li>8 интерактивных задач</li>--}}
-                                                {{--                                                <li>1 статья</li>--}}
-                                                <li>{{ __('default.pages.courses.mobile_access_title') }}</li>
-                                                {{--                                                <li>10 файлов</li>--}}
-                                                <li>{{ __('default.pages.courses.certificate_access_title') }}</li>
-                                            </ul>
-                                            <div class="hint gray">{{__('default.pages.courses.last_updates')}}
-                                                : {{\App\Extensions\FormatDate::formatDate($item->updated_at->format("d.m.Y"))}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.professions_title_1')}}
-                                        :
-                                    </div>
-                                    <div class="sidebar-item__body">
-                                        <div class="extendable">
-                                            <div class="tags">
-                                                <ul>
-                                                    @foreach($item->professions->groupBy('id') as $key => $profession)
-                                                        <li><a href="/{{$lang}}/course-catalog?professions[]={{$key}}"
-                                                               title="{{$profession[0]->getAttribute('name_'.$lang) ?? $profession[0]->getAttribute('name_ru')}}">{{$profession[0]->getAttribute('name_'.$lang) ?? $profession[0]->getAttribute('name_ru')}}</a>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <a href="javascript:;" title="{{__('default.pages.courses.show_all')}}"
-                                           class="link small text-center" data-maxheight="300"
-                                           data-alternativetitle="{{__('default.pages.courses.hide')}}"
-                                           style="display:none;">{{__('default.pages.courses.show_all')}}</a>
-                                    </div>
-                                </div>
-                                <div class="sidebar-item">
-                                    <div class="sidebar-item__title">{{__('default.pages.courses.skills_title_1')}}:
-                                    </div>
-                                    <div class="sidebar-item__body">
-                                        <div class="extendable">
-                                            <div class="tags">
-                                                <ul>
-                                                    @foreach($item->skills->groupBy('id') as $key => $skill)
-                                                        <li><a href="/{{$lang}}/course-catalog?skills[]={{$key}}"
-                                                               title="{{$skill[0]->getAttribute('name_'.$lang) ?? $skill[0]->getAttribute('name_ru')}}">{{$skill[0]->getAttribute('name_'.$lang) ?? $skill[0]->getAttribute('name_ru')}}</a>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <a href="javascript:;" title="{{__('default.pages.courses.show_all')}}"
-                                           class="link small text-center" data-maxheight="300"
-                                           data-alternativetitle="{{__('default.pages.courses.hide')}}"
-                                           style="display:none;">{{__('default.pages.courses.show_all')}}</a>
-                                    </div>
-                                </div>
-                                @if(empty($student_course) or ($student_course->paid_status == 0))
-                                    <div class="sidebar-item">
-                                        <div class="sidebar-item__title"></div>
-                                        <div class="sidebar-item__body">
-                                            <div class="price">
-                                                @if($item->is_paid == 1)
-                                                    <div
-                                                        class="price__value">{{number_format($item->cost, 0, ',', ' ')}}
-                                                        ₸
-                                                    </div>
-                                                @else
-                                                    <div class="price__value">{{__('default.pages.courses.free_title')}}
-                                                    </div>
-                                                @endif
-                                                @if($item->quota_status == 2)
-                                                    <div class="price__quota"><span
-                                                            class="mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</span>*
-                                                    </div>
-                                                    <div class="hint gray">
-                                                        * {{__('default.pages.courses.access_by_quota_desc')}}</div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-                            @if(empty($student_course) or ($student_course->paid_status == 0))
-                                <div class="sidebar__buttons">
-                                    @if($item->quota_status == 2)
-                                        @guest
-                                            <a href="#studentAuth" data-fancybox
-                                               title="{{__('default.pages.courses.get_by_quota')}}"
-                                               class="sidebar-btn ghost">{{__('default.pages.courses.get_by_quota')}}</a>
-                                        @endguest
-                                        @auth
-                                            @if(Auth::user()->hasRole('student'))
-                                                <a href="#quotaConfirm" data-fancybox
-                                                   title="{{__('default.pages.courses.get_by_quota')}}"
-                                                   class="sidebar-btn ghost">{{__('default.pages.courses.get_by_quota')}}</a>
-                                            @endif
-                                        @endauth
-                                    @endif
-                                    @if($item->is_paid == 0)
-                                        @guest
-                                            <a href="#studentAuth" data-fancybox
-                                               title="{{__('default.pages.courses.get_free')}}"
-                                               class="sidebar-btn ghost">{{__('default.pages.courses.get_free')}}</a>
-                                        @endguest
-                                        @auth
-                                            @if(Auth::user()->hasRole('student'))
-                                                <a href="#buyConfirm" data-fancybox
-                                                   title="{{__('default.pages.courses.get_free')}}"
-                                                   class="sidebar-btn ghost">{{__('default.pages.courses.get_free')}}</a>
-                                            @endif
-                                        @endauth
-                                    @else
-                                        @guest
-                                            <a href="#studentAuth" data-fancybox
-                                               title="{{__('default.pages.courses.buy_course')}}"
-                                               class="sidebar-btn">{{__('default.pages.courses.buy_course')}}</a>
-                                        @endguest
-                                        @auth
-                                            @if(Auth::user()->hasRole('student'))
-                                                <a href="#buyConfirm" data-fancybox
-                                                   title="{{__('default.pages.courses.buy_course')}}"
-                                                   class="sidebar-btn">{{__('default.pages.courses.buy_course')}}</a>
-                                            @endif
-                                        @endauth
-                                    @endif
-                                </div>
-                            @endif
+                            @include('app.pages.general.courses.catalog.components.media_attachments',['item' => $item])
                         </form>
                     </div>
                 </div>
@@ -588,7 +416,7 @@
                         @csrf
                         <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
                         <div
-                            class="plain-text gray text-center">{{__('default.pages.courses.confirm_course_by_quota')}}</div>
+                                class="plain-text gray text-center">{{__('default.pages.courses.confirm_course_by_quota')}}</div>
                         <div class="plain-text gray text-center">{{__('default.pages.courses.quota_have')}}
                             : {{Auth::user()->student_info->quota_count}}</div>
                         <div class="row row--multiline justify-center">

@@ -35,6 +35,20 @@ class LessonController extends Controller
         }
     }
 
+    public function createUnthemeLesson($lang, Course $item)
+    {
+        $lessons_type = LessonsType::all();
+        if ($item->author_id == Auth::user()->id) {
+            return view("app.pages.author.courses.create_lesson", [
+                "item" => $item,
+                "theme" => null,
+                "lessons_type" => $lessons_type
+            ]);
+        } else {
+            return redirect("/" . $lang . "/my-courses");
+        }
+    }
+
     public function storeLesson($lang, Request $request, Course $course, Theme $theme)
     {
         $this->validate($request, [
@@ -120,12 +134,14 @@ class LessonController extends Controller
 
         // Ссылки на видео курса
         $item_attachments->videos_link = json_encode($request->videos_link);
-
         // Ссылки на видео курса для слабовидящих
         if ($request->videos_poor_vision_link) {
             $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
         }
-
+        // Ссылки на видео курса для лиц с нарушениями слуха
+        if ($request->videos_poor_hearing_link) {
+            $item_attachments->videos_poor_hearing_link = json_encode($request->videos_poor_hearing_link);
+        }
         // Видео с устройства
         if (($request->videos != $item_attachments->videos)) {
             File::delete(public_path($item_attachments->videos));
@@ -137,6 +153,12 @@ class LessonController extends Controller
             File::delete(public_path($item_attachments->videos_poor_vision));
 
             $item_attachments->videos_poor_vision = $request->videos_poor_vision;
+        }
+        // Видео с устройства для лиц с нарушениями слуха
+        if (($request->videos_poor_hearing != $item_attachments->videos_poor_hearing)) {
+            File::delete(public_path($item_attachments->videos_poor_hearing));
+
+            $item_attachments->videos_poor_hearing = $request->videos_poor_hearing;
         }
         // Аудио с устройства
         if (($request->audios != $item_attachments->audios)) {
@@ -150,6 +172,12 @@ class LessonController extends Controller
 
             $item_attachments->audios_poor_vision = $request->audios_poor_vision;
         }
+        // Аудио с устройства для лиц с нарушениями слуха
+        if (($request->audios_poor_hearing != $item_attachments->audios_poor_hearing)) {
+            File::delete(public_path($item_attachments->audios_poor_hearing));
+
+            $item_attachments->audios_poor_hearing = $request->audios_poor_hearing;
+        }
         // Другие материалы
         if (($request->another_files != $item_attachments->another_files)) {
             File::delete(public_path($item_attachments->another_files));
@@ -162,6 +190,173 @@ class LessonController extends Controller
 
             $item_attachments->another_files_poor_vision = $request->another_files_poor_vision;
         }
+        // Другие материалы для лиц с нарушениями слуха
+        if (($request->another_files_poor_hearing != $item_attachments->another_files_poor_hearing)) {
+            File::delete(public_path($item_attachments->another_files_poor_hearing));
+
+            $item_attachments->another_files_poor_hearing = $request->another_files_poor_hearing;
+        }
+
+        $item_attachments->save();
+
+        return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id)->with('status', __('default.pages.lessons.create_request_message'));
+    }
+
+    public function storeUnthemeLesson($lang, Request $request, Course $course)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'duration' => 'required|numeric|gt:0'
+        ]);
+
+        // Получить послений index из тем и уроков без тем
+        $last_theme_index_id = Theme::whereCourseId($course->id)->get();
+        $last_lesson_index_id = Lesson::whereCourseId($course->id)
+            ->whereThemeId(null)
+            ->whereNotIn('type', [3, 4])
+            ->get();
+        $last_index = $last_theme_index_id
+            ->merge($last_lesson_index_id)
+            ->pluck('index_number')
+            ->toArray();
+        sort($last_index);
+        $last_index = end($last_index);
+
+        if ($last_index) {
+            $index = $last_index + 1;
+        } else {
+            $index = 0;
+        }
+
+        $item = new Lesson;
+        $item->course_id = $course->id;
+        $item->name = $request->name;
+        $item->index_number = $index;
+
+        if ($request->type == 'theory') {
+            $item->type = 1;
+
+            $item->end_lesson_type = 2;
+
+        } else {
+            $item->type = 2;
+
+            if ($request->practiceType == 'test') {
+                $item->end_lesson_type = 0;
+
+                $data = array(
+                    "questions" => array(),
+                    "passingScore" => $request->passingScore,
+                    "mixAnswers" => $request->mixAnswers
+                );
+
+                foreach ($request->questions as $key => $question) {
+                    $answers = $request->answers[$key];
+
+                    if (isset($request->isPictures[$key])) {
+                        foreach ($answers as $k => $answer) {
+                            if (is_array(json_decode($answer))) {
+                                $answers[$k] = json_decode($answer)[0];
+                            }
+                        }
+                    }
+
+                    $data['questions'][] = array(
+                        'name' => $request->questions[$key],
+                        'is_pictures' => isset($request->isPictures[$key]),
+                        'answers' => $answers
+                    );
+                }
+
+                $item->practice = json_encode($data);
+
+
+            } else if ($request->practiceType == 'homework') {
+                $item->end_lesson_type = 1;
+
+                $item->practice = $request->homework;
+            }
+        }
+
+        $item->duration = $request->duration;
+        $item->theory = $request->theory;
+
+        if (($request->image != $item->image)) {
+            File::delete(public_path($item->image));
+
+            $item->image = $request->image;
+        }
+
+        $item->save();
+
+        // Вложения к уроку
+        $item_attachments = new LessonAttachments;
+        $item_attachments->lesson_id = $item->id;
+
+        // Ссылки на видео курса
+        $item_attachments->videos_link = json_encode($request->videos_link);
+        // Ссылки на видео курса для слабовидящих
+        if ($request->videos_poor_vision_link) {
+            $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        }
+        // Ссылки на видео курса для лиц с нарушениями слуха
+        if ($request->videos_poor_hearing_link) {
+            $item_attachments->videos_poor_hearing_link = json_encode($request->videos_poor_hearing_link);
+        }
+        // Видео с устройства
+        if (($request->videos != $item_attachments->videos)) {
+            File::delete(public_path($item_attachments->videos));
+
+            $item_attachments->videos = $request->videos;
+        }
+        // Видео с устройства для слабовидящих
+        if (($request->videos_poor_vision != $item_attachments->videos_poor_vision)) {
+            File::delete(public_path($item_attachments->videos_poor_vision));
+
+            $item_attachments->videos_poor_vision = $request->videos_poor_vision;
+        }
+        // Видео с устройства для лиц с нарушениями слуха
+        if (($request->videos_poor_hearing != $item_attachments->videos_poor_hearing)) {
+            File::delete(public_path($item_attachments->videos_poor_hearing));
+
+            $item_attachments->videos_poor_hearing = $request->videos_poor_hearing;
+        }
+        // Аудио с устройства
+        if (($request->audios != $item_attachments->audios)) {
+            File::delete(public_path($item_attachments->audios));
+
+            $item_attachments->audios = $request->audios;
+        }
+        // Аудио с устройства для слабовидящих
+        if (($request->audios_poor_vision != $item_attachments->audios_poor_vision)) {
+            File::delete(public_path($item_attachments->audios_poor_vision));
+
+            $item_attachments->audios_poor_vision = $request->audios_poor_vision;
+        }
+        // Аудио с устройства для лиц с нарушениями слуха
+        if (($request->audios_poor_hearing != $item_attachments->audios_poor_hearing)) {
+            File::delete(public_path($item_attachments->audios_poor_hearing));
+
+            $item_attachments->audios_poor_hearing = $request->audios_poor_hearing;
+        }
+        // Другие материалы
+        if (($request->another_files != $item_attachments->another_files)) {
+            File::delete(public_path($item_attachments->another_files));
+
+            $item_attachments->another_files = $request->another_files;
+        }
+        // Другие материалы для слабовидящих
+        if (($request->another_files_poor_vision != $item_attachments->another_files_poor_vision)) {
+            File::delete(public_path($item_attachments->another_files_poor_vision));
+
+            $item_attachments->another_files_poor_vision = $request->another_files_poor_vision;
+        }
+        // Другие материалы для лиц с нарушениями слуха
+        if (($request->another_files_poor_hearing != $item_attachments->another_files_poor_hearing)) {
+            File::delete(public_path($item_attachments->another_files_poor_hearing));
+
+            $item_attachments->another_files_poor_hearing = $request->another_files_poor_hearing;
+        }
 
         $item_attachments->save();
 
@@ -170,7 +365,6 @@ class LessonController extends Controller
 
     public function editLesson($lang, Course $course, Lesson $lesson)
     {
-
         $theme = Theme::where('id', '=', $lesson->theme_id)->first();
 
         if ($theme) {
@@ -182,7 +376,7 @@ class LessonController extends Controller
 
         $lessons_type = LessonsType::all();
 
-        if (($course->author_id == Auth::user()->id) and (!empty($lesson_theme->lessons->first()->id) == $lesson->id)) {
+        if ($course->author_id == Auth::user()->id) {
             return view("app.pages.author.courses.edit_lesson", [
                 "theme" => $theme,
                 "item" => $lesson,
@@ -192,7 +386,6 @@ class LessonController extends Controller
         } else {
             return redirect("/" . app()->getLocale() . "/my-courses");
         }
-
     }
 
     public function updateLesson($lang, Request $request, Course $course, Lesson $item)
@@ -269,6 +462,10 @@ class LessonController extends Controller
         if ($request->videos_poor_vision_link) {
             $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
         }
+        // Ссылки на видео курса для лиц с нарушениями слуха
+        if ($request->videos_poor_hearing_link) {
+            $item_attachments->videos_poor_hearing_link = json_encode($request->videos_poor_hearing_link);
+        }
 
         // Видео с устройства
         $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
@@ -321,6 +518,34 @@ class LessonController extends Controller
         if ($another_files_poor_vision != $item_attachments->another_files_poor_vision) {
 
             $item_attachments->another_files_poor_vision = $another_files_poor_vision;
+
+            $item_attachments->save();
+        }
+
+        // Видео с устройства (для слабовидящих)
+        $videos_poor_hearing = array_merge(json_decode($request->localVideo2) ?? [], $request->localVideoStored2 ?? []);
+
+        if ($videos_poor_hearing != $item_attachments->videos_poor_hearing) {
+
+            $item_attachments->videos_poor_hearing = $videos_poor_hearing;
+
+            $item_attachments->save();
+        }
+        // Аудио с устройства (для слабовидящих)
+        $audios_poor_hearing = array_merge(json_decode($request->localAudio2) ?? [], $request->localAudioStored2 ?? []);
+
+        if ($audios_poor_hearing != $item_attachments->audios_poor_hearing) {
+
+            $item_attachments->audios_poor_hearing = $audios_poor_hearing;
+
+            $item_attachments->save();
+        }
+        // Другие файлы с устройства (для слабовидящих)
+        $another_files_poor_hearing = array_merge(json_decode($request->localDocuments2) ?? [], $request->localDocumentsStored2 ?? []);
+
+        if ($another_files_poor_hearing != $item_attachments->another_files_poor_hearing) {
+
+            $item_attachments->another_files_poor_hearing = $another_files_poor_hearing;
 
             $item_attachments->save();
         }
@@ -624,6 +849,12 @@ class LessonController extends Controller
 
             $item_attachments->videos_poor_vision = $request->videos_poor_vision;
         }
+        // Видео с устройства для лиц с нарушениями слуха
+        if (($request->videos_poor_hearing != $item_attachments->videos_poor_hearing)) {
+            File::delete(public_path($item_attachments->videos_poor_hearing));
+
+            $item_attachments->videos_poor_hearing = $request->videos_poor_hearing;
+        }
         // Аудио с устройства
         if (($request->audios != $item_attachments->audios)) {
             File::delete(public_path($item_attachments->audios));
@@ -636,6 +867,12 @@ class LessonController extends Controller
 
             $item_attachments->audios_poor_vision = $request->audios_poor_vision;
         }
+        // Аудио с устройства для лиц с нарушениями слуха
+        if (($request->audios_poor_hearing != $item_attachments->audios_poor_hearing)) {
+            File::delete(public_path($item_attachments->audios_poor_hearing));
+
+            $item_attachments->audios_poor_hearing = $request->audios_poor_hearing;
+        }
         // Другие материалы
         if (($request->another_files != $item_attachments->another_files)) {
             File::delete(public_path($item_attachments->another_files));
@@ -647,6 +884,12 @@ class LessonController extends Controller
             File::delete(public_path($item_attachments->another_files_poor_vision));
 
             $item_attachments->another_files_poor_vision = $request->another_files_poor_vision;
+        }
+        // Другие материалы для лиц с нарушениями слуха
+        if (($request->another_files_poor_hearing != $item_attachments->another_files_poor_hearing)) {
+            File::delete(public_path($item_attachments->another_files_poor_hearing));
+
+            $item_attachments->another_files_poor_hearing = $request->another_files_poor_hearing;
         }
 
         $item_attachments->save();
@@ -717,10 +960,13 @@ class LessonController extends Controller
 
         // Ссылки на видео курса
         $item_attachments->videos_link = json_encode($request->videos_link);
-
         // Ссылки на видео курса для слабовидящих
         if ($request->videos_poor_vision_link) {
             $item_attachments->videos_poor_vision_link = json_encode($request->videos_poor_vision_link);
+        }
+        // Ссылки на видео курса для лиц с нарушениями слуха
+        if ($request->videos_poor_hearing_link) {
+            $item_attachments->videos_poor_hearing_link = json_encode($request->videos_poor_hearing_link);
         }
 
         $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
@@ -730,6 +976,10 @@ class LessonController extends Controller
         $videos_poor_vision = array_merge(json_decode($request->localVideo1) ?? [], $request->localVideoStored1 ?? []);
         $audios_poor_vision = array_merge(json_decode($request->localAudio1) ?? [], $request->localAudioStored1 ?? []);
         $another_files_poor_vision = array_merge(json_decode($request->localDocuments1) ?? [], $request->localDocumentsStored1 ?? []);
+
+        $videos_poor_hearing = array_merge(json_decode($request->localVideo2) ?? [], $request->localVideoStored2 ?? []);
+        $audios_poor_hearing = array_merge(json_decode($request->localAudio2) ?? [], $request->localAudioStored2 ?? []);
+        $another_files_poor_hearing = array_merge(json_decode($request->localDocuments2) ?? [], $request->localDocumentsStored2 ?? []);
 
         // Видео с устройства
         if ($videos != $item_attachments->videos) {
@@ -770,6 +1020,27 @@ class LessonController extends Controller
         if ($another_files_poor_vision != $item_attachments->another_files_poor_vision) {
 
             $item_attachments->another_files_poor_vision = $another_files_poor_vision;
+
+            $item_attachments->save();
+        }
+        // Видео с устройства (для лиц с нарушениями слуха)
+        if ($videos_poor_hearing != $item_attachments->videos_poor_hearing) {
+
+            $item_attachments->videos_poor_hearing = $videos_poor_hearing;
+
+            $item_attachments->save();
+        }
+        // Аудио с устройства (для лиц с нарушениями слуха)
+        if ($audios_poor_hearing != $item_attachments->audios_poor_hearing) {
+
+            $item_attachments->audios_poor_hearing = $audios_poor_hearing;
+
+            $item_attachments->save();
+        }
+        // Другие файлы с устройства (для лиц с нарушениями слуха)
+        if ($another_files_poor_hearing != $item_attachments->another_files_poor_hearing) {
+
+            $item_attachments->another_files_poor_hearing = $another_files_poor_hearing;
 
             $item_attachments->save();
         }
@@ -922,15 +1193,36 @@ class LessonController extends Controller
     // Методы для таблицы курса
     public function deleteLesson(Request $request)
     {
-        Lesson::where('id', '=', $request->lesson_id)->delete();
+        $lesson = Lesson::find($request->lesson_id);
 
-        $theme_lessons = Lesson::whereHas('themes', function ($q) use ($request) {
-            $q->where('themes.id', '=', $request->theme_id);
-        })->orderBy('index_number', 'asc')->get();
+        if ($lesson->theme_id != null) {
+            $lesson->delete();
 
-        foreach ($theme_lessons as $key => $lesson) {
-            $lesson->index_number = $key;
-            $lesson->save();
+            $theme_lessons = Lesson::whereHas('themes', function ($q) use ($request) {
+                $q->where('themes.id', '=', $request->theme_id);
+            })->orderBy('index_number', 'asc')->get();
+
+            foreach ($theme_lessons as $key => $lesson) {
+                $lesson->index_number = $key;
+                $lesson->save();
+            }
+        } else {
+            $lesson->delete();
+
+            $themes = Theme::whereCourseId($lesson->course_id)
+                ->orderBy('index_number', 'asc')
+                ->get();
+            $untheme_lessons = Lesson::whereCourseId($lesson->course_id)
+                ->whereThemeId(null)
+                ->whereNotIn('type', [3, 4])
+                ->orderBy('index_number', 'asc')
+                ->get();
+            $themes = $themes->merge($untheme_lessons)->sortBy('index_number')->values();
+
+            foreach ($themes as $key => $theme) {
+                $theme->index_number = $key;
+                $theme->save();
+            }
         }
 
         $messages = ["title" => __('default.pages.courses.delete_lesson_title'), "body" => __('default.pages.courses.delete_lesson_success')];

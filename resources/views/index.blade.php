@@ -14,20 +14,21 @@
                                 {!! __('default.pages.index.find_your_course') !!}
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-group__label">{{__('default.pages.courses.choose_profession')}}</label>
-                            <select name="specialities[]"
-                                    placeholder="{{__('default.pages.courses.choose_profession')}}"
-                                    data-method="getProfessionsByName"
-                                    data-default="{{__('default.pages.courses.sort_by_default')}}"
-                                    class="white"> </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-group__label">{{__('default.pages.courses.choose_skill')}}</label>
-                            <select name="skills[]" placeholder="{{__('default.pages.courses.choose_skill')}}"
-                                    data-method="getSkillsByData"
-                                    data-default="{{__('default.pages.courses.sort_by_default')}}"
-                                    class="white"> </select>
+                        <div class="col-md-8">
+                            <div class="row row--multiline">
+                                <div class="col-md-4">
+                                    <label class="form-group__label">{{__('default.pages.courses.choose_professional_area')}}</label>
+                                    <select name="professional_areas[]" placeholder="{{__('default.pages.courses.choose_professional_area')}}" data-method="getProfessionalAreaByName" data-default="{{__('default.pages.courses.sort_by_default')}}" class="white" data-noresults="{{__('default.pages.index.nothing_to_show')}}"> </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-group__label">{{__('default.pages.courses.choose_profession')}}</label>
+                                    <select name="specialities[]" placeholder="{{__('default.pages.courses.choose_profession')}}" data-method="getProfessionsByData" data-default="{{__('default.pages.courses.sort_by_default')}}" class="white" data-noresults="{{__('default.pages.index.nothing_to_show')}}"> </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-group__label">{{__('default.pages.courses.choose_skill')}}</label>
+                                    <select name="skills[]" placeholder="{{__('default.pages.courses.choose_skill')}}" data-method="getSkillsByData" data-default="{{__('default.pages.courses.sort_by_default')}}" class="white" data-noresults="{{__('default.pages.index.nothing_to_show')}}"> </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-2">
                             <button type="submit" class="btn">{{__('default.pages.courses.apply_title')}}</button>
@@ -49,7 +50,7 @@
                                     <a href="/{{$lang}}/course-catalog/course/{{$course->id}}" title="" class="card">
                                         @if($course->quota_status == 2)
                                             <div
-                                                class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
+                                                    class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
                                         @endif
                                         <div class="card__image">
                                             <img src="{{$course->getAvatar()}}" alt="">
@@ -58,10 +59,10 @@
                                             <div class="card__top">
                                                 @if($course->is_paid == true)
                                                     <div
-                                                        class="card__price mark mark--blue">{{number_format($course->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                                                            class="card__price mark mark--blue">{{number_format($course->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
                                                 @else
                                                     <div
-                                                        class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
+                                                            class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
                                                 @endif
                                                 <h3 class="card__title">{{$course->name}}</h3>
                                                 <div class="card__author">{{$course->user->company_name}}</div>
@@ -181,7 +182,7 @@
                         <a href="/{{$lang}}/course-catalog/course/{{$item->id}}" title="" class="card">
                             @if($item->quota_status == 2)
                                 <div
-                                    class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
+                                        class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
                             @endif
                             <div class="card__image">
                                 <img src="{{$item->getAvatar()}}" alt="">
@@ -190,10 +191,10 @@
                                 <div class="card__top">
                                     @if($item->is_paid == true)
                                         <div
-                                            class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                                                class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
                                     @else
                                         <div
-                                            class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
+                                                class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
                                     @endif
                                     <h3 class="card__title">{{$item->name}}</h3>
                                     <div class="card__author">{{$item->user->company_name}}</div>
@@ -336,27 +337,29 @@
             ]
         });
 
-        //Modal message inline call example
-        /*$(document).ready(function () {
-          $.fancybox.open(`
-            <div class="text-center">
-                <h4 class="title-primary text-center">Восстановление пароля</h4>
-                <div class="plain-text gray">Пароль успешно отправлен на данный E-mail</div>
-                <button data-fancybox-close class="btn">Закрыть</button>
-            </div>
-          `, {
-            touch: false
-          });
-        });*/
-
-        const specialityEl = $('[name="specialities[]"]'),
+        const professionalAreaEl = $('[name="professional_areas[]"]'),
+            specialityEl = $('[name="specialities[]"]'),
             skillsEl = $('[name="skills[]"]');
 
-        let specialitySelect = new ajaxSelect(specialityEl);
+        let professionAreaSelect = new ajaxSelect(professionalAreaEl);
+        let specialitySelect = new ajaxSelect(specialityEl, professionalAreaEl);
         let skillsSelect = new ajaxSelect(skillsEl, specialityEl);
 
+        professionalAreaEl.change(function () {
+            specialitySelect.update($(this).val() ? {"professional_areas[]": toArray($(this).val())} : null);
+            specialitySelect.clear();
+            skillsSelect.clear();
+            setTimeout(function () {
+                specialitySelect.removeMessage();
+            }, 3000);
+        });
+
         specialityEl.change(function () {
-            skillsSelect.update($(this).val() ? {"professions": toArray($(this).val())} : null);
+            skillsSelect.update($(this).val() ? {"specialities[]": toArray($(this).val())} : null);
+            skillsSelect.clear();
+            setTimeout(function () {
+                skillsSelect.removeMessage();
+            }, 3000);
         })
     </script>
     <!---->

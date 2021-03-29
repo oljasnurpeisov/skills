@@ -31,13 +31,22 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|StudentCertificate whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|StudentCertificate whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Course $courses
+ * @property-read \App\Models\User $students
  */
 class StudentCertificate extends Model
 {
-
     protected $table = 'student_certificates';
 
     public $timestamps = true;
 
+    public function students()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
+    public function courses()
+    {
+        return $this->belongsTo(Course::class, 'course_id', 'id');
+    }
 }

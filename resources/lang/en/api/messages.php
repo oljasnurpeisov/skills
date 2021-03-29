@@ -48,6 +48,10 @@ return [
         'title' => 'Сертификаты'
     ],
 
+    'professional_areas' => [
+        'title' => 'Проф.области'
+    ],
+
     'professions' => [
         'title' => 'Профессии'
     ],

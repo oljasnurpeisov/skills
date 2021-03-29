@@ -72,6 +72,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Course whereIsPoorVision($value)
  * @property int|null $previous_status
  * @method static \Illuminate\Database\Eloquent\Builder|Course wherePreviousStatus($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Professions[] $professions
+ * @property-read int|null $professions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CourseQuotaCost[] $quotaCost
+ * @property-read int|null $quota_cost_count
+ * @property int $is_poor_hearing
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProfessionalArea[] $professional_areas
+ * @property-read int|null $professional_areas_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Course whereIsPoorHearing($value)
  */
 class Course extends Model
 {
@@ -126,6 +134,13 @@ class Course extends Model
     {
 
         return $this->belongsToMany(Professions::class, 'course_skill', 'course_id', 'profession_id');
+
+    }
+
+    public function professional_areas()
+    {
+
+        return $this->belongsToMany(ProfessionalArea::class, 'course_skill', 'course_id', 'professional_area_id');
 
     }
 

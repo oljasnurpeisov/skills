@@ -40,6 +40,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $student_skill
  * @property-read int|null $student_skill_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Professions[] $group_professions
+ * @property-read int|null $group_professions_count
  */
 class Skill extends Model
 {

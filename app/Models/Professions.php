@@ -40,6 +40,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $code
  * @method static \Illuminate\Database\Eloquent\Builder|Professions whereCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Professions whereParentId($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProfessionalArea[] $professional_areas
+ * @property-read int|null $professional_areas_count
  */
 class Professions extends Model
 {
@@ -52,6 +54,12 @@ class Professions extends Model
     public function skills() {
 
         return $this->belongsToMany(Skill::class,'profession_skills', 'profession_id', 'skill_id');
+
+    }
+
+    public function professional_areas() {
+
+        return $this->belongsToMany(ProfessionalArea::class,'professional_area_professions', 'profession_id', 'professional_area_id');
 
     }
 

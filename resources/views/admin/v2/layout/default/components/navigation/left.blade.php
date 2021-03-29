@@ -92,20 +92,22 @@
                     </li>
                     <li><a href="/{{$lang}}/admin/reports/students">{{ __('admin.pages.reports.students_report') }}</a>
                     </li>
+                    <li><a href="/{{$lang}}/admin/reports/certificates">{{ __('admin.pages.reports.certificates_report') }}</a>
+                    </li>
                 </ul>
             </li>
             @endhasPermission
             @hasPermission('admin.tech_support')
-            <li class="dropdown">
-                <a href="javascript:;" title="{{ __('admin.pages.dialogs.title') }}">
-                    <i class="fa fa-comments"></i> {{ __('admin.pages.dialogs.title') }}
-                </a>
-                <ul>
-                    <li>
-                        <a href="/{{$lang}}/admin/dialogs">{{ __('admin.pages.dialogs.list') }}</a>
-                    </li>
-                </ul>
-            </li>
+                <li class="dropdown">
+                    <a href="javascript:;" title="{{ __('admin.pages.dialogs.title') }}">
+                        <i class="fa fa-comments"></i> {{ __('admin.pages.dialogs.title') }}
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="/{{$lang}}/admin/dialogs">{{ __('admin.pages.dialogs.list') }}</a>
+                        </li>
+                    </ul>
+                </li>
             @endhasPermission
             <li class="dropdown">
                 <a href="javascript:;" title="{{ __('admin.pages.help.title') }}">

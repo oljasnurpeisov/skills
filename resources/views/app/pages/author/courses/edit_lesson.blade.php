@@ -21,7 +21,7 @@
                               enctype="multipart/form-data">
                             @csrf
                             <div class="row row--multiline">
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                     <div class="form-group" id="nameField">
                                         <label class="form-group__label">{{__('default.pages.lessons.lesson_name')}}
                                             *</label>
@@ -59,74 +59,6 @@
                     :message
                 </div>') !!}
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="form-group__label">{{__('default.pages.lessons.lesson_image')}}</label>
-                                        <div class="avatar lesson-image dropzone-avatar" id="lessonCover"
-                                             data-url="/ajax_upload_lesson_image?_token={{ csrf_token() }}"
-                                             data-maxsize="1"
-                                             data-acceptedfiles="image/*">
-
-                                            <div class="lesson-image__preview">
-                                                <img src="{{old('image') ?? $item->getAvatar()}}"
-                                                     class="avatar-preview" alt="">
-                                            </div>
-                                            <div class="lesson-image__desc dropzone-default">
-                                                <input type="text" name="image" class="avatar-path"
-                                                       value="{{ old('image') ?? $item->image }}">
-                                                @if($item->image)
-                                                    <div class="previews-container">
-                                                        <div class="dz-preview dz-image-preview">
-                                                            <div class="dz-details">
-                                                                <div class="dz-filename"><span
-                                                                            data-dz-name="">{{ basename($item->image) }}</span>
-                                                                </div>
-                                                                <div class="dz-size" data-dz-size="">
-                                                                    @if(file_exists(public_path($item->image)))
-                                                                        <strong>{{ $item->image ? round(filesize(public_path($item->image)) / 1024) : 0 }}</strong>
-                                                                        KB
-                                                                    @else
-                                                                        <strong>0</strong> KB
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <a href="javascript:undefined;"
-                                                               title="{{__('default.pages.courses.delete')}}"
-                                                               class="author-picture__link red"
-                                                               data-dz-remove="">{{__('default.pages.courses.delete')}}</a>
-                                                        </div>
-                                                    </div>
-                                                @else
-                                                    <div class="previews-container"></div>
-                                                @endif
-                                                <div class="dropzone-default__info">PNG, JPG
-                                                    • {{__('default.pages.courses.max_file_title')}} 1MB
-                                                </div>
-                                                <div class="lesson-image__link avatar-pick dropzone-default__link">
-                                                    Выбрать
-                                                    фото
-                                                </div>
-                                            </div>
-                                            <div class="avatar-preview-template" style="display:none;">
-                                                <div class="dz-preview dz-file-preview">
-                                                    <div class="dz-details">
-                                                        <div class="dz-filename"><span data-dz-name></span></div>
-                                                        <div class="dz-size" data-dz-size></div>
-                                                        <div class="dz-progress"><span class="dz-upload"
-                                                                                       data-dz-uploadprogress></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="alert alert-danger"><span data-dz-errormessage> </span>
-                                                    </div>
-                                                    <a href="javascript:undefined;"
-                                                       title="{{__('default.pages.courses.delete')}}"
-                                                       class="author-picture__link red"
-                                                       data-dz-remove>{{__('default.pages.courses.delete')}}</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.lessons.theory_title')}} *</label>
@@ -134,7 +66,7 @@
                                           required>{{ old('theory') ?? $item->theory}}</textarea>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.video_link')}}</label>
+                                <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link')}}</label>
                                 @if($item->lesson_attachment->videos_link != null)
                                     <input type="url" name="videos_link[]" placeholder=""
                                            class="input-regular"
@@ -282,11 +214,9 @@
                                        class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                 </div>
                             </div>
-                            {{--                            @if($course->is_poor_vision == true)--}}
                             @include('app.pages.author.courses.components.lesson.poor_vision_lesson_edit',['item' => $item])
-                            {{--                            @endif--}}
+                            @include('app.pages.author.courses.components.lesson.poor_hearing_lesson_edit',['item' => $item])
                             <div id="optionalFields">
-                                {{--                                @if($item->end_lesson_type == 1)--}}
                                 <div id="homework" @if($item->end_lesson_type == 1) style="display: block"
                                      @else style="display: none" @endif>
                                     <div class="form-group">
@@ -296,9 +226,7 @@
                                                   required>{{$item->practice}}</textarea>
                                     </div>
                                 </div>
-                                {{--                                @elseif($item->end_lesson_type == 0)--}}
                                 @include('app.pages.author.courses.components.lesson.test_lesson_edit',['item' => $item])
-                                {{--                                @endif--}}
                             </div>
 
                             <div class="buttons">

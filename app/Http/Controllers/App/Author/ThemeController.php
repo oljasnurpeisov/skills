@@ -16,13 +16,24 @@ use Illuminate\Support\Facades\File;
 class ThemeController extends Controller
 {
 
-    public function createTheme(Request $request){
-        $last_id = Theme::whereHas('courses', function($q) use ($request){
-            $q->where('courses.id', '=', $request->course_id);
-        })->orderBy('index_number', 'desc')->latest()->first();
+    public function createTheme(Request $request)
+    {
+        $untheme_lessons = Lesson::whereCourseId($request->course_id)
+            ->whereThemeId(null)
+            ->whereNotIn('type', [3,4])
+            ->orderBy('index_number', 'asc')
+            ->get();
 
-        if ($last_id) {
-            $index = $last_id->index_number + 1;
+        $themes = Theme::whereCourseId($request->course_id)
+            ->orderBy('index_number', 'asc')
+            ->get();
+
+        $themes = $themes->merge($untheme_lessons)
+            ->sortBy('index_number')
+            ->last();
+
+        if ($themes) {
+            $index = $themes->index_number + 1;
         } else {
             $index = 0;
         }
@@ -50,29 +61,70 @@ class ThemeController extends Controller
 
     public function deleteTheme(Request $request)
     {
-        Theme::where('id', '=', $request->theme_id)->delete();
+        $theme = Theme::find($request->theme_id);
 
-        $course_themes = Theme::whereHas('courses', function($q) use ($request){
-            $q->where('courses.id', '=', $request->course_id);
-        })->orderBy('index_number', 'asc')->get();
+        $theme->delete();
 
-        foreach ($course_themes as $key => $theme){
+        $themes = Theme::whereCourseId($theme->course_id)
+            ->orderBy('index_number', 'asc')
+            ->get();
+        $untheme_lessons = Lesson::whereCourseId($theme->course_id)
+            ->whereThemeId(null)
+            ->whereNotIn('type', [3,4])
+            ->orderBy('index_number', 'asc')
+            ->get();
+        $themes = $themes->merge($untheme_lessons)->sortBy('index_number')->values();
+
+        foreach ($themes as $key => $theme) {
             $theme->index_number = $key;
             $theme->save();
         }
-
 
         $messages = ["title" => __('default.pages.courses.delete_theme_title'), "body" => __('default.pages.courses.delete_theme_success')];
 
         return $messages;
     }
 
-    public function moveTheme(Request $request){
+    public function moveTheme(Request $request)
+    {
         $theme_1 = Theme::where('id', '=', $request->theme_1_id)->first();
         $theme_2 = Theme::where('id', '=', $request->theme_2_id)->first();
 
         [$theme_1->index_number, $theme_2->index_number] = [$theme_2->index_number, $theme_1->index_number];
         $theme_1->save();
         $theme_2->save();
+    }
+
+    public function moveItem(Request $request)
+    {
+        $item_1_id = $request->item_1_id;
+        $item_2_id = $request->item_2_id;
+        $item_1_type = $request->item_1_type;
+        $item_2_type = $request->item_2_type;
+
+        if ($item_1_type == 'theme') {
+            $item_1 = Theme::where('id', '=', $item_1_id)->first();
+        } else {
+            $item_1 = Lesson::where('id', '=', $item_1_id)->where('theme_id', '=', null)->first();
+        }
+
+        if ($item_2_type == 'theme') {
+            $item_2 = Theme::where('id', '=', $item_2_id)->first();
+        } else {
+            $item_2 = Lesson::where('id', '=', $item_2_id)->where('theme_id', '=', null)->first();
+        }
+
+        /** Добавить тут проверку автора на владение курса */
+
+        if ($item_1 and $item_2) {
+            [$item_1->index_number, $item_2->index_number] = [$item_2->index_number, $item_1->index_number];
+            $item_1->save();
+            $item_2->save();
+
+            return 200;
+        } else {
+            return 'Не удалось выполнить запрос, один или несколько объектов не были найдены';
+        }
+
     }
 }

@@ -38,48 +38,61 @@
 
                         <div class="course">
                             <div class="course" id="courseDataContainer">
-                                @foreach($item->themes->sortBy('index_number') as $theme)
-                                    <div class="topic spoiler">
-                                        <div class="topic__header">
-                                            <div class="title">{{$theme->name}}</div>
-                                            <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->where('theme_id', '=', $theme->id)->sum('duration'))}}</div>
+                                @foreach($course_data_items as $course_item)
+                                    @if($course_item->item_type == 'theme')
+                                        <div class="topic spoiler">
+                                            <div class="topic__header">
+                                                <div class="title">{{$course_item->name}}</div>
+                                                <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->where('theme_id', '=', $course_item->id)->sum('duration'))}}</div>
+                                            </div>
+                                            <div class="topic__body">
+                                                @foreach($course_item->lessons->sortBy('index_number') as $lesson)
+                                                    <div class="lesson">
+                                                        @if($lesson->type != 1)
+                                                            <div class="title"><a
+                                                                        href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$lesson->id}}"
+                                                                        title="{{$lesson->name}}">{{$lesson->name}}
+                                                                    <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}
+                                                                        {{$lesson->end_lesson_type == 0 ? ' ('.__('default.pages.lessons.test_title').')' : ' ('.__('default.pages.lessons.homework_title').')'}}</div>
+                                                                </a></div>
+                                                            <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                        @else
+                                                            <div class="title"><a
+                                                                        href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$lesson->id}}"
+                                                                        title="{{$lesson->name}}">{{$lesson->name}}
+                                                                    <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</div>
+                                                                </a></div>
+                                                            <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                        @endif
+                                                    </div>
+                                                @endforeach
+                                            </div>
                                         </div>
+                                    @else
                                         <div class="topic__body">
-                                            @foreach($theme->lessons->sortBy('index_number') as $lesson)
-                                                <div class="lesson">
-                                                    @if($lesson->type != 1)
-                                                        <div class="title"><a
-                                                                    href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$lesson->id}}"
-                                                                    title="{{$lesson->name}}">{{$lesson->name}}
-                                                                <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}
-                                                                    {{$lesson->end_lesson_type == 0 ? ' ('.__('default.pages.lessons.test_title').')' : ' ('.__('default.pages.lessons.homework_title').')'}}</div>
-                                                            </a></div>
-                                                        <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
-                                                    @else
-                                                        <div class="title"><a
-                                                                    href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$lesson->id}}"
-                                                                    title="{{$lesson->name}}">{{$lesson->name}}
-                                                                <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</div>
-                                                            </a></div>
-                                                        <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
+                                            <div class="lesson">
+                                                @if($course_item->type != 1)
+                                                    <div class="title"><a
+                                                                href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$course_item->id}}"
+                                                                title="{{$course_item->name}}">{{$course_item->name}}
+                                                            <div class="type">{{$course_item->lesson_type->getAttribute('name_'.$lang) ?? $course_item->lesson_type->getAttribute('name_ru')}}
+                                                                {{$course_item->end_lesson_type == 0 ? ' ('.__('default.pages.lessons.test_title').')' : ' ('.__('default.pages.lessons.homework_title').')'}}</div>
+                                                        </a>
+                                                    </div>
+                                                @else
+                                                    <div class="title"><a
+                                                                href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$course_item->id}}"
+                                                                title="{{$course_item->name}}">{{$course_item->name}}
+                                                            <div class="type">{{$course_item->lesson_type->getAttribute('name_'.$lang) ?? $course_item->lesson_type->getAttribute('name_ru')}}</div>
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                                <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($course_item->duration)}}</div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 @endforeach
                             </div>
-
-                            @if($item->courseWork() !== null)
-                                <div class="topic">
-                                    <div class="topic__header">
-                                        <div class="title"><a
-                                                    href="/{{$lang}}/admin/moderator-course-iframe-{{$item->id}}/lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
-                                        </div>
-                                        <div class="duration"></div>
-                                    </div>
-                                </div>
-                            @endif
                             @if($item->finalTest() !== null)
                                 <div class="topic">
                                     <div class="topic__header">
@@ -271,184 +284,7 @@
             </div>
             <div class="col-md-4">
                 <form class="sidebar">
-                    <div class="sidebar__inner">
-                        <div class="sidebar-item">
-                            <div class="sidebar-item__title">{{__('default.pages.courses.media_attachments')}}
-                                :
-                            </div>
-                            <div class="sidebar-item__body">
-                                @if(!empty($item->attachments->videos_link))
-                                    @foreach(json_decode($item->attachments->videos_link) as $video_link)
-                                        @if(!empty($video_link))
-                                            @php
-                                                $video_id = \App\Extensions\YoutubeParse::parseYoutube($video_link);
-                                            @endphp
-                                            <div class="video-wrapper">
-                                                <iframe width="560" height="315"
-                                                        src="https://www.youtube.com/embed/{{$video_id}}"
-                                                        frameborder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                        allowfullscreen></iframe>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                @endif
-                                @if(!empty($item->attachments->videos_poor_vision_link) and $item->is_poor_vision == true)
-                                    @foreach(json_decode($item->attachments->videos_poor_vision_link) as $video_link)
-                                        @if(!empty($video_link))
-                                            @php
-                                                $video_id = \App\Extensions\YoutubeParse::parseYoutube($video_link);
-                                            @endphp
-                                            <div class="video-wrapper">
-                                                <iframe width="560" height="315"
-                                                        src="https://www.youtube.com/embed/{{$video_id}}"
-                                                        frameborder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                        allowfullscreen></iframe>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                @endif
-                                @if(!empty($item->attachments->videos))
-                                    @foreach(json_decode($item->attachments->videos) as $video)
-                                        <div class="video-wrapper">
-                                            <video controls
-                                                   src="{{$video}}"></video>
-                                        </div>
-                                    @endforeach
-                                @endif
-                                @if(!empty($item->attachments->videos_poor_vision) and $item->is_poor_vision == true)
-                                    @foreach(json_decode($item->attachments->videos_poor_vision) as $video)
-                                        <div class="video-wrapper">
-                                            <video controls
-                                                   src="{{$video}}"></video>
-                                        </div>
-                                    @endforeach
-                                @endif
-                                @if(!empty($item->attachments->audios))
-                                    @foreach(json_decode($item->attachments->audios) as $audio)
-                                        <audio controls
-                                               src="{{$audio}}"></audio>
-                                    @endforeach
-                                @endif
-                                @if(!empty($item->attachments->audios_poor_vision) and $item->is_poor_vision == true)
-                                    @foreach(json_decode($item->attachments->audios_poor_vision) as $audio)
-                                        <audio controls
-                                               src="{{$audio}}"></audio>
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
-                        <div class="sidebar-item">
-                            <div class="sidebar-item__title">{{__('default.pages.courses.course_lang')}}:</div>
-                            <div class="sidebar-item__body">
-                                <div class="plain-text">
-                                    @if($item->lang == 0)
-                                        Қазақша
-                                    @elseif($item->lang == 1)
-                                        Русский
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sidebar-item">
-                            <div class="sidebar-item__title">{{__('default.pages.courses.course_include')}}:
-                            </div>
-                            <div class="sidebar-item__body">
-                                <div class="plain-text">
-                                    <ul>
-                                        <li>{{$item->lessons->whereIn('type', [1,2])->count()}} {{__('default.pages.courses.lessons_title')}}</li>
-                                        <li>{{$videos_count}} {{__('default.pages.courses.videos_count')}}</li>
-                                        <li>{{$audios_count}} {{__('default.pages.courses.audios_count')}} </li>
-                                        <li>{{$attachments_count}} {{__('default.pages.courses.attachments_count')}} </li>
-                                        {{--                                                <li>70,5 часов видео</li>--}}
-                                        <li>{{$item->lessons->whereIn('type', [2])->where('end_lesson_type', '=', 0)->count()}} {{__('default.pages.courses.tests_count_title')}}</li>
-                                        <li>{{$item->lessons->where('end_lesson_type', '=', 1)->where('type', '=', 2)->count()}} {{__('default.pages.courses.homeworks_count')}}</li>
-                                        @if(!empty($item->courseWork()))
-                                            <li>{{__('default.pages.courses.coursework_title')}}</li>
-                                        @endif
-                                        @if(!empty($item->finalTest()))
-                                            <li>{{__('default.pages.courses.final_test_title')}}</li>
-                                        @endif
-                                        <li>{{__('default.pages.courses.mobile_access_title')}}</li>
-                                        <li>{{__('default.pages.courses.certificate_access_title')}}</li>
-                                    </ul>
-                                    <div class="hint gray">{{__('default.pages.courses.last_updates')}}
-                                        : {{\App\Extensions\FormatDate::formatDate($item->updated_at->format("d.m.Y"))}}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sidebar-item">
-                            <div class="sidebar-item__title">{{__('default.pages.courses.professions_title_1')}}
-                                :
-                            </div>
-                            <div class="sidebar-item__body">
-                                <div class="extendable">
-                                    <div class="tags">
-                                        <ul>
-                                            @foreach($item->professions->groupBy('id') as $key => $profession)
-                                                <li><a href="#"
-                                                       title="{{$profession[0]->getAttribute('name_'.$lang) ?? $profession[0]->getAttribute('name_ru')}}">{{$profession[0]->getAttribute('name_'.$lang) ?? $profession[0]->getAttribute('name_ru')}}</a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
-                                <a href="javascript:;" title="{{__('default.pages.courses.show_all')}}"
-                                   class="link small text-center" data-maxheight="300"
-                                   data-alternativetitle="{{__('default.pages.courses.hide')}}"
-                                   style="display:none;">{{__('default.pages.courses.show_all')}}</a>
-                            </div>
-                        </div>
-                        <div class="sidebar-item">
-                            <div class="sidebar-item__title">{{__('default.pages.courses.skills_title_1')}}:
-                            </div>
-                            <div class="sidebar-item__body">
-                                <div class="extendable">
-                                    <div class="tags">
-                                        <ul>
-                                            @foreach($item->skills->groupBy('id') as $key => $skill)
-                                                <li><a href="#"
-                                                       title="{{$skill[0]->getAttribute('name_'.$lang) ?? $skill[0]->getAttribute('name_ru')}}">{{$skill[0]->getAttribute('name_'.$lang) ?? $skill[0]->getAttribute('name_ru')}}</a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
-                                <a href="javascript:;" title="{{__('default.pages.courses.show_all')}}"
-                                   class="link small text-center" data-maxheight="300"
-                                   data-alternativetitle="{{__('default.pages.courses.hide')}}"
-                                   style="display:none;">{{__('default.pages.courses.show_all')}}</a>
-                            </div>
-                        </div>
-                        <div class="sidebar-item">
-                            <div class="sidebar-item__title"></div>
-                            <div class="sidebar-item__body">
-                                <div class="price">
-                                    @if($item->is_paid == 1)
-                                        <div class="price__value">{{number_format($item->cost, 0, ',', ' ')}} ₸
-                                        </div>
-                                    @else
-                                        <div class="price__value">{{__('default.pages.courses.free_title')}}
-                                        </div>
-                                    @endif
-                                    @if($item->quota_status == 2)
-                                        <div class="price__quota"><span
-                                                    class="mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</span>*
-                                        </div>
-                                        <div class="hint gray">
-                                            * {{__('default.pages.courses.access_by_quota_desc')}}</div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="sidebar__buttons">
-                        <a href="#" title="{{__('default.pages.courses.get_by_quota')}}"
-                           class="sidebar-btn ghost disabled">{{__('default.pages.courses.get_by_quota')}}</a>
-                        <a href="#" title="{{__('default.pages.courses.buy_course')}}"
-                           class="sidebar-btn disabled">{{__('default.pages.courses.buy_course')}}</a>
-                    </div>
+                    @include('app.pages.author.courses.components.media_attachments',['item' => $item])
                 </form>
             </div>
         </div>

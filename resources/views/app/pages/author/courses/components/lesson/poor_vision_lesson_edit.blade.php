@@ -1,6 +1,7 @@
 <div id="poorVision" @if($course->is_poor_vision == true) style="display: block" @else style="display: none" @endif>
+    <h3 class="title-tertiary">{{__('default.pages.courses.is_vision_version')}}</h3>
     <div class="form-group">
-        <label class="form-group__label">{{__('default.pages.courses.video_link_1')}}</label>
+        <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link_1')}}</label>
         @if($item->lesson_attachment->videos_poor_vision_link != null)
             <input type="url" name="videos_poor_vision_link[]" placeholder=""
                    class="input-regular"

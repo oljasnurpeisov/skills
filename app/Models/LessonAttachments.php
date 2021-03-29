@@ -39,6 +39,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $another_files_poor_vision
  * @method static \Illuminate\Database\Eloquent\Builder|LessonAttachments whereAnotherFiles($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LessonAttachments whereAnotherFilesPoorVision($value)
+ * @property string|null $videos_poor_hearing_link
+ * @property string|null $videos_poor_hearing
+ * @property string|null $audios_poor_hearing
+ * @property string|null $another_files_poor_hearing
+ * @method static \Illuminate\Database\Eloquent\Builder|LessonAttachments whereAnotherFilesPoorHearing($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LessonAttachments whereAudiosPoorHearing($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LessonAttachments whereVideosPoorHearing($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LessonAttachments whereVideosPoorHearingLink($value)
  */
 class LessonAttachments extends Model
 {

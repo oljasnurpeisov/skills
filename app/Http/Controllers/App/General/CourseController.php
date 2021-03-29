@@ -8,6 +8,7 @@ use App\Models\CourseRate;
 use App\Models\Lesson;
 use App\Models\Notification;
 use App\Models\Page;
+use App\Models\ProfessionalArea;
 use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCourse;
@@ -34,6 +35,7 @@ class CourseController extends Controller
         $skills = $request->skills;
         $term = $request->search ? $request->search : '';
         $authors = $request->authors;
+        $professional_areas = $request->professional_areas;
 
         // Сортировка по названию
         if ($term) {
@@ -44,7 +46,7 @@ class CourseController extends Controller
                     $s->orWhereHas('author_info', function ($k) use ($term) {
                         $arr = explode(' ', $term);
                         foreach ($arr as $key => $t) {
-                            if($key === 0){
+                            if ($key === 0) {
                                 $k->where('name', 'like', '%' . $t . '%');
                                 $k->orWhere('surname', 'like', '%' . $t . '%');
                             } else {
@@ -109,6 +111,14 @@ class CourseController extends Controller
                 $q->whereIn('paid_status', [1, 2]);
             }])->having('course_members_count', '>=', $members_count);
         }
+        // Получить проф.области
+        if ($professional_areas) {
+            $professional_areas = ProfessionalArea::whereIn('id', $professional_areas)->get();
+
+            $query->whereHas('professional_areas', function ($q) use ($request) {
+                $q->whereIn('professional_areas.id', $request->professional_areas);
+            });
+        }
         // Сортировка по профессиям
         if ($specialities) {
             if (count(array_filter($specialities)) > 0) {
@@ -146,7 +156,8 @@ class CourseController extends Controller
             "professions" => $professions ?? null,
             "skills" => $skills ?? null,
             "authors" => $authors ?? null,
-            "content" => $content
+            "content" => $content,
+            "professional_areas" => $professional_areas ?? null
         ]);
     }
 
@@ -215,6 +226,22 @@ class CourseController extends Controller
             $coursework = $item->lessons->where('type', '=', 3)->first();
             $final_test = $item->lessons->where('type', '=', 4)->first();
 
+            $untheme_lessons = Lesson::whereCourseId($item->id)
+                ->whereThemeId(null)
+                ->whereNotIn('type', [3, 4])
+                ->orderBy('index_number', 'asc')
+                ->get();
+
+            foreach ($themes as $theme) {
+                $theme->item_type = 'theme';
+            }
+
+            foreach ($untheme_lessons as $unthemes_lesson) {
+                $unthemes_lesson->item_type = 'lesson';
+            }
+
+            $course_data_items = $themes->merge($untheme_lessons)->sortBy('index_number')->values();
+
             return view("app.pages.general.courses.catalog.course_view", [
                 "item" => $item,
                 "themes" => $themes,
@@ -231,7 +258,8 @@ class CourseController extends Controller
                 "videos_count" => array_sum($videos_count),
                 "audios_count" => array_sum($audios_count),
                 "attachments_count" => array_sum($attachments_count),
-                'course_rates' => $course_rates
+                'course_rates' => $course_rates,
+                'course_data_items' => $course_data_items
             ]);
         } else {
             return redirect("/" . app()->getLocale() . "/course-catalog");
@@ -264,7 +292,7 @@ class CourseController extends Controller
             $professions_group = Professions::whereIn('id', $professions)->pluck('parent_id');
             $skills = Skill::whereHas('group_professions', function ($q) use ($professions_group) {
                 $q->whereIn('profession_skills.profession_id', $professions_group);
-            })->paginate(50, ['*'], 'page', $page);
+            })->where('name_' . $lang, 'like', '%' . $skill_name . '%')->paginate(50, ['*'], 'page', $page);
 
             return $skills;
         } else {
@@ -346,6 +374,65 @@ class CourseController extends Controller
         $unreadNotifications = Auth::user()->notifications->where('is_read', '=', false);
 
         return $unreadNotifications->count();
+    }
+
+    public function getProfessionalAreaByName(Request $request, $lang)
+    {
+        $professional_area_name = $request->name ?? '';
+        $page = $request->page ?? 1;
+
+        $professions = ProfessionalArea::where('name_' . $lang, 'like', '%' . $professional_area_name . '%')
+            ->orderBy('name_' . $lang, 'asc')
+            ->paginate(50, ['*'], 'page', $page);
+
+        return $professions;
+    }
+
+    public function getProfessionsByProfessionalArea($lang, Request $request)
+    {
+        $professional_area_id = $request->professional_area_id;
+        $page = $request->page ?? 1;
+
+        $professions = Professions::whereHas('professional_areas', function ($q) use ($professional_area_id) {
+            $q->where('professional_areas.id', '=', $professional_area_id);
+        })->paginate(50, ['*'], 'page', $page);
+
+        return $professions;
+    }
+
+    public function getSkillsByProfession($lang, Request $request)
+    {
+        $profession = $request->profession_id;
+        $page = $request->page ?? 1;
+
+        $professions_group = Professions::whereIn('id', [$profession])->pluck('parent_id');
+        $skills = Skill::whereHas('group_professions', function ($q) use ($professions_group) {
+            $q->whereIn('profession_skills.profession_id', $professions_group);
+        })->paginate(50, ['*'], 'page', $page);
+
+        return $skills;
+    }
+
+    public function getProfessionsByData(Request $request, $lang)
+    {
+        $professional_areas = $request->professional_areas;
+        $profession_name = $request->name ?? '';
+        $page = $request->page ?? 1;
+
+        if ($professional_areas != []) {
+            $page = $request->page ?? 1;
+
+            $professions = Professions::whereHas('professional_areas', function ($q) use ($professional_areas) {
+                $q->whereIn('professional_areas.id', $professional_areas);
+            })->where('name_' . $lang, 'like', '%' . $profession_name . '%')->paginate(50, ['*'], 'page', $page);
+
+        } else {
+            $professions = Professions::where('name_' . $lang, 'like', '%' . $profession_name . '%')
+                ->orderBy('name_' . $lang, 'asc')
+                ->paginate(50, ['*'], 'page', $page);
+        }
+
+        return $professions;
     }
 
 }

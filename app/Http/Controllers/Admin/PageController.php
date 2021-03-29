@@ -4,13 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Page;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 
 class PageController extends Controller
 {
     public function main()
     {
-
         $item = Page::wherePageAlias('index')->first();
 
         return view('admin.v2.pages.static_pages.main', [
@@ -52,7 +50,6 @@ class PageController extends Controller
 
     public function forAuthors()
     {
-
         $item = Page::wherePageAlias('for_authors')->first();
 
         return view('admin.v2.pages.static_pages.for_authors', [
@@ -62,7 +59,6 @@ class PageController extends Controller
 
     public function forAuthorsUpdate(Request $request)
     {
-
         $languages = ['ru', 'kk', 'en'];
         $item = Page::wherePageAlias('for_authors')->first();
 
@@ -86,7 +82,6 @@ class PageController extends Controller
                     );
                 }
             }
-
 
             foreach ($request['advantages_name_' . $language] as $key => $advantage) {
                 if (isset($request['advantages_name_' . $language][$key])) {

@@ -417,6 +417,19 @@ class LessonController extends Controller
                 ->where('type', '=', 4)
                 ->first();
             if ($finalTest != null && $finalTest->id != $lesson->id) {
+                $courseLessons = $course->lessons()
+                    ->whereNotIn('type', [3, 4])
+                    ->pluck('id')
+                    ->toArray();
+                $finishedLessons = $user->student_lesson()
+                    ->where('course_id', '=', $course->id)
+                    ->where('is_finished', '=', true)
+                    ->pluck('lesson_id')
+                    ->toArray();
+                // Проверить завершенность уроков
+                if (array_diff($courseLessons, $finishedLessons) != []) {
+                    return redirect('/' . $lang . '/course-catalog/course/' . $course->id);
+                }
                 // Установка доступа к следующему уроку
                 $this->syncUserLessons($finalTest->id);
                 // Проверить окончание курса
