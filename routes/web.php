@@ -142,6 +142,10 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/dialogs/dialog-iframe-{id}', 'DialogController@viewDialog');
                 Route::post('/dialog-{dialog}/message/create', 'DialogController@save');
             });
+            // Конфиги php
+            Route::group(['middleware' => 'check.permission:admin.tech_support'], static function () {
+                Route::get('/phpinfo', 'PageController@phpInfo');
+            });
             // Отчеты
             Route::group(['middleware' => 'check.permission:admin.reports'], static function () {
                 // Отчеты по авторам

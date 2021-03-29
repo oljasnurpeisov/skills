@@ -109,6 +109,17 @@
                     </ul>
                 </li>
             @endhasPermission
+            <li class="dropdown">
+                <a href="javascript:;" title="{{ __('admin.pages.help.title') }}">
+                    <i class="fa fa-question"></i> {{ __('admin.pages.help.title') }}
+                </a>
+                <ul>
+                    <li>
+                        <a href="/assets/admin/video/instruction.mp4"
+                           target="_blank">{{ __('admin.pages.help.video') }}</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </aside>

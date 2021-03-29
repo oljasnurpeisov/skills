@@ -406,4 +406,9 @@ class PageController extends Controller
 
         return back()->with('status', __('admin.notifications.update_success'));
     }
+
+    public function phpInfo()
+    {
+        phpinfo();
+    }
 }

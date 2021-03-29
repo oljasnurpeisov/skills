@@ -37,9 +37,12 @@ class CourseController extends Controller
 
     public function storeCourse(Request $request)
     {
+
+
         if ($request->is_paid and $request->cost > 0) {
             if ((Auth::user()->payment_info->merchant_login != null) and (Auth::user()->payment_info->merchant_password != null)) {
 
+//                return $request->professions[0][0];
                 $item = new Course;
                 $item->name = $request->name;
                 $item->author_id = Auth::user()->id;
@@ -879,6 +882,7 @@ class CourseController extends Controller
 
     public function reportingCourse(Request $request)
     {
+
         $from = $request->date_from;
         $to = $request->date_to;
         $all_time = $request->all_time;

@@ -256,5 +256,4 @@ class UserController extends Controller
 
         return redirect('/' . app()->getLocale() . '/admin/profile');
     }
-
 }

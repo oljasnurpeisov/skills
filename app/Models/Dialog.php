@@ -38,26 +38,39 @@ class Dialog extends Model
 
     public function opponent()
     {
-        $tech_support_user = User::whereHas('roles', function ($q) {
-            $q->where('slug', '=', 'tech_support');
-        })->first();
         $members = $this->members;
         if (Auth::user()->can('admin.tech_support')) {
+            $tech_support_user = User::whereHas('roles', function ($q) {
+                $q->where('slug', '=', 'tech_support');
+            })->first();
             $members = $members->where('id', '!=', $tech_support_user->id);
         } else {
             $members = $members->where('id', '!=', Auth::user()->id);
         }
 
         $member = $members->first();
-
-        if ($member->roles()->first()->slug == 'author') {
-            $name = $member->author_info->name;
-            $avatar = $member->author_info->getAvatar();
-            $slug = '';
-        }else if($member->roles()->first()->slug == 'student'){
-            $name = $member->student_info->name ?? __('default.pages.profile.student_title');
-            $avatar = $member->student_info->getAvatar();
-            $slug = '';
+        $roles = $member->roles();
+        if ($roles != null) {
+            $memberRole = $roles->first();
+            if ($memberRole != null) {
+                if ($memberRole->slug == 'author') {
+                    $name = $member->author_info->name;
+                    $avatar = $member->author_info->getAvatar();
+                    $slug = '';
+                } else if ($memberRole->slug == 'student') {
+                    $name = $member->student_info->name ?? __('default.pages.profile.student_title');
+                    $avatar = $member->student_info->getAvatar();
+                    $slug = '';
+                } else {
+                    $name = $member->name;
+                    $avatar = '';
+                    $slug = 'tech_support';
+                }
+            } else {
+                $name = $member->name;
+                $avatar = '';
+                $slug = 'tech_support';
+            }
         } else {
             $name = $member->name;
             $avatar = '';

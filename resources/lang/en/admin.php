@@ -163,7 +163,7 @@ return [
             'teaser_placeholder' => 'Введите аннотацию',
             'calculator_teaser' => 'Краткое описание',
 
-            'for_authors' => 'Преподаватель',
+            'for_authors' => 'Автор',
             'btn_title' => 'Заголовок кнопки',
             'advantages' => 'Преимущества',
             'title_placeholder' => 'Введите заголовок',
@@ -225,7 +225,12 @@ return [
             'opponent_name' => 'ФИО',
             'last_message' => 'Последнее сообщение',
             'name_search' => 'Поиск по ФИО'
-        ]
+        ],
+
+        'help' => [
+            'title' => 'Помощь',
+            'video' => 'Видеоинструкция',
+        ],
     ],
     'labels' => [
         'copyright' => '',
