@@ -414,6 +414,6 @@ class PageController extends Controller
 
     public function phpInfo()
     {
-        phpinfo();
+//        phpinfo();
     }
 }
