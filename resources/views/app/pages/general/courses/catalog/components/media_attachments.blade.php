@@ -329,7 +329,7 @@
                         <div class="tags">
                             <ul>
                                 @foreach($item->professional_areas->groupBy('id') as $key => $profession_area)
-                                    <li><a href=""
+                                    <li><a href="/{{$lang}}/course-catalog?professional_areas[]={{$key}}"
                                            title="{{$profession_area[0]->getAttribute('name_'.$lang) ?? $profession_area[0]->getAttribute('name_ru')}}">{{$profession_area[0]->getAttribute('name_'.$lang) ?? $profession_area[0]->getAttribute('name_ru')}}</a>
                                     </li>
                                 @endforeach
@@ -351,7 +351,7 @@
                         <div class="tags">
                             <ul>
                                 @foreach($item->professions->groupBy('id') as $key => $profession)
-                                    <li><a href="/{{$lang}}/course-catalog?professions[]={{$key}}"
+                                    <li><a href="/{{$lang}}/course-catalog?specialities[]={{$key}}"
                                            title="{{$profession[0]->getAttribute('name_'.$lang) ?? $profession[0]->getAttribute('name_ru')}}">{{$profession[0]->getAttribute('name_'.$lang) ?? $profession[0]->getAttribute('name_ru')}}</a>
                                     </li>
                                 @endforeach
