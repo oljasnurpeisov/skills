@@ -911,14 +911,14 @@ class ReportController extends Controller
                 $file_kk = public_path($certificate->pdf_kk);
                 if ($certificate->pdf_kk == null) {
                     if (file_exists($file_ru) && is_file($file_ru)) {
-                        $zip->addFile($file_ru, str_replace(' ', '_', $certificate->students->student_info->name) . '-' . date('Y_m_d', strtotime($certificate->created_at)) . '-' . $certificate->course_id);
+                        $zip->addFile($file_ru, str_replace(' ', '_', $certificate->students->student_info->name) . '-' . date('Y_m_d', strtotime($certificate->created_at)) . '-' . $certificate->course_id . '.pdf');
                     }
                 } else {
                     if (file_exists($file_ru) && is_file($file_ru)) {
-                        $zip->addFile($file_ru, str_replace(' ', '_', $certificate->students->student_info->name) . '-' . date('Y_m_d', strtotime($certificate->created_at)) . '-' . $certificate->course_id . '-ru');
+                        $zip->addFile($file_ru, str_replace(' ', '_', $certificate->students->student_info->name) . '-' . date('Y_m_d', strtotime($certificate->created_at)) . '-' . $certificate->course_id . '-ru.pdf');
                     }
                     if (file_exists($file_kk) && is_file($file_kk)) {
-                        $zip->addFile($file_kk, str_replace(' ', '_', $certificate->students->student_info->name) . '-' . date('Y_m_d', strtotime($certificate->created_at)) . '-' . $certificate->course_id . '-kk');
+                        $zip->addFile($file_kk, str_replace(' ', '_', $certificate->students->student_info->name) . '-' . date('Y_m_d', strtotime($certificate->created_at)) . '-' . $certificate->course_id . '-kk.pdf');
                     }
                 }
 
