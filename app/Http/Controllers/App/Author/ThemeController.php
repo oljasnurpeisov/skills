@@ -32,10 +32,8 @@ class ThemeController extends Controller
             ->sortBy('index_number')
             ->last();
 
-        $last_id = $themes->index_number;
-
-        if ($last_id) {
-            $index = $last_id + 1;
+        if ($themes) {
+            $index = $themes->index_number + 1;
         } else {
             $index = 0;
         }
