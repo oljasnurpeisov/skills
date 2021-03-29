@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 use ZipArchive;
@@ -899,12 +900,28 @@ class ReportController extends Controller
 
         $fileName = 'Отчет по сертификатам.zip';
 
+        File::ensureDirectoryExists(public_path('/users/user_' . Auth::user()->id));
+
         if ($zip->open(public_path('/users/user_' . Auth::user()->id . '/' . $fileName), ZipArchive::CREATE) === TRUE) {
             $certificates = Session::get('certificates_export');
             $files = [];
 
             foreach ($certificates as $certificate) {
-                $zip->addFile(public_path($certificate->pdf_ru), str_replace(' ', '_', $certificate->students->student_info->name) . '-' . date('Y_m_d', strtotime($certificate->created_at)) . '-' . $certificate->course_id);
+                $file_ru = public_path($certificate->pdf_ru);
+                $file_kk = public_path($certificate->pdf_kk);
+                if ($certificate->pdf_kk == null) {
+                    if (file_exists($file_ru) && is_file($file_ru)) {
+                        $zip->addFile($file_ru, str_replace(' ', '_', $certificate->students->student_info->name) . '-' . date('Y_m_d', strtotime($certificate->created_at)) . '-' . $certificate->course_id);
+                    }
+                } else {
+                    if (file_exists($file_ru) && is_file($file_ru)) {
+                        $zip->addFile($file_ru, str_replace(' ', '_', $certificate->students->student_info->name) . '-' . date('Y_m_d', strtotime($certificate->created_at)) . '-' . $certificate->course_id . '-ru');
+                    }
+                    if (file_exists($file_kk) && is_file($file_kk)) {
+                        $zip->addFile($file_kk, str_replace(' ', '_', $certificate->students->student_info->name) . '-' . date('Y_m_d', strtotime($certificate->created_at)) . '-' . $certificate->course_id . '-kk');
+                    }
+                }
+
             }
 
             $zip->close();
