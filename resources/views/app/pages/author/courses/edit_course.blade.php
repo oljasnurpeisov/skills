@@ -61,7 +61,7 @@
                                     <div class="input-addon">
                                         <select name="professions" id="professionsSelect"
                                                 placeholder="{{__('default.pages.courses.choose_profession_title')}}"
-                                                data-method="getProfessionsByProfessionalArea"
+                                                data-method="getProfessionsByData"
                                                 class="professions-select" required>
                                             <option value="{{$item->professions[0]->id}}"
                                                     selected="selected">{{$item->professions[0]->getAttribute('name_'.$lang) ?? $item->professions[0]->group_professions[0]->getAttribute('name_ru')}}</option>
@@ -76,7 +76,7 @@
                                            id="skillsLabel">{{__('default.pages.courses.skills_title')}}</label>
                                     <select name="skills[]" id="skillsSelect"
                                             placeholder="{{__('default.pages.courses.choose_skills_title')}}"
-                                            data-method="getSkillsByProfession" data-maxitems="7"
+                                            data-method="getSkillsByData" data-maxitems="7"
                                             class="skills-select" multiple required>
                                         @foreach($current_skills as $skill)
                                             <option value="{{$skill->id}}"
