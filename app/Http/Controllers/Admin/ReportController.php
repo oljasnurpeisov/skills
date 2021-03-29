@@ -317,7 +317,7 @@ class ReportController extends Controller
             ->endOfDay()
             ->toDateTimeString();
 
-        $query = (new Course)->newQuery()
+        $query = Course::orderBy('created_at', 'DESC')
             ->with(['rate' => function ($q) use ($date_from, $date_to) {
                 $q->whereBetween('course_rate.created_at', [$date_from, $date_to]);
                 // Записавшиеся
