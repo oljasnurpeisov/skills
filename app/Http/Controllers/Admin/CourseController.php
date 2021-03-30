@@ -158,11 +158,16 @@ class CourseController extends Controller
                         'message_text' => $request->rejectMessage,
                     ];
 
-                    Mail::send('app.pages.page.emails.course_reject', ['data' => $data], function ($message) use ($request, $item, $user) {
-                        $message->from(env("MAIL_USERNAME"), env('APP_NAME'));
-                        $message->to($user->email, 'Receiver')->subject(__('notifications.publish_course_title'));
-                    });
+                    try {
 
+                        Mail::send('app.pages.page.emails.course_reject', ['data' => $data], function ($message) use ($request, $item, $user) {
+                            $message->from(env("MAIL_USERNAME"), env('APP_NAME'));
+                            $message->to($user->email, 'Receiver')->subject(__('notifications.publish_course_title'));
+                        });
+
+                    } catch (\Exception $e) {
+
+                    }
 
                     return redirect()->back()->with('status', trans('admin.pages.courses.course_reject', ['course_name' => $item->name, 'rejectMessage' => $request->rejectMessage]));
 
@@ -188,10 +193,16 @@ class CourseController extends Controller
                 'lang' => $lang,
             ];
 
-            Mail::send('app.pages.page.emails.course_confirm', ['data' => $data], function ($message) use ($request, $item, $user) {
-                $message->from(env("MAIL_USERNAME"), env('APP_NAME'));
-                $message->to($user->email, 'Receiver')->subject(__('notifications.publish_course_title'));
-            });
+            try {
+
+                Mail::send('app.pages.page.emails.course_confirm', ['data' => $data], function ($message) use ($request, $item, $user) {
+                    $message->from(env("MAIL_USERNAME"), env('APP_NAME'));
+                    $message->to($user->email, 'Receiver')->subject(__('notifications.publish_course_title'));
+                });
+
+            } catch (\Exception $e) {
+
+            }
 
             return redirect()->back()->with('status', trans('admin.pages.courses.course_published', ['course_name' => $item->name]));
         }
@@ -240,10 +251,17 @@ class CourseController extends Controller
                     'lang' => $lang
                 ];
 
-                Mail::send('app.pages.page.emails.quota_confirm', ['data' => $data], function ($message) use ($item) {
-                    $message->from(env("MAIL_USERNAME"), env('APP_NAME'));
-                    $message->to($item->user()->first()->email, 'Receiver')->subject(__('notifications.publish_course_title'));
-                });
+                try {
+
+                    Mail::send('app.pages.page.emails.quota_confirm', ['data' => $data], function ($message) use ($item) {
+                        $message->from(env("MAIL_USERNAME"), env('APP_NAME'));
+                        $message->to($item->user()->first()->email, 'Receiver')->subject(__('notifications.publish_course_title'));
+                    });
+
+                } catch (\Exception $e) {
+
+                }
+
             }
 
             $logger = new Log;
