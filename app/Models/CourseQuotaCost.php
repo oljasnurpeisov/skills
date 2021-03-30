@@ -28,8 +28,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class CourseQuotaCost extends Model
 {
-    // Стоимость 1 часа
-    const hour_cost = 2001.05;
     // Количество человек в группе
     const group_members_count = 13;
 
