@@ -85,9 +85,9 @@ class UserController extends Controller
                 ]
             ]);
         } catch (BadResponseException $e) {
-            return redirect()->back()->with('failed', __('auth.failed'));
+            return redirect()->back()->withInput()->with('failed', __('auth.failed'));
         } catch (GuzzleException $b) {
-            return redirect()->back()->with('failed', __('auth.failed'));
+            return redirect()->back()->withInput()->with('failed', __('auth.failed'));
         }
 
         $authData = json_decode($response->getBody(), true);

@@ -87,6 +87,12 @@
                     <i class="icon-password"> </i>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="checkbox small"><input type="checkbox" name="agree" id="agreeCheckbox"
+                                                     data-enable="#studentLoginBtn" value="on"
+                                                     {{old('agree') == 'on' ? 'checked' : ''}} required> <span
+                        style="font-family: sans-serif">{!! __('default.pages.auth.private_policy_agree_title') !!}</span></label>
+            </div>
             @if(Session::get('failed'))
 
                 <div class="alert alert-danger">
@@ -96,7 +102,8 @@
 
             <div class="text-center">
                 <div class="form-group">
-                    <button type="submit" class="btn">{{__('default.pages.auth.auth_title')}}</button>
+                    <button type="submit" class="btn"
+                            id="studentLoginBtn" {{old('agree') != 'on' ? 'disabled' : ''}}>{{__('default.pages.auth.auth_title')}}</button>
                 </div>
                 <div class="hint">
                     {{__('default.pages.auth.not_registered_title')}}<br/>
@@ -151,7 +158,8 @@
                 <select name="type_of_ownership" class="selectize-regular no-search" data-placeholder=" ">
                     @php($types_of_ownership = \App\Models\Type_of_ownership::all())
                     @foreach($types_of_ownership as $type)
-                        <option value="{{ $type->id }}">{{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru')}}</option>
+                        <option
+                            value="{{ $type->id }}">{{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru')}}</option>
                     @endforeach
                 </select>
             </div>
@@ -172,7 +180,8 @@
                     <div class="dropzone-default__info">PNG, JPG • {{__('default.pages.courses.max_file_title')}}1MB
                     </div>
                     <div class="previews-container"></div>
-                    <div class="logo-picture__link avatar-pick dropzone-default__link">{{__('default.pages.courses.choose_photo')}}</div>
+                    <div
+                        class="logo-picture__link avatar-pick dropzone-default__link">{{__('default.pages.courses.choose_photo')}}</div>
                 </div>
                 <div class="avatar-preview-template" style="display:none;">
                     <div class="dz-preview dz-file-preview">
@@ -265,5 +274,71 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div id="privacyPolicy" style="display: none;">
+        <h2 class="title-primary">{{__('default.pages.auth.private_policy_title')}}</h2>
+        <div class="plain-text">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Commodo, imperdiet risus elit aliquet donec
+                quisque viverra diam commodo. Amet ac egestas nullam id proin iaculis ullamcorper ut. Diam odio donec
+                auctor aliquet vitae. Sit egestas tempor, integer quis viverra risus facilisi varius vulputate. Sed at
+                est volutpat, leo, elementum sit est, ut. Facilisis vel leo enim viverra. Elementum nisl volutpat
+                facilisis augue ultricies dui aliquet.</p>
+            <p>In vel elementum pharetra est facilisi tellus nisl. Et, malesuada risus velit, netus porttitor non,
+                aliquet nibh arcu. Vestibulum nibh consectetur amet elit vulputate sem ipsum at vulputate. Ut faucibus
+                felis enim sodales eget donec arcu nunc. Odio ultrices dolor phasellus cum in. Feugiat amet, tristique
+                aenean eget nisi, arcu placerat. Bibendum neque tellus faucibus venenatis sagittis, semper magna
+                adipiscing quisque. Congue in nunc, risus eget quis non dui, dui. Convallis auctor adipiscing vitae,
+                amet a pretium sed. Platea ac blandit libero vel pulvinar. Venenatis sit sit nunc odio.</p>
+            <p>Ullamcorper orci sit tempus lacus, augue interdum. Cras magna est, pharetra ullamcorper etiam sed
+                fringilla ac. Nibh id nec consectetur maecenas felis tincidunt porta morbi. Tincidunt duis diam massa
+                blandit. Turpis orci iaculis duis volutpat proin nunc elit. Vel donec massa dis in gravida amet. Quam
+                praesent quis eu placerat tincidunt. Purus egestas cursus gravida congue. Nulla volutpat sodales at
+                ultrices nulla amet velit cras. Tellus tellus, aliquam nisl, ullamcorper leo. Venenatis cursus id cursus
+                tempor sem nec. Fermentum mattis sollicitudin eget viverra lacus fusce pharetra nunc. Nisl amet vitae
+                interdum tellus tortor purus at. Aliquam ac mattis purus nibh eros diam elit. Faucibus aliquam facilisis
+                adipiscing ac est gravida id gravida.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Commodo, imperdiet risus elit aliquet donec
+                quisque viverra diam commodo. Amet ac egestas nullam id proin iaculis ullamcorper ut. Diam odio donec
+                auctor aliquet vitae. Sit egestas tempor, integer quis viverra risus facilisi varius vulputate. Sed at
+                est volutpat, leo, elementum sit est, ut. Facilisis vel leo enim viverra. Elementum nisl volutpat
+                facilisis augue ultricies dui aliquet.</p>
+            <p>In vel elementum pharetra est facilisi tellus nisl. Et, malesuada risus velit, netus porttitor non,
+                aliquet nibh arcu. Vestibulum nibh consectetur amet elit vulputate sem ipsum at vulputate. Ut faucibus
+                felis enim sodales eget donec arcu nunc. Odio ultrices dolor phasellus cum in. Feugiat amet, tristique
+                aenean eget nisi, arcu placerat. Bibendum neque tellus faucibus venenatis sagittis, semper magna
+                adipiscing quisque. Congue in nunc, risus eget quis non dui, dui. Convallis auctor adipiscing vitae,
+                amet a pretium sed. Platea ac blandit libero vel pulvinar. Venenatis sit sit nunc odio.</p>
+            <p>Ullamcorper orci sit tempus lacus, augue interdum. Cras magna est, pharetra ullamcorper etiam sed
+                fringilla ac. Nibh id nec consectetur maecenas felis tincidunt porta morbi. Tincidunt duis diam massa
+                blandit. Turpis orci iaculis duis volutpat proin nunc elit. Vel donec massa dis in gravida amet. Quam
+                praesent quis eu placerat tincidunt. Purus egestas cursus gravida congue. Nulla volutpat sodales at
+                ultrices nulla amet velit cras. Tellus tellus, aliquam nisl, ullamcorper leo. Venenatis cursus id cursus
+                tempor sem nec. Fermentum mattis sollicitudin eget viverra lacus fusce pharetra nunc. Nisl amet vitae
+                interdum tellus tortor purus at. Aliquam ac mattis purus nibh eros diam elit. Faucibus aliquam facilisis
+                adipiscing ac est gravida id gravida.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Commodo,
+                imperdiet risus elit aliquet donec quisque viverra diam commodo. Amet ac egestas nullam id proin iaculis
+                ullamcorper ut. Diam odio donec auctor aliquet vitae. Sit egestas tempor, integer quis viverra risus
+                facilisi varius vulputate. Sed at est volutpat, leo, elementum sit est, ut. Facilisis vel leo enim
+                viverra. Elementum nisl volutpat facilisis augue ultricies dui aliquet.</p>
+            <p>In vel elementum pharetra est facilisi tellus nisl. Et, malesuada risus velit, netus porttitor non,
+                aliquet nibh arcu. Vestibulum nibh consectetur amet elit vulputate sem ipsum at vulputate. Ut faucibus
+                felis enim sodales eget donec arcu nunc. Odio ultrices dolor phasellus cum in. Feugiat amet, tristique
+                aenean eget nisi, arcu placerat. Bibendum neque tellus faucibus venenatis sagittis, semper magna
+                adipiscing quisque. Congue in nunc, risus eget quis non dui, dui. Convallis auctor adipiscing vitae,
+                amet a pretium sed. Platea ac blandit libero vel pulvinar. Venenatis sit sit nunc odio.</p>
+            <p>Ullamcorper orci sit tempus lacus, augue interdum. Cras magna est, pharetra ullamcorper etiam sed
+                fringilla ac. Nibh id nec consectetur maecenas felis tincidunt porta morbi. Tincidunt duis diam massa
+                blandit. Turpis orci iaculis duis volutpat proin nunc elit. Vel donec massa dis in gravida amet. Quam
+                praesent quis eu placerat tincidunt. Purus egestas cursus gravida congue. Nulla volutpat sodales at
+                ultrices nulla amet velit cras. Tellus tellus, aliquam nisl, ullamcorper leo. Venenatis cursus id cursus
+                tempor sem nec. Fermentum mattis sollicitudin eget viverra lacus fusce pharetra nunc. Nisl amet vitae
+                interdum tellus tortor purus at. Aliquam ac mattis purus nibh eros diam elit. Faucibus aliquam facilisis
+                adipiscing ac est gravida id gravida.</p>
+        </div>
+        <div class="form-group">
+            <a href="#studentAuth" data-fancybox title="{{__('default.pages.auth.agree_title')}}" class="btn"
+               id="privacyPolicyBtn"
+               onclick="document.querySelector('#agreeCheckbox').checked = true;document.querySelector('#agreeCheckbox').dispatchEvent(new Event('change'));">{{__('default.pages.auth.agree_title')}}</a>
+        </div>
     </div>
 @endguest

@@ -466,6 +466,10 @@ return [
             'is_registered_title' => 'Уже зарегистрированы?',
             'authorization_title' => 'Авторизация',
             'recovery_pass_success' => 'Новый пароль был отправлен на почту',
+            'private_policy_title' => 'Политика конфиденциальности',
+            'agree_title' => 'Я ознакомлен',
+            'private_policy_agree_title' => 'Я ознакомлен с <a
+                            href="#privacyPolicy" title="политика конфиденциальности" data-fancybox>политикой конфиденциальности</a>',
 
             'create_resume_title' => 'У вас нет созданного резюме',
             'create_resume_description' => 'Предлагаем создать для определения соответствия/несоответствия имеющихся у Вас навыков с требованиями
