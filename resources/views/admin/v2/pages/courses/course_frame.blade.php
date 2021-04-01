@@ -293,7 +293,7 @@
 
 @section('scripts')
     <!--Only this page's scripts-->
-
+    <script src="/assets/js/visually-impaired-tools.js"></script>
     <!---->
 @endsection
 

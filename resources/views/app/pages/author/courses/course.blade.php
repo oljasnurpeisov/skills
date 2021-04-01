@@ -2,8 +2,6 @@
 
 @section('content')
     <main class="main">
-
-
         <section class="plain">
             <div class="container">
                 <ul class="breadcrumbs">
@@ -62,17 +60,17 @@
                                     @case(2)
                                     <div class="article__info">
                                     <span>{{__('default.pages.courses.lessons_title_1')}}: <span
-                                                id="lessonsCount">0</span></span>
+                                            id="lessonsCount">0</span></span>
                                         <span>{{__('default.pages.courses.total_time_lessons')}}: <span
-                                                    id="courseDuration">0:00</span> {{__('default.pages.courses.hours_title')}}</span>
+                                                id="courseDuration">0:00</span> {{__('default.pages.courses.hours_title')}}</span>
                                     </div>
                                     @break
                                     @default
                                     <div class="article__info">
                                     <span>{{__('default.pages.courses.lessons_title_1')}}: <span
-                                                id="lessonsCount">{{$item->lessons->whereIn('type', [1,2])->count()}}</span></span>
+                                            id="lessonsCount">{{$item->lessons->whereIn('type', [1,2])->count()}}</span></span>
                                         <span>{{__('default.pages.courses.total_time_lessons')}}: <span
-                                                    id="courseDuration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->whereIn('type', [1,2])->sum('duration'))}}</span> {{__('default.pages.courses.hours_title')}}</span>
+                                                id="courseDuration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->whereIn('type', [1,2])->sum('duration'))}}</span> {{__('default.pages.courses.hours_title')}}</span>
                                     </div>
                                 @endswitch
 
@@ -89,28 +87,32 @@
                                                     <div class="topic spoiler">
                                                         <div class="topic__header">
                                                             <div class="title">{{$course_item->name}}</div>
-                                                            <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->where('theme_id', '=', $course_item->id)->sum('duration'))}}</div>
+                                                            <div
+                                                                class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->where('theme_id', '=', $course_item->id)->sum('duration'))}}</div>
                                                         </div>
                                                         <div class="topic__body">
                                                             @foreach($course_item->lessons->sortBy('index_number') as $lesson)
                                                                 <div class="lesson">
                                                                     @if($lesson->type != 1)
                                                                         <div class="title"><a
-                                                                                    href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$lesson->id}}"
-                                                                                    title="{{$lesson->name}}">{{$lesson->name}}
-                                                                                <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}
+                                                                                href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$lesson->id}}"
+                                                                                title="{{$lesson->name}}">{{$lesson->name}}
+                                                                                <div
+                                                                                    class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}
                                                                                     {{$lesson->end_lesson_type == 0 ? ' ('.__('default.pages.lessons.test_title').')' : ' ('.__('default.pages.lessons.homework_title').')'}}</div>
                                                                             </a>
                                                                         </div>
                                                                     @else
                                                                         <div class="title"><a
-                                                                                    href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$lesson->id}}"
-                                                                                    title="{{$lesson->name}}">{{$lesson->name}}
-                                                                                <div class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</div>
+                                                                                href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$lesson->id}}"
+                                                                                title="{{$lesson->name}}">{{$lesson->name}}
+                                                                                <div
+                                                                                    class="type">{{$lesson->lesson_type->getAttribute('name_'.$lang) ?? $lesson->lesson_type->getAttribute('name_ru')}}</div>
                                                                             </a>
                                                                         </div>
                                                                     @endif
-                                                                    <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                                    <div
+                                                                        class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
                                                                 </div>
                                                             @endforeach
                                                         </div>
@@ -120,21 +122,24 @@
                                                         <div class="lesson">
                                                             @if($course_item->type != 1)
                                                                 <div class="title"><a
-                                                                            href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$course_item->id}}"
-                                                                            title="{{$course_item->name}}">{{$course_item->name}}
-                                                                        <div class="type">{{$course_item->lesson_type->getAttribute('name_'.$lang) ?? $course_item->lesson_type->getAttribute('name_ru')}}
+                                                                        href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$course_item->id}}"
+                                                                        title="{{$course_item->name}}">{{$course_item->name}}
+                                                                        <div
+                                                                            class="type">{{$course_item->lesson_type->getAttribute('name_'.$lang) ?? $course_item->lesson_type->getAttribute('name_ru')}}
                                                                             {{$course_item->end_lesson_type == 0 ? ' ('.__('default.pages.lessons.test_title').')' : ' ('.__('default.pages.lessons.homework_title').')'}}</div>
                                                                     </a>
                                                                 </div>
                                                             @else
                                                                 <div class="title"><a
-                                                                            href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$course_item->id}}"
-                                                                            title="{{$course_item->name}}">{{$course_item->name}}
-                                                                        <div class="type">{{$course_item->lesson_type->getAttribute('name_'.$lang) ?? $course_item->lesson_type->getAttribute('name_ru')}}</div>
+                                                                        href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$course_item->id}}"
+                                                                        title="{{$course_item->name}}">{{$course_item->name}}
+                                                                        <div
+                                                                            class="type">{{$course_item->lesson_type->getAttribute('name_'.$lang) ?? $course_item->lesson_type->getAttribute('name_ru')}}</div>
                                                                     </a>
                                                                 </div>
                                                             @endif
-                                                            <div class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($course_item->duration)}}</div>
+                                                            <div
+                                                                class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($course_item->duration)}}</div>
                                                         </div>
                                                     </div>
                                                 @endif
@@ -147,7 +152,7 @@
                                         <div class="topic">
                                             <div class="topic__header">
                                                 <div class="title"><a
-                                                            href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
+                                                        href="/{{$lang}}/my-courses/course/{{$item->id}}/view-lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
                                                 </div>
                                                 <div class="duration"></div>
                                                 @switch($item->status)
@@ -239,7 +244,8 @@
 
                                 <div id="removeTopicModal" style="display:none;">
                                     <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
-                                    <div class="plain-text gray">{{__('default.pages.courses.confirm_theme_modal_desc')}}</div>
+                                    <div
+                                        class="plain-text gray">{{__('default.pages.courses.confirm_theme_modal_desc')}}</div>
                                     <div class="row row--multiline justify-center">
                                         <div class="col-auto">
                                             <a href="#" title="{{__('default.pages.courses.delete_title')}}"
@@ -256,7 +262,8 @@
 
                                 <div id="removeLessonModal" style="display:none;">
                                     <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
-                                    <div class="plain-text gray">{{__('default.pages.courses.confirm_lesson_modal_desc')}}</div>
+                                    <div
+                                        class="plain-text gray">{{__('default.pages.courses.confirm_lesson_modal_desc')}}</div>
                                     <div class="row row--multiline justify-center">
                                         <div class="col-auto">
                                             <a href="#" title="{{__('default.pages.courses.delete_title')}}"
@@ -273,12 +280,14 @@
 
                                 @if($item->courseWork() !== null)
                                     <div id="removeCourseWorkModal" style="display:none;">
-                                        <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$item->courseWork()->id}}/delete-lesson-form"
-                                              method="POST">
+                                        <form
+                                            action="/{{$lang}}/course-{{$item->id}}/lesson-{{$item->courseWork()->id}}/delete-lesson-form"
+                                            method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
-                                            <div class="plain-text gray">{{__('default.pages.courses.confirm_coursework_modal_desc')}}
+                                            <div
+                                                class="plain-text gray">{{__('default.pages.courses.confirm_coursework_modal_desc')}}
                                             </div>
                                             <div class="row row--multiline justify-center">
                                                 <div class="col-auto">
@@ -299,12 +308,14 @@
 
                                 @if($item->finalTest() !== null)
                                     <div id="removeFinalTestModal" style="display:none;">
-                                        <form action="/{{$lang}}/course-{{$item->id}}/lesson-{{$item->finalTest()->id}}/delete-lesson-form"
-                                              method="POST">
+                                        <form
+                                            action="/{{$lang}}/course-{{$item->id}}/lesson-{{$item->finalTest()->id}}/delete-lesson-form"
+                                            method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
-                                            <div class="plain-text gray">{{__('default.pages.courses.confirm_final_test_modal_desc')}}
+                                            <div
+                                                class="plain-text gray">{{__('default.pages.courses.confirm_final_test_modal_desc')}}
                                             </div>
                                             <div class="row row--multiline justify-center">
                                                 <div class="col-auto">
@@ -363,23 +374,29 @@
                                         </ul>
                                     </div>
                                     <div class="personal-card__right">
-                                        <div class="personal-card__name">{{ $item->user->author_info->name . ' ' . $item->user->author_info->surname  }}</div>
-                                        <div class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->author_info->specialization) ?? []) }}</div>
+                                        <div
+                                            class="personal-card__name">{{ $item->user->author_info->name . ' ' . $item->user->author_info->surname  }}</div>
+                                        <div
+                                            class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->author_info->specialization) ?? []) }}</div>
                                         <div class="plain-text">
                                             {!! $item->user->author_info->about !!}
                                         </div>
                                         <div class="personal-card__characteristics">
                                             <div>
-                                                <span class="blue">{{count($rates)}}</span> {{__('default.pages.profile.rates_count_title')}}
+                                                <span
+                                                    class="blue">{{count($rates)}}</span> {{__('default.pages.profile.rates_count_title')}}
                                             </div>
                                             <div>
-                                                <span class="blue">{{count($author_students)}}</span> {{__('default.pages.profile.course_members_count')}}
+                                                <span
+                                                    class="blue">{{count($author_students)}}</span> {{__('default.pages.profile.course_members_count')}}
                                             </div>
                                             <div>
-                                                <span class="blue">{{count($courses->where('status', '=', 3))}}</span> {{__('default.pages.profile.course_count')}}
+                                                <span
+                                                    class="blue">{{count($courses->where('status', '=', 3))}}</span> {{__('default.pages.profile.course_count')}}
                                             </div>
                                             <div>
-                                                <span class="blue">{{count($author_students_finished)}}</span> {{__('default.pages.profile.issued_certificates')}}
+                                                <span
+                                                    class="blue">{{count($author_students_finished)}}</span> {{__('default.pages.profile.issued_certificates')}}
                                             </div>
                                         </div>
                                         <div class="rating">
@@ -551,6 +568,7 @@
 
 @section('scripts')
     <!--Only this page's scripts-->
+    <script src="/assets/js/visually-impaired-tools.js"></script>
     <script src="/assets/js/course-edit.js"></script>
     <script>
         $.ajaxSetup({
