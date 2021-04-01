@@ -424,11 +424,14 @@ class CourseController extends Controller
 
             $professions = Professions::whereHas('professional_areas', function ($q) use ($professional_areas) {
                 $q->whereIn('professional_areas.id', $professional_areas);
-            })->where('name_' . $lang, 'like', '%' . $profession_name . '%')->paginate(50, ['*'], 'page', $page);
+            })->where('name_' . $lang, 'like', '%' . $profession_name . '%')
+                ->where('parent_id', '!=', null)
+                ->paginate(50, ['*'], 'page', $page);
 
         } else {
             $professions = Professions::where('name_' . $lang, 'like', '%' . $profession_name . '%')
                 ->orderBy('name_' . $lang, 'asc')
+                ->where('parent_id', '!=', null)
                 ->paginate(50, ['*'], 'page', $page);
         }
 
