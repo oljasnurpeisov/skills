@@ -4,126 +4,126 @@
             <div class="poor-vision">
                 <div><label class="checkbox"><input type="checkbox" data-toggle="poorVision"
                                                     name="poorVision"><span><span
-                                    class="special">{{__('default.pages.lessons.poor_vision_title')}}</span></span></label>
+                                class="special">{{__('default.pages.lessons.poor_vision_title')}}</span></span></label>
                 </div>
                 <div id="poorVision" style="display:none;">
-                    <div class="hidden-xs hidden-sm">
-                        <div class="sidebar-item">
-                            <div class="sidebar-item__title">{{__('default.pages.lessons.font_size_title')}}
-                                :
-                            </div>
-                            <div class="sidebar-item__body">
-                                <div class="range-slider-wrapper">
-                                    <input type="range" class="range-slider single-range-slider"
-                                           name="fontSize" min="12"
-                                           data-decimals="0" step="1" max="32" value="24">
-                                </div>
+                    <div class="sidebar-item">
+                        <div class="sidebar-item__title">{{__('default.pages.lessons.font_size_title')}}
+                            :
+                        </div>
+                        <div class="sidebar-item__body">
+                            <div class="range-slider-wrapper">
+                                <input type="range" class="range-slider single-range-slider"
+                                       name="fontSize" min="12"
+                                       data-decimals="0" step="1" max="32" value="24">
                             </div>
                         </div>
-                        <div class="sidebar-item">
-                            <div class="sidebar-item__title">{{__('default.pages.lessons.line_spacing')}}
-                                :
-                            </div>
-                            <div class="sidebar-item__body">
-                                <div class="range-slider-wrapper">
-                                    <input type="range" class="range-slider single-range-slider"
-                                           name="lineHeight" min="1"
-                                           data-decimals="1" step="0.5" max="3" value="2">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sidebar-item">
-                            <div class="sidebar-item__title">{{__('default.pages.lessons.font')}}
-                                :
-                            </div>
-                            <div class="sidebar-item__body">
-                                <select name="fontFamily" class="selectize-regular custom"
-                                        placeholder="{{__('default.pages.lessons.choose_font')}}">
-                                    <option value="">{{__('default.pages.lessons.default_title')}}</option>
-                                    <option value="Arial, sans-serif">Arial</option>
-                                    <option value="Times New Roman, sans-serif">Times New
-                                        Roman
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="sidebar-item">
-                            <div class="sidebar-item__title">{{__('default.pages.lessons.color_palette')}}
-                                :
-                            </div>
-                            <div class="sidebar-item__body">
-                                <select name="colorScheme"
-                                        class="selectize-regular custom color"
-                                        placeholder="{{__('default.pages.lessons.choose_palette')}}">
-                                    <option value="black-white">{{__('default.pages.lessons.default_title')}}</option>
-                                    <option value="white-black">{{__('default.pages.lessons.white_on_black_palette')}}</option>
-                                    <option value="yellow-blue">{{__('default.pages.lessons.yellow_on_blue_palette')}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        @if(!empty($item->attachments->videos_poor_vision_link))
-                            <div class="sidebar-item">
-                                <div class="sidebar-item__title">{{__('default.pages.courses.media_attachments')}}
-                                    :
-                                </div>
-                                <div class="sidebar-item__body">
-                                    @foreach(json_decode($item->attachments->videos_poor_vision_link) as $video_link)
-                                        @if($video_link !== null)
-                                            @php
-                                                $video_id = \App\Extensions\YoutubeParse::parseYoutube($video_link);
-                                            @endphp
-                                            <div class="video-wrapper">
-                                                <iframe width="560" height="315"
-                                                        src="https://www.youtube.com/embed/{{$video_id}}"
-                                                        frameborder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                        allowfullscreen></iframe>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                    @if(!empty($item->attachments->videos_poor_vision))
-                                        @foreach(json_decode($item->attachments->videos_poor_vision) as $video)
-                                            <div class="video-wrapper">
-                                                <video controls
-                                                       src="{{$video}}"></video>
-                                            </div>
-                                        @endforeach
-                                    @endif
-                                    @if(!empty($item->attachments->audios_poor_vision))
-                                        @foreach(json_decode($item->attachments->audios_poor_vision) as $audio)
-                                            <audio controls
-                                                   src="{{$audio}}"></audio>
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </div>
-                        @endif
-                        @if(!empty($item->attachments->another_files_poor_vision))
-                            <div class="sidebar-item">
-                                <div class="sidebar-item__title">{{__('default.pages.lessons.lesson_files')}}
-                                    :
-                                </div>
-                                <div class="sidebar-item__body">
-                                    <div class="plain-text">
-                                        <ul>
-                                            @if(!empty($item->attachments->another_files_poor_vision))
-                                                @foreach(json_decode($item->attachments->another_files_poor_vision) as $file)
-                                                    <li>
-                                                        <a href="{{env('APP_URL').$file}}"
-                                                           title="{{substr(basename($file), 14)}}"
-                                                           target="_blank">{{substr(basename($file), 14)}}
-                                                            &nbsp;</a>
-                                                        ({{ round(File::size(public_path($file))/1000000, 1) }}
-                                                        MB)
-                                                    </li>
-                                                @endforeach
-                                            @endif
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
                     </div>
+                    <div class="sidebar-item">
+                        <div class="sidebar-item__title">{{__('default.pages.lessons.line_spacing')}}
+                            :
+                        </div>
+                        <div class="sidebar-item__body">
+                            <div class="range-slider-wrapper">
+                                <input type="range" class="range-slider single-range-slider"
+                                       name="lineHeight" min="1"
+                                       data-decimals="1" step="0.5" max="3" value="2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-item">
+                        <div class="sidebar-item__title">{{__('default.pages.lessons.font')}}
+                            :
+                        </div>
+                        <div class="sidebar-item__body">
+                            <select name="fontFamily" class="selectize-regular custom"
+                                    placeholder="{{__('default.pages.lessons.choose_font')}}">
+                                <option value="">{{__('default.pages.lessons.default_title')}}</option>
+                                <option value="Arial, sans-serif">Arial</option>
+                                <option value="Times New Roman, sans-serif">Times New
+                                    Roman
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="sidebar-item">
+                        <div class="sidebar-item__title">{{__('default.pages.lessons.color_palette')}}
+                            :
+                        </div>
+                        <div class="sidebar-item__body">
+                            <select name="colorScheme"
+                                    class="selectize-regular custom color"
+                                    placeholder="{{__('default.pages.lessons.choose_palette')}}">
+                                <option value="black-white">{{__('default.pages.lessons.default_title')}}</option>
+                                <option
+                                    value="white-black">{{__('default.pages.lessons.white_on_black_palette')}}</option>
+                                <option
+                                    value="yellow-blue">{{__('default.pages.lessons.yellow_on_blue_palette')}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    @if(!empty($item->attachments->videos_poor_vision_link))
+                        <div class="sidebar-item">
+                            <div class="sidebar-item__title">{{__('default.pages.courses.media_attachments')}}
+                                :
+                            </div>
+                            <div class="sidebar-item__body">
+                                @foreach(json_decode($item->attachments->videos_poor_vision_link) as $video_link)
+                                    @if($video_link !== null)
+                                        @php
+                                            $video_id = \App\Extensions\YoutubeParse::parseYoutube($video_link);
+                                        @endphp
+                                        <div class="video-wrapper">
+                                            <iframe width="560" height="315"
+                                                    src="https://www.youtube.com/embed/{{$video_id}}"
+                                                    frameborder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                    allowfullscreen></iframe>
+                                        </div>
+                                    @endif
+                                @endforeach
+                                @if(!empty($item->attachments->videos_poor_vision))
+                                    @foreach(json_decode($item->attachments->videos_poor_vision) as $video)
+                                        <div class="video-wrapper">
+                                            <video controls
+                                                   src="{{$video}}"></video>
+                                        </div>
+                                    @endforeach
+                                @endif
+                                @if(!empty($item->attachments->audios_poor_vision))
+                                    @foreach(json_decode($item->attachments->audios_poor_vision) as $audio)
+                                        <audio controls
+                                               src="{{$audio}}"></audio>
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    @endif
+                    @if(!empty($item->attachments->another_files_poor_vision))
+                        <div class="sidebar-item">
+                            <div class="sidebar-item__title">{{__('default.pages.lessons.lesson_files')}}
+                                :
+                            </div>
+                            <div class="sidebar-item__body">
+                                <div class="plain-text">
+                                    <ul>
+                                        @if(!empty($item->attachments->another_files_poor_vision))
+                                            @foreach(json_decode($item->attachments->another_files_poor_vision) as $file)
+                                                <li>
+                                                    <a href="{{env('APP_URL').$file}}"
+                                                       title="{{substr(basename($file), 14)}}"
+                                                       target="_blank">{{substr(basename($file), 14)}}
+                                                        &nbsp;</a>
+                                                    ({{ round(File::size(public_path($file))/1000000, 1) }}
+                                                    MB)
+                                                </li>
+                                            @endforeach
+                                        @endif
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -135,73 +135,71 @@
             <div class="poor-vision">
                 <div><label class="checkbox"><input type="checkbox" data-toggle="poorHearing"
                                                     name="poorHearing"><span><span
-                                    class="special">{{__('default.pages.lessons.poor_hearing_title')}}</span></span></label>
+                                class="special">{{__('default.pages.lessons.poor_hearing_title')}}</span></span></label>
                 </div>
                 <div id="poorHearing" style="display:none;">
-                    <div class="hidden-xs hidden-sm">
-                        @if(!empty($item->attachments->videos_poor_hearing_link))
-                            <div class="sidebar-item">
-                                <div class="sidebar-item__title">{{__('default.pages.courses.media_attachments')}}
-                                    :
-                                </div>
-                                <div class="sidebar-item__body">
-                                    @foreach(json_decode($item->attachments->videos_poor_hearing_link) as $video_link)
-                                        @if($video_link !== null)
-                                            @php
-                                                $video_id = \App\Extensions\YoutubeParse::parseYoutube($video_link);
-                                            @endphp
-                                            <div class="video-wrapper">
-                                                <iframe width="560" height="315"
-                                                        src="https://www.youtube.com/embed/{{$video_id}}"
-                                                        frameborder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                        allowfullscreen></iframe>
-                                            </div>
-                                        @endif
+                    @if(!empty($item->attachments->videos_poor_hearing_link))
+                        <div class="sidebar-item">
+                            <div class="sidebar-item__title">{{__('default.pages.courses.media_attachments')}}
+                                :
+                            </div>
+                            <div class="sidebar-item__body">
+                                @foreach(json_decode($item->attachments->videos_poor_hearing_link) as $video_link)
+                                    @if($video_link !== null)
+                                        @php
+                                            $video_id = \App\Extensions\YoutubeParse::parseYoutube($video_link);
+                                        @endphp
+                                        <div class="video-wrapper">
+                                            <iframe width="560" height="315"
+                                                    src="https://www.youtube.com/embed/{{$video_id}}"
+                                                    frameborder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                    allowfullscreen></iframe>
+                                        </div>
+                                    @endif
+                                @endforeach
+                                @if(!empty($item->attachments->videos_poor_hearing))
+                                    @foreach(json_decode($item->attachments->videos_poor_hearing) as $video)
+                                        <div class="video-wrapper">
+                                            <video controls
+                                                   src="{{$video}}"></video>
+                                        </div>
                                     @endforeach
-                                    @if(!empty($item->attachments->videos_poor_hearing))
-                                        @foreach(json_decode($item->attachments->videos_poor_hearing) as $video)
-                                            <div class="video-wrapper">
-                                                <video controls
-                                                       src="{{$video}}"></video>
-                                            </div>
-                                        @endforeach
-                                    @endif
-                                    @if(!empty($item->attachments->audios_poor_hearing))
-                                        @foreach(json_decode($item->attachments->audios_poor_hearing) as $audio)
-                                            <audio controls
-                                                   src="{{$audio}}"></audio>
-                                        @endforeach
-                                    @endif
+                                @endif
+                                @if(!empty($item->attachments->audios_poor_hearing))
+                                    @foreach(json_decode($item->attachments->audios_poor_hearing) as $audio)
+                                        <audio controls
+                                               src="{{$audio}}"></audio>
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    @endif
+                    @if(!empty($item->attachments->another_files_poor_hearing))
+                        <div class="sidebar-item">
+                            <div class="sidebar-item__title">{{__('default.pages.lessons.lesson_files')}}
+                                :
+                            </div>
+                            <div class="sidebar-item__body">
+                                <div class="plain-text">
+                                    <ul>
+                                        @if(!empty($item->attachments->another_files_poor_hearing))
+                                            @foreach(json_decode($item->attachments->another_files_poor_hearing) as $file)
+                                                <li>
+                                                    <a href="{{env('APP_URL').$file}}"
+                                                       title="{{substr(basename($file), 14)}}"
+                                                       target="_blank">{{substr(basename($file), 14)}}
+                                                        &nbsp;</a>
+                                                    ({{ round(File::size(public_path($file))/1000000, 1) }}
+                                                    MB)
+                                                </li>
+                                            @endforeach
+                                        @endif
+                                    </ul>
                                 </div>
                             </div>
-                        @endif
-                        @if(!empty($item->attachments->another_files_poor_hearing))
-                            <div class="sidebar-item">
-                                <div class="sidebar-item__title">{{__('default.pages.lessons.lesson_files')}}
-                                    :
-                                </div>
-                                <div class="sidebar-item__body">
-                                    <div class="plain-text">
-                                        <ul>
-                                            @if(!empty($item->attachments->another_files_poor_hearing))
-                                                @foreach(json_decode($item->attachments->another_files_poor_hearing) as $file)
-                                                    <li>
-                                                        <a href="{{env('APP_URL').$file}}"
-                                                           title="{{substr(basename($file), 14)}}"
-                                                           target="_blank">{{substr(basename($file), 14)}}
-                                                            &nbsp;</a>
-                                                        ({{ round(File::size(public_path($file))/1000000, 1) }}
-                                                        MB)
-                                                    </li>
-                                                @endforeach
-                                            @endif
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -393,7 +391,7 @@
                         <div class="price">
                             @if($item->is_paid == 1)
                                 <div
-                                        class="price__value">{{number_format($item->cost, 0, ',', ' ')}}
+                                    class="price__value">{{number_format($item->cost, 0, ',', ' ')}}
                                     ₸
                                 </div>
                             @else
@@ -402,7 +400,7 @@
                             @endif
                             @if($item->quota_status == 2)
                                 <div class="price__quota"><span
-                                            class="mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</span>*
+                                        class="mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</span>*
                                 </div>
                                 <div class="hint gray">
                                     * {{__('default.pages.courses.access_by_quota_desc')}}</div>
