@@ -52,9 +52,9 @@
 
                                 <div class="article__info">
                                     <span>{{__('default.pages.courses.lessons_title_1')}}: <span
-                                                id="lessonsCount">{{$item->lessons->whereIn('type', [1,2])->count()}}</span></span>
+                                            id="lessonsCount">{{$item->lessons->whereIn('type', [1,2])->count()}}</span></span>
                                     <span>{{__('default.pages.courses.total_time_lessons')}}: <span
-                                                id="courseDuration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->whereIn('type', [1,2])->sum('duration'))}}</span> {{__('default.pages.courses.hours_title')}}</span>
+                                            id="courseDuration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->whereIn('type', [1,2])->sum('duration'))}}</span> {{__('default.pages.courses.hours_title')}}</span>
                                 </div>
 
                                 <div class="course">
@@ -65,13 +65,13 @@
                                                     <div class="topic__header">
                                                         <div class="title">{{$course_item->name}}</div>
                                                         <div
-                                                                class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->where('theme_id', '=', $course_item->id)->sum('duration'))}}</div>
+                                                            class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($item->lessons->where('theme_id', '=', $course_item->id)->sum('duration'))}}</div>
                                                     </div>
                                                     <div class="topic__body">
                                                         @foreach($course_item->lessons->sortBy('index_number') as $lesson)
                                                             @if($student_course)
                                                                 <div
-                                                                        class="lesson {{ $lesson->finishedByCurrentUser() ? 'finished' : '' }}">
+                                                                    class="lesson {{ $lesson->finishedByCurrentUser() ? 'finished' : '' }}">
                                                                     @if($lesson->type != 1)
                                                                         <div class="title">
                                                                             <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$lesson->id}}"
@@ -94,7 +94,7 @@
                                                                         </div>
                                                                     @endif
                                                                     <div
-                                                                            class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                                        class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
                                                                 </div>
                                                             @else
                                                                 <div class="lesson">
@@ -113,7 +113,7 @@
                                                                         </div>
                                                                     @endif
                                                                     <div
-                                                                            class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
+                                                                        class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($lesson->duration)}}</div>
                                                                 </div>
                                                             @endif
                                                         @endforeach
@@ -123,7 +123,7 @@
                                                 <div class="topic__body">
                                                     @if($student_course)
                                                         <div
-                                                                class="lesson {{ $course_item->finishedByCurrentUser() ? 'finished' : '' }}">
+                                                            class="lesson {{ $course_item->finishedByCurrentUser() ? 'finished' : '' }}">
                                                             @if($course_item->type != 1)
                                                                 <div class="title">
                                                                     <a href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$course_item->id}}"
@@ -146,7 +146,7 @@
                                                                 </div>
                                                             @endif
                                                             <div
-                                                                    class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($course_item->duration)}}</div>
+                                                                class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($course_item->duration)}}</div>
                                                         </div>
                                                     @else
                                                         <div class="lesson">
@@ -165,7 +165,7 @@
                                                                 </div>
                                                             @endif
                                                             <div
-                                                                    class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($course_item->duration)}}</div>
+                                                                class="duration">{{\App\Extensions\FormatDate::convertMunitesToTime($course_item->duration)}}</div>
                                                         </div>
                                                     @endif
                                                 </div>
@@ -178,11 +178,11 @@
                                             <div class="topic__header">
                                                 @if($student_course)
                                                     <div class="title"><a
-                                                                href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
+                                                            href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$item->courseWork()->id}}">{{__('default.pages.lessons.coursework_title')}}</a>
                                                     </div>
                                                 @else
                                                     <div
-                                                            class="title">{{__('default.pages.lessons.coursework_title')}}
+                                                        class="title">{{__('default.pages.lessons.coursework_title')}}
                                                     </div>
                                                 @endif
                                                 <div class="duration"></div>
@@ -194,11 +194,11 @@
                                             <div class="topic__header">
                                                 @if($student_course)
                                                     <div class="title"><a
-                                                                href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
+                                                            href="/{{$lang}}/course-catalog/course/{{$item->id}}/lesson-{{$item->finalTest()->id}}">{{__('default.pages.courses.final_test_title')}}</a>
                                                     </div>
                                                 @else
                                                     <div
-                                                            class="title">{{__('default.pages.courses.final_test_title')}}
+                                                        class="title">{{__('default.pages.courses.final_test_title')}}
                                                     </div>
                                                 @endif
                                                 <div class="duration"></div>
@@ -239,28 +239,28 @@
                                     </div>
                                     <div class="personal-card__right">
                                         <div
-                                                class="personal-card__name">{{ $item->user->author_info->name . ' ' . $item->user->author_info->surname  }}</div>
+                                            class="personal-card__name">{{ $item->user->author_info->name . ' ' . $item->user->author_info->surname  }}</div>
                                         <div
-                                                class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->author_info->specialization) ?? []) }}</div>
+                                            class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->author_info->specialization) ?? []) }}</div>
                                         <div class="plain-text">
                                             {!! $item->user->author_info->about !!}
                                         </div>
                                         <div class="personal-card__characteristics">
                                             <div>
                                                 <span
-                                                        class="blue">{{count($rates)}}</span> {{__('default.pages.profile.rates_count_title')}}
+                                                    class="blue">{{count($rates)}}</span> {{__('default.pages.profile.rates_count_title')}}
                                             </div>
                                             <div>
                                                 <span
-                                                        class="blue">{{count($author_students)}}</span> {{__('default.pages.profile.course_members_count')}}
+                                                    class="blue">{{count($author_students)}}</span> {{__('default.pages.profile.course_members_count')}}
                                             </div>
                                             <div>
                                                 <span
-                                                        class="blue">{{count($courses->where('status', '=', 3))}}</span> {{__('default.pages.profile.course_count')}}
+                                                    class="blue">{{count($courses->where('status', '=', 3))}}</span> {{__('default.pages.profile.course_count')}}
                                             </div>
                                             <div>
                                                 <span
-                                                        class="blue">{{count($author_students_finished)}}</span> {{__('default.pages.profile.issued_certificates')}}
+                                                    class="blue">{{count($author_students_finished)}}</span> {{__('default.pages.profile.issued_certificates')}}
                                             </div>
                                         </div>
                                         <div class="rating">
@@ -318,7 +318,7 @@
                                             <div class="review">
                                                 <div class="review__header">
                                                     <div
-                                                            class="review__name">{{$rate->student->student_info->name ?? __('default.pages.profile.student_title')}}</div>
+                                                        class="review__name">{{$rate->student->student_info->name ?? __('default.pages.profile.student_title')}}</div>
                                                     <div class="rating">
                                                         <div class="rating__stars">
                                                             <?php
@@ -416,7 +416,7 @@
                         @csrf
                         <h4 class="title-primary text-center">{{__('default.pages.courses.confirm_modal_title')}}</h4>
                         <div
-                                class="plain-text gray text-center">{{__('default.pages.courses.confirm_course_by_quota')}}</div>
+                            class="plain-text gray text-center">{{__('default.pages.courses.confirm_course_by_quota')}}</div>
                         <div class="plain-text gray text-center">{{__('default.pages.courses.quota_have')}}
                             : {{Auth::user()->student_info->quota_count}}</div>
                         <div class="row row--multiline justify-center">
@@ -438,6 +438,7 @@
 
 @section('scripts')
     <!--Only this page's scripts-->
+    <script src="/assets/js/visually-impaired-tools.js"></script>
     @if(empty($student_rate) and !empty($student_course->is_finished) == true)
         <script>
             $.fancybox.open({
