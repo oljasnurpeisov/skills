@@ -148,7 +148,7 @@ return [
             'skills_title_1' => 'Навыки',
             'professions_title_1' => 'Профессии',
 
-            'theme_name' => 'Название темы',
+            'theme_name' => 'Название модуля',
             'cancel_title' => 'Отмена',
 
             'recommended_courses' => 'Рекомендованные</span><br/> курсы',
@@ -157,7 +157,7 @@ return [
             'course_include' => 'В курс входит',
             'lessons_title' => 'Количество уроков',
             'tests_count_title' => 'Количество тестов',
-            'homeworks_count' => 'Количество домашних заданий',
+            'homeworks_count' => 'Количество практических заданий',
             'videos_count' => 'Количество видео',
             'audios_count' => 'Количество аудио',
             'attachments_count' => 'Количество материалов',
@@ -168,7 +168,7 @@ return [
             'theory_material_count_title' => 'Теоретических материалов',
 
             'confirm_modal_title' => 'Подтверждение',
-            'confirm_theme_modal_desc' => 'Вы уверены, что хотите удалить выбранную тему?',
+            'confirm_theme_modal_desc' => 'Вы уверены, что хотите удалить выбранный модуль?',
             'confirm_lesson_modal_desc' => 'Вы уверены, что хотите удалить выбранный урок?',
             'confirm_coursework_modal_desc' => 'Вы уверены, что хотите удалить курсовую работу?',
             'confirm_final_test_modal_desc' => 'Вы уверены, что хотите удалить Итоговое тестирование?',
@@ -180,13 +180,13 @@ return [
             'delete_course' => 'Удалить курс',
             'delete_course_warning' => 'Вы уверены, что хотите удалить курс?',
             'cancel_tile' => 'Отмена',
-            'edit_theme_title' => 'Редактирование темы',
+            'edit_theme_title' => 'Редактирование модуля',
             'edit_lesson_title' => 'Редактирование урока',
             'edit_coursework_title' => 'Редактирование курсовой работы',
             'edit_final_test_title' => 'Редактирование итогового теста',
-            'delete_theme_title' => 'Удаление темы',
+            'delete_theme_title' => 'Удаление модуля',
             'delete_theme_success' => 'Модуль успешно удален',
-            'create_theme_title' => 'Создание темы',
+            'create_theme_title' => 'Создание модуля',
             'create_theme_success' => 'Модуль успешно создан',
             'edit_theme_success' => 'Модуль успешно изменен',
             'delete_lesson_title' => 'Удаление урока',
@@ -211,7 +211,7 @@ return [
             'create_request_message' => 'Урок успешно создан',
             'access_denied_message' => 'У вас нет доступа к выбранному уроку, Вам необходимо завершить предыдущий урок',
             'test_finished_warning' => 'Вы уже прошли данное тестирование',
-            'homework_title' => 'Домашнее задание',
+            'homework_title' => 'Практическое задание',
             'coursework_title' => 'Курсовая работа',
             'video_files' => 'Видео файлы',
             'audio_files' => 'Аудио файлы',
@@ -267,7 +267,7 @@ return [
             'pictures_type_title' => 'В виде картинок',
             'right_answer_title' => 'Введите правильный вариант ответа',
             'input_answer_title' => 'Введите вариант ответа',
-            'homework' => 'Домашнее задание',
+            'homework' => 'Практическое задание',
             'add_question' => 'Добавить вопрос',
             'questions_count' => 'Всего вопросов',
             'passing_score' => 'Проходной балл',
@@ -512,8 +512,8 @@ return [
             'format_description' => 'Учебный контент курса содержит несколько форм (текст, изображение, аудио, видео, презентация)',
 
             'general_tests' => 'Промежуточные тесты',
-            'general_tests_section_1' => 'промежуточные тесты разработаны по каждой теме курса',
-            'general_tests_section_2' => 'промежуточные тесты разработаны по отдельным темам курса',
+            'general_tests_section_1' => 'промежуточные тесты разработаны по каждому модулю курса',
+            'general_tests_section_2' => 'промежуточные тесты разработаны по отдельным модулям курса',
             'general_tests_section_3' => 'промежуточные тесты отсутствуют',
 
             'final_test' => 'Итоговый тест',
@@ -534,7 +534,7 @@ return [
             'poor_vision_section_1' => 'Да',
             'poor_vision_section_2' => 'Нет',
 
-            'pay_for_student' => 'Оплата за одного учащегося (тг)',
+            'pay_for_student' => 'Оплата за одного обучающегося (тг)',
             'students_count' => 'Количество обучающихся',
             'total_cost' => 'Итого'
 
