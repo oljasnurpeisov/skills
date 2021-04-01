@@ -41,7 +41,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.choose_professional_area_title')}}</label>
+                                <label
+                                    class="form-group__label">{{__('default.pages.courses.choose_professional_area_title')}}</label>
                                 <div class="input-addon">
                                     <select name="professional_areas"
                                             placeholder="{{__('default.pages.courses.choose_professional_area_title')}}"
@@ -55,7 +56,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.choose_profession_title')}}</label>
+                                <label
+                                    class="form-group__label">{{__('default.pages.courses.choose_profession_title')}}</label>
                                 <div class="input-addon">
                                     <select name="professions"
                                             placeholder="{{__('default.pages.courses.choose_profession_title')}}"
@@ -69,7 +71,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.choose_skills_title')}}</label>
+                                <label
+                                    class="form-group__label">{{__('default.pages.courses.choose_skills_title')}}</label>
                                 <div class="input-addon">
                                     <select name="skills[]" id="skillsSelect"
                                             placeholder="{{__('default.pages.courses.choose_skills_title')}}"
@@ -158,7 +161,8 @@
                                         <div class="dropzone-default__info">PNG, JPG
                                             • {{__('default.pages.courses.max_file_title')}} 1MB
                                         </div>
-                                        <div class="course-image__link avatar-pick dropzone-default__link">{{__('default.pages.courses.choose_photo')}}</div>
+                                        <div
+                                            class="course-image__link avatar-pick dropzone-default__link">{{__('default.pages.courses.choose_photo')}}</div>
                                     </div>
                                     <div class="avatar-preview-template" style="display:none;">
                                         <div class="dz-preview dz-file-preview">
@@ -186,8 +190,8 @@
                             <div class="text-right pull-up">
                                 <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"
                                    data-duplicate="courseVideo" data-maxcount="4"><span
-                                            class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
-                                            class="btn-icon small icon-plus"> </span></a>
+                                        class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
+                                        class="btn-icon small icon-plus"> </span></a>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.video_local')}}</label>
@@ -220,7 +224,8 @@
                             <div id="poorVision" style="display: none">
                                 <h3 class="title-tertiary">{{__('default.pages.courses.is_vision_version')}}</h3>
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.courses.video_link_1')}}</label>
+                                    <label
+                                        class="form-group__label">{{__('default.pages.courses.video_link_1')}}</label>
                                     <input type="url" name="videos_poor_vision_link[]" placeholder=""
                                            class="input-regular" id="courseVideo1" required disabled>
                                 </div>
@@ -228,11 +233,12 @@
                                 <div class="text-right pull-up">
                                     <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"
                                        data-duplicate="courseVideo1" data-maxcount="4"><span
-                                                class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
-                                                class="btn-icon small icon-plus"> </span></a>
+                                            class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
+                                            class="btn-icon small icon-plus"> </span></a>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.courses.video_local_1')}}</label>
+                                    <label
+                                        class="form-group__label">{{__('default.pages.courses.video_local_1')}}</label>
                                     <div data-url="/ajax_upload_course_videos?_token={{ csrf_token() }}"
                                          data-maxfiles="5"
                                          data-maxsize="500" data-acceptedfiles=".mp4" id="video1"
@@ -248,7 +254,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.courses.course_audio_1')}}</label>
+                                    <label
+                                        class="form-group__label">{{__('default.pages.courses.course_audio_1')}}</label>
                                     <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
                                          data-maxfiles="5"
                                          data-maxsize="10" data-acceptedfiles=".mp3" id="audio1"
@@ -267,19 +274,23 @@
                             <div id="poorHearing" style="display: none">
                                 <h3 class="title-tertiary">{{__('default.pages.courses.is_poor_hearing')}}</h3>
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.courses.video_link_2')}}</label>
-                                    <input type="url" name="videos_poor_hearing_link[]" placeholder="" class="input-regular"
+                                    <label
+                                        class="form-group__label">{{__('default.pages.courses.video_link_2')}}</label>
+                                    <input type="url" name="videos_poor_hearing_link[]" placeholder=""
+                                           class="input-regular"
                                            id="courseVideo2" required disabled>
                                 </div>
                                 <div class="removable-items"></div>
                                 <div class="text-right pull-up">
-                                    <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn" data-duplicate="courseVideo1"
+                                    <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"
+                                       data-duplicate="courseVideo1"
                                        data-maxcount="4"><span
-                                                class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span><span
-                                                class="btn-icon small icon-plus"> </span></a>
+                                            class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span><span
+                                            class="btn-icon small icon-plus"> </span></a>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.courses.video_local_2')}}</label>
+                                    <label
+                                        class="form-group__label">{{__('default.pages.courses.video_local_2')}}</label>
                                     <div data-url="/ajax_upload_course_videos?_token={{ csrf_token() }}"
                                          data-maxfiles="5"
                                          data-maxsize="500" data-acceptedfiles=".mp4" id="video2"
@@ -296,7 +307,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.courses.course_audio_2')}}</label>
+                                    <label
+                                        class="form-group__label">{{__('default.pages.courses.course_audio_2')}}</label>
                                     <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
                                          data-maxfiles="5"
                                          data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
@@ -310,6 +322,23 @@
                                            class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}
                                         </a>
                                         <div class="previews-container"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.preview_certificate_title')}}</label>
+                                <div class="row row--multiline">
+                                    <div class="col-auto">
+                                        <div class="image-choice">
+                                            <img src="/assets/img/certificates/4.png"
+                                                 class="image-choice__thumbnail"
+                                                 alt="">
+                                            <label class="image-choice__overflow">
+                                                <i> </i>
+                                                <a href="/assets/img/certificates/4.png" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
+                                                   class="icon-zoom-in" style="margin-top: 20px"> </a>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

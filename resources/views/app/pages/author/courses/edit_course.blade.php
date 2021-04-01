@@ -567,6 +567,23 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.preview_certificate_title')}}</label>
+                                <div class="row row--multiline">
+                                    <div class="col-auto">
+                                        <div class="image-choice">
+                                            <img src="/assets/img/certificates/4.png"
+                                                 class="image-choice__thumbnail"
+                                                 alt="">
+                                            <label class="image-choice__overflow">
+                                                <i> </i>
+                                                <a href="/assets/img/certificates/4.png" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
+                                                   class="icon-zoom-in" style="margin-top: 20px"> </a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="buttons">
                                 <button type="submit"
                                         class="btn">{{__('default.pages.profile.save_btn_title')}}</button>
