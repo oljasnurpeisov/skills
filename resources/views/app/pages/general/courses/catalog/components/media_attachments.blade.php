@@ -82,14 +82,14 @@
                                         </div>
                                     @endif
                                 @endforeach
-                                @if(!empty($item->attachments->videos_poor_vision))
-                                    @foreach(json_decode($item->attachments->videos_poor_vision) as $video)
-                                        <div class="video-wrapper">
-                                            <video controls
-                                                   src="{{$video}}"></video>
-                                        </div>
-                                    @endforeach
-                                @endif
+{{--                                @if(!empty($item->attachments->videos_poor_vision))--}}
+{{--                                    @foreach(json_decode($item->attachments->videos_poor_vision) as $video)--}}
+{{--                                        <div class="video-wrapper">--}}
+{{--                                            <video controls--}}
+{{--                                                   src="{{$video}}"></video>--}}
+{{--                                        </div>--}}
+{{--                                    @endforeach--}}
+{{--                                @endif--}}
                                 @if(!empty($item->attachments->audios_poor_vision))
                                     @foreach(json_decode($item->attachments->audios_poor_vision) as $audio)
                                         <audio controls
@@ -158,14 +158,14 @@
                                         </div>
                                     @endif
                                 @endforeach
-                                @if(!empty($item->attachments->videos_poor_hearing))
-                                    @foreach(json_decode($item->attachments->videos_poor_hearing) as $video)
-                                        <div class="video-wrapper">
-                                            <video controls
-                                                   src="{{$video}}"></video>
-                                        </div>
-                                    @endforeach
-                                @endif
+{{--                                @if(!empty($item->attachments->videos_poor_hearing))--}}
+{{--                                    @foreach(json_decode($item->attachments->videos_poor_hearing) as $video)--}}
+{{--                                        <div class="video-wrapper">--}}
+{{--                                            <video controls--}}
+{{--                                                   src="{{$video}}"></video>--}}
+{{--                                        </div>--}}
+{{--                                    @endforeach--}}
+{{--                                @endif--}}
                                 @if(!empty($item->attachments->audios_poor_hearing))
                                     @foreach(json_decode($item->attachments->audios_poor_hearing) as $audio)
                                         <audio controls
@@ -229,14 +229,14 @@
                             @endif
                         @endforeach
                     @endif
-                    @if(!empty($item->attachments->videos))
-                        @foreach(json_decode($item->attachments->videos) as $video)
-                            <div class="video-wrapper">
-                                <video controls
-                                       src="{{$video}}"></video>
-                            </div>
-                        @endforeach
-                    @endif
+{{--                    @if(!empty($item->attachments->videos))--}}
+{{--                        @foreach(json_decode($item->attachments->videos) as $video)--}}
+{{--                            <div class="video-wrapper">--}}
+{{--                                <video controls--}}
+{{--                                       src="{{$video}}"></video>--}}
+{{--                            </div>--}}
+{{--                        @endforeach--}}
+{{--                    @endif--}}
                     @if(!empty($item->attachments->audios))
                         @foreach(json_decode($item->attachments->audios) as $audio)
                             <audio controls
@@ -291,7 +291,7 @@
                         <ul>
                             <li>{{__('default.pages.courses.lessons_title')}}
                                 : {{$item->lessons->whereIn('type', [1,2])->count()}} </li>
-                            <li>{{__('default.pages.courses.videos_count')}}: {{$videos_count}}</li>
+{{--                            <li>{{__('default.pages.courses.videos_count')}}: {{$videos_count}}</li>--}}
                             <li>{{__('default.pages.courses.audios_count')}}
                                 : {{$audios_count}}  </li>
                             <li>{{__('default.pages.courses.attachments_count')}}

@@ -249,46 +249,46 @@
                                             class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span><span
                                             class="btn-icon small icon-plus"> </span></a>
                             </div>
-                            <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.video_local')}}</label>
-                                <div data-url="/ajax_upload_lesson_videos?_token={{ csrf_token() }}"
-                                     data-maxfiles="5"
-                                     data-maxsize="500" data-acceptedfiles=".mp4" id="video2"
-                                     class="dropzone-default dropzone-multiple">
-                                    <input type="hidden" name="localVideo" value="">
-                                    <div class="dropzone-default__info">MP4
-                                        • {{__('default.pages.courses.max_file_title')}} 500MB
-                                    </div>
-                                    @if($item->attachments->videos != null)
-                                        <div class="previews-container">
-                                            @foreach(json_decode($item->attachments->videos) as $video)
-                                                <div class="dz-preview dz-image-preview dz-stored">
-                                                    <div class="dz-details">
-                                                        <input type="text" name="localVideoStored[]"
-                                                               value="{{$video}}" placeholder="">
-                                                        <div class="dz-filename"><span
-                                                                    data-dz-name="">{{substr(basename($video), 14)}}</span>
-                                                        </div>
-                                                    </div>
-                                                    <a href="javascript:undefined;"
-                                                       title="{{__('default.pages.courses.delete')}}"
-                                                       class="link red">{{__('default.pages.courses.delete')}}</a>
-                                                    <a href="javascript:undefined;"
-                                                       title="{{__('default.pages.courses.reestablish')}}"
-                                                       class="link green"
-                                                       style="display:none;">{{__('default.pages.courses.reestablish')}}</a>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                    <a href="javascript:;"
-                                       title="{{__('default.pages.courses.add_file_btn_title')}}"
-                                       class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
-                                    @if($item->attachments->videos == null)
-                                        <div class="previews-container"></div>
-                                    @endif
-                                </div>
-                            </div>
+{{--                            <div class="form-group">--}}
+{{--                                <label class="form-group__label">{{__('default.pages.courses.video_local')}}</label>--}}
+{{--                                <div data-url="/ajax_upload_lesson_videos?_token={{ csrf_token() }}"--}}
+{{--                                     data-maxfiles="5"--}}
+{{--                                     data-maxsize="500" data-acceptedfiles=".mp4" id="video2"--}}
+{{--                                     class="dropzone-default dropzone-multiple">--}}
+{{--                                    <input type="hidden" name="localVideo" value="">--}}
+{{--                                    <div class="dropzone-default__info">MP4--}}
+{{--                                        • {{__('default.pages.courses.max_file_title')}} 500MB--}}
+{{--                                    </div>--}}
+{{--                                    @if($item->attachments->videos != null)--}}
+{{--                                        <div class="previews-container">--}}
+{{--                                            @foreach(json_decode($item->attachments->videos) as $video)--}}
+{{--                                                <div class="dz-preview dz-image-preview dz-stored">--}}
+{{--                                                    <div class="dz-details">--}}
+{{--                                                        <input type="text" name="localVideoStored[]"--}}
+{{--                                                               value="{{$video}}" placeholder="">--}}
+{{--                                                        <div class="dz-filename"><span--}}
+{{--                                                                    data-dz-name="">{{substr(basename($video), 14)}}</span>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                    <a href="javascript:undefined;"--}}
+{{--                                                       title="{{__('default.pages.courses.delete')}}"--}}
+{{--                                                       class="link red">{{__('default.pages.courses.delete')}}</a>--}}
+{{--                                                    <a href="javascript:undefined;"--}}
+{{--                                                       title="{{__('default.pages.courses.reestablish')}}"--}}
+{{--                                                       class="link green"--}}
+{{--                                                       style="display:none;">{{__('default.pages.courses.reestablish')}}</a>--}}
+{{--                                                </div>--}}
+{{--                                            @endforeach--}}
+{{--                                        </div>--}}
+{{--                                    @endif--}}
+{{--                                    <a href="javascript:;"--}}
+{{--                                       title="{{__('default.pages.courses.add_file_btn_title')}}"--}}
+{{--                                       class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>--}}
+{{--                                    @if($item->attachments->videos == null)--}}
+{{--                                        <div class="previews-container"></div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_audio')}}</label>
                                 <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}" data-maxfiles="5"
@@ -365,46 +365,46 @@
                                                 class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
                                                 class="btn-icon small icon-plus"> </span></a>
                                 </div>
-                                <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.courses.video_local_1')}}</label>
-                                    <div data-url="/ajax_upload_course_videos?_token={{ csrf_token() }}"
-                                         data-maxfiles="5"
-                                         data-maxsize="500" data-acceptedfiles=".mp4" id="video2"
-                                         class="dropzone-default dropzone-multiple">
-                                        <input type="hidden" name="localVideo1" value="">
-                                        <div class="dropzone-default__info">MP4
-                                            • {{__('default.pages.courses.max_file_title')}} 500MB
-                                        </div>
-                                        @if($item->attachments->videos_poor_vision != null)
-                                            <div class="previews-container">
-                                                @foreach(json_decode($item->attachments->videos_poor_vision) as $video_poor_vision)
-                                                    <div class="dz-preview dz-image-preview dz-stored">
-                                                        <div class="dz-details">
-                                                            <input type="text" name="localVideoStored1[]"
-                                                                   value="{{{$video_poor_vision}}}" placeholder="">
-                                                            <div class="dz-filename"><span
-                                                                        data-dz-name="">{{substr(basename($video_poor_vision), 14)}}</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="javascript:undefined;"
-                                                           title="{{__('default.pages.courses.delete')}}"
-                                                           class="link red">{{__('default.pages.courses.delete')}}</a>
-                                                        <a href="javascript:undefined;"
-                                                           title="{{__('default.pages.courses.reestablish')}}"
-                                                           class="link green"
-                                                           style="display:none;">{{__('default.pages.courses.reestablish')}}</a>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        @endif
-                                        <a href="javascript:;"
-                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
-                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
-                                        @if($item->attachments->videos_poor_vision == null)
-                                            <div class="previews-container"></div>
-                                        @endif
-                                    </div>
-                                </div>
+{{--                                <div class="form-group">--}}
+{{--                                    <label class="form-group__label">{{__('default.pages.courses.video_local_1')}}</label>--}}
+{{--                                    <div data-url="/ajax_upload_course_videos?_token={{ csrf_token() }}"--}}
+{{--                                         data-maxfiles="5"--}}
+{{--                                         data-maxsize="500" data-acceptedfiles=".mp4" id="video2"--}}
+{{--                                         class="dropzone-default dropzone-multiple">--}}
+{{--                                        <input type="hidden" name="localVideo1" value="">--}}
+{{--                                        <div class="dropzone-default__info">MP4--}}
+{{--                                            • {{__('default.pages.courses.max_file_title')}} 500MB--}}
+{{--                                        </div>--}}
+{{--                                        @if($item->attachments->videos_poor_vision != null)--}}
+{{--                                            <div class="previews-container">--}}
+{{--                                                @foreach(json_decode($item->attachments->videos_poor_vision) as $video_poor_vision)--}}
+{{--                                                    <div class="dz-preview dz-image-preview dz-stored">--}}
+{{--                                                        <div class="dz-details">--}}
+{{--                                                            <input type="text" name="localVideoStored1[]"--}}
+{{--                                                                   value="{{{$video_poor_vision}}}" placeholder="">--}}
+{{--                                                            <div class="dz-filename"><span--}}
+{{--                                                                        data-dz-name="">{{substr(basename($video_poor_vision), 14)}}</span>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                        <a href="javascript:undefined;"--}}
+{{--                                                           title="{{__('default.pages.courses.delete')}}"--}}
+{{--                                                           class="link red">{{__('default.pages.courses.delete')}}</a>--}}
+{{--                                                        <a href="javascript:undefined;"--}}
+{{--                                                           title="{{__('default.pages.courses.reestablish')}}"--}}
+{{--                                                           class="link green"--}}
+{{--                                                           style="display:none;">{{__('default.pages.courses.reestablish')}}</a>--}}
+{{--                                                    </div>--}}
+{{--                                                @endforeach--}}
+{{--                                            </div>--}}
+{{--                                        @endif--}}
+{{--                                        <a href="javascript:;"--}}
+{{--                                           title="{{__('default.pages.courses.add_file_btn_title')}}"--}}
+{{--                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>--}}
+{{--                                        @if($item->attachments->videos_poor_vision == null)--}}
+{{--                                            <div class="previews-container"></div>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.courses.course_audio_1')}}</label>
                                     <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
@@ -484,47 +484,47 @@
                                                 class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span><span
                                                 class="btn-icon small icon-plus"> </span></a>
                                 </div>
-                                <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.courses.video_local_2')}}</label>
-                                    <div data-url="/ajax_upload_course_videos?_token={{ csrf_token() }}"
-                                         data-maxfiles="5"
-                                         data-maxsize="500" data-acceptedfiles=".mp4" id="video2"
-                                         class="dropzone-default dropzone-multiple">
-                                        <input type="hidden" name="localVideo2" value="">
-                                        <div class="dropzone-default__info">MP4
-                                            • {{__('default.pages.courses.max_file_title')}} 500MB
-                                        </div>
-                                        @if($item->attachments->videos_poor_hearing != null)
-                                            <div class="previews-container">
-                                                @foreach(json_decode($item->attachments->videos_poor_hearing) as $video_poor_hearing)
-                                                    <div class="dz-preview dz-image-preview dz-stored">
-                                                        <div class="dz-details">
-                                                            <input type="text" name="localVideoStored2[]"
-                                                                   value="{{{$video_poor_hearing}}}" placeholder="">
-                                                            <div class="dz-filename"><span
-                                                                        data-dz-name="">{{substr(basename($video_poor_hearing), 14)}}</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="javascript:undefined;"
-                                                           title="{{__('default.pages.courses.delete')}}"
-                                                           class="link red">{{__('default.pages.courses.delete')}}</a>
-                                                        <a href="javascript:undefined;"
-                                                           title="{{__('default.pages.courses.reestablish')}}"
-                                                           class="link green"
-                                                           style="display:none;">{{__('default.pages.courses.reestablish')}}</a>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        @endif
-                                        <a href="javascript:;"
-                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
-                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}
-                                        </a>
-                                        @if($item->attachments->videos_poor_hearing == null)
-                                            <div class="previews-container"></div>
-                                        @endif
-                                    </div>
-                                </div>
+{{--                                <div class="form-group">--}}
+{{--                                    <label class="form-group__label">{{__('default.pages.courses.video_local_2')}}</label>--}}
+{{--                                    <div data-url="/ajax_upload_course_videos?_token={{ csrf_token() }}"--}}
+{{--                                         data-maxfiles="5"--}}
+{{--                                         data-maxsize="500" data-acceptedfiles=".mp4" id="video2"--}}
+{{--                                         class="dropzone-default dropzone-multiple">--}}
+{{--                                        <input type="hidden" name="localVideo2" value="">--}}
+{{--                                        <div class="dropzone-default__info">MP4--}}
+{{--                                            • {{__('default.pages.courses.max_file_title')}} 500MB--}}
+{{--                                        </div>--}}
+{{--                                        @if($item->attachments->videos_poor_hearing != null)--}}
+{{--                                            <div class="previews-container">--}}
+{{--                                                @foreach(json_decode($item->attachments->videos_poor_hearing) as $video_poor_hearing)--}}
+{{--                                                    <div class="dz-preview dz-image-preview dz-stored">--}}
+{{--                                                        <div class="dz-details">--}}
+{{--                                                            <input type="text" name="localVideoStored2[]"--}}
+{{--                                                                   value="{{{$video_poor_hearing}}}" placeholder="">--}}
+{{--                                                            <div class="dz-filename"><span--}}
+{{--                                                                        data-dz-name="">{{substr(basename($video_poor_hearing), 14)}}</span>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                        <a href="javascript:undefined;"--}}
+{{--                                                           title="{{__('default.pages.courses.delete')}}"--}}
+{{--                                                           class="link red">{{__('default.pages.courses.delete')}}</a>--}}
+{{--                                                        <a href="javascript:undefined;"--}}
+{{--                                                           title="{{__('default.pages.courses.reestablish')}}"--}}
+{{--                                                           class="link green"--}}
+{{--                                                           style="display:none;">{{__('default.pages.courses.reestablish')}}</a>--}}
+{{--                                                    </div>--}}
+{{--                                                @endforeach--}}
+{{--                                            </div>--}}
+{{--                                        @endif--}}
+{{--                                        <a href="javascript:;"--}}
+{{--                                           title="{{__('default.pages.courses.add_file_btn_title')}}"--}}
+{{--                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}--}}
+{{--                                        </a>--}}
+{{--                                        @if($item->attachments->videos_poor_hearing == null)--}}
+{{--                                            <div class="previews-container"></div>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.courses.course_audio_2')}}</label>
                                     <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
