@@ -127,13 +127,11 @@
                                 <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}"
                                      data-maxfiles="20"
                                      data-maxsize="20"
-                                     data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg, .rar, .zip, .7z, .mp3, .mp4, .avi, .mov"
+                                     data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg"
                                      id="documents-dropzone"
                                      class="dropzone-default dropzone-multiple">
                                     <input type="hidden" name="another_files" value="">
-                                    <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX, PPTX, PNG, JPG,
-                                        RAR,
-                                        ZIP, 7z, MP3, MP4, AVI, MOV • {{__('default.pages.courses.max_file_title')}} 20
+                                    <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX, PPTX, PNG, JPG • {{__('default.pages.courses.max_file_title')}} 20
                                         MB
                                     </div>
                                     <a href="javascript:;" title="{{__('default.pages.courses.add_file_btn_title')}}"
@@ -191,13 +189,13 @@
                                     <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}"
                                          data-maxfiles="20"
                                          data-maxsize="20"
-                                         data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg, .rar, .zip, .7z, .mp3, .mp4, .avi, .mov"
+                                         data-acceptedfiles=".pdf, .doc, .xl
+                                         s, .ppt, .docx, .xlsx, .pptx, .png, .jpg"
                                          id="documents-dropzone2"
                                          class="dropzone-default dropzone-multiple">
                                         <input type="hidden" name="another_files_poor_vision" value="">
                                         <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX, PPTX, PNG,
-                                            JPG, RAR,
-                                            ZIP, 7z, MP3, MP4, AVI, MOV • {{__('default.pages.courses.max_file_title')}}
+                                            JPG• {{__('default.pages.courses.max_file_title')}}
                                             20 MB
                                         </div>
                                         <a href="javascript:;"

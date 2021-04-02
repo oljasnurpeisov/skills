@@ -219,13 +219,11 @@
                                 <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}"
                                      data-maxfiles="20"
                                      data-maxsize="20"
-                                     data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg, .rar, .zip, .7z, .mp3, .mp4, .avi, .mov"
+                                     data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg"
                                      id="documents-dropzone"
                                      class="dropzone-default dropzone-multiple">
                                     <input type="text" name="localDocuments" value="">
-                                    <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX, PPTX, PNG, JPG,
-                                        RAR,
-                                        ZIP, 7z, MP3, MP4, AVI, MOV • {{__('default.pages.courses.max_file_title')}} 20
+                                    <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX, PPTX, PNG, JPG • {{__('default.pages.courses.max_file_title')}} 20
                                         MB
                                     </div>
                                     <div class="previews-container">
