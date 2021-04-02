@@ -8,11 +8,8 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\PaymentHistory;
 use App\Models\StudentCourse;
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use PHPUnit\Framework\Exception;
 
 
 class PaymentController extends Controller
