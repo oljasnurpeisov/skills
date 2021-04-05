@@ -381,9 +381,6 @@
             <div class="diploma__text">
                 ие болғанын растайды
             </div>
-
-            <!--<img src="{{env('APP_URL')}}/assets/img/certificates/hr.png" alt="" class="diploma__hr second">-->
-
             <div class="diploma__info">
                 <span>Куәліктің сәйкестендіру нөмірі:<br/><strong>{{$data['certificate_id']}}</strong></span>
                 <hr>

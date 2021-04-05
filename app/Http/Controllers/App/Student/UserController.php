@@ -228,7 +228,6 @@ class UserController extends Controller
 
     public function myCertificates()
     {
-
         $certificates = StudentCertificate::where('user_id', '=', Auth::user()->id)
             ->orderBy('created_at', 'desc')
             ->get();
