@@ -22,11 +22,11 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-group__label">{{__('default.pages.courses.choose_profession')}}</label>
-                                    <select name="specialities[]" placeholder="{{__('default.pages.courses.choose_profession')}}" data-method="getProfessionsByData" data-default="{{__('default.pages.courses.sort_by_default')}}" class="white" data-noresults="{{__('default.pages.index.nothing_to_show')}}"> </select>
+                                    <select name="professions" placeholder="{{__('default.pages.courses.choose_profession')}}" data-method="getProfessionsByData" data-default="{{__('default.pages.courses.sort_by_default')}}" class="white" data-noresults="{{__('default.pages.index.nothing_to_show')}}"> </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-group__label">{{__('default.pages.courses.choose_skill')}}</label>
-                                    <select name="skills[]" placeholder="{{__('default.pages.courses.choose_skill')}}" data-method="getSkillsByData" data-default="{{__('default.pages.courses.sort_by_default')}}" class="white" data-noresults="{{__('default.pages.index.nothing_to_show')}}"> </select>
+                                    <select name="skills" placeholder="{{__('default.pages.courses.choose_skill')}}" data-method="getSkillsByData" data-default="{{__('default.pages.courses.sort_by_default')}}" class="white" data-noresults="{{__('default.pages.index.nothing_to_show')}}"> </select>
                                 </div>
                             </div>
                         </div>
@@ -338,8 +338,8 @@
         });
 
         const professionalAreaEl = $('[name="professional_areas[]"]'),
-            specialityEl = $('[name="specialities[]"]'),
-            skillsEl = $('[name="skills[]"]');
+            specialityEl = $('[name="professions"]'),
+            skillsEl = $('[name="skills"]');
 
         let professionAreaSelect = new ajaxSelect(professionalAreaEl);
         let specialitySelect = new ajaxSelect(specialityEl, professionalAreaEl);
@@ -355,7 +355,7 @@
         });
 
         specialityEl.change(function () {
-            skillsSelect.update($(this).val() ? {"specialities[]": toArray($(this).val())} : null);
+            skillsSelect.update($(this).val() ? {"professions": toArray($(this).val())} : null);
             skillsSelect.clear();
             setTimeout(function () {
                 skillsSelect.removeMessage();
