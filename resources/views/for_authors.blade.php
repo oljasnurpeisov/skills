@@ -144,20 +144,20 @@
                             <div class="radio-group">
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="checkbox" name="format" value="60"
+                                        <input type="checkbox" name="format" value="50"
                                                data-kk="10"><span>{{__('default.pages.calculator.format_section_1')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="checkbox" name="format" value="30"
-                                               data-kk="5"><span>{{__('default.pages.calculator.format_section_2')}}</span>
+                                        <input type="checkbox" name="format" value="37.5"
+                                               data-kk="8"><span>{{__('default.pages.calculator.format_section_2')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="checkbox" name="format" value="0"
-                                               data-kk="0"><span>{{__('default.pages.calculator.format_section_3')}}</span>
+                                        <input type="checkbox" name="format" value="25"
+                                               data-kk="5"><span>{{__('default.pages.calculator.format_section_3')}}</span>
                                     </label>
                                 </div>
                             </div>
@@ -166,47 +166,24 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-group__label big">{{__('default.pages.calculator.general_tests')}}</label>
-                            <div class="radio-group">
-                                <div>
-                                    <label class="radio radio--bordered">
-                                        <input type="checkbox" name="tests"
-                                               value="4"><span>{{__('default.pages.calculator.general_tests_section_1')}}</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label class="radio radio--bordered">
-                                        <input type="checkbox" name="tests"
-                                               value="2"><span>{{__('default.pages.calculator.general_tests_section_2')}}</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label class="radio radio--bordered">
-                                        <input type="checkbox" name="tests"
-                                               value="0"><span>{{__('default.pages.calculator.general_tests_section_3')}}</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-group__label big">{{__('default.pages.calculator.final_test')}}</label>
+                            <label class="form-group__label big">{{__('default.pages.calculator.practice_title')}}</label>
                             <div class="radio-group">
                                 <div>
                                     <label class="radio radio--bordered">
                                         <input type="checkbox" name="finalTest"
-                                               value="6"><span>{{__('default.pages.calculator.final_test_section_1')}}</span>
+                                               value="10"><span>{{__('default.pages.calculator.practice_section_1')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
                                         <input type="checkbox" name="finalTest"
-                                               value="3"><span>{{__('default.pages.calculator.final_test_section_2')}}</span>
+                                               value="5"><span>{{__('default.pages.calculator.practice_section_2')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
                                         <input type="checkbox" name="finalTest"
-                                               value="0"><span>{{__('default.pages.calculator.final_test_section_3')}}</span>
+                                               value="0"><span>{{__('default.pages.calculator.practice_section_3')}}</span>
                                     </label>
                                 </div>
                             </div>
@@ -217,19 +194,19 @@
                                 <div>
                                     <label class="radio radio--bordered">
                                         <input type="checkbox" name="rating"
-                                               value="0"><span>{{__('default.pages.calculator.course_rate_section_1')}}</span>
+                                               value="20"><span>{{__('default.pages.calculator.course_rate_section_1')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
                                         <input type="checkbox" name="rating"
-                                               value="5"><span>{{__('default.pages.calculator.course_rate_section_2')}}</span>
+                                               value="10"><span>{{__('default.pages.calculator.course_rate_section_2')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
                                         <input type="checkbox" name="rating"
-                                               value="10"><span>{{__('default.pages.calculator.course_rate_section_3')}}</span>
+                                               value="0"><span>{{__('default.pages.calculator.course_rate_section_3')}}</span>
                                     </label>
                                 </div>
                             </div>
@@ -240,30 +217,33 @@
                                 <div>
                                     <label class="radio radio--bordered">
                                         <input type="checkbox" name="language" value=""
-                                               class="calculator-kk-radio"><span>{{__('default.pages.calculator.language_section_1')}}</span>
+                                               class="calculator-kk-radio"><span>{{__('default.yes_title')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
                                         <input type="checkbox" name="language"
-                                               value="0"><span>{{__('default.pages.calculator.language_section_2')}}</span>
+                                               value="0"><span>{{__('default.no_title')}}</span>
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-group__label big">{{__('default.pages.calculator.poor_vision')}}</label>
+                            <label class="form-group__label big">{{__('default.pages.calculator.poor_opportunities_adaptive_title')}}</label>
                             <div class="radio-group">
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="checkbox" name="vi-version"
-                                               value="5"><span>{{__('default.pages.calculator.poor_vision_section_1')}}</span>
+                                        <input type="checkbox" name="vi-version" value="10"><span>{{__('default.pages.calculator.poor_opportunities_full_adaptive')}}</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label class="radio radio--bordered">
-                                        <input type="checkbox" name="vi-version"
-                                               value="0"><span>{{__('default.pages.calculator.poor_vision_section_2')}}</span>
+                                        <input type="checkbox" name="vi-version" value="5"><span>{{__('default.pages.calculator.poor_opportunities_not_full_adaptive')}}</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="radio radio--bordered">
+                                        <input type="checkbox" name="vi-version" value="0"><span>{{__('default.pages.calculator.poor_opportunities_not_adaptive')}}</span>
                                     </label>
                                 </div>
                             </div>
@@ -439,7 +419,7 @@
     <script>
         let calculator = new Calculator({
             calculatorId: '#calculator',
-            basePrice: 2001.05
+            basePrice: 2401.26
         });
         calculator.init();
     </script>
