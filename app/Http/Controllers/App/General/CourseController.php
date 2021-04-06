@@ -292,7 +292,9 @@ class CourseController extends Controller
             $professions_group = Professions::whereIn('id', $professions)->pluck('parent_id');
             $skills = Skill::whereHas('group_professions', function ($q) use ($professions_group) {
                 $q->whereIn('profession_skills.profession_id', $professions_group);
-            })->where('name_' . $lang, 'like', '%' . $skill_name . '%')->paginate(50, ['*'], 'page', $page);
+            })->where('name_' . $lang, 'like', '%' . $skill_name . '%')
+                ->orderBy('name_' . $lang, 'asc')
+                ->paginate(50, ['*'], 'page', $page);
 
             return $skills;
         } else {
@@ -426,6 +428,7 @@ class CourseController extends Controller
                 $q->whereIn('professional_areas.id', $professional_areas);
             })->where('name_' . $lang, 'like', '%' . $profession_name . '%')
                 ->where('parent_id', '!=', null)
+                ->orderBy('name_' . $lang, 'asc')
                 ->paginate(50, ['*'], 'page', $page);
 
         } else {
