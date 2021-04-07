@@ -198,4 +198,28 @@ class PageController extends Controller
         ]);
 
     }
+
+    public function testing()
+    {
+        $xml = XmlParser::load(url('https://iac2:Iac2007RBD@www.enbek.kz/feed/resume/profobl.xml'));
+        $professional_areas = $xml->parse([
+            'data' => ['uses' => 'row[field(::name=@)]'],
+        ]);
+
+        $xml = XmlParser::load(url('https://iac2:Iac2007RBD@www.enbek.kz/feed/resume/profobl_link_prf.xml'));
+        $profession_skills = $xml->parse([
+            'data' => ['uses' => 'row[field(::name=@)]'],
+        ]);
+
+        $professions = [];
+        foreach (array_values($profession_skills)[0] as $profession_skill) {
+            if ($profession_skill['cod_profObl'] === '111') {
+                $professions[] = $profession_skill['cod_NKZ'];
+            }
+        }
+
+        $professions = Professions::whereIn('code', $professions)->orderBy('name_ru', 'asc')->pluck('name_ru')->toArray();
+
+        dd($professions);
+    }
 }
