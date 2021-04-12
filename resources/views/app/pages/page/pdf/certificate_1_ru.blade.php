@@ -427,8 +427,11 @@
                                  style="left:167px;top:79px; position: absolute; height: 20px; width: 20px;border-radius: 55%;text-align: center;padding: 0; line-height: 12px;">{{date('d')}}</div>
                             <div style="left:191px;top:78px; position: absolute; ">»</div>
                             @php(\Carbon\Carbon::setlocale('ru'))
+                            @php($mounth_ru = \Carbon\Carbon::now()->translatedFormat('F'))
+                            @php(\Carbon\Carbon::setlocale('kk'))
+                            @php($mounth_kk = \Carbon\Carbon::now()->translatedFormat('F'))
                             <div class="diploma__text_field "
-                                 style="left:205px;top:79px; position: absolute; width: 120px;border-radius: 10px;text-align: center;padding: 0; line-height: 12px;">{{\Carbon\Carbon::now()->translatedFormat('F')}}</div>
+                                 style="left:205px;top:79px; position: absolute; width: 120px;border-radius: 10px;text-align: center;padding: 0; line-height: 12px;">{{$mounth_ru}}/{{$mounth_kk}}</div>
                             <div style="left:332px;top:80px; position: absolute; ">{{date('Y')}}ж. (г.)</div>
                     </td>
                     <td width="50% ">
