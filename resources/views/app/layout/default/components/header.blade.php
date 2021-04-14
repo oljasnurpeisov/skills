@@ -289,7 +289,7 @@
 @guest
     <header class="header compensate-for-scrollbar">
         <div class="container">
-            <a href="/{{$lang}}" title="{{__('default.main_title')}}" class="logo"><img src="/assets/img/logo_new.svg"
+            <a href="/{{$lang}}" title="{{__('default.main_title')}}" class="logo"><img src="/assets/img/logo_new.webp"
                                                                                         alt=""></a>
             <div class="buttons-group">
                 <form class="input-search" action="/{{$lang}}/course-catalog?search=">
