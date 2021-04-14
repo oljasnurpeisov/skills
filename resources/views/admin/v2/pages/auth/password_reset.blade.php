@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <img src="/assets/img/logo.svg" alt="" class="logo">
+    <img src="/assets/img/logo_new.webp" alt="" class="logo">
     <form action="/{{$lang}}/admin/passwordReset" method="POST">
         {{ csrf_field() }}
         <div class="input-group">

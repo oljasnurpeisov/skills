@@ -1,7 +1,7 @@
 @auth
     <header class="header">
         <div class="container">
-            <a href="/{{$lang}}" title="{{__('default.main_title')}}" class="logo"><img src="/assets/img/logo.svg"
+            <a href="/{{$lang}}" title="{{__('default.main_title')}}" class="logo"><img src="/assets/img/logo_new.webp"
                                                                                         alt=""></a>
             <ul class="menu">
                 @if(Auth::user()->hasRole('author'))
@@ -289,7 +289,7 @@
 @guest
     <header class="header compensate-for-scrollbar">
         <div class="container">
-            <a href="/{{$lang}}" title="{{__('default.main_title')}}" class="logo"><img src="/assets/img/logo.svg"
+            <a href="/{{$lang}}" title="{{__('default.main_title')}}" class="logo"><img src="/assets/img/logo_new.svg"
                                                                                         alt=""></a>
             <div class="buttons-group">
                 <form class="input-search" action="/{{$lang}}/course-catalog?search=">

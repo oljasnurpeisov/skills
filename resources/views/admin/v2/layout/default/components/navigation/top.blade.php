@@ -45,7 +45,7 @@
             </div>
             <div class="header-dropdown__desc">
                 <ul>
-                    <li><a href="/admin/profile/">Профиль</a></li>
+                    <li><a href="/{{$lang}}/admin/profile/">Профиль</a></li>
                     <li>
                         <a href="/admin/logout"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i

@@ -1,7 +1,7 @@
 <aside class="sidebar">
     <div class="sidebar__top hidden-sm hidden-xs">
         {{--<a href="/admin" title="Главная" class="logo"><img src="/assets/admin/img/logo.svg" alt=""></a>--}}
-        <a href="/{{$lang}}/admin" title="Главная" class="logo" style="color:white"><img src="/assets/img/logo.svg"
+        <a href="/{{$lang}}/admin" title="Главная" class="logo" style="color:white"><img src="/assets/img/logo_new.webp"
                                                                                          alt=""></a>
     </div>
     <div class="menu-wrapper">
