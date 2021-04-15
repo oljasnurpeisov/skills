@@ -177,6 +177,7 @@
     <script>
         renderAuthorStats(document.querySelector('#chartdiv'));
     </script>
+    <script src="/assets/libs/amcharts4/lang/ko_KR.js"></script>
     <!---->
 @endsection
 
