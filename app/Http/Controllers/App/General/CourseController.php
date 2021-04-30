@@ -12,7 +12,6 @@ use App\Models\ProfessionalArea;
 use App\Models\Professions;
 use App\Models\Skill;
 use App\Models\StudentCourse;
-use App\Models\StudentLesson;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +35,6 @@ class CourseController extends Controller
         $term = $request->search ? $request->search : '';
         $authors = $request->authors;
         $professional_areas = $request->professional_areas;
-
         // Сортировка по названию
         if ($term) {
             $query = $query->where(function ($q) use ($term) {
@@ -113,11 +111,13 @@ class CourseController extends Controller
         }
         // Получить проф.области
         if ($professional_areas) {
-            $professional_areas = ProfessionalArea::whereIn('id', $professional_areas)->get();
+            if (count(array_filter($professional_areas)) > 0) {
+                $query->whereHas('professional_areas', function ($q) use ($request) {
+                    $q->whereIn('professional_areas.id', $request->professional_areas);
+                });
+            }
 
-            $query->whereHas('professional_areas', function ($q) use ($request) {
-                $q->whereIn('professional_areas.id', $request->professional_areas);
-            });
+            $professional_areas = ProfessionalArea::whereIn('id', $professional_areas)->get();
         }
         // Сортировка по профессиям
         if ($specialities) {
