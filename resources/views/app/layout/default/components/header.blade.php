@@ -47,7 +47,7 @@
                                               action="/{{$lang}}/my-courses/quota-confirm-course/{{$notification->course->id}}"
                                               id="quota_confirm_form">
                                             {{ csrf_field() }}
-                                            <span>{!!trans($notification->name, ['course_name' => '"'. optional($notification->course)->name .'"', 'lang' => $lang, 'course_id' => optional($notification->course)->id, 'opponent_id' => json_decode($notification->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($notification->data)[0]->course_reject_message ?? '', 'course_quota_cost' => json_decode($notification->data)[0]->course_quota_cost ?? 0])!!}</span>
+                                            <span>{!!trans($notification->name, ['course_name' => '"'. optional($notification->course)->name .'"', 'lang' => $lang, 'course_id' => optional($notification->course)->id, 'opponent_id' => json_decode($notification->data)[0]->dialog_opponent_id ?? 0, 'reject_message' => json_decode($notification->data)[0]->course_reject_message ?? '', 'course_quota_cost' => json_decode($notification->data)[0]->course_quota_cost ?? 0, 'notification_id' => $notification->id])!!}</span>
                                             @if($notification->course->quota_status == 1)
                                                 <div class="buttons">
                                                     <button name="action" value="confirm"
@@ -74,7 +74,7 @@
                                     </li>
                                 @endif
                                 @if (Auth::user()->hasRole('author'))
-                                    <div id="rulesQuotaModal{{optional($notification->course)->id}}"
+                                    <div id="rulesQuotaModal{{optional($notification->course)->id.'-'.$notification->id}}"
                                          style="display:none; width: 500px" class="modal-form">
                                         <h4 class="title-primary text-center">{{__('notifications.quota_rules_title')}}</h4>
                                         <div class="plain-text" style="font-size: 1em">
