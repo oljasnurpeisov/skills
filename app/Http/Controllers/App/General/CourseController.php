@@ -113,11 +113,13 @@ class CourseController extends Controller
         }
         // Получить проф.области
         if ($professional_areas) {
-            $professional_areas = ProfessionalArea::whereIn('id', $professional_areas)->get();
+            if (count(array_filter($professional_areas)) > 0) {
+                $query->whereHas('professional_areas', function ($q) use ($request) {
+                    $q->whereIn('professional_areas.id', $request->professional_areas);
+                });
+            }
 
-            $query->whereHas('professional_areas', function ($q) use ($request) {
-                $q->whereIn('professional_areas.id', $request->professional_areas);
-            });
+            $professional_areas = ProfessionalArea::whereIn('id', $professional_areas)->get();
         }
         // Сортировка по профессиям
         if ($specialities) {
