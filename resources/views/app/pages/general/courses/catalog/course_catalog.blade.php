@@ -123,12 +123,12 @@
                                         <div class="sidebar-item__body">
                                             <select name="authors[]"
                                                     placeholder="{{__('default.pages.courses.choose_author')}}"
-                                                    data-method="getAuthorsByName"
+                                                    data-method="getAuthorsByCompanyName"
                                                     data-default="" class="custom" multiple>
                                                 @if(!empty($request->authors))
                                                     @foreach($authors as $author)
                                                         <option value="{{$author->id}}"
-                                                                selected>{{$author->author_info->name . ' ' . $author->author_info->surname}}</option>
+                                                                selected>{{$author->company_name}}</option>
                                                     @endforeach
                                                 @endif
                                             </select>

@@ -141,9 +141,9 @@ class CourseController extends Controller
         // Сортировка по авторам
         if ($authors) {
             $authors = User::whereIn('id', $authors)->get();
-
-            $query->whereHas('users', function ($q) use ($request) {
-                $q->whereIn('users.id', $request->authors);
+            $company_names = User::whereIn('id', $request->authors)->pluck('company_name');
+            $query->whereHas('users', function ($q) use ($request, $company_names) {
+                $q->whereIn('users.company_name', $company_names);
             });
         }
 
@@ -329,6 +329,24 @@ class CourseController extends Controller
 
         foreach ($authors as $author) {
             $author->name = $author->author_info->name . ' ' . $author->author_info->surname;
+        }
+
+        return $authors;
+    }
+
+    public function getAuthorsByCompanyName(Request $request, $lang)
+    {
+        $author_name = $request->name ?? '';
+        $page = $request->page ?? 1;
+
+        $authors = User::where('company_name', 'like', '%' . $author_name . '%')
+            ->where('company_name', '!=', null)
+            ->groupBy('company_name')
+            ->orderBy('company_name')
+            ->paginate(50, ['*'], 'page', $page);
+
+        foreach ($authors as $author) {
+            $author->name = $author->company_name;
         }
 
         return $authors;

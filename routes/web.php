@@ -239,6 +239,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::get("/getSkillsByData", "CourseController@getSkillsByData");
             Route::get("/getSkills", "CourseController@getSkills");
             Route::get("/getAuthorsByName", "CourseController@getAuthorsByName");
+            Route::get("/getAuthorsByCompanyName", "CourseController@getAuthorsByCompanyName");
             //
             Route::get("/getSkills", "CourseController@getCourseSkills");
             Route::get("/getProfessionsBySkills/{skill_id}", "CourseController@getProfessionsBySkills");
