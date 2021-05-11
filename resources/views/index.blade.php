@@ -219,7 +219,7 @@
                 <h2 class="title-primary decorated">{!! __('default.pages.index.popular_authors') !!}</h2>
                 <div class="regular-carousel courses-carousel">
                     @foreach($popular_authors as $author)
-                        <a href="/{{$lang}}/course-catalog?authors[]={{$author->company_name}}" title="" class="card">
+                        <a href="/{{$lang}}/course-catalog?authors[]={{$author->id}}" title="" class="card">
                             <div class="card__image card__author-image">
                                 <img src="{{$author->author_info->getAvatar()}}" alt="">
                             </div>
