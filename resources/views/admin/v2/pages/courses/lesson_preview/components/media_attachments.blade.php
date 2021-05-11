@@ -166,12 +166,12 @@
 {{--                                        </div>--}}
 {{--                                    @endforeach--}}
 {{--                                @endif--}}
-                                @if(!empty($lesson->lesson_attachment->audios_poor_hearing))
-                                    @foreach(json_decode($lesson->lesson_attachment->audios_poor_hearing) as $audio)
-                                        <audio controls
-                                               src="{{$audio}}"></audio>
-                                    @endforeach
-                                @endif
+{{--                                @if(!empty($lesson->lesson_attachment->audios_poor_hearing))--}}
+{{--                                    @foreach(json_decode($lesson->lesson_attachment->audios_poor_hearing) as $audio)--}}
+{{--                                        <audio controls--}}
+{{--                                               src="{{$audio}}"></audio>--}}
+{{--                                    @endforeach--}}
+{{--                                @endif--}}
                             </div>
                         </div>
                     @endif

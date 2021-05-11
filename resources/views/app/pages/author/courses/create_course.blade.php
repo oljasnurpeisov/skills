@@ -306,24 +306,24 @@
 {{--                                        <div class="previews-container"></div>--}}
 {{--                                    </div>--}}
 {{--                                </div>--}}
-                                <div class="form-group">
-                                    <label
-                                        class="form-group__label">{{__('default.pages.courses.course_audio_2')}}</label>
-                                    <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
-                                         data-maxfiles="5"
-                                         data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
-                                         class="dropzone-default dropzone-multiple">
-                                        <input type="hidden" name="audios_poor_hearing" value="">
-                                        <div class="dropzone-default__info">MP3
-                                            • {{__('default.pages.courses.max_file_title')}} 10MB
-                                        </div>
-                                        <a href="javascript:;"
-                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
-                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}
-                                        </a>
-                                        <div class="previews-container"></div>
-                                    </div>
-                                </div>
+{{--                                <div class="form-group">--}}
+{{--                                    <label--}}
+{{--                                        class="form-group__label">{{__('default.pages.courses.course_audio_2')}}</label>--}}
+{{--                                    <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"--}}
+{{--                                         data-maxfiles="5"--}}
+{{--                                         data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"--}}
+{{--                                         class="dropzone-default dropzone-multiple">--}}
+{{--                                        <input type="hidden" name="audios_poor_hearing" value="">--}}
+{{--                                        <div class="dropzone-default__info">MP3--}}
+{{--                                            • {{__('default.pages.courses.max_file_title')}} 10MB--}}
+{{--                                        </div>--}}
+{{--                                        <a href="javascript:;"--}}
+{{--                                           title="{{__('default.pages.courses.add_file_btn_title')}}"--}}
+{{--                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}--}}
+{{--                                        </a>--}}
+{{--                                        <div class="previews-container"></div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.preview_certificate_title')}}</label>
