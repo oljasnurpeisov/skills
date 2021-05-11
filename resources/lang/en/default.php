@@ -27,6 +27,7 @@ return [
             'course_description' => 'Описание курса',
             'course_description_placeholder' => 'Опишите содержание курса',
             'create_theme' => 'Создать модуль',
+            'create_theme_placeholder' => 'Создается при длительности курса более 12и часов',
             'coursework_title' => 'Курсовая работа',
             'final_test_title' => 'Итоговое тестирование',
 
@@ -198,6 +199,7 @@ return [
             'move_up_title' => 'Поднять',
             'move_down_title' => 'Спустить',
             'create_lesson' => 'Создать урок',
+            'create_lesson_placeholder' => 'Создается при длительности курса менее 12и часов',
             'lessons_title_1' => 'Уроков',
             'total_time_lessons' => 'Общая продолжительность',
             'hours_title' => 'часов',
