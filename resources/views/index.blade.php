@@ -225,7 +225,7 @@
                             </div>
                             <div class="card__desc">
                                 <div class="card__top">
-                                    <h3 class="card__title">{{$author->author_info->name . ' ' . $author->author_info->surname}}</h3>
+                                    <h3 class="card__title">{{$author->company_name}}</h3>
                                     <div class="card__stats">
                                         <span>{{$author->rates ?? 0}}</span> {{__('default.pages.profile.rates_count_title')}}
                                         <br/>
