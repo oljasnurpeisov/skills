@@ -74,42 +74,42 @@
 {{--               class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>--}}
 {{--        </div>--}}
 {{--    </div>--}}
-    <div class="form-group">
-        <label class="form-group__label">{{__('default.pages.courses.course_audio_1')}}</label>
-        <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
-             data-maxfiles="5"
-             data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
-             class="dropzone-default dropzone-multiple">
-            <input type="hidden" name="localAudio2" value="">
-            <div class="dropzone-default__info">MP3
-                • {{__('default.pages.courses.max_file_title')}} 10MB
-            </div>
-            <div class="previews-container">
-                @if($item->lesson_attachment->audios_poor_hearing != null)
-                    @foreach(json_decode($item->lesson_attachment->audios_poor_hearing) as $audio_poor_hearing)
-                        <div class="dz-preview dz-image-preview dz-stored">
-                            <div class="dz-details">
-                                <input type="text" name="localAudioStored2[]"
-                                       value="{{$audio_poor_hearing}}" placeholder="">
-                                <div class="dz-filename"><span
-                                            data-dz-name="">{{substr(basename($audio_poor_hearing), 14)}}</span>
-                                </div>
-                            </div>
-                            <a href="javascript:undefined;"
-                               title="{{__('default.pages.courses.delete')}}"
-                               class="link red">{{__('default.pages.courses.delete')}}</a>
-                            <a href="javascript:undefined;"
-                               title="{{__('default.pages.courses.reestablish')}}"
-                               class="link green"
-                               style="display:none;">{{__('default.pages.courses.reestablish')}}</a>
-                        </div>
-                    @endforeach
-                @endif
-            </div>
-            <a href="javascript:;" title="{{__('default.pages.courses.add_file_btn_title')}}"
-               class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
-        </div>
-    </div>
+{{--    <div class="form-group">--}}
+{{--        <label class="form-group__label">{{__('default.pages.courses.course_audio_1')}}</label>--}}
+{{--        <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"--}}
+{{--             data-maxfiles="5"--}}
+{{--             data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"--}}
+{{--             class="dropzone-default dropzone-multiple">--}}
+{{--            <input type="hidden" name="localAudio2" value="">--}}
+{{--            <div class="dropzone-default__info">MP3--}}
+{{--                • {{__('default.pages.courses.max_file_title')}} 10MB--}}
+{{--            </div>--}}
+{{--            <div class="previews-container">--}}
+{{--                @if($item->lesson_attachment->audios_poor_hearing != null)--}}
+{{--                    @foreach(json_decode($item->lesson_attachment->audios_poor_hearing) as $audio_poor_hearing)--}}
+{{--                        <div class="dz-preview dz-image-preview dz-stored">--}}
+{{--                            <div class="dz-details">--}}
+{{--                                <input type="text" name="localAudioStored2[]"--}}
+{{--                                       value="{{$audio_poor_hearing}}" placeholder="">--}}
+{{--                                <div class="dz-filename"><span--}}
+{{--                                            data-dz-name="">{{substr(basename($audio_poor_hearing), 14)}}</span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <a href="javascript:undefined;"--}}
+{{--                               title="{{__('default.pages.courses.delete')}}"--}}
+{{--                               class="link red">{{__('default.pages.courses.delete')}}</a>--}}
+{{--                            <a href="javascript:undefined;"--}}
+{{--                               title="{{__('default.pages.courses.reestablish')}}"--}}
+{{--                               class="link green"--}}
+{{--                               style="display:none;">{{__('default.pages.courses.reestablish')}}</a>--}}
+{{--                        </div>--}}
+{{--                    @endforeach--}}
+{{--                @endif--}}
+{{--            </div>--}}
+{{--            <a href="javascript:;" title="{{__('default.pages.courses.add_file_btn_title')}}"--}}
+{{--               class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>--}}
+{{--        </div>--}}
+{{--    </div>--}}
     <div class="form-group">
         <label class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments_2')}}</label>
         <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}" data-maxfiles="20"

@@ -27,6 +27,7 @@ return [
             'course_description' => 'Курстың сипаттамасы',
             'course_description_placeholder' => 'Курстың мазмұнын сипаттаңыз',
             'create_theme' => 'Модульды қалыптастыру',
+            'create_theme_placeholder' => 'Курстың ұзақтығы 12 сағаттан асатын болса құрылады',
             'coursework_title' => 'Курстық жұмыс',
             'final_test_title' => 'Қорытынды тестілеу',
 
@@ -194,6 +195,7 @@ return [
             'move_up_title' => 'Көтеру',
             'move_down_title' => 'Түсіру',
             'create_lesson' => 'Сабақты құру',
+            'create_lesson_placeholder' => 'Курстың ұзақтығы 12 сағаттан аспайтын болса құрылады',
             'lessons_title_1' => 'Сабақтар',
             'total_time_lessons' => 'Жалпы ұзақтығы',
             'hours_title' => 'сағат',

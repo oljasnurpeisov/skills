@@ -180,13 +180,13 @@
                                     <div class="row row--multiline">
                                         <div class="col-auto">
                                             <a href="#addTopicModal"
-                                               title="{{__('default.pages.courses.create_theme')}}"
+                                               title="{{__('default.pages.courses.create_theme_placeholder')}}"
                                                class="btn small"
                                                data-fancybox>{{__('default.pages.courses.create_theme')}}</a>
                                         </div>
                                         <div class="col-auto">
                                             <a href="/{{$lang}}/my-courses/course/{{$item->id}}/create-lesson"
-                                               title="{{__('default.pages.courses.create_lesson')}}"
+                                               title="{{__('default.pages.courses.create_lesson_placeholder')}}"
                                                class="btn small">{{__('default.pages.courses.create_lesson')}}</a>
                                         </div>
                                         @if($item->finalTest() == null)

@@ -24,7 +24,13 @@
                         </ul>
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <label class="form-group__label">
+                        <a href="/files/instructions.pdf" target="_blank" style="color: #2ab5f6;">
+                            {{ __('default.pages.courses.instruction') }}
+                        </a>
+                    </label>
+                </div>
                 <form class="author-personal" action="/{{$lang}}/update_author_data_profile" method="POST"
                       enctype="multipart/form-data">
                     {{ csrf_field() }}
