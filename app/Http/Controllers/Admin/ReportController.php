@@ -640,6 +640,7 @@ class ReportController extends Controller
     public function certificatesReports(Request $request)
     {
         $student_name = $request->student_name ? $request->student_name : '';
+        $student_iin = $request->iin;
         $payment_type = $request->payment_type;
         $date_from = $request->get("date_from", Carbon::now()->subDays(90)->format('Y-m-d'));
         $date_to = $request->get("date_to", Carbon::now()->format('Y-m-d'));
@@ -669,6 +670,12 @@ class ReportController extends Controller
         if ($student_name) {
             $query->whereHas('students.student_info', function ($q) use ($student_name) {
                 $q->where('name', 'like', '%' . $student_name . '%');
+            });
+        }
+        // Поиск по ИИН обучающегося
+        if ($student_iin) {
+            $query->whereHas('students.student_info', function ($q) use ($student_iin) {
+                $q->where('iin', 'like', '%' . $student_iin . '%');
             });
         }
         // Поиск по типу оплаты за курс

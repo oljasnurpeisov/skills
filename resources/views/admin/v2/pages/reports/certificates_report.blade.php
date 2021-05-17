@@ -21,6 +21,16 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="input-group">
+                            <label class="input-group__title">ИИН</label>
+                            <label class="">
+                                <input type="text" name="iin"
+                                       value="{{$request->iin}}" placeholder=""
+                                       class="input-regular" autocomplete="off">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="input-group">
                             <label class="input-group__title">Тип оплаты за курс</label>
                             <select name="payment_type" class="input-regular chosen" data-placeholder=" ">
                                 <option value="" selected hidden></option>
