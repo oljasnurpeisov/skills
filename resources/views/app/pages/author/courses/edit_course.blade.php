@@ -23,7 +23,7 @@
                             @csrf
                             <div class="form-group">
                                 <label class="form-group__label">
-                                    <a href="/files/instructions.pdf" target="_blank" style="color: #2ab5f6;">
+                                    <a href="/files/author_instructions_{{$lang}}.pdf" target="_blank" style="color: #2ab5f6;">
                                         {{ __('default.pages.courses.instruction') }}
                                     </a>
                                 </label>
