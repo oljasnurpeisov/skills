@@ -97,6 +97,7 @@ return [
             'write_feedback' => 'Пікір қалдыру',
 
             'course_name' => 'Курс атауы',
+            'instruction' => 'Авторға арналған нұсқаулық',
             'skills_title' => 'Дағдылар (кем дегенде 1 дағды)',
             'skill_title' => 'Дағды',
             'choose_skill_title' => 'Дағдыны таңдаңыз',
