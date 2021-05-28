@@ -119,6 +119,7 @@ class RegisterController extends Controller
 
         $user_information = new UserInformation;
         $user_information->user_id = $user->id;
+        $user_information->avatar = $user->company_logo;
         $user_information->save();
 
         $user_pay_information = new PayInformation;
