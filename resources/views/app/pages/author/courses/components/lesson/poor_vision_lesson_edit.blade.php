@@ -75,13 +75,14 @@
 {{--        </div>--}}
 {{--    </div>--}}
     <div class="form-group">
-        <label class="form-group__label">{{__('default.pages.courses.course_audio_1')}}</label>
+        <label class="form-group__label">{{__('default.pages.courses.course_audio_1')}}*</label>
         <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
              data-maxfiles="5"
              data-required="true"
              data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
              class="dropzone-default dropzone-multiple">
             <input type="text" name="localAudio1">
+            <input name="localAudio1-req" type="text" class="req" required>
             <div class="dropzone-default__info">MP3
                 • {{__('default.pages.courses.max_file_title')}} 10MB
             </div>
@@ -111,7 +112,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments_1')}}</label>
+        <label class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments_1')}}*</label>
         <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}" data-maxfiles="20"
              data-maxsize="20"
              data-required="true"
@@ -119,6 +120,7 @@
              id="documents-dropzone"
              class="dropzone-default dropzone-multiple">
             <input type="text" name="localDocuments1">
+            <input name="localDocuments1-req" type="text" class="req" required>
             <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX, PPTX, PNG, JPG • {{__('default.pages.courses.max_file_title')}} 20
                 MB
             </div>

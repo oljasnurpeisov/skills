@@ -1,16 +1,16 @@
 <div id="poorHearing" @if($course->is_poor_hearing == true) style="display: block" @else style="display: none" @endif>
     <h3 class="title-tertiary">{{__('default.pages.courses.is_poor_hearing')}}</h3>
     <div class="form-group">
-        <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link_2')}}</label>
+        <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link_2')}}*</label>
         @if($item->lesson_attachment->videos_poor_hearing_link != null)
             <input type="url" name="videos_poor_hearing_link[]" placeholder=""
                    class="input-regular"
                    value="{{json_decode($item->lesson_attachment->videos_poor_hearing_link)[0]}}"
-                   id="courseVideo2">
+                   id="courseVideo2" required>
         @else
             <input type="url" name="videos_poor_hearing_link[]" placeholder=""
                    class="input-regular"
-                   value="" id="courseVideo2">
+                   value="" id="courseVideo2" required>
         @endif
     </div>
     <div class="removable-items">

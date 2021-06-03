@@ -286,14 +286,14 @@ $(function () {
             input.setAttribute('disabled', 'disabled');
             hideEl(removeBtn);
             showEl(recoverBtn);
-            checkRequiredDropzone(el)
+            checkRequiredDropzone($(el).parent().parent())
         });
 
         recoverBtn.addEventListener('click', function () {
             input.removeAttribute('disabled');
             hideEl(recoverBtn);
             showEl(removeBtn);
-            checkRequiredDropzone(el)
+            checkRequiredDropzone($(el).parent().parent())
         })
     });
 
@@ -787,11 +787,23 @@ let CustomDropzone = function (el, url, maxFiles, maxSize, acceptedFiles, showTh
 };
 
 // Required
+// $(document).on('input[type="checkbox"]', 'change', function() {
+//     if ($('.dz-preview').length) {
+//
+//     }
+// });
+
 function checkRequiredDropzone(el) {
+    // if ($(el).parent().parent().parent().attr('style') === 'display: none') return;
+
     let count = $(el).find('.link.red:not([style="display: none;"])').length;
 
-    if ($(el).find('input.req').length === 0)
-        $(el).append('<input type="text" class="req" required>');
+    // console.log(count);
+
+    // if ($(el).find('input.req').length === 0)
+    //     $(el).append('<input name="2" type="text" class="req" required disabled>');
+
+    // console.log($(el).parent().find('input.req'))
 
     if (count > 0) {
         $(el).find('input.req')[0].value = 1;

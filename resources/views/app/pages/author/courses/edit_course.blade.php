@@ -406,7 +406,7 @@
                                 {{--                                    </div>--}}
                                 {{--                                </div>--}}
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.courses.course_audio_1')}}</label>
+                                    <label class="form-group__label">{{__('default.pages.courses.course_audio_1')}}*</label>
                                     <div class="input-addon">
                                         <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
                                              data-maxfiles="5"
@@ -414,6 +414,7 @@
                                              data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
                                              class="dropzone-default dropzone-multiple">
                                             <input type="hidden" name="localAudio1" value="">
+                                            <input name="req" type="text" class="req" required @if($item->is_poor_vision != true) disabled @endif>
                                             <div class="dropzone-default__info">MP3
                                                 • {{__('default.pages.courses.max_file_title')}} 10MB
                                             </div>
@@ -457,7 +458,7 @@
                                  @else style="display: none" @endif>
                                 <h3 class="title-tertiary">{{__('default.pages.courses.is_poor_hearing')}}</h3>
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.courses.video_link_2')}}</label>
+                                    <label class="form-group__label">{{__('default.pages.courses.video_link_2')}}*</label>
                                     <div class="input-addon">
                                         @if($item->attachments->videos_poor_hearing_link != null)
                                             <input type="url" name="videos_poor_hearing_link[]" placeholder=""

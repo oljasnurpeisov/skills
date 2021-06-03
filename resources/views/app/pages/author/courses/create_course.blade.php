@@ -255,7 +255,7 @@
                                 {{--                                </div>--}}
                                 <div class="form-group">
                                     <label
-                                        class="form-group__label">{{__('default.pages.courses.course_audio_1')}}</label>
+                                        class="form-group__label">{{__('default.pages.courses.course_audio_1')}}*</label>
                                     <div class="input-addon">
                                         <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
                                              data-maxfiles="5"
@@ -263,6 +263,7 @@
                                              data-maxsize="10" data-acceptedfiles=".mp3" id="audio1"
                                              class="dropzone-default dropzone-multiple">
                                             <input type="hidden" name="audios_poor_vision" value="">
+                                            <input name="req" type="text" class="req" required disabled>
                                             <div class="dropzone-default__info">MP3
                                                 • {{__('default.pages.courses.max_file_title')}} 10MB
                                             </div>
@@ -281,7 +282,7 @@
                                 <h3 class="title-tertiary">{{__('default.pages.courses.is_poor_hearing')}}</h3>
                                 <div class="form-group">
                                     <label
-                                        class="form-group__label">{{__('default.pages.courses.video_link_2')}}</label>
+                                        class="form-group__label">{{__('default.pages.courses.video_link_2')}}*</label>
                                     <div class="input-addon">
                                         <input type="url" name="videos_poor_hearing_link[]" placeholder=""
                                                class="input-regular"
@@ -393,8 +394,6 @@
                 skillsSelect.removeMessage();
             }, 3000);
         })
-
-        // $('input[name="is_paid"]').on('click', $('input[name="cost"]').inputmask('currency', {prefix: '',groupSeparator: ' ',rightAlign: false, digits: 0}))
     </script>
     <!---->
 @endsection
