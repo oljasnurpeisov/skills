@@ -407,44 +407,50 @@
                                 {{--                                </div>--}}
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.courses.course_audio_1')}}</label>
-                                    <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
-                                         data-maxfiles="5"
-                                         data-required="true"
-                                         data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
-                                         class="dropzone-default dropzone-multiple">
-                                        <input type="hidden" name="localAudio1" value="">
-                                        <div class="dropzone-default__info">MP3
-                                            • {{__('default.pages.courses.max_file_title')}} 10MB
-                                        </div>
-                                        @if($item->attachments->audios_poor_vision != null)
-                                            <div class="previews-container">
-                                                @foreach(json_decode($item->attachments->audios_poor_vision) as $audio_poor_vision)
-                                                    <div class="dz-preview dz-image-preview dz-stored">
-                                                        <div class="dz-details">
-                                                            <input type="text" name="localAudioStored1[]"
-                                                                   value="{{$audio_poor_vision}}" placeholder="">
-                                                            <div class="dz-filename"><span
-                                                                    data-dz-name="">{{substr(basename($audio_poor_vision), 14)}}</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="javascript:undefined;"
-                                                           title="{{__('default.pages.courses.delete')}}"
-                                                           class="link red">{{__('default.pages.courses.delete')}}</a>
-                                                        <a href="javascript:undefined;"
-                                                           title="{{__('default.pages.courses.reestablish')}}"
-                                                           class="link green"
-                                                           style="display:none;">{{__('default.pages.courses.reestablish')}}</a>
-                                                    </div>
-                                                @endforeach
+                                    <div class="input-addon">
+                                        <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
+                                             data-maxfiles="5"
+                                             data-required="true"
+                                             data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
+                                             class="dropzone-default dropzone-multiple">
+                                            <input type="hidden" name="localAudio1" value="">
+                                            <div class="dropzone-default__info">MP3
+                                                • {{__('default.pages.courses.max_file_title')}} 10MB
                                             </div>
-                                        @endif
-                                        <a href="javascript:;"
-                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
-                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
-                                        @if($item->attachments->audios_poor_vision == null)
-                                            <div class="previews-container"></div>
-                                        @endif
+                                            @if($item->attachments->audios_poor_vision != null)
+                                                <div class="previews-container">
+                                                    @foreach(json_decode($item->attachments->audios_poor_vision) as $audio_poor_vision)
+                                                        <div class="dz-preview dz-image-preview dz-stored">
+                                                            <div class="dz-details">
+                                                                <input type="text" name="localAudioStored1[]"
+                                                                       value="{{$audio_poor_vision}}" placeholder="">
+                                                                <div class="dz-filename"><span
+                                                                        data-dz-name="">{{substr(basename($audio_poor_vision), 14)}}</span>
+                                                                </div>
+                                                            </div>
+                                                            <a href="javascript:undefined;"
+                                                               title="{{__('default.pages.courses.delete')}}"
+                                                               class="link red">{{__('default.pages.courses.delete')}}</a>
+                                                            <a href="javascript:undefined;"
+                                                               title="{{__('default.pages.courses.reestablish')}}"
+                                                               class="link green"
+                                                               style="display:none;">{{__('default.pages.courses.reestablish')}}</a>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            @endif
+                                            <a href="javascript:;"
+                                               title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                               class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                            @if($item->attachments->audios_poor_vision == null)
+                                                <div class="previews-container"></div>
+                                            @endif
+                                        </div>
+                                        <div class="addon">
+                                            <span class="required">*</span>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
                             <div id="poorHearing" @if($item->is_poor_hearing == true) style="display: block"
@@ -452,16 +458,21 @@
                                 <h3 class="title-tertiary">{{__('default.pages.courses.is_poor_hearing')}}</h3>
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.courses.video_link_2')}}</label>
-                                    @if($item->attachments->videos_poor_hearing_link != null)
-                                        <input type="url" name="videos_poor_hearing_link[]" placeholder=""
-                                               class="input-regular"
-                                               value="{{json_decode($item->attachments->videos_poor_hearing_link)[0]}}"
-                                               id="courseVideo2" required>
-                                    @else
-                                        <input type="url" name="videos_poor_hearing_link[]" placeholder=""
-                                               class="input-regular"
-                                               value="" id="courseVideo2" required>
-                                    @endif
+                                    <div class="input-addon">
+                                        @if($item->attachments->videos_poor_hearing_link != null)
+                                            <input type="url" name="videos_poor_hearing_link[]" placeholder=""
+                                                   class="input-regular"
+                                                   value="{{json_decode($item->attachments->videos_poor_hearing_link)[0]}}"
+                                                   id="courseVideo2" required>
+                                        @else
+                                            <input type="url" name="videos_poor_hearing_link[]" placeholder=""
+                                                   class="input-regular"
+                                                   value="" id="courseVideo2" required>
+                                        @endif
+                                        <div class="addon">
+                                            <span class="required">*</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="removable-items">
                                     @if($item->attachments->videos_poor_hearing_link != null)
@@ -480,7 +491,7 @@
                                 </div>
                                 <div class="text-right pull-up">
                                     <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"
-                                       data-duplicate="courseVideo1"
+                                       data-duplicate="courseVideo2"
                                        data-maxcount="4"><span
                                             class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span><span
                                             class="btn-icon small icon-plus"> </span></a>
