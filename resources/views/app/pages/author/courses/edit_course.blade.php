@@ -128,7 +128,7 @@
                                 <label class="form-group__label">{{__('default.pages.courses.course_cost')}}</label>
                                 <div class="input-addon">
                                     <input type="text" name="cost" placeholder="" value="{{$item->cost}}"
-                                           class="input-regular" required>
+                                           class="input-regular" required onfocus="$(this).inputmask('currency', {prefix: '',groupSeparator: ' ',rightAlign: false, digits: 0})">
                                     <div class="addon">
                                         <span class="required">*</span>
                                     </div>
