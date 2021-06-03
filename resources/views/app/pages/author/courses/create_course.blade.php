@@ -208,11 +208,11 @@
 {{--                                </div>--}}
 {{--                            </div>--}}
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.course_audio')}}</label>
+                                <label class="form-group__label">{{__('default.pages.courses.course_audio_1')}}</label>
                                 <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}" data-maxfiles="5"
-                                     data-maxsize="10" data-acceptedfiles=".mp3" id="audio"
+                                     data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
                                      class="dropzone-default dropzone-multiple">
-                                    <input type="hidden" name="audios" value="">
+                                    <input type="text" name="localAudio1" value="" required>
                                     <div class="dropzone-default__info">MP3
                                         • {{__('default.pages.courses.max_file_title')}} 10MB
                                     </div>
@@ -221,21 +221,21 @@
                                     <div class="previews-container"></div>
                                 </div>
                             </div>
-                            <div id="poorVision" style="display: none">
+                            <div id="poorVision" style="display: block">
                                 <h3 class="title-tertiary">{{__('default.pages.courses.is_vision_version')}}</h3>
-                                <div class="form-group">
-                                    <label
-                                        class="form-group__label">{{__('default.pages.courses.video_link_1')}}</label>
-                                    <input type="url" name="videos_poor_vision_link[]" placeholder=""
-                                           class="input-regular" id="courseVideo1" required disabled>
-                                </div>
-                                <div class="removable-items"></div>
-                                <div class="text-right pull-up">
-                                    <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"
-                                       data-duplicate="courseVideo1" data-maxcount="4"><span
-                                            class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
-                                            class="btn-icon small icon-plus"> </span></a>
-                                </div>
+{{--                                <div class="form-group">--}}
+{{--                                    <label--}}
+{{--                                        class="form-group__label">{{__('default.pages.courses.video_link_1')}}</label>--}}
+{{--                                    <input type="url" name="videos_poor_vision_link[]" placeholder=""--}}
+{{--                                           class="input-regular" id="courseVideo1" required disabled>--}}
+{{--                                </div>--}}
+{{--                                <div class="removable-items"></div>--}}
+{{--                                <div class="text-right pull-up">--}}
+{{--                                    <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"--}}
+{{--                                       data-duplicate="courseVideo1" data-maxcount="4"><span--}}
+{{--                                            class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span--}}
+{{--                                            class="btn-icon small icon-plus"> </span></a>--}}
+{{--                                </div>--}}
 {{--                                <div class="form-group">--}}
 {{--                                    <label--}}
 {{--                                        class="form-group__label">{{__('default.pages.courses.video_local_1')}}</label>--}}
@@ -256,37 +256,48 @@
                                 <div class="form-group">
                                     <label
                                         class="form-group__label">{{__('default.pages.courses.course_audio_1')}}</label>
-                                    <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
-                                         data-maxfiles="5"
-                                         data-maxsize="10" data-acceptedfiles=".mp3" id="audio1"
-                                         class="dropzone-default dropzone-multiple">
-                                        <input type="hidden" name="audios_poor_vision" value="">
-                                        <div class="dropzone-default__info">MP3
-                                            • {{__('default.pages.courses.max_file_title')}} 10MB
+                                    <div class="input-addon">
+                                        <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}"
+                                             data-maxfiles="5"
+                                             data-maxsize="10" data-acceptedfiles=".mp3" id="audio1"
+                                             class="dropzone-default dropzone-multiple">
+                                            <input type="hidden" name="audios_poor_vision" value="">
+                                            <div class="dropzone-default__info">MP3
+                                                • {{__('default.pages.courses.max_file_title')}} 10MB
+                                            </div>
+                                            <a href="javascript:;"
+                                               title="{{__('default.pages.courses.add_file_btn_title')}}"
+                                               class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
+                                            <div class="previews-container"></div>
                                         </div>
-                                        <a href="javascript:;"
-                                           title="{{__('default.pages.courses.add_file_btn_title')}}"
-                                           class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
-                                        <div class="previews-container"></div>
+                                        <div class="addon">
+                                            <span class="required">*</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div id="poorHearing" style="display: none">
+                            <div id="poorHearing" style="display: block">
                                 <h3 class="title-tertiary">{{__('default.pages.courses.is_poor_hearing')}}</h3>
                                 <div class="form-group">
                                     <label
                                         class="form-group__label">{{__('default.pages.courses.video_link_2')}}</label>
-                                    <input type="url" name="videos_poor_hearing_link[]" placeholder=""
-                                           class="input-regular"
-                                           id="courseVideo2" required disabled>
+                                    <div class="input-addon">
+                                        <input type="url" name="videos_poor_hearing_link[]" placeholder=""
+                                               class="input-regular"
+                                               id="courseVideo2" required>
+                                        <div class="addon">
+                                            <span class="required">*</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="removable-items"></div>
                                 <div class="text-right pull-up">
                                     <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"
-                                       data-duplicate="courseVideo1"
-                                       data-maxcount="4"><span
-                                            class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span><span
-                                            class="btn-icon small icon-plus"> </span></a>
+                                       data-duplicate="courseVideo2"
+                                       data-maxcount="4">
+                                        <span class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span>
+                                        <span class="btn-icon small icon-plus"> </span>
+                                    </a>
                                 </div>
 {{--                                <div class="form-group">--}}
 {{--                                    <label--}}
