@@ -208,11 +208,11 @@
 {{--                                </div>--}}
 {{--                            </div>--}}
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.courses.course_audio_1')}}</label>
+                                <label class="form-group__label">{{__('default.pages.courses.course_audio')}}</label>
                                 <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}" data-maxfiles="5"
-                                     data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
+                                     data-maxsize="10" data-acceptedfiles=".mp3" id="audio"
                                      class="dropzone-default dropzone-multiple">
-                                    <input type="text" name="localAudio1" value="" required>
+                                    <input type="hidden" name="audios" value="">
                                     <div class="dropzone-default__info">MP3
                                         • {{__('default.pages.courses.max_file_title')}} 10MB
                                     </div>
@@ -261,7 +261,7 @@
                                              data-maxfiles="5"
                                              data-maxsize="10" data-acceptedfiles=".mp3" id="audio1"
                                              class="dropzone-default dropzone-multiple">
-                                            <input type="hidden" name="audios_poor_vision" value="">
+                                            <input type="text" name="audios_poor_vision" value="" required>
                                             <div class="dropzone-default__info">MP3
                                                 • {{__('default.pages.courses.max_file_title')}} 10MB
                                             </div>
