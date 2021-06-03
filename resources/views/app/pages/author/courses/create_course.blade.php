@@ -221,7 +221,7 @@
                                     <div class="previews-container"></div>
                                 </div>
                             </div>
-                            <div id="poorVision" style="display: block">
+                            <div id="poorVision" style="display: none">
                                 <h3 class="title-tertiary">{{__('default.pages.courses.is_vision_version')}}</h3>
 {{--                                <div class="form-group">--}}
 {{--                                    <label--}}
@@ -276,7 +276,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="poorHearing" style="display: block">
+                            <div id="poorHearing" style="display: none">
                                 <h3 class="title-tertiary">{{__('default.pages.courses.is_poor_hearing')}}</h3>
                                 <div class="form-group">
                                     <label

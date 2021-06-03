@@ -129,26 +129,12 @@
                                         @if($item->is_poor_vision == true)
                                             <h3 class="title-tertiary">{{__('default.pages.courses.is_vision_version')}}</h3>
                                             <div class="form-group">
-                                                <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link_1')}}</label>
-                                                <input type="url" name="videos_poor_vision_link[]" placeholder=""
-                                                       class="input-regular"
-                                                       id="courseVideo1">
-                                            </div>
-                                            <div class="removable-items"></div>
-                                            <div class="text-right pull-up">
-                                                <a href="#" title="{{__('default.pages.profile.add_btn_title')}}"
-                                                   class="add-btn"
-                                                   data-duplicate="courseVideo1" data-maxcount="4"><span
-                                                            class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
-                                                            class="btn-icon small icon-plus"> </span></a>
-                                            </div>
-                                            <div class="form-group">
                                                 <label class="form-group__label">{{__('default.pages.lessons.lesson_audio_1')}}</label>
                                                 <div data-url="/ajax_upload_lesson_audios?_token={{ csrf_token() }}"
                                                      data-maxfiles="5"
                                                      data-maxsize="10" data-acceptedfiles=".mp3" id="audio1"
                                                      class="dropzone-default dropzone-multiple">
-                                                    <input type="hidden" name="audios_poor_vision" value="">
+                                                    <input type="text" name="audios_poor_vision" value="" required>
                                                     <div class="dropzone-default__info">MP3
                                                         • {{__('default.pages.courses.max_file_title')}} 10MB
                                                     </div>
@@ -166,7 +152,7 @@
                                                      data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg"
                                                      id="documents-dropzone2"
                                                      class="dropzone-default dropzone-multiple">
-                                                    <input type="hidden" name="another_files_poor_vision" value="">
+                                                    <input type="text" name="another_files_poor_vision" value="" required>
                                                     <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX,
                                                         PPTX, PNG,
                                                         JPG
@@ -183,10 +169,10 @@
                                         @if($item->is_poor_hearing == true)
                                             <h3 class="title-tertiary">{{__('default.pages.courses.is_poor_hearing')}}</h3>
                                             <div class="form-group">
-                                                <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link_2')}}</label>
+                                                <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link_2')}}*</label>
                                                 <input type="url" name="videos_poor_hearing_link[]" placeholder=""
                                                        class="input-regular"
-                                                       id="courseVideo2">
+                                                       id="courseVideo2" required>
                                             </div>
                                             <div class="removable-items"></div>
                                             <div class="text-right pull-up">
@@ -195,22 +181,6 @@
                                                    data-duplicate="courseVideo2" data-maxcount="4"><span
                                                             class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
                                                             class="btn-icon small icon-plus"> </span></a>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="form-group__label">{{__('default.pages.lessons.lesson_audio_2')}}</label>
-                                                <div data-url="/ajax_upload_lesson_audios?_token={{ csrf_token() }}"
-                                                     data-maxfiles="5"
-                                                     data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
-                                                     class="dropzone-default dropzone-multiple">
-                                                    <input type="hidden" name="audios_poor_hearing" value="">
-                                                    <div class="dropzone-default__info">MP3
-                                                        • {{__('default.pages.courses.max_file_title')}} 10MB
-                                                    </div>
-                                                    <a href="javascript:;"
-                                                       title="{{__('default.pages.courses.add_file_btn_title')}}"
-                                                       class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
-                                                    <div class="previews-container"></div>
-                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments_2')}}</label>

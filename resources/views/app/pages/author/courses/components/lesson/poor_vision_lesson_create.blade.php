@@ -1,4 +1,5 @@
-<div id="poorVision" @if($course->is_poor_vision == true) style="display: block" @else style="display: none" @endif>
+{{--<div id="poorVision" @if($course->is_poor_vision == true) style="display: block" @else style="display: none" @endif>--}}
+<div id="poorVision">
     <h3 class="title-tertiary">{{__('default.pages.courses.is_vision_version')}}</h3>
 {{--    <div class="form-group">--}}
 {{--        <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link_1')}}</label>--}}
@@ -80,7 +81,7 @@
              data-maxfiles="5"
              data-maxsize="10" data-acceptedfiles=".mp3" id="audio2"
              class="dropzone-default dropzone-multiple">
-            <input type="text" name="localAudio1" value="@if ($item->lesson_attachment->audios_poor_vision != "[]"){{$item->lesson_attachment->audios_poor_vision}}@endif" required>
+            <input type="text" name="localAudio1" value="" required>
             <div class="dropzone-default__info">MP3
                 • {{__('default.pages.courses.max_file_title')}} 10MB
             </div>
@@ -89,9 +90,10 @@
                     @foreach(json_decode($item->lesson_attachment->audios_poor_vision) as $audio_poor_vision)
                         <div class="dz-preview dz-image-preview dz-stored">
                             <div class="dz-details">
-                                <input type="text" name="localAudioStored1[]" value="{{$audio_poor_vision}}" placeholder="">
-                                <div class="dz-filename">
-                                    <span data-dz-name="">{{substr(basename($audio_poor_vision), 14)}}</span>
+                                <input type="text" name="localAudioStored1[]"
+                                       value="{{$audio_poor_vision}}" placeholder="">
+                                <div class="dz-filename"><span
+                                            data-dz-name="">{{substr(basename($audio_poor_vision), 14)}}</span>
                                 </div>
                             </div>
                             <a href="javascript:undefined;"
@@ -116,7 +118,7 @@
              data-acceptedfiles=".pdf, .doc, .xls, .ppt, .docx, .xlsx, .pptx, .png, .jpg, .rar"
              id="documents-dropzone"
              class="dropzone-default dropzone-multiple">
-            <input type="text" name="localDocuments1" value="@if ($item->lesson_attachment->another_files_poor_vision != "[]"){{$item->lesson_attachment->another_files_poor_vision}}@endif" required>
+            <input type="text" name="localDocuments1" value="">
             <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX, PPTX, PNG, JPG • {{__('default.pages.courses.max_file_title')}} 20
                 MB
             </div>
