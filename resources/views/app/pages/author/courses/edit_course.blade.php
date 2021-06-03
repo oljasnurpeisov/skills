@@ -328,8 +328,8 @@
                                     @endif
                                 </div>
                             </div>
-                            <div id="poorVision" @if($item->is_poor_vision == true) style="display: block"
-                                 @else style="display: none" @endif>
+{{--                            <div id="poorVision" @if($item->is_poor_vision == true) style="display: block" @else style="display: none" @endif>--}}
+                            <div id="poorVision">
                                 <h3 class="title-tertiary">{{__('default.pages.courses.is_vision_version')}}</h3>
 {{--                                <div class="form-group">--}}
 {{--                                    <label class="form-group__label">{{__('default.pages.courses.video_link_1')}}</label>--}}
@@ -451,8 +451,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="poorHearing" @if($item->is_poor_hearing == true) style="display: block"
-                                 @else style="display: none" @endif>
+{{--                            <div id="poorHearing" @if($item->is_poor_hearing == true) style="display: block" @else style="display: none" @endif>--}}
+                            <div id="poorHearing">
                                 <h3 class="title-tertiary">{{__('default.pages.courses.is_poor_hearing')}}</h3>
                                 <div class="form-group">
                                     <label class="form-group__label">{{__('default.pages.courses.video_link_2')}}</label>
