@@ -44,11 +44,12 @@
                                 <label
                                     class="form-group__label">{{__('default.pages.courses.choose_professional_area_title')}}</label>
                                 <div class="input-addon">
-                                    <select name="professional_areas"
+                                    <select name="professional_areas[]"
                                             placeholder="{{__('default.pages.courses.choose_professional_area_title')}}"
                                             data-method="getProfessionalAreaByName"
                                             class="professional-areas-select"
                                             data-noresults="{{__('default.pages.index.nothing_to_show')}}" required>
+{{--                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" multiple required>--}}
                                     </select>
                                     <div class="addon">
                                         <span class="required">*</span>
@@ -59,11 +60,12 @@
                                 <label
                                     class="form-group__label">{{__('default.pages.courses.choose_profession_title')}}</label>
                                 <div class="input-addon">
-                                    <select name="professions"
+                                    <select name="professions[]"
                                             placeholder="{{__('default.pages.courses.choose_profession_title')}}"
                                             data-method="getProfessionsByData"
                                             class="professions-select"
                                             data-noresults="{{__('default.pages.index.nothing_to_show')}}" required>
+{{--                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" multiple required>--}}
                                     </select>
                                     <div class="addon">
                                         <span class="required">*</span>
@@ -370,13 +372,17 @@
 @section('scripts')
     <!--Only this page's scripts-->
     <script>
-        const professionalAreaEl = $('[name="professional_areas"]'),
-            specialityEl = $('[name="professions"]'),
+        const professionalAreaEl = $('[name="professional_areas[]"]'),
+            specialityEl = $('[name="professions[]"]'),
             skillsEl = $('[name="skills[]"]');
+
+        // let professionAreaSelect = new ajaxSelect(professionalAreaEl, null, true, 2);
+        // let specialitySelect = new ajaxSelect(specialityEl, professionalAreaEl, true, 3);
+        // let skillsSelect = new ajaxSelect(skillsEl, specialityEl, true, 7);
 
         let professionAreaSelect = new ajaxSelect(professionalAreaEl);
         let specialitySelect = new ajaxSelect(specialityEl, professionalAreaEl);
-        let skillsSelect = new ajaxSelect(skillsEl, specialityEl, true, 7);
+        let skillsSelect = new ajaxSelect(skillsEl, specialityEl);
 
         professionalAreaEl.change(function () {
             specialitySelect.update($(this).val() ? {"professional_areas": toArray($(this).val())} : null);
