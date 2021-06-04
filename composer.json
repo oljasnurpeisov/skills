@@ -50,7 +50,8 @@
       },
 
       "classmap": [
-          "app/Services"
+          "app/Services",
+          "app/Libraries"
       ]
 
   },
