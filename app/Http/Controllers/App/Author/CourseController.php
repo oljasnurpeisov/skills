@@ -552,10 +552,11 @@ class CourseController extends Controller
 
             $item->image = $request->image;
         }
-        $item->skills()->detach();
-        foreach ($request->skills as $key => $skill) {
-            $item->skills()->attach([$skill => ['profession_id' => $request->professions, 'professional_area_id' => $request->professional_areas]]);
-        }
+        $this->courseService->updateSkillsTree($item, $request->all());
+//        $item->skills()->detach();
+//        foreach ($request->skills as $key => $skill) {
+//            $item->skills()->attach([$skill => ['profession_id' => $request->professions, 'professional_area_id' => $request->professional_areas]]);
+//        }
         $item->save();
 
         $item_attachments = CourseAttachments::where('course_id', '=', $item->id)->first();

@@ -43,12 +43,15 @@
                                     <label class="form-group__label"
                                            id="skillsLabel">{{__('default.pages.courses.professional_area_title')}}</label>
                                     <div class="input-addon">
-                                        <select name="professional_areas" id="professionalAreasSelect"
+                                        <select name="professional_areas[]" id="professionalAreasSelect"
                                                 placeholder="{{__('default.pages.courses.choose_professional_area_title')}}"
-                                                data-method="getProfessionalAreaByName"
-                                                class="professional-areas-select" required>
-                                            <option value="{{$item->professional_areas[0]->id}}"
-                                                    selected="selected">{{$item->professional_areas[0]->getAttribute('name_'.$lang) ?? $item->professions[0]->group_professions[0]->getAttribute('name_ru')}}</option>
+                                                data-method="getProfessionalAreaByName" data-maxitems="2"
+                                                class="professional-areas-select" multiple required>
+                                            @foreach($item->professional_areas->unique('id') as $area)
+                                                <option value="{{ $area->id }}" selected="selected">{{ $area->getAttribute('name_'.$lang) ?? $area->getAttribute('name_ru') }}</option>
+                                            @endforeach
+{{--                                            <option value="{{$item->professional_areas[0]->id}}"--}}
+{{--                                                    selected="selected">{{$item->professional_areas[0]->getAttribute('name_'.$lang) ?? $item->professions[0]->group_professions[0]->getAttribute('name_ru')}}</option>--}}
                                         </select>
                                         <div class="addon">
                                             <span class="required">*</span>
@@ -59,12 +62,15 @@
                                     <label class="form-group__label"
                                            id="professionsLabel">{{__('default.pages.courses.profession_title')}}</label>
                                     <div class="input-addon">
-                                        <select name="professions" id="professionsSelect"
+                                        <select name="professions[]" id="professionsSelect"
                                                 placeholder="{{__('default.pages.courses.choose_profession_title')}}"
-                                                data-method="getProfessionsByData"
-                                                class="professions-select" required>
-                                            <option value="{{$item->professions[0]->id}}"
-                                                    selected="selected">{{$item->professions[0]->getAttribute('name_'.$lang) ?? $item->professions[0]->group_professions[0]->getAttribute('name_ru')}}</option>
+                                                data-method="getProfessionsByData" data-maxitems=3"
+                                                class="professions-select" multiple required>
+                                            @foreach($item->professions->unique('id') as $profession)
+                                                <option value="{{ $profession->id }}" selected="selected">{{ $profession->getAttribute('name_'.$lang) ?? $profession->getAttribute('name_ru') }}</option>
+                                            @endforeach
+{{--                                            <option value="{{$item->professions[0]->id}}"--}}
+{{--                                                    selected="selected">{{$item->professions[0]->getAttribute('name_'.$lang) ?? $item->professions[0]->group_professions[0]->getAttribute('name_ru')}}</option>--}}
                                         </select>
                                         <div class="addon">
                                             <span class="required">*</span>
@@ -79,8 +85,7 @@
                                             data-method="getSkillsByData" data-maxitems="7"
                                             class="skills-select" multiple required>
                                         @foreach($current_skills as $skill)
-                                            <option value="{{$skill->id}}"
-                                                    selected="selected">{{$skill->getAttribute('name_'.$lang) ?? $skill->getAttribute('name_ru')}}</option>
+                                            <option value="{{$skill->id}}" selected="selected">{{$skill->getAttribute('name_'.$lang) ?? $skill->getAttribute('name_ru')}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -464,11 +469,11 @@
                                             <input type="url" name="videos_poor_hearing_link[]" placeholder=""
                                                    class="input-regular"
                                                    value="{{json_decode($item->attachments->videos_poor_hearing_link)[0]}}"
-                                                   id="courseVideo2" required>
+                                                   id="courseVideo2" required disabled>
                                         @else
                                             <input type="url" name="videos_poor_hearing_link[]" placeholder=""
                                                    class="input-regular"
-                                                   value="" id="courseVideo2" required>
+                                                   value="" id="courseVideo2" required disabled>
                                         @endif
                                         <div class="addon">
                                             <span class="required">*</span>
@@ -616,12 +621,12 @@
 @section('scripts')
     <!--Only this page's scripts-->
     <script>
-        const professionalAreaEl = $('[name="professional_areas"]'),
-            specialityEl = $('[name="professions"]'),
+        const professionalAreaEl = $('[name="professional_areas[]"]'),
+            specialityEl = $('[name="professions[]"]'),
             skillsEl = $('[name="skills[]"]');
 
-        let professionAreaSelect = new ajaxSelect(professionalAreaEl);
-        let specialitySelect = new ajaxSelect(specialityEl, professionalAreaEl);
+        let professionAreaSelect = new ajaxSelect(professionalAreaEl, null, true, 2);
+        let specialitySelect = new ajaxSelect(specialityEl, professionalAreaEl, true, 3);
         let skillsSelect = new ajaxSelect(skillsEl, specialityEl, true, 7);
 
         professionalAreaEl.change(function () {
