@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\Input;
  */
 class AjaxUploadController extends Controller
 {
-    public $imageMaxSize = '10240';
+    public $imageMaxSize = '1024';
     public $fileMaxSize = '25000';
 
     /**
