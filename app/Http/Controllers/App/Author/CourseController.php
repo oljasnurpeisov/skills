@@ -9,7 +9,9 @@ use App\Models\CourseAttachments;
 use App\Models\Lesson;
 use App\Models\Notification;
 use App\Models\ProfessionalArea;
+use App\Models\ProfessionalAreaProfession;
 use App\Models\Professions;
+use App\Models\ProfessionSkill;
 use App\Models\Skill;
 use App\Models\StudentCourse;
 use App\Models\Theme;
@@ -21,10 +23,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
+use Services\Course\CourseService;
 
 
 class CourseController extends Controller
 {
+    /**
+     * @var CourseService
+     */
+    private $courseService;
+
+    /**
+     * CourseController constructor.
+     *
+     * @param CourseService $courseService
+     */
+    public function __construct(CourseService $courseService)
+    {
+        $this->courseService = $courseService;
+    }
 
     public function createCourse($lang)
     {
@@ -43,6 +60,8 @@ class CourseController extends Controller
      */
     public function storeCourse(Request $request)
     {
+        dump($request->all());
+
         if ($request->is_paid and $request->cost > 0) {
             if ((Auth::user()->payment_info->merchant_login != null) and (Auth::user()->payment_info->merchant_password != null)) {
 
@@ -141,9 +160,10 @@ class CourseController extends Controller
 
                 $item_attachments->save();
 
-                foreach ($request->skills as $key => $skill) {
-                    $item->skills()->attach([$skill => ['profession_id' => $request->professions, 'professional_area_id' => $request->professional_areas]]);
-                }
+                $this->courseService->saveSkillsTree($item, $request->all());
+//                foreach ($request->skills as $key => $skill) {
+//                    $item->skills()->attach([$skill => ['profession_id' => $request->professions, 'professional_area_id' => $request->professional_areas]]);
+//                }
 
                 return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.create_request_message'));
             }
@@ -243,9 +263,11 @@ class CourseController extends Controller
 
             $item_attachments->save();
 
-            foreach ($request->skills as $key => $skill) {
-                $item->skills()->attach([$skill => ['profession_id' => $request->professions, 'professional_area_id' => $request->professional_areas]]);
-            }
+            $this->courseService->saveSkillsTree($item, $request->all());
+
+//            foreach ($request->skills as $key => $skill) {
+//                $item->skills()->attach([$skill => ['profession_id' => $request->professions, 'professional_area_id' => $request->professional_areas]]);
+//            }
 
             return redirect("/" . app()->getLocale() . "/my-courses/drafts")->with('status', __('default.pages.courses.create_request_message'));
         }

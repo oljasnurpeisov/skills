@@ -48,8 +48,8 @@
                                             placeholder="{{__('default.pages.courses.choose_professional_area_title')}}"
                                             data-method="getProfessionalAreaByName"
                                             class="professional-areas-select"
-                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" required>
-{{--                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" multiple required>--}}
+{{--                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" required>--}}
+                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" multiple required>
                                     </select>
                                     <div class="addon">
                                         <span class="required">*</span>
@@ -64,8 +64,8 @@
                                             placeholder="{{__('default.pages.courses.choose_profession_title')}}"
                                             data-method="getProfessionsByData"
                                             class="professions-select"
-                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" required>
-{{--                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" multiple required>--}}
+{{--                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" required>--}}
+                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" multiple required>
                                     </select>
                                     <div class="addon">
                                         <span class="required">*</span>
@@ -376,13 +376,13 @@
             specialityEl = $('[name="professions[]"]'),
             skillsEl = $('[name="skills[]"]');
 
-        // let professionAreaSelect = new ajaxSelect(professionalAreaEl, null, true, 2);
-        // let specialitySelect = new ajaxSelect(specialityEl, professionalAreaEl, true, 3);
-        // let skillsSelect = new ajaxSelect(skillsEl, specialityEl, true, 7);
+        let professionAreaSelect = new ajaxSelect(professionalAreaEl, null, true, 2);
+        let specialitySelect = new ajaxSelect(specialityEl, professionalAreaEl, true, 3);
+        let skillsSelect = new ajaxSelect(skillsEl, specialityEl, true, 7);
 
-        let professionAreaSelect = new ajaxSelect(professionalAreaEl);
-        let specialitySelect = new ajaxSelect(specialityEl, professionalAreaEl);
-        let skillsSelect = new ajaxSelect(skillsEl, specialityEl);
+        // let professionAreaSelect = new ajaxSelect(professionalAreaEl);
+        // let specialitySelect = new ajaxSelect(specialityEl, professionalAreaEl);
+        // let skillsSelect = new ajaxSelect(skillsEl, specialityEl);
 
         professionalAreaEl.change(function () {
             specialitySelect.update($(this).val() ? {"professional_areas": toArray($(this).val())} : null);

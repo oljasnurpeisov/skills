@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\Professions
@@ -58,9 +59,17 @@ class Professions extends Model
     }
 
     public function professional_areas() {
-
         return $this->belongsToMany(ProfessionalArea::class,'professional_area_professions', 'profession_id', 'professional_area_id');
-
     }
 
+
+    /**
+     * Получение области профессии
+     *
+     * @return HasOne
+     */
+    public function professionArea()
+    {
+        return $this->hasOne(ProfessionalArea::class, 'id', 'profession_id', );
+    }
 }
