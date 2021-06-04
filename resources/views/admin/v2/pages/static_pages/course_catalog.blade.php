@@ -34,44 +34,46 @@
                             <div class="{{$lang_key == 'ru' ? 'active' : ''}}">
                                 <div id="main_banner_{{$lang_key}}">
                                     <div class="input-group">
-                                        <label class="input-group__title">{{__('admin.pages.static_pages.image_link')}} @if($lang_key == 'ru')
+                                        <label
+                                            class="input-group__title">{{__('admin.pages.static_pages.image_link')}} @if($lang_key == 'ru')
                                                 *@endif</label>
                                         <input type="text" name="image_link_{{$lang_key}}"
                                                value="{{json_decode($item->getAttribute('data_'.$lang_key))->course_catalog->link}}"
                                                placeholder="{{__('admin.pages.static_pages.image_link_placeholder')}}"
                                                class="input-regular {{$lang_key == 'ru' ? 'required' : ''}}">
                                     </div>
-                                    @if($lang_key == 'ru')
-                                        <div class="input-group {{ $errors->has('avatar') ? ' has-error' : '' }}">
-                                            <label class="input-group__title">{{ __('admin.pages.static_pages.main_banner_image') }}
-                                                *</label>
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    <img src="{{json_decode($item->getAttribute('data_'.$lang_key))->course_catalog->image}}"
-                                                         id="avatar_image" class="file-upload-image"
-                                                         style="height: 150px">
-                                                </div>
-                                                <div class="col-md-10">
-                                                    <input type="hidden" name="avatar"
-                                                           value="{{json_decode($item->getAttribute('data_'.$lang_key))->course_catalog->image}}">
-                                                    <div id="avatar" class="file-upload">
-                                                        <div id="avatar_uploader" class="file">
-                                                            <div class="progress">
-                                                                <div class="progress-bar"></div>
-                                                            </div>
-                                                            <span class="file__name">
+                                    <div class="input-group {{ $errors->has('avatar') ? ' has-error' : '' }}">
+                                        <label class="input-group__title">
+                                            {{ __('admin.pages.static_pages.main_banner_image') }}*
+                                        </label>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <img
+                                                    src="{{json_decode($item->getAttribute('data_'.$lang_key))->course_catalog->image}}"
+                                                    id="avatar_{{ $lang_key }}_image" class="file-upload-image"
+                                                    style="height: 150px">
+                                            </div>
+                                            <div class="col-md-10">
+                                                <input type="hidden" name="image_{{ $lang_key }}"
+                                                       value="{{json_decode($item->getAttribute('data_'.$lang_key))->course_catalog->image}}">
+                                                <div id="avatar_{{ $lang_key }}" class="file-upload">
+                                                    <div id="avatar_{{ $lang_key }}_uploader" class="file">
+                                                        <div class="progress">
+                                                            <div class="progress-bar"></div>
+                                                        </div>
+                                                        <span class="file__name">
                                     .png, .jpg • 25 MB<br/>
                                     <strong>{{ __('admin.pages.static_pages.upload_image') }}</strong>
                                 </span>
-                                                        </div>
                                                     </div>
-                                                    @if ($errors->has('avatar'))
-                                                        <span class="help-block"><strong>{{ $errors->first('avatar') }}</strong></span>
-                                                    @endif
                                                 </div>
+                                                @if ($errors->has('avatar'))
+                                                    <span
+                                                        class="help-block"><strong>{{ $errors->first('avatar') }}</strong></span>
+                                                @endif
                                             </div>
                                         </div>
-                                    @endif
+                                    </div>
                                 </div>
                             </div>
                         @endforeach

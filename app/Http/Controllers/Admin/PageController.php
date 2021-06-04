@@ -244,8 +244,10 @@ class PageController extends Controller
         foreach ($languages as $language) {
 
             $data = [
-                'course_catalog' => ['link' => $request['image_link_' . $language],
-                    'image' => $request['image_' . $language]]
+                'course_catalog' => [
+                    'link' => $request['image_link_' . $language],
+                    'image' => $request['image_' . $language]
+                ]
             ];
 
             $item['data_' . $language] = json_encode($data);
