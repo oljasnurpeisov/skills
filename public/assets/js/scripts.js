@@ -786,24 +786,8 @@ let CustomDropzone = function (el, url, maxFiles, maxSize, acceptedFiles, showTh
     }
 };
 
-// Required
-// $(document).on('input[type="checkbox"]', 'change', function() {
-//     if ($('.dz-preview').length) {
-//
-//     }
-// });
-
 function checkRequiredDropzone(el) {
-    // if ($(el).parent().parent().parent().attr('style') === 'display: none') return;
-
     let count = $(el).find('.link.red:not([style="display: none;"])').length;
-
-    // console.log(count);
-
-    // if ($(el).find('input.req').length === 0)
-    //     $(el).append('<input name="2" type="text" class="req" required disabled>');
-
-    // console.log($(el).parent().find('input.req'))
 
     if (count > 0) {
         $(el).find('input.req')[0].value = 1;
