@@ -60,8 +60,6 @@ class CourseController extends Controller
      */
     public function storeCourse(Request $request)
     {
-        dump($request->all());
-
         if ($request->is_paid and $request->cost > 0) {
             if ((Auth::user()->payment_info->merchant_login != null) and (Auth::user()->payment_info->merchant_password != null)) {
 
