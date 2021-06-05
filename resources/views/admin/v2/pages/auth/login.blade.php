@@ -7,7 +7,10 @@
 @endsection
 
 @section('content')
-    <img src="/assets/img/logo_new.webp" alt="" class="logo">
+    <picture>
+        <source srcset="{{ asset('/assets/img/logo_new.webp') }}" type="image/webp">
+        <img src="{{ asset('/assets/img/logo_new.png') }}" alt="" />
+    </picture>
     <form action="/{{ $lang }}/admin/login" method="POST">
         {{ csrf_field() }}
         <div class="input-group">

@@ -78,8 +78,12 @@
 ">
                 <tbody>
                 <tr>
-                    <td style="padding-bottom: 30px;"><a href="{{env('APP_URL')}}" title=""><img
-                                    src="{{env('APP_URL')}}/assets/img/logo_new.webp" alt=""></a></td>
+                    <td style="padding-bottom: 30px;">
+                        <picture>
+                            <source srcset="{{ asset('/assets/img/logo_new.webp') }}" type="image/webp">
+                            <img src="{{ asset('/assets/img/logo_new.png') }}" alt="" />
+                        </picture>
+                    </td>
                 </tr>
                 <tr>
                     <td>

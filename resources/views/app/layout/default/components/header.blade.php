@@ -3,8 +3,8 @@
         <div class="container">
             <a href="/{{$lang}}" title="{{__('default.main_title')}}" class="logo">
                 <picture>
-                    <source srcset="/assets/img/logo_new.webp" type="image/webp">
-                    <img src="/assets/img/logo_new.png" alt="" />
+                    <source srcset="{{ asset('/assets/img/logo_new.webp') }}" type="image/webp">
+                    <img src="{{ asset('/assets/img/logo_new.png') }}" alt="" />
                 </picture>
             </a>
             <ul class="menu">
@@ -293,8 +293,12 @@
 @guest
     <header class="header compensate-for-scrollbar">
         <div class="container">
-            <a href="/{{$lang}}" title="{{__('default.main_title')}}" class="logo"><img src="/assets/img/logo_new.webp"
-                                                                                        alt=""></a>
+            <a href="/{{$lang}}" title="{{__('default.main_title')}}" class="logo">
+                <picture>
+                    <source srcset="{{ asset('/assets/img/logo_new.webp') }}" type="image/webp">
+                    <img src="{{ asset('/assets/img/logo_new.png') }}" alt="" />
+                </picture>
+            </a>
             <div class="buttons-group">
                 <form class="input-search" action="/{{$lang}}/course-catalog?search=">
                     <i class="icon-search"> </i>
