@@ -3,10 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Dialog;
-use App\Models\PayInformation;
 use App\Models\User;
-use App\Models\UserInformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Libraries\Auth\EnbekPassport;
