@@ -32,26 +32,29 @@ class AuthServiceProvider extends ServiceProvider
 
         // Авторизация через EnbekPassport
         view()->composer('app.layout.default.template', function () {
-            $enbekPassport = new EnbekPassport();
-            $enbekPassport->init([
-                'appName' => config('auth.passportAppName'),
-                'accessKey' => config('auth.passportAccessKey'),
-            ]);
+            if (\Request::url() !== env('APP_URL') .'/ru/auth_sso') {
 
-            dump($enbekPassport->auth());
+                $enbekPassport = new EnbekPassport();
+                $enbekPassport->init([
+                    'appName' => config('auth.passportAppName'),
+                    'accessKey' => config('auth.passportAccessKey'),
+                ]);
 
-            if ($enbekPassport->auth()) {
-                $passportUser = $enbekPassport->user();
+                dump($enbekPassport->auth());
 
-                $user = $this->user->whereEmail($passportUser->email)->first();
+                if ($enbekPassport->auth()) {
+                    $passportUser = $enbekPassport->user();
 
-                if (!empty($user)) {
-                    Auth::login($user, true);
-                } else {
-                    dd("user not found");
+                    $user = $this->user->whereEmail($passportUser->email)->first();
+
+                    if (!empty($user)) {
+                        Auth::login($user, true);
+                    } else {
+                        dd("user not found");
+                    }
+
+                    return redirect((new LoginController())->redirectTo());
                 }
-
-                return redirect((new LoginController())->redirectTo());
             }
         });
 
