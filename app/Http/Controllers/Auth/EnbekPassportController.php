@@ -52,7 +52,6 @@ class EnbekPassportController extends Controller
     {
         $passportAuth = $this->passport->auth();
 
-
         if ($passportAuth) {
             $passportUser = $this->passport->user();
 

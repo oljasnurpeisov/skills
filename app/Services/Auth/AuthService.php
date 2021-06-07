@@ -49,7 +49,6 @@ class AuthService {
      */
     public function register(string $email): User
     {
-
         $user = $this->user->create(['email' => $email]);
 
         $this->afterRegister($user);
