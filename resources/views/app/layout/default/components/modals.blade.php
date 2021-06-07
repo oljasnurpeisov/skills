@@ -63,6 +63,8 @@
                     {{__('default.pages.auth.not_registered_title')}}<br/>
                     <a href="#authorRegistration" data-fancybox title="{{__('default.pages.auth.registration_title')}}"
                        class="link">{{__('default.pages.auth.registration_title')}}</a>
+                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri=http://skillstest.enbek.kz/ru" data-fancybox title=""
+                       class="link">passport.enbek.kz</a>
                 </div>
             </div>
         </form>
@@ -109,6 +111,8 @@
                     {{__('default.pages.auth.not_registered_title')}}<br/>
                     <a href="https://www.enbek.kz/ru/register" title="{{__('default.pages.auth.registration_title')}}"
                        class="link" target="_blank">{{__('default.pages.auth.registration_title')}}</a>
+                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri=http://skillstest.enbek.kz/ru" data-fancybox title=""
+                       class="link">passport.enbek.kz</a>
                 </div>
             </div>
         </form>
