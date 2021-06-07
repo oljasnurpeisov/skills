@@ -2,15 +2,16 @@
 
 namespace Services\Auth;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class LoginService {
     /**
      * Login user
      *
-     * @param object $user
+     * @param User $user
      */
-    public function login(object $user)
+    public function login(User $user): void
     {
         Auth::login($user, true);
     }
