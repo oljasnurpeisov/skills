@@ -64,6 +64,7 @@ class EnbekPassportController extends Controller
 
         $user = $this->user->whereEmail($passportUser->email)->first();
 
+        dump(1);
         dump($user);
 
         if (!empty($user)) {
