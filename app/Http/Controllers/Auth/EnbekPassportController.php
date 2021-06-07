@@ -49,7 +49,7 @@ class EnbekPassportController extends Controller
         }
 
         if (Auth::check()) {
-            return redirect((new LoginController())->redirectTo());
+            return redirect(url((new LoginController())->redirectTo()));
         }
     }
 
