@@ -57,10 +57,10 @@ class AuthService {
     /**
      * Create UserInformation/PayInformation/Dialog etc
      *
-     * @param object $user
+     * @param User $user
      * @return User
      */
-    public function afterRegister(object $user): object
+    public function afterRegister(User $user): User
     {
         $this->createUserInformation($user);
 
@@ -76,10 +76,10 @@ class AuthService {
     /**
      * Create user information
      *
-     * @param object $user
+     * @param User $user
      * @return void
      */
-    public function createUserInformation(object $user): void
+    public function createUserInformation(User $user): void
     {
         $user_information               = new UserInformation;
         $user_information->user_id      = $user->id;
@@ -90,10 +90,10 @@ class AuthService {
     /**
      * Create user pay information
      *
-     * @param object $user
+     * @param User $user
      * @return void
      */
-    public function createUserPayInformation(object $user): void
+    public function createUserPayInformation(User $user): void
     {
         $user_pay_information           = new PayInformation;
         $user_pay_information->user_id  = $user->id;
@@ -103,10 +103,10 @@ class AuthService {
     /**
      * Create support dialog
      *
-     * @param object $user
+     * @param User $user
      * @return void
      */
-    public function createSupportDialog(object $user): void
+    public function createSupportDialog(User $user): void
     {
         $tech_support = User::whereHas('roles', function ($q) {
             $q->where('slug', '=', 'tech_support');
