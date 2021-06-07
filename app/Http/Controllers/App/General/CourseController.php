@@ -463,7 +463,10 @@ class CourseController extends Controller
         } elseif (!empty($skills)) {
             $page = $request->page ?? 1;
 
-            $profession_ids = ProfessionSkill::whereIn('skill_id', $skills)->pluck('profession_id');
+            $profession_ids = ProfessionSkill::whereHas('profession')
+                ->whereIn('skill_id', $skills)
+                ->pluck('profession_id');
+
             $professions = Professions::whereIn('parent_id', $profession_ids)
                 ->whereNotNull('parent_id')
                 ->with('professional_areas')
