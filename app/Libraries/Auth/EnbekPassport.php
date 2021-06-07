@@ -25,8 +25,6 @@ class EnbekPassport {
 					),
 				);
 
-				dump($request);
-
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $this->api);
 				curl_setopt($ch, CURLOPT_POST, 1);
