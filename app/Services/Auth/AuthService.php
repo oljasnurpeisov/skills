@@ -51,17 +51,16 @@ class AuthService {
     {
         $user = $this->user->create(['email' => $email]);
 
-        $this->afterRegister($user);
-
-        return $user;
+        return $this->afterRegister($user);
     }
 
     /**
      * Create UserInformation/PayInformation/Dialog etc
      *
      * @param object $user
+     * @return User
      */
-    public function afterRegister(object $user): void
+    public function afterRegister(object $user): object
     {
         $this->createUserInformation($user);
 
@@ -70,6 +69,8 @@ class AuthService {
         $user->roles()->sync([4]);
 
         $this->createSupportDialog($user);
+
+        return $user;
     }
 
     /**
