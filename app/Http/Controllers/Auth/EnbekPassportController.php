@@ -8,21 +8,31 @@ use Libraries\Auth\EnbekPassport;
 
 class EnbekPassportController extends Controller
 {
-    public function login()
+    /**
+     * @var void
+     */
+    private $passport;
+
+    public function __construct()
     {
         $enbekPassport = new EnbekPassport();
 
-        $enbekPassport->init([
+        $this->passport = $enbekPassport->init([
             'appName' => config('auth.passportAppName'),
             'accessKey' => config('auth.passportAccessKey'),
         ]);
+    }
+
+    public function login()
+    {
+
 
         // Получаем сведения о авторизованном пользователе
-        $user = $enbekPassport->user();
+        $user = $this->passport->user();
 
         dump($user);
 
-        $auth = $enbekPassport->auth();
+        $auth = $this->passport->auth();
 
         dump($auth);
     }
