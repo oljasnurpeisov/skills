@@ -64,6 +64,7 @@ class AuthService {
     public function afterRegister(object $user): void
     {
         $this->createUserInformation($user);
+
         $this->createUserPayInformation($user);
 
         $user->roles()->sync([4]);
