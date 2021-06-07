@@ -78,7 +78,7 @@ class Skill extends Model
     }
 
     /**
-     * Get profession
+     * HasOne profession
      *
      * @return HasOne
      */
