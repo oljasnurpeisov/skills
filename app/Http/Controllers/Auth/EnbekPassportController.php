@@ -13,20 +13,25 @@ class EnbekPassportController extends Controller
      */
     private $passport;
 
-    public function __construct()
+    /**
+     * EnbekPassportController constructor.
+     *
+     * @param EnbekPassport $passport
+     */
+    public function __construct(EnbekPassport $passport)
     {
-        $enbekPassport = new EnbekPassport();
-
-        $this->passport = $enbekPassport->init([
+        $this->passport = $passport;
+        $this->passport->init([
             'appName' => config('auth.passportAppName'),
             'accessKey' => config('auth.passportAccessKey'),
         ]);
     }
 
+    /**
+     * Login
+     */
     public function login()
     {
-
-
         // Получаем сведения о авторизованном пользователе
         $user = $this->passport->user();
 
