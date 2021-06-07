@@ -68,15 +68,7 @@ class AuthService {
 
         $user->roles()->sync([4]);
 
-        // Создание диалога с тех.поддержкой
-        $tech_support = User::whereHas('roles', function ($q) {
-            $q->where('slug', '=', 'tech_support');
-        })->first();
-
-        $dialog = new Dialog;
-        $dialog->save();
-
-        $dialog->members()->sync([$user->id, $tech_support->id]);
+        $this->createSupportDialog($user);
     }
 
     /**
@@ -104,5 +96,23 @@ class AuthService {
         $user_pay_information           = new PayInformation;
         $user_pay_information->user_id  = $user->id;
         $user_pay_information->save();
+    }
+
+    /**
+     * Create support dialog
+     *
+     * @param object $user
+     * @return void
+     */
+    public function createSupportDialog(object $user): void
+    {
+        $tech_support = User::whereHas('roles', function ($q) {
+            $q->where('slug', '=', 'tech_support');
+        })->first();
+
+        $dialog = new Dialog;
+        $dialog->save();
+
+        $dialog->members()->sync([$user->id, $tech_support->id]);
     }
 }
