@@ -20,6 +20,8 @@ class EnbekPassportController extends Controller
         // Получаем сведения о авторизованном пользователе
         $user = $enbekPassport->user();
 
+        dump($user);
+
         $auth = $enbekPassport->auth();
 
         dump($auth);
