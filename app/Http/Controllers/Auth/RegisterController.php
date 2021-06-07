@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Service\Auth\AuthService;
 
 class RegisterController extends Controller
 {
@@ -35,14 +36,19 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    /**
+     * @var AuthService
+     */
+    private $authService;
 
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param AuthService $authService
      */
-    public function __construct()
+    public function __construct(AuthService $authService)
     {
+        $this->authService = $authService;
         $this->middleware('guest');
         $this->redirectTo = '/' . app()->getLocale() . '/profile-author-information';
     }
@@ -117,26 +123,28 @@ class RegisterController extends Controller
 //        $user->company_logo = $imageName;
         $user->save();
 
-        $user_information = new UserInformation;
-        $user_information->user_id = $user->id;
-        $user_information->avatar = $user->company_logo;
-        $user_information->save();
+        $this->authService->afterRegister($user);
 
-        $user_pay_information = new PayInformation;
-        $user_pay_information->user_id = $user->id;
-        $user_pay_information->save();
-
-        $user->roles()->sync([4]);
-
-        // Создание диалога с тех.поддержкой
-        $tech_support = User::whereHas('roles', function ($q) {
-            $q->where('slug', '=', 'tech_support');
-        })->first();
-
-        $dialog = new Dialog;
-        $dialog->save();
-
-        $dialog->members()->sync([$user->id, $tech_support->id]);
+//        $user_information = new UserInformation;
+//        $user_information->user_id = $user->id;
+//        $user_information->avatar = $user->company_logo;
+//        $user_information->save();
+//
+//        $user_pay_information = new PayInformation;
+//        $user_pay_information->user_id = $user->id;
+//        $user_pay_information->save();
+//
+//        $user->roles()->sync([4]);
+//
+//        // Создание диалога с тех.поддержкой
+//        $tech_support = User::whereHas('roles', function ($q) {
+//            $q->where('slug', '=', 'tech_support');
+//        })->first();
+//
+//        $dialog = new Dialog;
+//        $dialog->save();
+//
+//        $dialog->members()->sync([$user->id, $tech_support->id]);
 
         return ($user);
     }

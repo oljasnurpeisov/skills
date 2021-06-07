@@ -63,12 +63,13 @@ class AuthService {
      */
     public function afterRegister(object $user): void
     {
-        $user_information = new UserInformation;
-        $user_information->user_id = $user->id;
+        $user_information               = new UserInformation;
+        $user_information->user_id      = $user->id;
+        $user_information->avatar       = $user->company_logo ?? null;
         $user_information->save();
 
-        $user_pay_information = new PayInformation;
-        $user_pay_information->user_id = $user->id;
+        $user_pay_information           = new PayInformation;
+        $user_pay_information->user_id  = $user->id;
         $user_pay_information->save();
 
         $user->roles()->sync([4]);
