@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Service\Auth\AuthService;
+use Services\Auth\RegisterService;
 
 class RegisterController extends Controller
 {
@@ -36,19 +37,27 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+
     /**
      * @var AuthService
      */
     private $authService;
 
     /**
+     * @var RegisterService
+     */
+    private $registerService;
+
+    /**
      * Create a new controller instance.
      *
      * @param AuthService $authService
+     * @param RegisterService $registerService
      */
-    public function __construct(AuthService $authService)
+    public function __construct(AuthService $authService, RegisterService $registerService)
     {
         $this->authService = $authService;
+        $this->registerService = $registerService;
         $this->middleware('guest');
         $this->redirectTo = '/' . app()->getLocale() . '/profile-author-information';
     }
@@ -100,31 +109,18 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param array $data
-     * @return \App\Models\User
+     * @return User
      */
     protected function create(array $data)
     {
-
-
-        $user = User::create([
+        return $this->registerService->register([
 //            'name' => $data['name'],
-            'email' => $data['email_register'],
-            'password' => Hash::make($data['password_register']),
-            'iin' => $data['iin'],
+            'email'             => $data['email_register'],
+            'password'          => Hash::make($data['password_register']),
+            'iin'               => $data['iin'],
             'type_of_ownership' => $data['type_of_ownership'],
-            'company_name' => $data['company_name'],
-            'company_logo' => $data['company_logo'],
+            'company_name'      => $data['company_name'],
+            'company_logo'      => $data['company_logo'],
         ]);
-
-//        $imageName = time() . '.' . $data['company_logo']->getClientOriginalExtension();
-//        $user->company_logo = '/users/user_' . $user->id . '/profile/image/' . $imageName;
-//        $data['company_logo']->move(public_path('users/user_' . $user->id . '/profile/image'), $imageName);
-
-//        $user->company_logo = $imageName;
-        $user->save();
-
-        $this->authService->afterRegister($user);
-
-        return ($user);
     }
 }
