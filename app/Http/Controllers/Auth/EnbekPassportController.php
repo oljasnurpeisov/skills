@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Libraries\Auth\EnbekPassport;
 
 class EnbekPassportController extends Controller
@@ -35,10 +36,12 @@ class EnbekPassportController extends Controller
         // Получаем сведения о авторизованном пользователе
         $user = $this->passport->user();
 
-        dump($user);
+        dump($user->email);
 
         $auth = $this->passport->auth();
 
         dump($auth);
+
+//        Auth::loginUsingId($userData->id, TRUE);
     }
 }
