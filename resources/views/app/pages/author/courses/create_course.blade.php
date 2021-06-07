@@ -424,6 +424,7 @@
 
             if (type === 2) {
                 specialitySelect.update($(this).val() ? {"skills": toArray($(this).val())} : null);
+                professionAreaSelect.clear();
                 specialitySelect.clear();
                 setTimeout(function () {
                     specialitySelect.removeMessage();
