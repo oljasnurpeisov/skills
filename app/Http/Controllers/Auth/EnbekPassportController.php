@@ -48,7 +48,9 @@ class EnbekPassportController extends Controller
             $this->loginByEmail();
         }
 
-        return redirect(url('/404'));
+        if (Auth::check()) {
+            return redirect((new LoginController())->redirectTo());
+        }
     }
 
     /**
