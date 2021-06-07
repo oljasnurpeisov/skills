@@ -48,7 +48,7 @@ class EnbekPassportController extends Controller
             $this->loginByEmail();
         }
 
-        return redirect(url('/'));
+        return redirect(url('/404'));
     }
 
     /**
@@ -59,11 +59,12 @@ class EnbekPassportController extends Controller
         $passportUser = $this->passport->user();
 
         $user = $this->user->whereEmail($passportUser->email)->first();
+//        $user = $this->user->find(55);
 
         if (!empty($user)) {
-            Auth::login($user);
+            Auth::login($user, true);
 
-            dd($user);
+
         } else {
             dd("user not found");
         }
