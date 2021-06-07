@@ -76,4 +76,10 @@ class Skill extends Model
 
     }
 
+    public function profession() {
+
+        return $this->hasOne(ProfessionSkill::class, 'skill_id', 'id');
+
+    }
+
 }
