@@ -68,7 +68,7 @@ class EnbekPassportController extends Controller
             Auth::login($user, true);
 
             dump(Auth::check());
-            dd(url((new LoginController())->redirectTo()));
+            dd((new LoginController())->redirectTo());
         } else {
             dd("user not found");
         }
