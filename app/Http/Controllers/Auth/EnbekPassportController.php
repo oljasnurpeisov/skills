@@ -60,15 +60,14 @@ class EnbekPassportController extends Controller
     {
         $passportUser = $this->passport->user();
 
+        if (empty($passportUser)) return;
+
         $user = $this->user->whereEmail($passportUser->email)->first();
 
         dump($user);
 
         if (!empty($user)) {
             Auth::login($user, true);
-
-            dump(Auth::check());
-            dd((new LoginController())->redirectTo());
         } else {
             dd("user not found");
         }
