@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\Skill
@@ -76,10 +77,14 @@ class Skill extends Model
 
     }
 
-    public function profession() {
-
+    /**
+     * Get profession
+     *
+     * @return HasOne
+     */
+    public function profession(): HasOne
+    {
         return $this->hasOne(ProfessionSkill::class, 'skill_id', 'id');
-
     }
 
 }
