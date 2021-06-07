@@ -31,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // Авторизация через EnbekPassport
-        view()->composer('*', function () {
+        view()->composer('app.layout.default.template', function () {
             $enbekPassport = new EnbekPassport();
             $enbekPassport->init([
                 'appName' => config('auth.passportAppName'),
