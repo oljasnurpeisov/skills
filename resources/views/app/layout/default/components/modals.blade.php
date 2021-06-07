@@ -60,7 +60,7 @@
                     <button type="submit" class="btn">{{__('default.pages.auth.auth_title')}}</button>
                 </div>
                 <div class="hint">
-                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri=http://skillstest.enbek.kz/ru/auth_sso" title=""
+                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri=https://skillstest.enbek.kz/ru/auth_sso" title=""
                        class="">passport.enbek.kz</a>
                 </div>
                 <div class="hint">
@@ -110,7 +110,7 @@
                             id="studentLoginBtn" {{old('agree') != 'on' ? 'disabled' : ''}}>{{__('default.pages.auth.auth_title')}}</button>
                 </div>
                 <div class="hint">
-                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri=http://skillstest.enbek.kz/ru/auth_sso" title=""
+                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri=https://skillstest.enbek.kz/ru/auth_sso" title=""
                        class="">passport.enbek.kz</a>
                 </div>
                 <div class="hint">
