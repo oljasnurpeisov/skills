@@ -10,6 +10,7 @@ use App\Models\UserInformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Libraries\Auth\EnbekPassport;
+use Service\Auth\AuthService;
 
 class EnbekPassportController extends Controller
 {
@@ -24,18 +25,25 @@ class EnbekPassportController extends Controller
     private $user;
 
     /**
+     * @var AuthService
+     */
+    private $authService;
+
+    /**
      * EnbekPassportController constructor.
      *
      * @param EnbekPassport $passport
      * @param User $user
+     * @param AuthService $authService
      */
-    public function __construct(EnbekPassport $passport, User $user)
+    public function __construct(EnbekPassport $passport, User $user, AuthService $authService)
     {
-        $this->user     = $user;
-        $this->passport = $passport;
+        $this->user         = $user;
+        $this->passport     = $passport;
+        $this->authService  = $authService;
 
         $this->passport->init([
-            'appName' => config('auth.passportAppName'),
+            'appName'   => config('auth.passportAppName'),
             'accessKey' => config('auth.passportAccessKey'),
         ]);
     }
@@ -48,59 +56,17 @@ class EnbekPassportController extends Controller
         $passportAuth = $this->passport->auth();
 
         if ($passportAuth) {
-            $this->loginByEmail();
-        }
+            $passportUser = $this->passport->user();
 
-        $this->register((object) ['email' => 'test@testtest.test3']);
+            if (!empty($passportUser)) {
+                $this->authService->loginByEmail($passportUser->email);
+            }
+        }
 
         if (Auth::check()) {
             return redirect(url((new LoginController())->redirectTo()));
-        }
-    }
-
-    /**
-     * Login by email
-     */
-    protected function loginByEmail()
-    {
-        $passportUser = $this->passport->user();
-
-        if (empty($passportUser)) return;
-
-        $user = $this->user->whereEmail($passportUser->email)->first();
-
-
-        if (!empty($user)) {
-            Auth::login($user, true);
         } else {
-            $this->register($passportUser);
+            return redirect(url('/'));
         }
-    }
-
-    protected function register($passportUser)
-    {
-        $user = $this->user->create(['email' => $passportUser->email]);
-
-        $user_information = new UserInformation;
-        $user_information->user_id = $user->id;
-        $user_information->save();
-
-        $user_pay_information = new PayInformation;
-        $user_pay_information->user_id = $user->id;
-        $user_pay_information->save();
-
-        $user->roles()->sync([4]);
-
-        // Создание диалога с тех.поддержкой
-        $tech_support = User::whereHas('roles', function ($q) {
-            $q->where('slug', '=', 'tech_support');
-        })->first();
-
-        $dialog = new Dialog;
-        $dialog->save();
-
-        $dialog->members()->sync([$user->id, $tech_support->id]);
-
-        Auth::login($user, true);
     }
 }
