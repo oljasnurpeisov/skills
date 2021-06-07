@@ -9,7 +9,9 @@ use App\Models\Lesson;
 use App\Models\Notification;
 use App\Models\Page;
 use App\Models\ProfessionalArea;
+use App\Models\ProfessionalAreaProfession;
 use App\Models\Professions;
+use App\Models\ProfessionSkill;
 use App\Models\Skill;
 use App\Models\StudentCourse;
 use App\Models\User;
@@ -398,13 +400,22 @@ class CourseController extends Controller
     public function getProfessionalAreaByName(Request $request, $lang)
     {
         $professional_area_name = $request->name ?? '';
+        $professions = $request->professions ?? '';
         $page = $request->page ?? 1;
 
-        $professions = ProfessionalArea::where('name_' . $lang, 'like', '%' . $professional_area_name . '%')
-            ->orderBy('name_' . $lang, 'asc')
-            ->paginate(50, ['*'], 'page', $page);
+        if (!empty($professions)) {
+//            print_r(1);
+//            die();
+            $area_ids = ProfessionalAreaProfession::whereIn('profession_id', $professions)->first();
 
-        return $professions;
+            return ProfessionalArea::whereIn('id', $area_ids)
+                ->paginate(50, ['*'], 'page', $page);
+
+        } else {
+            return ProfessionalArea::where('name_' . $lang, 'like', '%' . $professional_area_name . '%')
+                ->orderBy('name_' . $lang, 'asc')
+                ->paginate(50, ['*'], 'page', $page);
+        }
     }
 
     public function getProfessionsByProfessionalArea($lang, Request $request)
@@ -434,16 +445,28 @@ class CourseController extends Controller
 
     public function getProfessionsByData(Request $request, $lang)
     {
-        $professional_areas = $request->professional_areas;
+        $professional_areas = $request->professional_areas ?? '';
         $profession_name = $request->name ?? '';
+        $skills = $request->skills ?? '';
         $page = $request->page ?? 1;
 
-        if ($professional_areas != []) {
+        if (!empty($professional_areas)) {
             $page = $request->page ?? 1;
 
             $professions = Professions::whereHas('professional_areas', function ($q) use ($professional_areas) {
                 $q->whereIn('professional_areas.id', $professional_areas);
             })->where('name_' . $lang, 'like', '%' . $profession_name . '%')
+                ->where('parent_id', '!=', null)
+                ->orderBy('name_' . $lang, 'asc')
+                ->paginate(50, ['*'], 'page', $page);
+
+        } elseif (!empty($skills)) {
+            $page = $request->page ?? 1;
+
+            $profession_ids = ProfessionSkill::whereIn('skill_id', $skills)->pluck('profession_id');
+            $professions = Professions::whereIn('parent_id', $profession_ids)
+                ->whereNotNull('parent_id')
+                ->with('professional_areas')
                 ->where('parent_id', '!=', null)
                 ->orderBy('name_' . $lang, 'asc')
                 ->paginate(50, ['*'], 'page', $page);

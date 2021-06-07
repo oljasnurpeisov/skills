@@ -12,8 +12,8 @@ let ajaxSelect = function (el, parentEl = null, multiLang = true, maxItems = nul
     this.multiLang = multiLang;
 
     this.method = this.el.data('method');
-    this.domainName = 'https://dev3.panama.kz';
-    // this.domainName = document.location.origin;
+    // this.domainName = 'https://dev3.panama.kz';
+    this.domainName = document.location.origin;
     this.lang = window.Laravel.lang;
     this.url = this.domainName + '/' + this.lang + '/' + this.method;
     this.pageCounter = 1;
@@ -234,8 +234,8 @@ let ajaxSelect2 = function (el, multiLang = true, skillId = null, maxItems = nul
     this.skillId = skillId;
 
     this.method = this.el.data('method');
-    this.domainName = 'https://dev3.panama.kz';
-    // this.domainName = document.location.origin;
+    // this.domainName = 'https://dev3.panama.kz';
+    this.domainName = document.location.origin;
     this.lang = window.Laravel.lang;
     this.url = this.domainName + '/' + this.lang + '/' + this.method;
     this.pageCounter = 1;

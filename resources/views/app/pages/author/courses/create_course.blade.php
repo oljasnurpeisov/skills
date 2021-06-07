@@ -380,25 +380,63 @@
         let specialitySelect = new ajaxSelect(specialityEl, professionalAreaEl, true, 3);
         let skillsSelect = new ajaxSelect(skillsEl, specialityEl, true, 7);
 
-        // let professionAreaSelect = new ajaxSelect(professionalAreaEl);
-        // let specialitySelect = new ajaxSelect(specialityEl, professionalAreaEl);
-        // let skillsSelect = new ajaxSelect(skillsEl, specialityEl);
+        var type = null;
 
         professionalAreaEl.change(function () {
-            specialitySelect.update($(this).val() ? {"professional_areas": toArray($(this).val())} : null);
-            specialitySelect.clear();
-            skillsSelect.clear();
-            setTimeout(function () {
-                specialitySelect.removeMessage();
-            }, 3000);
+            if (type === null) {
+                type = 1;
+            }
+
+            if (type === 2) {
+
+            } else if (type === 1) {
+                specialitySelect.update($(this).val() ? {"professional_areas": toArray($(this).val())} : null);
+                specialitySelect.clear();
+                skillsSelect.clear();
+                setTimeout(function () {
+                    specialitySelect.removeMessage();
+                }, 3000);
+            }
         });
 
         specialityEl.change(function () {
-            skillsSelect.update($(this).val() ? {"professions": toArray($(this).val())} : null);
-            skillsSelect.clear();
-            setTimeout(function () {
-                skillsSelect.removeMessage();
-            }, 3000);
+            if (type === null) {
+                type = 1;
+            }
+
+            if (type === 2) {
+                professionAreaSelect.update($(this).val() ? {"professions": toArray($(this).val())} : null);
+                professionAreaSelect.clear();
+                setTimeout(function () {
+                    professionAreaSelect.removeMessage();
+                }, 3000);
+            } else if (type === 1) {
+                skillsSelect.update($(this).val() ? {"professions": toArray($(this).val())} : null);
+                skillsSelect.clear();
+                setTimeout(function () {
+                    skillsSelect.removeMessage();
+                }, 3000);
+            }
+        });
+
+        skillsEl.change(function () {
+            if (type === null) {
+                type = 2;
+            }
+
+            if (type === 2) {
+                specialitySelect.update($(this).val() ? {"skills": toArray($(this).val())} : null);
+                specialitySelect.clear();
+                setTimeout(function () {
+                    specialitySelect.removeMessage();
+                }, 3000);
+            } else if (type === 1) {
+                // skillsSelect.update($(this).val() ? {"professions": toArray($(this).val())} : null);
+                // skillsSelect.clear();
+                // setTimeout(function () {
+                //     skillsSelect.removeMessage();
+                // }, 3000);
+            }
         })
     </script>
     <!---->
