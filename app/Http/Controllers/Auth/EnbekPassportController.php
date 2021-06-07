@@ -13,8 +13,8 @@ class EnbekPassportController extends Controller
         $enbekPassport = new EnbekPassport();
 
         $enbekPassport->init([
-            'appName' => config('passportAppName'),
-            'accessKey' => config('passportAccessKey'),
+            'appName' => config('auth.passportAppName'),
+            'accessKey' => config('auth.passportAccessKey'),
         ]);
 
         // Получаем сведения о авторизованном пользователе
