@@ -31,32 +31,32 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // Авторизация через EnbekPassport
-        view()->composer('app.layout.default.template', function () {
-            if (\Request::url() !== env('APP_URL') .'/ru/auth_sso') {
-
-                $enbekPassport = new EnbekPassport();
-                $enbekPassport->init([
-                    'appName' => config('auth.passportAppName'),
-                    'accessKey' => config('auth.passportAccessKey'),
-                ]);
-
-                dump($enbekPassport->auth());
-
-                if ($enbekPassport->auth()) {
-                    $passportUser = $enbekPassport->user();
-
-                    $user = $this->user->whereEmail($passportUser->email)->first();
-
-                    if (!empty($user)) {
-                        Auth::login($user, true);
-                    } else {
-                        dd("user not found");
-                    }
-
-                    return redirect((new LoginController())->redirectTo());
-                }
-            }
-        });
+//        view()->composer('app.layout.default.template', function () {
+//            if (\Request::url() !== env('APP_URL') .'/ru/auth_sso') {
+//
+//                $enbekPassport = new EnbekPassport();
+//                $enbekPassport->init([
+//                    'appName' => config('auth.passportAppName'),
+//                    'accessKey' => config('auth.passportAccessKey'),
+//                ]);
+//
+//                dump($enbekPassport->auth());
+//
+//                if ($enbekPassport->auth()) {
+//                    $passportUser = $enbekPassport->user();
+//
+//                    $user = $this->user->whereEmail($passportUser->email)->first();
+//
+//                    if (!empty($user)) {
+//                        Auth::login($user, true);
+//                    } else {
+//                        dd("user not found");
+//                    }
+//
+//                    return redirect((new LoginController())->redirectTo());
+//                }
+//            }
+//        });
 
     }
 }
