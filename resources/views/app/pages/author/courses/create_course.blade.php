@@ -387,9 +387,7 @@
                 type = 1;
             }
 
-            if (type === 2) {
-
-            } else if (type === 1) {
+            if (type === 1) {
                 specialitySelect.update($(this).val() ? {"professional_areas": toArray($(this).val())} : null);
                 specialitySelect.clear();
                 skillsSelect.clear();
@@ -430,12 +428,6 @@
                 setTimeout(function () {
                     specialitySelect.removeMessage();
                 }, 3000);
-            } else if (type === 1) {
-                // skillsSelect.update($(this).val() ? {"professions": toArray($(this).val())} : null);
-                // skillsSelect.clear();
-                // setTimeout(function () {
-                //     skillsSelect.removeMessage();
-                // }, 3000);
             }
         })
     </script>
