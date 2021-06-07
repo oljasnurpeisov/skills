@@ -63,14 +63,8 @@ class AuthService {
      */
     public function afterRegister(object $user): void
     {
-        $user_information               = new UserInformation;
-        $user_information->user_id      = $user->id;
-        $user_information->avatar       = $user->company_logo ?? null;
-        $user_information->save();
-
-        $user_pay_information           = new PayInformation;
-        $user_pay_information->user_id  = $user->id;
-        $user_pay_information->save();
+        $this->createUserInformation($user);
+        $this->createUserPayInformation($user);
 
         $user->roles()->sync([4]);
 
@@ -83,5 +77,32 @@ class AuthService {
         $dialog->save();
 
         $dialog->members()->sync([$user->id, $tech_support->id]);
+    }
+
+    /**
+     * Create user information
+     *
+     * @param object $user
+     * @return void
+     */
+    public function createUserInformation(object $user): void
+    {
+        $user_information               = new UserInformation;
+        $user_information->user_id      = $user->id;
+        $user_information->avatar       = $user->company_logo ?? null;
+        $user_information->save();
+    }
+
+    /**
+     * Create user pay information
+     *
+     * @param object $user
+     * @return void
+     */
+    public function createUserPayInformation(object $user): void
+    {
+        $user_pay_information           = new PayInformation;
+        $user_pay_information->user_id  = $user->id;
+        $user_pay_information->save();
     }
 }
