@@ -62,6 +62,8 @@ class EnbekPassportController extends Controller
 
         $user = $this->user->whereEmail($passportUser->email)->first();
 
+        dd($user);
+
         if (!empty($user)) {
             Auth::login($user, true);
         } else {
