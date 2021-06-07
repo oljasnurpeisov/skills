@@ -644,6 +644,10 @@
                     specialitySelect.removeMessage();
                 }, 3000);
             }
+
+            if (professionalAreaEl.val() === null && specialityEl.val() === null && skillsEl.val() === null) {
+                type = null;
+            }
         });
 
         specialityEl.change(function () {
@@ -664,6 +668,10 @@
                     skillsSelect.removeMessage();
                 }, 3000);
             }
+
+            if (professionalAreaEl.val() === null && specialityEl.val() === null && skillsEl.val() === null) {
+                type = null;
+            }
         });
 
         skillsEl.change(function () {
@@ -678,6 +686,10 @@
                 setTimeout(function () {
                     specialitySelect.removeMessage();
                 }, 3000);
+            }
+
+            if (professionalAreaEl.val() === null && specialityEl.val() === null && skillsEl.val() === null) {
+                type = null;
             }
         })
     </script>
