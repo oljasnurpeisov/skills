@@ -32,6 +32,8 @@ Route::group(["namespace" => "Admin"], function () {
 
 });
 
+Route::get("/ru/auth_sso", "Auth\EnbekPassportController@login");
+
 Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
 
     Route::group(['prefix' => '{lang}'], function () {

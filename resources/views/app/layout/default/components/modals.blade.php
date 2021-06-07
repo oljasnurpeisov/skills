@@ -60,11 +60,13 @@
                     <button type="submit" class="btn">{{__('default.pages.auth.auth_title')}}</button>
                 </div>
                 <div class="hint">
+                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri=http://skillstest.enbek.kz/ru/auth_sso" data-fancybox title=""
+                       class="link">passport.enbek.kz</a>
+                </div>
+                <div class="hint">
                     {{__('default.pages.auth.not_registered_title')}}<br/>
                     <a href="#authorRegistration" data-fancybox title="{{__('default.pages.auth.registration_title')}}"
                        class="link">{{__('default.pages.auth.registration_title')}}</a>
-                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri=http://skillstest.enbek.kz/ru" data-fancybox title=""
-                       class="link">passport.enbek.kz</a>
                 </div>
             </div>
         </form>
@@ -108,11 +110,13 @@
                             id="studentLoginBtn" {{old('agree') != 'on' ? 'disabled' : ''}}>{{__('default.pages.auth.auth_title')}}</button>
                 </div>
                 <div class="hint">
+                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri=http://skillstest.enbek.kz/ru/auth_sso" data-fancybox title=""
+                       class="link">passport.enbek.kz</a>
+                </div>
+                <div class="hint">
                     {{__('default.pages.auth.not_registered_title')}}<br/>
                     <a href="https://www.enbek.kz/ru/register" title="{{__('default.pages.auth.registration_title')}}"
                        class="link" target="_blank">{{__('default.pages.auth.registration_title')}}</a>
-                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri=http://skillstest.enbek.kz/ru" data-fancybox title=""
-                       class="link">passport.enbek.kz</a>
                 </div>
             </div>
         </form>
