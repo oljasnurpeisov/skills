@@ -13,4 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class Bank extends Model
 {
     protected $table = 'banks';
+
+    const UPDATED_AT = null;
+    const CREATED_AT = null;
 }
