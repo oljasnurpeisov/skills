@@ -19,12 +19,12 @@ use App\Http\Controllers\App\PageController;
 
 // Админ панель
 Route::group(["namespace" => "Admin"], function () {
-    Route::post('/ajax_upload_image', 'AjaxUploadController@ajax_upload_image');
-    Route::post('/ajax_upload_file', 'AjaxUploadController@ajax_upload_file');
+    Route::post('/ajax_upload_image', 'AjaxUploadController@ajax_upload_image')->name('ajax_upload_image');
+    Route::post('/ajax_upload_file', 'AjaxUploadController@ajax_upload_file')->name('ajax_upload_file');
 
     Route::post('/ajaxUploadImage', 'AjaxUploadController@ajaxUploadPic');
     Route::post('/ajaxUploadImageContent', 'AjaxUploadController@ajaxUploadPicContent');
-    Route::post('/ajaxUploadFile', 'AjaxUploadController@ajaxUploadFile');
+    Route::post('/ajaxUploadFile', 'AjaxUploadController@ajaxUploadFile')->name('ajaxUploadFile');
 
     // Тест для Айтана
     Route::post('/ajaxUploadImageTest', 'AjaxUploadController@ajaxUploadPicTest');
@@ -280,6 +280,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::post("/profile_pay_information", "UserController@update_profile_pay_information");
                     Route::get("/profile-author-information", "UserController@author_data_show");
                     Route::post("/update_author_data_profile", "UserController@update_author_data_profile");
+                    Route::get("/profile-requisites", "UserController@profile_requisites");
+                    Route::post("/update_profile-requisites", "UserController@update_profile_requisites")->name('update_profile_requisites');
                 });
             });
             //

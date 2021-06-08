@@ -6,6 +6,12 @@ use App\Models\User;
 use Services\Auth\LoginService;
 use Services\Auth\RegisterService;
 
+/**
+ * Class AuthService
+ * @author kgurovoy@gmail.com
+ * @package Service\Auth
+ */
+
 class AuthService {
     /**
      * @var User

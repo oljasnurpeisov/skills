@@ -21,6 +21,10 @@
                             <li class="active"><a href="/{{$lang}}/change-password"
                                    title="{{__('default.pages.profile.password_title')}}">{{__('default.pages.profile.password_title')}}</a>
                             </li>
+                            <li>
+                                <a href="/{{$lang}}/profile-requisites"
+                                   title="{{__('default.pages.profile.requisites_data')}}">{{__('default.pages.profile.requisites_data')}}</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

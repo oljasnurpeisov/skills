@@ -9,17 +9,25 @@
                     <div class="mobile-dropdown__title dynamic">{{__('default.pages.profile.organization_data')}}</div>
                     <div class="mobile-dropdown__desc">
                         <ul class="tabs-links">
-                            <li class="active"><a href="/{{$lang}}/profile-author-information"
+                            <li class="active">
+                                <a href="/{{$lang}}/profile-author-information"
                                                   title="{{__('default.pages.profile.organization_data')}}">{{__('default.pages.profile.organization_data')}}</a>
                             </li>
-                            <li><a href="/{{$lang}}/profile-pay-information"
+                            <li>
+                                <a href="/{{$lang}}/profile-pay-information"
                                    title="{{__('default.pages.profile.payment_information')}}">{{__('default.pages.profile.payment_information')}}</a>
                             </li>
-                            <li><a href="/{{$lang}}/edit-profile"
+                            <li>
+                                <a href="/{{$lang}}/edit-profile"
                                    title="{{__('default.pages.profile.registration_data')}}">{{__('default.pages.profile.registration_data')}}</a>
                             </li>
-                            <li><a href="/{{$lang}}/change-password"
+                            <li>
+                                <a href="/{{$lang}}/change-password"
                                    title="{{__('default.pages.profile.password_title')}}">{{__('default.pages.profile.password_title')}}</a>
+                            </li>
+                            <li>
+                                <a href="/{{$lang}}/profile-requisites"
+                                   title="{{__('default.pages.profile.requisites_data')}}">{{__('default.pages.profile.requisites_data')}}</a>
                             </li>
                         </ul>
                     </div>

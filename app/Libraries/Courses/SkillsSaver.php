@@ -8,6 +8,12 @@ use App\Models\Professions;
 use App\Models\ProfessionSkill;
 use \Illuminate\Support\Collection;
 
+/**
+ * Class SkillsSaver
+ * @author kgurovoy@gmail.com
+ * @package Libraries\Courses
+ */
+
 class SkillsSaver {
     /**
      * @var int

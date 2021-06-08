@@ -102,22 +102,24 @@ class AjaxUploadController extends Controller
             return Response::json(array('success' => false, 'message' => 'invalid url'));
         }
 
-        $rules = array(
-            'file' => "file|required|max:$this->fileMaxSize|mimes:docx,doc,xls,xlsx,pdf,txt,ppt,pptx,xml"
-        );
+//        $rules = array(
+//            'file' => "files|required|max:$this->fileMaxSize|mimes:docx,doc,xls,xlsx,pdf,txt,ppt,pptx,xml"
+//        );
 
-        $validation = Validator::make(Input::all(), $rules);
-        if ($validation->fails()) {
-            return Response::json(array('success' => false, 'message' => $validation->errors()->all()));
+//        $validation = Validator::make($request->all(), $rules);
+//        if ($validation->fails()) {
+        if (!isset($request->file()['files'][0])) {
+            return Response::json(array('success' => false));
+//            return Response::json(array('success' => false, 'message' => $validation->errors()->all()));
         }
 
-        $file = Input::file('file');
+        $file = $request->file()['files'][0];
         $imageName = time() . '.' . $file->getClientOriginalExtension();
         $file->move(public_path('files'), $imageName);
 
         return Response::json(array(
             'success' => true,
-            'location' => config('APP_URL') . '/files/' . $imageName
+            'filenames' => config('APP_URL') . '/files/' . $imageName
         ));
     }
 

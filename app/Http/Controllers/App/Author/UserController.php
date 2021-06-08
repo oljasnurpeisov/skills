@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App\Author;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Author\UpdateRequisites;
 use App\Models\Course;
 use App\Models\PayInformation;
 use App\Models\Skill;
@@ -11,6 +12,8 @@ use App\Models\Type_of_ownership;
 use App\Models\User;
 use App\Models\UserInformation;
 use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -20,11 +23,26 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
+use Service\Author\UpdateRequisitesService;
 use XmlParser;
 
 
 class UserController extends Controller
 {
+    /**
+     * @var UpdateRequisitesService
+     */
+    private $requisitesService;
+
+    /**
+     * UserController constructor.
+     *
+     * @param UpdateRequisitesService $requisitesService
+     */
+    public function __construct(UpdateRequisitesService $requisitesService)
+    {
+        $this->requisitesService = $requisitesService;
+    }
 
     public function edit_profile()
     {
@@ -154,6 +172,35 @@ class UserController extends Controller
             return redirect("/" . app()->getLocale() . "/profile-pay-information")->with('status', __('default.pages.profile.save_success_message'));
         }
 
+    }
+
+    /**
+     * Requisites
+     *
+     * @author kgurovoy@gmail.com
+     *
+     * @return View
+     */
+    public function profile_requisites(): View
+    {
+        return view("app.pages.author.profile.profile_requisites", [
+            'types_of_ownership' => Type_of_ownership::get()
+        ]);
+    }
+
+    /**
+     * Update user requisites
+     *
+     * @author kgurovoy@gmail.com
+     *
+     * @param UpdateRequisites $request
+     * @return RedirectResponse
+     */
+    public function update_profile_requisites(UpdateRequisites $request): RedirectResponse
+    {
+        $this->requisitesService->update(Auth::user()->id, $request->all());
+
+        return redirect()->back();
     }
 
     public function author_data_show()

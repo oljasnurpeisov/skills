@@ -21,6 +21,10 @@
                             <li><a href="/{{$lang}}/change-password"
                                    title="{{__('default.pages.profile.password_title')}}">{{__('default.pages.profile.password_title')}}</a>
                             </li>
+                            <li>
+                                <a href="/{{$lang}}/profile-requisites"
+                                   title="{{__('default.pages.profile.requisites_data')}}">{{__('default.pages.profile.requisites_data')}}</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -58,7 +62,7 @@
                                 <label class="form-group__label">{{__('default.pages.profile.type_of_ownership')}} *</label>
                                 <select name="type_of_ownership" class="selectize-regular no-search">
                                     @foreach($types_of_ownership as $type)
-                                    <option value="{{ $type->id }}" @if($type->id==$user->type_ownership->id) selected='selected' @endif>
+                                    <option value="{{ $type->id }}" @if(isset($user->type_ownership->id) and $type->id==$user->type_ownership->id) selected='selected' @endif>
                                         {{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}</option>
                                     @endforeach
                                 </select>
@@ -72,7 +76,7 @@
                                 <input type="hidden" name="company_logo" class="avatar-path" value="{{$user->company_logo}}">
                                 <img src="{{$user->company_logo ?? '/assets/img/logo-thumbnail.png'}}" class="logo-picture__preview avatar-preview" alt="">
                                 <div class="logo-picture__desc dropzone-default">
-                                    <div class="dropzone-default__info">PNG, JPG • {{__('default.pages.profile.max_file_title')}} 1MB</div>
+                                    <div class="dropzone-default__info">PNG, JPG • {{__('default.pages.profile.max_file_title') }} 1MB</div>
                                     <div class="previews-container"></div>
                                     <div class="logo-picture__link avatar-pick dropzone-default__link">{{__('default.pages.profile.choose_photo')}}</div>
                                 </div>
@@ -83,7 +87,7 @@
                                             <div class="dz-size" data-dz-size></div>
                                         </div>
                                         <div class="alert alert-danger"><span data-dz-errormessage> </span></div>
-                                        <a href="javascript:undefined;" title="{{__('default.pages.profile.delete')}}" class="author-picture__link red" data-dz-remove>{{__('default.pages.profile.delete')}}</a>
+                                        <a href="javascript:undefined;" title="{{__('default.pages.profile.delete')}}" class="author-picture__link red" data-dz-remove>{{__('default.pages.profile.delete') }}</a>
                                     </div>
                                 </div>
                             </div>

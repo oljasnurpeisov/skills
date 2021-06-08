@@ -7,6 +7,11 @@ use App\Models\PayInformation;
 use App\Models\User;
 use App\Models\UserInformation;
 
+/**
+ * Class RegisterService
+ * @author kgurovoy@gmail.com
+ * @package Services\Auth
+ */
 class RegisterService {
     /**
      * @var User

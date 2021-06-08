@@ -752,7 +752,11 @@ let CustomDropzone = function (el, url, maxFiles, maxSize, acceptedFiles, showTh
 
             this.on('success', (files, response) => {
                 filenames.push(String(response.filenames));
-                filesPath.value = JSON.stringify(filenames);
+                if (maxFiles === 1) {
+                    filesPath.value = filenames;
+                } else {
+                    filesPath.value = JSON.stringify(filenames);
+                }
                 if (required) checkRequiredDropzone(el);
             });
             this.on('removedfile', (files) => {
@@ -763,7 +767,11 @@ let CustomDropzone = function (el, url, maxFiles, maxSize, acceptedFiles, showTh
                         return item !== removedValue
                     });
                 }
-                filesPath.value = JSON.stringify(filenames);
+                if (maxFiles === 1) {
+                    filesPath.value = filenames;
+                } else {
+                    filesPath.value = JSON.stringify(filenames);
+                }
                 if (required) checkRequiredDropzone(el);
             })
 

@@ -316,6 +316,7 @@ return [
             'payment_information' => 'Төлем туралы ақпарат',
             'registration_data' => 'Тіркеу деректері',
             'password_title' => 'Пароль',
+            'requisites_data' => 'Реквизиттер',
             'logout_title' => 'Шығу',
             'choose_photo' => 'Фотоны таңдау',
             'delete' => 'Өшіру',
@@ -358,6 +359,15 @@ return [
             'new_password' => 'Жаңа пароль',
             'confirm_new_password' => 'Жаңа парольді қайталау',
             'student_title' => 'Білім алушылар',
+
+            'profile.position' => 'Қызметі',
+            'fio_director' => 'Қол қоюшының Т.А.Ә',
+            'base' => 'Негіздеме',
+            'iik_kz' => 'ЖСК KZ',
+            'kbe' => 'Кбе (бенефициар коды)',
+            'bik' => 'БСК',
+            'bank_name' => 'Банктің атауы',
+            'choose_file' => 'Файлды жүктеул',
         ],
         'calendar' => [
             'today' => 'Бүгін',

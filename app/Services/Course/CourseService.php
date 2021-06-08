@@ -4,6 +4,11 @@ namespace Services\Course;
 
 use Libraries\Courses\SkillsSaver;
 
+/**
+ * Class CourseService
+ * @author kgurovoy@gmail.com
+ * @package Services\Course
+ */
 class CourseService {
     /**
      * Сохраняем навыки

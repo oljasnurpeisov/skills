@@ -319,6 +319,7 @@ return [
             'payment_information' => 'Платежная информация',
             'registration_data' => 'Регистрационные данные',
             'password_title' => 'Пароль',
+            'requisites_data' => 'Реквизиты',
             'logout_title' => 'Выйти',
             'choose_photo' => 'Выбрать фото',
             'delete' => 'Удалить',
@@ -363,6 +364,15 @@ return [
             'confirm_new_password' => 'Повторите новый пароль',
 
             'student_title' => 'Обучающийся',
+
+            'position' => 'Должность',
+            'fio_director' => 'ФИО подписанта',
+            'base' => 'Основание',
+            'iik_kz' => 'ИИК KZ',
+            'kbe' => 'Kбе',
+            'bik' => 'БИК',
+            'bank_name' => 'Название банка',
+            'choose_file' => 'Добавить файл',
         ],
         'calendar' => [
             'today' => 'Сегодня',
