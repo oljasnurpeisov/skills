@@ -368,6 +368,13 @@ return [
             'bik' => 'БСК',
             'bank_name' => 'Банктің атауы',
             'choose_file' => 'Файлды жүктеул',
+
+            'base_select' => [
+                'tired' => 'Жарғы',
+                'position' => 'Ереже',
+                'order' => 'Бұйрық',
+                'decision' => 'Шешім',
+            ]
         ],
         'calendar' => [
             'today' => 'Бүгін',

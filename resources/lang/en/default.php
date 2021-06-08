@@ -373,6 +373,13 @@ return [
             'bik' => 'БИК',
             'bank_name' => 'Название банка',
             'choose_file' => 'Добавить файл',
+
+            'base_select' => [
+                'tired' => 'Устав',
+                'position' => 'Положение',
+                'order' => 'Приказ',
+                'decision' => 'Решение',
+            ]
         ],
         'calendar' => [
             'today' => 'Сегодня',

@@ -82,10 +82,10 @@
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.profile.base')}} *</label>
                                 <select type="text" name="base" required class="selectize-regular no-search">
-                                    <option @if(Auth::user()->base === 1) selected='selected' @endif value="1">Устав</option>
-                                    <option @if(Auth::user()->base === 2) selected='selected' @endif value="2">Положение</option>
-                                    <option @if(Auth::user()->base === 3) selected='selected' @endif value="3">Приказ</option>
-                                    <option @if(Auth::user()->base === 4) selected='selected' @endif value="4">Решение</option>
+                                    <option @if(Auth::user()->base === 1) selected='selected' @endif value="1">{{__('default.pages.profile.base_select.tired')}}</option>
+                                    <option @if(Auth::user()->base === 2) selected='selected' @endif value="2">{{__('default.pages.profile.base_select.position')}}</option>
+                                    <option @if(Auth::user()->base === 3) selected='selected' @endif value="3">{{__('default.pages.profile.base_select.order')}}</option>
+                                    <option @if(Auth::user()->base === 4) selected='selected' @endif value="4">{{__('default.pages.profile.base_select.decision')}}</option>
                                 </select>
                             </div>
 
