@@ -3,7 +3,6 @@
 namespace Service\Author;
 
 use App\Models\User;
-use Illuminate\Support\Arr;
 
 /**
  * Class UpdateRequisitesService
