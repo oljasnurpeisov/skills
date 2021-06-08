@@ -118,8 +118,6 @@
                                     @else
                                         <div class="previews-container"></div>
                                     @endif
-
-
                                 </div>
                             </div>
 
@@ -145,7 +143,13 @@
 
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.profile.bank_name')}} *</label>
-                                <input type="text" name="bank_name" placeholder="" class="input-regular" required value="{{ old('bank_name') ?? Auth::user()->bank_name }}">
+                                <select type="text" name="bank_id" required class="selectize-regular">
+                                    @foreach($banks as $bank)
+                                        <option value="{{ $bank->id }}" @if($bank->id==Auth::user()->bank_id) selected='selected' @endif>
+                                            {{ $bank->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="buttons">

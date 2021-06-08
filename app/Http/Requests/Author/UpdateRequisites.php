@@ -33,7 +33,7 @@ class UpdateRequisites extends FormRequest
             'iik_kz'                => ['required'],
             'kbe'                   => ['required'],
             'bik'                   => ['required'],
-            'bank_name'             => ['required'],
+            'bank_id'               => ['required'],
         ];
     }
 }

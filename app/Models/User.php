@@ -15,7 +15,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $table = 'users';
 
-    protected $fillable = ['email', 'name', 'surname', 'patronymic', 'iin', 'type_of_ownership', 'company_name', 'company_logo', 'base', 'iik_kz', 'bik', 'kbe', 'bank_name', 'position', 'fio_director', 'base_file'];
+    protected $fillable = ['email', 'name', 'surname', 'patronymic', 'iin', 'type_of_ownership', 'company_name', 'company_logo', 'base', 'iik_kz', 'bik', 'kbe', 'bank_id', 'position', 'fio_director', 'base_file'];
 
     protected $guarded = [];
 
