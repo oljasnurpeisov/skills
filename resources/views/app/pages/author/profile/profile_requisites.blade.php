@@ -146,7 +146,7 @@
                                 <select type="text" name="bank_id" required class="selectize-regular">
                                     @foreach($banks as $bank)
                                         <option value="{{ $bank->id }}" @if($bank->id==Auth::user()->bank_id) selected='selected' @endif>
-                                            {{ $bank->name }}
+                                            {{ $bank->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}
                                         </option>
                                     @endforeach
                                 </select>
