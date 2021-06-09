@@ -1,7 +1,6 @@
 @extends('app.layout.default.template')
 
 @section('content')
-
     <main class="main">
         <section class="plain">
             <div class="container">
@@ -474,7 +473,7 @@
                                        title="{{__('default.pages.courses.delete_course')}}"
                                        class="btn red">{{__('default.pages.courses.delete_course')}}</a>
 
-                                    @if($item->quota_status == 0)
+                                    @if($item->quota_status == 0 and $item->cost > 0)
                                         <a href="#rulesQuotaModal" data-fancybox
                                            title="{{__('default.pages.courses.quota_allow')}}"
                                            class="btn">{{__('default.pages.courses.quota_allow')}}</a>
