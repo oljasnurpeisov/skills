@@ -107,35 +107,60 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.type_title') }}</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <label class="checkbox"><input type="checkbox" name="is_paid"
-                                                                       value="true" data-toggle="paidFormgroup"
-                                                {{ ($item->is_paid == true ? ' checked' : '') }}><span>{{__('default.pages.courses.is_paid')}}  ({{__('default.pages.courses.default_free')}})</span></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio">
+                                                <input type="radio" name="is_paid" value="false" data-toggle="paidFormgroup,quota_status" {{ ($item->is_paid === 0 ? ' checked' : '') }}><span>{{__('default.pages.courses.free_title') }}</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <label class="radio">
+                                                <input type="radio" name="is_paid" value="true" data-toggle="paidFormgroup,quota_status" {{ ($item->is_paid === 1 ? ' checked' : '') }}><span>{{__('default.pages.courses.paid_title') }}</span>
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <label class="checkbox"><input type="checkbox" name="is_access_all"
-                                                                       value="true" {{ ($item->is_access_all == true ? ' checked' : '') }}><span>{{__('default.pages.courses.is_access_all')}}</span></label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="checkbox"><input type="checkbox" name="is_poor_vision"
-                                                                       value="true"
-                                                                       data-toggle="poorVision" {{ ($item->is_poor_vision == true ? ' checked' : '') }}><span>{{__('default.pages.courses.is_vision_version')}}</span></label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="checkbox"><input type="checkbox" name="is_poor_hearing"
-                                                                       value="true"
-                                                                       data-toggle="poorHearing" {{ ($item->is_poor_hearing == true ? ' checked' : '') }}><span>{{__('default.pages.courses.is_poor_hearing')}}</span></label>
+                                    <div class="col-sm-6" id="quota_status" @if ($item->is_paid === 0) style="display:none;" @endif>
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="quota_status" value="true" {{ ($item->quota_status === 2 ? ' checked' : '') }}><span>{{ __('default.pages.courses.quota_title') }}</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group" id="paidFormgroup" style="display:block;">
+                            <div class="form-group" id="paidFormgroup" @if ($item->is_paid === 0) style="display:none;" @endif>
                                 <label class="form-group__label">{{__('default.pages.courses.course_cost')}}</label>
                                 <div class="input-addon">
-                                    <input type="text" name="cost" placeholder="" value="{{$item->cost}}"
-                                           class="input-regular" required onfocus="$(this).inputmask('currency', {prefix: '',groupSeparator: ' ',rightAlign: false, digits: 0})">
+                                    <input type="text" name="cost" placeholder="" value="{{ $item->cost }}"
+                                           class="input-regular" required @if ($item->is_paid === 0) disabled @endif onfocus="$(this).inputmask('currency', {prefix: '',groupSeparator: ' ',rightAlign: false, digits: 0})">
                                     <div class="addon">
                                         <span class="required">*</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.availability_title') }}</label>
+                                <div class="row">
+{{--                                    <div class="col-sm-6">--}}
+{{--                                        <label class="checkbox">--}}
+{{--                                            <input type="checkbox" name="is_paid" value="true" data-toggle="paidFormgroup" {{ ($item->is_paid == true ? ' checked' : '') }}>--}}
+{{--                                            <span>{{__('default.pages.courses.is_paid')}}  ({{__('default.pages.courses.default_free')}})</span>--}}
+{{--                                        </label>--}}
+{{--                                    </div>--}}
+                                    <div class="col-sm-6">
+                                        <label class="checkbox"><input type="checkbox" name="is_access_all" value="true" {{ ($item->is_access_all == true ? ' checked' : '') }}>
+                                            <span>{{__('default.pages.courses.is_access_all')}}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox"><input type="checkbox" name="is_poor_vision" value="true" data-toggle="poorVision" {{ ($item->is_poor_vision == true ? ' checked' : '') }}>
+                                            <span>{{__('default.pages.courses.is_vision_version')}}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox"><input type="checkbox" name="is_poor_hearing" value="true" data-toggle="poorHearing" {{ ($item->is_poor_hearing == true ? ' checked' : '') }}>
+                                            <span>{{__('default.pages.courses.is_poor_hearing')}}</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>

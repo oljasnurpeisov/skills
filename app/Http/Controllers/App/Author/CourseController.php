@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App\Author;
 
 use App\Exports\ReportingExport;
+use App\Extensions\CalculateQuotaCost;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseAttachments;
@@ -60,6 +61,8 @@ class CourseController extends Controller
      */
     public function storeCourse(Request $request)
     {
+        $request->cost = str_replace(' ','', $request->cost);
+
         if ($request->is_paid and $request->cost > 0) {
             if ((Auth::user()->payment_info->merchant_login != null) and (Auth::user()->payment_info->merchant_password != null)) {
 
@@ -68,11 +71,17 @@ class CourseController extends Controller
                 $item->name = $request->name;
                 $item->author_id = Auth::user()->id;
                 $item->lang = $request->lang;
-                if ($request->is_paid) {
+                if ($request->is_paid === "true") {
                     $item->is_paid = 1;
+
+                    if ($request->quota_status === "true") {
+                        $item->quota_status = 4;
+                    }
                 } else {
                     $item->is_paid = 0;
+                    $item->quota_status = 0;
                 }
+
                 if ($request->is_access_all) {
                     $item->is_access_all = 1;
                 } else {
@@ -171,10 +180,15 @@ class CourseController extends Controller
             $item->name = $request->name;
             $item->author_id = Auth::user()->id;
             $item->lang = $request->lang;
-            if ($request->is_paid) {
+            if ($request->is_paid === "true") {
                 $item->is_paid = 1;
+
+                if ($request->quota_status === "true") {
+                    $item->quota_status = 4;
+                }
             } else {
                 $item->is_paid = 0;
+                $item->quota_status = 0;
             }
             if ($request->is_access_all) {
                 $item->is_access_all = 1;
@@ -481,7 +495,8 @@ class CourseController extends Controller
                 "videos_count" => array_sum($videos_count),
                 "audios_count" => array_sum($audios_count),
                 "attachments_count" => array_sum($attachments_count),
-                'course_data_items' => $course_data_items
+                'course_data_items' => $course_data_items,
+                'quota_cost' => CalculateQuotaCost::calculate_quota_cost($item)
             ]);
         } else {
             return redirect("/" . app()->getLocale() . "/my-courses");
@@ -516,12 +531,19 @@ class CourseController extends Controller
 
     public function updateCourse($lang, Request $request, Course $item)
     {
+        $request->cost = str_replace(' ','', $request->cost);
+
         $item->name = $request->name;
         $item->lang = $request->lang;
-        if ($request->is_paid) {
+        if ($request->is_paid === "true") {
             $item->is_paid = 1;
+
+            if ($request->quota_status === "true") {
+                $item->quota_status = 4;
+            }
         } else {
             $item->is_paid = 0;
+            $item->quota_status = 0;
         }
         if ($request->is_access_all) {
             $item->is_access_all = 1;

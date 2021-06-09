@@ -94,7 +94,7 @@
                                     <select name="lang" placeholder="{{__('default.pages.courses.choose_lang')}}"
                                             class="selectize-regular" required>
                                         <option value="1">Русский</option>
-                                        <option value="0">Казахский</option>
+                                        <option value="0">Қазақша</option>
                                     </select>
                                     <div class="addon">
                                         <span class="required">*</span>
@@ -102,34 +102,56 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.type_title') }}</label>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <label class="checkbox"><input type="checkbox" name="is_paid"
-                                                                       value="true" data-toggle="paidFormgroup"><span>{{__('default.pages.courses.is_paid')}} ({{__('default.pages.courses.default_free')}})</span></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio">
+                                                <input type="radio" name="is_paid" value="false" data-toggle="paidFormgroup,quota_status" checked><span>{{__('default.pages.courses.free_title') }}</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <label class="radio">
+                                                <input type="radio" name="is_paid" value="true" data-toggle="paidFormgroup,quota_status"><span>{{__('default.pages.courses.paid_title') }}</span>
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <label class="checkbox"><input type="checkbox" name="is_access_all"
-                                                                       value="true"><span>{{__('default.pages.courses.is_access_all')}}</span></label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="checkbox"><input type="checkbox" name="is_poor_vision"
-                                                                       value="true"
-                                                                       data-toggle="poorVision"><span>{{__('default.pages.courses.is_vision_version')}}</span></label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="checkbox"><input type="checkbox" name="is_poor_hearing"
-                                                                       value="true"
-                                                                       data-toggle="poorHearing"><span>{{__('default.pages.courses.is_poor_hearing')}}</span></label>
+                                    <div class="col-sm-6" id="quota_status" style="display:none;">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="quota_status" value="true"><span>{{ __('default.pages.courses.quota_title') }}</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group" id="paidFormgroup" style="display:none;">
-                                <label class="form-group__label">{{__('default.pages.courses.course_cost')}}</label>
+                                <label class="form-group__label">{{__('default.pages.courses.course_cost') }}</label>
                                 <div class="input-addon">
                                     <input type="text" name="cost" placeholder="" class="input-regular"
                                            value="{{ old('cost') ?? 0 }}" required disabled onfocus="$(this).inputmask('currency', {prefix: '',groupSeparator: ' ',rightAlign: false, digits: 0})">
                                     <div class="addon">
                                         <span class="required">*</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.courses.availability_title') }}</label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="is_access_all" value="true"><span>{{__('default.pages.courses.is_access_all')}}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="is_poor_vision" value="true" data-toggle="poorVision">
+                                            <span>{{__('default.pages.courses.is_vision_version')}}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="is_poor_hearing" value="true" data-toggle="poorHearing">
+                                            <span>{{__('default.pages.courses.is_poor_hearing')}}</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -445,6 +467,14 @@
             }
         })
     </script>
-    <!---->
+
+    <script>
+        let quotaEl = $('[name="quota_status"]'),
+            paidEl = $('[name="is_paid"]');
+
+        paidEl.change(function () {
+            quotaEl.prop('checked', false);
+        });
+    </script>
 @endsection
 

@@ -80,7 +80,12 @@ return [
             'success_rate_message' => 'Ваш отзыв был успешно отправлен автору курса!',
             'report_title' => 'Отчет',
             'free_title' => 'Бесплатно',
+            'paid_title' => 'Платно',
+            'quota_title' => 'Доступен при гос. поддержке',
+            'type_title' => 'Тип курса',
+            'availability_title' => 'Доступность курса',
             'access_by_quota' => 'Доступен по квоте',
+            'quota_allow' => 'Запросить доступ при гос. поддержке',
             'access_by_quota_desc' => 'в случае, если такая опция доступна',
             'apply_title' => 'Применить',
             'create' => 'Создать',
@@ -208,6 +213,7 @@ return [
 
             'show_all' => 'Показать все',
             'hide' => 'Скрыть',
+
 
         ],
         'lessons' => [

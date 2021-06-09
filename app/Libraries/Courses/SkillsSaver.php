@@ -73,13 +73,16 @@ class SkillsSaver {
         {
             $skill              = ProfessionSkill::whereSkillId($skill)->first();
             $profession         = Professions::whereParentId($skill->profession_id)->whereIn('id', $this->request['professions'])->first();
-            $professionalArea   = ProfessionalAreaProfession::whereProfessionId($profession->id)->first();
 
-            $this->collection->add([
-                'skill_id'              => $skill->skill_id,
-                'profession_id'         => $profession->id,
-                'professional_area_id'  => $professionalArea->professional_area_id
-            ]);
+            if (!empty($profession)) {
+                $professionalArea = ProfessionalAreaProfession::whereProfessionId($profession->id)->first();
+
+                $this->collection->add([
+                    'skill_id' => $skill->skill_id,
+                    'profession_id' => $profession->id,
+                    'professional_area_id' => $professionalArea->professional_area_id
+                ]);
+            }
         }
     }
 

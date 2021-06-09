@@ -472,6 +472,32 @@
                                     <a href="#removeCourseModal" data-fancybox
                                        title="{{__('default.pages.courses.delete_course')}}"
                                        class="btn red">{{__('default.pages.courses.delete_course')}}</a>
+
+                                    @if($item->quota_status == 0)
+                                        <a href="#rulesQuotaModal" data-fancybox
+                                           title="{{__('default.pages.courses.quota_allow')}}"
+                                           class="btn">{{__('default.pages.courses.quota_allow')}}</a>
+
+                                        @if (Auth::user()->hasRole('author'))
+                                            <div id="rulesQuotaModal" style="display:none; width: 500px" class="modal-form">
+                                                <h4 class="title-primary text-center">{{__('notifications.quota_rules_title')}}</h4>
+                                                <div class="plain-text" style="font-size: 1em">
+                                                    {!! trans(__('notifications.quota_rules_description'), ['course_id' => $item->id,'course_name' => $item->name, 'author_name' => Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname, 'course_quota_cost' => $quota_cost, 'lang' => $lang])!!}
+                                                </div>
+                                                <div class="plain-text" style="font-size: 1em">
+                                                    <form method="POST" action="/{{$lang}}/my-courses/quota-confirm-course/{{$item->id}}" id="quota_confirm_form">
+                                                        {{ csrf_field() }}
+                                                        <div class="buttons">
+                                                            <button name="action" value="confirm" title="{{__('notifications.confirm_btn_title')}}"
+                                                                    class="btn">{{__('notifications.confirm_btn_title')}}</button>
+                                                            <button name="action" data-fancybox-close title="{{__('notifications.reject_btn_title')}}"
+                                                                    class="ghost-btn" style="background-color: white">{{__('notifications.reject_btn_title')}}</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endif
                                 </div>
                                 @break
                                 @case(4)
