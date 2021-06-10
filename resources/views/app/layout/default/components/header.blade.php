@@ -102,8 +102,11 @@
                                  alt=""><i
                                     class="icon-chevron-down"> </i>
                         @elseif(Auth::user()->hasRole('student'))
-                            <img src="{{Auth::user()->student_info->getAvatar()}}"
-                                 alt="">
+                            @if (!empty(Auth::user()->student_info->avatar))
+                                <img src="{{ Auth::user()->student_info->getAvatar() }}" alt="">
+                            @else
+                                <img src="/assets/img/author-thumbnail.png" alt="">
+                            @endif
                             <i class="icon-chevron-down"> </i>
                         @endif
                     </div>
