@@ -107,6 +107,7 @@
                             @else
                                 <img src="/assets/img/author-thumbnail.png" alt="">
                             @endif
+
                             <i class="icon-chevron-down"> </i>
                         @endif
                     </div>
