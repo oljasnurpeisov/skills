@@ -113,7 +113,13 @@
                     </div>
                     <div class="header-dropdown__desc">
                         @if(Auth::user()->hasRole('author'))
-                            <div class="name">{{Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname}}</div>
+                            <div class="name">
+                                @if (!empty(Auth::user()->author_info->name) and !empty(Auth::user()->author_info->surname))
+                                    {{ Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname }}
+                                @else
+                                    {{ Auth::user()->email }}
+                                @endif
+                            </div>
                         @elseif(Auth::user()->hasRole('student'))
                             <div class="name">{{Auth::user()->student_info->name}}</div>
                             <div class="quotas">{{__('default.pages.profile.have_quota')}}
