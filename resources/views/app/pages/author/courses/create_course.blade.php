@@ -412,8 +412,8 @@
 
             if (type === 1) {
                 specialitySelect.update($(this).val() ? {"professional_areas": toArray($(this).val())} : null);
-                specialitySelect.clear();
-                skillsSelect.clear();
+                // specialitySelect.clear();
+                // skillsSelect.clear();
                 setTimeout(function () {
                     specialitySelect.removeMessage();
                 }, 3000);
@@ -431,13 +431,14 @@
 
             if (type === 2) {
                 professionAreaSelect.update($(this).val() ? {"professions": toArray($(this).val())} : null);
-                professionAreaSelect.clear();
+                // professionAreaSelect.clear();
                 setTimeout(function () {
                     professionAreaSelect.removeMessage();
                 }, 3000);
             } else if (type === 1) {
+                professionAreaSelect.update($(this).val() ? {"professions": toArray($(this).val())} : null);
                 skillsSelect.update($(this).val() ? {"professions": toArray($(this).val())} : null);
-                skillsSelect.clear();
+                // skillsSelect.clear();
                 setTimeout(function () {
                     skillsSelect.removeMessage();
                 }, 3000);
@@ -455,8 +456,8 @@
 
             if (type === 2) {
                 specialitySelect.update($(this).val() ? {"skills": toArray($(this).val())} : null);
-                professionAreaSelect.clear();
-                specialitySelect.clear();
+                // professionAreaSelect.clear();
+                // specialitySelect.clear();
                 setTimeout(function () {
                     specialitySelect.removeMessage();
                 }, 3000);
