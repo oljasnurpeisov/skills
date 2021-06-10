@@ -121,10 +121,9 @@
                                 @else
                                     {{ Auth::user()->email }}
                                 @endif
-
                             </div>
                             <div class="quotas">{{__('default.pages.profile.have_quota')}}
-                                : {{Auth::user()->student_info->quota_count}}</div>
+                                : {{ Auth::user()->student_info->quota_count ?? 0}}</div>
                         @endif
                         <hr>
                         <ul>
