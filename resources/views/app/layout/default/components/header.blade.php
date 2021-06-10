@@ -123,7 +123,7 @@
                                 @endif
                             </div>
                             <div class="quotas">{{__('default.pages.profile.have_quota')}}
-                                : {{ Auth::user()->student_info->quota_count ?? 0}}</div>
+                                : {{ Auth::user()->student_info->quota_count ?? 0 }}</div>
                         @endif
                         <hr>
                         <ul>
@@ -236,7 +236,11 @@
                         <img src="{{Auth::user()->author_info->getAvatar()}}" alt="">
                         <div class="name">{{Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname}}</div>
                     @elseif(Auth::user()->hasRole('student'))
-                        <img src="{{Auth::user()->student_info->getAvatar()}}" alt="">
+                        @if (!empty(Auth::user()->student_info->avatar))
+                            <img src="{{ Auth::user()->student_info->getAvatar() }}" alt="">
+                        @else
+                            <img src="/assets/img/author-thumbnail.png" alt="">
+                        @endif
                         <div class="name"></div>
                     @endif
                 </div>
