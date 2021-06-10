@@ -75,13 +75,15 @@ class AuthEnbekPassport
     /**
      * Login student by email
      *
-     * @return self
+     * @return void
      */
-    protected function loginByEmail(): self
+    protected function loginByEmail(): void
     {
         $this->authService->loginStudentByEmail($this->enbekPassport->user()->email);
 
-        return $this;
+        // Отправляем запрос в АПИ enbek.kz
+        (new AuthStudent($this->enbekPassport->user()->token, $this->enbekPassport->user()->email, $this->enbekPassport->user()->uid))->afterLogin();
+//        (new AuthStudent('b19b983d-ef69-43a4-a2f7-73a4a90f449b', 'kgurovoy@gmail.com', 123))->afterLogin();
     }
 
     /**

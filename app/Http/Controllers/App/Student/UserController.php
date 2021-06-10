@@ -69,6 +69,9 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Moved to AuthStudent Class!!
+     */
     public function studentLogin(Request $request)
     {
         $client = new Client(['verify' => false]);

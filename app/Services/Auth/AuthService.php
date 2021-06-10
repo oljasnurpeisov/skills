@@ -3,6 +3,7 @@
 namespace Service\Auth;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Services\Auth\LoginService;
 use Services\Auth\RegisterService;
 
@@ -49,7 +50,13 @@ class AuthService {
         $user = $this->user->whereEmail($email)->first();
 
         if (empty($user)) {
-            $user = $this->registerService->register(['email' => $email, 'role_id' => 5]);
+            $user = $this->registerService->register(
+                [
+                    'email'             => $email,
+                    'role_id'           => 5,
+                    'is_activate'       => 1,
+                    'email_verified_at' => Carbon::now()->toDateTimeString()
+                ]);
         }
 
         $this->loginService->login($user);
