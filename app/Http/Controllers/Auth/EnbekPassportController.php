@@ -56,7 +56,7 @@ class EnbekPassportController extends Controller
             $passportUser = $this->passport->user();
 
             if (!empty($passportUser)) {
-                $this->authService->loginByEmail($passportUser->email);
+                $this->authService->loginStudentByEmail($passportUser->email);
             }
         }
 

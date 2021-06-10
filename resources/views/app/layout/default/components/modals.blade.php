@@ -12,7 +12,7 @@
                 </a>
             </div>
             <div class="col-sm-6">
-                <a href="#studentAuth" data-fancybox title="{{__('default.pages.auth.as_student')}}"
+                <a href="https://passport.enbek.kz/ru/user/login?redirect_uri={{ route('auth_sso', ['redirect' => 'strict']) }}"  title="{{__('default.pages.auth.as_student')}}"
                    class="authorization-option">
                 <span class="authorization-option__image">
                     <img src="/assets/img/student.svg" alt="">
@@ -58,10 +58,6 @@
             <div class="text-center">
                 <div class="form-group">
                     <button type="submit" class="btn">{{__('default.pages.auth.auth_title')}}</button>
-                </div>
-                <div class="hint">
-                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri=https://skillstest.enbek.kz/ru/auth_sso" title=""
-                       class="">passport.enbek.kz</a>
                 </div>
                 <div class="hint">
                     {{__('default.pages.auth.not_registered_title')}}<br/>
@@ -110,7 +106,7 @@
                             id="studentLoginBtn" {{old('agree') != 'on' ? 'disabled' : ''}}>{{__('default.pages.auth.auth_title')}}</button>
                 </div>
                 <div class="hint">
-                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri=https://skillstest.enbek.kz/ru/auth_sso" title=""
+                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri={{ route('auth_sso', ['redirect' => 'strict']) }}" title=""
                        class="">passport.enbek.kz</a>
                 </div>
                 <div class="hint">

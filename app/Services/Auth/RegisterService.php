@@ -20,40 +20,40 @@ class RegisterService {
 
     /**
      * RegisterService constructor.
-     *
-     * @param User $user
      */
-    public function __construct(User $user)
+    public function __construct()
     {
-        $this->user = $user;
+        $this->user = new User();
     }
 
     /**
      * Registration
      *
      * @param array $data
+     * @param int $role_id
      * @return User
      */
-    public function register(array $data): User
+    public function register(array $data, int $role_id = 4): User
     {
         $user = $this->user->create($data);
 
-        return $this->afterRegister($user);
+        return $this->afterRegister($user, $role_id);
     }
 
     /**
      * Create UserInformation/PayInformation/Dialog etc
      *
      * @param User $user
+     * @param int $role_id
      * @return User
      */
-    public function afterRegister(User $user): User
+    public function afterRegister(User $user, int $role_id = 4): User
     {
         $this->createUserInformation($user);
 
         $this->createUserPayInformation($user);
 
-        $user->roles()->sync([4]);
+        $user->roles()->sync([$role_id]);
 
         $this->createSupportDialog($user);
 

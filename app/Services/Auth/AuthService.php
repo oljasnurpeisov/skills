@@ -30,16 +30,12 @@ class AuthService {
 
     /**
      * AuthService constructor.
-     *
-     * @param User $user
-     * @param RegisterService $registerService
-     * @param LoginService $loginService
      */
-    public function __construct(User $user, RegisterService $registerService, LoginService $loginService)
+    public function __construct()
     {
-        $this->user             = $user;
-        $this->registerService  = $registerService;
-        $this->loginService     = $loginService;
+        $this->user             = new User();
+        $this->registerService  = new RegisterService();
+        $this->loginService     = new LoginService();
     }
 
     /**
@@ -48,12 +44,12 @@ class AuthService {
      * @param string $email
      * @return void
      */
-    public function loginByEmail(string $email): void
+    public function loginStudentByEmail(string $email): void
     {
         $user = $this->user->whereEmail($email)->first();
 
         if (empty($user)) {
-            $user = $this->registerService->register(['email' => $email]);
+            $user = $this->registerService->register(['email' => $email, 'role_id' => 5]);
         }
 
         $this->loginService->login($user);
