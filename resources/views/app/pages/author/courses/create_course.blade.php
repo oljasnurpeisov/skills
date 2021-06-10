@@ -404,6 +404,11 @@
 
         var type = null;
 
+        function clearAllFields() {
+            professionAreaSelect.clear();
+            specialitySelect.clear();
+            skillsSelect.clear();
+        }
 
         professionalAreaEl.change(function () {
             if (type === null) {
@@ -421,6 +426,7 @@
 
             if (professionalAreaEl.val() === null && specialityEl.val() === null && skillsEl.val() === null) {
                 type = null;
+                clearAllFields();
             }
         });
 
@@ -446,6 +452,7 @@
 
             if (professionalAreaEl.val() === null && specialityEl.val() === null && skillsEl.val() === null) {
                 type = null;
+                clearAllFields();
             }
         });
 
@@ -465,6 +472,7 @@
 
             if (professionalAreaEl.val() === null && specialityEl.val() === null && skillsEl.val() === null) {
                 type = null;
+                clearAllFields();
             }
         })
     </script>
