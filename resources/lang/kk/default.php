@@ -495,7 +495,7 @@ return [
         ],
         'index' => [
             'index_title' => 'Өз дағдыларынды жақсарт! <br/><span>Enbek.kz-пен бірге</span>',
-            'find_your_course' => '<span>Табыңыз</span><br/> Өз курсыңызды',
+            'find_your_course' => '<span>Өз курсыңызды</span><br/> Табыңыз',
             'popular_courses' => '<span>Танымал</span><br/> курстар',
             'popular_authors' => '<span>Танымал</span><br/> авторлар',
             'popular_courses_catalog' => '<span>Қолдануға болады</span><br/> танымал курстар',
