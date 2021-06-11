@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Libraries\Auth\AuthStudent;
 use Libraries\Auth\EnbekPassport;
 use Service\Auth\AuthService;
 
@@ -61,6 +62,8 @@ class EnbekPassportController extends Controller
         }
 
         if (Auth::check()) {
+            (new AuthStudent($this->enbekPassport->user()->token, $this->enbekPassport->user()->email, $this->enbekPassport->user()->uid))->afterLogin();
+
             return redirect(url((new LoginController())->redirectTo()));
         } else {
             return redirect(url('/'));

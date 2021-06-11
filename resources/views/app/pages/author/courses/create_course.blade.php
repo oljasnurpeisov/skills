@@ -410,6 +410,10 @@
             skillsSelect.clear();
         }
 
+        // $('[name="professional_areas[]"], [name="professions[]"], [name="skills[]"]').change(function () {
+        //
+        // });
+
         professionalAreaEl.change(function () {
             if (type === null) {
                 type = 1;
