@@ -3,7 +3,6 @@
 namespace Services\Contracts;
 
 use App\Models\Contract;
-use App\Models\Course;
 use Doctrine\DBAL\Query;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
