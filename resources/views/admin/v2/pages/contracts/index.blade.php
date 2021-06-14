@@ -30,6 +30,7 @@
         </div>
 
         @include('admin.v2.partials.components.warning')
+
         <div class="block">
             <h2 class="title-secondary">{{ $keywords ? __('admin.labels.search_result') : __('admin.labels.record_list') }}</h2>
 
@@ -57,23 +58,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($contracts as $contract)
-                    <tr>
-                        <td>{{ $contract->id }}</td>
-                        <td>{{ $contract->course->name }}</td>
-                        <td>{{ $contract->course->user->company_name }}</td>
-                        <td>{{ $contract->getStatusName() }}</td>
-                        <td>{{ $contract->course->getTypeName() }}</td>
-                        <td>-</td>
-                        <td>{{ $contract->created_at }}</td>
-                        <td>
-                            <div class="action-buttons">
-                                <a target="_blank" href="{{ asset($contract->link) }}" title="{{ __('admin.labels.view') }}"
-                                   class="icon-btn icon-btn--yellow icon-eye"></a>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
+                    @foreach($contracts as $contract)
+                        <tr>
+                            <td>{{ $contract->id }}</td>
+                            <td>{{ $contract->course->name }}</td>
+                            <td>{{ $contract->course->user->company_name }}</td>
+                            <td>{{ $contract->getStatusName() }}</td>
+                            <td>{{ $contract->course->getTypeName() }}</td>
+                            <td>-</td>
+                            <td>{{ $contract->created_at }}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a target="_blank" href="{{ asset($contract->link) }}" title="{{ __('admin.labels.view') }}"
+                                       class="icon-btn icon-btn--yellow icon-eye"></a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
 
