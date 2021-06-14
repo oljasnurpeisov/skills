@@ -142,4 +142,54 @@ class Course extends Model
         return $this->hasMany(CourseQuotaCost::class, 'course_id', 'id');
     }
 
+    /**
+     * Тип курса
+     *
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        switch (true) {
+            case $this->isQuota():
+                return 'Доступен по квоте';
+                break;
+            case $this->isPaid():
+                return 'Платный';
+                break;
+            default;
+                return 'Бесплатный';
+                break;
+        }
+    }
+
+    /**
+     * Курс бесплатный
+     *
+     * @return bool
+     */
+    public function isFree(): bool
+    {
+        return !$this->isPaid();
+    }
+
+    /**
+     * Курс платный?
+     *
+     * @return bool
+     */
+    public function isPaid(): bool
+    {
+        return $this->is_paid === 1;
+    }
+
+    /**
+     * Курс доступен по квоте?
+     *
+     * @return bool
+     */
+    public function isQuota(): bool
+    {
+        return $this->isPaid() && $this->quota_status !== 0;
+    }
+
 }

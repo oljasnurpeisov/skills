@@ -59,6 +59,20 @@
                 </ul>
             </li>
             @endhasPermission
+            @hasPermission('admin.contracts')
+            <li class="dropdown">
+                <a href="javascript:;" title="Договоры">
+                    <i class="icon-reports"></i> Договоры
+                </a>
+                <ul>
+                    <li><a href="{{ route('admin.contracts.all', ['lang' => $lang]) }}">Все договоры</a></li>
+                    <li><a href="">Ожидающие подписания</a></li>
+                    <li><a href="">Подписаны</a></li>
+                    <li><a href="">Расторгнуты</a></li>
+                    <li><a href="">Отклонены автором</a></li>
+                </ul>
+            </li>
+            @endhasPermission
             @hasPermission('admin.pages')
             <li class="dropdown">
                 <a href="javascript:;" title="{{ __('admin.pages.static_pages.title') }}">

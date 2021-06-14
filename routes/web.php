@@ -107,7 +107,10 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post("/course-{course}/lesson-{lesson}/admin-homework-submit", "PreviewCourseController@submitHomeWork");
                 Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-test", "PreviewCourseController@testView");
                 Route::post("/course-{course}/lesson-{lesson}/admin-test-submit", "PreviewCourseController@submitTest");
-
+            });
+            // Договоры
+            Route::group(['middleware' => 'check.permission:admin.courses'], static function () {
+                Route::get('/contracts/index', 'ContractsController@index')->name('admin.contracts.all');
             });
             // Страницы
             Route::group(['middleware' => 'check.permission:admin.pages'], static function () {
