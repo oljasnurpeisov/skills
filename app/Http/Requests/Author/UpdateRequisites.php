@@ -28,7 +28,7 @@ class UpdateRequisites extends FormRequest
             'company_name'          => ['required'],
             'position'              => ['required'],
             'fio_director'          => ['required'],
-            'base'                  => ['required'],
+            'base_id'               => ['required'],
             'iin'                   => ['required'],
             'iik_kz'                => ['required'],
             'kbe'                   => ['required'],

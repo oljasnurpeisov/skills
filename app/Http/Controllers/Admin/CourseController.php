@@ -11,6 +11,7 @@ use App\Models\Log;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Libraries\Word\Agreement;
 
 /**
  * --------------------------------------------------------------------------

@@ -70,6 +70,11 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="form-group__label">{{ __('default.pages.profile.address') }} *</label>
+                                <input type="text" name="legal_address" placeholder="" class="input-regular" required value="{{ old('legal_address') ?? Auth::user()->legal_address }}">
+                            </div>
+
+                            <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.profile.position')}} *</label>
                                 <input type="text" name="position" placeholder="" class="input-regular" required value="{{ old('position') ?? Auth::user()->position }}">
                             </div>
@@ -81,11 +86,12 @@
 
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.profile.base')}} *</label>
-                                <select type="text" name="base" required class="selectize-regular no-search">
-                                    <option @if(Auth::user()->base === 1) selected='selected' @endif value="1">{{__('default.pages.profile.base_select.tired')}}</option>
-                                    <option @if(Auth::user()->base === 2) selected='selected' @endif value="2">{{__('default.pages.profile.base_select.position')}}</option>
-                                    <option @if(Auth::user()->base === 3) selected='selected' @endif value="3">{{__('default.pages.profile.base_select.order')}}</option>
-                                    <option @if(Auth::user()->base === 4) selected='selected' @endif value="4">{{__('default.pages.profile.base_select.decision')}}</option>
+                                <select type="text" name="base_id" required class="selectize-regular no-search">
+                                    @foreach($bases as $base)
+                                        <option value="{{ $base->id }}" @if($base->id==Auth::user()->base_id) selected='selected' @endif>
+                                            {{ $base->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 

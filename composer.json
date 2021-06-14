@@ -22,9 +22,11 @@
     "league/fractal": "^0.19.2",
     "maatwebsite/excel": "^3.1",
     "orchestra/parser": "^6.0",
+    "phpoffice/phpword": "^0.18.2",
     "spatie/pdf-to-image": "^2.1"
   },
   "require-dev": {
+    "barryvdh/laravel-debugbar": "^3.6",
     "barryvdh/laravel-ide-helper": "^2.8",
     "facade/ignition": "^2.3.6",
     "fzaninotto/faker": "^1.9.1",

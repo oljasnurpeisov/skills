@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App\Author;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Author\UpdateRequisites;
 use App\Models\Bank;
+use App\Models\Base;
 use App\Models\Course;
 use App\Models\PayInformation;
 use App\Models\Skill;
@@ -186,7 +187,8 @@ class UserController extends Controller
     {
         return view("app.pages.author.profile.profile_requisites", [
             'types_of_ownership'    => Type_of_ownership::get(),
-            'banks'                 => Bank::get()
+            'banks'                 => Bank::get(),
+            'bases'                 => Base::get()
         ]);
     }
 

@@ -1,4 +1,15 @@
 <?php return array (
+  'barryvdh/laravel-debugbar' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Barryvdh\\Debugbar\\ServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Debugbar' => 'Barryvdh\\Debugbar\\Facade',
+    ),
+  ),
   'barryvdh/laravel-dompdf' => 
   array (
     'providers' => 
@@ -26,6 +37,17 @@
     'aliases' => 
     array (
       'API' => 'Dingo\\Api\\Facade\\API',
+    ),
+  ),
+  'edujugon/push-notification' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Edujugon\\PushNotification\\Providers\\PushNotificationServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'PushNotification' => 'Edujugon\\PushNotification\\Facades\\PushNotification',
     ),
   ),
   'facade/ignition' => 

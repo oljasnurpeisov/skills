@@ -179,6 +179,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -236,6 +237,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'API' => Dingo\Api\Facade\API::class,
         'APIRoute' => Dingo\Api\Facade\Route::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];
