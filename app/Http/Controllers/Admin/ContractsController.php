@@ -10,6 +10,7 @@ use Services\Contracts\ContractService;
 /**
  * Class ContractsController
  *
+ * @author kgurovoy@gmail.com
  * @package App\Http\Controllers\Admin
  */
 class ContractsController extends Controller

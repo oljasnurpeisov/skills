@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * Class Contract
+ *
+ * @author kgurovoy@gmail.com
+ * @package App\Models
+ */
 class Contract extends Model
 {
     protected $table = 'contracts';

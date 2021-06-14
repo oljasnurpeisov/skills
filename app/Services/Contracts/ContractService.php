@@ -8,6 +8,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 /**
  * Class ContractService
  *
+ * @author kgurovoy@gmail.com
  * @package Services\Contracts
  */
 class ContractService
