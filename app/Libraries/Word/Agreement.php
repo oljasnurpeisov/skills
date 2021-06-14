@@ -18,6 +18,8 @@ setlocale(LC_TIME, 'ru_RU.UTF-8');
 
 /**
  * Class Agreement
+ *
+ * @author kgurovoy@gmail.com
  * @package Libraries\Word
  */
 class Agreement
