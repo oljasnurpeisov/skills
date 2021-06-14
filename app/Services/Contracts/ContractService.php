@@ -3,11 +3,11 @@
 namespace Services\Contracts;
 
 use App\Models\Contract;
-use Doctrine\DBAL\Query;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
  * Class ContractService
+ *
  * @package Services\Contracts
  */
 class ContractService
@@ -33,11 +33,16 @@ class ContractService
      * @TODO REMOVE LIKE!
      *
      * @param string $keywords
+     * @param string|null $scope
      * @return LengthAwarePaginator
      */
-    public function getOrSearch(string $keywords=null): LengthAwarePaginator
+    public function getOrSearch(string $keywords=null, string $scope=null): LengthAwarePaginator
     {
         $courses = $this->contract;
+
+        if (!empty($scope)) {
+            $courses = $courses->$scope();
+        }
 
         if (!empty($keywords)) {
             $courses = $courses->whereHas('course', function($q) use ($keywords) {

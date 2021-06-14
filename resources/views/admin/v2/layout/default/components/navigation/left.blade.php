@@ -66,10 +66,10 @@
                 </a>
                 <ul>
                     <li><a href="{{ route('admin.contracts.all', ['lang' => $lang]) }}">Все договоры</a></li>
-                    <li><a href="">Ожидающие подписания</a></li>
-                    <li><a href="">Подписаны</a></li>
-                    <li><a href="">Расторгнуты</a></li>
-                    <li><a href="">Отклонены автором</a></li>
+                    <li><a href="{{ route('admin.contracts.pending', ['lang' => $lang]) }}">Ожидающие подписания</a></li>
+                    <li><a href="{{ route('admin.contracts.signed', ['lang' => $lang]) }}">Подписаны</a></li>
+                    <li><a href="{{ route('admin.contracts.distributed', ['lang' => $lang]) }}">Расторгнуты</a></li>
+                    <li><a href="{{ route('admin.contracts.rejected_by_author', ['lang' => $lang]) }}">Отклонены автором</a></li>
                 </ul>
             </li>
             @endhasPermission

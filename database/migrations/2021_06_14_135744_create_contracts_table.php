@@ -17,7 +17,7 @@ class CreateContractsTable extends Migration
             $table->id();
             $table->integer('course_id')->index();
             $table->string('link')->nullable();
-            $table->integer('status')->index();
+            $table->integer('status')->default(0)->index();
             $table->timestamps();
         });
     }

@@ -110,7 +110,11 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
             });
             // Договоры
             Route::group(['middleware' => 'check.permission:admin.courses'], static function () {
-                Route::get('/contracts/index', 'ContractsController@index')->name('admin.contracts.all');
+                Route::get('/contracts/all', 'ContractsController@all')->name('admin.contracts.all');
+                Route::get('/contracts/signed', 'ContractsController@signed')->name('admin.contracts.signed');
+                Route::get('/contracts/distributed', 'ContractsController@distributed')->name('admin.contracts.distributed');
+                Route::get('/contracts/rejected-by-author', 'ContractsController@rejectedByAuthor')->name('admin.contracts.rejected_by_author');
+                Route::get('/contracts/pending', 'ContractsController@pending')->name('admin.contracts.pending');
             });
             // Страницы
             Route::group(['middleware' => 'check.permission:admin.pages'], static function () {
