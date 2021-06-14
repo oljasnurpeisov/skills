@@ -62,7 +62,7 @@
                         <td>{{ $contract->id }}</td>
                         <td>{{ $contract->course->name }}</td>
                         <td>{{ $contract->course->user->company_name }}</td>
-                        <td>-</td>
+                        <td>{{ $contract->getStatusName() }}</td>
                         <td>{{ $contract->course->getTypeName() }}</td>
                         <td>-</td>
                         <td>{{ $contract->created_at }}</td>

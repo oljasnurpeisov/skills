@@ -65,4 +65,70 @@ class Contract extends Model
     {
         return $query->whereStatus(1);
     }
+
+    /**
+     * Ожидает подписания?
+     *
+     * @return bool
+     */
+    public function isPending(): bool
+    {
+        return $this->status === 1;
+    }
+
+    /**
+     * Подписан?
+     *
+     * @return bool
+     */
+    public function isSigned(): bool
+    {
+        return $this->status === 2;
+    }
+
+    /**
+     * Расторгнут?
+     *
+     * @return bool
+     */
+    public function isDistributed(): bool
+    {
+        return $this->status === 3;
+    }
+
+    /**
+     * Отклонен автором?
+     *
+     * @return bool
+     */
+    public function isRejectedByAuthor(): bool
+    {
+        return $this->status === 4;
+    }
+
+    /**
+     * Название статуса
+     *
+     * @return string
+     */
+    public function getStatusName(): string
+    {
+        switch (true) {
+            case $this->isPending():
+                return 'Ожидает подписания';
+                break;
+            case $this->isSigned():
+                return 'Подписан';
+                break;
+            case $this->isDistributed():
+                return 'Расторгнут';
+                break;
+            case $this->isRejectedByAuthor():
+                return 'Отклонен автором';
+                break;
+            default;
+                return 'Сгенерирован';
+                break;
+        }
+    }
 }
