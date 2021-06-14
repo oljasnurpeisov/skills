@@ -13,25 +13,25 @@
                 <div class="col-md-4">
                     <h1 class="title-primary" style="margin-bottom: 0">Договоры</h1>
                 </div>
-{{--                <div class="col-md-8 text-right-md text-right-lg">--}}
-{{--                    <div class="flex-form">--}}
-{{--                        <div>--}}
-{{--                            <form action="/{{$lang}}/admin/courses/index" method="get" class="input-button">--}}
-{{--                                <input type="text" name="term"--}}
-{{--                                       placeholder="{{ __('admin.pages.courses.course_name') }}"--}}
-{{--                                       class="input-regular input-regular--solid" style="width: 282px;"--}}
-{{--                                       value="{{ $term }}">--}}
-{{--                                <button class="btn btn--green">{{ __('admin.labels.search') }}</button>--}}
-{{--                            </form>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                <div class="col-md-8 text-right-md text-right-lg">
+                    <div class="flex-form">
+                        <div>
+                            <form action="{{ route('admin.contracts.all', ['lang' => $lang]) }}" method="get" class="input-button">
+                                <input type="text" name="keywords"
+                                       placeholder="{{ __('admin.pages.courses.course_name') }}"
+                                       class="input-regular input-regular--solid" style="width: 282px;"
+                                       value="{{ $keywords }}">
+                                <button class="btn btn--green">{{ __('admin.labels.search') }}</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         @include('admin.v2.partials.components.warning')
         <div class="block">
-{{--            <h2 class="title-secondary">{{ $term ? __('admin.labels.search_result') : __('admin.labels.record_list') }}</h2>--}}
+            <h2 class="title-secondary">{{ $keywords ? __('admin.labels.search_result') : __('admin.labels.record_list') }}</h2>
 
             <table class="table records">
                 <colgroup>
