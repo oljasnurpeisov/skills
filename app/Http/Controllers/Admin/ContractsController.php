@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contract;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Services\Contracts\ContractService;
+use Services\Contracts\ContractFilterService;
 
 /**
  * Class ContractsController
@@ -16,16 +17,16 @@ use Services\Contracts\ContractService;
 class ContractsController extends Controller
 {
     /**
-     * @var ContractService
+     * @var ContractFilterService
      */
     private $contractService;
 
     /**
-     * ContractsController constructor.
+     * ContractFilterService constructor.
      *
-     * @param ContractService $contractService
+     * @param ContractFilterService $contractService
      */
-    public function __construct(ContractService $contractService)
+    public function __construct(ContractFilterService $contractService)
     {
         $this->contractService = $contractService;
     }
@@ -39,8 +40,8 @@ class ContractsController extends Controller
     public function all(Request $request): View
     {
         return view('admin.v2.pages.contracts.index', [
-            'contracts' => $this->contractService->getOrSearch($request->keywords),
-            'keywords'  => $request->keywords,
+            'contracts' => $this->contractService->getOrSearch($request->all()),
+            'request'   => $request->all(),
             'title'     => 'Договоры'
         ]);
     }
@@ -54,8 +55,8 @@ class ContractsController extends Controller
     public function signed(Request $request): View
     {
         return view('admin.v2.pages.contracts.index', [
-            'contracts' => $this->contractService->getOrSearch($request->keywords, 'signed'),
-            'keywords'  => $request->keywords,
+            'contracts' => $this->contractService->getOrSearch($request->all(), 'signed'),
+            'request'   => $request->all(),
             'title'     => 'Подписанные договора'
         ]);
     }
@@ -69,8 +70,8 @@ class ContractsController extends Controller
     public function distributed(Request $request): View
     {
         return view('admin.v2.pages.contracts.index', [
-            'contracts' => $this->contractService->getOrSearch($request->keywords, 'distributed'),
-            'keywords'  => $request->keywords,
+            'contracts' => $this->contractService->getOrSearch($request->all(), 'distributed'),
+            'request'   => $request->all(),
             'title'     => 'Расторгнутые договора'
         ]);
     }
@@ -84,8 +85,8 @@ class ContractsController extends Controller
     public function rejectedByAuthor(Request $request): View
     {
         return view('admin.v2.pages.contracts.index', [
-            'contracts' => $this->contractService->getOrSearch($request->keywords, 'rejectedByAuthor'),
-            'keywords'  => $request->keywords,
+            'contracts' => $this->contractService->getOrSearch($request->all(), 'rejectedByAuthor'),
+            'request'   => $request->all(),
             'title'     => 'Отклонены автором'
         ]);
     }
@@ -99,9 +100,23 @@ class ContractsController extends Controller
     public function pending(Request $request): View
     {
         return view('admin.v2.pages.contracts.index', [
-            'contracts' => $this->contractService->getOrSearch($request->keywords, 'pending'),
-            'keywords'  => $request->keywords,
+            'contracts' => $this->contractService->getOrSearch($request->all(), 'pending'),
+            'request'   => $request->all(),
             'title'     => 'Ожидающие подписания'
+        ]);
+    }
+
+    /**
+     * Просмотр договора
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function view(Request $request): View
+    {
+        return view('admin.v2.pages.contracts.view', [
+            'contract'  => Contract::findOrFail($request->id),
+            'title'     => 'Просмотр договора'
         ]);
     }
 }

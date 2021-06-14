@@ -15,6 +15,7 @@ class CreateContractsTable extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
+            $table->string('number')->index();
             $table->integer('course_id')->index();
             $table->string('link')->nullable();
             $table->integer('status')->default(0)->index();

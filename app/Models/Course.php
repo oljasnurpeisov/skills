@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -140,6 +141,39 @@ class Course extends Model
     public function quotaCost()
     {
         return $this->hasMany(CourseQuotaCost::class, 'course_id', 'id');
+    }
+
+    /**
+     * Бесплатные курсы
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeFree($query): Builder
+    {
+        return $query->whereIsPaid(0);
+    }
+
+    /**
+     * Платные курсы
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopePaid($query): Builder
+    {
+        return $query->whereIsPaid(1);
+    }
+
+    /**
+     * Курсы по квоте
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeQuota($query): Builder
+    {
+        return $query->whereIsPaid(1)->where('quota_status', '!=', 0);
     }
 
     /**

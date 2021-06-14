@@ -13,26 +13,13 @@
                 <div class="col-md-4">
                     <h1 class="title-primary" style="margin-bottom: 0">{{ $title }}</h1>
                 </div>
-                <div class="col-md-8 text-right-md text-right-lg">
-                    <div class="flex-form">
-                        <div>
-                            <form action="{{ route('admin.contracts.all', ['lang' => $lang]) }}" method="get" class="input-button">
-                                <input type="text" name="keywords"
-                                       placeholder="{{ __('admin.pages.courses.course_name') }}"
-                                       class="input-regular input-regular--solid" style="width: 282px;"
-                                       value="{{ $keywords }}">
-                                <button class="btn btn--green">{{ __('admin.labels.search') }}</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
         @include('admin.v2.partials.components.warning')
 
         <div class="block">
-            <h2 class="title-secondary">{{ $keywords ? __('admin.labels.search_result') : __('admin.labels.record_list') }}</h2>
+            <h2 class="title-secondary">{{ !empty($request) ? __('admin.labels.search_result') : __('admin.labels.record_list') }}</h2>
 
             <table class="table records">
                 <colgroup>
@@ -47,20 +34,47 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <th>#</th>
+                    <th>Номер договора</th>
                     <th>Название курса</th>
-                    <th>Название организации автора</th>
+                    <th>Название организации</th>
                     <th>Статус договора</th>
                     <th>Тип курса</th>
                     <th>Дата подписания Автором</th>
                     <th>Дата публикации</th>
-                    <th>{{ __('admin.labels.actions') }}</th>
+                    <th>Договор</th>
                 </tr>
                 </thead>
                 <tbody>
+                    <form name="search">
+                        <tr>
+                            <th><input name="contract_number" type="text" class="input-regular" value="{{ $request['contract_number'] ?? '' }}"></th>
+                            <th><input name="course_name" type="text" class="input-regular" value="{{ $request['course_name'] ?? '' }}"></th>
+                            <th><input name="company_name" type="text" class="input-regular" value="{{ $request['company_name'] ?? '' }}"></th>
+                            <th>
+                                <select id="contract_status" name="contract_status" class="input-regular chosen">
+                                    <option value="">Все</option>
+                                    <option value="">Статус 1</option>
+                                    <option value="">Статус 2</option>
+                                </select>
+                                <script>document.getElementById('contract_status').value = {{ $request['contract_status'] ?? '' }};</script>
+                            </th>
+                            <th>
+                                <select id="course_type" name="course_type" class="input-regular chosen">
+                                    <option value="">Все</option>
+                                    <option value="3">Доступен по квоте</option>
+                                    <option value="2">Платный</option>
+                                    <option value="1">Бесплатный</option>
+                                </select>
+                                <script>document.getElementById('course_type').value = {{ $request['course_type'] ?? '' }};</script>
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th><button class="btn">Поиск</button></th>
+                        </tr>
+                    </form>
                     @foreach($contracts as $contract)
                         <tr>
-                            <td>{{ $contract->id }}</td>
+                            <td>{{ $contract->number }}</td>
                             <td>{{ $contract->course->name }}</td>
                             <td>{{ $contract->course->user->company_name }}</td>
                             <td>{{ $contract->getStatusName() }}</td>
@@ -69,7 +83,7 @@
                             <td>{{ $contract->created_at }}</td>
                             <td>
                                 <div class="action-buttons">
-                                    <a target="_blank" href="{{ asset($contract->link) }}" title="{{ __('admin.labels.view') }}"
+                                    <a target="_blank" href="{{ route('admin.contracts.view', ['lang' => $lang, 'id' => $contract->id]) }}" title="{{ __('admin.labels.view') }}"
                                        class="icon-btn icon-btn--yellow icon-eye"></a>
                                 </div>
                             </td>
