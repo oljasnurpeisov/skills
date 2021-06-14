@@ -38,7 +38,7 @@ class ContractFilterService
      * @param string|null $scope
      * @return LengthAwarePaginator
      */
-    public function getOrSearch(array $request, string $scope=null): LengthAwarePaginator
+    public function getOrSearch(array $request, string $scope = null): LengthAwarePaginator
     {
         $contracts = $this->contract->with(['course', 'course.user']);
 
