@@ -2,8 +2,8 @@
 
 namespace Libraries\Auth;
 
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Service\Auth\AuthService;
 
 /**
@@ -119,6 +119,6 @@ class AuthEnbekPassport
      */
     protected function isStudent(): bool
     {
-        return Auth::check() && Auth::user()->hasRole('student') && Session::get('resume_data');
+        return Auth::check() && Auth::user()->hasRole('student') && empty(Session::get('resume_data'));
     }
 }
