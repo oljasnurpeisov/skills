@@ -113,13 +113,25 @@ class Agreement
     /**
      * Резервируем id создавая запись
      *
-     * @return int
+     * @return string
      */
-    private function getNumber(): int
+    private function getNumber(): string
     {
         $this->contract = $this->contract->create([
             'course_id' => $this->course->id
         ]);
+
+        switch ($this->type) {
+            case 'agreement_free':
+                return $this->contract->id .'-Б';
+                break;
+            case 'agreement_paid':
+                return $this->contract->id .'-П';
+                break;
+            case 'agreement_quota':
+                return $this->contract->id .'-ГП';
+                break;
+        }
 
         return $this->contract->id;
     }
@@ -132,7 +144,8 @@ class Agreement
      */
     private function save(string $savePath): Contract
     {
-        $this->contract->link = $savePath;
+        $this->contract->link   = $savePath;
+        $this->contract->number = $this->number;
         $this->contract->update();
 
         return $this->contract;
