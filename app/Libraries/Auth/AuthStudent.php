@@ -108,6 +108,8 @@ class AuthStudent
 
                 (new LoginService())->logout();
 
+                return;
+
 //                return redirect(url('/'))->send();
             }
         }
