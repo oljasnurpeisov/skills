@@ -106,10 +106,6 @@ class AuthStudent
             } else {
                 Session::put('resume_data', $user->id);
 
-                Auth::logout();
-
-                dd('Нет резюме');
-
                 (new LoginService())->logout();
 
                 return redirect(url('/'))->send();
