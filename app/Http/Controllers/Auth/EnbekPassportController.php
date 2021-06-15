@@ -69,12 +69,12 @@ class EnbekPassportController extends Controller
 //            }
 //        }
 //
-//        if (Auth::check()) {
-//            (new AuthStudent($this->passport->user()->token, $this->passport->user()->email, $this->passport->user()->uid))->afterLogin();
-//
-//            return redirect(url((new LoginController())->redirectTo()));
-//        } else {
-//            return redirect(url('/'));
-//        }
+        if (Auth::check()) {
+            (new AuthStudent($this->passport->user()->token, $this->passport->user()->email, $this->passport->user()->uid))->afterLogin();
+
+            return redirect(url((new LoginController())->redirectTo()));
+        } else {
+            return redirect(url('/'));
+        }
     }
 }
