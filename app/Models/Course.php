@@ -15,9 +15,6 @@ class Course extends Model
     const unpublished = 2;
     const published = 3;
     const deleted = 4;
-    const signingAuthor = 5;
-    const signingAdmin = 6;
-    const checkContracts = 7;
 
     protected $table = 'courses';
 
@@ -154,7 +151,7 @@ class Course extends Model
      */
     public function scopeSigningAuthor($query): Builder
     {
-        return $query->whereStatus(5);
+        return $query->whereContractStatus(1);
     }
 
     /**
@@ -165,7 +162,7 @@ class Course extends Model
      */
     public function scopeSigningAdmin($query): Builder
     {
-        return $query->whereStatus(6);
+        return $query->whereContractStatus(2);
     }
 
     /**
@@ -176,7 +173,7 @@ class Course extends Model
      */
     public function scopeCheckContracts($query): Builder
     {
-        return $query->whereStatus(7);
+        return $query->whereContractStatus(3);
     }
 
     /**
