@@ -53,10 +53,9 @@ class AuthService {
             $user = $this->registerService->register(
                 [
                     'email'             => $email,
-                    'role_id'           => 5,
                     'is_activate'       => 1,
                     'email_verified_at' => Carbon::now()->toDateTimeString()
-                ]);
+                ], 5);
         }
 
         $this->loginService->login($user);
