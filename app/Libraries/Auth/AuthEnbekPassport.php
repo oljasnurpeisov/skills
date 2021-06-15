@@ -112,12 +112,23 @@ class AuthEnbekPassport
     }
 
     /**
-     * Пользователь обучающийся есть резюме?
+     * Пользователь обучающийся?
      *
      * @return bool
      */
     protected function isStudent(): bool
     {
-        return Auth::check() && Auth::user()->hasRole('student') && empty(Session::get('resume_data'));
+        return Auth::check() && Auth::user()->hasRole('student'));
     }
+
+    /**
+     * Есть резюме?
+     *
+     * @return bool
+     */
+    protected function checkResume(): bool
+    {
+        return empty(Session::get('resume_data'));
+    }
+
 }
