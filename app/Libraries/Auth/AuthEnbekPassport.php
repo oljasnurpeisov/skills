@@ -120,7 +120,7 @@ class AuthEnbekPassport
      */
     protected function isStudent(): bool
     {
-        return Auth::check() && Auth::user()->hasRole('student'));
+        return Auth::check() && Auth::user()->hasRole('student');
     }
 
     /**
