@@ -97,8 +97,6 @@ class AuthEnbekPassport
 
         if ($this->isStudent()) {
             redirect($this->loginService->redirect())->send();
-        } else {
-            redirect('/')->send();
         }
 //        (new AuthStudent('b19b983d-ef69-43a4-a2f7-73a4a90f449b', 'kgurovoy@gmail.com', 123))->afterLogin();
     }
