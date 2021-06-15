@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Services\Auth\LoginService;
 
 class LoginController extends Controller
 {
@@ -44,16 +45,7 @@ class LoginController extends Controller
     }
 
     public function redirectTo(){
-
-        if (Auth::user()->hasRole('admin')){
-            return '/'.app()->getLocale().'/admin';
-        }else if (Auth::user()->hasRole('author')){
-            return '/' . app()->getLocale() . '/profile-author-information';
-        }else if (Auth::user()->hasRole('tech_support')){
-            return '/' . app()->getLocale() . '/admin';
-        }else{
-            return '/';
-        }
+        return (new LoginService())->redirect();
     }
 
     protected function validateLogin(Request $request)

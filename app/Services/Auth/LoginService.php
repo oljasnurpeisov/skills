@@ -28,4 +28,22 @@ class LoginService {
     {
         Auth::logout();
     }
+
+    /**
+     * Перенаправление после входа (перенесено из LoginController)
+     *
+     * @return string
+     */
+    public function redirect(): string
+    {
+        if (Auth::user()->hasRole('admin')) {
+            return '/'. app()->getLocale() .'/admin';
+        } else if (Auth::user()->hasRole('author')) {
+            return '/' . app()->getLocale() . '/profile-author-information';
+        } else if (Auth::user()->hasRole('tech_support')) {
+            return '/' . app()->getLocale() . '/admin';
+        } else {
+            return '/';
+        }
+    }
 }
