@@ -106,9 +106,7 @@ class AuthStudent
             } else {
                 Session::put('resume_data', $user->id);
 
-                (new LoginService())->logout();
-
-                return redirect(url('/'))->send();
+                Auth::logout();
             }
         }
 
