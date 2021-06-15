@@ -108,9 +108,9 @@ class AuthStudent
 
                 (new LoginService())->logout();
 
-                return;
+//                return;
 
-//                return redirect(url('/'))->send();
+                return redirect(url('/'))->send();
             }
         }
 
