@@ -109,7 +109,7 @@ class AuthStudent
         }
 
         if ($user->roles()->first()->id != $studentRole->id) {
-            return redirect(url('/')->with('status', __('default.pages.auth.student_login_author_exist'))->send();
+            return redirect(url('/'))->with('status', __('default.pages.auth.student_login_author_exist'))->send();
         }
 
         Session::put('student_token', $this->token);
