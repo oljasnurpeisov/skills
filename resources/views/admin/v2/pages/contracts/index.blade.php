@@ -69,7 +69,13 @@
                             </th>
                             <th></th>
                             <th></th>
-                            <th><button class="btn">Поиск</button></th>
+                            <th>
+                                <div class="buttons btn-group-sm">
+                                    <a href="{{ route(Route::currentRouteName(), ['lang' => $lang]) }}" class="btn" style="color: #fff; background: #e2e2e2; text-decoration:none; height: 30px; margin-top: 2px;">-</a>
+                                    <button class="btn">Поиск</button>
+                                </div>
+
+                            </th>
                         </tr>
                     </form>
                     @foreach($contracts as $contract)
