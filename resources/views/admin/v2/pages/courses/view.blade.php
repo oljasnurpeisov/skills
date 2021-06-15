@@ -128,7 +128,7 @@
                                     </div>
                                     <br>
                                 </form>
-                                @if(($item->cost > 0) and ($item->is_paid == true) and $item->quota_status === 0)
+                                @if($item->isPaid() and !$item->isQuota())
                                     <form id="course_form"
                                           action="/{{$lang}}/admin/course/quota_request/{{ $item->id }}"
                                           method="post"
