@@ -12,7 +12,7 @@
                 </a>
             </div>
             <div class="col-sm-6">
-                <a href="https://passport.enbek.kz/ru/user/login?redirect_uri={{ route('auth_sso', ['redirect' => 'strict']) }}"  title="{{__('default.pages.auth.as_student')}}"
+                <a href="https://passport.enbek.kz/ru/user/login?redirect_uri={{ route('auth_sso') }}&redirect=strict"  title="{{__('default.pages.auth.as_student')}}"
                    class="authorization-option">
                 <span class="authorization-option__image">
                     <img src="/assets/img/student.svg" alt="">
@@ -106,7 +106,7 @@
                             id="studentLoginBtn" {{old('agree') != 'on' ? 'disabled' : ''}}>{{__('default.pages.auth.auth_title')}}</button>
                 </div>
                 <div class="hint">
-                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri={{ route('auth_sso', ['redirect' => 'strict']) }}" title=""
+                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri={{ route('auth_sso') }}&redirect=strict" title=""
                        class="">passport.enbek.kz</a>
                 </div>
                 <div class="hint">

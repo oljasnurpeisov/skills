@@ -173,7 +173,7 @@
                             </li>
                             @if(Auth::user()->hasRole('student'))
                                 <li>
-                                    <a href="https://passport.enbek.kz/ru/user/logout?redirect_uri={{ url('/') }}" title="{{__('default.pages.profile.logout_title')}}">{{__('default.pages.profile.logout_title')}}</a>
+                                    <a href="https://passport.enbek.kz/ru/user/logout?redirect_uri={{ url('/') }}&redirect=strict" title="{{__('default.pages.profile.logout_title')}}">{{__('default.pages.profile.logout_title')}}</a>
                                 </li>
                             @else
                                 <li>

@@ -128,7 +128,7 @@ class ContractFilterService
     }
 
     /**
-     * Фильтр по статуса договора
+     * Фильтр по статусам договора
      *
      * @param Builder $contracts
      * @param $request
