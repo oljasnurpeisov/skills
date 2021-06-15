@@ -44,6 +44,8 @@ class AuthEnbekPassport
      */
     public function init(): void
     {
+        if (!$this->checkResume()) return;
+
         if ($this->isPassportAuth()) $this->loginUser();
 
         if (!$this->isPassportAuth()) $this->logout();
