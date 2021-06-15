@@ -44,10 +44,6 @@ class EnbekPassportController extends Controller
     {
         $this->authEnbekPassport->init();
 
-        if (Auth::check()) {
-            return redirect(url($this->loginService->redirect()));
-        } else {
-            return redirect(url('/'));
-        }
+        return redirect(url('/'));
     }
 }
