@@ -12,6 +12,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Libraries\Requests\SendRequest;
+use Services\Auth\LoginService;
 
 class AuthStudent
 {
@@ -104,7 +105,10 @@ class AuthStudent
                 $studentInformation->save();
             } else {
                 Session::put('resume_data', $user->id);
-                return redirect(url('/'))->send();
+
+                (new LoginService())->logout();
+
+//                return redirect(url('/'))->send();
             }
         }
 

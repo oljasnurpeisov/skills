@@ -20,4 +20,12 @@ class LoginService {
     {
         Auth::login($user, true);
     }
+
+    /**
+     * Logout
+     */
+    public function logout(): void
+    {
+        Auth::logout();
+    }
 }
