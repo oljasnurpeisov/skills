@@ -117,6 +117,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/contracts/pending', 'ContractsController@pending')->name('admin.contracts.pending');
 
                 Route::get('/contracts/{id}/view', 'ContractsController@view')->name('admin.contracts.view');
+                Route::get('/contracts/{id}/get-contract-html', 'ContractsController@getContractHtml')->name('admin.contracts.get_contract_html');
             });
             // Страницы
             Route::group(['middleware' => 'check.permission:admin.pages'], static function () {

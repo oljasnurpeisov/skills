@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Contract;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\ContractFilterService;
+use Services\Contracts\ContractService;
 
 /**
  * Class ContractsController
@@ -19,16 +21,23 @@ class ContractsController extends Controller
     /**
      * @var ContractFilterService
      */
+    private $contractFilterService;
+
+    /**
+     * @var ContractService
+     */
     private $contractService;
 
     /**
      * ContractFilterService constructor.
      *
-     * @param ContractFilterService $contractService
+     * @param ContractFilterService $contractFilterService
+     * @param ContractService $contractService
      */
-    public function __construct(ContractFilterService $contractService)
+    public function __construct(ContractFilterService $contractFilterService, ContractService $contractService)
     {
-        $this->contractService = $contractService;
+        $this->contractFilterService    = $contractFilterService;
+        $this->contractService          = $contractService;
     }
 
     /**
@@ -40,7 +49,7 @@ class ContractsController extends Controller
     public function all(Request $request): View
     {
         return view('admin.v2.pages.contracts.index', [
-            'contracts' => $this->contractService->getOrSearch($request->all()),
+            'contracts' => $this->contractFilterService->getOrSearch($request->all()),
             'request'   => $request->all(),
             'title'     => 'Договоры'
         ]);
@@ -55,7 +64,7 @@ class ContractsController extends Controller
     public function signed(Request $request): View
     {
         return view('admin.v2.pages.contracts.index', [
-            'contracts' => $this->contractService->getOrSearch($request->all(), 'signed'),
+            'contracts' => $this->contractFilterService->getOrSearch($request->all(), 'signed'),
             'request'   => $request->all(),
             'title'     => 'Подписанные договора'
         ]);
@@ -70,7 +79,7 @@ class ContractsController extends Controller
     public function distributed(Request $request): View
     {
         return view('admin.v2.pages.contracts.index', [
-            'contracts' => $this->contractService->getOrSearch($request->all(), 'distributed'),
+            'contracts' => $this->contractFilterService->getOrSearch($request->all(), 'distributed'),
             'request'   => $request->all(),
             'title'     => 'Расторгнутые договора'
         ]);
@@ -85,7 +94,7 @@ class ContractsController extends Controller
     public function rejectedByAuthor(Request $request): View
     {
         return view('admin.v2.pages.contracts.index', [
-            'contracts' => $this->contractService->getOrSearch($request->all(), 'rejectedByAuthor'),
+            'contracts' => $this->contractFilterService->getOrSearch($request->all(), 'rejectedByAuthor'),
             'request'   => $request->all(),
             'title'     => 'Отклонены автором'
         ]);
@@ -100,7 +109,7 @@ class ContractsController extends Controller
     public function pending(Request $request): View
     {
         return view('admin.v2.pages.contracts.index', [
-            'contracts' => $this->contractService->getOrSearch($request->all(), 'pending'),
+            'contracts' => $this->contractFilterService->getOrSearch($request->all(), 'pending'),
             'request'   => $request->all(),
             'title'     => 'Ожидающие подписания'
         ]);
@@ -118,5 +127,17 @@ class ContractsController extends Controller
             'contract'  => Contract::findOrFail($request->id),
             'title'     => 'Просмотр договора'
         ]);
+    }
+
+    /**
+     * Предпросмотр договора
+     *
+     * @param Request $request
+     * @return string
+     * @throws Exception
+     */
+    public function getContractHtml(Request $request): string
+    {
+        return $this->contractService->contractToHtml($request->id);
     }
 }

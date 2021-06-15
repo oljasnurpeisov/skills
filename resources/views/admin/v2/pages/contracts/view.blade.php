@@ -19,7 +19,9 @@
         @include('admin.v2.partials.components.warning')
 
         <div class="block">
-            Договор: {{ asset($contract->link) }}
+            Скачать договор: <a href="{{ asset($contract->link) }}">Скачать</a>
+
+            <iframe src="{{ route('admin.contracts.get_contract_html', ['lang' => 'ru', 'id' => $contract->id]) }}" frameborder="0" width="100%" height="600"></iframe>
 
         </div>
     </div>
