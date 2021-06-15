@@ -310,39 +310,42 @@ class CourseController extends Controller
     /**
      * Ожидающие проверки договора
      *
+     * @param Request $request
      * @return View
      */
-    public function waitCheckContracts(): View
+    public function waitCheckContracts(Request $request): View
     {
         return view('admin.v2.pages.courses.index', [
             'items' => $this->courseService->waitCheckContracts(),
-            'term'  => null,
+            'term'  => $request->term,
         ]);
     }
 
     /**
      * Ожидающие подписания договора со стороны Автора
      *
+     * @param Request $request
      * @return View
      */
-    public function waitSigningAuthor(): View
+    public function waitSigningAuthor(Request $request): View
     {
         return view('admin.v2.pages.courses.index', [
             'items' => $this->courseService->waitSigningAuthor(),
-            'term'  => null,
+            'term'  => $request->term,
         ]);
     }
 
     /**
      * Ожидающие подписания договора со стороны Администрации
      *
+     * @param Request $request
      * @return View
      */
-    public function waitSigningAdmin(): View
+    public function waitSigningAdmin(Request $request): View
     {
         return view('admin.v2.pages.courses.index', [
             'items' => $this->courseService->waitSigningAdmin(),
-            'term'  => null,
+            'term'  => $request->term,
         ]);
     }
 }

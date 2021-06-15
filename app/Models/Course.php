@@ -258,5 +258,4 @@ class Course extends Model
     {
         return $this->isPaid() && $this->quota_status !== 0;
     }
-
 }
