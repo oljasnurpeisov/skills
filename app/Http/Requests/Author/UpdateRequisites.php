@@ -26,7 +26,10 @@ class UpdateRequisites extends FormRequest
         return [
             'type_of_ownership'     => ['required'],
             'company_name'          => ['required'],
-            'position'              => ['required'],
+            'position_ru'           => ['required'],
+            'position_kk'           => ['required'],
+            'legal_address_ru'      => ['required'],
+            'legal_address_kk'      => ['required'],
             'fio_director'          => ['required'],
             'base_id'               => ['required'],
             'iin'                   => ['required'],

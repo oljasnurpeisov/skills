@@ -70,13 +70,23 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="form-group__label">{{ __('default.pages.profile.address') }} *</label>
-                                <input type="text" name="legal_address" placeholder="" class="input-regular" required value="{{ old('legal_address') ?? Auth::user()->legal_address }}">
+                                <label class="form-group__label">{{ __('default.pages.profile.address') }} (ru) *</label>
+                                <input type="text" name="legal_address_ru" placeholder="" class="input-regular" required value="{{ old('legal_address_ru') ?? Auth::user()->legal_address_ru }}">
                             </div>
 
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.profile.position')}} *</label>
-                                <input type="text" name="position" placeholder="" class="input-regular" required value="{{ old('position') ?? Auth::user()->position }}">
+                                <label class="form-group__label">{{ __('default.pages.profile.address') }} (kz) *</label>
+                                <input type="text" name="legal_address_kk" placeholder="" class="input-regular" required value="{{ old('legal_address_kk') ?? Auth::user()->legal_address_kk }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.profile.position')}} (ru) *</label>
+                                <input type="text" name="position_ru" placeholder="" class="input-regular" required value="{{ old('position_ru') ?? Auth::user()->position_ru }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.profile.position')}} (kz) *</label>
+                                <input type="text" name="position_kk" placeholder="" class="input-regular" required value="{{ old('position_kk') ?? Auth::user()->position_kk }}">
                             </div>
 
                             <div class="form-group">
