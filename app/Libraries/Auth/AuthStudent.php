@@ -104,12 +104,12 @@ class AuthStudent
                 $studentInformation->save();
             } else {
                 Session::put('resume_data', $user->id);
-                return redirect()->back();
+                return redirect()->back()->send();
             }
         }
 
         if ($user->roles()->first()->id != $studentRole->id) {
-            return redirect()->back()->with('status', __('default.pages.auth.student_login_author_exist'));
+            return redirect()->back()->with('status', __('default.pages.auth.student_login_author_exist'))->send();
         }
 
         Session::put('student_token', $this->token);
