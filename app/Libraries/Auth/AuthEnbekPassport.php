@@ -8,6 +8,7 @@ use Service\Auth\AuthService;
 
 /**
  * Class AuthEnbekPassport
+ *
  * @author kgurovoy@gmail.com
  * @package Libraries\Auth
  */
