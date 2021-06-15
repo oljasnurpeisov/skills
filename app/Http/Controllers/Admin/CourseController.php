@@ -11,7 +11,9 @@ use App\Models\Log;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 use Libraries\Word\Agreement;
+use Services\Course\CourseService;
 
 /**
  * --------------------------------------------------------------------------
@@ -23,6 +25,21 @@ use Libraries\Word\Agreement;
  */
 class CourseController extends Controller
 {
+    /**
+     * @var CourseService
+     */
+    private $courseService;
+
+    /**
+     * CourseController constructor.
+     *
+     * @param CourseService $courseService
+     */
+    public function __construct(CourseService $courseService)
+    {
+        $this->courseService = $courseService;
+    }
+
     public function index(Request $request)
     {
         $term = $request->term ? $request->term : '';
@@ -290,4 +307,42 @@ class CourseController extends Controller
         return redirect()->back()->with('status', __('admin.pages.courses.quote_contract_saved'));
     }
 
+    /**
+     * Ожидающие проверки договора
+     *
+     * @return View
+     */
+    public function waitCheckContracts(): View
+    {
+        return view('admin.v2.pages.courses.index', [
+            'items' => $this->courseService->waitCheckContracts(),
+            'term'  => null,
+        ]);
+    }
+
+    /**
+     * Ожидающие подписания договора со стороны Автора
+     *
+     * @return View
+     */
+    public function waitSigningAuthor(): View
+    {
+        return view('admin.v2.pages.courses.index', [
+            'items' => $this->courseService->waitSigningAuthor(),
+            'term'  => null,
+        ]);
+    }
+
+    /**
+     * Ожидающие подписания договора со стороны Администрации
+     *
+     * @return View
+     */
+    public function waitSigningAdmin(): View
+    {
+        return view('admin.v2.pages.courses.index', [
+            'items' => $this->courseService->waitSigningAdmin(),
+            'term'  => null,
+        ]);
+    }
 }

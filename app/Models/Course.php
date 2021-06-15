@@ -15,6 +15,9 @@ class Course extends Model
     const unpublished = 2;
     const published = 3;
     const deleted = 4;
+    const signingAuthor = 5;
+    const signingAdmin = 6;
+    const checkContracts = 7;
 
     protected $table = 'courses';
 
@@ -141,6 +144,39 @@ class Course extends Model
     public function quotaCost()
     {
         return $this->hasMany(CourseQuotaCost::class, 'course_id', 'id');
+    }
+
+    /**
+     * На подписании у автора
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeSigningAuthor($query): Builder
+    {
+        return $query->whereStatus(5);
+    }
+
+    /**
+     * На подписании у администрации
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeSigningAdmin($query): Builder
+    {
+        return $query->whereStatus(6);
+    }
+
+    /**
+     * На проверке договора
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeCheckContracts($query): Builder
+    {
+        return $query->whereStatus(7);
     }
 
     /**

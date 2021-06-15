@@ -88,6 +88,11 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
             // Курсы
             Route::group(['middleware' => 'check.permission:admin.courses'], static function () {
                 Route::get('/courses/index', 'CourseController@index');
+
+                Route::get('/courses/wait-check-contracts', 'CourseController@waitCheckContracts')->name('admin.courses.wait_check_contracts');
+                Route::get('/courses/wait-signing-author', 'CourseController@waitSigningAuthor')->name('admin.courses.wait_signing_author');
+                Route::get('/courses/wait-signing-admin', 'CourseController@waitSigningAdmin')->name('admin.courses.wait_signing_admin');
+
                 Route::get('/courses/wait_verification', 'CourseController@wait_verification');
                 Route::get('/courses/unpublished', 'CourseController@unpublished_index');
                 Route::get("/courses/drafts", "CourseController@drafts_index");

@@ -114,16 +114,34 @@
                                 <hr>
                                 <form id="course_form" action="/{{$lang}}/admin/course/unpublish/{{ $item->id }}"
                                       method="post"
+                                      style="float: right"
                                       enctype="multipart/form-data">
                                     {{ csrf_field() }}
                                     <div class="buttons" style="float: right;">
                                         <div>
+{{--                                            <a type="submit" name="action"--}}
+{{--                                                    class="btn btn--green">Запросить доступ по квоте</a>--}}
                                             <button type="submit" name="action"
                                                     class="btn btn--red">{{ __('admin.pages.courses.unpublish_title') }}</button>
                                         </div>
                                     </div>
                                     <br>
                                 </form>
+                                @if(($item->cost > 0) and ($item->is_paid == true) and $item->quota_status === 0)
+                                    <form id="course_form"
+                                          action="/{{$lang}}/admin/course/quota_request/{{ $item->id }}"
+                                          method="post"
+                                          style="float: right"
+                                          enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <div class="buttons">
+                                            <div>
+                                                <button type="submit" name="action" value="activate"
+                                                        class="btn btn--yellow">{{ __('admin.pages.courses.quota_request_title') }}</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                @endif
                             @endif
                         </div>
                     </div>

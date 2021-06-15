@@ -45,16 +45,14 @@
                     <i class="icon-reports"></i> {{ __('admin.pages.courses.title') }}
                 </a>
                 <ul>
+                    <li><a href="/{{$lang}}/admin/courses/wait_verification">{{ __('admin.pages.courses.wait_publish_list') }}</a></li>
+                    <li><a href="{{ route('admin.courses.wait_check_contracts', ['lang' => $lang]) }}">Ожидающие проверки договора</a></li>
+                    <li><a href="{{ route('admin.courses.wait_signing_author', ['lang' => $lang]) }}">Ожидающие подписания договора со стороны Автора</a></li>
+                    <li><a href="{{ route('admin.courses.wait_signing_admin', ['lang' => $lang]) }}">Ожидающие подписания договора со стороны Администрации</a></li>
+                    <li><a href="/{{$lang}}/admin/courses/published">{{ __('admin.pages.courses.publish_list') }}</a></li>
+                    <li><a href="/{{$lang}}/admin/courses/unpublished">{{ __('admin.pages.courses.unpublish_list') }}</a></li>
                     <li><a href="/{{$lang}}/admin/courses/deleted">{{ __('admin.pages.courses.deleted_list') }}</a></li>
                     <li><a href="/{{$lang}}/admin/courses/drafts">{{ __('admin.pages.courses.drafts_list') }}</a></li>
-                    <li>
-                        <a href="/{{$lang}}/admin/courses/wait_verification">{{ __('admin.pages.courses.wait_publish_list') }}</a>
-                    </li>
-                    <li>
-                        <a href="/{{$lang}}/admin/courses/unpublished">{{ __('admin.pages.courses.unpublish_list') }}</a>
-                    </li>
-                    <li><a href="/{{$lang}}/admin/courses/published">{{ __('admin.pages.courses.publish_list') }}</a>
-                    </li>
                     <li><a href="/{{$lang}}/admin/courses/index">{{ __('admin.pages.courses.list') }}</a></li>
                 </ul>
             </li>

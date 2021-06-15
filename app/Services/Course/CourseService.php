@@ -2,6 +2,8 @@
 
 namespace Services\Course;
 
+use App\Models\Course;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Libraries\Courses\SkillsSaver;
 
 /**
@@ -32,5 +34,35 @@ class CourseService {
         $item->skills()->detach();
 
         (new SkillsSaver($item, $request))->save();
+    }
+
+    /**
+     * Ожидающие проверки договора
+     *
+     * @return LengthAwarePaginator
+     */
+    public function waitCheckContracts(): LengthAwarePaginator
+    {
+        return Course::checkContracts()->paginate(10);
+    }
+
+    /**
+     * Ожидающие подписания договора со стороны Автора
+     *
+     * @return LengthAwarePaginator
+     */
+    public function waitSigningAuthor(): LengthAwarePaginator
+    {
+        return Course::signingAuthor()->paginate(10);
+    }
+
+    /**
+     * Ожидающие подписания договора со стороны Администрации
+     *
+     * @return LengthAwarePaginator
+     */
+    public function waitSigningAdmin(): LengthAwarePaginator
+    {
+        return Course::signingAdmin()->paginate(10);
     }
 }
