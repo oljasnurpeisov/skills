@@ -23,8 +23,9 @@
                             <li class="active"><a href="javascript:;"
                                                   title="{{__('admin.pages.courses.preview')}}">{{__('admin.pages.courses.preview')}}</a>
                             </li>
-                            <li><a href="javascript:;"
-                                   title="{{__('admin.pages.courses.info_about_course')}}">{{__('admin.pages.courses.info_about_course')}}</a>
+                            <li>
+{{--                                <a href="javascript:;" title="{{__('admin.pages.courses.info_about_course')}}">{{__('admin.pages.courses.info_about_course')}}</a>--}}
+                                <a href="javascript:;" title="Действия">Действия</a>
                             </li>
                         </ul>
                     </div>
