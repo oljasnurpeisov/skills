@@ -44,7 +44,6 @@ class AuthEnbekPassport
      */
     public function init(): void
     {
-        dd(Session::get('resume_data'));
         if ($this->isPassportAuth()) $this->loginUser();
 
         if (!$this->isPassportAuth()) $this->logout();
