@@ -139,22 +139,22 @@
 
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.auth.iin')}} *</label>
-                                <input type="text" name="iin" placeholder="" class="input-regular" required value="{{ old('iin') ?? Auth::user()->iin }}">
+                                <input type="text" name="iin" placeholder="" onfocus="$(this).inputmask('999999999999')" class="input-regular" required value="{{ old('iin') ?? Auth::user()->iin }}">
                             </div>
 
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.profile.iik_kz')}} *</label>
-                                <input type="text" name="iik_kz" placeholder="" class="input-regular" required value="{{ old('iik_kz') ?? Auth::user()->iik_kz }}">
+                                <input type="text" name="iik_kz" placeholder="" onfocus="$(this).inputmask('KZ 999999999999999999')" class="input-regular" required value="{{ old('iik_kz') ?? Auth::user()->iik_kz }}">
                             </div>
 
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.profile.kbe')}} *</label>
-                                <input type="text" name="kbe" placeholder="" class="input-regular" required value="{{ old('kbe') ?? Auth::user()->kbe }}">
+                                <input type="text" name="kbe" placeholder="" onfocus="$(this).inputmask('99')" class="input-regular" required value="{{ old('kbe') ?? Auth::user()->kbe }}">
                             </div>
 
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.profile.bik')}} *</label>
-                                <input type="text" name="bik" placeholder="" class="input-regular" required value="{{ old('bik') ?? Auth::user()->bik }}">
+                                <input type="text" name="bik" placeholder="" onfocus="$(this).inputmask('9|A{1,100}')" class="input-regular" required value="{{ old('bik') ?? Auth::user()->bik }}">
                             </div>
 
                             <div class="form-group">
