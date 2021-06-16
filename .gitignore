@@ -22,4 +22,3 @@ yarn-error.log
 **/.vscode
 **/.DS_Store
 **/adminer.php
-**/TestController.php

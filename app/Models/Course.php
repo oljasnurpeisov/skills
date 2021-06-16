@@ -6,6 +6,7 @@ use App\Extensions\CalculateQuotaCost;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
 class Course extends Model
@@ -149,6 +150,16 @@ class Course extends Model
     public function calculateQuotaCost()
     {
         return CalculateQuotaCost::calculate_quota_cost($this);
+    }
+
+    /**
+     * Последний договор
+     *
+     * @return HasOne
+     */
+    public function contract(): HasOne
+    {
+        return $this->hasOne(Contract::class, 'course_id', 'id')->latest();
     }
 
     /**

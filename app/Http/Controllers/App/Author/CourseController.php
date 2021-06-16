@@ -26,6 +26,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
+use Services\Contracts\ContractService;
 use Services\Course\AuthorCourseService;
 use Services\Course\CourseService;
 
@@ -43,15 +44,22 @@ class CourseController extends Controller
     private $authorCourseService;
 
     /**
+     * @var ContractService
+     */
+    private $contractService;
+
+    /**
      * CourseController constructor.
      *
      * @param CourseService $courseService
      * @param AuthorCourseService $authorCourseService
+     * @param ContractService $contractService
      */
-    public function __construct(CourseService $courseService, AuthorCourseService $authorCourseService)
+    public function __construct(CourseService $courseService, AuthorCourseService $authorCourseService, ContractService $contractService)
     {
         $this->courseService        = $courseService;
         $this->authorCourseService  = $authorCourseService;
+        $this->contractService      = $contractService;
     }
 
     public function createCourse($lang)
@@ -1124,8 +1132,13 @@ class CourseController extends Controller
      */
     public function contract(Request $request)
     {
+        $course = Course::whereAuthorId(Auth::user()->id)->findOrFail($request->id);
+
+        $contract = $this->contractService->contractToPdf($course->contract->id);
+
         return view('app.pages.author.courses.signing', [
-            'id' => $request->id
+            'course'    => $course,
+            'contract'  => $contract
         ]);
     }
 

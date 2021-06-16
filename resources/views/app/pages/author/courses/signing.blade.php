@@ -45,7 +45,11 @@
 
                 <div class="row row--multiline column-reverse-sm">
                     <div class="col-md-12">
-                        <a href="{{ route('author.courses.signing.contract.reject', ['lang' => $lang, 'id' => $id]) }}" class="btn">Отклонить</a>
+                        <div id="contract">
+                            {!! $contract !!}
+                        </div>
+
+                        <a href="{{ route('author.courses.signing.contract.reject', ['lang' => $lang, 'id' => $course->id]) }}" class="btn">Отклонить</a>
                         <a href="" class="btn">Подписать</a>
                     </div>
                 </div>
