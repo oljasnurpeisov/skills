@@ -32,10 +32,10 @@ class UpdateRequisites extends FormRequest
             'legal_address_kk'      => ['required'],
             'fio_director'          => ['required'],
             'base_id'               => ['required'],
-            'iin'                   => ['required'],
-            'iik_kz'                => ['required'],
-            'kbe'                   => ['required'],
-            'bik'                   => ['required'],
+            'iin'                   => ['required', 'integer', 'min:100000000000', 'max:999999999999'],
+            'iik_kz'                => ['required', 'string', 'min:21', 'max:21'],
+            'kbe'                   => ['required', 'integer', 'min:00', 'max:99'],
+            'bik'                   => ['required', 'string'],
             'bank_id'               => ['required'],
         ];
     }

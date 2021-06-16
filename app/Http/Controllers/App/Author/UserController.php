@@ -202,6 +202,7 @@ class UserController extends Controller
      */
     public function update_profile_requisites(UpdateRequisites $request): RedirectResponse
     {
+        dd($request->all());
         $this->requisitesService->update(Auth::user()->id, $request->all());
 
         return redirect()->back();
