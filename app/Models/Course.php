@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Extensions\CalculateQuotaCost;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -141,6 +142,11 @@ class Course extends Model
     public function quotaCost()
     {
         return $this->hasMany(CourseQuotaCost::class, 'course_id', 'id');
+    }
+
+    public function calculateQuotaCost()
+    {
+        return CalculateQuotaCost::calculate_quota_cost($this);
     }
 
     /**

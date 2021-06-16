@@ -46,6 +46,8 @@
                         <col span="1" style="width: 8%;">
                         <col span="1" style="width: 8%;">
                         <col span="1" style="width: 8%;">
+                        <col span="1" style="width: 8%;">
+                        <col span="1" style="width: 8%;">
                     </colgroup>
                     <thead>
                     <tr>
@@ -54,6 +56,8 @@
                         <th>{{ __('admin.pages.courses.course_name') }}</th>
                         <th>{{ __('admin.pages.courses.author_email') }}</th>
                         <th>{{ __('admin.pages.user.status') }}</th>
+                        <th>Стоимость курса</th>
+                        <th>Стоиомость при гос. поддержке</th>
                         <th>{{ __('admin.labels.created_at') }}</th>
                         <th>{{ __('admin.labels.updated_at') }}</th>
                         <th>{{ __('admin.labels.actions') }}</th>
@@ -83,6 +87,9 @@
                                             </div>
                                     </div>
                             </td>
+
+                            <td>{{ $item->cost }}</td>
+                            <td>{{ $item->calculateQuotaCost() }}</td>
 
                             <td>{!! $item->created_at . ($creator ? '<br>'.($creator->surname.' '.$creator->name.' '.$creator->middle_name) : '') !!}</td>
                             <td>{!! $item->updated_at . ($modifier ? '<br>'.($modifier->surname.' '.$modifier->name.' '.$modifier->middle_name) : '') !!}</td>

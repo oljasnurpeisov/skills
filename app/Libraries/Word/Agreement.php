@@ -75,10 +75,8 @@ class Agreement
         $this->contract             = new Contract();
         $this->course               = $course;
         $this->type                 = $type;
-        $this->number               = $this->getNumber();
-        $this->author               = $this->course->user;
-        $this->author_info          = $this->author->author_info;
-        $this->course_attachments   = $this->course->attachments;
+        $this->number               = null;
+
     }
 
     /**
@@ -90,6 +88,8 @@ class Agreement
     {
         $source     = 'contracts/templates/agreements/'. $this->type .'.docx';
         $savePath   = 'contracts/templates/agreements/'. $this->type .'_'. $this->number.'.docx';
+
+        $this->setData();
 
         try {
             $this->templateProcessor = new TemplateProcessor(public_path($source));
@@ -108,6 +108,19 @@ class Agreement
         $this->templateProcessor->saveAs(public_path($savePath));
 
         return $this->save($savePath);
+    }
+
+    /**
+     * Set data
+     *
+     * @return void
+     */
+    private function setData(): void
+    {
+        $this->number               = $this->getNumber();
+        $this->author               = $this->course->user;
+        $this->author_info          = $this->author->author_info;
+        $this->course_attachments   = $this->course->attachments;
     }
 
     /**
