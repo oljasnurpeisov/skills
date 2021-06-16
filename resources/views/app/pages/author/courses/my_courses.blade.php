@@ -21,25 +21,23 @@
                     <div class="mobile-dropdown__title dynamic">{{__('default.pages.courses.my_courses')}}</div>
                     <div class="mobile-dropdown__desc">
                         <ul class="tabs-links">
-                            <li @if($page_name == 'default.pages.courses.my_courses')class="active"@endif><a
-                                        href="/{{$lang}}/my-courses"
-                                        title="{{__('default.pages.courses.my_courses')}}">{{__('default.pages.courses.my_courses')}}</a>
+                            <li @if(Route::currentRouteName() === 'author.courses.my_courses') class="active" @endif>
+                                <a href="{{ route('author.courses.my_courses', ['lang' => $lang]) }}" title="{{__('default.pages.courses.my_courses')}}">{{__('default.pages.courses.my_courses')}}</a>
                             </li>
-                            <li @if($page_name == 'default.pages.courses.my_courses_unpublished')class="active"@endif><a
-                                        href="/{{$lang}}/my-courses/unpublished"
-                                        title="{{__('default.pages.courses.my_courses_unpublished')}}">{{__('default.pages.courses.my_courses_unpublished')}}</a>
+                            <li @if(Route::currentRouteName() === 'author.courses.unpublished') class="active" @endif>
+                                <a href="{{ route('author.courses.unpublished', ['lang' => $lang]) }}" title="{{__('default.pages.courses.my_courses_unpublished')}}">{{__('default.pages.courses.my_courses_unpublished')}}</a>
                             </li>
-                            <li @if($page_name == 'default.pages.courses.my_courses_onCheck')class="active"@endif><a
-                                        href="/{{$lang}}/my-courses/on-check"
-                                        title="{{__('default.pages.courses.my_courses_onCheck')}}">{{__('default.pages.courses.my_courses_onCheck')}}</a>
+                            <li @if(Route::currentRouteName() === 'author.courses.on_check') class="active" @endif>
+                                <a href="{{ route('author.courses.on_check', ['lang' => $lang]) }}" title="{{__('default.pages.courses.my_courses_onCheck')}}">{{__('default.pages.courses.my_courses_onCheck')}}</a>
                             </li>
-                            <li @if($page_name == 'default.pages.courses.drafts')class="active"@endif><a
-                                        href="/{{$lang}}/my-courses/drafts"
-                                        title="{{__('default.pages.courses.drafts')}}">{{__('default.pages.courses.drafts')}}</a>
+                            <li @if(Route::currentRouteName() === 'author.courses.drafts') class="active" @endif>
+                                <a href="{{ route('author.courses.drafts', ['lang' => $lang]) }}" title="{{__('default.pages.courses.drafts')}}">{{__('default.pages.courses.drafts')}}</a>
                             </li>
-                            <li @if($page_name == 'default.pages.courses.my_courses_deleted')class="active"@endif><a
-                                        href="/{{$lang}}/my-courses/deleted"
-                                        title="{{__('default.pages.courses.my_courses_deleted')}}">{{__('default.pages.courses.my_courses_deleted')}}</a>
+                            <li @if(Route::currentRouteName() === 'author.courses.deleted') class="active" @endif>
+                                <a href="{{ route('author.courses.deleted', ['lang' => $lang]) }}" title="{{__('default.pages.courses.my_courses_deleted')}}">{{__('default.pages.courses.my_courses_deleted')}}</a>
+                            </li>
+                            <li @if(Route::currentRouteName() === 'author.courses.signing') class="active" @endif>
+                                <a href="{{ route('author.courses.signing', ['lang' => $lang]) }}" title="">На подписании</a>
                             </li>
                         </ul>
                     </div>
@@ -59,35 +57,69 @@
                         @endif
                         <div class="row row--multiline">
                             @foreach($items as $item)
-                                <div class="col-sm-6 col-md-4">
-                                    <a href="/{{$lang}}/my-courses/course/{{$item->id}}" title="" class="card">
-                                        @if($item->quota_status == 2)
-                                            <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
-                                        @endif
-                                        <div class="card__image">
-                                            <img src="{{$item->getAvatar()}}" alt="">
-                                        </div>
-                                        <div class="card__desc">
-                                            <div class="card__top">
-                                                @if($item->is_paid == true)
-                                                    <div class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
-                                                @else
-                                                    <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
-                                                @endif
-                                                <h3 class="card__title">{{$item->name}}</h3>
-                                                <div class="card__author">{{$item->user->company_name}}</div>
+                                @if(Route::currentRouteName() === 'author.courses.signing')
+                                    <div class="col-sm-6 col-md-4">
+                                        <div href="/{{$lang}}/my-courses/course/{{$item->id}}" title="" class="card">
+                                            @if($item->quota_status == 2)
+                                                <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
+                                            @endif
+                                            <div class="card__image">
+                                                <img src="{{$item->getAvatar()}}" alt="">
                                             </div>
-                                            <div class="card__bottom">
-                                                <div class="card__attribute">
-                                                    <i class="icon-user"> </i><span>{{count($item->course_members->whereIn('paid_status', [1,2,3]))}}</span>
+                                            <div class="card__desc">
+                                                <div class="card__top">
+                                                    @if($item->is_paid == true)
+                                                        <div class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                                                    @else
+                                                        <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
+                                                    @endif
+                                                    <h3 class="card__title">{{$item->name}}</h3>
+                                                    <div class="card__author">{{$item->user->company_name}}</div>
+                                                    <a href="{{ route('author.courses.signing.contract', ['lang' => $lang, 'id' => $item->id]) }}" class="btn" style="padding: 6px;margin: 0 auto;display: block;">Договор</a>
                                                 </div>
-                                                <div class="card__attribute">
-                                                    <i class="icon-star-full"> </i><span>{{round($item->rate->pluck('rate')->avg() ?? 0, 1)}}</span>
+                                                <div class="card__bottom">
+                                                    <div class="card__attribute">
+                                                        <i class="icon-user"> </i><span>{{count($item->course_members->whereIn('paid_status', [1,2,3]))}}</span>
+                                                    </div>
+                                                    <div class="card__attribute">
+                                                        <i class="icon-star-full"> </i><span>{{round($item->rate->pluck('rate')->avg() ?? 0, 1)}}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </a>
-                                </div>
+                                    </div>
+                                @else
+                                    <div class="col-sm-6 col-md-4">
+                                        <a href="/{{$lang}}/my-courses/course/{{$item->id}}" title="" class="card">
+                                            @if($item->quota_status == 2)
+                                                <div class="card__quota mark mark--yellow">{{__('default.pages.courses.access_by_quota')}}</div>
+                                            @endif
+                                            <div class="card__image">
+                                                <img src="{{$item->getAvatar()}}" alt="">
+                                            </div>
+                                            <div class="card__desc">
+                                                <div class="card__top">
+                                                    @if($item->is_paid == true)
+                                                        <div class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                                                    @else
+                                                        <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
+                                                    @endif
+                                                    <h3 class="card__title">{{$item->name}}</h3>
+                                                    <div class="card__author">{{$item->user->company_name}}</div>
+
+                                                </div>
+                                                <div class="card__bottom">
+                                                    <div class="card__attribute">
+                                                        <i class="icon-user"> </i><span>{{count($item->course_members->whereIn('paid_status', [1,2,3]))}}</span>
+                                                    </div>
+                                                    <div class="card__attribute">
+                                                        <i class="icon-star-full"> </i><span>{{round($item->rate->pluck('rate')->avg() ?? 0, 1)}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endif
                             @endforeach
 
                         </div>

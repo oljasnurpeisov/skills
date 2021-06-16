@@ -19,6 +19,8 @@ class Course extends Model
 
     protected $table = 'courses';
 
+    protected $fillable = ['contract_status', 'status'];
+
     public $timestamps = true;
 
 

@@ -330,7 +330,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     // Получить курс
                     Route::get("/getCourseData/{course}", "CourseController@getCourseData");
                     // Мои курсы
-                    Route::get("/my-courses", "CourseController@myCourses");
+                    Route::get("/my-courses", "CourseController@myCourses")->name('author.courses.my_courses');
                     Route::get("/create-course", "CourseController@createCourse");
                     Route::get("/my-courses/statistics", "CourseController@statisticsCourse");
                     Route::get("/my-courses/reporting", "CourseController@reportingCourse");
@@ -378,15 +378,19 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-courses/course/{course}/edit-final-test", "LessonController@editFinalTest");
                     Route::post("/my-courses/course/{course}/edit-final-test", "LessonController@updateFinalTest");
                     // Черновики
-                    Route::get("/my-courses/drafts", "CourseController@myCourses");
+                    Route::get("/my-courses/drafts", "CourseController@myCourses")->name('author.courses.drafts');
                     // Неопубликованные курсы
-                    Route::get("/my-courses/unpublished", "CourseController@myCourses");
+                    Route::get("/my-courses/unpublished", "CourseController@myCourses")->name('author.courses.unpublished');
                     // На проверке
-                    Route::get("/my-courses/on-check", "CourseController@myCourses");
+                    Route::get("/my-courses/on-check", "CourseController@myCourses")->name('author.courses.on_check');
                     // Удаленные курсы
-                    Route::get("/my-courses/deleted", "CourseController@myCourses");
+                    Route::get("/my-courses/deleted", "CourseController@myCourses")->name('author.courses.deleted');
                     // Редактирование курса
                     Route::get("/my-courses/course/{item}", "CourseController@courseShow");
+                    // На подписании
+                    Route::get("/my-courses/signing", "CourseController@myCourses")->name('author.courses.signing');
+                    Route::get("/my-courses/signing/{id}/contract", "CourseController@contract")->name('author.courses.signing.contract');
+                    Route::get("/my-courses/signing/{id}/contract-reject", "CourseController@contractReject")->name('author.courses.signing.contract.reject');
                 });
             });
         });

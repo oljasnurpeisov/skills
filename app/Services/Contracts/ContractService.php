@@ -18,13 +18,13 @@ class ContractService
     /**
      * Предпросмотр договора
      *
-     * @param int $id
+     * @param int $course_id
      * @return string
      * @throws Exception
      */
-   public function contractToHtml(int $id): string
+   public function contractToHtml(int $course_id): string
    {
-       $contract = Contract::findOrFail($id);
+       $contract = Contract::findOrFail($course_id);
        $filePath = public_path($contract->link);
 
        if (!file_exists($filePath)) abort(404);

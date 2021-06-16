@@ -18,12 +18,15 @@ use App\Models\StudentCourse;
 use App\Models\Theme;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
+use Services\Course\AuthorCourseService;
 use Services\Course\CourseService;
 
 
@@ -35,13 +38,20 @@ class CourseController extends Controller
     private $courseService;
 
     /**
+     * @var AuthorCourseService
+     */
+    private $authorCourseService;
+
+    /**
      * CourseController constructor.
      *
      * @param CourseService $courseService
+     * @param AuthorCourseService $authorCourseService
      */
-    public function __construct(CourseService $courseService)
+    public function __construct(CourseService $courseService, AuthorCourseService $authorCourseService)
     {
-        $this->courseService = $courseService;
+        $this->courseService        = $courseService;
+        $this->authorCourseService  = $authorCourseService;
     }
 
     public function createCourse($lang)
@@ -57,7 +67,7 @@ class CourseController extends Controller
      * Сохранение курса
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function storeCourse(Request $request)
     {
@@ -308,6 +318,10 @@ class CourseController extends Controller
             case('deleted'):
                 $query = Auth::user()->courses()->where('status', '=', Course::deleted);
                 $page_name = 'default.pages.courses.my_courses_deleted';
+                break;
+            case('signing'):
+                $query = Auth::user()->courses()->signingAuthor();
+                $page_name = 'default.pages.courses.my_courses_signing';
                 break;
         }
 
@@ -1100,5 +1114,31 @@ class CourseController extends Controller
             return $themes;
         }
         return abort(404);
+    }
+
+    /**
+     * Предпросмотр договора
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function contract(Request $request)
+    {
+        return view('app.pages.author.courses.signing', [
+            'id' => $request->id
+        ]);
+    }
+
+    /**
+     * Отклонение договора автором
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function contractReject(Request $request): RedirectResponse
+    {
+        $this->authorCourseService->rejectContract($request->id);
+
+        return redirect(route('author.courses.my_courses', ['lang' => $request->lang]));
     }
 }
