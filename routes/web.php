@@ -390,6 +390,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     // На подписании
                     Route::get("/my-courses/signing", "CourseController@myCourses")->name('author.courses.signing');
                     Route::get("/my-courses/signing/{id}/contract", "CourseController@contract")->name('author.courses.signing.contract');
+                    Route::get("/my-courses/signing/{id}/contract/doc", "CourseController@contractDoc")->name('author.courses.signing.contractDoc');
                     Route::get("/my-courses/signing/{id}/contract-reject", "CourseController@contractReject")->name('author.courses.signing.contract.reject');
                 });
             });

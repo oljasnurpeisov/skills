@@ -86,10 +86,10 @@ class Agreement
      */
     public function generate(): Contract
     {
+        $this->setData();
+
         $source     = 'contracts/templates/agreements/'. $this->type .'.docx';
         $savePath   = 'contracts/templates/agreements/'. $this->type .'_'. $this->number.'.docx';
-
-        $this->setData();
 
         try {
             $this->templateProcessor = new TemplateProcessor(public_path($source));
@@ -210,9 +210,12 @@ class Agreement
     private function setCourseInfo(): self
     {
         $this->templateProcessor->setValue('course_name', $this->course->name);
-        $this->templateProcessor->setValue('course_professional_areas', $this->course->professional_areas->pluck('name_ru')->unique()->implode(', '));
-        $this->templateProcessor->setValue('course_professions', $this->course->professional_areas->pluck('name_ru')->unique()->implode(', '));
-        $this->templateProcessor->setValue('course_skills', $this->course->skills->pluck('name_ru')->unique()->implode(', '));
+        $this->templateProcessor->setValue('course_professional_areas_ru', $this->course->professional_areas->pluck('name_ru')->unique()->implode(', '));
+        $this->templateProcessor->setValue('course_professions_ru', $this->course->professional_areas->pluck('name_ru')->unique()->implode(', '));
+        $this->templateProcessor->setValue('course_skills_ru', $this->course->skills->pluck('name_ru')->unique()->implode(', '));
+        $this->templateProcessor->setValue('course_professional_areas_kk', $this->course->professional_areas->pluck('name_kk')->unique()->implode(', '));
+        $this->templateProcessor->setValue('course_professions_kk', $this->course->professional_areas->pluck('name_kk')->unique()->implode(', '));
+        $this->templateProcessor->setValue('course_skills_kk', $this->course->skills->pluck('name_kk')->unique()->implode(', '));
 
         return $this;
     }
@@ -224,8 +227,8 @@ class Agreement
      */
     private function setCourseDetail(): void
     {
-        $this->templateProcessor->setValue('teaser', $this->course->teaser);
-        $this->templateProcessor->setValue('description', $this->course->description);
+        $this->templateProcessor->setValue('teaser', $this->clearText($this->course->teaser));
+        $this->templateProcessor->setValue('description', $this->clearText($this->course->description));
         $this->templateProcessor->setValue('profit_desc', $this->course->profit_desc);
         $this->templateProcessor->setValue('videos_link', $this->course->videos_link);
         $this->templateProcessor->setValue('duration', (new CalculateQuotaCostService())->courseDurationService($this->course));
@@ -319,5 +322,21 @@ class Agreement
         }
 
         return $adaptive;
+    }
+
+    /**
+     * Очистка от мусора
+     *
+     * @param string $text
+     * @return string
+     */
+    private function clearText(string $text): string
+    {
+        $text = preg_replace('/(&nbsp;)/', ' ', $text);
+        $text = preg_replace('/(&laquo;)/', ' ', $text);
+        $text = preg_replace('/(&raquo;)/', ' ', $text);
+        $text = htmlspecialchars(strip_tags($text));
+
+        return $text;
     }
 }

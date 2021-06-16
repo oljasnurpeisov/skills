@@ -25,7 +25,9 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Libraries\Word\Agreement;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\ContractService;
 use Services\Course\AuthorCourseService;
 use Services\Course\CourseService;
@@ -1132,13 +1134,24 @@ class CourseController extends Controller
      */
     public function contract(Request $request)
     {
+        return view('app.pages.author.courses.signing', [
+            'course'    => Course::whereAuthorId(Auth::user()->id)->findOrFail($request->id)
+        ]);
+    }
+
+    /**
+     * Договор
+     *
+     * @param Request $request
+     * @return View
+     * @throws Exception
+     */
+    public function contractDoc(Request $request): View
+    {
         $course = Course::whereAuthorId(Auth::user()->id)->findOrFail($request->id);
 
-        $contract = $this->contractService->contractToPdf($course->contract->id);
-
-        return view('app.pages.author.courses.signing', [
-            'course'    => $course,
-            'contract'  => $contract
+        return view('app.pages.author.courses.contractDoc', [
+            'contract' => $this->contractService->contractToHtml($course->contract->id)
         ]);
     }
 

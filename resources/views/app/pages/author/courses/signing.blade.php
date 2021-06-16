@@ -45,9 +45,10 @@
 
                 <div class="row row--multiline column-reverse-sm">
                     <div class="col-md-12">
-                        <div id="contract">
-                            {!! $contract !!}
-                        </div>
+{{--                        <div id="contract" style="max-width: 100%">--}}
+{{--                            {!! $contract !!}--}}
+{{--                        </div>--}}
+                        <iframe src="{{ route('author.courses.signing.contractDoc', ['lang' => 'ru', 'id' => $course->id]) }}" frameborder="0" width="100%" height="600"></iframe>
 
                         <a href="{{ route('author.courses.signing.contract.reject', ['lang' => $lang, 'id' => $course->id]) }}" class="btn">Отклонить</a>
                         <a href="" class="btn">Подписать</a>
@@ -58,6 +59,12 @@
     </main>
 @endsection
 
+
+<style>
+    #contract * {word-break: break-word}
+    #contract table {max-width: 100% !important;}
+    #contract tr {max-width: 50% !important;}
+</style>
 @section('scripts')
     <!--Only this page's scripts-->
 @endsection
