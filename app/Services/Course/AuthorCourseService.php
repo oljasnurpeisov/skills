@@ -32,7 +32,6 @@ class AuthorCourseService
     {
         $course = Course::whereAuthorId(Auth::user()->id)->findOrFail($id);
 
-
         $course->update([
             'contract_status'   => 0,
             'status'            => 0
