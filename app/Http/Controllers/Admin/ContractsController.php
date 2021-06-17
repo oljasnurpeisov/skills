@@ -138,6 +138,8 @@ class ContractsController extends Controller
      */
     public function getContractHtml(Request $request): string
     {
-        return $this->contractService->contractToHtml($request->id);
+        return view('app.pages.author.courses.contractDoc', [
+            'contract' => $this->contractService->contractToHtml($request->id)
+        ]);
     }
 }
