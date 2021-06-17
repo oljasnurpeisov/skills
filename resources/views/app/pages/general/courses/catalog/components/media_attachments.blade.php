@@ -421,7 +421,8 @@
                 @endguest
                 @auth
                     @if(Auth::user()->hasRole('student'))
-                        <a href="#quotaConfirm" data-fancybox
+                        <a href="#privacyPolicy" data-after="#quotaConfirm" data-type="quota" data-fancybox=""
+                           onclick="$('#privacyPolicyBtn').attr('href', $(this).attr('data-after')); $('#privacyPolicy .type > div').hide(); $('#privacyPolicy .type .'+ $(this).attr('data-type')).show()"
                            title="{{__('default.pages.courses.get_by_quota')}}"
                            class="sidebar-btn ghost">{{__('default.pages.courses.get_by_quota')}}</a>
                     @endif
@@ -435,7 +436,8 @@
                 @endguest
                 @auth
                     @if(Auth::user()->hasRole('student'))
-                        <a href="#buyConfirm" data-fancybox
+                        <a href="#privacyPolicy" data-after="#buyConfirm" data-type="free" data-fancybox=""
+                           onclick="$('#privacyPolicyBtn').attr('href', $(this).attr('data-after')); $('#privacyPolicy .type > div').hide(); $('#privacyPolicy .type .'+ $(this).attr('data-type')).show()"
                            title="{{__('default.pages.courses.get_free')}}"
                            class="sidebar-btn ghost">{{__('default.pages.courses.get_free')}}</a>
                     @endif
@@ -448,12 +450,34 @@
                 @endguest
                 @auth
                     @if(Auth::user()->hasRole('student'))
-                        <a href="#buyConfirm" data-fancybox
+                        <a href="#privacyPolicy" data-after="#buyConfirm" data-type="paid" data-fancybox=""
+                           onclick="$('#privacyPolicyBtn').attr('href', $(this).attr('data-after')); $('#privacyPolicy .type > div').hide(); $('#privacyPolicy .type .'+ $(this).attr('data-type')).show()"
                            title="{{__('default.pages.courses.buy_course')}}"
                            class="sidebar-btn">{{__('default.pages.courses.buy_course')}}</a>
                     @endif
                 @endauth
             @endif
         </div>
+
+        <div id="privacyPolicy" style="display: none;">
+{{--            <h2 class="title-primary">{{__('default.pages.private_policy.private_policy_title')}}</h2>--}}
+{{--            <h3 class="plain-text">{{__('default.pages.private_policy.private_policy_teaser')}}</h3>--}}
+            <div class="plain-text type">
+                <div class="free" style="display: none">
+                    {!! __('default.pages.private_policy_course.free_description') !!}
+                </div>
+                <div class="paid" style="display: none">
+                    {!! __('default.pages.private_policy_course.paid_description') !!}
+                </div>
+                <div class="quota" style="display: none">
+                    {!! __('default.pages.private_policy_course.quota_description') !!}
+                </div>
+            </div>
+            <div class="form-group">
+                <a href="..." data-fancybox title="{{__('default.pages.private_policy.agree_title')}}" class="btn"
+                   id="privacyPolicyBtn">{{ __('default.pages.private_policy.agree_title') }}</a>
+            </div>
+        </div>
+
     @endif
 </div>
