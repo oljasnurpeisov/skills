@@ -86,7 +86,7 @@
                             <td>{{ $contract->getStatusName() }}</td>
                             <td>{{ $contract->course->getTypeName() }}</td>
                             <td>-</td>
-                            <td>{{ $contract->created_at }}</td>
+                            <td>{{ $contract->publish_at ?? '-' }}</td>
                             <td>
                                 <div class="action-buttons">
                                     <a target="_blank" href="{{ route('admin.contracts.view', ['lang' => $lang, 'id' => $contract->id]) }}" title="{{ __('admin.labels.view') }}"

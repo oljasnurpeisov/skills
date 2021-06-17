@@ -56,6 +56,7 @@
                         <th>{{ __('admin.pages.courses.course_name') }}</th>
                         <th>{{ __('admin.pages.courses.author_email') }}</th>
                         <th>{{ __('admin.pages.user.status') }}</th>
+                        <th>Тип курса</th>
                         <th>Стоимость курса</th>
                         <th>Стоиомость при гос. поддержке</th>
                         <th>{{ __('admin.labels.created_at') }}</th>
@@ -88,6 +89,7 @@
                                     </div>
                             </td>
 
+                            <td>{{ $item->getTypeName() }}</td>
                             <td>{{ $item->cost }}</td>
                             <td>{{ $item->calculateQuotaCost() }}</td>
 

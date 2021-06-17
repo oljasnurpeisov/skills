@@ -22,6 +22,8 @@ class Course extends Model
 
     protected $fillable = ['contract_status', 'status'];
 
+    protected $dates = ['publish_at'];
+
     public $timestamps = true;
 
 

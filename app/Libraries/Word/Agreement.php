@@ -335,6 +335,7 @@ class Agreement
         $text = preg_replace('/(&nbsp;)/', ' ', $text);
         $text = preg_replace('/(&laquo;)/', ' ', $text);
         $text = preg_replace('/(&raquo;)/', ' ', $text);
+        $text = preg_replace('/\s/', ' ', $text);
         $text = htmlspecialchars(strip_tags($text));
 
         return $text;

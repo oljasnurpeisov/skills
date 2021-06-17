@@ -180,6 +180,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
 
+        App\Providers\ObserverServiceProvider::class
+
     ],
 
     /*

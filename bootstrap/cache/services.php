@@ -45,6 +45,7 @@
     41 => 'App\\Providers\\RouteServiceProvider',
     42 => 'Barryvdh\\Debugbar\\ServiceProvider',
     43 => 'Barryvdh\\DomPDF\\ServiceProvider',
+    44 => 'App\\Providers\\ObserverServiceProvider',
   ),
   'eager' => 
   array (
@@ -76,6 +77,7 @@
     25 => 'App\\Providers\\RouteServiceProvider',
     26 => 'Barryvdh\\Debugbar\\ServiceProvider',
     27 => 'Barryvdh\\DomPDF\\ServiceProvider',
+    28 => 'App\\Providers\\ObserverServiceProvider',
   ),
   'deferred' => 
   array (
