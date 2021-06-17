@@ -189,7 +189,8 @@ class Agreement
         $this->templateProcessor->setValue('company_name', $this->author->company_name);
         $this->templateProcessor->setValue('type_of_ownership', $this->author->type_ownership->name_ru);
         $this->templateProcessor->setValue('fio', $this->author_info->surname .' '. $this->author_info->name .' '. $this->author_info->surname);
-        $this->templateProcessor->setValue('position', $this->author->position);
+        $this->templateProcessor->setValue('position_ru', $this->author->position_ru);
+        $this->templateProcessor->setValue('position_kk', $this->author->position_kk);
         $this->templateProcessor->setValue('fio_director', $this->author->fio_director);
         $this->templateProcessor->setValue('iin', $this->author->iik_kz);
         $this->templateProcessor->setValue('iik', $this->author->iik_kz);
