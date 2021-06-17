@@ -2,15 +2,8 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Libraries\Auth\AuthEnbekPassport;
-use Libraries\Auth\EnbekPassport;
-use Service\Auth\AuthService;
-
-//use Libraries\Auth\EnbekPassport;
 
 class AuthServiceProvider extends ServiceProvider
 {
