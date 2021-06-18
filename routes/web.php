@@ -85,6 +85,18 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/student/index', 'StudentController@index');
                 Route::get('/student/{item}', 'StudentController@edit');
             });
+            // Маршруты
+            Route::group(['middleware' => 'check.permission:admin.routes'], static function () {
+                Route::get('/routes/contract-quota', 'RoutesController@contractQuota')->name('admin.routes.contract_quota');
+                Route::get('/routes/contract-paid', 'RoutesController@contractPaid')->name('admin.routes.contract_paid');
+                Route::get('/routes/avr', 'RoutesController@avr')->name('admin.routes.avr');
+
+                Route::get('/routes/{type}/create', 'RoutesController@create')->name('admin.routes.create');
+                Route::post('/routes/{type}/store', 'RoutesController@store')->name('admin.routes.store');
+                Route::get('/routes/{type}/{route_id}/edit', 'RoutesController@edit')->name('admin.routes.role.edit');
+                Route::post('/routes/{type}/{route_id}/update', 'RoutesController@update')->name('admin.routes.role.update');
+                Route::delete('/routes/{route_id}/destroy', 'RoutesController@destroy')->name('admin.routes.destroy');
+            });
             // Курсы
             Route::group(['middleware' => 'check.permission:admin.courses'], static function () {
                 Route::get('/courses/index', 'CourseController@index');

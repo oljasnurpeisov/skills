@@ -39,6 +39,18 @@
                 </ul>
             </li>
             @endhasPermission
+            @hasPermission('admin.routes')
+                <li class="dropdown">
+                    <a href="javascript:;" title="Маршруты">
+                        <i class="icon-users"></i> Маршруты
+                    </a>
+                    <ul>
+                        <li><a href="{{ route('admin.routes.contract_paid', ['lang' => $lang]) }}">Маршрут подписания договоров (платный)</a></li>
+                        <li><a href="{{ route('admin.routes.contract_quota', ['lang' => $lang]) }}">Маршрут подписания договоров (при гос. поддержке)</a></li>
+                        <li><a href="{{ route('admin.routes.avr', ['lang' => $lang]) }}">Маршрут подписания АВР</a></li>
+                    </ul>
+                </li>
+            @endhasPermission
             @hasPermission('admin.courses')
             <li class="dropdown">
                 <a href="javascript:;" title="{{ __('admin.pages.courses.title') }}">
