@@ -1,6 +1,6 @@
 @extends('admin.v2.layout.default.template')
 
-@section('title', 'Маршруты')
+@section('title', $title)
 
 @section('head')
 
@@ -11,7 +11,7 @@
         <div class="title-block">
             <div class="row row--multiline align-items-center">
                 <div class="col-md-4">
-                    <h1 class="title-primary" style="margin-bottom: 0">Маршруты </h1>
+                    <h1 class="title-primary" style="margin-bottom: 0">{{ $title }}</h1>
                 </div>
                 <div class="col-md-8 text-right-md text-right-lg">
                     <div class="flex-form">

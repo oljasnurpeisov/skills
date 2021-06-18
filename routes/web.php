@@ -87,6 +87,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
             });
             // Маршруты
             Route::group(['middleware' => 'check.permission:admin.routes'], static function () {
+                Route::get('/routes/contract-free', 'RoutesController@contractFree')->name('admin.routes.contract_free');
                 Route::get('/routes/contract-quota', 'RoutesController@contractQuota')->name('admin.routes.contract_quota');
                 Route::get('/routes/contract-paid', 'RoutesController@contractPaid')->name('admin.routes.contract_paid');
                 Route::get('/routes/avr', 'RoutesController@avr')->name('admin.routes.avr');

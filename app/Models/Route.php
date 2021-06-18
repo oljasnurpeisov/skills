@@ -13,6 +13,17 @@ class Route extends Model
     protected $fillable = ['type', 'role_id', 'sort'];
 
     /**
+     * Маршруты на договора (бесплатные курсы)
+     *
+     * @param $q
+     * @return Builder
+     */
+    public function scopeContractFree($q): Builder
+    {
+        return $q->whereType(1);
+    }
+
+    /**
      * Маршруты на договора (платные курсы)
      *
      * @param $q
@@ -20,7 +31,7 @@ class Route extends Model
      */
     public function scopeContractPaid($q): Builder
     {
-        return $q->whereType(1);
+        return $q->whereType(2);
     }
 
     /**
@@ -31,7 +42,7 @@ class Route extends Model
      */
     public function scopeContractQuota($q): Builder
     {
-        return $q->whereType(2);
+        return $q->whereType(3);
     }
 
     /**
@@ -42,7 +53,7 @@ class Route extends Model
      */
     public function scopeAvr($q): Builder
     {
-        return $q->whereType(3);
+        return $q->whereType(4);
     }
 
     /**

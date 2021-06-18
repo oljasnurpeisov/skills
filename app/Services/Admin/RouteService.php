@@ -113,11 +113,13 @@ class RouteService
     public function typeToRouteName(int $route_type): string
     {
         switch ($route_type) {
-            case 2:
-                return 'admin.routes.contract_quota';
             case 1:
+                return 'admin.routes.contract_free';
+            case 2:
                 return 'admin.routes.contract_paid';
             case 3:
+                return 'admin.routes.contract_quota';
+            case 4:
                 return 'admin.routes.avr';
             default:
                 return null;
