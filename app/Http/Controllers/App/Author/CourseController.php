@@ -530,8 +530,6 @@ class CourseController extends Controller
     public function editCourse($lang, Course $item)
     {
 
-        return (new \App\Http\Controllers\App\Student\LessonController())->saveCertificates($item);
-        dd(1);
 
         if ($item->author_id == Auth::user()->id) {
             switch ($item->status) {
