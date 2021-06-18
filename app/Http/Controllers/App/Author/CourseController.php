@@ -122,7 +122,7 @@ class CourseController extends Controller
                 $item->teaser = $request->teaser;
                 $item->description = $request->description;
                 $item->course_includes = $request->course_includes;
-                $item->certificate_id = 1;
+                $item->certificate_id = $request->certificate_id;
 
                 if (($request->image != $item->image)) {
                     File::delete(public_path($item->image));
@@ -230,7 +230,7 @@ class CourseController extends Controller
             $item->teaser = $request->teaser;
             $item->description = $request->description;
             $item->course_includes = $request->course_includes;
-            $item->certificate_id = 1;
+            $item->certificate_id = $request->certificate_id;
 
             if (($request->image != $item->image)) {
                 File::delete(public_path($item->image));
@@ -529,6 +529,10 @@ class CourseController extends Controller
 
     public function editCourse($lang, Course $item)
     {
+
+        return (new \App\Http\Controllers\App\Student\LessonController())->saveCertificates($item);
+        dd(1);
+
         if ($item->author_id == Auth::user()->id) {
             switch ($item->status) {
                 case 0:
@@ -589,7 +593,7 @@ class CourseController extends Controller
         $item->teaser = $request->teaser;
         $item->description = $request->description;
 
-        $item->certificate_id = 1;
+        $item->certificate_id = $request->certificate_id;
 
         if (($request->image != $item->image)) {
             File::delete(public_path($item->image));

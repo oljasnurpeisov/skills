@@ -543,7 +543,7 @@ class LessonController extends Controller
         }
     }
 
-    private function saveCertificates(Course $course)
+    public function saveCertificates(Course $course)
     {
         $user = Auth::user();
         $languages = ["ru"];
@@ -555,7 +555,7 @@ class LessonController extends Controller
 
         $data = [
             'author_name' => $course->user->company_name . '/' . $course->user->author_info->name . ' ' . $course->user->author_info->surname,
-            'student_name' => $user->student_info->name,
+            'student_name' => $user->student_info->name ?? '2323',
             'duration' => $course->lessons->sum('duration'),
             'course_name' => $course->name,
             'skills' => $course->skills,
@@ -567,14 +567,25 @@ class LessonController extends Controller
         foreach ($languages as $language) {
             try {
                 $template = 'app.pages.page.pdf.certificate_' . $course->certificate_id . '_' . $language;
+
+                return view($template, ['data' => $data]);
+
+
+
                 $pdf = PDF::loadView($template, ['data' => $data]);
+
+
+
                 $pdf = $pdf->setPaper('A4', 'landscape');
 
                 File::ensureDirectoryExists(public_path('/users/user_' . $user->id));
 
-                $path = public_path('users/user_' . $user->id . '');
+                $path = public_path('users/user_' . $user->id);
                 $pdfPath = $path . '/' . 'course_' . $course->id . '_certificate_' . $language . '.pdf';
                 $pdf->save($pdfPath);
+
+
+                dd($pdf);
             } catch (\InvalidArgumentException $e) {
                 $e->getMessage();
             }
