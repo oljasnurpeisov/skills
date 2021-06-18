@@ -364,64 +364,76 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.preview_certificate_title')}}</label>
-                                <input name="certificate_id" type="text" value="{{ 10 ?? old('certificate_id') }}">
+                                <input name="certificate_id" type="hidden" value="{{ 1 ?? old('certificate_id') }}">
 
                                 <div class="row row--multiline">
                                     <div class="col-auto">
-                                        <div class="image-choice checked" data-id="10">
-                                            <img src="/assets/img/certificates/cert_new_10.jpg"
+                                        <div class="image-choice" data-id="10">
+                                            <img src="/assets/img/certificates/4.png"
                                                  class="image-choice__thumbnail"
                                                  alt="">
                                             <label class="image-choice__overflow">
                                                 <i> </i>
-                                                <a class="check" style="margin-top: -22px;">✓</a>
-                                                <a href="/assets/img/certificates/cert_new_10.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
+                                                <a href="/assets/img/certificates/4.png" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
                                                    class="icon-zoom-in" style="margin-top: 23px"> </a>
                                             </label>
                                         </div>
                                     </div>
+{{--                                    <div class="col-auto">--}}
+{{--                                        <div class="image-choice checked" data-id="10">--}}
+{{--                                            <img src="/assets/img/certificates/cert_new_10.jpg"--}}
+{{--                                                 class="image-choice__thumbnail"--}}
+{{--                                                 alt="">--}}
+{{--                                            <label class="image-choice__overflow">--}}
+{{--                                                <i> </i>--}}
+{{--                                                <a class="check" style="margin-top: -22px;">✓</a>--}}
+{{--                                                <a href="/assets/img/certificates/cert_new_10.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"--}}
+{{--                                                   class="icon-zoom-in" style="margin-top: 23px"> </a>--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
 
-                                    <div class="col-auto">
-                                        <div class="image-choice " data-id="11">
-                                            <img src="/assets/img/certificates/cert_new_11.jpg"
-                                                 class="image-choice__thumbnail"
-                                                 alt="">
-                                            <label class="image-choice__overflow">
-                                                <i> </i>
-                                                <a class="check" style="margin-top: -22px;">✓</a>
-                                                <a href="/assets/img/certificates/cert_new_11.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
-                                                   class="icon-zoom-in" style="margin-top: 23px"> </a>
-                                            </label>
-                                        </div>
-                                    </div>
+{{--                                    <div class="col-auto">--}}
+{{--                                        <div class="image-choice " data-id="11">--}}
+{{--                                            <img src="/assets/img/certificates/cert_new_11.jpg"--}}
+{{--                                                 class="image-choice__thumbnail"--}}
+{{--                                                 alt="">--}}
+{{--                                            <label class="image-choice__overflow">--}}
+{{--                                                <i> </i>--}}
+{{--                                                <a class="check" style="margin-top: -22px;">✓</a>--}}
+{{--                                                <a href="/assets/img/certificates/cert_new_11.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"--}}
+{{--                                                   class="icon-zoom-in" style="margin-top: 23px"> </a>--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
 
-                                    <div class="col-auto">
-                                        <div class="image-choice " data-id="12">
-                                            <img src="/assets/img/certificates/cert_new_12.jpg"
-                                                 class="image-choice__thumbnail"
-                                                 alt="">
-                                            <label class="image-choice__overflow">
-                                                <i> </i>
-                                                <a class="check" style="margin-top: -22px;">✓</a>
-                                                <a href="/assets/img/certificates/cert_new_12.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
-                                                   class="icon-zoom-in" style="margin-top: 23px"> </a>
-                                            </label>
-                                        </div>
-                                    </div>
+{{--                                    <div class="col-auto">--}}
+{{--                                        <div class="image-choice " data-id="12">--}}
+{{--                                            <img src="/assets/img/certificates/cert_new_12.jpg"--}}
+{{--                                                 class="image-choice__thumbnail"--}}
+{{--                                                 alt="">--}}
+{{--                                            <label class="image-choice__overflow">--}}
+{{--                                                <i> </i>--}}
+{{--                                                <a class="check" style="margin-top: -22px;">✓</a>--}}
+{{--                                                <a href="/assets/img/certificates/cert_new_12.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"--}}
+{{--                                                   class="icon-zoom-in" style="margin-top: 23px"> </a>--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
 
-                                    <div class="col-auto">
-                                        <div class="image-choice " data-id="13">
-                                            <img src="/assets/img/certificates/cert_new_13.jpg"
-                                                 class="image-choice__thumbnail"
-                                                 alt="">
-                                            <label class="image-choice__overflow">
-                                                <i> </i>
-                                                <a class="check" style="margin-top: -22px;">✓</a>
-                                                <a href="/assets/img/certificates/cert_new_13.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
-                                                   class="icon-zoom-in" style="margin-top: 23px"> </a>
-                                            </label>
-                                        </div>
-                                    </div>
+{{--                                    <div class="col-auto">--}}
+{{--                                        <div class="image-choice " data-id="13">--}}
+{{--                                            <img src="/assets/img/certificates/cert_new_13.jpg"--}}
+{{--                                                 class="image-choice__thumbnail"--}}
+{{--                                                 alt="">--}}
+{{--                                            <label class="image-choice__overflow">--}}
+{{--                                                <i> </i>--}}
+{{--                                                <a class="check" style="margin-top: -22px;">✓</a>--}}
+{{--                                                <a href="/assets/img/certificates/cert_new_13.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"--}}
+{{--                                                   class="icon-zoom-in" style="margin-top: 23px"> </a>--}}
+{{--                                            </label>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                 </div>
                             </div>
                             <div class="buttons">

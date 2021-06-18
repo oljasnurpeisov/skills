@@ -543,7 +543,7 @@ class LessonController extends Controller
         }
     }
 
-    public function saveCertificates(Course $course)
+    private function saveCertificates(Course $course)
     {
         $user = Auth::user();
         $languages = ["ru"];
@@ -555,7 +555,7 @@ class LessonController extends Controller
 
         $data = [
             'author_name' => $course->user->company_name . '/' . $course->user->author_info->name . ' ' . $course->user->author_info->surname,
-            'student_name' => $user->student_info->name ?? '2323',
+            'student_name' => $user->student_info->name,
             'duration' => $course->lessons->sum('duration'),
             'course_name' => $course->name,
             'skills' => $course->skills,

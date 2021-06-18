@@ -529,8 +529,6 @@ class CourseController extends Controller
 
     public function editCourse($lang, Course $item)
     {
-
-
         if ($item->author_id == Auth::user()->id) {
             switch ($item->status) {
                 case 0:
