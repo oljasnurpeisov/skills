@@ -104,7 +104,7 @@ class AuthStudent
                 $studentInformation->iin = $studentResume["iin"];
                 $studentInformation->save();
 
-                if ($studentInformation->agree === 0) {
+                if ($studentInformation->agree !== 1) {
                     Session::put('agree_data', $user->id);
 
                     Auth::logout();

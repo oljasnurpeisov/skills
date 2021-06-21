@@ -151,5 +151,4 @@ class AuthEnbekPassport
     {
         return empty(Session::get('agree_data'));
     }
-
 }
