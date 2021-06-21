@@ -108,12 +108,12 @@ class AuthStudent
 
                 Auth::logout();
             }
-        }
+        } else {
+            if ($studentInformation->agree !== 1) {
+                Session::put('agree_data', $user->id);
 
-        if ($studentInformation->agree !== 1) {
-            Session::put('agree_data', $user->id);
-
-            Auth::logout();
+                Auth::logout();
+            }
         }
 
 //        if ($user->roles()->first()->id != $studentRole->id) {
