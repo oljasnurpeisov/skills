@@ -274,8 +274,8 @@
             </div>
             <div class="form-group">
                 <label class="checkbox small">
-                    <input type="checkbox" name="agree" id="agreeCheckbox" data-enable="#noCvModal" value="on" {{old('agree') == 'on' ? 'checked' : ''}} required>
-                    <span style="font-family: sans-serif">{!! __('default.pages.auth.private_policy_agree_title') !!}</span>
+                    <input type="checkbox" name="agree" id="agreeCheckboxCv" data-enable="#noCvModal" value="on" {{old('agree') == 'on' ? 'checked' : ''}} required>
+                    <span style="font-family: sans-serif">{!! __('default.pages.auth.private_policy_agree_title_noCvModal') !!}</span>
                 </label>
             </div>
             <div class="text-center">
@@ -291,8 +291,8 @@
             @csrf
             <div class="form-group">
                 <label class="checkbox small">
-                    <input type="checkbox" name="agree" id="agreeCheckbox" data-enable="#noCvModal" value="on" {{old('agree') == 'on' ? 'checked' : ''}} required>
-                    <span style="font-family: sans-serif">{!! __('default.pages.auth.private_policy_agree_title') !!}</span>
+                    <input type="checkbox" name="agree" id="agreeCheckboxAgree" data-enable="#noCvModal" value="on" {{old('agree') == 'on' ? 'checked' : ''}} required>
+                    <span style="font-family: sans-serif">{!! __('default.pages.auth.private_policy_agree_title_agreeModal') !!}</span>
                 </label>
             </div>
             <div class="text-center">
@@ -309,9 +309,9 @@
             {!! __('default.pages.private_policy.private_policy_description') !!}
         </div>
         <div class="form-group">
-            <a href="#noCvModal" data-fancybox title="{{__('default.pages.private_policy.agree_title')}}" class="btn"
+            <a href="" data-fancybox data-checkbox="#agreeCheckbox" title="{{__('default.pages.private_policy.agree_title')}}" class="btn"
                id="privacyPolicyBtn"
-               onclick="document.querySelector('#agreeCheckbox').checked = true;document.querySelector('#agreeCheckbox').dispatchEvent(new Event('change'));">{{__('default.pages.private_policy.agree_title')}}</a>
+               onclick="document.querySelector($(this).attr('data-checkbox')).checked = true;document.querySelector($(this).attr('data-checkbox')).dispatchEvent(new Event('change'));">{{__('default.pages.private_policy.agree_title')}}</a>
         </div>
     </div>
 @endguest
