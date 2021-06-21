@@ -296,7 +296,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::get("/login_student", "UserController@studentAuth");
             Route::post("/login_student", "UserController@studentLogin");
             Route::post("/save-student-data/{user_id}", "UserController@studentDataSave");
-            Route::get("/agree/{user_id}", "UserController@agree");
+            Route::post("/agree/{user_id}", "UserController@agree");
         });
         //
         Route::group(['middleware' => ["auth"]], static function () {
