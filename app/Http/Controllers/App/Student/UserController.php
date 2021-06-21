@@ -257,9 +257,22 @@ class UserController extends Controller
         StudentInformation::whereUserId($user_id)->update([
             'name' => $request->resume_name,
             'iin' => $request->resume_iin,
+            'agree' => 1
         ]);
 
         $user = User::whereId($user_id)->first();
+        Auth::login($user);
+
+        return redirect()->back();
+    }
+
+    public function agree(Request $request)
+    {
+        StudentInformation::whereUserId($request->user_id)->update([
+            'agree' => 1
+        ]);
+
+        $user = User::whereId($request->user_id)->first();
         Auth::login($user);
 
         return redirect()->back();

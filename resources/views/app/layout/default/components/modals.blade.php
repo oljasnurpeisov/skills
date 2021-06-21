@@ -12,7 +12,7 @@
                 </a>
             </div>
             <div class="col-sm-6">
-                <a href="https://passport.enbek.kz/ru/user/login?redirect_uri={{ route('auth_sso') }}&redirect=strict"  title="{{__('default.pages.auth.as_student')}}"
+                <a href="https://passport.enbek.kz/{{ $lang }}/user/login?redirect_uri={{ route('auth_sso', ['lang' => $lang]) }}&redirect=strict"  title="{{__('default.pages.auth.as_student')}}"
                    class="authorization-option">
                 <span class="authorization-option__image">
                     <img src="/assets/img/student.svg" alt="">
@@ -272,6 +272,23 @@
                     :message
                 </div>') !!}
             </div>
+            <div class="form-group">
+                <label class="checkbox small">
+                    <input type="checkbox" name="agree" id="agreeCheckbox" data-enable="#noCvModal" value="on" {{old('agree') == 'on' ? 'checked' : ''}} required>
+                    <span style="font-family: sans-serif">{!! __('default.pages.auth.private_policy_agree_title') !!}</span>
+                </label>
+            </div>
+            <div class="text-center">
+                <div class="form-group">
+                    <button type="submit" class="btn">{{__('default.pages.auth.send_resume')}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="agreeModal" style="display:none;" class="modal-form">
+        <h2 class="title-primary">{{__('default.pages.private_policy.private_policy_title')}}</h2>
+        <form action="/{{$lang}}/agree/{{session('resume_data')}}" method="post">
+            @csrf
             <div class="form-group">
                 <label class="checkbox small">
                     <input type="checkbox" name="agree" id="agreeCheckbox" data-enable="#noCvModal" value="on" {{old('agree') == 'on' ? 'checked' : ''}} required>

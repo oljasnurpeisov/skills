@@ -56,5 +56,12 @@
         });
         {{Session::forget('resume_data')}}
         @endif
+        @if(Session::get('agree_data'))
+        $.fancybox.open({
+            src: '#agreeModal',
+            touch: false
+        });
+        {{Session::forget('agree_data')}}
+        @endif
     </script>
 @endguest

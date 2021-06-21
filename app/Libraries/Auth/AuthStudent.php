@@ -103,6 +103,12 @@ class AuthStudent
                 $studentInformation->name = $studentResume["FIO"];
                 $studentInformation->iin = $studentResume["iin"];
                 $studentInformation->save();
+
+                if ($studentInformation->agree === 0) {
+                    Session::put('agree_data', $user->id);
+
+                    Auth::logout();
+                }
             } else {
                 Session::put('resume_data', $user->id);
 
