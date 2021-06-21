@@ -52,7 +52,7 @@ class AuthEnbekPassport
      */
     public function init(): void
     {
-        if (!$this->checkResume()) return;
+        if (!$this->checkResume() or !$this->checkAgree()) return;
 
         if ($this->isPassportAuth()) $this->loginUser();
 
@@ -140,6 +140,16 @@ class AuthEnbekPassport
     protected function checkResume(): bool
     {
         return empty(Session::get('resume_data'));
+    }
+
+    /**
+     * Есть резюме?
+     *
+     * @return bool
+     */
+    protected function checkAgree(): bool
+    {
+        return empty(Session::get('agree_data'));
     }
 
 }
