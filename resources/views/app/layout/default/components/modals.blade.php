@@ -68,55 +68,55 @@
         </form>
     </div>
 
-    <div id="studentAuth" style="display:none;" class="modal-form">
-        <h4 class="title-primary text-center">{{__('default.pages.auth.auth_as_student')}}</h4>
-        <form action="/{{$lang}}/login_student" method="POST">
-            @csrf
-            <div class="form-group">
-                <label class="form-group__label">E-mail</label>
-                <div class="input-group">
-                    <input type="email" name="email" placeholder="" class="input-regular" value="{{ old('email') }}"
-                           required>
-                    <i class="icon-user"> </i>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="form-group__label">{{__('default.pages.auth.password_title')}}</label>
-                <div class="input-group">
-                    <input type="password" name="password" placeholder="" class="input-regular" required>
-                    <i class="icon-password"> </i>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="checkbox small"><input type="checkbox" name="agree" id="agreeCheckbox"
-                                                     data-enable="#studentLoginBtn" value="on"
-                                                     {{old('agree') == 'on' ? 'checked' : ''}} required> <span
-                        style="font-family: sans-serif">{!! __('default.pages.auth.private_policy_agree_title') !!}</span></label>
-            </div>
-            @if(Session::get('failed'))
+{{--    <div id="studentAuth" style="display:none;" class="modal-form">--}}
+{{--        <h4 class="title-primary text-center">{{__('default.pages.auth.auth_as_student')}}</h4>--}}
+{{--        <form action="/{{$lang}}/login_student" method="POST">--}}
+{{--            @csrf--}}
+{{--            <div class="form-group">--}}
+{{--                <label class="form-group__label">E-mail</label>--}}
+{{--                <div class="input-group">--}}
+{{--                    <input type="email" name="email" placeholder="" class="input-regular" value="{{ old('email') }}"--}}
+{{--                           required>--}}
+{{--                    <i class="icon-user"> </i>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="form-group">--}}
+{{--                <label class="form-group__label">{{__('default.pages.auth.password_title')}}</label>--}}
+{{--                <div class="input-group">--}}
+{{--                    <input type="password" name="password" placeholder="" class="input-regular" required>--}}
+{{--                    <i class="icon-password"> </i>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="form-group">--}}
+{{--                <label class="checkbox small"><input type="checkbox" name="agree" id="agreeCheckbox"--}}
+{{--                                                     data-enable="#studentLoginBtn" value="on"--}}
+{{--                                                     {{old('agree') == 'on' ? 'checked' : ''}} required> <span--}}
+{{--                        style="font-family: sans-serif">{!! __('default.pages.auth.private_policy_agree_title') !!}</span></label>--}}
+{{--            </div>--}}
+{{--            @if(Session::get('failed'))--}}
 
-                <div class="alert alert-danger">
-                    {{Session::get('failed')}}
-                </div>
-            @endif
+{{--                <div class="alert alert-danger">--}}
+{{--                    {{Session::get('failed')}}--}}
+{{--                </div>--}}
+{{--            @endif--}}
 
-            <div class="text-center">
-                <div class="form-group">
-                    <button type="submit" class="btn"
-                            id="studentLoginBtn" {{old('agree') != 'on' ? 'disabled' : ''}}>{{__('default.pages.auth.auth_title')}}</button>
-                </div>
-                <div class="hint">
-                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri={{ route('auth_sso') }}&redirect=strict" title=""
-                       class="">passport.enbek.kz</a>
-                </div>
-                <div class="hint">
-                    {{__('default.pages.auth.not_registered_title')}}<br/>
-                    <a href="https://www.enbek.kz/ru/register" title="{{__('default.pages.auth.registration_title')}}"
-                       class="link" target="_blank">{{__('default.pages.auth.registration_title')}}</a>
-                </div>
-            </div>
-        </form>
-    </div>
+{{--            <div class="text-center">--}}
+{{--                <div class="form-group">--}}
+{{--                    <button type="submit" class="btn"--}}
+{{--                            id="studentLoginBtn" {{old('agree') != 'on' ? 'disabled' : ''}}>{{__('default.pages.auth.auth_title')}}</button>--}}
+{{--                </div>--}}
+{{--                <div class="hint">--}}
+{{--                    <a href="https://passport.enbek.kz/ru/user/login?redirect_uri={{ route('auth_sso') }}&redirect=strict" title=""--}}
+{{--                       class="">passport.enbek.kz</a>--}}
+{{--                </div>--}}
+{{--                <div class="hint">--}}
+{{--                    {{__('default.pages.auth.not_registered_title')}}<br/>--}}
+{{--                    <a href="https://www.enbek.kz/ru/register" title="{{__('default.pages.auth.registration_title')}}"--}}
+{{--                       class="link" target="_blank">{{__('default.pages.auth.registration_title')}}</a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </form>--}}
+{{--    </div>--}}
 
     <div id="authorRegistration" style="display:none;" class="modal-form">
         <h4 class="title-primary text-center">{{__('default.pages.auth.author_register')}}</h4>
@@ -272,6 +272,12 @@
                     :message
                 </div>') !!}
             </div>
+            <div class="form-group">
+                <label class="checkbox small">
+                    <input type="checkbox" name="agree" id="agreeCheckbox" data-enable="#noCvModal" value="on" {{old('agree') == 'on' ? 'checked' : ''}} required>
+                    <span style="font-family: sans-serif">{!! __('default.pages.auth.private_policy_agree_title') !!}</span>
+                </label>
+            </div>
             <div class="text-center">
                 <div class="form-group">
                     <button type="submit" class="btn">{{__('default.pages.auth.send_resume')}}</button>
@@ -286,7 +292,7 @@
             {!! __('default.pages.private_policy.private_policy_description') !!}
         </div>
         <div class="form-group">
-            <a href="#studentAuth" data-fancybox title="{{__('default.pages.private_policy.agree_title')}}" class="btn"
+            <a href="#noCvModal" data-fancybox title="{{__('default.pages.private_policy.agree_title')}}" class="btn"
                id="privacyPolicyBtn"
                onclick="document.querySelector('#agreeCheckbox').checked = true;document.querySelector('#agreeCheckbox').dispatchEvent(new Event('change'));">{{__('default.pages.private_policy.agree_title')}}</a>
         </div>
