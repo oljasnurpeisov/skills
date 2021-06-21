@@ -3,6 +3,7 @@
 @section('content')
 
     <main class="main">
+        <a href="#noCvModal" data-fancybox="#noCvModal">!!!!</a>
         <section class="opening"
                  style="background: url({{json_decode($content->getAttribute('data_'.$lang))->main_banner->image}}) center center no-repeat; background-size: cover;">
             <div class="container">
