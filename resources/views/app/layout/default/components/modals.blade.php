@@ -287,7 +287,7 @@
     </div>
     <div id="agreeModal" style="display:none;" class="modal-form">
         <h2 class="title-primary">{{__('default.pages.private_policy.private_policy_title')}}</h2>
-        <form action="/{{$lang}}/agree/{{session('resume_data')}}" method="post">
+        <form action="/{{$lang}}/agree/{{session('agree_data')}}" method="post">
             @csrf
             <div class="form-group">
                 <label class="checkbox small">
