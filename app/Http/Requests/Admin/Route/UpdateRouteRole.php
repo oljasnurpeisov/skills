@@ -25,7 +25,7 @@ class UpdateRouteRole extends FormRequest
     public function rules()
     {
         return [
-            'sort' => ['required', 'integer', new RouteSortExist($this->request->get('type'), $this->request->get('sort'), $this->request->get('id'))],
+            'sort' => ['required', 'integer', new RouteSortExist($this->request->get('type'), $this->request->get('sort'), $this->request->get('id')), 'min:1'],
         ];
     }
 }

@@ -26,7 +26,7 @@ class StoreRouteRole extends FormRequest
     {
         return [
             'role_id'   => ['required', 'integer'],
-            'sort'      => ['required', 'integer', new RouteSortExist($this->request->get('type'), $this->request->get('sort'))],
+            'sort'      => ['required', 'integer', new RouteSortExist($this->request->get('type'), $this->request->get('sort')), 'min:1'],
         ];
     }
 }
