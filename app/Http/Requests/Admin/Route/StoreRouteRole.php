@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\Route;
 
+use App\Rules\Admin\Route\RouteSortExist;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRouteRole extends FormRequest
@@ -25,7 +26,7 @@ class StoreRouteRole extends FormRequest
     {
         return [
             'role_id'   => ['required', 'integer'],
-            'sort'      => ['required', 'integer'],
+            'sort'      => ['required', 'integer', new RouteSortExist($this->request->get('type'), $this->request->get('sort'))],
         ];
     }
 }

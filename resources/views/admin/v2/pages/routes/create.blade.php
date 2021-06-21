@@ -23,6 +23,7 @@
             @include('admin.v2.partials.components.errors')
             <form action="{{ route('admin.routes.store', ['lang' => $lang, 'type' => $type]) }}" method="POST">
                 @csrf
+                <input type="hidden" name="type" value="{{ $type }}">
 
                 <div class="input-group ">
                     <label class="input-group__title">Роль *</label>

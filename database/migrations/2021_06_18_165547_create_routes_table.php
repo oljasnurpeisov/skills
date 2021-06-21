@@ -15,9 +15,9 @@ class CreateRoutesTable extends Migration
     {
         Schema::create('routes', function (Blueprint $table) {
             $table->id();
-            $table->integer('type');
-            $table->integer('role_id');
-            $table->integer('sort');
+            $table->integer('type')->index();
+            $table->integer('role_id')->index();
+            $table->integer('sort')->index();
             $table->timestamps();
         });
     }

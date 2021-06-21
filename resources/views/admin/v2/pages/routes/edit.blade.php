@@ -25,6 +25,9 @@
             <form action="{{ route('admin.routes.role.update', ['lang' => $lang, 'type' => $type, 'route_id' => $route->id]) }}" method="POST">
                 @csrf
 
+                <input type="hidden" name="id" value="{{ $route->id }}">
+                <input type="hidden" name="type" value="{{ $type }}">
+
                 <div class="input-group ">
                     <label class="input-group__title">Номер в очереди *</label>
                     <input type="number" name="sort" placeholder="" class="input-regular" required="" value="{{ $route->sort ?? old('sort') }}">
