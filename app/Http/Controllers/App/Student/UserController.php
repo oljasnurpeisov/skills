@@ -266,13 +266,13 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function agree(Request $request)
+    public function agree($lang, $user_id, Request $request)
     {
-        StudentInformation::whereUserId($request->user_id)->update([
+        StudentInformation::whereUserId($user_id)->update([
             'agree' => 1
         ]);
 
-        $user = User::whereId($request->user_id)->first();
+        $user = User::whereId($user_id)->first();
         Auth::login($user);
 
         return redirect()->back();
