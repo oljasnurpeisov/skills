@@ -50,7 +50,7 @@ class CourseService {
         $paid = Course::paid()->whereDoesntHave('paid_contract')->pluck('id');
         $quota = Course::paid()->whereDoesntHave('quota_contract')->pluck('id');
 
-        return Course::whereIn('id', collect($free, $paid, $quota))->paginate(10);
+        return Course::whereIn('id', collect($free, $paid, $quota))->whereNotIn('status', [0, 1, 2, 4])->paginate(10);
     }
 
     /**
