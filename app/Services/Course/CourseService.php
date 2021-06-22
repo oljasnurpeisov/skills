@@ -3,7 +3,10 @@
 namespace Services\Course;
 
 use App\Models\Course;
+use App\Models\RoleUser;
+use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 use Libraries\Courses\SkillsSaver;
 
 /**
@@ -43,7 +46,11 @@ class CourseService {
      */
     public function waitCheckContracts(): LengthAwarePaginator
     {
-        return Course::checkContracts()->paginate(10);
+        $free = Course::free()->whereDoesntHave('free_contract')->pluck('id');
+        $paid = Course::paid()->whereDoesntHave('paid_contract')->pluck('id');
+        $quota = Course::paid()->whereDoesntHave('quota_contract')->pluck('id');
+
+        return Course::whereIn('id', collect($free, $paid, $quota))->paginate(10);
     }
 
     /**

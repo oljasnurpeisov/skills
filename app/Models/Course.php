@@ -254,7 +254,18 @@ class Course extends Model
      */
     public function scopeCheckContracts($query): Builder
     {
-        return $query->whereContractStatus(3);
+        return $query->courseCheck()->whereDoesntHave('contracts');
+    }
+
+    /**
+     * Курсы прошедшие проверку
+     *
+     * @param $q
+     * @return mixed
+     */
+    public function scopeCourseCheck($q)
+    {
+        return $q->whereStatus(5);
     }
 
     /**
@@ -367,9 +378,7 @@ class Course extends Model
      */
     public function isFreeContractCreated(): bool
     {
-        return $this->whereHas('contracts', function ($q) {
-            return $q->whereType(1);
-        })->exists();
+        return Contract::whereType(1)->whereCourseId($this->id)->exists();
     }
 
     /**
@@ -379,9 +388,7 @@ class Course extends Model
      */
     public function isPaidContractCreated()
     {
-        return $this->whereHas('contracts', function ($q) {
-            return $q->whereType(2);
-        })->exists();
+        return Contract::whereType(2)->whereCourseId($this->id)->exists();
     }
 
     /**
@@ -391,8 +398,36 @@ class Course extends Model
      */
     public function isQuotaContractCreated()
     {
-        return $this->whereHas('contracts', function ($q) {
-            return $q->whereType(3);
-        })->exists();
+        return Contract::whereType(3)->whereCourseId($this->id)->exists();
+    }
+
+    /**
+     * Договор (бесплатный)
+     *
+     * @return HasOne
+     */
+    public function free_contract(): HasOne
+    {
+        return $this->hasOne(Contract::class)->free()->latest();
+    }
+
+    /**
+     * Договор (платный)
+     *
+     * @return HasOne
+     */
+    public function paid_contract(): HasOne
+    {
+        return $this->hasOne(Contract::class)->paid()->latest();
+    }
+
+    /**
+     * Договор (квота)
+     *
+     * @return HasOne
+     */
+    public function quota_contract(): HasOne
+    {
+        return $this->hasOne(Contract::class)->quota()->latest();
     }
 }

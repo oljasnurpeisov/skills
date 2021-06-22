@@ -36,7 +36,7 @@ class Contract extends Model
      */
     public function scopeFree($query): Builder
     {
-        return $query->whereStatus(1);
+        return $query->whereType(1);
     }
 
     /**
@@ -47,7 +47,7 @@ class Contract extends Model
      */
     public function scopePaid($query): Builder
     {
-        return $query->whereStatus(2);
+        return $query->whereType(2);
     }
 
     /**
@@ -58,7 +58,7 @@ class Contract extends Model
      */
     public function scopeQuota($query): Builder
     {
-        return $query->whereStatus(3);
+        return $query->whereType(3);
     }
 
     /**

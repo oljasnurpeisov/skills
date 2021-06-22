@@ -143,9 +143,11 @@
                                         </div>
                                     </form>
                                 @endif
+
+{{--                            Прошедшие проверку и отправленные на генерацию договора    --}}
                             @elseif($item->status == 5)
                                 <p><b>{{ __('admin.pages.courses.course_status_title') }}
-                                        :</b> {{ __('admin.pages.courses.'.$item->status) }}</p>
+                                        :</b> {{ __('admin.pages.courses.'.$item->status) }} (с момента отправки первого договора статус не актуален)</p>
                                 <p><b>{{ __('admin.pages.courses.course_quota_title') }}
                                         :</b> {{ __('admin.pages.courses.quota_status_'.$item->quota_status) }}</p>
                                 <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
@@ -157,12 +159,18 @@
                                         @csrf
                                         <div class="buttons">
                                             <div>
-                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_quota']) }}" target="_blank" class="btn btn--blue">Договор</a>
-                                                <button type="submit" name="action" class="btn btn--green">Одобрить договор (по квоте)</button>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_quota']) }}" target="_blank" class="btn btn--blue">Договор (по квоте)</a>
+                                                <button type="submit" name="action" class="btn btn--green">Одобрить договор</button>
                                             </div>
                                         </div>
                                         <br>
                                     </form>
+                                @else
+                                    @if ($item->isQuotaContractCreated())
+                                        <div>
+                                            <a href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $item->quota_contract->id]) }}" target="_blank" class="btn btn--blue">Договор (по квоте)</a>
+                                        </div>
+                                    @endif
                                 @endif
 
                                 @if ($item->isFree() and !$item->isFreeContractCreated())
@@ -170,12 +178,18 @@
                                         @csrf
                                         <div class="buttons">
                                             <div>
-                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_free']) }}" target="_blank" class="btn btn--blue">Договор</a>
-                                                <button type="submit" name="action" class="btn btn--green">Одобрить договор (бесплатный)</button>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_free']) }}" target="_blank" class="btn btn--blue">Договор (бесплатный)</a>
+                                                <button type="submit" name="action" class="btn btn--green">Одобрить договор</button>
                                             </div>
                                         </div>
                                         <br>
                                     </form>
+                                @else
+                                    @if ($item->isFreeContractCreated())
+                                        <div>
+                                            <a href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $item->free_contract->id]) }}" target="_blank" class="btn btn--blue">Договор (бесплатный)</a>
+                                        </div>
+                                    @endif
                                 @endif
 
                                 @if ($item->isPaid() and !$item->isPaidContractCreated())
@@ -183,12 +197,18 @@
                                         @csrf
                                         <div class="buttons">
                                             <div>
-                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_paid']) }}" target="_blank" class="btn btn--blue">Договор</a>
-                                                <button type="submit" name="action" class="btn btn--green">Одобрить договор (платный)</button>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_paid']) }}" target="_blank" class="btn btn--blue">Договор (платный)</a>
+                                                <button type="submit" name="action" class="btn btn--green">Одобрить договор</button>
                                             </div>
                                         </div>
                                         <br>
                                     </form>
+                                @else
+                                    @if ($item->isPaidContractCreated())
+                                        <div>
+                                            <a href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $item->paid_contract->id]) }}" target="_blank" class="btn btn--blue">Договор (платный)</a>
+                                        </div>
+                                    @endif
                                 @endif
                             @endif
                         </div>
