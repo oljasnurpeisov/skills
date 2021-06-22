@@ -4,6 +4,8 @@ namespace Services\Contracts;
 
 
 use App\Models\Contract;
+use App\Models\Course;
+use Libraries\Word\Agreement;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Settings;
@@ -17,6 +19,35 @@ use Barryvdh\DomPDF\PDF;
  */
 class ContractService
 {
+    /**
+     * Создаем договор,
+     * если данного типа еще не создан
+     *
+     * @param Course $course
+     * @param string $type
+     * @return Contract|string|bool
+     * @throws Exception
+     */
+    public function createContract(Course $course, string $type)
+    {
+        $contract = new Agreement($course, $type);
+        return $contract->generate();
+    }
+
+    /**
+     * Превью договора
+     *
+     * @param Course $course
+     * @param string $type
+     * @return string
+     * @throws Exception
+     */
+    public function createPreviewContract(Course $course, string $type): string
+    {
+        $contract = new Agreement($course, $type, false);
+        return $contract->generate();
+    }
+
     /**
      * Предпросмотр договора
      *

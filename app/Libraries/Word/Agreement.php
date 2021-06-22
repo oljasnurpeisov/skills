@@ -9,8 +9,11 @@ use App\Models\CourseAttachments;
 use App\Models\User;
 use App\Models\UserInformation;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 use PhpOffice\PhpWord\Exception\CopyFileException;
 use PhpOffice\PhpWord\Exception\CreateTemporaryFileException;
+use PhpOffice\PhpWord\Exception\Exception;
+use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Services\Course\CalculateQuotaCost\CalculateQuotaCostService;
 
@@ -65,27 +68,44 @@ class Agreement
     private $contract;
 
     /**
+     * @var bool
+     */
+    private $save;
+
+    /**
+     * @var int
+     */
+    private $typeNumber;
+
+    /**
      * Agreement constructor.
      *
      * @param Course $course
      * @param string $type
+     * @param bool $save
      */
-    public function __construct(Course $course, string $type='agreement_free')
+    public function __construct(Course $course, string $type = 'agreement_free', bool $save = true)
     {
         $this->contract             = new Contract();
         $this->course               = $course;
         $this->type                 = $type;
         $this->number               = null;
-
+        $this->typeNumber           = 0;
+        $this->save                 = $save;
     }
 
     /**
      * Генерация договора
      *
-     * @return Contract
+     * @return Contract|string
+     * @throws Exception
      */
-    public function generate(): Contract
+    public function generate()
     {
+        if ($this->setType()->checkExist()) {
+            return false;
+        }
+
         $this->setData();
 
         $source     = 'contracts/templates/agreements/'. $this->type .'.docx';
@@ -105,9 +125,37 @@ class Agreement
             ->setCourseInfo()
             ->setCourseDetail();
 
+
         $this->templateProcessor->saveAs(public_path($savePath));
 
-        return $this->save($savePath);
+        if ($this->save) {
+            $result = $this->save($savePath);
+        } else {
+            $phpWord = IOFactory::load($savePath, "Word2007");
+            $writer = IOFactory::createWriter($phpWord, "HTML");
+
+            $result =  $writer->getContent();
+
+            unlink($savePath);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Проверяем существование договора
+     *
+     * @return bool
+     */
+    private function checkExist(): bool
+    {
+        if (Contract::whereCourseId($this->course->id)->whereType($this->typeNumber)->exists()) {
+            Session::flash('status', 'Уже есть договор на данный курс!');
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -124,29 +172,54 @@ class Agreement
     }
 
     /**
+     * Get contract type
+     *
+     * @return self
+     */
+    private function setType(): self
+    {
+        switch ($this->type) {
+            case 'agreement_free':
+                $this->typeNumber   = 1;
+                break;
+            case 'agreement_paid':
+                $this->typeNumber   = 2;
+                break;
+            case 'agreement_quota':
+                $this->typeNumber   = 3;
+                break;
+        }
+
+        return $this;
+    }
+
+    /**
      * Резервируем id создавая запись
      *
      * @return string
      */
     private function getNumber(): string
     {
-        $this->contract = $this->contract->create([
-            'course_id' => $this->course->id
-        ]);
+        if ($this->save) {
+            $this->contract = $this->contract->create([
+                'course_id' => $this->course->id,
+                'status'    => 1,
+            ]);
 
-        switch ($this->type) {
-            case 'agreement_free':
-                return $this->contract->id .'-Б';
-                break;
-            case 'agreement_paid':
-                return $this->contract->id .'-П';
-                break;
-            case 'agreement_quota':
-                return $this->contract->id .'-ГП';
-                break;
+            switch ($this->type) {
+                case 'agreement_free':
+                    $contract_id        = $this->contract->id .'-Б';
+                    break;
+                case 'agreement_paid':
+                    $contract_id        = $this->contract->id .'-П';
+                    break;
+                case 'agreement_quota':
+                    $contract_id        = $this->contract->id .'-ГП';
+                    break;
+            }
         }
 
-        return $this->contract->id;
+        return $contract_id ?? 'XXX';
     }
 
     /**
@@ -159,6 +232,7 @@ class Agreement
     {
         $this->contract->link   = $savePath;
         $this->contract->number = $this->number;
+        $this->contract->type   = $this->typeNumber;
         $this->contract->update();
 
         return $this->contract;
@@ -186,19 +260,19 @@ class Agreement
      */
     private function setRequisites(): self
     {
-        $this->templateProcessor->setValue('company_name', $this->author->company_name);
-        $this->templateProcessor->setValue('type_of_ownership', $this->author->type_ownership->name_ru);
+        $this->templateProcessor->setValue('company_name', $this->author->company_name ?? '-');
+        $this->templateProcessor->setValue('type_of_ownership', $this->author->type_ownership->name_ru ?? '-');
         $this->templateProcessor->setValue('fio', $this->author_info->surname .' '. $this->author_info->name .' '. $this->author_info->surname);
-        $this->templateProcessor->setValue('position_ru', $this->author->position_ru);
-        $this->templateProcessor->setValue('position_kk', $this->author->position_kk);
-        $this->templateProcessor->setValue('fio_director', $this->author->fio_director);
-        $this->templateProcessor->setValue('iin', $this->author->iik_kz);
-        $this->templateProcessor->setValue('iik', $this->author->iik_kz);
-        $this->templateProcessor->setValue('kbe', $this->author->kbe);
-        $this->templateProcessor->setValue('bik', $this->author->bik);
-        $this->templateProcessor->setValue('bank_name', $this->author->bank->name_ru);
-        $this->templateProcessor->setValue('legal_address', $this->author->legal_address);
-        $this->templateProcessor->setValue('base', $this->author->base->name_ru);
+        $this->templateProcessor->setValue('position_ru', $this->author->position_ru ?? '-');
+        $this->templateProcessor->setValue('position_kk', $this->author->position_kk ?? '-');
+        $this->templateProcessor->setValue('fio_director', $this->author->fio_director ?? '-');
+        $this->templateProcessor->setValue('iin', $this->author->iik_kz ?? '-');
+        $this->templateProcessor->setValue('iik', $this->author->iik_kz ?? '-');
+        $this->templateProcessor->setValue('kbe', $this->author->kbe ?? '-');
+        $this->templateProcessor->setValue('bik', $this->author->bik ?? '-');
+        $this->templateProcessor->setValue('bank_name', $this->author->bank->name_ru ?? '-');
+        $this->templateProcessor->setValue('legal_address', $this->author->legal_address ?? '-');
+        $this->templateProcessor->setValue('base', $this->author->base->name_ru ?? '-');
 
         return $this;
     }
@@ -210,13 +284,13 @@ class Agreement
      */
     private function setCourseInfo(): self
     {
-        $this->templateProcessor->setValue('course_name', $this->course->name);
-        $this->templateProcessor->setValue('course_professional_areas_ru', $this->course->professional_areas->pluck('name_ru')->unique()->implode(', '));
-        $this->templateProcessor->setValue('course_professions_ru', $this->course->professional_areas->pluck('name_ru')->unique()->implode(', '));
-        $this->templateProcessor->setValue('course_skills_ru', $this->course->skills->pluck('name_ru')->unique()->implode(', '));
-        $this->templateProcessor->setValue('course_professional_areas_kk', $this->course->professional_areas->pluck('name_kk')->unique()->implode(', '));
-        $this->templateProcessor->setValue('course_professions_kk', $this->course->professional_areas->pluck('name_kk')->unique()->implode(', '));
-        $this->templateProcessor->setValue('course_skills_kk', $this->course->skills->pluck('name_kk')->unique()->implode(', '));
+        $this->templateProcessor->setValue('course_name', $this->course->name ?? '-');
+        $this->templateProcessor->setValue('course_professional_areas_ru', $this->course->professional_areas->pluck('name_ru')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_professions_ru', $this->course->professional_areas->pluck('name_ru')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_skills_ru', $this->course->skills->pluck('name_ru')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_professional_areas_kk', $this->course->professional_areas->pluck('name_kk')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_professions_kk', $this->course->professional_areas->pluck('name_kk')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_skills_kk', $this->course->skills->pluck('name_kk')->unique()->implode(', ') ?? '-');
 
         return $this;
     }
@@ -228,11 +302,11 @@ class Agreement
      */
     private function setCourseDetail(): void
     {
-        $this->templateProcessor->setValue('teaser', $this->clearText($this->course->teaser));
-        $this->templateProcessor->setValue('description', $this->clearText($this->course->description));
-        $this->templateProcessor->setValue('profit_desc', $this->course->profit_desc);
-        $this->templateProcessor->setValue('videos_link', $this->course->videos_link);
-        $this->templateProcessor->setValue('duration', (new CalculateQuotaCostService())->courseDurationService($this->course));
+        $this->templateProcessor->setValue('teaser', $this->clearText($this->course->teaser) ?? '-');
+        $this->templateProcessor->setValue('description', $this->clearText($this->course->description) ?? '-');
+        $this->templateProcessor->setValue('profit_desc', $this->clearText($this->course->profit_desc) ?? '-');
+        $this->templateProcessor->setValue('videos_link', $this->course->videos_link ?? '-');
+        $this->templateProcessor->setValue('duration', (new CalculateQuotaCostService())->courseDurationService($this->course) ?? '-');
         $this->templateProcessor->setValue('lang', $this->course->lang === 1 ? 'Нет' : 'Да');
         $this->templateProcessor->setValue('attachments', $this->allAttachments($this->course_attachments));
         $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));

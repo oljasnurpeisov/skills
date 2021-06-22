@@ -114,6 +114,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/course/{item}', 'CourseController@view');
                 Route::post('/course/publish/{item}', 'CourseController@publish');
                 Route::post('/course/unpublish/{item}', 'CourseController@unpublish');
+                Route::post('/course/accept/{item}', 'CourseController@accept')->name('admin.courses.accept');
                 Route::post('/course/quota_request/{item}', 'CourseController@quota_request');
                 Route::post('/course/quota_contract/{item}', 'CourseController@quota_contract');
                 // Предосмотр курса
@@ -126,6 +127,10 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-test", "PreviewCourseController@testView");
                 Route::post("/course-{course}/lesson-{lesson}/admin-test-submit", "PreviewCourseController@submitTest");
             });
+            // Маршрутизация договоров в курсах
+            Route::group(['middleware' => 'check.permission:admin.courses'], static function () {
+                Route::post('/contracts/{course_id}/{type}/start', "CourseRoutingController@start")->name('admin.contracts.routing.start');
+            });
             // Договоры
             Route::group(['middleware' => 'check.permission:admin.courses'], static function () {
                 Route::get('/contracts/all', 'ContractsController@all')->name('admin.contracts.all');
@@ -134,8 +139,11 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/contracts/rejected-by-author', 'ContractsController@rejectedByAuthor')->name('admin.contracts.rejected_by_author');
                 Route::get('/contracts/pending', 'ContractsController@pending')->name('admin.contracts.pending');
 
-                Route::get('/contracts/{id}/view', 'ContractsController@view')->name('admin.contracts.view');
-                Route::get('/contracts/{id}/get-contract-html', 'ContractsController@getContractHtml')->name('admin.contracts.get_contract_html');
+                Route::get('/contracts/{contract_id}/view', 'ContractsController@view')->name('admin.contracts.view');
+                Route::get('/contracts/{contract_id}/get-contract-html', 'ContractsController@getContractHtml')->name('admin.contracts.get_contract_html');
+                Route::get('/contracts/{course_id}/{type}/get-contract-html-preview', 'ContractsController@getContractHtmlPreview')->name('admin.contracts.get_contract_html_preview');
+                Route::get('/contracts/{course_id}/{type}/generate-preview-contract', 'ContractsController@previewContract')->name('admin.contracts.generate_preview_contract');
+
             });
             // Страницы
             Route::group(['middleware' => 'check.permission:admin.pages'], static function () {

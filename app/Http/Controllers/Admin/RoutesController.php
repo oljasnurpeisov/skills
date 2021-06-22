@@ -56,7 +56,7 @@ class RoutesController extends Controller
     {
         return view('admin.v2.pages.routes.index', [
             'routes'    => $this->routeService->getRoutes('contractPaid'),
-            'type'      => 1,
+            'type'      => 2,
             'title'     => 'Маршрут подписания договоров (платный)'
         ]);
     }
@@ -70,7 +70,7 @@ class RoutesController extends Controller
     {
         return view('admin.v2.pages.routes.index', [
             'routes'    => $this->routeService->getRoutes('contractQuota'),
-            'type'      => 2,
+            'type'      => 3,
             'title'     => 'Маршрут подписания договоров (по квоте)'
         ]);
     }

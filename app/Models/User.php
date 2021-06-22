@@ -115,6 +115,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Role
+     *
+     * @return HasOne
+     */
+    public function role(): HasOne
+    {
+        return $this->hasOne(RoleUser::class, 'user_id', 'id');
+    }
+
+    /**
      * Bank
      *
      * @return HasOne

@@ -89,7 +89,7 @@
                             <td>{{ $contract->publish_at ?? '-' }}</td>
                             <td>
                                 <div class="action-buttons">
-                                    <a target="_blank" href="{{ route('admin.contracts.view', ['lang' => $lang, 'id' => $contract->id]) }}" title="{{ __('admin.labels.view') }}"
+                                    <a target="_blank" href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $contract->id]) }}" title="{{ __('admin.labels.view') }}"
                                        class="icon-btn icon-btn--yellow icon-eye"></a>
                                 </div>
                             </td>

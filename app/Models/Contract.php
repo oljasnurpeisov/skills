@@ -16,7 +16,7 @@ class Contract extends Model
 {
     protected $table = 'contracts';
 
-    protected $fillable = ['number', 'course_id', 'link', 'status'];
+    protected $fillable = ['number', 'course_id', 'link', 'type', 'status', 'route_id'];
 
     /**
      * Course
@@ -26,6 +26,39 @@ class Contract extends Model
     public function course(): HasOne
     {
         return $this->hasOne(Course::class, 'id', 'course_id');
+    }
+
+    /**
+     * Договор на бесплатный курс
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeFree($query): Builder
+    {
+        return $query->whereStatus(1);
+    }
+
+    /**
+     * Договор на платный курс
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopePaid($query): Builder
+    {
+        return $query->whereStatus(2);
+    }
+
+    /**
+     * Договор на курс по квоте
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeQuota($query): Builder
+    {
+        return $query->whereStatus(3);
     }
 
     /**
@@ -113,6 +146,16 @@ class Contract extends Model
     }
 
     /**
+     * Не актуален
+     *
+     * @return bool
+     */
+    public function isNotValid(): bool
+    {
+        return $this->status === 5;
+    }
+
+    /**
      * Название статуса
      *
      * @return string
@@ -136,5 +179,27 @@ class Contract extends Model
                 return 'Сгенерирован';
                 break;
         }
+    }
+
+    /**
+     * Отправляем договор на подписание
+     *
+     * @return void
+     */
+    public function setPending(): void
+    {
+        $this->update([
+            'status' => 1
+        ]);
+    }
+
+    /**
+     * Текущий маршрут договора
+     *
+     * @return HasOne
+     */
+    public function current_route(): HasOne
+    {
+        return $this->hasOne(Route::class, 'id', 'route_id');
     }
 }

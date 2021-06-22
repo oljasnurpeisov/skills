@@ -9,11 +9,13 @@ use App\Models\CourseQuotaCost;
 use App\Models\Notification;
 use App\Models\Log;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Libraries\Word\Agreement;
 use Services\Course\CourseService;
+use Services\Course\CourseStatusService;
 
 /**
  * --------------------------------------------------------------------------
@@ -31,13 +33,20 @@ class CourseController extends Controller
     private $courseService;
 
     /**
+     * @var CourseStatusService
+     */
+    private $courseStatusService;
+
+    /**
      * CourseController constructor.
      *
      * @param CourseService $courseService
+     * @param CourseStatusService $courseStatusService
      */
-    public function __construct(CourseService $courseService)
+    public function __construct(CourseService $courseService, CourseStatusService $courseStatusService)
     {
-        $this->courseService = $courseService;
+        $this->courseService        = $courseService;
+        $this->courseStatusService  = $courseStatusService;
     }
 
     public function index(Request $request)
@@ -153,6 +162,19 @@ class CourseController extends Controller
         return view('admin.v2.pages.courses.view', [
             'item' => $item
         ]);
+    }
+
+    /**
+     * Одобрение курса
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function accept(Request $request): RedirectResponse
+    {
+        $this->courseStatusService->acceptCourse($request->item);
+
+        return redirect()->back();
     }
 
     public function publish($lang, Course $item, Request $request)

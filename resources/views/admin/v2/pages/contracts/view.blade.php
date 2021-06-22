@@ -19,10 +19,13 @@
         @include('admin.v2.partials.components.warning')
 
         <div class="block">
-            Скачать договор: <a href="{{ asset($contract->link) }}">Скачать</a>
+            @if (!empty($contract))
+                Скачать договор: <a href="{{ asset($contract->link) }}">Скачать</a>
 
-            <iframe src="{{ route('admin.contracts.get_contract_html', ['lang' => 'ru', 'id' => $contract->id]) }}" frameborder="0" width="100%" height="600"></iframe>
-
+                <iframe src="{{ route('admin.contracts.get_contract_html', ['lang' => 'ru', 'contract_id' => $contract->id]) }}" frameborder="0" width="100%" height="600"></iframe>
+            @else
+                <iframe src="{{ route('admin.contracts.get_contract_html_preview', ['lang' => 'ru', 'course_id' => $course->id, 'type' => $type]) }}" frameborder="0" width="100%" height="600"></iframe>
+            @endif
         </div>
     </div>
 

@@ -37,7 +37,7 @@
                     <div>
                         <div class="block">
                             @if($item->status == 1)
-                                <form id="course_form" action="/{{$lang}}/admin/course/publish/{{ $item->id }}"
+                                <form id="course_form" action="{{ route('admin.courses.accept', ['lang' => $lang, 'item' => $item->id]) }}"
                                       method="post"
                                       enctype="multipart/form-data">
                                     {{ csrf_field() }}
@@ -46,7 +46,7 @@
                                     <div class="buttons">
                                         <div>
                                             <button type="submit" name="action" value="activate"
-                                                    class="btn btn--green">{{ __('admin.pages.courses.publish_button_title') }}</button>
+                                                    class="btn btn--green">Одобрить</button>
                                         </div>
                                         @if($item->status != 2)
                                             <div>
@@ -143,6 +143,53 @@
                                         </div>
                                     </form>
                                 @endif
+                            @elseif($item->status == 5)
+                                <p><b>{{ __('admin.pages.courses.course_status_title') }}
+                                        :</b> {{ __('admin.pages.courses.'.$item->status) }}</p>
+                                <p><b>{{ __('admin.pages.courses.course_quota_title') }}
+                                        :</b> {{ __('admin.pages.courses.quota_status_'.$item->quota_status) }}</p>
+                                <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
+                                        :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>
+
+
+                                @if ($item->isQuota() and !$item->isQuotaContractCreated())
+                                    <form id="course_form" action="{{ route('admin.contracts.routing.start', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_quota']) }}" method="post">
+                                        @csrf
+                                        <div class="buttons">
+                                            <div>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_quota']) }}" target="_blank" class="btn btn--blue">Договор</a>
+                                                <button type="submit" name="action" class="btn btn--green">Одобрить договор (по квоте)</button>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </form>
+                                @endif
+
+                                @if ($item->isFree() and !$item->isFreeContractCreated())
+                                    <form id="course_form" action="{{ route('admin.contracts.routing.start', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_free']) }}" method="post">
+                                        @csrf
+                                        <div class="buttons">
+                                            <div>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_free']) }}" target="_blank" class="btn btn--blue">Договор</a>
+                                                <button type="submit" name="action" class="btn btn--green">Одобрить договор (бесплатный)</button>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </form>
+                                @endif
+
+                                @if ($item->isPaid() and !$item->isPaidContractCreated())
+                                    <form id="course_form" action="{{ route('admin.contracts.routing.start', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_paid']) }}" method="post">
+                                        @csrf
+                                        <div class="buttons">
+                                            <div>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_paid']) }}" target="_blank" class="btn btn--blue">Договор</a>
+                                                <button type="submit" name="action" class="btn btn--green">Одобрить договор (платный)</button>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </form>
+                                @endif
                             @endif
                         </div>
                     </div>
@@ -150,7 +197,7 @@
                         <h4 class="title-secondary">{{ __('admin.pages.courses.reject_title') }}</h4>
                         <hr>
                         <div class="input-group" id="rejectMessageBlock">
-                                <textarea form="course_form" name="rejectMessage" id="rejectMessage"
+                            <textarea form="course_form" name="rejectMessage" id="rejectMessage"
                                           placeholder="Сообщение об отказе публикации"
                                           class="input-regular"></textarea>
                         </div>

@@ -75,7 +75,12 @@
                                                     @endif
                                                     <h3 class="card__title">{{$item->name}}</h3>
                                                     <div class="card__author">{{$item->user->company_name}}</div>
-                                                    <a href="{{ route('author.courses.signing.contract', ['lang' => $lang, 'id' => $item->id]) }}" class="btn" style="padding: 6px;margin: 0 auto;display: block;">Договор</a>
+
+                                                    @if (!empty($item->contracts))
+                                                        @foreach ($item->contracts as $contract)
+                                                                <a href="{{ route('author.courses.signing.contract', ['lang' => $lang, 'id' => $contract->id]) }}" class="btn" style="padding: 6px;margin: 5px auto 0;display: block;">Договор</a>
+                                                        @endforeach
+                                                    @endif
                                                 </div>
                                                 <div class="card__bottom">
                                                     <div class="card__attribute">

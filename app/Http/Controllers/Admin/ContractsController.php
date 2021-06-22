@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contract;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use PhpOffice\PhpWord\Exception\Exception;
@@ -116,6 +117,21 @@ class ContractsController extends Controller
     }
 
     /**
+     * Предпросмотр без сохранения
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function previewContract(Request $request): View
+    {
+        return view('admin.v2.pages.contracts.view', [
+            'course'    => Course::find($request->course_id),
+            'type'      => $request->type,
+            'title'     => 'Просмотр договора'
+        ]);
+    }
+
+    /**
      * Просмотр договора
      *
      * @param Request $request
@@ -124,7 +140,7 @@ class ContractsController extends Controller
     public function view(Request $request): View
     {
         return view('admin.v2.pages.contracts.view', [
-            'contract'  => Contract::findOrFail($request->id),
+            'contract'  => Contract::findOrFail($request->contract_id),
             'title'     => 'Просмотр договора'
         ]);
     }
@@ -139,7 +155,21 @@ class ContractsController extends Controller
     public function getContractHtml(Request $request): string
     {
         return view('app.pages.author.courses.contractDoc', [
-            'contract' => $this->contractService->contractToHtml($request->id)
+            'contract' => $this->contractService->contractToHtml($request->contract_id)
+        ]);
+    }
+
+    /**
+     * Предпросмотр договора без сохранения
+     *
+     * @param Request $request
+     * @return string
+     * @throws Exception
+     */
+    public function getContractHtmlPreview(Request $request): string
+    {
+        return view('app.pages.author.courses.contractDoc', [
+            'contract' => $this->contractService->createPreviewContract(Course::find($request->course_id), $request->type)
         ]);
     }
 }

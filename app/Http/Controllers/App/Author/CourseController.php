@@ -330,7 +330,7 @@ class CourseController extends Controller
                 $page_name = 'default.pages.courses.my_courses_deleted';
                 break;
             case('signing'):
-                $query = Auth::user()->courses()->signingAuthor();
+                $query = Auth::user()->courses()->signingThisAuthor();
                 $page_name = 'default.pages.courses.my_courses_signing';
                 break;
         }

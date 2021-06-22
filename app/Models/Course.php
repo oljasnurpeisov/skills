@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Extensions\CalculateQuotaCost;
+use Dingo\Api\Auth\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
@@ -20,7 +22,7 @@ class Course extends Model
 
     protected $table = 'courses';
 
-    protected $fillable = ['contract_status', 'status'];
+    protected $fillable = ['contract_status', 'contract_quota_status', 'status'];
 
     protected $dates = ['publish_at'];
 
@@ -155,13 +157,43 @@ class Course extends Model
     }
 
     /**
-     * Последний договор
+     * Актуальные договоры
+     *
+     * @return hasMany
+     */
+    public function contracts(): HasMany
+    {
+        return $this->hasMany(Contract::class, 'course_id', 'id')->where('status', '!=', 5);
+    }
+
+    /**
+     * Договор на бесплатный курс
      *
      * @return HasOne
      */
-    public function contract(): HasOne
+    public function contract_free(): HasOne
     {
-        return $this->hasOne(Contract::class, 'course_id', 'id')->latest();
+        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(1)->where('status', '!=', 5);
+    }
+
+    /**
+     * Договор на платный курс
+     *
+     * @return HasOne
+     */
+    public function contract_paid(): HasOne
+    {
+        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(2)->where('status', '!=', 5);
+    }
+
+    /**
+     * Договор на курс по квоте
+     *
+     * @return HasOne
+     */
+    public function contract_quota(): HasOne
+    {
+        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(3)->where('status', '!=', 5);
     }
 
     /**
@@ -172,7 +204,35 @@ class Course extends Model
      */
     public function scopeSigningAuthor($query): Builder
     {
-        return $query->whereContractStatus(1);
+
+//        return $query->whereContractStatus(1);
+
+//        $userRoutes = Route::whereRoleId(\Auth::user()->role->role_id)->pluck('id');
+//
+//        return $query->whereHas('contracts', function($q) use ($userRoutes) {
+//            return $q->whereIn('route_id', $userRoutes);
+//        });
+
+        return $query->whereHas('contracts', function($q) {
+            return $q->whereHas('current_route', function($e) {
+                return $e->whereRoleId(4);
+            });
+        });
+    }
+
+    /**
+     * На подписании у текущего автора
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeSigningThisAuthor($query): Builder
+    {
+        return $query->whereHas('contracts', function($q) {
+            return $q->whereHas('current_route', function($e) {
+                return $e->whereRoleId(\Auth::user()->role->role_id);
+            });
+        });
     }
 
     /**
@@ -251,6 +311,26 @@ class Course extends Model
     }
 
     /**
+     * Тип курса
+     *
+     * @return string
+     */
+    public function getTypeContractName(): string
+    {
+        switch (true) {
+            case $this->isQuota():
+                return 'agreement_quota';
+                break;
+            case $this->isPaid():
+                return 'agreement_paid';
+                break;
+            default;
+                return 'agreement_free';
+                break;
+        }
+    }
+
+    /**
      * Курс бесплатный
      *
      * @return bool
@@ -278,5 +358,41 @@ class Course extends Model
     public function isQuota(): bool
     {
         return $this->isPaid() && $this->quota_status !== 0;
+    }
+
+    /**
+     * Договор (бесплатный) существует
+     *
+     * @return bool
+     */
+    public function isFreeContractCreated(): bool
+    {
+        return $this->whereHas('contracts', function ($q) {
+            return $q->whereType(1);
+        })->exists();
+    }
+
+    /**
+     * Договор (платный) существует
+     *
+     * @return bool
+     */
+    public function isPaidContractCreated()
+    {
+        return $this->whereHas('contracts', function ($q) {
+            return $q->whereType(2);
+        })->exists();
+    }
+
+    /**
+     * Договор (по квоте) существует
+     *
+     * @return bool
+     */
+    public function isQuotaContractCreated()
+    {
+        return $this->whereHas('contracts', function ($q) {
+            return $q->whereType(3);
+        })->exists();
     }
 }
