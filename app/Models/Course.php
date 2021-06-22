@@ -243,7 +243,13 @@ class Course extends Model
      */
     public function scopeSigningAdmin($query): Builder
     {
-        return $query->whereContractStatus(2);
+//        return $query->whereContractStatus(2);
+
+        return $query->whereHas('contracts', function($q) {
+            return $q->whereHas('current_route', function($e) {
+                return $e->where('role_id', '!=', 4);
+            });
+        });
     }
 
     /**
