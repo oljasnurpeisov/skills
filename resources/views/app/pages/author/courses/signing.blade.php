@@ -48,9 +48,9 @@
 {{--                        <div id="contract" style="max-width: 100%">--}}
 {{--                            {!! $contract !!}--}}
 {{--                        </div>--}}
-                        <iframe src="{{ route('author.courses.signing.contractDoc', ['lang' => 'ru', 'id' => $course->id]) }}" frameborder="0" width="100%" height="600"></iframe>
+                        <iframe src="{{ route('author.courses.signing.contractDoc', ['lang' => 'ru', 'contract_id' => $contract->id]) }}" frameborder="0" width="100%" height="600"></iframe>
 
-                        <a href="{{ route('author.courses.signing.contract.reject', ['lang' => $lang, 'id' => $course->id]) }}" class="btn">Отклонить</a>
+                        <a href="{{ route('author.courses.signing.contract.reject', ['lang' => $lang, 'contract_id' => $contract->id]) }}" class="btn">Отклонить</a>
                         <a href="" class="btn">Подписать</a>
                     </div>
                 </div>

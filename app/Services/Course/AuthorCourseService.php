@@ -2,6 +2,7 @@
 
 namespace Services\Course;
 
+use App\Models\Contract;
 use App\Models\Course;
 use Illuminate\Support\Facades\Auth;
 use Services\Contracts\AuthorContractService;
@@ -26,17 +27,19 @@ class AuthorCourseService
     /**
      * Договор курса отклонен автором
      *
-     * @param int $id
+     * @param int $contract_id
      */
-    public function rejectContract(int $id)
+    public function rejectContract(int $contract_id)
     {
-        $course = Course::whereAuthorId(Auth::user()->id)->findOrFail($id);
+        $contract = Contract::whereHas('course', function ($q) {
+            return $q->whereAuthorId(Auth::user()->id);
+        })->findOrFail($contract_id);
 
-        $course->update([
-            'contract_status'   => 0,
-            'status'            => 0
-        ]);
+//        $contract->course->update([
+//            'contract_status'   => 0,
+//            'status'            => 0
+//        ]);
 
-        $this->authorContractService->rejectContract($course->id);
+        $this->authorContractService->rejectContract($contract->id);
     }
 }

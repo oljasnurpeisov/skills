@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App\Author;
 use App\Exports\ReportingExport;
 use App\Extensions\CalculateQuotaCost;
 use App\Http\Controllers\Controller;
+use App\Models\Contract;
 use App\Models\Course;
 use App\Models\CourseAttachments;
 use App\Models\Lesson;
@@ -1135,7 +1136,9 @@ class CourseController extends Controller
     public function contract(Request $request)
     {
         return view('app.pages.author.courses.signing', [
-            'course'    => Course::whereAuthorId(Auth::user()->id)->findOrFail($request->id)
+            'contract' => Contract::whereHas('course', function ($q) {
+                return $q->whereAuthorId(Auth::user()->id);
+            })->findOrFail($request->contract_id)
         ]);
     }
 
@@ -1148,10 +1151,12 @@ class CourseController extends Controller
      */
     public function contractDoc(Request $request): View
     {
-        $course = Course::whereAuthorId(Auth::user()->id)->findOrFail($request->id);
+        $contract = Contract::whereHas('course', function ($q) {
+            return $q->whereAuthorId(Auth::user()->id);
+        })->findOrFail($request->contract_id);
 
         return view('app.pages.author.courses.contractDoc', [
-            'contract' => $this->contractService->contractToHtml($course->contract->id)
+            'contract' => $this->contractService->contractToHtml($contract->id)
         ]);
     }
 
@@ -1163,7 +1168,7 @@ class CourseController extends Controller
      */
     public function contractReject(Request $request): RedirectResponse
     {
-        $this->authorCourseService->rejectContract($request->id);
+        $this->authorCourseService->rejectContract($request->contract_id);
 
         return redirect(route('author.courses.my_courses', ['lang' => $request->lang]));
     }

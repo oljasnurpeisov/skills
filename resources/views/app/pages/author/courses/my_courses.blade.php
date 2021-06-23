@@ -78,7 +78,7 @@
 
                                                     @if (!empty($item->contracts))
                                                         @foreach ($item->contracts as $contract)
-                                                                <a href="{{ route('author.courses.signing.contract', ['lang' => $lang, 'id' => $contract->id]) }}" class="btn" style="padding: 6px;margin: 5px auto 0;display: block;">Договор</a>
+                                                            <a href="{{ route('author.courses.signing.contract', ['lang' => $lang, 'contract_id' => $contract->id]) }}" class="btn" style="padding: 6px;margin: 5px auto 0;display: block;">Договор</a>
                                                         @endforeach
                                                     @endif
                                                 </div>

@@ -10,12 +10,12 @@ class AuthorContractService
     /**
      * Договор курса отклонен автором
      *
-     * @param int $course_id
+     * @param int $contract_id
      * @return void
      */
-    public function rejectContract(int $course_id): void
+    public function rejectContract(int $contract_id): void
     {
-        Contract::whereCourseId($course_id)->latest()->first()->update([
+        Contract::find($contract_id)->update([
             'status' => 4
         ]);
     }
