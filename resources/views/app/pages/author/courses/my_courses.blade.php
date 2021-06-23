@@ -67,7 +67,7 @@
                                                 <img src="{{$item->getAvatar()}}" alt="">
                                             </div>
                                             <div class="card__desc">
-                                                <div class="card__top">
+                                                <div class="card__top" style="padding-bottom: 50px;">
                                                     @if($item->is_paid == true)
                                                         <div class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
                                                     @else
@@ -76,11 +76,13 @@
                                                     <h3 class="card__title">{{$item->name}}</h3>
                                                     <div class="card__author">{{$item->user->company_name}}</div>
 
-                                                    @if (!empty($item->contracts))
-                                                        @foreach ($item->contracts as $contract)
-                                                            <a href="{{ route('author.courses.signing.contract', ['lang' => $lang, 'contract_id' => $contract->id]) }}" class="btn" style="padding: 6px;margin: 5px auto 0;display: block;">Договор</a>
-                                                        @endforeach
-                                                    @endif
+                                                    <div style="position: absolute;bottom: 75px;">
+                                                        @if (!empty($item->contracts))
+                                                            @foreach ($item->contracts as $contract)
+                                                                <a href="{{ route('author.courses.signing.contract', ['lang' => $lang, 'contract_id' => $contract->id]) }}" class="btn" style="padding: 6px;margin: 5px auto 0;display: block;">Договор <i style="font-size: 13px; font-style: normal">({{__("default.pages.courses.contract_type_$contract->type")}})</i></a>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
                                                 </div>
                                                 <div class="card__bottom">
                                                     <div class="card__attribute">

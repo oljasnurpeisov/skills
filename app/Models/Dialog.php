@@ -49,6 +49,9 @@ class Dialog extends Model
         }
 
         $member = $members->first();
+
+        if (empty($member)) return;
+
         $roles = $member->roles();
         if ($roles != null) {
             $memberRole = $roles->first();

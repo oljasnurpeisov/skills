@@ -36,7 +36,7 @@
                             <li @if(Route::currentRouteName() === 'author.courses.deleted') class="active" @endif>
                                 <a href="{{ route('author.courses.deleted', ['lang' => $lang]) }}" title="{{__('default.pages.courses.my_courses_deleted')}}">{{__('default.pages.courses.my_courses_deleted')}}</a>
                             </li>
-                            <li @if(Route::currentRouteName() === 'author.courses.signing') class="active" @endif>
+                            <li @if(Route::currentRouteName() === 'author.courses.signing' || Route::currentRouteName() === 'author.courses.signing.contract') class="active" @endif>
                                 <a href="{{ route('author.courses.signing', ['lang' => $lang]) }}" title="">На подписании</a>
                             </li>
                         </ul>

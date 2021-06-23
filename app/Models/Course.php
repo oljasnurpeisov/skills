@@ -228,11 +228,16 @@ class Course extends Model
      */
     public function scopeSigningThisAuthor($query): Builder
     {
-        return $query->whereHas('contracts', function($q) {
-            return $q->notRejectedByAuthor()->whereHas('current_route', function($e) {
-                return $e->whereRoleId(\Auth::user()->role->role_id);
+        return $query
+            ->with(['contracts' => function($q) {
+                return $q->notRejectedByAuthor();
+            }])
+
+            ->whereHas('contracts', function($q) {
+                return $q->notRejectedByAuthor()->whereHas('current_route', function($e) {
+                    return $e->whereRoleId(\Auth::user()->role->role_id);
+                });
             });
-        });
     }
 
     /**

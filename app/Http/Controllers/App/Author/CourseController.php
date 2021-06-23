@@ -1170,6 +1170,8 @@ class CourseController extends Controller
     {
         $this->authorCourseService->rejectContract($request->contract_id);
 
+        Session::flash('status', 'Договор отклонен, курс перемещен в черновики!');
+
         return redirect(route('author.courses.my_courses', ['lang' => $request->lang]));
     }
 }

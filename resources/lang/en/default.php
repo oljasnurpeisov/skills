@@ -12,6 +12,11 @@ return [
 
     'pages' => [
         'courses' => [
+
+            'contract_type_1' => 'Бесплатный',
+            'contract_type_2' => 'Платный',
+            'contract_type_3' => 'При гос. поддер.',
+
             'course_title' => 'Курс',
             'drafts' => 'Черновики',
             'my_courses_title' => 'Мои курсы',
@@ -213,8 +218,6 @@ return [
 
             'show_all' => 'Показать все',
             'hide' => 'Скрыть',
-
-
         ],
         'lessons' => [
             'create_request_message' => 'Урок успешно создан',
