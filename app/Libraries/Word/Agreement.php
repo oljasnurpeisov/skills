@@ -17,8 +17,6 @@ use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Services\Course\CalculateQuotaCost\CalculateQuotaCostService;
 
-setlocale(LC_TIME, 'ru_RU.UTF-8');
-
 /**
  * Class Agreement
  *
@@ -246,7 +244,13 @@ class Agreement
     private function setGeneral(): self
     {
         $this->templateProcessor->setValue('day', Carbon::now()->day);
-        $this->templateProcessor->setValue('month', Carbon::now()->getTranslatedMonthName('Do MMMM'));
+
+        setlocale(LC_TIME, 'ru_RU.UTF-8');
+        $this->templateProcessor->setValue('month_ru', Carbon::now()->getTranslatedMonthName('Do MMMM'));
+
+        setlocale(LC_TIME, 'kk_KZ.UTF-8');
+        $this->templateProcessor->setValue('month_kk', Carbon::now()->getTranslatedMonthName('Do MMMM'));
+
         $this->templateProcessor->setValue('year', Carbon::now()->year);
         $this->templateProcessor->setValue('number', $this->number);
 
@@ -271,8 +275,10 @@ class Agreement
         $this->templateProcessor->setValue('kbe', $this->author->kbe ?? '-');
         $this->templateProcessor->setValue('bik', $this->author->bik ?? '-');
         $this->templateProcessor->setValue('bank_name', $this->author->bank->name_ru ?? '-');
-        $this->templateProcessor->setValue('legal_address', $this->author->legal_address ?? '-');
-        $this->templateProcessor->setValue('base', $this->author->base->name_ru ?? '-');
+        $this->templateProcessor->setValue('legal_address_ru', $this->author->legal_address_ru ?? '-');
+        $this->templateProcessor->setValue('legal_address_kk', $this->author->legal_address_kk ?? '-');
+        $this->templateProcessor->setValue('base_ru', $this->author->base->name_ru ?? '-');
+        $this->templateProcessor->setValue('base_kk', $this->author->base->name_kk ?? '-');
 
         return $this;
     }
@@ -311,6 +317,7 @@ class Agreement
         $this->templateProcessor->setValue('attachments', $this->allAttachments($this->course_attachments));
         $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));
 
+        //@TODO Check this!!!
         $this->templateProcessor->setValue('practice_status', __('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course)));
         $this->templateProcessor->setValue('attachments_forms_count', __('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course)));
         $this->templateProcessor->setValue('poor_status', $this->getPoorStatus($this->course_attachments));
