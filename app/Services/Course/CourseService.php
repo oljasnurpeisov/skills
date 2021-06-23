@@ -70,7 +70,7 @@ class CourseService {
      */
     public function waitSigningAuthor(): LengthAwarePaginator
     {
-        return Course::signingAuthor()->paginate(10);
+        return Course::signingAuthor()->latest()->paginate(10);
     }
 
     /**
@@ -80,6 +80,6 @@ class CourseService {
      */
     public function waitSigningAdmin(): LengthAwarePaginator
     {
-        return Course::signingAdmin()->paginate(10);
+        return Course::signingAdmin()->latest()->paginate(10);
     }
 }
