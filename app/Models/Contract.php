@@ -175,19 +175,19 @@ class Contract extends Model
     {
         switch (true) {
             case $this->isPending():
-                return 'Ожидает подписания';
+                return "Ожидает подписания (". $this->current_route->role->name .")";
                 break;
             case $this->isSigned():
-                return 'Подписан';
+                return "Подписан";
                 break;
             case $this->isDistributed():
-                return 'Расторгнут';
+                return "Расторгнут";
                 break;
             case $this->isRejectedByAuthor():
-                return 'Отклонен автором';
+                return "Отклонен автором";
                 break;
             default;
-                return 'Сгенерирован';
+                return "Сгенерирован";
                 break;
         }
     }

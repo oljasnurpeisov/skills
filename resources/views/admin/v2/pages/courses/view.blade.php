@@ -163,13 +163,13 @@
 
 {{--                            Прошедшие проверку и отправленные на генерацию договора    --}}
                             @elseif($item->status == 5)
+
+{{--                                {{ dd($item->isQuota()) }}--}}
+
                                 <p><b>{{ __('admin.pages.courses.course_status_title') }}
                                         :</b> {{ __('admin.pages.courses.'. $item->status) }}</p>
                                 <p><b>Тип курса
                                         :</b> {{ $item->getTypeName() }}</p>
-
-                                <p><b>Статус договора
-                                        :</b> -</p>
 
                                 @if (!$item->isFree())
                                     @if ($item->isQuota())
@@ -180,6 +180,18 @@
                                     @endif
                                     <p><b>Стоимость курса на платной основе
                                             :</b> {{$item->cost ?? 0}} {{__('default.tenge_title')}}</p>
+                                @endif
+
+                                @if ($item->isFree())
+                                    <p><b>Статус договора (бесплатный):</b> {{ !empty($item->free_contract->status) ? $item->free_contract->getStatusName() : 'Проверка договора' }}</p>
+                                @endif
+
+                                @if ($item->isPaid())
+                                    <p><b>Статус договора (платный):</b> {{ !empty($item->paid_contract->status) ? $item->paid_contract->getStatusName() : 'Проверка договора' }}</p>
+                                @endif
+
+                                @if ($item->isQuota())
+                                    <p><b>Статус договора (квота):</b> {{ !empty($item->quota_contract->status) ? $item->quota_contract->getStatusName() : 'Проверка договора' }}</p>
                                 @endif
 
 
