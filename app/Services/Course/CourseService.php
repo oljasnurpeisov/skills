@@ -3,14 +3,12 @@
 namespace Services\Course;
 
 use App\Models\Course;
-use App\Models\RoleUser;
-use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\DB;
 use Libraries\Courses\SkillsSaver;
 
 /**
  * Class CourseService
+ *
  * @author kgurovoy@gmail.com
  * @package Services\Course
  */
