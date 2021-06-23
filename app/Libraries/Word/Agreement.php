@@ -149,7 +149,7 @@ class Agreement
      */
     private function checkExist(): bool
     {
-        if (Contract::whereCourseId($this->course->id)->whereType($this->typeNumber)->exists()) {
+        if (Contract::whereCourseId($this->course->id)->notRejectedByAuthor()->whereType($this->typeNumber)->exists()) {
             Session::flash('status', 'Уже есть договор на данный курс!');
 
             return true;

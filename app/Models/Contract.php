@@ -73,6 +73,17 @@ class Contract extends Model
     }
 
     /**
+     * Не отклоненные автором договора
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeNotRejectedByAuthor($query): Builder
+    {
+        return $query->where('status', '!=', 4);
+    }
+
+    /**
      * Расторгнутые договора
      *
      * @param $query

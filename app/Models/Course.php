@@ -214,7 +214,7 @@ class Course extends Model
 //        });
 
         return $query->whereHas('contracts', function($q) {
-            return $q->whereHas('current_route', function($e) {
+            return $q->notRejectedByAuthor()->whereHas('current_route', function($e) {
                 return $e->whereRoleId(4);
             });
         });
@@ -229,7 +229,7 @@ class Course extends Model
     public function scopeSigningThisAuthor($query): Builder
     {
         return $query->whereHas('contracts', function($q) {
-            return $q->pending()->whereHas('current_route', function($e) {
+            return $q->notRejectedByAuthor()->whereHas('current_route', function($e) {
                 return $e->whereRoleId(\Auth::user()->role->role_id);
             });
         });
@@ -384,7 +384,7 @@ class Course extends Model
      */
     public function isFreeContractCreated(): bool
     {
-        return Contract::whereType(1)->whereCourseId($this->id)->exists();
+        return Contract::whereType(1)->whereCourseId($this->id)->notRejectedByAuthor()->exists();
     }
 
     /**
@@ -394,7 +394,7 @@ class Course extends Model
      */
     public function isPaidContractCreated()
     {
-        return Contract::whereType(2)->whereCourseId($this->id)->exists();
+        return Contract::whereType(2)->whereCourseId($this->id)->notRejectedByAuthor()->exists();
     }
 
     /**
@@ -404,7 +404,7 @@ class Course extends Model
      */
     public function isQuotaContractCreated()
     {
-        return Contract::whereType(3)->whereCourseId($this->id)->exists();
+        return Contract::whereType(3)->whereCourseId($this->id)->notRejectedByAuthor()->exists();
     }
 
     /**

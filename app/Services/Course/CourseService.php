@@ -48,9 +48,17 @@ class CourseService {
      */
     public function waitCheckContracts(): LengthAwarePaginator
     {
-        $free = Course::free()->whereDoesntHave('free_contract')->pluck('id');
-        $paid = Course::paid()->whereDoesntHave('paid_contract')->pluck('id');
-        $quota = Course::paid()->whereDoesntHave('quota_contract')->pluck('id');
+        $free = Course::free()->whereDoesntHave('free_contract', function ($q) {
+            return $q->notRejectedByAuthor();
+        })->pluck('id');
+
+        $paid = Course::paid()->whereDoesntHave('paid_contract', function ($q) {
+            return $q->notRejectedByAuthor();
+        })->pluck('id');
+
+        $quota = Course::paid()->whereDoesntHave('quota_contract', function ($q) {
+            return $q->notRejectedByAuthor();
+        })->pluck('id');
 
         return Course::whereIn('id', $free->merge($paid)->merge($quota))->whereNotIn('status', [0, 1, 2, 4])->latest()->paginate(10);
     }
