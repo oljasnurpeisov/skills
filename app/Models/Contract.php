@@ -223,6 +223,28 @@ class Contract extends Model
     }
 
     /**
+     * Название типа
+     *
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        switch (true) {
+            case $this->isFree():
+                return "Бесплатный";
+                break;
+            case $this->isPaid():
+                return "Платный";
+                break;
+            case $this->isQuota():
+                return "При гос. поддержке";
+                break;
+            default:
+                return '';
+        }
+    }
+
+    /**
      * Отправляем договор на подписание
      *
      * @return void

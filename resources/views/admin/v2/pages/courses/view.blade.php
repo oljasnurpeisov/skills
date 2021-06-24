@@ -51,7 +51,7 @@
                                     @if (!$item->isFree())
                                         @if ($item->isQuota())
                                             <p><b>{{ __('admin.pages.courses.course_quota_title') }}
-                                                    :</b> {{ __('admin.pages.courses.quota_status_'.$item->quota_status) }}</p>
+                                                    :</b> Да</p>
                                             <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
                                                     :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>
                                         @endif
@@ -80,7 +80,8 @@
                                 <p><b>{{ __('admin.pages.courses.course_status_title') }}
                                         :</b> {{ __('admin.pages.courses.'.$item->status) }}</p>
                                 <p><b>{{ __('admin.pages.courses.course_quota_title') }}
-                                        :</b> {{ __('admin.pages.courses.quota_status_'.$item->quota_status) }}</p>
+{{--                                        :</b> {{ __('admin.pages.courses.quota_status_'.$item->quota_status) }}</p>--}}
+                                        :</b> Да</p>
                                 <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
                                         :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>
 
@@ -174,7 +175,7 @@
                                 @if (!$item->isFree())
                                     @if ($item->isQuota())
                                         <p><b>{{ __('admin.pages.courses.course_quota_title') }}
-                                                :</b> {{ __('admin.pages.courses.quota_status_'.$item->quota_status) }}</p>
+                                                :</b> Да</p>
                                         <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
                                                 :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>
                                     @endif

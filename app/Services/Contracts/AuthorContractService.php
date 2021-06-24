@@ -21,7 +21,7 @@ class AuthorContractService
         ]);
 
         if ($contract->isFree() or $contract->isPaid()) {
-            Session::flash('status', 'Договор отклонен, курс перемещен в черновики!');
+            Session::flash('status', 'Договор ('. $contract->getTypeName() .') отклонен, курс перемещен в черновики!');
 
             $contract->course->update([
                 'contract_status'   => 0,
@@ -34,7 +34,7 @@ class AuthorContractService
                 ]);
             }
         } else {
-            Session::flash('status', 'Договор отклонен!');
+            Session::flash('status', 'Договор ('. $contract->getTypeName() .') отклонен!');
         }
     }
 
