@@ -56,7 +56,7 @@
                         {{--                        <th>{{ __('admin.pages.user.surname').' '.__('admin.pages.user.name').' '.__('admin.pages.user.middle_name') }}</th>--}}
                         <th>{{ __('admin.pages.courses.course_name') }}</th>
                         <th>{{ __('admin.pages.courses.author_email') }}</th>
-                        <th>{{ __('admin.pages.user.status') }}</th>
+                        <th>Статус курса</th>
                         <th>Тип курса</th>
                         <th>Стоимость курса</th>
                         <th>Стоиомость при гос. поддержке</th>

@@ -117,7 +117,7 @@ class Contract extends Model
     }
 
     /**
-     * Ожидает подписания?
+     * Бесплатный?
      *
      * @return bool
      */
@@ -127,7 +127,7 @@ class Contract extends Model
     }
 
     /**
-     * Ожидает подписания?
+     * Платный?
      *
      * @return bool
      */
@@ -137,7 +137,7 @@ class Contract extends Model
     }
 
     /**
-     * Ожидает подписания?
+     * По квоте?
      *
      * @return bool
      */

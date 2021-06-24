@@ -26,7 +26,7 @@
                     <col span="1" style="width: 5%;">
                     <col span="1" style="width: 20%;">
                     <col span="1" style="width: 7%;">
-                    <col span="1" style="width: 7%;">
+                    <col span="1" style="width: 17%;">
                     <col span="1" style="width: 7%;">
                     <col span="1" style="width: 15%;">
                     <col span="1" style="width: 15%;">
@@ -51,12 +51,16 @@
                             <th><input name="course_name" type="text" class="input-regular" value="{{ $request['course_name'] ?? '' }}"></th>
                             <th><input name="company_name" type="text" class="input-regular" value="{{ $request['company_name'] ?? '' }}"></th>
                             <th>
-                                <select id="contract_status" name="contract_status" class="input-regular chosen">
-                                    <option value="">Все</option>
-                                    <option value="">Статус 1</option>
-                                    <option value="">Статус 2</option>
-                                </select>
-                                <script>document.getElementById('contract_status').value = {{ $request['contract_status'] ?? '' }};</script>
+                                @if(Route::currentRouteName() === 'admin.contracts.all')
+                                    <select id="contract_status" name="contract_status" class="input-regular chosen">
+                                        <option value="">Все</option>
+                                        <option value="1">Ожидающие подписания</option>
+                                        <option value="2">Подписаны</option>
+                                        <option value="3">Расторгнуты</option>
+                                        <option value="4">Отклонены автором</option>
+                                    </select>
+                                    <script>document.getElementById('contract_status').value = {{ $request['contract_status'] ?? '' }};</script>
+                                @endif
                             </th>
                             <th>
                                 <select id="course_type" name="course_type" class="input-regular chosen">

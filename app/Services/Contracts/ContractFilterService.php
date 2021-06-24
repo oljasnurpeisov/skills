@@ -136,6 +136,10 @@ class ContractFilterService
      */
     private function filterByContractStatus(Builder $contracts, array $request): Builder
     {
+        if (!empty($request['contract_status'])) {
+            return $contracts->whereStatus($request['contract_status']);
+        }
+
         return $contracts;
     }
 
