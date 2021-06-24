@@ -37,9 +37,4 @@ class AuthorContractService
             Session::flash('status', 'Договор ('. $contract->getTypeName() .') отклонен!');
         }
     }
-
-    public function rejectContractQuota()
-    {
-
-    }
 }
