@@ -35,11 +35,6 @@ class AuthorCourseService
             return $q->whereAuthorId(Auth::user()->id);
         })->findOrFail($contract_id);
 
-        $contract->course->update([
-            'contract_status'   => 0,
-            'status'            => 0
-        ]);
-
-        $this->authorContractService->rejectContract($contract->id);
+        $this->authorContractService->rejectContract($contract);
     }
 }

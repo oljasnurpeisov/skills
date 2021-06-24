@@ -4,19 +4,42 @@ namespace Services\Contracts;
 
 
 use App\Models\Contract;
+use Illuminate\Support\Facades\Session;
 
 class AuthorContractService
 {
     /**
      * Договор курса отклонен автором
      *
-     * @param int $contract_id
+     * @param Contract $contract
      * @return void
      */
-    public function rejectContract(int $contract_id): void
+    public function rejectContract(Contract $contract): void
     {
-        Contract::find($contract_id)->update([
+        Contract::find($contract->id)->update([
             'status' => 4
         ]);
+
+        if ($contract->isFree() or $contract->isPaid()) {
+            Session::flash('status', 'Договор отклонен, курс перемещен в черновики!');
+
+            $contract->course->update([
+                'contract_status'   => 0,
+                'status'            => 0
+            ]);
+
+            if ($contract->isPaid()) {
+                Contract::whereCourseId($contract->course_id)->quota()->pending()->first()->update([
+                    'status' => 4
+                ]);
+            }
+        } else {
+            Session::flash('status', 'Договор отклонен!');
+        }
+    }
+
+    public function rejectContractQuota()
+    {
+
     }
 }

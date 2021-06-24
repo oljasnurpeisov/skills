@@ -121,6 +121,36 @@ class Contract extends Model
      *
      * @return bool
      */
+    public function isFree(): bool
+    {
+        return $this->type === 1;
+    }
+
+    /**
+     * Ожидает подписания?
+     *
+     * @return bool
+     */
+    public function isPaid(): bool
+    {
+        return $this->type === 2;
+    }
+
+    /**
+     * Ожидает подписания?
+     *
+     * @return bool
+     */
+    public function isQuota(): bool
+    {
+        return $this->type === 3;
+    }
+
+    /**
+     * Ожидает подписания?
+     *
+     * @return bool
+     */
     public function isPending(): bool
     {
         return $this->status === 1;

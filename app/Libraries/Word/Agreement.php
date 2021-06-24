@@ -248,7 +248,7 @@ class Agreement
         setlocale(LC_TIME, 'ru_RU.UTF-8');
         $this->templateProcessor->setValue('month_ru', Carbon::now()->getTranslatedMonthName('Do MMMM'));
 
-        setlocale(LC_TIME, 'kk_KZ.UTF-8');
+        setlocale(LC_TIME, 'kz_KZ.UTF-8');
         $this->templateProcessor->setValue('month_kk', Carbon::now()->getTranslatedMonthName('Do MMMM'));
 
         $this->templateProcessor->setValue('year', Carbon::now()->year);
@@ -274,7 +274,8 @@ class Agreement
         $this->templateProcessor->setValue('iik', $this->author->iik_kz ?? '-');
         $this->templateProcessor->setValue('kbe', $this->author->kbe ?? '-');
         $this->templateProcessor->setValue('bik', $this->author->bik ?? '-');
-        $this->templateProcessor->setValue('bank_name', $this->author->bank->name_ru ?? '-');
+        $this->templateProcessor->setValue('bank_name_ru', $this->author->bank->name_ru ?? '-');
+        $this->templateProcessor->setValue('bank_name_kk', $this->author->bank->name_kk ?? '-');
         $this->templateProcessor->setValue('legal_address_ru', $this->author->legal_address_ru ?? '-');
         $this->templateProcessor->setValue('legal_address_kk', $this->author->legal_address_kk ?? '-');
         $this->templateProcessor->setValue('base_ru', $this->author->base->name_ru ?? '-');
