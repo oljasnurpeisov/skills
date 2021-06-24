@@ -234,8 +234,10 @@ class Course extends Model
             }])
 
             ->whereHas('contracts', function($q) {
-                return $q->notRejectedByAuthor()->whereHas('current_route', function($e) {
-                    return $e->whereRoleId(\Auth::user()->role->role_id);
+                return $q->
+                    notRejectedByAuthor()
+                    ->whereHas('current_route', function($e) {
+                        return $e->whereRoleId(\Auth::user()->role->role_id);
                 });
             });
     }

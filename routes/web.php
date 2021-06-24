@@ -414,6 +414,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-courses/signing/{contract_id}/contract", "CourseController@contract")->name('author.courses.signing.contract');
                     Route::get("/my-courses/signing/{contract_id}/contract/doc", "CourseController@contractDoc")->name('author.courses.signing.contractDoc');
                     Route::get("/my-courses/signing/{contract_id}/contract-reject", "CourseController@contractReject")->name('author.courses.signing.contract.reject');
+
+                    Route::get("/my-courses/signing/{contract_id}/next", "CourseController@next")->name('author.courses.signing.contract.next'); // Заглушка пока нет эцп
                 });
             });
         });
