@@ -205,7 +205,8 @@ class Contract extends Model
     {
         switch (true) {
             case $this->isPending():
-                return "Ожидает подписания (". $this->current_route->role->name .")";
+//                return "Ожидает подписания (". $this->current_route->role->name .")";
+                return "Ожидает подписания (". 1 .")";
                 break;
             case $this->isSigned():
                 return "Подписан";
