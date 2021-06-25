@@ -50,7 +50,7 @@
 {{--                        </div>--}}
                         <iframe src="{{ route('author.courses.signing.contractDoc', ['lang' => 'ru', 'contract_id' => $contract->id]) }}" frameborder="0" width="100%" height="600"></iframe>
 
-                        <a href="{{ route('author.courses.signing.contract.reject', ['lang' => $lang, 'contract_id' => $contract->id]) }}" class="btn">Отклонить</a>
+                        <a href="{{ route('author.courses.signing.contract.reject', ['lang' => $lang, 'contract_id' => $contract->id]) }}" class="btn" style="margin-right: 15px;">Отклонить</a>
                         <a href="{{ route('author.courses.signing.contract.next', ['lang' => $lang, 'contract_id' => $contract->id]) }}" class="btn">Подписать</a>
                     </div>
                 </div>
