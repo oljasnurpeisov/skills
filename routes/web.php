@@ -144,6 +144,8 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/contracts/{course_id}/{type}/get-contract-html-preview', 'ContractsController@getContractHtmlPreview')->name('admin.contracts.get_contract_html_preview');
                 Route::get('/contracts/{course_id}/{type}/generate-preview-contract', 'ContractsController@previewContract')->name('admin.contracts.generate_preview_contract');
 
+                Route::get("/contracts/signing/{contract_id}/next", "ContractsController@next")->name('admin.contracts.contract.next'); // Заглушка пока нет эцп
+
             });
             // Страницы
             Route::group(['middleware' => 'check.permission:admin.pages'], static function () {

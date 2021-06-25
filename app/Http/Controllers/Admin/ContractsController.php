@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Contract;
 use App\Models\Course;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\ContractFilterService;
 use Services\Contracts\ContractService;
+use Services\Course\AdminCourseService;
 
 /**
  * Class ContractsController
@@ -30,15 +32,22 @@ class ContractsController extends Controller
     private $contractService;
 
     /**
+     * @var AdminCourseService
+     */
+    private $adminCourseService;
+
+    /**
      * ContractFilterService constructor.
      *
      * @param ContractFilterService $contractFilterService
      * @param ContractService $contractService
+     * @param AdminCourseService $adminCourseService
      */
-    public function __construct(ContractFilterService $contractFilterService, ContractService $contractService)
+    public function __construct(ContractFilterService $contractFilterService, ContractService $contractService, AdminCourseService $adminCourseService)
     {
         $this->contractFilterService    = $contractFilterService;
         $this->contractService          = $contractService;
+        $this->adminCourseService       = $adminCourseService;
     }
 
     /**
@@ -171,5 +180,20 @@ class ContractsController extends Controller
         return view('app.pages.author.courses.contractDoc', [
             'contract' => $this->contractService->createPreviewContract(Course::find($request->course_id), $request->type)
         ]);
+    }
+
+    /**
+     * Заглушка, пока нет ЭЦП
+     *
+     * @TODO: REMOVE THIS!!!
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function next(Request $request): RedirectResponse
+    {
+        $this->adminCourseService->acceptContract($request->contract_id);
+
+        return redirect()->route('admin.contracts.pending', ['lang' => $request->lang]);
     }
 }

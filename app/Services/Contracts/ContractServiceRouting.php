@@ -46,10 +46,18 @@ class ContractServiceRouting
 
             if (!empty($nextRoute)) {
                 $contract->update([
-                    'route_id' => $this->getNextRoute($contract->type, $contract->current_route->sort)->id
+                    'route_id' => $nextRoute->id
                 ]);
             } else {
-                // меняем статус на подписано
+                $contract->update([
+                    'status' => 2
+                ]);
+
+                if ($contract->isQuota()) {
+                    $contract->course()->update([
+                        'quota_status' => 2
+                    ]);
+                }
             }
         }
     }
@@ -60,7 +68,7 @@ class ContractServiceRouting
      * @param int $course_type
      * @return Route
      */
-    public function getFirstRoute(int $course_type): Route
+    private function getFirstRoute(int $course_type): Route
     {
         return $this->route->whereType($course_type)->orderBy('sort')->first();
     }
@@ -72,7 +80,7 @@ class ContractServiceRouting
      * @param int $sort
      * @return Route
      */
-    public function getNextRoute(int $course_type, int $sort)
+    private function getNextRoute(int $course_type, int $sort)
     {
         return $this->route->whereType($course_type)->where('sort', '>', $sort)->orderBy('sort')->first();
     }

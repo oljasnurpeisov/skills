@@ -77,13 +77,29 @@
                                     </div>
                                 </form>
                             @elseif($item->status == 3)
-                                <p><b>{{ __('admin.pages.courses.course_status_title') }}
-                                        :</b> {{ __('admin.pages.courses.'.$item->status) }}</p>
-                                <p><b>{{ __('admin.pages.courses.course_quota_title') }}
+{{--                                <p><b>{{ __('admin.pages.courses.course_status_title') }}--}}
+{{--                                        :</b> {{ __('admin.pages.courses.'.$item->status) }}</p>--}}
+{{--                                <p><b>{{ __('admin.pages.courses.course_quota_title') }}--}}
 {{--                                        :</b> {{ __('admin.pages.courses.quota_status_'.$item->quota_status) }}</p>--}}
-                                        :</b> Да</p>
-                                <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
-                                        :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>
+{{--                                        :</b> Да</p>--}}
+{{--                                <p><b>{{ __('admin.pages.courses.course_quota_cost') }}--}}
+{{--                                        :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>--}}
+
+                                <p><b>{{ __('admin.pages.courses.course_status_title') }}
+                                        :</b> {{ __('admin.pages.courses.'. $item->status) }}</p>
+                                <p><b>Тип курса
+                                        :</b> {{ $item->getTypeName() }}</p>
+
+                                @if (!$item->isFree())
+                                    @if ($item->isQuota())
+                                        <p><b>{{ __('admin.pages.courses.course_quota_title') }}
+                                                :</b> Да</p>
+                                        <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
+                                                :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>
+                                    @endif
+                                    <p><b>Стоимость курса на платной основе
+                                            :</b> {{$item->cost ?? 0}} {{__('default.tenge_title')}}</p>
+                                @endif
 
                                 @switch($item->quota_status)
                                     @case(0)

@@ -230,7 +230,7 @@ class Course extends Model
     {
         return $query
             ->with(['contracts' => function($q) {
-                return $q->notRejectedByAuthor();
+                return $q->notRejectedByAuthor()->pending();
             }])
 
             ->whereHas('contracts', function($q) {
