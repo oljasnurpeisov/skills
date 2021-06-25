@@ -69,7 +69,7 @@ class ContractService
    }
 
     /**
-     * Договор в PDF (НЕ РАБОТАЕТ!)
+     * Договор в PDF (НЕ РАБОТАЕТ!!!)
      *
      * @param int $contract_id
      * @return string
@@ -85,10 +85,12 @@ class ContractService
 
        $Content = IOFactory::load($filePath);
 
+       $pdfPath = preg_replace('/docx/', 'pdf', $filePath);
+
        $PDFWriter = IOFactory::createWriter($Content,'PDF');
 
-//       $PDFWriter->save(public_path('new-result.pdf'));
+       $PDFWriter->save($pdfPath);
 
-       return $PDFWriter->getContent();
+       return $pdfPath;
    }
 }

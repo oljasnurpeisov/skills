@@ -20,6 +20,7 @@ return [
             'course_title' => 'Курс',
             'drafts' => 'Черновики',
             'my_courses_title' => 'Мои курсы',
+            'my_contracts_title' => 'Мои договоры',
             'create_course' => 'Создать курс',
             'creation_course' => 'Создание курса',
             'edit_course' => 'Редактирование курса',

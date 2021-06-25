@@ -355,6 +355,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/getCourseData/{course}", "CourseController@getCourseData");
                     // Мои курсы
                     Route::get("/my-courses", "CourseController@myCourses")->name('author.courses.my_courses');
+                    Route::get("/my-contracts", "ContractsController@index")->name('author.contracts.index');
+                    Route::get("/contract/{contract_id}/download", "ContractsController@download")->name('author.contracts.download');
                     Route::get("/create-course", "CourseController@createCourse");
                     Route::get("/my-courses/statistics", "CourseController@statisticsCourse");
                     Route::get("/my-courses/reporting", "CourseController@reportingCourse");
