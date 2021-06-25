@@ -20,8 +20,8 @@ class AuthorContractService
     {
 
         return Contract::
-//            signed()
-            with('course')
+            signed()
+            ->with('course')
             ->whereHas('course', function ($q) {
                 return $q->whereAuthorId(Auth::user()->id);
             })
