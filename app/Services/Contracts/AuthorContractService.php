@@ -18,7 +18,6 @@ class AuthorContractService
      */
     public function getMyContracts(): LengthAwarePaginator
     {
-
         return Contract::
             signed()
             ->with('course')
