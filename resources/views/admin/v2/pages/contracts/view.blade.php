@@ -20,8 +20,6 @@
 
         <div class="block">
             @if (!empty($contract))
-                Скачать договор: <a href="{{ asset($contract->link) }}">Скачать</a>
-
                 <iframe src="{{ route('admin.contracts.get_contract_html', ['lang' => 'ru', 'contract_id' => $contract->id]) }}" frameborder="0" width="100%" height="600"></iframe>
 
                 @if ($contract->isPending() && $contract->current_route->role_id === Auth::user()->role->role_id)

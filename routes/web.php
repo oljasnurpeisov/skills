@@ -132,7 +132,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post('/contracts/{course_id}/{type}/start', "CourseRoutingController@start")->name('admin.contracts.routing.start');
             });
             // Договоры
-            Route::group(['middleware' => 'check.permission:admin.courses'], static function () {
+            Route::group(['middleware' => 'check.permission:admin.contracts'], static function () {
                 Route::get('/contracts/all', 'ContractsController@all')->name('admin.contracts.all');
                 Route::get('/contracts/signed', 'ContractsController@signed')->name('admin.contracts.signed');
                 Route::get('/contracts/distributed', 'ContractsController@distributed')->name('admin.contracts.distributed');
