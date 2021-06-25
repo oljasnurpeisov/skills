@@ -82,6 +82,7 @@
                             </th>
                         </tr>
                     </form>
+
                     @foreach($contracts as $contract)
                         <tr>
                             <td>{{ $contract->number }}</td>
