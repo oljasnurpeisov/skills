@@ -22,7 +22,7 @@ class Course extends Model
 
     protected $table = 'courses';
 
-    protected $fillable = ['contract_status', 'contract_quota_status', 'status'];
+    protected $fillable = ['contract_status', 'contract_quota_status', 'status', 'publish_at'];
 
     protected $dates = ['publish_at'];
 
@@ -234,7 +234,13 @@ class Course extends Model
                     ->whereHas('current_route', function($e) {
                         return $e->whereRoleId(\Auth::user()->role->role_id);
                     });
-            }]);
+            }])
+            ->whereHas('contracts', function($q) {
+                return $q->pending()->notRejectedByAuthor()
+                    ->whereHas('current_route', function($e) {
+                        return $e->whereRoleId(\Auth::user()->role->role_id);
+                    });
+            });
     }
 
     /**

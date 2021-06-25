@@ -23,12 +23,12 @@ class CourseObserver
     }
 
     /**
-     * Listen to the Course saving event.
+     * Listen to the Course updating event.
      *
      * @param Course $course
      * @return void
      */
-    public function saving(Course $course)
+    public function updating(Course $course)
     {
         $oldData = $this->course->find($course->id);
 

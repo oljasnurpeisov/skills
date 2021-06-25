@@ -53,7 +53,6 @@ class ContractsController extends Controller
      *
      * @param Request $request
      * @return BinaryFileResponse
-     * @throws Exception
      */
     public function download(Request $request)
     {

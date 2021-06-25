@@ -3,6 +3,7 @@
 namespace Services\Course;
 
 use App\Models\Contract;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Services\Contracts\AuthorContractService;
 use Services\Contracts\ContractServiceRouting;
@@ -60,7 +61,8 @@ class AuthorCourseService
 
         // опубликовать курс, если платный или бесплатный
         $contract->course()->update([
-            'status' => 3
+            'status' => 3,
+            'publish_at' => Carbon::now()
         ]);
 
         $this->contractServiceRouting->toNextRoute($contract);
