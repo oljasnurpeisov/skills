@@ -18,14 +18,10 @@ class AuthorContractService
      */
     public function getMyContracts(): LengthAwarePaginator
     {
-        return Contract::
-            signed()
-            ->with('course')
+        return Contract::signed()->with('course')
             ->whereHas('course', function ($q) {
                 return $q->whereAuthorId(Auth::user()->id);
-            })
-            ->latest()
-            ->paginate(10);
+            })->latest()->paginate(10);
     }
 
     /**
