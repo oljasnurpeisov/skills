@@ -2,7 +2,6 @@
 
 namespace Services\Contracts;
 
-
 use App\Models\Contract;
 use App\Models\Route;
 

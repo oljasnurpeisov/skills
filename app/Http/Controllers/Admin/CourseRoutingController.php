@@ -17,6 +17,7 @@ class CourseRoutingController extends Controller
      * @var ContractService
      */
     private $contractService;
+
     /**
      * @var ContractServiceRouting
      */
