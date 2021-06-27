@@ -4,10 +4,26 @@ namespace Services\Contracts;
 
 
 use App\Models\Contract;
+use App\Models\Role;
+use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AuthorContractService
 {
+    /**
+     * Получаем договора автора
+     *
+     * @return LengthAwarePaginator
+     */
+    public function getMyContracts(): LengthAwarePaginator
+    {
+        return Contract::signed()->with('course')
+            ->whereHas('course', function ($q) {
+                return $q->whereAuthorId(Auth::user()->id);
+            })->latest()->paginate(10);
+    }
+
     /**
      * Договор курса отклонен автором
      *

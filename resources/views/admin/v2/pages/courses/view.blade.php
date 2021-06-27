@@ -77,17 +77,99 @@
                                     </div>
                                 </form>
                             @elseif($item->status == 3)
-                                <p><b>{{ __('admin.pages.courses.course_status_title') }}
-                                        :</b> {{ __('admin.pages.courses.'.$item->status) }}</p>
-                                <p><b>{{ __('admin.pages.courses.course_quota_title') }}
+{{--                                <p><b>{{ __('admin.pages.courses.course_status_title') }}--}}
+{{--                                        :</b> {{ __('admin.pages.courses.'.$item->status) }}</p>--}}
+{{--                                <p><b>{{ __('admin.pages.courses.course_quota_title') }}--}}
 {{--                                        :</b> {{ __('admin.pages.courses.quota_status_'.$item->quota_status) }}</p>--}}
-                                        :</b> Да</p>
-                                <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
-                                        :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>
+{{--                                        :</b> Да</p>--}}
+{{--                                <p><b>{{ __('admin.pages.courses.course_quota_cost') }}--}}
+{{--                                        :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>--}}
 
-                                @switch($item->quota_status)
-                                    @case(0)
-                                    @case(3)
+                                <p><b>{{ __('admin.pages.courses.course_status_title') }}
+                                        :</b> {{ __('admin.pages.courses.'. $item->status) }}</p>
+                                <p><b>Тип курса
+                                        :</b> {{ $item->getTypeName() }}</p>
+
+                                @if (!$item->isFree())
+                                    @if ($item->isQuota())
+                                        <p><b>{{ __('admin.pages.courses.course_quota_title') }}
+                                                :</b> Да</p>
+                                        <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
+                                                :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>
+                                    @endif
+                                    <p><b>Стоимость курса на платной основе
+                                            :</b> {{$item->cost ?? 0}} {{__('default.tenge_title')}}</p>
+                                @endif
+
+                                @if ($item->isFree() and !$item->isFreeContractCreated())
+                                    <form id="course_form" action="{{ route('admin.contracts.routing.start', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_free']) }}" method="post">
+                                        @csrf
+                                        <div class="buttons">
+                                            <div>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_free']) }}" target="_blank" class="btn btn--blue">Договор (бесплатный)</a>
+                                                <button type="submit" name="action" class="btn btn--green">Одобрить договор</button>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </form>
+                                @else
+                                    @if ($item->isFreeContractCreated())
+                                        <div class="buttons">
+                                            <div>
+                                                <a href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $item->free_contract->id]) }}" target="_blank" class="btn btn--blue">Договор (бесплатный)</a>
+                                                <button type="submit" name="action" class="btn" style="background: rgb(223, 223, 223);">Одобрить договор</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endif
+
+                                @if ($item->isPaid() and !$item->isPaidContractCreated())
+                                    <form id="course_form" action="{{ route('admin.contracts.routing.start', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_paid']) }}" method="post">
+                                        @csrf
+                                        <div class="buttons">
+                                            <div>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_paid']) }}" target="_blank" class="btn btn--blue">Договор (платный)</a>
+                                                <button type="submit" name="action" class="btn btn--green">Одобрить договор</button>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </form>
+                                @else
+                                    @if ($item->isPaidContractCreated())
+                                        <div class="buttons">
+                                            <div>
+                                                <a href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $item->paid_contract->id]) }}" target="_blank" class="btn btn--blue">Договор (платный)</a>
+                                                <button type="submit" name="action" class="btn" style="background: rgb(223, 223, 223);">Одобрить договор</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endif
+
+                                @if ($item->isQuota() and !$item->isQuotaContractCreated())
+                                    <form id="course_form" action="{{ route('admin.contracts.routing.start', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_quota']) }}" method="post">
+                                        @csrf
+                                        <div class="buttons">
+                                            <div>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_quota']) }}" target="_blank" class="btn btn--blue">Договор (по квоте)</a>
+                                                <button type="submit" name="action" class="btn btn--green">Одобрить договор</button>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </form>
+                                @else
+                                    @if ($item->isQuotaContractCreated())
+                                        <div class="buttons">
+                                            <div>
+                                                <a href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $item->quota_contract->id]) }}" target="_blank" class="btn btn--blue">Договор (по квоте)</a>
+                                                <button type="submit" name="action" class="btn" style="background: rgb(223, 223, 223);">Одобрить договор</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endif
+
+{{--                                @switch($item->quota_status)--}}
+{{--                                    @case(0)--}}
+{{--                                    @case(3)--}}
 {{--                                    @if(($item->cost > 0) and ($item->is_paid == true))--}}
 {{--                                        <form id="course_form"--}}
 {{--                                              action="/{{$lang}}/admin/course/quota_request/{{ $item->id }}"--}}
@@ -103,34 +185,34 @@
 {{--                                            </div>--}}
 {{--                                        </form>--}}
 {{--                                    @endif--}}
-                                    @break
-                                    @case(2)
-                                    @case(4)
-                                    <form id="quota_number_form" method="POST"
-                                          action="/{{$lang}}/admin/course/quota_contract/{{ $item->id }}">
-                                        {{ csrf_field() }}
-                                        <div class="input-group {{ $errors->has('quota_contract_number') ? ' has-error' : '' }}">
-                                            <label class="input-group__title">Номер договора*</label>
-                                            <input type="text" name="quota_contract_number"
-                                                   value="{{ $item->quota_contract_number ?? '' }}"
-                                                   placeholder=""
-                                                   class="input-regular" required>
-                                            @if ($errors->has('quota_contract_number'))
-                                                <span class="help-block"><strong>{{ $errors->first('quota_contract_number') }}</strong></span>
-                                            @endif
-                                        </div>
-                                        <div>
-                                            <button type="submit"
-                                                    class="btn btn--green">{{ __('admin.labels.save') }}</button>
-                                        </div>
-                                    </form>
-                                    @break
-                                    @default
+{{--                                    @break--}}
+{{--                                    @case(2)--}}
+{{--                                    @case(4)--}}
+{{--                                    <form id="quota_number_form" method="POST"--}}
+{{--                                          action="/{{$lang}}/admin/course/quota_contract/{{ $item->id }}">--}}
+{{--                                        {{ csrf_field() }}--}}
+{{--                                        <div class="input-group {{ $errors->has('quota_contract_number') ? ' has-error' : '' }}">--}}
+{{--                                            <label class="input-group__title">Номер договора*</label>--}}
+{{--                                            <input type="text" name="quota_contract_number"--}}
+{{--                                                   value="{{ $item->quota_contract_number ?? '' }}"--}}
+{{--                                                   placeholder=""--}}
+{{--                                                   class="input-regular" required>--}}
+{{--                                            @if ($errors->has('quota_contract_number'))--}}
+{{--                                                <span class="help-block"><strong>{{ $errors->first('quota_contract_number') }}</strong></span>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                        <div>--}}
+{{--                                            <button type="submit"--}}
+{{--                                                    class="btn btn--green">{{ __('admin.labels.save') }}</button>--}}
+{{--                                        </div>--}}
+{{--                                    </form>--}}
+{{--                                    @break--}}
+{{--                                    @default--}}
 
-                                @endswitch
+{{--                                @endswitch--}}
 
 
-                                <hr>
+{{--                                <hr>--}}
                                 <form id="course_form" action="/{{$lang}}/admin/course/unpublish/{{ $item->id }}"
                                       method="post"
                                       style="float: right"

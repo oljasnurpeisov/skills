@@ -132,7 +132,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post('/contracts/{course_id}/{type}/start', "CourseRoutingController@start")->name('admin.contracts.routing.start');
             });
             // Договоры
-            Route::group(['middleware' => 'check.permission:admin.courses'], static function () {
+            Route::group(['middleware' => 'check.permission:admin.contracts'], static function () {
                 Route::get('/contracts/all', 'ContractsController@all')->name('admin.contracts.all');
                 Route::get('/contracts/signed', 'ContractsController@signed')->name('admin.contracts.signed');
                 Route::get('/contracts/distributed', 'ContractsController@distributed')->name('admin.contracts.distributed');
@@ -143,6 +143,8 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/contracts/{contract_id}/get-contract-html', 'ContractsController@getContractHtml')->name('admin.contracts.get_contract_html');
                 Route::get('/contracts/{course_id}/{type}/get-contract-html-preview', 'ContractsController@getContractHtmlPreview')->name('admin.contracts.get_contract_html_preview');
                 Route::get('/contracts/{course_id}/{type}/generate-preview-contract', 'ContractsController@previewContract')->name('admin.contracts.generate_preview_contract');
+
+                Route::get("/contracts/signing/{contract_id}/next", "ContractsController@next")->name('admin.contracts.contract.next'); // Заглушка пока нет эцп
 
             });
             // Страницы
@@ -353,6 +355,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/getCourseData/{course}", "CourseController@getCourseData");
                     // Мои курсы
                     Route::get("/my-courses", "CourseController@myCourses")->name('author.courses.my_courses');
+                    Route::get("/my-contracts", "ContractsController@index")->name('author.contracts.index');
+                    Route::get("/contract/{contract_id}/download", "ContractsController@download")->name('author.contracts.download');
                     Route::get("/create-course", "CourseController@createCourse");
                     Route::get("/my-courses/statistics", "CourseController@statisticsCourse");
                     Route::get("/my-courses/reporting", "CourseController@reportingCourse");
@@ -414,6 +418,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-courses/signing/{contract_id}/contract", "CourseController@contract")->name('author.courses.signing.contract');
                     Route::get("/my-courses/signing/{contract_id}/contract/doc", "CourseController@contractDoc")->name('author.courses.signing.contractDoc');
                     Route::get("/my-courses/signing/{contract_id}/contract-reject", "CourseController@contractReject")->name('author.courses.signing.contract.reject');
+
+                    Route::get("/my-courses/signing/{contract_id}/next", "CourseController@next")->name('author.courses.signing.contract.next'); // Заглушка пока нет эцп
                 });
             });
         });

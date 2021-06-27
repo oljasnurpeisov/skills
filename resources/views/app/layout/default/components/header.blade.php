@@ -142,12 +142,15 @@
                                 </li>
                             @endif
                             @if(Auth::user()->hasRole('author'))
-                                <li><a href="/{{$lang}}/my-courses"
-                                       title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
+                                <li>
+                                    <a href="/{{$lang}}/my-courses" title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('author.contracts.index', ['lang' => $lang]) }}" title="{{__('default.pages.courses.my_contracts_title')}}">{{__('default.pages.courses.my_contracts_title')}}</a>
                                 </li>
                             @elseif(Auth::user()->hasRole('student'))
-                                <li><a href="/{{$lang}}/student/my-courses"
-                                       title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
+                                <li>
+                                    <a href="/{{$lang}}/student/my-courses" title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>
                                 </li>
                             @endif
                             @if(Auth::user()->hasRole('student'))
@@ -159,8 +162,8 @@
                                    title="{{__('default.pages.dialogs.title')}}">{{__('default.pages.dialogs.title')}}</a>
                             </li>
                             @if(Auth::user()->hasRole('author'))
-                                <li><a href="/{{$lang}}/my-courses/reporting"
-                                       title="{{__('default.pages.reporting.title')}}">{{__('default.pages.reporting.title')}}</a>
+                                <li>
+                                    <a href="/{{$lang}}/my-courses/reporting" title="{{__('default.pages.reporting.title')}}">{{__('default.pages.reporting.title')}}</a>
                                 </li>
                             @endif
                             <li><a href="/{{$lang}}/notifications"

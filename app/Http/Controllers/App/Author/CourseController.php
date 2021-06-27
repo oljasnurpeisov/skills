@@ -1136,7 +1136,7 @@ class CourseController extends Controller
     public function contract(Request $request)
     {
         return view('app.pages.author.courses.signing', [
-            'contract' => Contract::whereHas('course', function ($q) {
+            'contract' => Contract::pending()->whereHas('course', function ($q) {
                 return $q->whereAuthorId(Auth::user()->id);
             })->findOrFail($request->contract_id)
         ]);
@@ -1151,9 +1151,15 @@ class CourseController extends Controller
      */
     public function contractDoc(Request $request): View
     {
-        $contract = Contract::whereHas('course', function ($q) {
-            return $q->whereAuthorId(Auth::user()->id);
-        })->findOrFail($request->contract_id);
+        $contract = Contract::
+            pending()
+            ->whereHas('current_route', function ($q) {
+                return $q->whereRoleId(Auth::user()->role->role_id);
+            })
+            ->whereHas('course', function ($q) {
+                return $q->whereAuthorId(Auth::user()->id);
+            })
+            ->findOrFail($request->contract_id);
 
         return view('app.pages.author.courses.contractDoc', [
             'contract' => $this->contractService->contractToHtml($contract->id)
@@ -1171,5 +1177,20 @@ class CourseController extends Controller
         $this->authorCourseService->rejectContract($request->contract_id);
 
         return redirect(route('author.courses.my_courses', ['lang' => $request->lang]));
+    }
+
+    /**
+     * Заглушка, пока нет ЭЦП
+     *
+     * @TODO: REMOVE THIS!!!
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function next(Request $request): RedirectResponse
+    {
+        $this->authorCourseService->acceptContract($request->contract_id);
+
+        return redirect(route('author.courses.signing', ['lang' => $request->lang]));
     }
 }

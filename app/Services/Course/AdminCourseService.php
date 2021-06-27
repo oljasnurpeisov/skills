@@ -3,12 +3,13 @@
 namespace Services\Course;
 
 use App\Models\Contract;
-use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Services\Contracts\AuthorContractService;
 use Services\Contracts\ContractServiceRouting;
+use Services\Documents\DocumentService;
 
-class AuthorCourseService
+class AdminCourseService
 {
     /**
      * @var AuthorContractService
@@ -33,20 +34,6 @@ class AuthorCourseService
     }
 
     /**
-     * Договор курса отклонен автором
-     *
-     * @param int $contract_id
-     */
-    public function rejectContract(int $contract_id)
-    {
-        $contract = Contract::whereHas('course', function ($q) {
-            return $q->whereAuthorId(Auth::user()->id);
-        })->findOrFail($contract_id);
-
-        $this->authorContractService->rejectContract($contract);
-    }
-
-    /**
      * Заглушка, пока нет ЭЦП
      *
      * @TODO: REMOVE THIS!!!
@@ -55,15 +42,10 @@ class AuthorCourseService
      */
     public function acceptContract(int $contract_id)
     {
-        $contract = Contract::whereHas('course', function ($q) {
-            return $q->whereAuthorId(Auth::user()->id);
-        })->findOrFail($contract_id);
-
-        // опубликовать курс, если платный или бесплатный
-        $contract->course()->update([
-            'status' => 3,
-            'publish_at' => Carbon::now()
-        ]);
+        $contract = Contract::whereHas('current_route', function ($r) {
+                return $r->whereRoleId(Auth::user()->role->role_id);
+            })
+            ->findOrFail($contract_id);
 
         $this->contractServiceRouting->toNextRoute($contract);
     }

@@ -49,7 +49,7 @@ class CourseRoutingController extends Controller
         $contract = $this->contractService->createContract($course, $request->type);
 
         if ($contract) {
-            Session::flash('status', 'Договор сгененрирован и отправлен по маршруту на подписание');
+            Session::flash('status', 'Договор ('. $contract->getTypeName() .') отправлен на подписание');
             $this->contractServiceRouting->toNextRoute($contract);
         }
 
