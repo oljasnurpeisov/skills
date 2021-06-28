@@ -295,10 +295,10 @@ class Agreement
     {
         $this->templateProcessor->setValue('course_name', $this->course->name ?? '-');
         $this->templateProcessor->setValue('course_professional_areas_ru', $this->course->professional_areas->pluck('name_ru')->unique()->implode(', ') ?? '-');
-        $this->templateProcessor->setValue('course_professions_ru', $this->course->professional_areas->pluck('name_ru')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_professions_ru', $this->course->professions->pluck('name_ru')->unique()->implode(', ') ?? '-');
         $this->templateProcessor->setValue('course_skills_ru', $this->course->skills->pluck('name_ru')->unique()->implode(', ') ?? '-');
         $this->templateProcessor->setValue('course_professional_areas_kk', $this->course->professional_areas->pluck('name_kk')->unique()->implode(', ') ?? '-');
-        $this->templateProcessor->setValue('course_professions_kk', $this->course->professional_areas->pluck('name_kk')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_professions_kk', $this->course->professions->pluck('name_kk')->unique()->implode(', ') ?? '-');
         $this->templateProcessor->setValue('course_skills_kk', $this->course->skills->pluck('name_kk')->unique()->implode(', ') ?? '-');
 
         return $this;
