@@ -121,7 +121,7 @@ class Agreement
         }
 
         $this
-//            ->setGeneral()
+            ->setGeneral()
             ->setRequisites()
             ->setCourseInfo()
             ->setCourseDetail();
@@ -316,14 +316,20 @@ class Agreement
         $this->templateProcessor->setValue('profit_desc', $this->clearText($this->course->profit_desc) ?? '-');
         $this->templateProcessor->setValue('videos_link', $this->course->videos_link ?? '-');
         $this->templateProcessor->setValue('duration', (new CalculateQuotaCostService())->courseDurationService($this->course) ?? '-');
-        $this->templateProcessor->setValue('lang', $this->course->lang === 1 ? 'Нет' : 'Да');
+        $this->templateProcessor->setValue('lang_ru', $this->course->lang === 1 ? 'Нет' : 'Да');
+        $this->templateProcessor->setValue('lang_kk', $this->course->lang === 1 ? 'Жоқ' : 'Иә');
         $this->templateProcessor->setValue('attachments', $this->allAttachments($this->course_attachments));
         $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));
 
         //@TODO Check this!!!
-        $this->templateProcessor->setValue('practice_status', __('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course))); // Количество форматов учебного контента
-        $this->templateProcessor->setValue('attachments_forms_count', __('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course))); // Наличие контрольно-измерительных материалов:
-        $this->templateProcessor->setValue('poor_status', $this->getPoorStatus($this->course_attachments));
+        $this->templateProcessor->setValue('practice_status_ru', trans('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course), null, 'ru')); // Количество форматов учебного контента
+        $this->templateProcessor->setValue('practice_status_kk', trans('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course), null, 'kk')); // Количество форматов учебного контента
+
+        $this->templateProcessor->setValue('attachments_forms_count_ru', trans('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course), null, 'ru')); // Наличие контрольно-измерительных материалов:
+        $this->templateProcessor->setValue('attachments_forms_count_kk', trans('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course), null, 'kk')); // Наличие контрольно-измерительных материалов:
+
+        $this->templateProcessor->setValue('poor_status_ru', $this->getPoorStatus($this->course_attachments, 'ru'));
+        $this->templateProcessor->setValue('poor_status_kk', $this->getPoorStatus($this->course_attachments, 'kk'));
 
         $this->templateProcessor->setValue('sum', CalculateQuotaCost::calculate_quota_cost($this->course));
     }
@@ -391,19 +397,20 @@ class Agreement
      * Адаптированность для лиц с особыми образовательными потребностями
      *
      * @param $course_attachments
+     * @param string $lang
      * @return string
      */
-    private function getPoorStatus($course_attachments): string
+    private function getPoorStatus($course_attachments, string $lang): string
     {
         $videos_poor_hearing_link   = json_decode($course_attachments->videos_poor_hearing_link);
         $audios_poor_vision         = json_decode($course_attachments->audios_poor_vision);
 
         if ($this->attachmentExist($videos_poor_hearing_link) or $this->attachmentExist($audios_poor_vision)) {
-            $adaptive = __('default.pages.calculator.poor_opportunities_not_full_adaptive');
+            $adaptive = trans('default.pages.calculator.poor_opportunities_not_full_adaptive', null, $lang);
         } elseif ($this->attachmentExist($videos_poor_hearing_link) and $this->attachmentExist($audios_poor_vision)) {
-            $adaptive = __('default.pages.calculator.poor_opportunities_full_adaptive');
+            $adaptive = trans('default.pages.calculator.poor_opportunities_full_adaptive', null, $lang);
         }  else {
-            $adaptive = __('default.pages.calculator.poor_opportunities_not_adaptive');
+            $adaptive = trans('default.pages.calculator.poor_opportunities_not_adaptive', null, $lang);
         }
 
         return $adaptive;
