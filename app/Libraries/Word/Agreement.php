@@ -266,8 +266,8 @@ class Agreement
     private function setRequisites(): self
     {
         $this->templateProcessor->setValue('company_name', $this->author->company_name ?? '-');
-        $this->templateProcessor->setValue('type_of_ownership_ru', $this->author->type_ownership->name_short_ru ?? '-');
-        $this->templateProcessor->setValue('type_of_ownership_kk', $this->author->type_ownership->name_short_kk ?? '-');
+        $this->templateProcessor->setValue('type_of_ownership_ru', $this->author->type_ownership->name_ru ?? '-');
+        $this->templateProcessor->setValue('type_of_ownership_kk', $this->author->type_ownership->name_kk ?? '-');
         $this->templateProcessor->setValue('fio', $this->author_info->surname .' '. $this->author_info->name .' '. $this->author_info->surname);
         $this->templateProcessor->setValue('position_ru', $this->author->position_ru ?? '-');
         $this->templateProcessor->setValue('position_kk', $this->author->position_kk ?? '-');
