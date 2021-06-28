@@ -94,8 +94,9 @@
                             <td>{{ $contract->course->publish_at ?? '-' }}</td>
                             <td>
                                 <div class="action-buttons">
-                                    <a target="_blank" href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $contract->id]) }}" title="{{ __('admin.labels.view') }}"
-                                       class="icon-btn icon-btn--yellow icon-eye"></a>
+                                    @if (!empty($contract->current_route))
+                                        <a target="_blank" href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $contract->id]) }}" title="{{ __('admin.labels.view') }}" class="icon-btn icon-btn--yellow icon-eye"></a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
