@@ -28,8 +28,6 @@
             @else
                 <iframe src="{{ route('admin.contracts.get_contract_html_preview', ['lang' => 'ru', 'course_id' => $course->id, 'type' => $type]) }}" frameborder="0" width="100%" height="600"></iframe>
             @endif
-
-
         </div>
     </div>
 

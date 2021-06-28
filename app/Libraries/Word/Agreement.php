@@ -10,12 +10,15 @@ use App\Models\User;
 use App\Models\UserInformation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use Libraries\Helpers\GetMonth;
 use PhpOffice\PhpWord\Exception\CopyFileException;
 use PhpOffice\PhpWord\Exception\CreateTemporaryFileException;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Services\Course\CalculateQuotaCost\CalculateQuotaCostService;
+
+setlocale(LC_TIME, 'ru_RU.UTF-8');
 
 /**
  * Class Agreement
@@ -245,11 +248,9 @@ class Agreement
     {
         $this->templateProcessor->setValue('day', Carbon::now()->day);
 
-        setlocale(LC_TIME, 'ru_RU.UTF-8');
         $this->templateProcessor->setValue('month_ru', Carbon::now()->getTranslatedMonthName('Do MMMM'));
 
-        setlocale(LC_TIME, 'kz_KZ.UTF-8');
-        $this->templateProcessor->setValue('month_kk', Carbon::now()->getTranslatedMonthName('Do MMMM'));
+        $this->templateProcessor->setValue('month_kk', (new GetMonth())->kk(date('m')));
 
         $this->templateProcessor->setValue('year', Carbon::now()->year);
         $this->templateProcessor->setValue('number', $this->number);
@@ -265,12 +266,13 @@ class Agreement
     private function setRequisites(): self
     {
         $this->templateProcessor->setValue('company_name', $this->author->company_name ?? '-');
-        $this->templateProcessor->setValue('type_of_ownership', $this->author->type_ownership->name_ru ?? '-');
+        $this->templateProcessor->setValue('type_of_ownership_ru', $this->author->type_ownership->name_ru ?? '-');
+        $this->templateProcessor->setValue('type_of_ownership_kk', $this->author->type_ownership->name_kk ?? '-');
         $this->templateProcessor->setValue('fio', $this->author_info->surname .' '. $this->author_info->name .' '. $this->author_info->surname);
         $this->templateProcessor->setValue('position_ru', $this->author->position_ru ?? '-');
         $this->templateProcessor->setValue('position_kk', $this->author->position_kk ?? '-');
         $this->templateProcessor->setValue('fio_director', $this->author->fio_director ?? '-');
-        $this->templateProcessor->setValue('iin', $this->author->iik_kz ?? '-');
+        $this->templateProcessor->setValue('iin', $this->author->iin ?? '-');
         $this->templateProcessor->setValue('iik', $this->author->iik_kz ?? '-');
         $this->templateProcessor->setValue('kbe', $this->author->kbe ?? '-');
         $this->templateProcessor->setValue('bik', $this->author->bik ?? '-');
