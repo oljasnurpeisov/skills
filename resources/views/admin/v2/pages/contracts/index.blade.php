@@ -30,7 +30,7 @@
                     <col span="1" style="width: 7%;">
                     <col span="1" style="width: 15%;">
                     <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 8%;">
+                    <col span="1" style="width: 15%;">
                 </colgroup>
                 <thead>
                 <tr>
@@ -75,7 +75,7 @@
                             <th></th>
                             <th>
                                 <div class="buttons btn-group-sm">
-                                    <a href="{{ route(Route::currentRouteName(), ['lang' => $lang]) }}" class="btn" style="color: #fff; background: #e2e2e2; text-decoration:none; height: 30px; margin-top: 2px;">-</a>
+                                    <a href="{{ route(Route::currentRouteName(), ['lang' => $lang]) }}" class="btn" style="color: #fff; background: #e2e2e2; text-decoration:none; height: 30px; margin-top: 2px; margin-right: 5px">Очистить</a>
                                     <button class="btn">Поиск</button>
                                 </div>
 
@@ -94,8 +94,9 @@
                             <td>{{ $contract->course->publish_at ?? '-' }}</td>
                             <td>
                                 <div class="action-buttons">
-                                    <a target="_blank" href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $contract->id]) }}" title="{{ __('admin.labels.view') }}"
-                                       class="icon-btn icon-btn--yellow icon-eye"></a>
+                                    @if (!empty($contract->current_route))
+                                        <a target="_blank" href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $contract->id]) }}" title="{{ __('admin.labels.view') }}" class="icon-btn icon-btn--yellow icon-eye"></a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

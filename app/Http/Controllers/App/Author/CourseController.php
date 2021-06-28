@@ -319,7 +319,7 @@ class CourseController extends Controller
                 $page_name = 'default.pages.courses.my_courses_unpublished';
                 break;
             case('on-check'):
-                $query = Auth::user()->courses()->where('status', '=', Course::onCheck)->orWhere('status', '=', 5);
+                $query = Auth::user()->courses()->where(function ($q) {return $q->where('status', '=', Course::onCheck)->orWhere('status', '=', 5);})->doesntHave('contracts');
                 $page_name = 'default.pages.courses.my_courses_onCheck';
                 break;
             case('drafts'):
@@ -706,6 +706,9 @@ class CourseController extends Controller
             $item->previous_status = $item->status;
             $item->status = 4;
             $item->save();
+
+            // удаляем активные договора
+            $this->contractService->removeActiveContracts($item->id);
 
             return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('default.pages.courses.delete_request_message'));
 

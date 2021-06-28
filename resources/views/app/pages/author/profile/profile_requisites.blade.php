@@ -55,9 +55,9 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.auth.type_of_ownership')}} *</label>
-                                <select name="type_of_ownership" class="selectize-regular no-search">
+                                <select type="text" name="type_of_ownership" class="selectize-regular">
                                     @foreach($types_of_ownership as $type)
-                                        <option value="{{ $type->id }}" @if(isset($user->type_ownership->id) and $type->id==Auth::user()->type_ownership) selected='selected' @endif>
+                                        <option value="{{ $type->id }}" @if(isset(Auth::user()->type_ownership->id) and $type->id==Auth::user()->type_ownership->id) selected='selected' @endif>
                                             {{ $type->getAttribute('name_'.$lang) ??  $type->getAttribute('name_ru') }}
                                         </option>
                                     @endforeach

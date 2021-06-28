@@ -74,7 +74,8 @@
                                                         <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
                                                     @endif
                                                     <h3 class="card__title">{{$item->name}}</h3>
-                                                    <div class="card__author">{{$item->user->company_name}}</div>
+                                                    <?php $tos = 'name_short_'. $lang; ?>
+                                                    <div class="card__author">{{ $item->user->type_ownership->$tos }} "{{$item->user->company_name}}"</div>
 
                                                     <div style="position: absolute;bottom: 75px; right: 15px; left: 15px;">
                                                         @if (!empty($item->contracts))
@@ -112,8 +113,8 @@
                                                         <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
                                                     @endif
                                                     <h3 class="card__title">{{$item->name}}</h3>
-                                                    <div class="card__author">{{$item->user->company_name}}</div>
-
+                                                    <?php $tos = 'name_short_'. $lang; ?>
+                                                    <div class="card__author">{{ $item->user->type_ownership->$tos }} "{{$item->user->company_name}}"</div>
                                                 </div>
                                                 <div class="card__bottom">
                                                     <div class="card__attribute">
