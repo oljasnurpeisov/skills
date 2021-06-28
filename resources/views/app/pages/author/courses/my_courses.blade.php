@@ -114,7 +114,6 @@
                                                     <h3 class="card__title">{{$item->name}}</h3>
                                                     <?php $tos = 'name_short_'. $lang; ?>
                                                     <div class="card__author">{{ $item->user->type_ownership->$tos }} {{$item->user->company_name}}</div>
-
                                                 </div>
                                                 <div class="card__bottom">
                                                     <div class="card__attribute">
