@@ -450,24 +450,20 @@
     </main>
 
     <style>
-        .image-choice.checked {
-            outline: 3px solid #2ab5f6;
-        }
-        .image-choice.checked::after {
-            color: #2ab5f6;
-            border: 2px solid #2ab5f6;
-            content: "✓";
-            font-size: 22px;
+               .image-choice.checked::after {
+            color: #fff;
+            content: "\2714";
+            font-size: 24px;
             position: absolute;
             top: -10px;
             right: -22px;
             transform: translateX(-50%);
-            height: 25px;
-            width: 25px;
-            line-height: 22px;
+            height: 30px;
+            width: 30px;
+            line-height: 31px;
             text-align: center;
             border-radius: 50%;
-            background: white;
+            background: #2ab5f6;
             box-shadow: 0px 2px 5px -2px hsla(0, 0%, 0%, 0.25);
         }
         .image-choice {
