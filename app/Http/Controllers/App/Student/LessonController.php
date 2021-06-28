@@ -552,9 +552,11 @@ class LessonController extends Controller
         $certificate->user_id = $user->id;
         $certificate->course_id = $course->id;
         $certificate->save();
-
         $data = [
             'author_name' => $course->user->company_name . '/' . $course->user->author_info->name . ' ' . $course->user->author_info->surname,
+            'author' => $course->user->author_info->name . ' ' . $course->user->author_info->surname,
+            'company' => $course->user->company_name,
+            'company_logo' => $course->user->company_logo,
             'student_name' => $user->student_info->name,
             'duration' => $course->lessons->sum('duration'),
             'course_name' => $course->name,
