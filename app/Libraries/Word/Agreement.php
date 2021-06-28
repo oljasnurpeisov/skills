@@ -273,7 +273,7 @@ class Agreement
         $this->templateProcessor->setValue('position_kk', $this->author->position_kk ?? '-');
         $this->templateProcessor->setValue('fio_director', $this->author->fio_director ?? '-');
         $this->templateProcessor->setValue('iin', $this->author->iin ?? '-');
-        $this->templateProcessor->setValue('iik', $this->author->iik_kz ?? '-');
+        $this->templateProcessor->setValue('iik', preg_replace('/ /', '', $this->author->iik_kz) ?? '-');
         $this->templateProcessor->setValue('kbe', $this->author->kbe ?? '-');
         $this->templateProcessor->setValue('bik', $this->author->bik ?? '-');
         $this->templateProcessor->setValue('bank_name_ru', $this->author->bank->name_ru ?? '-');
