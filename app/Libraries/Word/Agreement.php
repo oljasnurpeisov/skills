@@ -10,12 +10,15 @@ use App\Models\User;
 use App\Models\UserInformation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use Libraries\Helpers\GetMonth;
 use PhpOffice\PhpWord\Exception\CopyFileException;
 use PhpOffice\PhpWord\Exception\CreateTemporaryFileException;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Services\Course\CalculateQuotaCost\CalculateQuotaCostService;
+
+setlocale(LC_TIME, 'ru_RU.UTF-8');
 
 /**
  * Class Agreement
@@ -245,11 +248,9 @@ class Agreement
     {
         $this->templateProcessor->setValue('day', Carbon::now()->day);
 
-        setlocale(LC_TIME, 'ru_RU.UTF-8');
         $this->templateProcessor->setValue('month_ru', Carbon::now()->getTranslatedMonthName('Do MMMM'));
 
-        setlocale(LC_TIME, 'kz_KZ.UTF-8');
-        $this->templateProcessor->setValue('month_kk', Carbon::now()->getTranslatedMonthName('Do MMMM'));
+        $this->templateProcessor->setValue('month_kk', (new GetMonth())->kk(date('m')));
 
         $this->templateProcessor->setValue('year', Carbon::now()->year);
         $this->templateProcessor->setValue('number', $this->number);
@@ -265,12 +266,13 @@ class Agreement
     private function setRequisites(): self
     {
         $this->templateProcessor->setValue('company_name', $this->author->company_name ?? '-');
-        $this->templateProcessor->setValue('type_of_ownership', $this->author->type_ownership->name_ru ?? '-');
+        $this->templateProcessor->setValue('type_of_ownership_ru', $this->author->type_ownership->name_ru ?? '-');
+        $this->templateProcessor->setValue('type_of_ownership_kk', $this->author->type_ownership->name_kk ?? '-');
         $this->templateProcessor->setValue('fio', $this->author_info->surname .' '. $this->author_info->name .' '. $this->author_info->surname);
         $this->templateProcessor->setValue('position_ru', $this->author->position_ru ?? '-');
         $this->templateProcessor->setValue('position_kk', $this->author->position_kk ?? '-');
         $this->templateProcessor->setValue('fio_director', $this->author->fio_director ?? '-');
-        $this->templateProcessor->setValue('iin', $this->author->iik_kz ?? '-');
+        $this->templateProcessor->setValue('iin', $this->author->iin ?? '-');
         $this->templateProcessor->setValue('iik', $this->author->iik_kz ?? '-');
         $this->templateProcessor->setValue('kbe', $this->author->kbe ?? '-');
         $this->templateProcessor->setValue('bik', $this->author->bik ?? '-');
@@ -314,14 +316,22 @@ class Agreement
         $this->templateProcessor->setValue('profit_desc', $this->clearText($this->course->profit_desc) ?? '-');
         $this->templateProcessor->setValue('videos_link', $this->course->videos_link ?? '-');
         $this->templateProcessor->setValue('duration', (new CalculateQuotaCostService())->courseDurationService($this->course) ?? '-');
-        $this->templateProcessor->setValue('lang', $this->course->lang === 1 ? 'Нет' : 'Да');
+
+        $this->templateProcessor->setValue('lang_ru', $this->course->lang === 1 ? 'Нет' : 'Да');
+        $this->templateProcessor->setValue('lang_kk', $this->course->lang === 1 ? 'Жоқ' : 'Иә');
+
         $this->templateProcessor->setValue('attachments', $this->allAttachments($this->course_attachments));
         $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));
 
         //@TODO Check this!!!
-        $this->templateProcessor->setValue('practice_status', __('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course)));
-        $this->templateProcessor->setValue('attachments_forms_count', __('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course)));
-        $this->templateProcessor->setValue('poor_status', $this->getPoorStatus($this->course_attachments));
+        $this->templateProcessor->setValue('practice_status_ru', trans('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course), [], 'ru')); // Количество форматов учебного контента
+        $this->templateProcessor->setValue('practice_status_kk', trans('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course), [], 'kk')); // Количество форматов учебного контента
+
+        $this->templateProcessor->setValue('attachments_forms_count_ru', trans('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course), [], 'ru')); // Наличие контрольно-измерительных материалов:
+        $this->templateProcessor->setValue('attachments_forms_count_kk', trans('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course), [], 'kk')); // Наличие контрольно-измерительных материалов:
+
+        $this->templateProcessor->setValue('poor_status_ru', $this->getPoorStatus($this->course_attachments, 'ru'));
+        $this->templateProcessor->setValue('poor_status_kk', $this->getPoorStatus($this->course_attachments, 'kk'));
 
         $this->templateProcessor->setValue('sum', CalculateQuotaCost::calculate_quota_cost($this->course));
     }
@@ -389,19 +399,20 @@ class Agreement
      * Адаптированность для лиц с особыми образовательными потребностями
      *
      * @param $course_attachments
+     * @param string $lang
      * @return string
      */
-    private function getPoorStatus($course_attachments): string
+    private function getPoorStatus($course_attachments, string $lang): string
     {
         $videos_poor_hearing_link   = json_decode($course_attachments->videos_poor_hearing_link);
         $audios_poor_vision         = json_decode($course_attachments->audios_poor_vision);
 
         if ($this->attachmentExist($videos_poor_hearing_link) or $this->attachmentExist($audios_poor_vision)) {
-            $adaptive = __('default.pages.calculator.poor_opportunities_not_full_adaptive');
+            $adaptive = trans('default.pages.calculator.poor_opportunities_not_full_adaptive', [], $lang);
         } elseif ($this->attachmentExist($videos_poor_hearing_link) and $this->attachmentExist($audios_poor_vision)) {
-            $adaptive = __('default.pages.calculator.poor_opportunities_full_adaptive');
+            $adaptive = trans('default.pages.calculator.poor_opportunities_full_adaptive', [], $lang);
         }  else {
-            $adaptive = __('default.pages.calculator.poor_opportunities_not_adaptive');
+            $adaptive = trans('default.pages.calculator.poor_opportunities_not_adaptive', [], $lang);
         }
 
         return $adaptive;

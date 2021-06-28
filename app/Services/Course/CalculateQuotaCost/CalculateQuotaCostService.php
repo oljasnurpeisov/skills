@@ -8,6 +8,7 @@ class CalculateQuotaCostService
 {
     /**
      * Длительность курса
+     *
      * @param Course $course
      * @return float|int
      */
