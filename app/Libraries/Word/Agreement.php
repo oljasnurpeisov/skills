@@ -121,7 +121,7 @@ class Agreement
         }
 
         $this
-            ->setGeneral()
+//            ->setGeneral()
             ->setRequisites()
             ->setCourseInfo()
             ->setCourseDetail();
