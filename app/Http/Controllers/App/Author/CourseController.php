@@ -707,6 +707,9 @@ class CourseController extends Controller
             $item->status = 4;
             $item->save();
 
+            // удаляем активные договора
+            $this->contractService->removeActiveContracts($item->id);
+
             return redirect("/" . app()->getLocale() . "/my-courses")->with('status', __('default.pages.courses.delete_request_message'));
 
         }

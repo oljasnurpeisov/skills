@@ -93,4 +93,24 @@ class ContractService
 
        return $pdfPath;
    }
+
+    /**
+     * Удаление активных договоров
+     *
+     * @param int $course_id
+     * @return void
+     */
+   public function removeActiveContracts(int $course_id): void
+   {
+       $contracts = Contract::pending()->whereCourseId($course_id)->get();
+
+       foreach ($contracts as $contract)
+       {
+           if (file_exists(public_path($contract->link))) {
+               unlink(public_path($contract->link));
+           }
+
+           $contract->delete();
+       }
+   }
 }
