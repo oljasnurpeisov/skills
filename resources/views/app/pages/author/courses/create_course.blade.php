@@ -450,21 +450,16 @@
     </main>
 
     <style>
-               .image-choice.checked::after {
-            color: #fff;
-            content: "\2714";
-            font-size: 24px;
+        .image-choice.checked::after {
+            content: "";
             position: absolute;
             top: -10px;
-            right: -22px;
-            transform: translateX(-50%);
-            height: 30px;
-            width: 30px;
-            line-height: 31px;
-            text-align: center;
-            border-radius: 50%;
-            background: #2ab5f6;
-            box-shadow: 0px 2px 5px -2px hsla(0, 0%, 0%, 0.25);
+            right: -11px;
+            height: 25px;
+            width: 25px;
+            background: url(/assets/img/checked.png);
+            background-repeat: no-repeat;
+            background-image: cover;
         }
         .image-choice {
             width: 9rem;
