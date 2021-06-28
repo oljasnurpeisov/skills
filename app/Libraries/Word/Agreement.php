@@ -321,8 +321,8 @@ class Agreement
         $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));
 
         //@TODO Check this!!!
-        $this->templateProcessor->setValue('practice_status', __('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course)));
-        $this->templateProcessor->setValue('attachments_forms_count', __('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course)));
+        $this->templateProcessor->setValue('practice_status', __('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course))); // Количество форматов учебного контента
+        $this->templateProcessor->setValue('attachments_forms_count', __('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course))); // Наличие контрольно-измерительных материалов:
         $this->templateProcessor->setValue('poor_status', $this->getPoorStatus($this->course_attachments));
 
         $this->templateProcessor->setValue('sum', CalculateQuotaCost::calculate_quota_cost($this->course));
