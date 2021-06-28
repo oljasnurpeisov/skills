@@ -295,10 +295,10 @@ class Agreement
     {
         $this->templateProcessor->setValue('course_name', $this->course->name ?? '-');
         $this->templateProcessor->setValue('course_professional_areas_ru', $this->course->professional_areas->pluck('name_ru')->unique()->implode(', ') ?? '-');
-        $this->templateProcessor->setValue('course_professions_ru', $this->course->professional_areas->pluck('name_ru')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_professions_ru', $this->course->professions->pluck('name_ru')->unique()->implode(', ') ?? '-');
         $this->templateProcessor->setValue('course_skills_ru', $this->course->skills->pluck('name_ru')->unique()->implode(', ') ?? '-');
         $this->templateProcessor->setValue('course_professional_areas_kk', $this->course->professional_areas->pluck('name_kk')->unique()->implode(', ') ?? '-');
-        $this->templateProcessor->setValue('course_professions_kk', $this->course->professional_areas->pluck('name_kk')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_professions_kk', $this->course->professions->pluck('name_kk')->unique()->implode(', ') ?? '-');
         $this->templateProcessor->setValue('course_skills_kk', $this->course->skills->pluck('name_kk')->unique()->implode(', ') ?? '-');
 
         return $this;
@@ -324,11 +324,11 @@ class Agreement
         $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));
 
         //@TODO Check this!!!
-        $this->templateProcessor->setValue('practice_status_ru', trans('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course), [], 'ru')); // Количество форматов учебного контента
-        $this->templateProcessor->setValue('practice_status_kk', trans('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course), [], 'kk')); // Количество форматов учебного контента
+        $this->templateProcessor->setValue('practice_status_ru', $this->getPracticeStatus('ru')); // Количество форматов учебного контента
+        $this->templateProcessor->setValue('practice_status_kk', $this->getPracticeStatus('kk')); // Количество форматов учебного контента
 
-        $this->templateProcessor->setValue('attachments_forms_count_ru', trans('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course), [], 'ru')); // Наличие контрольно-измерительных материалов:
-        $this->templateProcessor->setValue('attachments_forms_count_kk', trans('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course), [], 'kk')); // Наличие контрольно-измерительных материалов:
+        $this->templateProcessor->setValue('attachments_forms_count_ru', $this->getAttachmentsForm('ru')); // Наличие контрольно-измерительных материалов:
+        $this->templateProcessor->setValue('attachments_forms_count_kk', $this->getAttachmentsForm('kk')); // Наличие контрольно-измерительных материалов:
 
         $this->templateProcessor->setValue('poor_status_ru', $this->getPoorStatus($this->course_attachments, 'ru'));
         $this->templateProcessor->setValue('poor_status_kk', $this->getPoorStatus($this->course_attachments, 'kk'));
@@ -416,6 +416,49 @@ class Agreement
         }
 
         return $adaptive;
+    }
+
+    /**
+     * Контрольно-измерительные материалы
+     *
+     * @param string $lang
+     * @return string
+     */
+    private function getPracticeStatus(string $lang): string
+    {
+        $status = (new CalculateQuotaCostService())->practice_status($this->course);
+
+        switch ($status) {
+            case 0:
+                return trans('default.pages.calculator.practice_section_3', [], $lang);
+            case 1:
+                return trans('default.pages.calculator.practice_section_2', [], $lang);
+            case 2:
+                return trans('default.pages.calculator.practice_section_1', [], $lang);
+            default:
+                return '-';
+        }
+    }
+
+    /**
+     * Формат учебного контента
+     *
+     * @param string $lang
+     * @return string
+     */
+    private function getAttachmentsForm(string $lang): string
+    {
+        $count = (new CalculateQuotaCostService())->attachments_forms_count($this->course);
+
+        switch ($count) {
+            case 1:
+                return trans('default.pages.calculator.format_section_3', [], $lang);
+            case 2:
+            case 3:
+                return trans('default.pages.calculator.format_section_2', [], $lang);
+            default:
+                return trans('default.pages.calculator.format_section_1', [], $lang);
+        }
     }
 
     /**
