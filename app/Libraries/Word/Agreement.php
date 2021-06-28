@@ -324,11 +324,11 @@ class Agreement
         $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));
 
         //@TODO Check this!!!
-        $this->templateProcessor->setValue('practice_status_ru', trans('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course), null, 'ru')); // Количество форматов учебного контента
-        $this->templateProcessor->setValue('practice_status_kk', trans('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course), null, 'kk')); // Количество форматов учебного контента
+        $this->templateProcessor->setValue('practice_status_ru', trans('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course), [], 'ru')); // Количество форматов учебного контента
+        $this->templateProcessor->setValue('practice_status_kk', trans('default.pages.calculator.practice_section_'. (new CalculateQuotaCostService())->practice_status($this->course), [], 'kk')); // Количество форматов учебного контента
 
-        $this->templateProcessor->setValue('attachments_forms_count_ru', trans('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course), null, 'ru')); // Наличие контрольно-измерительных материалов:
-        $this->templateProcessor->setValue('attachments_forms_count_kk', trans('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course), null, 'kk')); // Наличие контрольно-измерительных материалов:
+        $this->templateProcessor->setValue('attachments_forms_count_ru', trans('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course), [], 'ru')); // Наличие контрольно-измерительных материалов:
+        $this->templateProcessor->setValue('attachments_forms_count_kk', trans('default.pages.calculator.format_section_'. (new CalculateQuotaCostService())->attachments_forms_count($this->course), [], 'kk')); // Наличие контрольно-измерительных материалов:
 
         $this->templateProcessor->setValue('poor_status_ru', $this->getPoorStatus($this->course_attachments, 'ru'));
         $this->templateProcessor->setValue('poor_status_kk', $this->getPoorStatus($this->course_attachments, 'kk'));
@@ -408,11 +408,11 @@ class Agreement
         $audios_poor_vision         = json_decode($course_attachments->audios_poor_vision);
 
         if ($this->attachmentExist($videos_poor_hearing_link) or $this->attachmentExist($audios_poor_vision)) {
-            $adaptive = trans('default.pages.calculator.poor_opportunities_not_full_adaptive', null, $lang);
+            $adaptive = trans('default.pages.calculator.poor_opportunities_not_full_adaptive', [], $lang);
         } elseif ($this->attachmentExist($videos_poor_hearing_link) and $this->attachmentExist($audios_poor_vision)) {
-            $adaptive = trans('default.pages.calculator.poor_opportunities_full_adaptive', null, $lang);
+            $adaptive = trans('default.pages.calculator.poor_opportunities_full_adaptive', [], $lang);
         }  else {
-            $adaptive = trans('default.pages.calculator.poor_opportunities_not_adaptive', null, $lang);
+            $adaptive = trans('default.pages.calculator.poor_opportunities_not_adaptive', [], $lang);
         }
 
         return $adaptive;
