@@ -381,13 +381,13 @@
 {{--                                        </div>--}}
 {{--                                    </div>--}}
                                     <div class="col-auto">
-                                        <div class="image-choice " data-id="11">
+                                        <div class="image-choice checked" data-id="11">
                                             <img src="/assets/img/certificates/cert_new_11.jpg"
                                                  class="image-choice__thumbnail"
                                                  alt="">
                                             <label class="image-choice__overflow">
                                                 <i> </i>
-                                                <a class="check" style="margin-top: -22px;">✓</a>
+{{--                                                <a class="check" style="margin-top: -22px;">✓</a>--}}
                                                 <a href="/assets/img/certificates/cert_new_11.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
                                                    class="icon-zoom-in" style="margin-top: 23px"> </a>
                                             </label>
@@ -401,7 +401,7 @@
                                                  alt="">
                                             <label class="image-choice__overflow">
                                                 <i> </i>
-                                                <a class="check" style="margin-top: -22px;">✓</a>
+{{--                                                <a class="check" style="margin-top: -22px;">✓</a>--}}
                                                 <a href="/assets/img/certificates/cert_new_12.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
                                                    class="icon-zoom-in" style="margin-top: 23px"> </a>
                                             </label>
@@ -415,7 +415,7 @@
                                                  alt="">
                                             <label class="image-choice__overflow">
                                                 <i> </i>
-                                                <a class="check" style="margin-top: -22px;">✓</a>
+{{--                                                <a class="check" style="margin-top: -22px;">✓</a>--}}
                                                 <a href="/assets/img/certificates/cert_new_13.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
                                                    class="icon-zoom-in" style="margin-top: 23px"> </a>
                                             </label>
@@ -423,13 +423,13 @@
                                     </div>
 
                                     <div class="col-auto">
-                                        <div class="image-choice checked" data-id="10">
+                                        <div class="image-choice" data-id="10">
                                             <img src="/assets/img/certificates/cert_new_10.jpg"
                                                  class="image-choice__thumbnail"
                                                  alt="">
                                             <label class="image-choice__overflow">
                                                 <i> </i>
-                                                <a class="check" style="margin-top: -22px;">✓</a>
+{{--                                                <a class="check" style="margin-top: -22px;">✓</a>--}}
                                                 <a href="/assets/img/certificates/cert_new_10.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
                                                    class="icon-zoom-in" style="margin-top: 23px"> </a>
                                             </label>
@@ -451,7 +451,27 @@
 
     <style>
         .image-choice.checked {
-            border: 3px solid #2ab5f6;
+            outline: 3px solid #2ab5f6;
+        }
+        .image-choice.checked::after {
+            color: #2ab5f6;
+            border: 2px solid #2ab5f6;
+            content: "✓";
+            font-size: 22px;
+            position: absolute;
+            top: -10px;
+            right: -22px;
+            transform: translateX(-50%);
+            height: 25px;
+            width: 25px;
+            line-height: 22px;
+            text-align: center;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0px 2px 5px -2px hsla(0, 0%, 0%, 0.25);
+        }
+        .image-choice {
+            width: 9rem;
         }
     </style>
 @endsection
@@ -459,9 +479,9 @@
 @section('scripts')
     <!--Only this page's scripts-->
     <script>
-        $('.image-choice .check').on('click', function () {
+        $('.image-choice').on('click', function () {
             $('.image-choice').removeClass('checked');
-            let block = $(this).parent().parent();
+            let block = $(this);
             block.addClass('checked');
             $('input[name="certificate_id"]').val(block.attr('data-id'));
         });

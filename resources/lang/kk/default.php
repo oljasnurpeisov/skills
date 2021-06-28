@@ -142,7 +142,7 @@ return [
             'course_audio_1' => 'Курс аудиосы (көру қабілеті нашар тұлғаларға)',
             'course_audio_2' => 'Курс аудиосы (есту қабілеті нашар тұлғаларға)',
             'choose_certificate' => 'Оқытудың аяқталу сертификатын таңдаңыз',
-            'preview_certificate_title' => 'Білім алушының сертификатын алдын-ала көру',
+            'preview_certificate_title' => 'Сертификатты таңдаңыз',
             'zoom_certificate' => 'Үлкейту',
             'choose' => 'Таңдау',
             'author_certificates' => 'Атор сертификаты',

@@ -148,7 +148,7 @@ return [
             'course_audio_1' => 'Аудио курса (для слабовидящих)',
             'course_audio_2' => 'Аудио курса (для лиц с нарушениями слуха)',
             'choose_certificate' => 'Выберите сертификат окончания',
-            'preview_certificate_title' => 'Предварительный просмотр сертификата обучающегося',
+            'preview_certificate_title' => 'Выберите сертификат',
             'zoom_certificate' => 'Увеличить',
             'choose' => 'Выбрать',
             'author_certificates' => 'Сертификаты автора',
