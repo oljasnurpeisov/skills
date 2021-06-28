@@ -6,7 +6,7 @@
         <section class="opening"
                  style="background: url({{json_decode($content->getAttribute('data_'.$lang))->main_banner->image}}) center center no-repeat; background-size: cover;">
             <div class="container">
-                <h1>{{json_decode($content->getAttribute('data_'.$lang))->main_banner->title}}<br/><span>
+                <h1>{!! json_decode($content->getAttribute('data_'.$lang))->main_banner->title !!}<br/><span>
                         {!! json_decode($content->getAttribute('data_'.$lang))->main_banner->teaser !!}</span></h1>
                 <form class="opening-form" action="/{{$lang}}/course-catalog">
                     <div class="row row--multiline">
