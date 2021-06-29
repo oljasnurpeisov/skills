@@ -556,39 +556,4 @@ class LessonController extends Controller
             }
         }
     }
-
-    private function putNewSkills($uid, Course $course, $cert)
-    {
-        $data = [
-            'uid' => $uid,
-            'course' => [
-                'id' => $course->id,
-                'name' => $course->name,
-                'skills' => $course->skills->pluck('code_skill')->toArray()
-            ],
-            'cert' => $cert
-        ];
-
-        $client = new Client(['verify' => false]);
-
-        try {
-            $body = $data;
-            $response = $client->request('PUT', config('enbek.base_url') . '/ru/api/put-navyk-from-obuch', [
-                'body' => json_encode($body),
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                ]
-            ]);
-        } catch (BadResponseException $e) {
-            return [
-                'success' => false,
-                'message' => $e->getMessage(),
-            ];
-        }
-
-        return [
-            'success' => true,
-            'message' => null,
-        ];
-    }
 }
