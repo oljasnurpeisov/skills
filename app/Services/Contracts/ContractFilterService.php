@@ -203,11 +203,11 @@ class ContractFilterService
     private function filterByQuota(Builder $contracts, array $request): Builder
     {
         if (!empty($request['contract_quota'])) {
-            if ($request['contract_quota'] === 1) {
+            if ($request['contract_quota'] == 1) {
                 $contracts = $contracts->whereType(3);
             }
 
-            if ($request['contract_quota'] === 0) {
+            if ($request['contract_quota'] == 2) {
                 $contracts = $contracts->where('type', '!=', 3);
             }
         }
