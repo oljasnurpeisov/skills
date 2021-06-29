@@ -10,8 +10,8 @@
     <style>
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraLightItalic.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraLightItalic.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraLightItalic.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraLightItalic.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraLightItalic.svg#Montserrat-ExtraLightItalic') format('svg');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-ExtraLightItalic.eot') }}');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-ExtraLightItalic.eot?#iefix') }}') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraLightItalic.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraLightItalic.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraLightItalic.svg#Montserrat-ExtraLightItalic')}}') format('svg');
             font-weight: 200;
             font-style: italic;
             font-display: swap;
@@ -19,8 +19,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Italic.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Italic.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Italic.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Italic.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Italic.svg#Montserrat-Italic') format('svg');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-Italic.eot') }}');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-Italic.eot?#iefix')}}') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-Italic.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-Italic.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-Italic.svg#Montserrat-Italic')}}') format('svg');
             font-weight: normal;
             font-style: italic;
             font-display: swap;
@@ -28,8 +28,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Medium.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Medium.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Medium.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Medium.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Medium.svg#Montserrat-Medium') format('svg');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-Medium.eot') }}');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-Medium.eot?#iefix')}} ') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-Medium.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-Medium.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-Medium.svg#Montserrat-Medium')}}') format('svg');
             font-weight: 500;
             font-style: normal;
             font-display: swap;
@@ -37,8 +37,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Light.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Light.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Light.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Light.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Light.svg#Montserrat-Light') format('svg');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-Light.eot')}} ');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-Light.eot?#iefix')}} ') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-Light.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-Light.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-Light.svg#Montserrat-Light')}}') format('svg');
             font-weight: 300;
             font-style: normal;
             font-display: swap;
@@ -46,8 +46,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-LightItalic.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-LightItalic.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-LightItalic.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-LightItalic.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-LightItalic.svg#Montserrat-LightItalic') format('svg');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-LightItalic.eot')}} ');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-LightItalic.eot?#iefix') }} ') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-LightItalic.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-LightItalic.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-LightItalic.svg#Montserrat-LightItalic')}}') format('svg');
             font-weight: 300;
             font-style: italic;
             font-display: swap;
@@ -55,8 +55,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Bold.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Bold.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Bold.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Bold.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Bold.svg#Montserrat-Bold') format('svg');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-Bold.eot') }}');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-Bold.eot?#iefix') }}') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-Bold.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-Bold.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-Bold.svg#Montserrat-Bold')}}') format('svg');
             font-weight: bold;
             font-style: normal;
             font-display: swap;
@@ -64,8 +64,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ThinItalic.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ThinItalic.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ThinItalic.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ThinItalic.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ThinItalic.svg#Montserrat-ThinItalic') format('svg');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-ThinItalic.eot') }}');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-ThinItalic.eot?#iefix') }}') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-ThinItalic.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-ThinItalic.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-ThinItalic.svg#Montserrat-ThinItalic')}}') format('svg');
             font-weight: 100;
             font-style: italic;
             font-display: swap;
@@ -73,8 +73,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Black.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Black.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Black.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Black.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Black.svg#Montserrat-Black') format('svg');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-Black.eot') }}');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-Black.eot?#iefix') }}') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-Black.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-Black.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-Black.svg#Montserrat-Black')}}') format('svg');
             font-weight: 900;
             font-style: normal;
             font-display: swap;
@@ -82,8 +82,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-BoldItalic.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-BoldItalic.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-BoldItalic.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-BoldItalic.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-BoldItalic.svg#Montserrat-BoldItalic') format('svg');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-BoldItalic.eot') }}');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-BoldItalic.eot?#iefix') }}') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-BoldItalic.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-BoldItalic.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-BoldItalic.svg#Montserrat-BoldItalic')}}') format('svg');
             font-weight: bold;
             font-style: italic;
             font-display: swap;
@@ -91,8 +91,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-MediumItalic.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-MediumItalic.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-MediumItalic.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-MediumItalic.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-MediumItalic.svg#Montserrat-MediumItalic') format('svg');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-MediumItalic.eot') }}');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-MediumItalic.eot?#iefix')}} ') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-MediumItalic.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-MediumItalic.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-MediumItalic.svg#Montserrat-MediumItalic')}}') format('svg');
             font-weight: 500;
             font-style: italic;
             font-display: swap;
@@ -100,8 +100,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-BlackItalic.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-BlackItalic.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-BlackItalic.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-BlackItalic.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-BlackItalic.svg#Montserrat-BlackItalic') format('svg');
+            src: url('{{url('/assets/fonts/Montserrat/Montserrat-BlackItalic.eot')}}');
+            src: url('{{url('/assets/fonts/Montserrat/Montserrat-BlackItalic.eot?#iefix')}}') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-BlackItalic.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-BlackItalic.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-BlackItalic.svg#Montserrat-BlackItalic')}}') format('svg');
             font-weight: 900;
             font-style: italic;
             font-display: swap;
@@ -109,8 +109,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Thin.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Thin.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Thin.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Thin.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Thin.svg#Montserrat-Thin') format('svg');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-Thin.eot') }}');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-Thin.eot?#iefix') }}') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-Thin.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-Thin.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-Thin.svg#Montserrat-Thin')}}') format('svg');
             font-weight: 100;
             font-style: normal;
             font-display: swap;
@@ -118,8 +118,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-SemiBold.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-SemiBold.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-SemiBold.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-SemiBold.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-SemiBold.svg#Montserrat-SemiBold') format('svg');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-SemiBold.eot') }}');
+            src: url('{{ url('/assets/fonts/Montserrat/Montserrat-SemiBold.eot?#iefix') }}') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-SemiBold.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-SemiBold.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-SemiBold.svg#Montserrat-SemiBold')}}') format('svg');
             font-weight: 600;
             font-style: normal;
             font-display: swap;
@@ -127,8 +127,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Regular.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Regular.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Regular.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-Regular.svg#Montserrat-Regular') format('svg');
+            src: url('{{url('/assets/fonts/Montserrat/Montserrat-Regular.eot')}}');
+            src: url('{{url('/assets/fonts/Montserrat/Montserrat-Regular.eot?#iefix')}}') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-Regular.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-Regular.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-Regular.svg#Montserrat-Regular')}}') format('svg');
             font-weight: normal;
             font-style: normal;
             font-display: swap;
@@ -136,8 +136,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-SemiBoldItalic.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-SemiBoldItalic.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-SemiBoldItalic.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-SemiBoldItalic.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-SemiBoldItalic.svg#Montserrat-SemiBoldItalic') format('svg');
+            src: url('{{url('/assets/fonts/Montserrat/Montserrat-SemiBoldItalic.eot')}}');
+            src: url('{{url('/assets/fonts/Montserrat/Montserrat-SemiBoldItalic.eot?#iefix')}}') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-SemiBoldItalic.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-SemiBoldItalic.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-SemiBoldItalic.svg#Montserrat-SemiBoldItalic')}}') format('svg');
             font-weight: 600;
             font-style: italic;
             font-display: swap;
@@ -145,8 +145,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraBold.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraBold.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraBold.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraBold.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraBold.svg#Montserrat-ExtraBold') format('svg');
+            src: url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraBold.eot')}}');
+            src: url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraBold.eot?#iefix')}}') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraBold.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraBold.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraBold.svg#Montserrat-ExtraBold')}}') format('svg');
             font-weight: 800;
             font-style: normal;
             font-display: swap;
@@ -154,8 +154,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraLight.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraLight.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraLight.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraLight.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraLight.svg#Montserrat-ExtraLight') format('svg');
+            src: url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraLight.eot')}}');
+            src: url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraLight.eot?#iefix')}}') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraLight.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraLight.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraLight.svg#Montserrat-ExtraLight')}}') format('svg');
             font-weight: 200;
             font-style: normal;
             font-display: swap;
@@ -163,8 +163,8 @@
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.eot');
-            src: url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.eot?#iefix') format('embedded-opentype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.woff') format('woff'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.ttf') format('truetype'), url('{{env('APP_URL')}}/assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.svg#Montserrat-ExtraBoldItalic') format('svg');
+            src: url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.eot')}}');
+            src: url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.eot?#iefix')}}') format('embedded-opentype'), url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.woff')}}') format('woff'), url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.ttf')}}') format('truetype'), url('{{url('/assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.svg#Montserrat-ExtraBoldItalic')}}') format('svg');
             font-weight: 800;
             font-style: italic;
             font-display: swap;
@@ -185,7 +185,7 @@
             width: 1125px;
             height: 910px;
             background-color: #f5f5f5;
-            background-image: url("{{env('APP_URL')}}/assets/img/certificates/cert-bg.png");
+            background-image: url("{{ url('/assets/img/certificates/cert-bg.png') }}");
             background-size: cover;
             line-height: 100%;
             position: relative;
@@ -308,7 +308,7 @@
         .manyline-field-1 {
             height: 78px;
             width: 474px;
-            background-image: url({{env('APP_URL')}}/assets/img/certificates/fieldBg1.png);
+            background-image: url({{url('/assets/img/certificates/fieldBg1.png')}});
             background-size: 100%;
             background-repeat: no-repeat;
         }
@@ -316,7 +316,7 @@
         .manyline-field-2 {
             height: 140px;
             width: 474px;
-            background-image: url({{env('APP_URL')}}/assets/img/certificates/fieldBg2.png);
+            background-image: url({{url('/assets/img/certificates/fieldBg2.png')}});
             background-size: 100% 100%;
             background-repeat: no-repeat;
         }
@@ -329,7 +329,7 @@
 
 <body>
 <!---->
-<img src="{{env('APP_URL')}}/assets/img/certificates/cert-border.png" class="border-image">
+<img src="{{url('/assets/img/certificates/cert-border.png')}}" class="border-image">
 <div class="diploma ">
     <div class="diploma__inner2 ">
         <div class="diploma__inner ">
@@ -435,13 +435,13 @@
                     </td>
                     <td width="10%">
                         <div style="position: relative; ">
-                            <img src="{{env('APP_URL')}}{{$data['company_logo']}}"
+                            <img src="{{url($data['company_logo'])}}"
                                  style="width: 100px; right: 0px;position: absolute; top: 5px; ">
                         </div>
                     </td>
                     <td width="50% ">
                         <div style="position: relative; ">
-                            <img src="{{env('APP_URL')}}/assets/img/certificates/cert-logo.png"
+                            <img src="{{url('/assets/img/certificates/cert-logo.png')}}"
                                  style="width: 250px; right: 20px;position: absolute; top: 40px; ">
                         </div>
                     </td>
