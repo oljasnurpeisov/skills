@@ -47,7 +47,7 @@
                                     <script>document.getElementById('contract_quota').value = {{ $request['contract_quota'] ?? '' }};</script>
                                 </td>
                                 <td>
-                                    <a class="btn" style="background: #e2e2e2; color: #333">Сбросить</a>
+                                    <a class="btn" style="background: #e2e2e2; color: #333" href="{{ route(Route::currentRouteName(), ['lang' => $lang]) }}">Сбросить</a>
                                     <button class="btn">Поиск</button>
                                 </td>
                             </form>
