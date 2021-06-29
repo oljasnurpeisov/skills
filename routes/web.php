@@ -112,7 +112,8 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get("/courses/deleted", "CourseController@deleted_index");
                 Route::get('/courses/published', 'CourseController@published_index');
                 Route::get('/course/{item}', 'CourseController@view');
-                Route::post('/course/publish/{item}', 'CourseController@publish');
+                Route::post('/course/publish/{item}', 'CourseController@publish')->name('admin.courses.publish');
+                Route::post('/course/reject/{item}', 'CourseController@reject')->name('admin.courses.reject');
                 Route::post('/course/unpublish/{item}', 'CourseController@unpublish');
                 Route::post('/course/accept/{item}', 'CourseController@accept')->name('admin.courses.accept');
                 Route::post('/course/quota_request/{item}', 'CourseController@quota_request');

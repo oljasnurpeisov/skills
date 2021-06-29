@@ -346,25 +346,23 @@
                             @endif
                         </div>
                     </div>
-                    <div id="dialog-confirm-reject" class="modal" style="display: none;">
+                    <form action="{{ route('admin.courses.reject', ['lang' => $lang, 'item' => $item->id]) }}" method="POST" id="dialog-confirm-reject" class="modal" style="display: none;">
+                        @csrf
                         <h4 class="title-secondary">{{ __('admin.pages.courses.reject_title') }}</h4>
                         <hr>
                         <div class="input-group" id="rejectMessageBlock">
-                            <textarea form="course_form" name="rejectMessage" id="rejectMessage"
-                                          placeholder="Сообщение об отказе публикации"
-                                          class="input-regular"></textarea>
+                            <textarea name="rejectMessage" id="rejectMessage" placeholder="Сообщение об отказе публикации" class="input-regular"></textarea>
                         </div>
                         <div class="buttons justify-end">
                             <div>
-                                <button type="submit" form="course_form" id="send_reject" name="action" value="reject"
-                                        class="btn btn--red btn--delete">{{ __('admin.pages.courses.reject_button_title_1') }}</button>
+                                <button class="btn btn--red btn--delete">{{ __('admin.pages.courses.reject_button_title_1') }}</button>
                                 {{--<button type="submit" name="action" value="reject" class="btn btn--red">{{ __('admin.pages.deleting.submit') }}</button>--}}
                             </div>
                             <div>
                                 <button class="btn" data-fancybox-close>{{ __('admin.labels.cancel') }}</button>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

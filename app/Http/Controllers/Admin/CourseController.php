@@ -177,6 +177,48 @@ class CourseController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Отклонение курса
+     *
+     * @param $lang
+     * @param Course $item
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function reject($lang, Course $item, Request $request)
+    {
+        $user = $item->user()->first();
+
+        $item->status = 2;
+        $item->save();
+
+        $notification_data = [
+            'course_reject_message' => $request->rejectMessage
+        ];
+        $notification_name = "notifications.course_reject";
+        NotificationsHelper::createNotification($notification_name, $item->id, $user->id, 0, $notification_data);
+
+        $data = [
+            'item' => $item,
+            'lang' => $lang,
+            'message_text' => $request->rejectMessage,
+        ];
+
+        try {
+
+            Mail::send('app.pages.page.emails.course_reject', ['data' => $data], function ($message) use ($request, $item, $user) {
+                $message->from(env("MAIL_USERNAME"), env('APP_NAME'));
+                $message->to($user->email, 'Receiver')->subject(__('notifications.publish_course_title'));
+            });
+
+        } catch (\Exception $e) {
+
+        }
+
+        return redirect()->back()->with('status', trans('admin.pages.courses.course_reject', ['course_name' => $item->name, 'rejectMessage' => $request->rejectMessage]));
+    }
+
+
     public function publish($lang, Course $item, Request $request)
     {
         if ($item->status == 1 or $item->status == 2 or $item->status == 3) {
