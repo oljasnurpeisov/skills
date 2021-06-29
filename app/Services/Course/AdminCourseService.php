@@ -3,11 +3,10 @@
 namespace Services\Course;
 
 use App\Models\Contract;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Course;
 use Illuminate\Support\Facades\Auth;
 use Services\Contracts\AuthorContractService;
 use Services\Contracts\ContractServiceRouting;
-use Services\Documents\DocumentService;
 
 class AdminCourseService
 {
@@ -48,5 +47,17 @@ class AdminCourseService
             ->findOrFail($contract_id);
 
         $this->contractServiceRouting->toNextRoute($contract);
+    }
+
+    /**
+     * Отменяем доступ по квоте
+     *
+     * @param int $course_id
+     */
+    public function rejectQuota(int $course_id)
+    {
+        Course::find($course_id)->update([
+            'quota_status' => 0
+        ]);
     }
 }

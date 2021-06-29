@@ -113,4 +113,19 @@ class ContractService
            $contract->delete();
        }
    }
+
+    /**
+     * Расторжение договора
+     *
+     * @param int $contract_id
+     * @param string $message
+     * @return void
+     */
+   public function rejectContract(int $contract_id, string $message): void
+   {
+       Contract::find($contract_id)->update([
+           'status'         => 3,
+           'reject_comment' => $message
+       ]);
+   }
 }

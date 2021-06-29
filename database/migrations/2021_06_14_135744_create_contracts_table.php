@@ -21,6 +21,7 @@ class CreateContractsTable extends Migration
             $table->integer('status')->default(0)->index();
             $table->integer('route_id')->default(null)->index();
             $table->integer('type')->index();
+            $table->text('reject_comment');
             $table->timestamps();
         });
     }

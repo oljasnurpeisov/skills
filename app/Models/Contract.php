@@ -16,7 +16,7 @@ class Contract extends Model
 {
     protected $table = 'contracts';
 
-    protected $fillable = ['number', 'course_id', 'link', 'type', 'status', 'route_id'];
+    protected $fillable = ['number', 'course_id', 'link', 'type', 'status', 'route_id', 'reject_comment'];
 
     /**
      * Course

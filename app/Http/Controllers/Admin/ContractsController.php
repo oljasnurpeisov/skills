@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Contract;
 use App\Models\Course;
+use Dingo\Api\Auth\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -195,5 +196,28 @@ class ContractsController extends Controller
         $this->adminCourseService->acceptContract($request->contract_id);
 
         return redirect()->route('admin.contracts.pending', ['lang' => $request->lang]);
+    }
+
+    /**
+     * Расторжение договора директором
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function rejectContract(Request $request): RedirectResponse
+    {
+        $contract = Contract::findOrFail($request->contract_id);
+
+        if (!$contract->isSigned() or !$contract->isQuota() or ! \Auth::user()->hasRole('rukovoditel')) abort(403);
+
+        // Отклоняем договор
+        $this->contractService->rejectContract($contract->id, $request->message);
+
+        // Отменяем доступ по квоте
+        $this->adminCourseService->rejectQuota($contract->course->id);
+
+        // @TODO Send author notification
+
+        return redirect()->back();
     }
 }

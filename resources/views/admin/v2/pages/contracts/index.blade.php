@@ -30,6 +30,9 @@
                     <col span="1" style="width: 7%;">
                     <col span="1" style="width: 15%;">
                     <col span="1" style="width: 15%;">
+                    @if (Route::currentRouteName() === 'admin.contracts.distributed')
+                        <col span="1" style="width: 15%;">
+                    @endif
                     <col span="1" style="width: 15%;">
                 </colgroup>
                 <thead>
@@ -41,6 +44,9 @@
                     <th>Тип курса</th>
                     <th>Дата подписания Автором</th>
                     <th>Дата публикации</th>
+                    @if (Route::currentRouteName() === 'admin.contracts.distributed')
+                        <th>Причина отклонения</th>
+                    @endif
                     <th>Договор</th>
                 </tr>
                 </thead>
@@ -73,6 +79,9 @@
                             </th>
                             <th></th>
                             <th></th>
+                            @if (Route::currentRouteName() === 'admin.contracts.distributed')
+                                <th></th>
+                            @endif
                             <th>
                                 <div class="buttons btn-group-sm">
                                     <a href="{{ route(Route::currentRouteName(), ['lang' => $lang]) }}" class="btn" style="color: #fff; background: #e2e2e2; text-decoration:none; height: 30px; margin-top: 2px; margin-right: 5px">Очистить</a>
@@ -92,6 +101,9 @@
                             <td>{{ $contract->course->getTypeName() }}</td>
                             <td>-</td>
                             <td>{{ $contract->course->publish_at ?? '-' }}</td>
+                            @if (Route::currentRouteName() === 'admin.contracts.distributed')
+                                <td>{{ $contract->reject_comment }}</td>
+                            @endif
                             <td>
                                 <div class="action-buttons">
                                     @if (!empty($contract->current_route))
