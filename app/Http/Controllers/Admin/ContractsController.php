@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Contract;
 use App\Models\Course;
-use Dingo\Api\Auth\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -208,7 +207,7 @@ class ContractsController extends Controller
     {
         $contract = Contract::findOrFail($request->contract_id);
 
-        if (!$contract->isSigned() or !$contract->isQuota() or ! \Auth::user()->hasRole('rukovoditel')) abort(403);
+        if (!$contract->isSigned() or !$contract->isQuota() or ! Auth::user()->hasRole('rukovoditel')) abort(403);
 
         // Отклоняем договор
         $this->contractService->rejectContract($contract->id, $request->message);
