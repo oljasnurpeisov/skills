@@ -4,7 +4,6 @@ namespace Services\Contracts;
 
 
 use App\Models\Contract;
-use App\Models\Role;
 use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -12,19 +11,36 @@ use Illuminate\Support\Facades\Session;
 class AuthorContractService
 {
     /**
+     * @var ContractFilterService
+     */
+    private $contractFilterService;
+
+    /**
+     * AuthorContractService constructor.
+     *
+     * @param ContractFilterService $contractFilterService
+     */
+    public function __construct(ContractFilterService $contractFilterService)
+    {
+        $this->contractFilterService = $contractFilterService;
+    }
+
+    /**
      * Получаем договора автора
      *
-     * @param array|null $search
+     * @param array|null $request
      * @return LengthAwarePaginator
      */
-    public function getOrSearchMyContracts(array $search = null): LengthAwarePaginator
+    public function getOrSearchMyContracts(array $request = null): LengthAwarePaginator
     {
-//        dd($search);
+        $contracts = Contract::signed()->with('course');
 
-        return Contract::signed()->with('course')
-            ->whereHas('course', function ($q) {
-                return $q->whereAuthorId(Auth::user()->id);
-            })->latest()->paginate(10);
+        $contracts = $this->contractFilterService->search($contracts, $request);
+
+        return $contracts->whereHas('course', function ($q) {
+            return $q->whereAuthorId(Auth::user()->id);
+        })->latest()->paginate(10);
+
     }
 
     /**

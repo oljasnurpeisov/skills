@@ -30,22 +30,24 @@
                                 </td>
                                 <td></td>
                                 <td>
-                                    <select name="contract_type" type="text" class="selectize-regular no-search">
+                                    <select name="contract_type" id="contract_type" type="text" class="selectize-regular no-search">
                                         <option value="">Выберите тип</option>
                                         <option value="1">Бесплатный</option>
                                         <option value="2">Платный</option>
                                         <option value="3">При гос. поддержке</option>
                                     </select>
+                                    <script>document.getElementById('contract_type').value = {{ $request['contract_type'] ?? '' }};</script>
                                 </td>
                                 <td>
-                                    <select name="quota" type="text" class="selectize-regular no-search">
+                                    <select name="contract_quota" id="contract_quota" type="text" class="selectize-regular no-search">
                                         <option value="">Выберите доступность</option>
                                         <option value="1">Да</option>
                                         <option value="2">Нет</option>
                                     </select>
+                                    <script>document.getElementById('contract_quota').value = {{ $request['contract_quota'] ?? '' }};</script>
                                 </td>
                                 <td>
-                                    <a class="btn" style="background: #e2e2e2; color: #333">Сбросить</a>
+                                    <a class="btn" style="background: #e2e2e2; color: #333" href="{{ route(Route::currentRouteName(), ['lang' => $lang]) }}">Сбросить</a>
                                     <button class="btn">Поиск</button>
                                 </td>
                             </form>
