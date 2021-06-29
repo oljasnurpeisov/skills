@@ -20,6 +20,34 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <tr>
+                            <form action="">
+                                <td>
+                                    <input type="text" name="contract_number" placeholder="Номер договора" class="input-regular" value="">
+                                </td>
+                                <td>
+                                    <input type="text" name="course_name" placeholder="Наименование курса" class="input-regular" value="">
+                                </td>
+                                <td></td>
+                                <td>
+                                    <select name="contract_type" type="text" class="selectize-regular no-search">
+                                        <option value="">Бесплатный</option>
+                                        <option value="">Платный</option>
+                                        <option value="">При гос. поддержке</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="quota" type="text" class="selectize-regular no-search">
+                                        <option value="">Да</option>
+                                        <option value="">Нет</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <a class="btn" style="background: #e2e2e2; color: #333">Сбросить</a>
+                                    <button class="btn">Поиск</button>
+                                </td>
+                            </form>
+                        </tr>
                         @foreach ($contracts as $contract)
                             <tr>
                                 <td>{{ $contract->number }}</td>
