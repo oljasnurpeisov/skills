@@ -7,7 +7,6 @@ use App\Models\Contract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\AuthorContractService;
 use Services\Contracts\ContractService;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -39,12 +38,14 @@ class ContractsController extends Controller
     /**
      * Договоры автора
      *
+     * @param Request $request
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         return view('app.pages.author.contracts.index', [
-            'contracts' => $this->authorContractService->getMyContracts()
+            'contracts' => $this->authorContractService->getOrSearchMyContracts($request->all()),
+            'request'   => $request->all()
         ]);
     }
 

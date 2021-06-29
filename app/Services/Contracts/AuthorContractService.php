@@ -14,10 +14,13 @@ class AuthorContractService
     /**
      * Получаем договора автора
      *
+     * @param array|null $search
      * @return LengthAwarePaginator
      */
-    public function getMyContracts(): LengthAwarePaginator
+    public function getOrSearchMyContracts(array $search = null): LengthAwarePaginator
     {
+//        dd($search);
+
         return Contract::signed()->with('course')
             ->whereHas('course', function ($q) {
                 return $q->whereAuthorId(Auth::user()->id);

@@ -23,23 +23,25 @@
                         <tr>
                             <form action="">
                                 <td>
-                                    <input type="text" name="contract_number" placeholder="Номер договора" class="input-regular" value="">
+                                    <input type="text" name="contract_number" placeholder="Номер договора" class="input-regular" value="{{ $request['contract_number'] ?? '' }}">
                                 </td>
                                 <td>
-                                    <input type="text" name="course_name" placeholder="Наименование курса" class="input-regular" value="">
+                                    <input type="text" name="course_name" placeholder="Наименование курса" class="input-regular" value="{{ $request['course_name'] ?? '' }}">
                                 </td>
                                 <td></td>
                                 <td>
                                     <select name="contract_type" type="text" class="selectize-regular no-search">
-                                        <option value="">Бесплатный</option>
-                                        <option value="">Платный</option>
-                                        <option value="">При гос. поддержке</option>
+                                        <option value="">Выберите тип</option>
+                                        <option value="1">Бесплатный</option>
+                                        <option value="2">Платный</option>
+                                        <option value="3">При гос. поддержке</option>
                                     </select>
                                 </td>
                                 <td>
                                     <select name="quota" type="text" class="selectize-regular no-search">
-                                        <option value="">Да</option>
-                                        <option value="">Нет</option>
+                                        <option value="">Выберите доступность</option>
+                                        <option value="1">Да</option>
+                                        <option value="2">Нет</option>
                                     </select>
                                 </td>
                                 <td>
