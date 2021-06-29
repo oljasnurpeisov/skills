@@ -10,7 +10,8 @@
   "require": {
     "php": "^7.3|^8.0",
     "ext-json": "*",
-    "barryvdh/laravel-dompdf": "^0.8.7",
+    "barryvdh/laravel-dompdf": "^0.9.0",
+    "dompdf/dompdf": "^1.0.2",
     "dingo/api": "^3.0",
     "edujugon/push-notification": "^4.5",
     "fideloper/proxy": "^4.2",
