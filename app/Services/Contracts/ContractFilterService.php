@@ -58,13 +58,15 @@ class ContractFilterService
      * @param array $request
      * @return Builder
      */
-    private function search(Builder $contracts, array $request): Builder
+    public function search(Builder $contracts, array $request): Builder
     {
         $contracts = $this->searchByContractName($contracts, $request);
         $contracts = $this->searchByCourseName($contracts, $request);
         $contracts = $this->searchByCompanyName($contracts, $request);
         $contracts = $this->filterByContractStatus($contracts, $request);
+        $contracts = $this->filterByContractType($contracts, $request);
         $contracts = $this->filterByCourseType($contracts, $request);
+        $contracts = $this->filterByQuota($contracts, $request);
 
         return $contracts;
     }
@@ -144,6 +146,22 @@ class ContractFilterService
     }
 
     /**
+     * Фильтр по типу договора
+     *
+     * @param Builder $contracts
+     * @param $request
+     * @return Builder
+     */
+    private function filterByContractType(Builder $contracts, array $request): Builder
+    {
+        if (!empty($request['contract_type'])) {
+            return $contracts->whereType($request['contract_type']);
+        }
+
+        return $contracts;
+    }
+
+    /**
      * Фильтр по типу курса
      *
      * @param Builder $contracts
@@ -160,15 +178,37 @@ class ContractFilterService
             }
 
             if ($request['course_type'] == 2) {
-                $contracts =  $contracts->whereHas('course', function($q) {
+                $contracts = $contracts->whereHas('course', function($q) {
                     return $q->paid();
                 });
             }
 
             if ($request['course_type'] == 3) {
-                $contracts =  $contracts->whereHas('course', function($q) {
+                $contracts = $contracts->whereHas('course', function($q) {
                     return $q->quota();
                 });
+            }
+        }
+
+        return $contracts;
+    }
+
+    /**
+     * Фильтр по доступности квоты
+     *
+     * @param Builder $contracts
+     * @param $request
+     * @return Builder
+     */
+    private function filterByQuota(Builder $contracts, array $request): Builder
+    {
+        if (!empty($request['contract_quota'])) {
+            if ($request['contract_quota'] === 1) {
+                $contracts = $contracts->whereType(3);
+            }
+
+            if ($request['contract_quota'] === 0) {
+                $contracts = $contracts->where('type', '!=', 3);
             }
         }
 

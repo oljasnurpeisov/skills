@@ -38,7 +38,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select name="quota" type="text" class="selectize-regular no-search">
+                                    <select name="contract_quota" type="text" class="selectize-regular no-search">
                                         <option value="">Выберите доступность</option>
                                         <option value="1">Да</option>
                                         <option value="2">Нет</option>
