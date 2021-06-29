@@ -112,7 +112,7 @@
   'montserrat' => array(
     '300_italic' => $fontDir . '/montserrat-300-italic_d88b21ff681369158f8b3ebf8b2023e5',
     '300' => $fontDir . '/montserrat-300_37873a515c8c489a3bdeafacd6ba23aa',
-    '900' => $fontDir . '/montserrat_900_ae6ad4357653cc06eb70f64fa5fc718d',
+    '900' => $fontDir . '/montserrat-900_ae6ad4357653cc06eb70f64fa5fc718d',
     '200' => $fontDir . '/montserrat-200_f9b2cc9e94ef200a55b51a3e5e446fd1',
     '100_italic' => $fontDir . '/montserrat-100-italic_c6c9d0c8a51dfa5a21489161bc8e75e5',
     '500_italic' => $fontDir . '/montserrat-500-italic_564e1920d5438cf8be3e728ac1b78834',
@@ -121,7 +121,7 @@
     '500' => $fontDir . '/montserrat-500_179bbb6eb582fa8cdaa1dae9162c957f',
     'bold' => $fontDir . '/montserrat-bold_99ebeab9948a78cf66b672ebdf9aa3b1',
     'bold_italic' => $fontDir . '/montserrat-bold-italic_dfc605fb7d03d059d3af33ce3a154ca2',
-    '900_italic' => $fontDir . '/montserrat_900_italic_999b1cd67454b9ac020d2fd3d068c83b',
+    '900_italic' => $fontDir . '/montserrat-900-italic_999b1cd67454b9ac020d2fd3d068c83b',
     '100' => $fontDir . '/montserrat-100_cf15fff5c0cb314a334c5d1b30d51b64',
     '600' => $fontDir . '/montserrat-600_18b7caa2098564c9dfae4fcad79f3ac0',
     'normal' => $fontDir . '/montserrat-normal_0830bd9e371fe5f15efe78cf1e0a3ef6',
