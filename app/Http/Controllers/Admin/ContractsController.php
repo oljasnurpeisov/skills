@@ -117,7 +117,6 @@ class ContractsController extends Controller
      *
      * @param Request $request
      * @return View
-     * @throws AuthorizationException
      */
     public function rejectedByAdmin(Request $request): View
     {
