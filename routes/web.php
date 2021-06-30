@@ -138,6 +138,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/contracts/signed', 'ContractsController@signed')->name('admin.contracts.signed');
                 Route::get('/contracts/distributed', 'ContractsController@distributed')->name('admin.contracts.distributed');
                 Route::get('/contracts/rejected-by-author', 'ContractsController@rejectedByAuthor')->name('admin.contracts.rejected_by_author');
+                Route::get('/contracts/rejected-by-admin', 'ContractsController@rejectedByAdmin')->name('admin.contracts.rejected_by_admin');
                 Route::get('/contracts/pending', 'ContractsController@pending')->name('admin.contracts.pending');
 
                 Route::get('/contracts/{contract_id}/view', 'ContractsController@view')->name('admin.contracts.view');
@@ -148,6 +149,9 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post('/contracts/{contract_id}/reject-contract', 'ContractsController@rejectContract')->name('admin.contracts.reject_contract');
 
                 Route::get("/contracts/signing/{contract_id}/next", "ContractsController@next")->name('admin.contracts.contract.next'); // Заглушка пока нет эцп
+                Route::post("/contracts/rejecting/{contract_id}/admin", "ContractsController@rejectContractByAdmin")->name('admin.contracts.contract.reject_by_admin');
+                Route::post("/contracts/rejecting/{contract_id}/moderator", "ContractsController@rejectContractByModerator")->name('admin.contracts.contract.reject_by_moderator');
+                Route::get("/contracts/rejecting/{contract_id}/cancel", "ContractsController@rejectContractByAdminCancel")->name('admin.contracts.contract.reject_by_admin_cancel');
 
             });
             // Страницы

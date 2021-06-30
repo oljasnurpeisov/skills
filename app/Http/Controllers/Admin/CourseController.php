@@ -178,7 +178,7 @@ class CourseController extends Controller
     }
 
     /**
-     * Отклонение курса
+     * Отклонение курса (перенесено из $this->publish)
      *
      * @param $lang
      * @param Course $item

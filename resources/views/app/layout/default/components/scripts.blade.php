@@ -1,5 +1,5 @@
 <script src="/assets/libs/jquery/dist/jquery.js"></script>
-<script src="https://cdn.tiny.cloud/1/dypqwpg7c59aateufscg61hqfrr4d8ylm54905fckvunt7pg/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.tiny.cloud/1/c0cnq2qz6yd8ycmigfdsxz6lq0yrz0njkstn32tcnwiij71c/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="/assets/libs/maskedinput/maskedinput.js"></script>
 <script src="/assets/libs/fancybox/dist/jquery.fancybox.min.js"></script>
 <script src="/assets/libs/slick-carousel/slick/slick.js"></script>

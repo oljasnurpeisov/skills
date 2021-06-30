@@ -2,14 +2,14 @@
 
 namespace Services\Contracts;
 
-
 use App\Models\Contract;
 use App\Models\Course;
+use Illuminate\Support\Facades\Auth;
 use Libraries\Word\Agreement;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Settings;
-use Barryvdh\DomPDF\PDF;
+use Services\Course\AdminCourseService;
 
 /**
  * Class ContractService
@@ -19,6 +19,34 @@ use Barryvdh\DomPDF\PDF;
  */
 class ContractService
 {
+    /**
+     * @var AdminCourseService
+     */
+    private $adminCourseService;
+
+    /**
+     * ContractService constructor.
+     * @param AdminCourseService $adminCourseService
+     */
+    public function __construct(AdminCourseService $adminCourseService)
+    {
+        $this->adminCourseService = $adminCourseService;
+    }
+
+    /**
+     * Получение договора, если очередь юзера
+     *
+     * @param $contract_id
+     * @return Contract
+     */
+    public function getContractIfMyCurrentRoute($contract_id): Contract
+    {
+        return Contract::whereHas('current_route', function ($r) {
+                return $r->whereRoleId(Auth::user()->role->role_id);
+            })
+            ->findOrFail($contract_id);
+    }
+
     /**
      * Создаем договор,
      * если данного типа еще не создан
@@ -128,4 +156,56 @@ class ContractService
            'reject_comment' => $message
        ]);
    }
+
+    /**
+     * Отклонение договора от администрации
+     *
+     * @param int $contract_id
+     * @param string $message
+     * @return void
+     */
+   public function rejectContractByAdmin(int $contract_id, string $message): void
+   {
+       Contract::find($contract_id)->update([
+           'status'         => 5,
+           'reject_comment' => $message
+       ]);
+   }
+
+    /**
+     * Отмена отклонения договора администрацией,
+     * возращаем обратно на подписание
+     *
+     * @param int $contract_id
+     * @return void
+     */
+   public function rejectContractByAdminCancel(int $contract_id): void
+   {
+       Contract::find($contract_id)->update([
+           'status'         => 1,
+           'reject_comment' => null
+       ]);
+   }
+
+    /**
+     * Подтверждение отклонения договора
+     *
+     * @param int $contract_id
+     * @param string $message
+     */
+    public function rejectContractConfirmation(int $contract_id, string $message): void
+    {
+        $contract = Contract::findOrFail($contract_id);
+
+        $contract->update([
+            'status'         => 6,
+            'reject_comment' => $message
+        ]);
+
+        if ($contract->isPaid() or $contract->isFree()) {
+            $this->adminCourseService->rejectCourse($contract->course->id);
+        } else {
+            $this->adminCourseService->rejectQuota($contract->course->id);
+        }
+    }
 }
