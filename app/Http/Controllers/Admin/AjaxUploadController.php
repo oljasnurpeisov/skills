@@ -25,6 +25,7 @@ class AjaxUploadController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function ajax_upload_image(Request $request)
     {
