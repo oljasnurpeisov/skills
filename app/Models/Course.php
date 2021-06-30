@@ -277,7 +277,7 @@ class Course extends Model
      * @param $q
      * @return mixed
      */
-    public function scopeCourseCheck($q)
+    public function scopeCourseCheck($q): Builder
     {
         return $q->whereStatus(5);
     }
@@ -400,7 +400,7 @@ class Course extends Model
      *
      * @return bool
      */
-    public function isPaidContractCreated()
+    public function isPaidContractCreated(): bool
     {
         return Contract::whereType(2)->whereCourseId($this->id)->notRejectedByAuthor()->exists();
     }
@@ -410,7 +410,7 @@ class Course extends Model
      *
      * @return bool
      */
-    public function isQuotaContractCreated()
+    public function isQuotaContractCreated(): bool
     {
         return Contract::whereType(3)->whereCourseId($this->id)->notRejectedByAuthor()->exists();
     }

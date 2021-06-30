@@ -459,6 +459,12 @@ return [
         ],
 
         'auth' => [
+
+            'private_policy_agree_title_noCvModal' => 'Мен <a
+                            href="#privacyPolicy" onclick="$(\'#privacyPolicy a\').attr(\'href\', \'#noCvModal\').attr(\'data-checkbox\', \'#agreeCheckboxCv\');" title="пайдаланушы келісімі" data-fancybox>пайдаланушы келісімімен</a> таныспын',
+            'private_policy_agree_title_agreeModal' => 'Мен <a
+                            href="#privacyPolicy" onclick="$(\'#privacyPolicy a\').attr(\'href\', \'#agreeModal\').attr(\'data-checkbox\', \'#agreeCheckboxAgree\');" title="пайдаланушы келісімі" data-fancybox>пайдаланушы келісімімен</a> таныспын',
+
             'auth_title' => 'Кіру',
             'as_author' => 'Автор ретінде',
             'as_student' => 'Білім алушы ретінде',
