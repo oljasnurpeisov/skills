@@ -31,16 +31,14 @@ class CourseCertificateService
         $certificate->save();
         $data = [
             'author_name' => $course->user->company_name . '/' . $course->user->author_info->name . ' ' . $course->user->author_info->surname,
-            'author' => $course->user->author_info->name . ' ' . $course->user->author_info->surname,
-            'company' => $course->user->company_name,
-            'company_logo' => $course->user->company_logo,
+            'author' => $course->user,
+            'company_logo' => file_exists(public_path($course->user->company_logo)) ? $course->user->company_logo : '',
             'student_name' => $user->student_info->name,
             'duration' => $course->lessons->sum('duration'),
             'course_name' => $course->name,
             'skills' => $course->skills,
             'certificate_id' => sprintf("%012d", $certificate->id) . '-' . date('dmY')
         ];
-
         $filePath = '/users/user_' . $user->id;
 
         foreach ($languages as $language) {
