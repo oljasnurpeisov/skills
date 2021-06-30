@@ -370,7 +370,7 @@
                             <div style="left:12px;top:122px;" class="manyline-field manyline-field-2">
                                 @php($skills = $data['skills']->implode('name_kk', '; '))
                                 <div style="position: relative; margin-top: -4px;">
-                                    <p style="margin: 0; line-height: 20.5px">{{$skills}}</p>
+                                    <p style="margin: 0; line-height: 20.5px">{{$skills}};</p>
                                 </div>
                             </div>
                             <div style="left:12px;top:265px; position: absolute;">ие болғанын растайды</div>
@@ -398,7 +398,7 @@
                             <div style="left:12px;top:140px;" class="manyline-field manyline-field-2">
                                 @php($skills = $data['skills']->implode('name_ru', '; '))
                                 <div style="position: relative; margin-top: -4px;">
-                                    <p style="margin: 0; line-height: 20.5px">{{$skills}}</p>
+                                    <p style="margin: 0; line-height: 20.5px">{{$skills}};</p>
                                 </div>
                             </div>
                         </div>
