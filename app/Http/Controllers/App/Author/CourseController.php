@@ -442,6 +442,7 @@ class CourseController extends Controller
         $courses = Auth::user()->courses()->get();
 
         $courses->load('rate');
+        $courses->load('course_members');
 
         // Все оценки всех курсов
         $rates = [];
