@@ -222,6 +222,16 @@ class Contract extends Model
     }
 
     /**
+     * Отклонен администрацией или модератором
+     *
+     * @return bool
+     */
+    public function isRejectedByAdminOrModerator(): bool
+    {
+        return $this->status === 5 || $this->status === 6;
+    }
+
+    /**
      * Отклонен администрацией
      *
      * @return bool
@@ -272,7 +282,7 @@ class Contract extends Model
             case $this->isRejectedByAuthor():
                 return "Отклонен автором";
                 break;
-            case $this->isRejectedByAdmin():
+            case $this->isRejectedByAdminOrModerator():
                 $role_name = !empty($this->current_route) ? $this->current_route->role->name : 'Маршрут изменен';
                 return "Отклонен администрацией (". $role_name .")";
                 break;
