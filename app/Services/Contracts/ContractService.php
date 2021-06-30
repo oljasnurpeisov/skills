@@ -9,7 +9,6 @@ use Libraries\Word\Agreement;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Settings;
-use Services\Course\AdminCourseService;
 
 /**
  * Class ContractService
@@ -20,17 +19,11 @@ use Services\Course\AdminCourseService;
 class ContractService
 {
     /**
-     * @var AdminCourseService
-     */
-    private $adminCourseService;
-
-    /**
      * ContractService constructor.
-     * @param AdminCourseService $adminCourseService
      */
-    public function __construct(AdminCourseService $adminCourseService)
+    public function __construct()
     {
-        $this->adminCourseService = $adminCourseService;
+        //
     }
 
     /**
@@ -201,11 +194,5 @@ class ContractService
             'status'         => 6,
             'reject_comment' => $message
         ]);
-
-        if ($contract->isPaid() or $contract->isFree()) {
-            $this->adminCourseService->rejectCourse($contract->course->id);
-        } else {
-            $this->adminCourseService->rejectQuota($contract->course->id);
-        }
     }
 }

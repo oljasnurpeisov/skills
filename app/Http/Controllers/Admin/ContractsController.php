@@ -292,6 +292,8 @@ class ContractsController extends Controller
         // Расторжение договора
         $this->contractService->rejectContractConfirmation($contract->id, $request->message);
 
+        $this->adminCourseService->rejectOnContract($contract);
+
         // @TODO Send author notification
 
         return redirect()->back();

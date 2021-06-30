@@ -80,4 +80,18 @@ class AdminCourseService
             'status' => 2
         ]);
     }
+
+    /**
+     * Отклоняем курс или квоту при отклонении договора
+     *
+     * @param Contract $contract
+     */
+    public function rejectOnContract(Contract $contract)
+    {
+        if ($contract->isPaid() or $contract->isFree()) {
+            $this->rejectCourse($contract->course->id);
+        } else {
+            $this->rejectQuota($contract->course->id);
+        }
+    }
 }

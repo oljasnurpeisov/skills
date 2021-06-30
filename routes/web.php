@@ -17,8 +17,6 @@ use App\Http\Controllers\App\PageController;
 |
 */
 
-Route::get("/test", "TestController@test");
-
 // Админ панель
 Route::group(["namespace" => "Admin"], function () {
     Route::post('/ajax_upload_image', 'AjaxUploadController@ajax_upload_image')->name('ajax_upload_image');
