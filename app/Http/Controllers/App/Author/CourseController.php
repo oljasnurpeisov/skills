@@ -440,6 +440,9 @@ class CourseController extends Controller
     public function courseShow($lang, Course $item)
     {
         $courses = Auth::user()->courses()->get();
+
+        $courses->load('rate');
+
         // Все оценки всех курсов
         $rates = [];
         foreach ($courses as $course) {
