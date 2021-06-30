@@ -412,11 +412,11 @@
                         </div>
                         <div class="diploma__text_column " style="width: 100%; position: relative; left:12px; ">
                             <div class="diploma__text_field diploma__text_long-field "
-                                 style="top:0; left:0; position: absolute; ">{{$data['company']}}</div>
+                                 style="top:0; left:0; position: absolute; ">{{ $data['author']->type_ownership->name_short_ru }} "{{$data['author']->company_name}}"</div>
                             <div style="top:24px; left:0; position: absolute; ">Ұйымның атауы/Наименование организации
                             </div>
                             <div class="diploma__text_field diploma__text_long-field "
-                                 style="top:45px; left:0; position: absolute; ">{{$data['author']}}</div>
+                                 style="top:45px; left:0; position: absolute; ">{{ $data['author']->author_info->name . ' ' . $data['author']->author_info->surname }}</div>
                             <div style="top:69px; left:0; position: absolute; ">Автордың Т.А.Ә/Ф.И.О автора
                             </div>
                             <div style="top:100px; left:0; position: absolute; ">Сәйкестендіру номері/<br/S>Идентификационный
@@ -439,7 +439,7 @@
                     </td>
                     <td width="10%">
                         <div style="position: relative; ">
-                            <img src="{{url($data['company_logo'])}}"
+                            <img src="{{public_path($data['company_logo'])}}"
                                  style="width: 100px; right: 0px;position: absolute; top: 5px; ">
                         </div>
                     </td>
