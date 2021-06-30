@@ -121,7 +121,7 @@ class ContractsController extends Controller
      */
     public function rejectedByAdmin(Request $request): View
     {
-        $this->authorize('moderatorOnly', [Contract::class]);
+//        $this->authorize('moderatorOnly', [Contract::class]);
 
         return view('admin.v2.pages.contracts.index', [
             'contracts' => $this->contractFilterService->getOrSearch($request->all(), 'rejectedByAdminOrModerator'),
