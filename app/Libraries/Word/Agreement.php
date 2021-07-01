@@ -110,7 +110,7 @@ class Agreement
         $this->setData();
 
         $source     = 'contracts/templates/agreements/'. $this->type .'.docx';
-        $savePath   = 'contracts/templates/agreements/'. $this->type .'_'. $this->number.'.docx';
+        $savePath   = 'contracts/files/'. $this->type .'_'. $this->number.'.docx';
 
         try {
             $this->templateProcessor = new TemplateProcessor(public_path($source));
