@@ -25,7 +25,12 @@
                 {{--Управление для администрации по текущему маршруту--}}
                 @if ($contract->isPending() && $contract->current_route->role_id === Auth::user()->role->role_id)
                     <a href="{{ route('admin.contracts.contract.next', ['lang' => $lang, 'contract_id' => $contract->id]) }}" class="btn">Подписать</a>
-                    <a href="" class="btn btn--red" id="rejectBtn" data-btn="Вернуть" data-title="Укажите причину отправки на доработку" data-action="{{ route('admin.contracts.contract.reject_by_admin', ['lang' => $lang, 'contract_id' => $contract->id]) }}">Отправить на доработку</a>
+
+                    @if (!Auth::user()->hasRole('moderator'))
+                        <a href="" class="btn btn--red" id="rejectBtn" data-btn="Вернуть" data-title="Укажите причину отправки на доработку" data-action="{{ route('admin.contracts.contract.reject_by_admin', ['lang' => $lang, 'contract_id' => $contract->id]) }}">Отправить на доработку</a>
+                    @else
+                        <a href="" class="btn btn--red" id="rejectBtn" data-btn="Расторгнуть" data-title="Укажите причину расторжения договора" data-action="{{ route('admin.contracts.contract.reject_by_moderator', ['lang' => $lang, 'contract_id' => $contract->id]) }}">Отклонение договора</a>
+                    @endif
                 @endif
 
                 {{--Расторжение договора для директора--}}

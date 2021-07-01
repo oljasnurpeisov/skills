@@ -1,6 +1,6 @@
 @extends('admin.v2.layout.default.template')
 
-@section('title', 'Добавление роли')
+@section('title', 'Редактирование роли')
 
 @section('head')
 
@@ -11,7 +11,7 @@
         <div class="title-block">
             <div class="row row--multiline align-items-center">
                 <div class="col-md-4">
-                    <h1 class="title-primary" style="margin-bottom: 0">Добавление роли</h1>
+                    <h1 class="title-primary" style="margin-bottom: 0">Редактирование роли</h1>
                 </div>
             </div>
         </div>

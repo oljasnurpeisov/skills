@@ -62,6 +62,6 @@ class AdminContractPolicy
      */
     public function rejectContractByModerator(User $user, Contract $contract): bool
     {
-        return $contract->isRejectedByAdmin() and Auth::user()->hasRole('moderator');
+        return ($contract->isRejectedByAdmin() or $contract->isPending()) and Auth::user()->hasRole('moderator');
     }
 }
