@@ -254,7 +254,7 @@ class Course extends Model
 //        return $query->whereContractStatus(2);
 
         return $query->whereHas('contracts', function($q) {
-            return $q->whereHas('current_route', function($e) {
+            return $q->pending()->whereHas('current_route', function($e) {
                 return $e->where('role_id', '!=', 4);
             });
         });
