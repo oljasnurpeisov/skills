@@ -163,7 +163,7 @@ class Course extends Model
      */
     public function contracts(): HasMany
     {
-        return $this->hasMany(Contract::class, 'course_id', 'id')->where('status', '!=', 5);
+        return $this->hasMany(Contract::class, 'course_id', 'id')->whereIn('status', [1, 2]);
     }
 
     /**
@@ -173,7 +173,7 @@ class Course extends Model
      */
     public function contract_free(): HasOne
     {
-        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(1)->where('status', '!=', 5);
+        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(1)->whereIn('status', [1, 2]);
     }
 
     /**
@@ -183,7 +183,7 @@ class Course extends Model
      */
     public function contract_paid(): HasOne
     {
-        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(2)->where('status', '!=', 5);
+        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(2)->whereIn('status', [1, 2]);
     }
 
     /**
@@ -193,7 +193,7 @@ class Course extends Model
      */
     public function contract_quota(): HasOne
     {
-        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(3)->where('status', '!=', 5);
+        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(3)->whereIn('status', [1, 2]);
     }
 
     /**

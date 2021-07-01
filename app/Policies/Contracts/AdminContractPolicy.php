@@ -38,7 +38,7 @@ class AdminContractPolicy
      */
     public function rejectContract(User $user, Contract $contract): bool
     {
-        return $contract->isSigned() and $contract->isQuota() and Auth::user()->hasRole('rukovoditel');
+        return $contract->isSigned() and Auth::user()->hasRole('rukovoditel');
     }
 
     /**

@@ -152,6 +152,17 @@ class Contract extends Model
     }
 
     /**
+     * Не отклоненные админами
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeNotRejectedByAdmin($query): Builder
+    {
+        return $query->where('status', '!=', 5);
+    }
+
+    /**
      * Бесплатный?
      *
      * @return bool

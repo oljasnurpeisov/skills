@@ -229,8 +229,13 @@ class ContractsController extends Controller
 
         $this->authorize('rejectContract', [Contract::class, $contract]);
 
-        // Отклоняем договор
+        // Расторжение договора
         $this->contractService->rejectContract($contract->id, $request->message);
+
+        // Снимаем с публикации
+        if (!$contract->isQuota()) {
+            $this->adminCourseService->rejectCourse($contract->course->id);
+        }
 
         // Отменяем доступ по квоте
         $this->adminCourseService->rejectQuota($contract->course->id);
@@ -292,6 +297,11 @@ class ContractsController extends Controller
         $this->contractService->rejectContractConfirmation($contract->id, $request->message);
 
         $this->adminCourseService->rejectOnContract($contract);
+
+        // Снимаем с публикации
+        if (!$contract->isQuota()) {
+            $this->adminCourseService->rejectCourse($contract->course->id);
+        }
 
         // @TODO Send author notification
 

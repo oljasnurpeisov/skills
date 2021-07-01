@@ -144,10 +144,32 @@ class ContractService
      */
    public function rejectContract(int $contract_id, string $message): void
    {
-       Contract::find($contract_id)->update([
+       $contract = Contract::find($contract_id);
+
+       $contract->update([
            'status'         => 3,
            'reject_comment' => $message
        ]);
+
+       $this->rejectQuotaContractByPaid($contract->id);
+   }
+
+    /**
+     * Расторжение договора по квоте
+     *
+     * @param int $contract_id
+     * @param int $status
+     * @return void
+     */
+   public function rejectQuotaContractByPaid(int $contract_id, int $status = 3): void
+   {
+       $contract = Contract::find($contract_id);
+
+       if ($contract->isPaid() and !empty($contract->course->contract_quota)) {
+           $contract->course->contract_quota->update([
+               'status'    => $status,
+           ]);
+       }
    }
 
     /**
@@ -194,5 +216,7 @@ class ContractService
             'status'         => 6,
             'reject_comment' => $message
         ]);
+
+        $this->rejectQuotaContractByPaid($contract->id, 6);
     }
 }

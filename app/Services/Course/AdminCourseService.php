@@ -90,6 +90,10 @@ class AdminCourseService
     {
         if ($contract->isPaid() or $contract->isFree()) {
             $this->rejectCourse($contract->course->id);
+
+            if ($contract->isPaid()) {
+                $this->rejectQuota($contract->course->id);
+            }
         } else {
             $this->rejectQuota($contract->course->id);
         }

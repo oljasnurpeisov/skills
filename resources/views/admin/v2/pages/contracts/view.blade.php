@@ -29,12 +29,12 @@
                     @if (!Auth::user()->hasRole('moderator'))
                         <a href="" class="btn btn--red" id="rejectBtn" data-btn="Вернуть" data-title="Укажите причину отправки на доработку" data-action="{{ route('admin.contracts.contract.reject_by_admin', ['lang' => $lang, 'contract_id' => $contract->id]) }}">Отправить на доработку</a>
                     @else
-                        <a href="" class="btn btn--red" id="rejectBtn" data-btn="Расторгнуть" data-title="Укажите причину расторжения договора" data-action="{{ route('admin.contracts.contract.reject_by_moderator', ['lang' => $lang, 'contract_id' => $contract->id]) }}">Отклонение договора</a>
+                        <a href="" class="btn btn--red" id="rejectBtn" data-btn="Отклонить договор" data-title="Укажите причину расторжения договора" data-action="{{ route('admin.contracts.contract.reject_by_moderator', ['lang' => $lang, 'contract_id' => $contract->id]) }}">Отклонение договора</a>
                     @endif
                 @endif
 
                 {{--Расторжение договора для директора--}}
-                @if ($contract->isSigned() and $contract->isQuota() and Auth::user()->hasRole('rukovoditel'))
+                @if ($contract->isSigned() and Auth::user()->hasRole('rukovoditel'))
                     <a href="" class="btn btn--red" id="rejectBtn" data-btn="Расторгнуть" data-title="Укажите причину расторжения договора" data-action="{{ route('admin.contracts.reject_contract', ['lang' => $lang, 'contract_id' => $contract->id]) }}">Расторгнуть договор</a>
                 @endif
 
