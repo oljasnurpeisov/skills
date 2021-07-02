@@ -320,7 +320,7 @@
             width: 474px;
             background-image: url({{public_path('/assets/img/certificates/fieldBg.png')}});
             background-repeat: repeat-y;
-            background-size: contain;
+            background-size: auto;
         }
 
         table {
@@ -338,17 +338,41 @@
         }
 
         .company_logo {
+            width: auto;
+            max-height: 69px;
+        }
+
+        .logo {
             width: 100%;
+            height: 69px;
             background: #fff;
             padding: 10px;
             border: 1px solid #efeff0;
             box-sizing: border-box;
             border-radius: 10px;
+            margin-top: -1px;
+            text-align: center;
         }
 
         .skills {
-            max-height: 183px;
+            max-height: 209px;
             margin: 5px 0 2px;
+        }
+
+        .diploma__text_duration {
+            width: 53px;
+            text-align: center;
+            background: #fff;
+            border: 1px solid #efeff0;
+            display: inline-block;
+            border-radius: 10px;
+            vertical-align: bottom;
+        }
+
+        .course_name {
+            height: 53px;
+            margin-bottom: 2px;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -377,26 +401,26 @@
                     <td width="50%">
                         <div class="diploma__text_column " style="width: 100%; position: relative;">
                             <div style="left:12px;"><span>&nbsp;</span></div>
-                            <div class="diploma__text_quotes" style="left:0;top:21px;position: absolute;">«</div>
-                            <div style="left:12px;top:18px; " class="manyline-field manyline-field-1">
-                                <div style="position: relative;">
-                                    <div style="position: relative; margin-top: -4px;">
-                                        <p style="margin: 0; line-height: 19.5px">{{$data['course_name']}}</p>
+                            <div class="course_name">
+{{--                                <div class="diploma__text_quotes" style="left:-10px; top:5px; position: absolute;">«</div>--}}
+                                <div style="left:12px;top:18px; " class="manyline-field manyline-field-2">
+                                    <div style="position: relative;">
+                                        <div style="position: relative; margin-top: -4px;">
+                                            <p style="margin: 0; line-height: 19.5px">{{$data['course_name']}}</p>
+                                        </div>
                                     </div>
                                 </div>
+{{--                                <div class="diploma__text_quotes" style="right:-5px; bottom:5px; position: absolute;">»</div>--}}
                             </div>
-                            <div class="diploma__text_quotes" style="right:-5px;top:72px; position: absolute;">»</div>
-                            <div><span>тақырыбында</span>
-                            <span class="diploma__text_field diploma__text_middle-field "
-                                 style="text-align: center;padding: 0; margin-top: 5px">{{round($data['duration'] / 60)}}</span>
-                            <span> сағат көлемінде,
-                                «Enbek.kz»
-                                Электрондық еңбек биржасы арқылы берілген курстан өткенін
-                                және келесі дағдыларға:</span>
+                            <div>
+                                <span>тақырыбында</span>
+                                <span class="diploma__text_duration">{{round($data['duration'] / 60)}}</span>
+                                <span> сағат көлемінде, «Enbek.kz» Электрондық еңбек биржасы арқылы берілген курстан өткенін және келесіr дағдыларға:
+                                </span>
                             </div>
                             <div style="" class="manyline-field manyline-field-2 skills">
                                 @php($skills = $data['skills']->implode('name_kk', '; '))
-                                <p style="margin: 0; line-height: 18.5px">{{$skills}};</p>
+                                <p style="margin: 0; line-height: 18.8px">{{$skills}};</p>
                             </div>
                             <div style="">ие болғанын растайды</div>
                         </div>
@@ -404,20 +428,25 @@
                     <td width="50%">
                         <div class="diploma__text_column " style="width: 100%; position: relative;">
                             <div style="left:12px;">прошел (-ла) курс на тему:</div>
-                            <div class="diploma__text_quotes" style="left:0;top:21px;position: absolute;">«</div>
-                            <div style="left:12px;top:18px;" class="manyline-field manyline-field-1">
-                                <div style="position: relative;">
-                                    <div style="position: relative; margin-top: -4px;">
-                                        <p style="margin: 0; line-height: 19.5px">{{$data['course_name']}}</p>
+                            <div class="course_name">
+{{--                            <div class="diploma__text_quotes" style="left:0;top:21px;position: absolute;">«</div>--}}
+                                <div style="left:12px;top:18px;" class="manyline-field manyline-field-2">
+                                    <div style="position: relative;">
+                                        <div style="position: relative; margin-top: -4px;">
+                                            <p style="margin: 0; line-height: 19.5px">{{$data['course_name']}}</p>
+                                        </div>
                                     </div>
                                 </div>
+{{--                            <div class="diploma__text_quotes" style="right:-5px;top:72px; position: absolute;">»</div>--}}
                             </div>
-                            <div class="diploma__text_quotes" style="right:-5px;top:72px; position: absolute;">»</div>
-                            <div><span>предоставленный через электронную биржу труда «Enbek.kz» в объеме</span> <span class="diploma__text_field diploma__text_middle-field" style="text-align: center;padding: 0; margin-top: 5px">{{ round($data['duration'] / 60) }}</span> <span>часов и получил(ла) навык/навыки:</span>
+                            <div>
+                                <span>предоставленный через электронную биржу труда «Enbek.kz» в объеме </span>
+                                <span class="diploma__text_duration">{{ round($data['duration'] / 60) }}</span>
+                                <span> часов и получил(ла) навык/навыки:</span>
                             </div>
                             <div style="" class="manyline-field manyline-field-2 skills">
                                 @php($skills = $data['skills']->implode('name_ru', '; '))
-                                <p style="margin: 0; line-height: 18.5px">{{$skills}};</p>
+                                <p style="margin: 0; line-height: 18.8px">{{$skills}};</p>
                             </div>
                         </div>
                     </td>
@@ -440,12 +469,12 @@
                             <div class="diploma__text_field_label" style="display: inline-block; line-height: 7px; padding-top: 5px">Сәйкестендіру номері/<br/>Идентификационный номер
                             </div>
                             <span class="diploma__text_field diploma__text_field_full"
-                                  style="width: 200px;border-radius: 10px;text-align: center;padding: 0; float: right">{{$data['certificate_id']}}
+                                  style="width: 200px;border-radius: 10px;text-align: center;padding: 0; margin-top: 4px; float: right;">{{$data['certificate_id']}}
                                 </span>
                             <div class="diploma__text_field_label">Берілген күні/Дата выдачи
                                 <span style="">«</span>
                                 <span class="diploma__text_field "
-                                     style="height: 20px; width: 20px;border-radius: 55%;text-align: center;padding: 0; line-height: 12px; margin-top: 7px">{{date('d')}}</span>
+                                     style="width: 20px;border-radius: 70%;text-align: center;padding: 0; line-height: 12px; margin-top: 7px">{{date('d')}}</span>
                                 <span style="">»</span>
                                 @php(\Carbon\Carbon::setlocale('ru'))
                                 @php($mounth_ru = \Carbon\Carbon::now()->translatedFormat('F'))
@@ -455,9 +484,12 @@
                                      style="width: 120px;border-radius: 10px;text-align: center;padding: 0; line-height: 12px; margin-top: 7px">{{$mounth_ru}}/{{$mounth_kk}}</span>
                                 <span style="">{{date('Y')}}ж. (г.)</span>
                             </div>
+                        </div>
                     </td>
-                    <td width="10%" style="vertical-align: baseline;">
-                        <img class="company_logo" src="{{public_path($data['company_logo'])}}">
+                    <td width="10%" style="vertical-align: baseline">
+                            <div class="logo">
+                                <img class="company_logo" src="{{public_path($data['company_logo'])}}">
+                            </div>
                     </td>
                     <td width="50% ">
                         <div style="position: relative; ">
