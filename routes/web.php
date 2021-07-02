@@ -375,6 +375,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     // Мои курсы
                     Route::get("/my-courses", "CourseController@myCourses")->name('author.courses.my_courses');
                     Route::get("/my-contracts", "ContractsController@index")->name('author.contracts.index');
+                    Route::get("/my-avr", "AVRController@index")->name('author.avr.index'); // Заглушка пока нет эцп
                     Route::get("/contract/{contract_id}/download", "ContractsController@download")->name('author.contracts.download');
                     Route::get("/create-course", "CourseController@createCourse");
                     Route::get("/my-courses/statistics", "CourseController@statisticsCourse");
@@ -439,6 +440,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-courses/signing/{contract_id}/contract-reject", "CourseController@contractReject")->name('author.courses.signing.contract.reject');
 
                     Route::get("/my-courses/signing/{contract_id}/next", "CourseController@next")->name('author.courses.signing.contract.next'); // Заглушка пока нет эцп
+
+                    // avr
                 });
             });
         });

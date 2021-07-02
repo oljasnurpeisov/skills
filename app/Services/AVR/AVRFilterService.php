@@ -124,7 +124,7 @@ class AVRFilterService
     public function searchByAVRSum(Builder $avr, array $request): Builder
     {
         if (!empty($request['sum'])) {
-            $avr =  $avr->where('sum', 'like', '%'. $request['sum'] .'%');
+            $avr =  $avr->where('sum', 'like', '%'. (int) $request['sum'] .'%');
         }
 
         return $avr;

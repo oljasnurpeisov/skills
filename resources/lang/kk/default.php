@@ -16,6 +16,7 @@ return [
             'drafts' => 'Уақытша',
             'my_courses_title' => 'Менің курстарым',
             'my_contracts_title' => 'Менің келісім шарттарым',
+            'my_avr_title' => 'Орындалған жұмыстар актісі',
             'create_course' => 'Курсты қалыптастыру',
             'creation_course' => 'Курстың құрылуы',
             'edit_course' => 'Курсты өңдеу',

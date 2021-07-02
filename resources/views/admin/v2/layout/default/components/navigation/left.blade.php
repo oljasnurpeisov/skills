@@ -95,7 +95,7 @@
                 </a>
                 <ul>
                     <li><a href="{{ route('admin.avr.generate', ['lang' => $lang]) }}">Запустить создание АВР (для теста)</a></li>
-                    <li><a href="{{ route('admin.avr.all', ['lang' => $lang]) }}">Все АВР</a></li>
+                    <li><a href="{{ route('admin.avr.all', ['lang' => $lang]) }}">Все акты выполненных работ</a></li>
                     <li><a href="{{ route('admin.avr.pending', ['lang' => $lang]) }}">Ожидающие подписания</a></li>
                     <li><a href="{{ route('admin.avr.signed', ['lang' => $lang]) }}">Подписаны</a></li>
                 </ul>
