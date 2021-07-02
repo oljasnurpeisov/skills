@@ -148,6 +148,9 @@
                                 <li>
                                     <a href="{{ route('author.contracts.index', ['lang' => $lang]) }}" title="{{__('default.pages.courses.my_contracts_title')}}">{{__('default.pages.courses.my_contracts_title')}}</a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('author.avr.index', ['lang' => $lang]) }}" title="{{__('default.pages.courses.my_avr_title')}}">{{__('default.pages.courses.my_avr_title')}}</a>
+                                </li>
                             @elseif(Auth::user()->hasRole('student'))
                                 <li>
                                     <a href="/{{$lang}}/student/my-courses" title="{{__('default.pages.courses.my_courses_title')}}">{{__('default.pages.courses.my_courses_title')}}</a>

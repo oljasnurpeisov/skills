@@ -21,6 +21,7 @@ return [
             'drafts' => 'Черновики',
             'my_courses_title' => 'Мои курсы',
             'my_contracts_title' => 'Мои договоры',
+            'my_avr_title' => 'Мои акты выполненных работ',
             'create_course' => 'Создать курс',
             'creation_course' => 'Создание курса',
             'edit_course' => 'Редактирование курса',

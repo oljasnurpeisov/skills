@@ -80,7 +80,7 @@ class ContractFilterService
      * @param array $request
      * @return Builder
      */
-    private function searchByContractName(Builder $contracts, array $request): Builder
+    public function searchByContractName(Builder $contracts, array $request): Builder
     {
         if (!empty($request['contract_number'])) {
             $contracts =  $contracts->where('number', 'like', '%'. $request['contract_number'] .'%');
@@ -98,7 +98,7 @@ class ContractFilterService
      * @param $request
      * @return Builder
      */
-    private function searchByCourseName(Builder $contracts, array $request): Builder
+    public function searchByCourseName(Builder $contracts, array $request): Builder
     {
         if (!empty($request['course_name'])) {
             $contracts =  $contracts->whereHas('course', function($q) use ($request) {
@@ -118,7 +118,7 @@ class ContractFilterService
      * @param $request
      * @return Builder
      */
-    private function searchByCompanyName(Builder $contracts, array $request): Builder
+    public function searchByCompanyName(Builder $contracts, array $request): Builder
     {
         if (!empty($request['company_name'])) {
             $contracts =  $contracts->whereHas('course.user', function($q) use ($request) {
@@ -152,7 +152,7 @@ class ContractFilterService
      * @param $request
      * @return Builder
      */
-    private function filterByContractType(Builder $contracts, array $request): Builder
+    public function filterByContractType(Builder $contracts, array $request): Builder
     {
         if (!empty($request['contract_type'])) {
             return $contracts->whereType($request['contract_type']);
@@ -168,7 +168,7 @@ class ContractFilterService
      * @param $request
      * @return Builder
      */
-    private function filterByCourseType(Builder $contracts, array $request): Builder
+    public function filterByCourseType(Builder $contracts, array $request): Builder
     {
         if (!empty($request['course_type'])) {
             if ($request['course_type'] == 1) {
@@ -200,7 +200,7 @@ class ContractFilterService
      * @param $request
      * @return Builder
      */
-    private function filterByQuota(Builder $contracts, array $request): Builder
+    public function filterByQuota(Builder $contracts, array $request): Builder
     {
         if (!empty($request['contract_quota'])) {
             if ($request['contract_quota'] == 1) {

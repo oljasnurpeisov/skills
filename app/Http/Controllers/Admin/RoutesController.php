@@ -84,7 +84,7 @@ class RoutesController extends Controller
     {
         return view('admin.v2.pages.routes.index', [
             'routes'    => $this->routeService->getRoutes('avr'),
-            'type'      => 3,
+            'type'      => 4,
             'title'     => 'Маршрут АВР'
         ]);
     }

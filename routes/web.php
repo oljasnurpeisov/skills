@@ -150,7 +150,21 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post("/contracts/rejecting/{contract_id}/admin", "ContractsController@rejectContractByAdmin")->name('admin.contracts.contract.reject_by_admin');
                 Route::post("/contracts/rejecting/{contract_id}/moderator", "ContractsController@rejectContractByModerator")->name('admin.contracts.contract.reject_by_moderator');
                 Route::get("/contracts/rejecting/{contract_id}/cancel", "ContractsController@rejectContractByAdminCancel")->name('admin.contracts.contract.reject_by_admin_cancel');
+            });
+            // АВР
+            Route::group(['middleware' => 'check.permission:admin.avr'], static function () {
+                Route::get("/avr/all", "AVRController@all")->name('admin.avr.all');
+                Route::get('/avr/pending', 'AVRController@pending')->name('admin.avr.pending');
+                Route::get('/avr/signed', 'AVRController@signed')->name('admin.avr.signed');
+                Route::get("/avr/generate", "AVRController@generate")->name('admin.avr.generate');
 
+                Route::get('/avr/{avr_id}/view', 'AVRController@view')->name('admin.avr.view');
+                Route::get('/avr/{avr_id}/get-avr-html', 'AVRController@getAVRHtml')->name('admin.avr.get_contract_html');
+//                Route::get('/contracts/{course_id}/{type}/get-contract-html-preview', 'ContractsController@getContractHtmlPreview')->name('admin.contracts.get_contract_html_preview');
+//                Route::get('/contracts/{course_id}/{type}/generate-preview-contract', 'ContractsController@previewContract')->name('admin.contracts.generate_preview_contract');
+
+
+                Route::get("/avr/signing/{avr_id}/next", "ContractsController@next")->name('admin.avr.next'); // Заглушка пока нет эцп
             });
             // Страницы
             Route::group(['middleware' => 'check.permission:admin.pages'], static function () {
@@ -361,6 +375,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     // Мои курсы
                     Route::get("/my-courses", "CourseController@myCourses")->name('author.courses.my_courses');
                     Route::get("/my-contracts", "ContractsController@index")->name('author.contracts.index');
+                    Route::get("/my-avr", "AVRController@index")->name('author.avr.index'); // Заглушка пока нет эцп
                     Route::get("/contract/{contract_id}/download", "ContractsController@download")->name('author.contracts.download');
                     Route::get("/create-course", "CourseController@createCourse");
                     Route::get("/my-courses/statistics", "CourseController@statisticsCourse");
@@ -425,6 +440,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-courses/signing/{contract_id}/contract-reject", "CourseController@contractReject")->name('author.courses.signing.contract.reject');
 
                     Route::get("/my-courses/signing/{contract_id}/next", "CourseController@next")->name('author.courses.signing.contract.next'); // Заглушка пока нет эцп
+
+                    // avr
                 });
             });
         });
