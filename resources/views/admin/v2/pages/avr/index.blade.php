@@ -61,13 +61,27 @@
                                     <option value="1">Ожидающие подписания</option>
                                     <option value="2">Подписаны</option>
                                 </select>
-                                <script>document.getElementById('avr_status').value = {{ $request['avr_status'] ?? '' }};</script>
+                                @if (!empty($request['avr_status'])) <script>document.getElementById('avr_status').value = {{ $request['avr_status'] ?? '' }};</script> @endif
                             </th>
                             <th>
                                 <input name="sum" type="text" class="input-regular" value="{{ $request['sum'] ?? '' }}">
                             </th>
                             <th>
-                                <input type="text" data-date-format="dd.mm.yyyy" id="avr_period" name="avr_period" value="{{ $request['avr_period'] ?? '' }}" placeholder="" class="input-regular custom-datepicker" autocomplete="off" data-range="true">
+                                <input type="text" data-date-format="dd.mm.yyyy" id="avr_period" name="avr_period" value="{{ $request['avr_period'] ?? '' }}" placeholder="" class="input-regular custom-datepicker" autocomplete="off" data-value="{{ $request['avr_period'] ?? '' }}" data-range="true">
+
+{{--                                @if (!empty($request['avr_period']))--}}
+{{--                                            <?php--}}
+{{--                                            $date = explode(',', $request['avr_period']);--}}
+{{--                                            //--}}
+{{--                                            ?>--}}
+{{--                                            <script>--}}
+{{--                                                var datepicker = $('#avr_period').datepicker().data('datepicker');--}}
+{{--                                                datepicker.selectDate(new Date('01/07/2021'));--}}
+{{--                                                datepicker.selectDate(new Date('01/08/2021'));--}}
+
+{{--                                                // console.log(new Date('01/07/2021'));--}}
+{{--                                            </script>--}}
+{{--                                @endif--}}
                             </th>
                             <th>
                                 <input type="text" data-date-format="dd.mm.yyyy" name="" disabled value="" placeholder="" class="input-regular custom-datepicker" autocomplete="off">
@@ -118,5 +132,18 @@
 @endsection
 
 @section('scripts')
-
+    <?php
+        if (!empty($request['avr_period'])) {
+            $date = explode(',', $request['avr_period']);
+            $start = \Carbon\Carbon::parse($date[0])->format('m/d/Y');
+            $end = \Carbon\Carbon::parse($date[1])->format('m/d/Y');
+        }
+    ?>
+    @if (!empty($request['avr_period']))
+        <script>
+            var datepicker = $('#avr_period').datepicker().data('datepicker');
+            datepicker.selectDate(new Date('{{ $start }}'));
+            datepicker.selectDate(new Date('{{ $end }}'));
+        </script>
+    @endif
 @endsection
