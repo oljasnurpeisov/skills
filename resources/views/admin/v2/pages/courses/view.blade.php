@@ -213,21 +213,21 @@
 
 
 {{--                                <hr>--}}
-                                <form id="course_form" action="/{{$lang}}/admin/course/unpublish/{{ $item->id }}"
-                                      method="post"
-                                      style="float: right"
-                                      enctype="multipart/form-data">
-                                    {{ csrf_field() }}
-                                    <div class="buttons" style="float: right;">
-                                        <div>
+{{--                                <form id="course_form" action="/{{$lang}}/admin/course/unpublish/{{ $item->id }}"--}}
+{{--                                      method="post"--}}
+{{--                                      style="float: right"--}}
+{{--                                      enctype="multipart/form-data">--}}
+{{--                                    {{ csrf_field() }}--}}
+{{--                                    <div class="buttons" style="float: right;">--}}
+{{--                                        <div>--}}
 {{--                                            <a type="submit" name="action"--}}
 {{--                                                    class="btn btn--green">Запросить доступ по квоте</a>--}}
-                                            <button type="submit" name="action"
-                                                    class="btn btn--red">{{ __('admin.pages.courses.unpublish_title') }}</button>
-                                        </div>
-                                    </div>
-                                    <br>
-                                </form>
+{{--                                            <button type="submit" name="action"--}}
+{{--                                                    class="btn btn--red">{{ __('admin.pages.courses.unpublish_title') }}</button>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <br>--}}
+{{--                                </form>--}}
                                 @if($item->isPaid() and !$item->isQuota())
                                     <form id="course_form"
                                           action="/{{$lang}}/admin/course/quota_request/{{ $item->id }}"

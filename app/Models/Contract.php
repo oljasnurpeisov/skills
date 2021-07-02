@@ -73,6 +73,41 @@ class Contract extends Model
     }
 
     /**
+     * Отклоненные администрацией
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeRejectedByAdminOrModerator($query): Builder
+    {
+        return $query->where(function ($q) {
+            return $q->whereStatus(5)->orWhere('status', 6);
+        });
+    }
+
+    /**
+     * Отклоненные админами
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeRejectedByAdmin($query): Builder
+    {
+        return $query->whereStatus(5);
+    }
+
+    /**
+     * Отклоненные модератором
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeRejectedByModerator($query): Builder
+    {
+        return $query->whereStatus(6);
+    }
+
+    /**
      * Не отклоненные автором договора
      *
      * @param $query
@@ -114,6 +149,17 @@ class Contract extends Model
     public function scopePending($query): Builder
     {
         return $query->whereStatus(1);
+    }
+
+    /**
+     * Не отклоненные админами
+     *
+     * @param $query
+     * @return Builder
+     */
+    public function scopeNotRejectedByAdmin($query): Builder
+    {
+        return $query->where('status', '!=', 5);
     }
 
     /**
@@ -187,6 +233,36 @@ class Contract extends Model
     }
 
     /**
+     * Отклонен администрацией или модератором
+     *
+     * @return bool
+     */
+    public function isRejectedByAdminOrModerator(): bool
+    {
+        return $this->status === 5 || $this->status === 6;
+    }
+
+    /**
+     * Отклонен администрацией
+     *
+     * @return bool
+     */
+    public function isRejectedByAdmin(): bool
+    {
+        return $this->status === 5;
+    }
+
+    /**
+     * Отклонен модератором
+     *
+     * @return bool
+     */
+    public function isRejectedByModerator(): bool
+    {
+        return $this->status === 6;
+    }
+
+    /**
      * Не актуален
      *
      * @return bool
@@ -216,6 +292,10 @@ class Contract extends Model
                 break;
             case $this->isRejectedByAuthor():
                 return "Отклонен автором";
+                break;
+            case $this->isRejectedByAdminOrModerator():
+                $role_name = !empty($this->current_route) ? $this->current_route->role->name : 'Маршрут изменен';
+                return "Отклонен администрацией (". $role_name .")";
                 break;
             default;
                 return "Сгенерирован";

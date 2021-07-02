@@ -53,7 +53,9 @@
                                                                 href="/{{$lang}}/course-catalog/course/{{$item->course->id}}"
                                                                 title="{{$item->course->name}}">{{$item->course->name}}</a>
                                                     </h3>
-                                                    <div class="card__author">{{$item->course->user->company_name}}</div>
+
+                                                    <?php $tos = 'name_short_'. $lang; ?>
+                                                    <div class="card__author">{{ $item->course->user->type_ownership->$tos }} "{{$item->course->user->company_name}}"</div>
                                                 </div>
                                                 <div class="card__date">
                                                     <div>

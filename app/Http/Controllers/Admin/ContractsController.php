@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Contract;
 use App\Models\Course;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\ContractFilterService;
@@ -111,6 +113,23 @@ class ContractsController extends Controller
     }
 
     /**
+     * Отклонены администрацией
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function rejectedByAdmin(Request $request): View
+    {
+//        $this->authorize('moderatorOnly', [Contract::class]);
+
+        return view('admin.v2.pages.contracts.index', [
+            'contracts' => $this->contractFilterService->getOrSearch($request->all(), 'rejectedByAdminOrModerator'),
+            'request'   => $request->all(),
+            'title'     => 'Отклонены администрацией'
+        ]);
+    }
+
+    /**
      * Ожидающие подписания
      *
      * @param Request $request
@@ -183,7 +202,7 @@ class ContractsController extends Controller
     }
 
     /**
-     * Заглушка, пока нет ЭЦП
+     * Заглушка, пока нет ЭЦП, нет никаких проверок!!!!
      *
      * @TODO: REMOVE THIS!!!
      *
@@ -202,18 +221,87 @@ class ContractsController extends Controller
      *
      * @param Request $request
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function rejectContract(Request $request): RedirectResponse
     {
         $contract = Contract::findOrFail($request->contract_id);
 
-        if (!$contract->isSigned() or !$contract->isQuota() or ! Auth::user()->hasRole('rukovoditel')) abort(403);
+        $this->authorize('rejectContract', [Contract::class, $contract]);
 
-        // Отклоняем договор
+        // Расторжение договора
         $this->contractService->rejectContract($contract->id, $request->message);
+
+        // Снимаем с публикации
+        if (!$contract->isQuota()) {
+            $this->adminCourseService->rejectCourse($contract->course->id);
+        }
 
         // Отменяем доступ по квоте
         $this->adminCourseService->rejectQuota($contract->course->id);
+
+        // @TODO Send author notification
+
+        return redirect()->back();
+    }
+
+    /**
+     * Отклонение договора администрацией
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function rejectContractByAdmin(Request $request): RedirectResponse
+    {
+        $contract = $this->contractService->getContractIfMyCurrentRoute($request->contract_id);
+
+        $this->contractService->rejectContractByAdmin($contract->id, $request->message);
+
+        return redirect()->back();
+    }
+
+    /**
+     * Отмена отклонения договора администрацией,
+     * возращаем обратно на подписание
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function rejectContractByAdminCancel(Request $request): RedirectResponse
+    {
+        $contract = Contract::findOrFail($request->contract_id);
+
+        $this->authorize('rejectContractByAdminCancel', [Contract::class, $contract]);
+
+        $this->contractService->rejectContractByAdminCancel($contract->id);
+
+        return redirect()->back();
+    }
+
+    /**
+     * Отклонение договора модератором
+     * с отправкой курса в отклоненные
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function rejectContractByModerator(Request $request): RedirectResponse
+    {
+        $contract = Contract::findOrFail($request->contract_id);
+
+        $this->authorize('rejectContractByModerator', [Contract::class, $contract]);
+
+        // Расторжение договора
+        $this->contractService->rejectContractConfirmation($contract->id, $request->message);
+
+        $this->adminCourseService->rejectOnContract($contract);
+
+        // Снимаем с публикации
+        if (!$contract->isQuota()) {
+            $this->adminCourseService->rejectCourse($contract->course->id);
+        }
 
         // @TODO Send author notification
 

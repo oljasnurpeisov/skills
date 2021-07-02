@@ -82,6 +82,12 @@ class SkillsSaver {
                     'profession_id' => $profession->id,
                     'professional_area_id' => $professionalArea->professional_area_id
                 ]);
+            } else {
+                $this->collection->add([
+                    'skill_id' => $skill->skill_id,
+                    'profession_id' => null,
+                    'professional_area_id' => null
+                ]);
             }
         }
     }

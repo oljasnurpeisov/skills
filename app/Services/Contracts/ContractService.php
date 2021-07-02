@@ -2,14 +2,13 @@
 
 namespace Services\Contracts;
 
-
 use App\Models\Contract;
 use App\Models\Course;
+use Illuminate\Support\Facades\Auth;
 use Libraries\Word\Agreement;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Settings;
-use Barryvdh\DomPDF\PDF;
 
 /**
  * Class ContractService
@@ -19,6 +18,28 @@ use Barryvdh\DomPDF\PDF;
  */
 class ContractService
 {
+    /**
+     * ContractService constructor.
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Получение договора, если очередь юзера
+     *
+     * @param $contract_id
+     * @return Contract
+     */
+    public function getContractIfMyCurrentRoute($contract_id): Contract
+    {
+        return Contract::whereHas('current_route', function ($r) {
+                return $r->whereRoleId(Auth::user()->role->role_id);
+            })
+            ->findOrFail($contract_id);
+    }
+
     /**
      * Создаем договор,
      * если данного типа еще не создан
@@ -123,9 +144,79 @@ class ContractService
      */
    public function rejectContract(int $contract_id, string $message): void
    {
-       Contract::find($contract_id)->update([
+       $contract = Contract::find($contract_id);
+
+       $contract->update([
            'status'         => 3,
            'reject_comment' => $message
        ]);
+
+       $this->rejectQuotaContractByPaid($contract->id);
    }
+
+    /**
+     * Расторжение договора по квоте
+     *
+     * @param int $contract_id
+     * @param int $status
+     * @return void
+     */
+   public function rejectQuotaContractByPaid(int $contract_id, int $status = 3): void
+   {
+       $contract = Contract::find($contract_id);
+
+       if ($contract->isPaid() and !empty($contract->course->contract_quota)) {
+           $contract->course->contract_quota->update([
+               'status'    => $status,
+           ]);
+       }
+   }
+
+    /**
+     * Отклонение договора от администрации
+     *
+     * @param int $contract_id
+     * @param string $message
+     * @return void
+     */
+   public function rejectContractByAdmin(int $contract_id, string $message): void
+   {
+       Contract::find($contract_id)->update([
+           'status'         => 5,
+           'reject_comment' => $message
+       ]);
+   }
+
+    /**
+     * Отмена отклонения договора администрацией,
+     * возращаем обратно на подписание
+     *
+     * @param int $contract_id
+     * @return void
+     */
+   public function rejectContractByAdminCancel(int $contract_id): void
+   {
+       Contract::find($contract_id)->update([
+           'status'         => 1,
+           'reject_comment' => null
+       ]);
+   }
+
+    /**
+     * Подтверждение отклонения договора
+     *
+     * @param int $contract_id
+     * @param string $message
+     */
+    public function rejectContractConfirmation(int $contract_id, string $message): void
+    {
+        $contract = Contract::findOrFail($contract_id);
+
+        $contract->update([
+            'status'         => 6,
+            'reject_comment' => $message
+        ]);
+
+        $this->rejectQuotaContractByPaid($contract->id, 6);
+    }
 }

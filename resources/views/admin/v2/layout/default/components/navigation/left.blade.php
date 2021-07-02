@@ -81,6 +81,10 @@
                     <li><a href="{{ route('admin.contracts.signed', ['lang' => $lang]) }}">Подписаны</a></li>
                     <li><a href="{{ route('admin.contracts.distributed', ['lang' => $lang]) }}">Расторгнуты</a></li>
                     <li><a href="{{ route('admin.contracts.rejected_by_author', ['lang' => $lang]) }}">Отклонены автором</a></li>
+
+{{--                    @if (Auth::user()->hasRole('moderator'))--}}
+                        <li><a href="{{ route('admin.contracts.rejected_by_admin', ['lang' => $lang]) }}">Отклонены администрацией</a></li>
+{{--                    @endif--}}
                 </ul>
             </li>
             @endhasPermission

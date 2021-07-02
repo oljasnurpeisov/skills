@@ -30,7 +30,7 @@
                     <col span="1" style="width: 7%;">
                     <col span="1" style="width: 15%;">
                     <col span="1" style="width: 15%;">
-                    @if (Route::currentRouteName() === 'admin.contracts.distributed')
+                    @if (Route::currentRouteName() === 'admin.contracts.distributed' || Route::currentRouteName() === 'admin.contracts.rejected_by_admin')
                         <col span="1" style="width: 15%;">
                     @endif
                     <col span="1" style="width: 15%;">
@@ -44,7 +44,7 @@
                     <th>Тип курса</th>
                     <th>Дата подписания Автором</th>
                     <th>Дата публикации</th>
-                    @if (Route::currentRouteName() === 'admin.contracts.distributed')
+                    @if (Route::currentRouteName() === 'admin.contracts.distributed' || Route::currentRouteName() === 'admin.contracts.rejected_by_admin')
                         <th>Причина отклонения</th>
                     @endif
                     <th>Договор</th>
@@ -79,12 +79,12 @@
                             </th>
                             <th></th>
                             <th></th>
-                            @if (Route::currentRouteName() === 'admin.contracts.distributed')
+                            @if (Route::currentRouteName() === 'admin.contracts.distributed' || Route::currentRouteName() === 'admin.contracts.rejected_by_admin')
                                 <th></th>
                             @endif
                             <th>
                                 <div class="buttons btn-group-sm">
-                                    <a href="{{ route(Route::currentRouteName(), ['lang' => $lang]) }}" class="btn" style="color: #fff; background: #e2e2e2; text-decoration:none; height: 30px; margin-top: 2px; margin-right: 5px">Очистить</a>
+                                    <a href="{{ route(Route::currentRouteName(), ['lang' => $lang]) }}" class="btn" style="color: #fff; background: #e2e2e2; text-decoration:none; height: 30px; margin-top: 2px; margin-right: 5px">Сбросить</a>
                                     <button class="btn">Поиск</button>
                                 </div>
 
@@ -101,7 +101,7 @@
                             <td>{{ $contract->course->getTypeName() }}</td>
                             <td>-</td>
                             <td>{{ $contract->course->publish_at ?? '-' }}</td>
-                            @if (Route::currentRouteName() === 'admin.contracts.distributed')
+                            @if (Route::currentRouteName() === 'admin.contracts.distributed' || Route::currentRouteName() === 'admin.contracts.rejected_by_admin')
                                 <td>{{ $contract->reject_comment }}</td>
                             @endif
                             <td>

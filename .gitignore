@@ -8,6 +8,8 @@
 /public/users
 /public/zip
 
+/public/contracts/files/
+
 /storage/*.key
 /vendor
 .env

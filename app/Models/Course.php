@@ -22,7 +22,7 @@ class Course extends Model
 
     protected $table = 'courses';
 
-    protected $fillable = ['contract_status', 'contract_quota_status', 'status', 'publish_at'];
+    protected $fillable = ['contract_status', 'contract_quota_status', 'status', 'publish_at', 'quota_status'];
 
     protected $dates = ['publish_at'];
 
@@ -163,7 +163,7 @@ class Course extends Model
      */
     public function contracts(): HasMany
     {
-        return $this->hasMany(Contract::class, 'course_id', 'id')->where('status', '!=', 5);
+        return $this->hasMany(Contract::class, 'course_id', 'id')->whereIn('status', [1, 2]);
     }
 
     /**
@@ -173,7 +173,7 @@ class Course extends Model
      */
     public function contract_free(): HasOne
     {
-        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(1)->where('status', '!=', 5);
+        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(1)->whereIn('status', [1, 2]);
     }
 
     /**
@@ -183,7 +183,7 @@ class Course extends Model
      */
     public function contract_paid(): HasOne
     {
-        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(2)->where('status', '!=', 5);
+        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(2)->whereIn('status', [1, 2]);
     }
 
     /**
@@ -193,7 +193,7 @@ class Course extends Model
      */
     public function contract_quota(): HasOne
     {
-        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(3)->where('status', '!=', 5);
+        return $this->hasOne(Contract::class, 'course_id', 'id')->whereType(3)->whereIn('status', [1, 2]);
     }
 
     /**
@@ -251,10 +251,8 @@ class Course extends Model
      */
     public function scopeSigningAdmin($query): Builder
     {
-//        return $query->whereContractStatus(2);
-
         return $query->whereHas('contracts', function($q) {
-            return $q->whereHas('current_route', function($e) {
+            return $q->pending()->whereHas('current_route', function($e) {
                 return $e->where('role_id', '!=', 4);
             });
         });
@@ -392,7 +390,9 @@ class Course extends Model
      */
     public function isFreeContractCreated(): bool
     {
-        return Contract::whereType(1)->whereCourseId($this->id)->notRejectedByAuthor()->exists();
+        return Contract::where(function ($q) {
+            return $q->where(function ($e) {return $e->pending();})->orWhere(function ($e) {return $e->rejectedByAdmin();})->orWhere(function ($e) {return $e->signed();});
+        })->whereType(1)->whereCourseId($this->id)->exists();
     }
 
     /**
@@ -402,7 +402,9 @@ class Course extends Model
      */
     public function isPaidContractCreated(): bool
     {
-        return Contract::whereType(2)->whereCourseId($this->id)->notRejectedByAuthor()->exists();
+        return Contract::where(function ($q) {
+            return $q->where(function ($e) {return $e->pending();})->orWhere(function ($e) {return $e->rejectedByAdmin();})->orWhere(function ($e) {return $e->signed();});
+        })->whereType(2)->whereCourseId($this->id)->exists();
     }
 
     /**
@@ -412,7 +414,9 @@ class Course extends Model
      */
     public function isQuotaContractCreated(): bool
     {
-        return Contract::whereType(3)->whereCourseId($this->id)->notRejectedByAuthor()->exists();
+        return Contract::where(function ($q) {
+            return $q->where(function ($e) {return $e->pending();})->orWhere(function ($e) {return $e->rejectedByAdmin();})->orWhere(function ($e) {return $e->signed();});
+        })->whereType(3)->whereCourseId($this->id)->exists();
     }
 
     /**
