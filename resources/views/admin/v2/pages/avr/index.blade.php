@@ -93,7 +93,7 @@
                             <td>{{ $item->course->user->company_name }}</td>
                             <td>{{ $item->getStatusName() }}</td>
                             <td>{{ $item->sum }}</td>
-                            <td>-</td>
+                            <td>{{ $item->start_at->format('d.m.Y') }}-{{ $item->end_at->format('d.m.Y') }}</td>
                             <td>-</td>
                             <td>-</td>
                             <td>

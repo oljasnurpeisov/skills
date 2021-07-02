@@ -90,7 +90,7 @@ class AVRController extends Controller
     {
         return view('admin.v2.pages.avr.view', [
             'avr'  => AVR::findOrFail($request->avr_id),
-            'title'     => 'Просмотр договора'
+            'title'     => 'Просмотр АВР'
         ]);
     }
 
