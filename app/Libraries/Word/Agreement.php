@@ -26,12 +26,12 @@ setlocale(LC_TIME, 'ru_RU.UTF-8');
  * @author kgurovoy@gmail.com
  * @package Libraries\Word
  */
-class Agreement
+class Agreement extends BaseGenerator
 {
     /**
      * @var TemplateProcessor
      */
-    private $templateProcessor;
+    protected $templateProcessor;
 
     /**
      * @var string
@@ -112,13 +112,7 @@ class Agreement
         $source     = 'contracts/templates/agreements/'. $this->type .'.docx';
         $savePath   = 'contracts/files/'. $this->type .'_'. $this->number.'.docx';
 
-        try {
-            $this->templateProcessor = new TemplateProcessor(public_path($source));
-        } catch (CopyFileException $e) {
-            abort(500);
-        } catch (CreateTemporaryFileException $e) {
-            abort(500);
-        }
+        $this->readTemplate($source);
 
         $this
             ->setGeneral()
@@ -127,7 +121,7 @@ class Agreement
             ->setCourseDetail();
 
 
-        $this->templateProcessor->saveAs(public_path($savePath));
+        $this->TPSaveAs($savePath);
 
         if ($this->save) {
             $result = $this->save($savePath);

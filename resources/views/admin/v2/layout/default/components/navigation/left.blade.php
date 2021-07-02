@@ -88,6 +88,19 @@
                 </ul>
             </li>
             @endhasPermission
+            @hasPermission('admin.avr')
+            <li class="dropdown">
+                <a href="javascript:;" title="АВР">
+                    <i class="icon-reports"></i> АВР
+                </a>
+                <ul>
+                    <li><a href="{{ route('admin.avr.generate', ['lang' => $lang]) }}">Запустить создание АВР (для теста)</a></li>
+                    <li><a href="{{ route('admin.avr.all', ['lang' => $lang]) }}">Все АВР</a></li>
+                    <li><a href="{{ route('admin.avr.pending', ['lang' => $lang]) }}">Ожидающие подписания</a></li>
+                    <li><a href="{{ route('admin.avr.signed', ['lang' => $lang]) }}">Подписаны</a></li>
+                </ul>
+            </li>
+            @endhasPermission
             @hasPermission('admin.pages')
             <li class="dropdown">
                 <a href="javascript:;" title="{{ __('admin.pages.static_pages.title') }}">
