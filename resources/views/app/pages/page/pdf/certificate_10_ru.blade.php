@@ -358,6 +358,14 @@
             max-height: 209px;
             margin: 5px 0 2px;
         }
+        .skills p {
+            /*line-height: 18.8px;*/
+            line-height: 19.5px;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            margin-top: -4px;
+        }
 
         .diploma__text_duration {
             width: 53px;
@@ -420,7 +428,9 @@
                             </div>
                             <div style="" class="manyline-field manyline-field-2 skills">
                                 @php($skills = $data['skills']->implode('name_kk', '; '))
-                                <p style="margin: 0; line-height: 18.8px">{{$skills}};</p>
+                                <div>
+                                    <p>{{$skills}};</p>
+                                </div>
                             </div>
                             <div style="">ие болғанын растайды</div>
                         </div>
@@ -446,7 +456,9 @@
                             </div>
                             <div style="" class="manyline-field manyline-field-2 skills">
                                 @php($skills = $data['skills']->implode('name_ru', '; '))
-                                <p style="margin: 0; line-height: 18.8px">{{$skills}};</p>
+                                <div>
+                                    <p>{{$skills}};</p>
+                                </div>
                             </div>
                         </div>
                     </td>
