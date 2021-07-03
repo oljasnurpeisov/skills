@@ -33,7 +33,7 @@
                                     <input type="text" name="course_name" placeholder="Наименование курса" class="input-regular" value="{{ $request['course_name'] ?? '' }}">
                                 </td>
                                 <td>
-                                    <input type="text" data-date-format="dd.mm.yyyy" id="avr_period" name="avr_period" value="{{ $request['avr_period'] ?? '' }}" placeholder="Период" class="input-regular custom-datepicker" autocomplete="off" data-range="true">
+                                    <input type="text" data-date-format="dd.mm.yyyy" id="avr_period" name="avr_period" value="{{ $request['avr_period'] ?? '' }}" placeholder="Период" class="input-regular" autocomplete="off" data-range="true">
                                 </td>
                                 <td>
                                     <input type="text" name="sum" placeholder="Сумма" class="input-regular" value="{{ $request['sum'] ?? '' }}">
@@ -80,6 +80,19 @@
 @endsection
 
 @section('scripts')
-
+    <?php
+        if (!empty($request['avr_period'])) {
+            $date = explode(',', $request['avr_period']);
+            $start = \Carbon\Carbon::parse($date[0])->format('m/d/Y');
+            $end = \Carbon\Carbon::parse($date[1])->format('m/d/Y');
+        }
+    ?>
+    @if (!empty($request['avr_period']))
+        <script>
+            var datepicker = $('#avr_period').datepicker().data('datepicker');
+            datepicker.selectDate(new Date('{{ $start }}'));
+            datepicker.selectDate(new Date('{{ $end }}'));
+        </script>
+    @endif
 @endsection
 

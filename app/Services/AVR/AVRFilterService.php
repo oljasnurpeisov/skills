@@ -63,9 +63,9 @@ class AVRFilterService
      */
     public function search(Builder $avr, array $request): Builder
     {
-        $avr = $this->searchByAVRName($avr, $request);
-        $avr = $this->contractFilterService->searchByCourseName($avr, $request);
         $avr = $this->contractFilterService->searchByCompanyName($avr, $request);
+        $avr = $this->contractFilterService->searchByCourseName($avr, $request);
+        $avr = $this->searchByAVRName($avr, $request);
         $avr = $this->searchByContractNumber($avr, $request);
         $avr = $this->searchByAVRSum($avr, $request);
         $avr = $this->filterByAVRStatus($avr, $request);
