@@ -60,7 +60,7 @@ class AuthorCourseService
         })->findOrFail($contract_id);
 
         // опубликовать курс, если платный или бесплатный
-        if ($contract->isPaid() || $contract->isFree()) {
+        if (!$contract->isQuota()) {
             $contract->course()->update([
                 'status' => 3,
                 'publish_at' => Carbon::now()
