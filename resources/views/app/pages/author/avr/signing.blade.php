@@ -8,7 +8,9 @@
                     <div class="col-md-12">
                         <iframe src="{{ route('author.avr.signing.avrDoc', ['lang' => 'ru', 'avr_id' => $avr->id]) }}" frameborder="0" width="100%" height="600"></iframe>
 
-                        <a href="{{ route('author.avr.signing.next', ['lang' => 'ru', 'avr_id' => $avr->id]) }}" class="btn">Подписать</a>
+                        @if ($avr->isSignator())
+                            <a href="{{ route('author.avr.signing.next', ['lang' => 'ru', 'avr_id' => $avr->id]) }}" class="btn">Подписать</a>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Auth;
 
 class AVR extends Model
 {
@@ -105,5 +106,15 @@ class AVR extends Model
     public function current_route(): HasOne
     {
         return $this->hasOne(Route::class, 'id', 'route_id');
+    }
+
+    /**
+     * Текущий пользователь подписант?
+     *
+     * @return bool
+     */
+    public function isSignator(): bool
+    {
+        return $this->current_route->role_id === Auth::user()->role->role_id and $this->isPending();
     }
 }
