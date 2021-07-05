@@ -44,7 +44,7 @@
                                         <option value="1">На подписании</option>
                                         <option value="2">Подписан</option>
                                     </select>
-                                    <script>document.getElementById('avr_status').value = {{ $request['avr_status'] ?? '' }};</script>
+                                    <script>document.getElementById('avr_status').value = {{ $request['avr_status'] ?? '""' }};</script>
                                 </td>
                                 <td>
                                     <a class="btn" style="background: #e2e2e2; color: #333" href="{{ route(Route::currentRouteName(), ['lang' => $lang]) }}">Сбросить</a>
@@ -80,6 +80,9 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $('#avr_period').datepicker();
+    </script>
     <?php
         if (!empty($request['avr_period'])) {
             $date = explode(',', $request['avr_period']);
