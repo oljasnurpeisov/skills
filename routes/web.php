@@ -375,7 +375,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     // Мои курсы
                     Route::get("/my-courses", "CourseController@myCourses")->name('author.courses.my_courses');
                     Route::get("/my-contracts", "ContractsController@index")->name('author.contracts.index');
-                    Route::get("/my-avr", "AVRController@index")->name('author.avr.index'); // Заглушка пока нет эцп
+                    Route::get("/my-avr", "AVRController@index")->name('author.avr.index');
                     Route::get("/contract/{contract_id}/download", "ContractsController@download")->name('author.contracts.download');
                     Route::get("/create-course", "CourseController@createCourse");
                     Route::get("/my-courses/statistics", "CourseController@statisticsCourse");
@@ -442,6 +442,9 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-courses/signing/{contract_id}/next", "CourseController@next")->name('author.courses.signing.contract.next'); // Заглушка пока нет эцп
 
                     // avr
+                    Route::get("/my-avr/{avr_id}/avr", "AvrController@avr")->name('author.avr.view');
+                    Route::get("/my-avr/{avr_id}/avrDoc", "AvrController@avrDoc")->name('author.avr.signing.avrDoc');
+                    Route::get("/my-avr/signing/{avr_id}/next", "AvrController@next")->name('author.avr.signing.next'); // Заглушка пока нет эцп
                 });
             });
         });

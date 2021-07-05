@@ -4,10 +4,8 @@ namespace Services\Contracts;
 
 
 use App\Models\AVR;
-use App\Models\Contract;
 use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Services\AVR\AVRFilterService;
 
 /**
@@ -24,13 +22,38 @@ class AuthorAVRService
     private $AVRFilterService;
 
     /**
+     * @var AVRServiceRouting
+     */
+    private $AVRServiceRouting;
+
+    /**
      * AuthorAVRService constructor.
      *
      * @param AVRFilterService $AVRFilterService
+     * @param AVRServiceRouting $AVRServiceRouting
      */
-    public function __construct(AVRFilterService $AVRFilterService)
+    public function __construct(AVRFilterService $AVRFilterService, AVRServiceRouting $AVRServiceRouting)
     {
-        $this->AVRFilterService = $AVRFilterService;
+        $this->AVRFilterService     = $AVRFilterService;
+        $this->AVRServiceRouting    = $AVRServiceRouting;
+    }
+
+    /**
+     * Заглушка, пока нет ЭЦП
+     *
+     * @TODO: REMOVE THIS!!!
+     *
+     * @param int $avr_id
+     */
+    public function acceptAvr(int $avr_id)
+    {
+        $avr = AVR::whereHas('course', function ($q) {
+            return $q->whereAuthorId(Auth::user()->id);
+        })->whereHas('current_route', function ($q) {
+            return $q->whereRoleId(Auth::user()->role->role_id);
+        })->findOrFail($avr_id);
+
+        $this->AVRServiceRouting->toNextRoute($avr);
     }
 
     /**
@@ -41,7 +64,7 @@ class AuthorAVRService
      */
     public function getOrSearchMyContracts(array $request = null): LengthAwarePaginator
     {
-        $avr = AVR::signed()->with('course');
+        $avr = AVR::with('course');
 
         $avr = $this->AVRFilterService->search($avr, $request);
 

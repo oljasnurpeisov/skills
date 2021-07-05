@@ -61,7 +61,7 @@
                                 <td>{{ number_format($avr->sum, 2, '.', ' ') }} ₸</td>
                                 <td>{{ $avr->getStatusName() }}</td>
                                 <td>
-                                    <a href="">Просмотр</a>
+                                    <a href="{{ route('author.avr.view', ['lang' => $lang, 'avr_id' => $avr->id]) }}">Просмотр</a>
                                 </td>
                             </tr>
                         @endforeach
