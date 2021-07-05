@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Console\Commands\AVR\AVRGenerate;
 use App\Http\Controllers\Controller;
 use App\Models\AVR;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\View\View;
 use PhpOffice\PhpWord\Exception\Exception;
+use Services\AVR\AdminAVRService;
 use Services\AVR\AVRFilterService;
 use Services\Contracts\AVRService;
 
@@ -18,21 +20,29 @@ class AVRController extends Controller
      * @var AVRFilterService
      */
     private $AVRFilterService;
+
     /**
      * @var AVRService
      */
     private $AVRService;
 
     /**
+     * @var AdminAVRService
+     */
+    private $adminAVRService;
+
+    /**
      * AVRController constructor.
      *
      * @param AVRFilterService $AVRFilterService
      * @param AVRService $AVRService
+     * @param AdminAVRService $adminAVRService
      */
-    public function __construct(AVRFilterService $AVRFilterService, AVRService $AVRService)
+    public function __construct(AVRFilterService $AVRFilterService, AVRService $AVRService, AdminAVRService $adminAVRService)
     {
         $this->AVRFilterService = $AVRFilterService;
         $this->AVRService       = $AVRService;
+        $this->adminAVRService  = $adminAVRService;
     }
 
     /**
@@ -106,6 +116,21 @@ class AVRController extends Controller
         return view('app.pages.author.courses.contractDoc', [
             'contract' => $this->AVRService->avrToHtml($request->avr_id)
         ]);
+    }
+
+    /**
+     * Заглушка, пока нет ЭЦП, нет никаких проверок!!!!
+     *
+     * @TODO: REMOVE THIS!!!
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function next(Request $request): RedirectResponse
+    {
+        $this->adminAVRService->acceptAvr($request->avr_id);
+
+        return redirect()->route('admin.avr.pending', ['lang' => $request->lang]);
     }
 
     /**

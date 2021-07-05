@@ -22,7 +22,7 @@
             <iframe src="{{ route('admin.avr.get_contract_html', ['lang' => 'ru', 'avr_id' => $avr->id]) }}" frameborder="0" width="100%" height="600"></iframe>
 
             {{--Управление для администрации по текущему маршруту--}}
-            @if ($avr->isPending() && $avr->current_route->role_id === Auth::user()->role->role_id)
+            @if ($avr->isPending() && $avr->isSignator())
                 <a href="{{ route('admin.avr.next', ['lang' => $lang, 'avr_id' => $avr->id]) }}" class="btn">Подписать</a>
             @endif
         </div>
