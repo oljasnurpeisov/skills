@@ -48,6 +48,7 @@
 <link rel="stylesheet" href="/assets/admin/css/style.css" type="text/css" media="screen"/>
 
 <script src="/assets/admin/libs/jquery/dist/jquery.js"></script>
+<script src="/assets/js/kalkan.js"></script>
 
 <script src="https://cdn.tiny.cloud/1/dypqwpg7c59aateufscg61hqfrr4d8ylm54905fckvunt7pg/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 

@@ -5,28 +5,28 @@ namespace App\Http\Controllers\App\Author;
 use App\Exports\ReportingExport;
 use App\Extensions\CalculateQuotaCost;
 use App\Http\Controllers\Controller;
+use App\Libraries\Kalkan\Certificate;
 use App\Models\Contract;
 use App\Models\Course;
 use App\Models\CourseAttachments;
 use App\Models\Lesson;
 use App\Models\Notification;
 use App\Models\ProfessionalArea;
-use App\Models\ProfessionalAreaProfession;
 use App\Models\Professions;
-use App\Models\ProfessionSkill;
 use App\Models\Skill;
 use App\Models\StudentCourse;
 use App\Models\Theme;
 use App\Models\User;
+use App\Services\Signing\ValidationService;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Libraries\Word\Agreement;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\ContractService;
@@ -52,17 +52,29 @@ class CourseController extends Controller
     private $contractService;
 
     /**
+     * @var ValidationService
+     */
+    private $validationService;
+
+    /**
      * CourseController constructor.
      *
      * @param CourseService $courseService
      * @param AuthorCourseService $authorCourseService
      * @param ContractService $contractService
+     * @param
      */
-    public function __construct(CourseService $courseService, AuthorCourseService $authorCourseService, ContractService $contractService)
+    public function __construct(
+        CourseService $courseService,
+        AuthorCourseService $authorCourseService,
+        ContractService $contractService,
+        ValidationService  $validationService
+    )
     {
         $this->courseService        = $courseService;
         $this->authorCourseService  = $authorCourseService;
         $this->contractService      = $contractService;
+        $this->validationService    = $validationService;
     }
 
     public function createCourse($lang)
@@ -1115,10 +1127,12 @@ class CourseController extends Controller
             }
 
             foreach ($unthemes_lessons as $unthemes_lesson) {
+
                 $unthemes_lesson->order = $unthemes_lesson->index_number;
                 $unthemes_lesson->item_type = 'lesson';
 
                 $unthemes_lesson->lessons = [];
+
                 if ($unthemes_lesson->type != 1) {
                     $unthemes_lesson->type = $unthemes_lesson->lesson_type->getAttribute('name_' . $lang) ?? $unthemes_lesson->lesson_type->getAttribute('name_ru');
                     $unthemes_lesson->type .= $unthemes_lesson->end_lesson_type == 0 ? ' (' . __('default.pages.lessons.test_title') . ')' : ' (' . __('default.pages.lessons.homework_title') . ')';
@@ -1187,17 +1201,65 @@ class CourseController extends Controller
     }
 
     /**
-     * Заглушка, пока нет ЭЦП
-     *
-     * @TODO: REMOVE THIS!!!
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function xml(Request $request): JsonResponse
+    {
+        $xml = $this->authorCourseService->generateXml($request->contract_id);
+
+        return response()->json(['xml' => $xml]);
+    }
+
+    /**
+     * Check and send
      *
      * @param Request $request
-     * @return RedirectResponse
+     * @return \Illuminate\Contracts\Foundation\Application|JsonResponse|RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function next(Request $request): RedirectResponse
+    public function next(Request $request)
     {
-        $this->authorCourseService->acceptContract($request->contract_id);
+        if(!empty($_POST)) {
 
-        return redirect(route('author.courses.signing', ['lang' => $request->lang]));
+            $xml = $request->post('xml');
+
+            $success = false;
+            $certificate = null;
+
+            if($this->validationService->verifyXml($xml)) {
+
+                $success = true;
+                $x509 = Certificate::getCertificate($xml, true);
+                $message = 'Договор успешно подписан';
+
+                if ($x509) {
+                    $certificate = $x509;
+                }
+
+                $this->authorCourseService->acceptContract($request->contract_id, $xml, $this->validationService->getResponse());
+
+                Session::flash('status', $message);
+
+            } else {
+                $message = $this->validationService->getError();
+            }
+
+            return response()->json([
+                'success' => $success,
+                'message' => $message,
+                'certificate' => $certificate,
+                'redirect' => route('author.courses.signing', ['lang' => $request->lang]),
+                'response' => $this->validationService->getResponse()
+            ], $success ? 200 : 500);
+
+        } else {
+
+            $message = 'Договор успешно подписан';
+            $this->authorCourseService->acceptContract($request->contract_id);
+            Session::flash('status', $message);
+
+            return redirect(route('author.courses.signing', ['lang' => $request->lang]));
+        }
     }
 }

@@ -146,11 +146,15 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
 
                 Route::post('/contracts/{contract_id}/reject-contract', 'ContractsController@rejectContract')->name('admin.contracts.reject_contract');
 
-                Route::get("/contracts/signing/{contract_id}/next", "ContractsController@next")->name('admin.contracts.contract.next'); // Заглушка пока нет эцп
+                Route::get("/contracts/signing/{contract_id}/xml", "ContractsController@xml")->name('admin.contracts.contract.xml'); // Формирование XML для подписания
+                Route::post("/contracts/signing/{contract_id}/next", "ContractsController@next")->name('admin.contracts.contract.next'); // Отправка подписанного договора
+                Route::get("/contracts/signing/{contract_id}/next", "ContractsController@next")->name('admin.contracts.contract.next'); // Отправка обычного договора
+
                 Route::post("/contracts/rejecting/{contract_id}/admin", "ContractsController@rejectContractByAdmin")->name('admin.contracts.contract.reject_by_admin');
                 Route::post("/contracts/rejecting/{contract_id}/moderator", "ContractsController@rejectContractByModerator")->name('admin.contracts.contract.reject_by_moderator');
                 Route::get("/contracts/rejecting/{contract_id}/cancel", "ContractsController@rejectContractByAdminCancel")->name('admin.contracts.contract.reject_by_admin_cancel');
             });
+
             // АВР
             Route::group(['middleware' => 'check.permission:admin.avr'], static function () {
                 Route::get("/avr/all", "AVRController@all")->name('admin.avr.all');
@@ -289,6 +293,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::get("/faq", "PageController@faq");
             // Помощь
             Route::get("/help", "PageController@help");
+            // Проверка документа
+            Route::get("/verify", "DocumentController@verify")->name('public.document.verify');
             // Курсы
             Route::get("/course-catalog", "CourseController@courseCatalog");
             Route::get("/course-catalog/course/{item}", "CourseController@courseView");
@@ -439,7 +445,9 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-courses/signing/{contract_id}/contract/doc", "CourseController@contractDoc")->name('author.courses.signing.contractDoc');
                     Route::get("/my-courses/signing/{contract_id}/contract-reject", "CourseController@contractReject")->name('author.courses.signing.contract.reject');
 
-                    Route::get("/my-courses/signing/{contract_id}/next", "CourseController@next")->name('author.courses.signing.contract.next'); // Заглушка пока нет эцп
+                    Route::get("/my-courses/signing/{contract_id}/xml", "CourseController@xml")->name('author.courses.signing.contract.xml'); // Формирование XML для подписания
+                    Route::post("/my-courses/signing/{contract_id}/next", "CourseController@next")->name('author.courses.signing.contract.next'); // Отправка подписанного договора
+                    Route::get("/my-courses/signing/{contract_id}/next", "CourseController@next")->name('author.courses.signing.contract.next'); // Отправка обычного договора
 
                     // avr
                     Route::get("/my-avr/{avr_id}/avr", "AvrController@avr")->name('author.avr.view');

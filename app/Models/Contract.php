@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -11,12 +12,27 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @author kgurovoy@gmail.com
  * @package App\Models
+ *
+ * @property int $id
+ * @property string $number
+ * @property int $course_id
+ * @property int $document_id
+ * @property string $link
+ * @property int $type
+ * @property int $status
+ * @property int $route_id
+ * @property string $reject_comment
+ * @property string $signed_at
+ * @property string $updated_at
+ * @property string $created_at
+ *
+ * @property Document $document
  */
 class Contract extends Model
 {
     protected $table = 'contracts';
 
-    protected $fillable = ['number', 'course_id', 'link', 'type', 'status', 'route_id', 'reject_comment'];
+    protected $fillable = ['number', 'course_id', 'link', 'type', 'status', 'route_id', 'reject_comment', 'document_id'];
 
     /**
      * Course
@@ -345,5 +361,14 @@ class Contract extends Model
     public function current_route(): HasOne
     {
         return $this->hasOne(Route::class, 'id', 'route_id');
+    }
+
+    /**
+     * Get document
+     * @return BelongsTo
+     */
+    public function document(): BelongsTo
+    {
+        return $this->belongsTo(Document::class, 'document_id');
     }
 }

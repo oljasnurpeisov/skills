@@ -4,9 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class AVR
+ * @package App\Models
+ *
+ * @property int $id
+ * @property string $link
+ * @property int $document_id
+ *
+ * @property Document $document
+ */
 class AVR extends Model
 {
     protected $table = 'avrs';
@@ -116,5 +127,14 @@ class AVR extends Model
     public function isSignator(): bool
     {
         return $this->current_route->role_id === Auth::user()->role->role_id and $this->isPending();
+    }
+
+    /**
+     * Get document
+     * @return BelongsTo
+     */
+    public function document(): BelongsTo
+    {
+        return $this->belongsTo(Document::class, 'document_id');
     }
 }

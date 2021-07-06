@@ -50,8 +50,8 @@
 <link rel="stylesheet" href="/assets/libs/visually-impaired/css/bvi.min.css" type="text/css" media="screen"/>
 <link rel="stylesheet" href="/assets/css/style.css" type="text/css" media="screen"/>
 
-
 <script src="/assets/admin/libs/jquery/dist/jquery.js"></script>
+<script src="/assets/js/kalkan.js"></script>
 
 <script>
     window.Laravel = {

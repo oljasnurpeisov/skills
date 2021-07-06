@@ -4,6 +4,7 @@ namespace Services\Course;
 
 use App\Models\Contract;
 use App\Models\Course;
+use App\Services\Signing\DocumentService;
 use Illuminate\Support\Facades\Auth;
 use Services\Contracts\AuthorContractService;
 use Services\Contracts\ContractService;
@@ -26,31 +27,46 @@ class AdminCourseService
     private $contractService;
 
     /**
+     * @var DocumentService
+     */
+    private $documentService;
+
+    /**
      * ContractService constructor.
      *
      * @param AuthorContractService $authorContractService
      * @param ContractServiceRouting $contractServiceRouting
      * @param ContractService $contractService
+     * @param DocumentService $documentService
      */
-    public function __construct(AuthorContractService $authorContractService, ContractServiceRouting $contractServiceRouting,
-                                ContractService $contractService)
+    public function __construct(
+        AuthorContractService $authorContractService,
+        ContractServiceRouting $contractServiceRouting,
+        ContractService $contractService,
+        DocumentService $documentService
+    )
     {
         $this->authorContractService    = $authorContractService;
         $this->contractServiceRouting   = $contractServiceRouting;
         $this->contractService          = $contractService;
+        $this->documentService          = $documentService;
     }
 
     /**
-     * Заглушка, пока нет ЭЦП
-     *
-     * @TODO: REMOVE THIS!!!
+     * Accept signed contract
      *
      * @param int $contract_id
+     * @param string|null $message
+     * @param array $validationResponse
      * @return void
      */
-    public function acceptContract(int $contract_id): void
+    public function acceptContract(int $contract_id, string $message = null, array $validationResponse = []): void
     {
         $contract = $this->contractService->getContractIfMyCurrentRoute($contract_id);
+
+        if ($contract->document && $message) {
+            $this->documentService->attachSignature($contract->document, $message, $validationResponse);
+        }
 
         $this->contractServiceRouting->toNextRoute($contract);
     }

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Libraries\Kalkan\Certificate;
 use App\Models\Contract;
 use App\Models\Course;
+use App\Services\Signing\ValidationService;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -38,17 +41,29 @@ class ContractsController extends Controller
     private $adminCourseService;
 
     /**
-     * ContractFilterService constructor.
+     * @var ValidationService
+     */
+    private $validationService;
+
+    /**
+     * ContractsController constructor.
      *
      * @param ContractFilterService $contractFilterService
      * @param ContractService $contractService
      * @param AdminCourseService $adminCourseService
+     * @param ValidationService $validationService
      */
-    public function __construct(ContractFilterService $contractFilterService, ContractService $contractService, AdminCourseService $adminCourseService)
+    public function __construct(
+        ContractFilterService $contractFilterService,
+        ContractService $contractService,
+        AdminCourseService $adminCourseService,
+        ValidationService  $validationService
+    )
     {
         $this->contractFilterService    = $contractFilterService;
         $this->contractService          = $contractService;
         $this->adminCourseService       = $adminCourseService;
+        $this->validationService        = $validationService;
     }
 
     /**
@@ -201,18 +216,47 @@ class ContractsController extends Controller
     }
 
     /**
-     * Заглушка, пока нет ЭЦП, нет никаких проверок!!!!
-     *
-     * @TODO: REMOVE THIS!!!
-     *
+     * Check and send
      * @param Request $request
-     * @return RedirectResponse
+     * @return JsonResponse|RedirectResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function next(Request $request): RedirectResponse
+    public function next(Request $request)
     {
-        $this->adminCourseService->acceptContract($request->contract_id);
+        if (!empty($_POST)) {
 
-        return redirect()->route('admin.contracts.pending', ['lang' => $request->lang]);
+            $xml = $request->post('xml');
+
+            $success = false;
+            $certificate = null;
+
+            if($this->validationService->verifyXml($xml)) {
+
+                $success = true;
+                $x509 = Certificate::getCertificate($xml, true);
+                $message = 'Договор успешно подписан';
+
+                if ($x509) {
+                    $certificate = $x509;
+                }
+
+                $this->adminCourseService->acceptContract($request->contract_id, $xml, $this->validationService->getResponse());
+
+            } else {
+                $message = $this->validationService->getError();
+            }
+
+            return response()->json([
+                'success' => $success,
+                'message' => $message,
+                'certificate' => $certificate,
+                'redirect' => route('admin.contracts.pending', ['lang' => $request->lang]),
+                'response' => $this->validationService->getResponse()
+            ], $success ? 200 : 500);
+        } else {
+            $this->adminCourseService->acceptContract($request->contract_id);
+            return redirect()->route('admin.contracts.pending', ['lang' => $request->lang]);
+        }
     }
 
     /**
@@ -305,5 +349,21 @@ class ContractsController extends Controller
         // @TODO Send author notification
 
         return redirect()->back();
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function xml(Request $request): JsonResponse
+    {
+        /** @var Contract $contract */
+        $contract = Contract::findOrFail($request->contract_id);
+
+        if ($contract && $contract->document) {
+            return response()->json(['xml' => $contract->document->content]);
+        }
+
+        return response()->json(['message' => 'Электронный договор не найден'], 500);
     }
 }

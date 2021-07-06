@@ -3,17 +3,23 @@
 namespace App\Models;
 
 use App\Extensions\CalculateQuotaCost;
-use Dingo\Api\Auth\Auth;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-
+/**
+ * Class Course
+ * @package App\Models
+ *
+ * @property int $id
+ * @property int $status
+ * @property string $published_at
+ */
 class Course extends Model
 {
     // Статусы курса
+
     const draft = 0;
     const onCheck = 1;
     const unpublished = 2;
@@ -31,72 +37,52 @@ class Course extends Model
 
     public function user()
     {
-
         return $this->hasOne(User::class, 'id', 'author_id');
-
     }
 
     public function users()
     {
-
         return $this->hasMany(User::class, 'id', 'author_id');
-
     }
 
     public function themes()
     {
-
         return $this->hasMany(Theme::class, 'course_id', 'id');
-
     }
 
     public function lessons()
     {
-
         return $this->hasMany(Lesson::class, 'course_id', 'id');
-
     }
 
     public function skills()
     {
-
         return $this->belongsToMany(Skill::class, 'course_skill', 'course_id', 'skill_id');
-
     }
 
     public function professions()
     {
-
         return $this->belongsToMany(Professions::class, 'course_skill', 'course_id', 'profession_id');
-
     }
 
     public function professional_areas()
     {
-
         return $this->belongsToMany(ProfessionalArea::class, 'course_skill', 'course_id', 'professional_area_id');
-
     }
 
     public function course_members()
     {
-
         return $this->hasMany(StudentCourse::class, 'course_id', 'id');
-
     }
 
     public function rate()
     {
-
         return $this->hasMany(CourseRate::class, 'course_id', 'id');
-
     }
 
     public function attachments()
     {
-
         return $this->hasOne(CourseAttachments::class, 'course_id', 'id');
-
     }
 
     public function getAvatar()
@@ -213,8 +199,8 @@ class Course extends Model
 //            return $q->whereIn('route_id', $userRoutes);
 //        });
 
-        return $query->whereHas('contracts', function($q) {
-            return $q->notRejectedByAuthor()->whereHas('current_route', function($e) {
+        return $query->whereHas('contracts', function ($q) {
+            return $q->notRejectedByAuthor()->whereHas('current_route', function ($e) {
                 return $e->whereRoleId(4);
             });
         });
@@ -229,15 +215,15 @@ class Course extends Model
     public function scopeSigningThisAuthor($query): Builder
     {
         return $query
-            ->with(['contracts' => function($q) {
+            ->with(['contracts' => function ($q) {
                 return $q->pending()->notRejectedByAuthor()
-                    ->whereHas('current_route', function($e) {
+                    ->whereHas('current_route', function ($e) {
                         return $e->whereRoleId(\Auth::user()->role->role_id);
                     });
             }])
-            ->whereHas('contracts', function($q) {
+            ->whereHas('contracts', function ($q) {
                 return $q->pending()->notRejectedByAuthor()
-                    ->whereHas('current_route', function($e) {
+                    ->whereHas('current_route', function ($e) {
                         return $e->whereRoleId(\Auth::user()->role->role_id);
                     });
             });
@@ -251,8 +237,8 @@ class Course extends Model
      */
     public function scopeSigningAdmin($query): Builder
     {
-        return $query->whereHas('contracts', function($q) {
-            return $q->pending()->whereHas('current_route', function($e) {
+        return $query->whereHas('contracts', function ($q) {
+            return $q->pending()->whereHas('current_route', function ($e) {
                 return $e->where('role_id', '!=', 4);
             });
         });
@@ -391,7 +377,13 @@ class Course extends Model
     public function isFreeContractCreated(): bool
     {
         return Contract::where(function ($q) {
-            return $q->where(function ($e) {return $e->pending();})->orWhere(function ($e) {return $e->rejectedByAdmin();})->orWhere(function ($e) {return $e->signed();});
+            return $q->where(function ($e) {
+                return $e->pending();
+            })->orWhere(function ($e) {
+                return $e->rejectedByAdmin();
+            })->orWhere(function ($e) {
+                return $e->signed();
+            });
         })->whereType(1)->whereCourseId($this->id)->exists();
     }
 
@@ -403,7 +395,13 @@ class Course extends Model
     public function isPaidContractCreated(): bool
     {
         return Contract::where(function ($q) {
-            return $q->where(function ($e) {return $e->pending();})->orWhere(function ($e) {return $e->rejectedByAdmin();})->orWhere(function ($e) {return $e->signed();});
+            return $q->where(function ($e) {
+                return $e->pending();
+            })->orWhere(function ($e) {
+                return $e->rejectedByAdmin();
+            })->orWhere(function ($e) {
+                return $e->signed();
+            });
         })->whereType(2)->whereCourseId($this->id)->exists();
     }
 
@@ -415,7 +413,13 @@ class Course extends Model
     public function isQuotaContractCreated(): bool
     {
         return Contract::where(function ($q) {
-            return $q->where(function ($e) {return $e->pending();})->orWhere(function ($e) {return $e->rejectedByAdmin();})->orWhere(function ($e) {return $e->signed();});
+            return $q->where(function ($e) {
+                return $e->pending();
+            })->orWhere(function ($e) {
+                return $e->rejectedByAdmin();
+            })->orWhere(function ($e) {
+                return $e->signed();
+            });
         })->whereType(3)->whereCourseId($this->id)->exists();
     }
 

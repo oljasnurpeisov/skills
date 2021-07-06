@@ -5,6 +5,10 @@ namespace App\Observers;
 use App\Models\Course;
 use Carbon\Carbon;
 
+/**
+ * Class CourseObserver
+ * @package App\Observers
+ */
 class CourseObserver
 {
     /**

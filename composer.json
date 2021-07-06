@@ -9,10 +9,14 @@
   "license": "MIT",
   "require": {
     "php": "^7.3|^8.0",
+    "ext-bcmath": "*",
     "ext-json": "*",
+    "ext-openssl": "*",
+    "ext-xml": "*",
+    "ext-dom": "*",
     "barryvdh/laravel-dompdf": "^0.9.0",
-    "dompdf/dompdf": "^1.0.2",
     "dingo/api": "^3.0",
+    "dompdf/dompdf": "^1.0.2",
     "edujugon/push-notification": "^4.5",
     "fideloper/proxy": "^4.2",
     "fruitcake/laravel-cors": "^2.0",
@@ -22,8 +26,11 @@
     "laravel/ui": "^3.0",
     "league/fractal": "^0.19.2",
     "maatwebsite/excel": "^3.1",
+    "mpdf/mpdf": "^8.0",
+    "mpdf/qrcode": "^1.1",
     "orchestra/parser": "^6.0",
     "phpoffice/phpword": "^0.18.2",
+    "spatie/array-to-xml": "^2.16",
     "spatie/pdf-to-image": "^2.1"
   },
   "require-dev": {

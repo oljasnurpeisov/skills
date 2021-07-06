@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * Class Route
+ * @package App\Models
+ *
+ * @property int $id
+ * @property int $type
+ * @property int $role_id
+ * @property int $sort
+ * @property string $created_at
+ * @property string $updated_at
+ */
 class Route extends Model
 {
     protected $table = 'routes';

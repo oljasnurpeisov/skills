@@ -2,13 +2,22 @@
 
 namespace Services\Contracts;
 
+use App\Console\Commands\DocumentGenerator;
+use App\Libraries\Kalkan\Certificate;
 use App\Models\Contract;
 use App\Models\Course;
+use App\Models\Document;
+use App\Models\DocumentSignature;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Libraries\Helpers\GetMonth;
 use Libraries\Word\Agreement;
+use Mpdf\Mpdf;
+use Mpdf\Output\Destination;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
-use PhpOffice\PhpWord\Settings;
+
+ini_set('memory_limit', '4G');
 
 /**
  * Class ContractService
@@ -90,27 +99,82 @@ class ContractService
    }
 
     /**
-     * Договор в PDF (НЕ РАБОТАЕТ!!!)
+     * Договор в PDF
+     *
+     * @see DocumentGenerator
      *
      * @param int $contract_id
      * @return string
      * @throws Exception
      */
-   public function contractToPdf(int $contract_id): string
+   public function contractToPdf(int $contract_id, bool $forceRewrite = false): string
    {
+       /** @var Contract $contract */
        $contract = Contract::latest()->findOrFail($contract_id);
+
        $filePath = public_path($contract->link);
 
-       Settings::setPdfRendererPath(base_path('vendor/dompdf/dompdf'));
-       Settings::setPdfRendererName('DomPDF');
+       $info = pathinfo(strtolower($filePath));
+
+       if ($info['extension'] === 'pdf' && $forceRewrite) {
+           $filePath = preg_replace('/pdf/', 'docx', $filePath);
+       }
 
        $Content = IOFactory::load($filePath);
+       $PDFWriter = IOFactory::createWriter($Content,'HTML');
 
        $pdfPath = preg_replace('/docx/', 'pdf', $filePath);
 
-       $PDFWriter = IOFactory::createWriter($Content,'PDF');
+       $html = $PDFWriter->getContent();
 
-       $PDFWriter->save($pdfPath);
+       $html = str_replace('</body>', '<pagebreak />{appendix}</body>', $html);
+
+       $html = str_replace('{appendix}', $this->generateAppendix(
+           $contract->document,
+           $contract->document->number,
+           $contract->number
+       ), $html);
+
+       $dateKz = sprintf('%d жылғы %s «%s»',
+           Carbon::parse($contract->document->lastSignature->created_at)->year,
+           (new GetMonth())->kk(date('m', strtotime($contract->document->lastSignature->created_at))),
+           Carbon::parse($contract->document->lastSignature->created_at)->day
+       );
+
+       $dateRu = sprintf('«%s» %s %d года',
+           Carbon::parse($contract->document->lastSignature->created_at)->day,
+           Carbon::parse($contract->document->lastSignature->created_at)->getTranslatedMonthName('Do MMMM'),
+           Carbon::parse($contract->document->lastSignature->created_at)->year
+       );
+
+       preg_match_all('/&lt;(.*?)&gt;/', $html, $dateMatches);
+
+       if ($dateMatches && sizeof($dateMatches[0]) === 2) {
+
+           foreach($dateMatches[0] as $dateMatch) {
+
+               if(strpos($dateMatch, 'қойылған') !== false) {
+                    $html = str_replace($dateMatch, $dateKz, $html);
+               }
+
+               elseif(strpos($dateMatch, 'подписания') !== false) {
+                   $html = str_replace($dateMatch, $dateRu, $html);
+               }
+           }
+       }
+
+       $format = 'A4';
+
+       $pdf = new mPDF([
+           'mode' => 'utf-8',
+           'format' => $format,
+           'orientation' => str_contains($format, 'L') ? 'L' : 'P'
+       ]);
+
+       $pdf->SetAuthor(env('APP_NAME'));
+
+       $pdf->WriteHTML($html);
+       $pdf->Output($pdfPath, Destination::FILE);
 
        return $pdfPath;
    }
@@ -133,7 +197,7 @@ class ContractService
 
            $contract->delete();
        }
-   }
+    }
 
     /**
      * Расторжение договора
@@ -218,5 +282,85 @@ class ContractService
         ]);
 
         $this->rejectQuotaContractByPaid($contract->id, 6);
+    }
+
+    /**
+     * Generate document appendix
+     * @param Document $document
+     * @param string $number
+     * @return string
+     */
+    private function generateAppendix(Document $document, string $number = '', string $parent = '')
+    {
+        if($document->signatures()->count() == 0)
+            return '';
+
+        $content = <<<HTML
+<p>
+Данный электронный документ подписан с использованием электронной цифровой подписи.
+</p>
+<p>
+Для проверки электронного документа перейдите по ссылке: <br />
+<a href="{link}">{link}</a>
+</p>
+<br />
+<table cellpadding="4" cellspacing="4">
+<tr>
+<td style="width: 25%">Тип документа</td>
+<td>{type}</td>
+</tr>
+<tr>
+<td style="width: 25%">Номер документа</td>
+<td>{parent}</td>
+</tr>
+<tr>
+<td style="width: 25%">Уникальный номер</td>
+<td>{number}</td>
+</tr>
+<tr>
+<td style="width: 25%">Электронные цифровые подписи</td>
+<td>
+{signatures}
+<br />
+<br />
+</td>
+</tr>
+</table>
+<br />
+<br />
+<table style="border: 0">
+<tr>
+<td style="width: 25%;border: 0">
+<barcode type="QR" class="barcode" error="M" code="{link}" size="1.4" border="0"/>
+</td>
+<td style="width: 75%; border: 0">
+Осы құжат «Электронды құжат және электрондық цифрлық қолтаңба туралы» Қазақстан Республикасының 2003 жылғы 7 қаңтардағы Заңы 7 бабының 1 тармағына сәйкес қағаз тасығыштағы құжатпен
+маңызы бірдей. <br />
+Данный документ согласно пункту 1 статьи 7 ЗРК от 7 января 2003 года "Об электронном документе и электронной цифровой подписи" равнозначен документу на бумажном носителе.</td>
+</tr>
+</table>
+HTML;
+
+        $content = str_replace('{link}', route('public.document.verify', ['lang' => 'ru', 'number' => $document->number]), $content);
+        $content = str_replace('{type}', $document->type->name, $content);
+        $content = str_replace('{parent}', $parent, $content);
+        $content = str_replace('{number}', $number, $content);
+
+        $signatures = '';
+
+        foreach ($document->signatures as $signature) {
+
+            $certificate = new Certificate($signature->cert);
+
+            $signatures .= sprintf('%s<br/><br/>Подписано: %s<br />Время подписи: %s<hr />',
+                $certificate->legalName ?: $certificate->personName,
+                $certificate->personName,
+                $signature->created_at
+            );
+        }
+
+        $content = str_replace('{signatures}', trim($signatures, '<hr />'), $content);
+
+        return $content;
     }
 }

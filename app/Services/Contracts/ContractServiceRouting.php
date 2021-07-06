@@ -4,6 +4,8 @@ namespace Services\Contracts;
 
 use App\Models\Contract;
 use App\Models\Route;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class ContractServiceRouting
@@ -19,13 +21,19 @@ class ContractServiceRouting
     private $route;
 
     /**
+     * @var ContractService
+     */
+    private $contactService;
+
+    /**
      * ContractServiceRouting constructor.
      *
      * @param Route $route
      */
-    public function __construct(Route $route)
+    public function __construct(Route $route, ContractService $contractService)
     {
         $this->route = $route;
+        $this->contactService = $contractService;
     }
 
     /**
@@ -41,6 +49,7 @@ class ContractServiceRouting
                 'route_id' => $this->getFirstRoute($contract->type)->id
             ]);
         } else {
+
             $nextRoute = $this->getNextRoute($contract->type, $contract->current_route->sort);
 
             if (!empty($nextRoute)) {
@@ -48,14 +57,33 @@ class ContractServiceRouting
                     'route_id' => $nextRoute->id
                 ]);
             } else {
-                $contract->update([
-                    'status' => 2
-                ]);
 
-                if ($contract->isQuota()) {
-                    $contract->course()->update([
-                        'quota_status' => 2
-                    ]);
+                try {
+
+                    DB::beginTransaction();
+
+                    if ($contract->update([
+                        'status' => 2
+                    ])) {
+
+                        if ($contract->document && $contract->document->lastSignature) {
+                            $contract->signed_at = $contract->document->lastSignature->created_at;
+                            $contract->link = asset($this->contactService->contractToPdf($contract->id));
+                            $contract->save();
+                        }
+                    }
+
+                    if ($contract->isQuota()) {
+                        $contract->course()->update([
+                            'quota_status' => 2
+                        ]);
+                    }
+
+                    DB::commit();
+
+                } catch (\Exception $exception) {
+                    DB::rollBack();
+                    Log::error($exception);
                 }
             }
         }
