@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\AVR\AVRGenerate;
 use App\Console\Commands\ProfessionalAreaProfessionRelation;
 use App\Console\Commands\ProfessionalAreasUpdate;
 use App\Console\Commands\ProfessionSkillRelation;
@@ -28,7 +29,8 @@ class Kernel extends ConsoleKernel
         ReCalculateCourseQuotaCost::class,
         ProfessionsParentUpdate::class,
         ProfessionalAreasUpdate::class,
-        ProfessionalAreaProfessionRelation::class
+        ProfessionalAreaProfessionRelation::class,
+        AVRGenerate::class
     ];
 
     /**
@@ -39,6 +41,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('generate:AVR')->monthlyOn(1, '09:00');
+
         $schedule->command('remove:user')
             ->everySixHours();
 

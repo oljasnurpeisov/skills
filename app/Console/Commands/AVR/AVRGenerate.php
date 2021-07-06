@@ -15,7 +15,7 @@ class AVRGenerate extends Command
      *
      * @var string
      */
-    protected $signature = 'generateAVR';
+    protected $signature = 'generate:AVR';
 
     /**
      * The console command description.
@@ -42,8 +42,8 @@ class AVRGenerate extends Command
      */
     public function handle()
     {
-        $start_at = Carbon::now()->addMonths(-1)->startOfMonth();
-        $end_at = Carbon::now()->addMonths(-1)->endOfMonth();
+        $start_at   = Carbon::now()->addMonths(-1)->startOfMonth();
+        $end_at     = Carbon::now()->addMonths(-1)->endOfMonth();
 
         $courses = Course::quota()
             ->whereHas('certificate')
