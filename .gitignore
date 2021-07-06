@@ -9,6 +9,7 @@
 /public/zip
 
 /public/contracts/files/
+/public/avr/files/
 
 /storage/*.key
 /vendor

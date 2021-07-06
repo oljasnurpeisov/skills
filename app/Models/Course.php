@@ -448,4 +448,14 @@ class Course extends Model
     {
         return $this->hasOne(Contract::class)->quota()->latest();
     }
+
+    /**
+     * Сертификат
+     *
+     * @return HasMany
+     */
+    public function certificate()
+    {
+        return $this->hasMany(StudentCertificate::class, 'course_id', 'id');
+    }
 }

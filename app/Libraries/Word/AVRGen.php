@@ -2,8 +2,10 @@
 
 namespace Libraries\Word;
 
+use App\Extensions\CalculateQuotaCost;
 use App\Models\AVR;
 use App\Models\Course;
+use Carbon\Carbon;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\TemplateProcessor;
 
@@ -27,7 +29,7 @@ class AVRGen extends BaseGenerator
     /**
      * @var string
      */
-    private $number;
+    private $id;
 
     /**
      * @var AVR
@@ -35,16 +37,30 @@ class AVRGen extends BaseGenerator
     private $avr;
 
     /**
+     * @var Carbon
+     */
+    private $start_at;
+
+    /**
+     * @var Carbon
+     */
+    private $end_at;
+
+    /**
      * AVR constructor.
      *
      * @param Course $course
+     * @param Carbon $start_at
+     * @param Carbon $end_at
      * @param bool $save
      */
-    public function __construct(Course $course, bool $save = true)
+    public function __construct(Course $course, Carbon $start_at, Carbon $end_at, bool $save = true)
     {
         $this->avr      = new AVR();
         $this->course   = $course;
         $this->save     = $save;
+        $this->start_at = $start_at;
+        $this->end_at   = $end_at;
     }
 
     /**
@@ -52,12 +68,18 @@ class AVRGen extends BaseGenerator
      */
     public function generate()
     {
-        $source     = 'avr/templates/avr.docx';
-        $savePath   = 'avr/templates/123.docx';
-
         $this->setData();
 
+        $source     = 'avr/templates/avr.docx';
+        $savePath   = 'avr/files/'.$this->id.'.docx';
+
         $this->readTemplate($source);
+
+        $this
+            ->setGeneral()
+            ->setAVRInfo()
+            ->setInfo();
+
         $this->TPSaveAs($savePath);
 
         if ($this->save) {
@@ -81,7 +103,8 @@ class AVRGen extends BaseGenerator
      */
     private function setData(): void
     {
-        $this->number = $this->getNumber();
+        $this->id       = $this->getNumber();
+        $this->author   = $this->course->user;
     }
 
     /**
@@ -94,12 +117,12 @@ class AVRGen extends BaseGenerator
         if ($this->save) {
             $this->avr = $this->avr->create([
                 'course_id'     => $this->course->id,
-                'contract_id'   => $this->course->contract_quota->id,
+                'contract_id'   => $this->course->contract_quota->id ?? 0,
                 'status'        => 1
             ]);
         }
 
-        return $contract_id ?? 'XXX';
+        return $this->avr->id ?? 'XXX';
     }
 
     /**
@@ -111,9 +134,54 @@ class AVRGen extends BaseGenerator
     private function save(string $savePath): AVR
     {
         $this->avr->link   = $savePath;
-        $this->avr->number = $this->number;
         $this->avr->update();
 
         return $this->avr;
+    }
+
+    /**
+     * Заполняем
+     *
+     * @return self
+     */
+    private function setGeneral(): self
+    {
+        $this->templateProcessor->setValue('iin', $this->author->iin ?? '-');
+        $this->templateProcessor->setValue('type_of_ownership_ru', $this->author->type_ownership->name_ru ?? '-');
+        $this->templateProcessor->setValue('company_name', $this->author->company_name ?? '-');
+        $this->templateProcessor->setValue('address_ru', $this->author->legal_address_ru ?? '-');
+        $this->templateProcessor->setValue('contract_number', $this->course->quota_contract->number ?? '-');
+
+        return $this;
+    }
+
+    /**
+     * Заполняем инфо АВР
+     *
+     * @return self
+     */
+    private function setAVRInfo(): self
+    {
+        $this->templateProcessor->setValue('course_name', $this->course->name ?? '-');
+        $this->templateProcessor->setValue('start_at', $this->start_at->format('d.m.Y'));
+        $this->templateProcessor->setValue('end_at', $this->end_at->format('d.m.Y'));
+        $this->templateProcessor->setValue('student_count', $this->course->certificate->count());
+        $this->templateProcessor->setValue('cost_by_student', CalculateQuotaCost::calculate_quota_cost($this->course));
+        $this->templateProcessor->setValue('cost', CalculateQuotaCost::calculate_quota_cost($this->course) * $this->course->certificate->count());
+
+        return $this;
+    }
+
+    /**
+     * Заполняем подпись
+     *
+     * @return self
+     */
+    private function setInfo(): self
+    {
+        $this->templateProcessor->setValue('position_ru', $this->author->position_ru ?? '-');
+        $this->templateProcessor->setValue('fio_director', $this->author->fio_director ?? '-');
+
+        return $this;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Console\Commands\AVR;
 
 use App\Models\Course;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Libraries\Word\AVRGen;
 
@@ -39,10 +40,17 @@ class AVRGenerate extends Command
      */
     public function handle()
     {
-        $courses = Course::quota()->get();
+        $start_at = Carbon::now()->addMonths(-1)->startOfMonth();
+        $end_at = Carbon::now()->addMonths(-1)->endOfMonth();
+
+        $courses = Course::quota()
+            ->whereHas('certificate')
+            ->with('certificate', 'user')
+//            ->whereDate()
+            ->get();
 
         foreach($courses as $course) {
-            $avr = new AVRGen($course);
+            $avr = new AVRGen($course, $start_at, $end_at);
             $avr->generate();
         }
     }
