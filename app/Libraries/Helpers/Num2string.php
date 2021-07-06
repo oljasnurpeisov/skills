@@ -11,7 +11,7 @@ class Num2string
      * @return string
      * @author Oljasnurpeisov
      */
-    public function kk(int $num)
+    public function kk(int $num): string
     {
         $null = 'нөл';
         $ten = ['', 'бір', 'екі', 'үш', 'төрт', 'бес', 'алты', 'жеті', 'сегіз', 'тоғыз'];
@@ -50,7 +50,7 @@ class Num2string
      * @return string
      * @author runcore
      */
-    public function ru(int $num)
+    public function ru(int $num): string
     {
         $nul='ноль';
         $ten=array(
