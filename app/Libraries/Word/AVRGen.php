@@ -146,6 +146,7 @@ class AVRGen extends BaseGenerator
      */
     private function setGeneral(): self
     {
+        $this->templateProcessor->setValue('date_now', Carbon::now()->format('d.m.Y'));
         $this->templateProcessor->setValue('iin', $this->author->iin ?? '-');
         $this->templateProcessor->setValue('type_of_ownership_ru', $this->author->type_ownership->name_ru ?? '-');
         $this->templateProcessor->setValue('company_name', $this->author->company_name ?? '-');
