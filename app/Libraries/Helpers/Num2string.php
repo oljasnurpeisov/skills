@@ -5,20 +5,34 @@ namespace Libraries\Helpers;
 class Num2string
 {
     /**
-     * Возвращает сумму прописью (ру)
+     * @var int
+     */
+    private $num;
+
+    /**
+     * Num2string constructor.
      *
      * @param int $num
+     */
+    public function __construct(int $num)
+    {
+        $this->num = $num;
+    }
+
+    /**
+     * Возвращает сумму прописью (ру)
+     *
      * @return string
      * @author Oljasnurpeisov
      */
-    public function kk(int $num): string
+    public function kk(): string
     {
         $null = 'нөл';
         $ten = ['', 'бір', 'екі', 'үш', 'төрт', 'бес', 'алты', 'жеті', 'сегіз', 'тоғыз'];
         $tens = [1=> 'он', 'жиырма', 'отыз', 'қырық', 'елу', 'алпыс', 'жетпіс', 'сексен', 'тоқсан'];
         $hundred = 'жүз';
         $out = [];
-        list($sum,$kop) = explode('.',sprintf("%015.2f", floatval($num)));
+        list($sum,$kop) = explode('.',sprintf("%015.2f", floatval($this->num)));
         $unit = [
             array('копейка' ,'копейки' ,'копеек',  1),
             array('рубль'   ,'рубля'   ,'рублей'    ,0),
@@ -46,11 +60,10 @@ class Num2string
     /**
      * Возвращает сумму прописью (ру)
      *
-     * @param int $num
      * @return string
      * @author runcore
      */
-    public function ru(int $num): string
+    public function ru(): string
     {
         $nul='ноль';
         $ten=array(
@@ -68,7 +81,7 @@ class Num2string
             array('миллиард','милиарда','миллиардов',0),
         );
         //
-        list($rub,$kop) = explode('.',sprintf("%015.2f", floatval($num)));
+        list($rub,$kop) = explode('.',sprintf("%015.2f", floatval($this->num)));
         $out = array();
         if (intval($rub)>0) {
             foreach(str_split($rub,3) as $uk=>$v) { // by 3 symbols
