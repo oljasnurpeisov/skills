@@ -5,10 +5,12 @@ namespace Libraries\Word;
 use App\Extensions\CalculateQuotaCost;
 use App\Models\AVR;
 use App\Models\Course;
+use App\Models\Route;
 use Carbon\Carbon;
-use Libraries\Helpers\Num2string;
+use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\TemplateProcessor;
+use Services\Contracts\AVRServiceRouting;
 
 class AVRGen extends BaseGenerator
 {
@@ -48,28 +50,33 @@ class AVRGen extends BaseGenerator
     private $end_at;
 
     /**
+     * @var int
+     */
+    private $sum;
+
+    /**
      * AVR constructor.
      *
      * @param Course $course
-     * @param Carbon $start_at
-     * @param Carbon $end_at
      * @param bool $save
      */
-    public function __construct(Course $course, Carbon $start_at, Carbon $end_at, bool $save = true)
+    public function __construct(Course $course = null, bool $save = true)
     {
         $this->avr      = new AVR();
         $this->course   = $course;
         $this->save     = $save;
-        $this->start_at = $start_at;
-        $this->end_at   = $end_at;
     }
 
     /**
      * Генерация АВР
+     * @param Carbon $start_at
+     * @param Carbon $end_at
+     * @return AVR
+     * @throws Exception
      */
-    public function generate()
+    public function generate(Carbon $start_at, Carbon $end_at)
     {
-        $this->setData();
+        $this->setData($start_at, $end_at);
 
         $source     = 'avr/templates/avr.docx';
         $savePath   = 'avr/files/'.$this->id.'.docx';
@@ -98,12 +105,34 @@ class AVRGen extends BaseGenerator
     }
 
     /**
-     * Set data
+     * Добавление номера АВР
      *
+     * @param AVR $avr
+     * @param string $avr_number
      * @return void
      */
-    private function setData(): void
+    public function addAVRNumber(AVR $avr, string $avr_number): void
     {
+        $this->readTemplate($avr->link);
+
+        $this->templateProcessor->setValue('avr_number', $avr_number);
+
+        $this->TPSaveAs($avr->link);
+
+        $avr->update(['number' => $avr_number]);
+    }
+
+    /**
+     * Set data
+     *
+     * @param Carbon $start_at
+     * @param Carbon $end_at
+     * @return void
+     */
+    private function setData(Carbon $start_at, Carbon $end_at): void
+    {
+        $this->start_at = $start_at;
+        $this->end_at   = $end_at;
         $this->id       = $this->getNumber();
         $this->author   = $this->course->user;
     }
@@ -115,11 +144,16 @@ class AVRGen extends BaseGenerator
      */
     private function getNumber(): string
     {
+        $this->getSum();
+
         if ($this->save) {
             $this->avr = $this->avr->create([
                 'course_id'     => $this->course->id,
                 'contract_id'   => $this->course->contract_quota->id ?? 0,
-                'status'        => 1
+                'status'        => 1,
+                'start_at'      => $this->start_at,
+                'end_at'        => $this->end_at,
+                'sum'           => $this->sum
             ]);
         }
 
@@ -136,6 +170,8 @@ class AVRGen extends BaseGenerator
     {
         $this->avr->link   = $savePath;
         $this->avr->update();
+
+        (new AVRServiceRouting(new Route))->toNextRoute($this->avr);
 
         return $this->avr;
     }
@@ -169,7 +205,7 @@ class AVRGen extends BaseGenerator
         $this->templateProcessor->setValue('end_at', $this->end_at->format('d.m.Y'));
         $this->templateProcessor->setValue('student_count', $this->course->certificate->count());
         $this->templateProcessor->setValue('cost_by_student', CalculateQuotaCost::calculate_quota_cost($this->course));
-        $this->templateProcessor->setValue('cost', CalculateQuotaCost::calculate_quota_cost($this->course) * $this->course->certificate->count());
+        $this->templateProcessor->setValue('cost', $this->sum);
 
         return $this;
     }
@@ -185,5 +221,15 @@ class AVRGen extends BaseGenerator
         $this->templateProcessor->setValue('fio_director', $this->author->fio_director ?? '-');
 
         return $this;
+    }
+
+    /**
+     * Общая сумма
+     *
+     * @return void
+     */
+    private function getSum(): void
+    {
+        $this->sum = CalculateQuotaCost::calculate_quota_cost($this->course) * $this->course->certificate->count();
     }
 }

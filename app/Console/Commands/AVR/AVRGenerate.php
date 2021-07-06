@@ -6,6 +6,7 @@ use App\Models\Course;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Libraries\Word\AVRGen;
+use PhpOffice\PhpWord\Exception\Exception;
 
 class AVRGenerate extends Command
 {
@@ -37,6 +38,7 @@ class AVRGenerate extends Command
      * Execute the console command.
      *
      * @return void
+     * @throws Exception
      */
     public function handle()
     {
@@ -50,8 +52,8 @@ class AVRGenerate extends Command
             ->get();
 
         foreach($courses as $course) {
-            $avr = new AVRGen($course, $start_at, $end_at);
-            $avr->generate();
+            $avr = new AVRGen($course);
+            $avr->generate($start_at, $end_at);
         }
     }
 }

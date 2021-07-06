@@ -4,8 +4,10 @@ namespace Services\Contracts;
 
 
 use App\Models\AVR;
+use App\Models\Course;
 use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Libraries\Word\AVRGen;
 use Services\AVR\AVRFilterService;
 
 /**
@@ -54,6 +56,21 @@ class AuthorAVRService
         })->findOrFail($avr_id);
 
         $this->AVRServiceRouting->toNextRoute($avr);
+    }
+
+    /**
+     * Обновление номера АВР и счета фактуры
+     *
+     * @param int $avr_id
+     * @param array $request
+     */
+    public function updateAVR(int $avr_id, array $request)
+    {
+        $avr = AVR::findOrFail($avr_id);
+        $avr->update(['invoice_link' => $request['invoice']]);
+
+        $avrGen = new AVRGen();
+        $avrGen->addAVRNumber($avr, $request['avr_number']);
     }
 
     /**

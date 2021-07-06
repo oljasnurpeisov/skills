@@ -54,7 +54,7 @@
                         </tr>
                         @foreach ($avrs as $avr)
                             <tr>
-                                <td>{{ $avr->contract->number }}</td>
+                                <td>{{ $avr->contract->number ?? '-' }}</td>
                                 <td>{{ $avr->number }}</td>
                                 <td>{{ $avr->course->name }}</td>
                                 <td>{{ $avr->start_at->format('d.m.Y') }} – {{ $avr->end_at->format('d.m.Y') }}</td>

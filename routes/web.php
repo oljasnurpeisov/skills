@@ -452,6 +452,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     // avr
                     Route::get("/my-avr/{avr_id}/avr", "AvrController@avr")->name('author.avr.view');
                     Route::get("/my-avr/{avr_id}/avrDoc", "AvrController@avrDoc")->name('author.avr.signing.avrDoc');
+                    Route::get("/my-avr/signing/{avr_id}/update", "AvrController@update")->name('author.avr.signing.update');
                     Route::get("/my-avr/signing/{avr_id}/next", "AvrController@next")->name('author.avr.signing.next'); // Заглушка пока нет эцп
                 });
             });

@@ -15,7 +15,7 @@ class CreateAvrsTable extends Migration
     {
         Schema::create('avrs', function (Blueprint $table) {
             $table->id();
-            $table->integer('number')->nullable()->index();
+            $table->string('number')->nullable()->index();
             $table->integer('contract_id')->index();
             $table->integer('course_id')->index();
             $table->string('link')->nullable();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App\Author;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AVR\UpdateAVR;
 use App\Models\AVR;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -89,6 +90,19 @@ class AVRController extends Controller
         return view('app.pages.author.avr.avrDoc', [
             'avr' => $this->AVRService->avrToHtml($avr->id)
         ]);
+    }
+
+    /**
+     * Обновляем номер АВР + счет фактура
+     *
+     * @param UpdateAVR $request
+     * @return RedirectResponse
+     */
+    public function update(UpdateAVR $request): RedirectResponse
+    {
+        $this->authorAVRService->updateAVR($request->avr_id, $request->all());
+
+        return redirect()->back();
     }
 
     /**
