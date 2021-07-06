@@ -81,12 +81,25 @@ class Num2string
                 if ($i2>1) $out[]= $tens[$i2].' '.$ten[$gender][$i3]; # 20-99
                 else $out[]= $i2>0 ? $a20[$i3] : $ten[$gender][$i3]; # 10-19 | 1-9
                 // units without rub & kop
-                if ($uk>1) $out[]= morph($v,$unit[$uk][0],$unit[$uk][1],$unit[$uk][2]);
+                if ($uk>1) $out[]= $this->morph($v,$unit[$uk][0],$unit[$uk][1],$unit[$uk][2]);
             } //foreach
         }
         else $out[] = $nul;
-        $out[] = morph(intval($rub), $unit[1][0],$unit[1][1],$unit[1][2]); // rub
-        $out[] = $kop.' '.morph($kop,$unit[0][0],$unit[0][1],$unit[0][2]); // kop
-        return trim(preg_replace('/ {2,}/', ' ', join(' ',$out)));
+
+
+        return trim(implode(' ', $out));
+    }
+
+    /**
+     * Склоняем словоформу
+     * @ author runcore
+     */
+    private function morph($n, $f1, $f2, $f5) {
+        $n = abs(intval($n)) % 100;
+        if ($n>10 && $n<20) return $f5;
+        $n = $n % 10;
+        if ($n>1 && $n<5) return $f2;
+        if ($n==1) return $f1;
+        return $f5;
     }
 }
