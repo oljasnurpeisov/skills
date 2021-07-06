@@ -87,8 +87,14 @@ class AVRController extends Controller
             })
             ->findOrFail($request->avr_id);
 
+        if (empty($avr->invoice_link)) {
+            $content = $this->AVRService->avrToHtmlWithoutNumber($avr->id);
+        } else {
+            $content = $this->AVRService->avrToHtml($avr->id);
+        }
+
         return view('app.pages.author.avr.avrDoc', [
-            'avr' => $this->AVRService->avrToHtml($avr->id)
+            'avr' => $content
         ]);
     }
 

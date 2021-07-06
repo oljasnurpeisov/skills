@@ -3,6 +3,7 @@
 namespace Services\Contracts;
 
 use App\Models\AVR;
+use Libraries\Word\AVRGen;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
 use PhpOffice\PhpWord\Exception\Exception;
@@ -17,7 +18,7 @@ use PhpOffice\PhpWord\IOFactory;
 class AVRService
 {
     /**
-     * Предпросмотр договора
+     * Предпросмотр АВР
      *
      * @param int $avr_id
      * @return string
@@ -25,7 +26,7 @@ class AVRService
      */
     public function avrToHtml(int $avr_id): string
     {
-        $avr        = AVR::latest()->findOrFail($avr_id);
+        $avr        = AVR::findOrFail($avr_id);
         $filePath   = public_path($avr->link);
 
         if (!file_exists($filePath)) abort(404);
@@ -34,6 +35,20 @@ class AVRService
         $writer = IOFactory::createWriter($phpWord, "HTML");
 
         return $writer->getContent();
+    }
+
+    /**
+     * Предпросмотр АВР без ноера договора
+     *
+     * @param int $avr_id
+     * @return string
+     * @throws Exception
+     */
+    public function avrToHtmlWithoutNumber(int $avr_id): string
+    {
+        $avr = AVR::findOrFail($avr_id);
+
+        return (new AVRGen)->previewWithoutNumber($avr);
     }
 
     /**

@@ -123,6 +123,33 @@ class AVRGen extends BaseGenerator
     }
 
     /**
+     * Предпросмотр без номера
+     *
+     * @param AVR $avr
+     * @return string
+     * @throws Exception
+     */
+    public function previewWithoutNumber(AVR $avr): string
+    {
+        $this->readTemplate($avr->link);
+
+        $this->templateProcessor->setValue('avr_number', 'XXX');
+
+        $savePath   = 'avr/files/'. $avr->id .'-preview.docx';
+
+        $this->TPSaveAs($savePath);
+
+        $phpWord = IOFactory::load($savePath, "Word2007");
+        $writer = IOFactory::createWriter($phpWord, "HTML");
+
+        $result =  $writer->getContent();
+
+        unlink($savePath);
+
+        return $result;
+    }
+
+    /**
      * Set data
      *
      * @param Carbon $start_at
