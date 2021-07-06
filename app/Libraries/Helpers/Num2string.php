@@ -105,7 +105,7 @@ class Num2string
 
     /**
      * Склоняем словоформу
-     * @ author runcore
+     * @author runcore
      */
     private function morph($n, $f1, $f2, $f5) {
         $n = abs(intval($n)) % 100;
