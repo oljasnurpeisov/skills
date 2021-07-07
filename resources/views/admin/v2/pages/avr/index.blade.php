@@ -94,7 +94,6 @@
                                     <a href="{{ route(Route::currentRouteName(), ['lang' => $lang]) }}" class="btn" style="color: #fff; background: #e2e2e2; text-decoration:none; height: 30px; margin-top: 2px; margin-right: 5px">Сбросить</a>
                                     <button class="btn">Поиск</button>
                                 </div>
-
                             </th>
                         </tr>
                     </form>
@@ -108,8 +107,8 @@
                             <td>{{ $item->getStatusName() }}</td>
                             <td>{{ $item->sum }} ₸</td>
                             <td>{{ $item->start_at->format('d.m.Y') }}-{{ $item->end_at->format('d.m.Y') }}</td>
-                            <td>-</td>
-                            <td>-</td>
+                            <td>{{ $item->getAuthorSignedAt() }}</td>
+                            <td>{{ $item->getSignedAt() }}</td>
                             <td>
                                 <div class="action-buttons">
 {{--                                    @if (!empty($item->current_route))--}}

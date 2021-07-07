@@ -143,10 +143,43 @@ class AVR extends Model
 
     /**
      * Get document
+     *
      * @return BelongsTo
      */
     public function document(): BelongsTo
     {
         return $this->belongsTo(Document::class, 'document_id');
+    }
+
+    /**
+     * Дата принятия работ
+     *
+     * @return string
+     */
+    public function getSignedAt(): string
+    {
+        return (!empty($this->document->lastSignature) and $this->isSigned()) ? $this->lastSignature->created_at : '-';
+    }
+
+    /**
+     * Дата подписания автором
+     *
+     * @return string
+     */
+    public function getAuthorSignedAt(): string
+    {
+        if (empty($this->document)) return '-';
+
+        $document = $this->document->with('signatures')->whereHas('signatures', function ($s) {
+            return $s->whereHas('user', function ($q) {
+                return $q->whereHas('role', function ($r) {
+                    return $r->whereRoleId(1);
+                });
+            });
+        })->first();
+
+        if (empty($document)) return '-';
+
+        return $document->signatures->first()->created_at ?? '-';
     }
 }

@@ -3,10 +3,12 @@
 namespace App\Console\Commands\AVR;
 
 use App\Models\Course;
+use App\Models\Route;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Libraries\Word\AVRGen;
 use PhpOffice\PhpWord\Exception\Exception;
+use Services\Contracts\AVRServiceRouting;
 
 class AVRGenerate extends Command
 {
@@ -23,15 +25,26 @@ class AVRGenerate extends Command
      * @var string
      */
     protected $description = 'Генерация актов выполненых работ за предыдущий месяц';
+    /**
+     * @var AVRServiceRouting
+     */
+    private $AVRServiceRouting;
+    /**
+     * @var Route
+     */
+    private $route;
 
     /**
      * Create a new command instance.
      *
-     * @return void
+     * @param AVRServiceRouting $AVRServiceRouting
+     * @param Route $route
      */
-    public function __construct()
+    public function __construct(AVRServiceRouting $AVRServiceRouting, Route $route)
     {
         parent::__construct();
+        $this->AVRServiceRouting = $AVRServiceRouting;
+        $this->route = $route;
     }
 
     /**
@@ -53,7 +66,9 @@ class AVRGenerate extends Command
 
         foreach($courses as $course) {
             $avr = new AVRGen($course);
-            $avr->generate($start_at, $end_at);
+            $newAvr = $avr->generate($start_at, $end_at);
+
+            $this->AVRServiceRouting->toNextRoute($newAvr);
         }
     }
 }

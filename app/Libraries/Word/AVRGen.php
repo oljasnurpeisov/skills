@@ -5,12 +5,10 @@ namespace Libraries\Word;
 use App\Extensions\CalculateQuotaCost;
 use App\Models\AVR;
 use App\Models\Course;
-use App\Models\Route;
 use Carbon\Carbon;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\TemplateProcessor;
-use Services\Contracts\AVRServiceRouting;
 
 class AVRGen extends BaseGenerator
 {
@@ -92,6 +90,7 @@ class AVRGen extends BaseGenerator
 
         if ($this->save) {
             $result = $this->save($savePath);
+            return $this->avr;
         } else {
             $phpWord = IOFactory::load($savePath, "Word2007");
             $writer = IOFactory::createWriter($phpWord, "HTML");
@@ -197,8 +196,6 @@ class AVRGen extends BaseGenerator
     {
         $this->avr->link   = $savePath;
         $this->avr->update();
-
-        (new AVRServiceRouting(new Route))->toNextRoute($this->avr);
 
         return $this->avr;
     }
