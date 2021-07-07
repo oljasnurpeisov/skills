@@ -163,6 +163,8 @@ class ContractService
            }
        }
 
+       $html = str_replace('#auto', '#0000', $html);
+
        $format = 'A4';
 
        $pdf = new mPDF([
