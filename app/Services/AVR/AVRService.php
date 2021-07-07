@@ -69,6 +69,7 @@ class AVRService
         $act = AVR::latest()->findOrFail($act_id);
 
         $filePath = public_path($act->link);
+        $returnPath = preg_replace('/docx/', 'pdf', $act->link);
 
         $info = pathinfo(strtolower($filePath));
 
@@ -108,7 +109,7 @@ class AVRService
         $pdf->WriteHTML($html);
         $pdf->Output($pdfPath, Destination::FILE);
 
-        return $pdfPath;
+        return $returnPath;
     }
 
     /**

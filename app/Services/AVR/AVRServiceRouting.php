@@ -70,7 +70,7 @@ class AVRServiceRouting
 
                         if ($avr->document && $avr->document->lastSignature) {
                             $avr->signed_at = $avr->document->lastSignature->created_at;
-                            $avr->link = asset($this->AVRService->avrToPdf($avr->id));
+                            $avr->link = $this->AVRService->avrToPdf($avr->id);
                             $avr->save();
                         }
 

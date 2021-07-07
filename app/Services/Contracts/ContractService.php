@@ -113,6 +113,7 @@ class ContractService
        $contract = Contract::latest()->findOrFail($contract_id);
 
        $filePath = public_path($contract->link);
+       $returnPath = preg_replace('/docx/', 'pdf', $contract->link);
 
        $info = pathinfo(strtolower($filePath));
 
@@ -178,7 +179,7 @@ class ContractService
        $pdf->WriteHTML($html);
        $pdf->Output($pdfPath, Destination::FILE);
 
-       return $pdfPath;
+       return $returnPath;
    }
 
     /**

@@ -68,7 +68,7 @@ class ContractServiceRouting
 
                         if ($contract->document && $contract->document->lastSignature) {
                             $contract->signed_at = $contract->document->lastSignature->created_at;
-                            $contract->link = asset($this->contactService->contractToPdf($contract->id));
+                            $contract->link = $this->contactService->contractToPdf($contract->id);
                             $contract->save();
                         }
                     }
