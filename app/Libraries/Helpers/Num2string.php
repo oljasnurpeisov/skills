@@ -52,7 +52,7 @@ class Num2string
                 if ($uk>1) $out[] = $unit[$uk];
             }
         }
-        else $out = $null;
+        else return $null;
         $out[] = $unit[1]; // kzt
         return trim(preg_replace('/ {2,}/', ' ', join(' ',$out)));
     }
