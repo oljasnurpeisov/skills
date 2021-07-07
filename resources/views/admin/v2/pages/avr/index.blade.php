@@ -70,10 +70,10 @@
                                 <input type="text" data-date-format="dd.mm.yyyy" id="avr_period" name="avr_period" value="{{ $request['avr_period'] ?? '' }}" placeholder="" class="input-regular custom-datepicker" autocomplete="off" data-value="{{ $request['avr_period'] ?? '' }}" data-range="true">
                             </th>
                             <th>
-                                <input type="text" data-date-format="dd.mm.yyyy" name="" disabled value="" placeholder="" class="input-regular custom-datepicker" autocomplete="off">
+                                <input type="text" data-date-format="dd.mm.yyyy" id="author_signed_at" name="author_signed_at" value="{{ $request['author_signed_at'] ?? '' }}" placeholder="" class="input-regular custom-datepicker" autocomplete="off" data-value="" data-range="true">
                             </th>
                             <th>
-                                <input type="text" data-date-format="dd.mm.yyyy" name="" disabled value="" placeholder="" class="input-regular custom-datepicker" autocomplete="off">
+                                <input type="text" data-date-format="dd.mm.yyyy" id="signed_at" name="signed_at" value="{{ $request['signed_at'] ?? '' }}" placeholder="" class="input-regular custom-datepicker" autocomplete="off" data-value="" data-range="true">
                             </th>
                             <th>
                                 <div class="buttons btn-group-sm">
@@ -120,15 +120,39 @@
     <?php
         if (!empty($request['avr_period'])) {
             $date = explode(',', $request['avr_period']);
-            $start = \Carbon\Carbon::parse($date[0])->format('m/d/Y');
-            $end = \Carbon\Carbon::parse($date[1])->format('m/d/Y');
+            $start_a = \Carbon\Carbon::parse($date[0])->format('m/d/Y');
+            $end_a = \Carbon\Carbon::parse($date[1])->format('m/d/Y');
+        }
+        if (!empty($request['signed_at'])) {
+            $date = explode(',', $request['signed_at']);
+            $start_s = \Carbon\Carbon::parse($date[0])->format('m/d/Y');
+            $end_s = \Carbon\Carbon::parse($date[1])->format('m/d/Y');
+        }
+        if (!empty($request['author_signed_at'])) {
+            $date = explode(',', $request['author_signed_at']);
+            $start_as = \Carbon\Carbon::parse($date[0])->format('m/d/Y');
+            $end_as = \Carbon\Carbon::parse($date[1])->format('m/d/Y');
         }
     ?>
     @if (!empty($request['avr_period']))
         <script>
             var datepicker = $('#avr_period').datepicker().data('datepicker');
-            datepicker.selectDate(new Date('{{ $start }}'));
-            datepicker.selectDate(new Date('{{ $end }}'));
+            datepicker.selectDate(new Date('{{ $start_a }}'));
+            datepicker.selectDate(new Date('{{ $end_a }}'));
+        </script>
+    @endif
+    @if (!empty($request['signed_at']))
+        <script>
+            var datepicker = $('#signed_at').datepicker().data('datepicker');
+            datepicker.selectDate(new Date('{{ $start_s }}'));
+            datepicker.selectDate(new Date('{{ $end_s }}'));
+        </script>
+    @endif
+    @if (!empty($request['author_signed_at']))
+        <script>
+            var datepicker = $('#author_signed_at').datepicker().data('datepicker');
+            datepicker.selectDate(new Date('{{ $start_as }}'));
+            datepicker.selectDate(new Date('{{ $end_as }}'));
         </script>
     @endif
 @endsection
