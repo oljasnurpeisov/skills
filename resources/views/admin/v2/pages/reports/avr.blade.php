@@ -33,7 +33,6 @@
                     <th>Номер АВР</th>
                     <th>Название курса</th>
                     <th>Название организации</th>
-                    <th>Статус АВР</th>
                     <th>Сумма АВР</th>
                     <th>Период</th>
                     <th>Дата подписания Автором</th>
@@ -48,14 +47,6 @@
                         <th><input name="avr_number" type="text" class="input-regular" value="{{ $request['avr_number'] ?? '' }}"></th>
                         <th><input name="course_name" type="text" class="input-regular" value="{{ $request['course_name'] ?? '' }}"></th>
                         <th><input name="company_name" type="text" class="input-regular" value="{{ $request['company_name'] ?? '' }}"></th>
-                        <th>
-                            <select id="avr_status" name="avr_status" class="input-regular chosen">
-                                <option value="">Все</option>
-                                <option value="1">Ожидающие подписания</option>
-                                <option value="2">Подписаны</option>
-                            </select>
-                            @if (!empty($request['avr_status'])) <script>document.getElementById('avr_status').value = {{ $request['avr_status'] ?? '' }};</script> @endif
-                        </th>
                         <th>
                             <input name="sum" type="text" class="input-regular" value="{{ $request['sum'] ?? '' }}">
                         </th>
@@ -84,7 +75,6 @@
                         <td>{{ $item->number }}</td>
                         <td>{{ $item->course->name }}</td>
                         <td>{{ $item->course->user->company_name }}</td>
-                        <td>{{ $item->getStatusName() }}</td>
                         <td>{{ $item->sum }} ₸</td>
                         <td>{{ $item->start_at->format('d.m.Y') }}-{{ $item->end_at->format('d.m.Y') }}</td>
                         <td>{{ $item->getAuthorSignedAt() }}</td>
