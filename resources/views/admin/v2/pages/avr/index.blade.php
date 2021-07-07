@@ -68,20 +68,6 @@
                             </th>
                             <th>
                                 <input type="text" data-date-format="dd.mm.yyyy" id="avr_period" name="avr_period" value="{{ $request['avr_period'] ?? '' }}" placeholder="" class="input-regular custom-datepicker" autocomplete="off" data-value="{{ $request['avr_period'] ?? '' }}" data-range="true">
-
-{{--                                @if (!empty($request['avr_period']))--}}
-{{--                                            <?php--}}
-{{--                                            $date = explode(',', $request['avr_period']);--}}
-{{--                                            //--}}
-{{--                                            ?>--}}
-{{--                                            <script>--}}
-{{--                                                var datepicker = $('#avr_period').datepicker().data('datepicker');--}}
-{{--                                                datepicker.selectDate(new Date('01/07/2021'));--}}
-{{--                                                datepicker.selectDate(new Date('01/08/2021'));--}}
-
-{{--                                                // console.log(new Date('01/07/2021'));--}}
-{{--                                            </script>--}}
-{{--                                @endif--}}
                             </th>
                             <th>
                                 <input type="text" data-date-format="dd.mm.yyyy" name="" disabled value="" placeholder="" class="input-regular custom-datepicker" autocomplete="off">

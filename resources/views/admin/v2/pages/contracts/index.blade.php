@@ -77,8 +77,12 @@
                                 </select>
                                 <script>document.getElementById('course_type').value = {{ $request['course_type'] ?? '' }};</script>
                             </th>
-                            <th></th>
-                            <th></th>
+                            <th>
+                                <input type="text" data-date-format="dd.mm.yyyy" id="author_signed_at" name="author_signed_at" value="{{ $request['author_signed_at'] ?? '' }}" placeholder="" class="input-regular custom-datepicker" autocomplete="off" data-value="{{ $request['author_signed_at'] ?? '' }}" data-range="true">
+                            </th>
+                            <th>
+                                <input type="text" data-date-format="dd.mm.yyyy" id="course_publish_at" name="course_publish_at" value="{{ $request['course_publish_at'] ?? '' }}" placeholder="" class="input-regular custom-datepicker" autocomplete="off" data-value="{{ $request['course_publish_at'] ?? '' }}" data-range="true">
+                            </th>
                             @if (Route::currentRouteName() === 'admin.contracts.distributed' || Route::currentRouteName() === 'admin.contracts.rejected_by_admin')
                                 <th></th>
                             @endif
@@ -126,5 +130,30 @@
 @endsection
 
 @section('scripts')
-
+    <?php
+        if (!empty($request['author_signed_at'])) {
+            $date = explode(',', $request['author_signed_at']);
+            $start_s = \Carbon\Carbon::parse($date[0])->format('m/d/Y');
+            $end_s = \Carbon\Carbon::parse($date[1])->format('m/d/Y');
+        }
+        if (!empty($request['course_publish_at'])) {
+            $date = explode(',', $request['course_publish_at']);
+            $start_c = \Carbon\Carbon::parse($date[0])->format('m/d/Y');
+            $end_c = \Carbon\Carbon::parse($date[1])->format('m/d/Y');
+        }
+    ?>
+    @if (!empty($request['author_signed_at']))
+        <script>
+            var datepicker = $('#author_signed_at').datepicker().data('datepicker');
+            datepicker.selectDate(new Date('{{ $start_s }}'));
+            datepicker.selectDate(new Date('{{ $end_s }}'));
+        </script>
+    @endif
+    @if (!empty($request['course_publish_at']))
+        <script>
+            var datepicker = $('#course_publish_at').datepicker().data('datepicker');
+            datepicker.selectDate(new Date('{{ $start_c }}'));
+            datepicker.selectDate(new Date('{{ $end_c }}'));
+        </script>
+    @endif
 @endsection

@@ -68,6 +68,8 @@ class AVRFilterService
         $avr = $this->searchByAVRName($avr, $request);
         $avr = $this->searchByContractNumber($avr, $request);
         $avr = $this->searchByAVRSum($avr, $request);
+        $avr = $this->searchByAuthorSignedAt($avr, $request);
+        $avr = $this->searchBySignedAt($avr, $request);
         $avr = $this->filterByAVRStatus($avr, $request);
         $avr = $this->searchByPeriod($avr, $request);
 
@@ -186,6 +188,64 @@ class AVRFilterService
                 });
 
                 return $q;
+            });
+        }
+
+        return $avr;
+    }
+
+    /**
+     * Поиск по дате подписания автором
+     *
+     * @param Builder $avr
+     * @param array $request
+     * @return Builder
+     */
+    public function searchByAuthorSignedAt(Builder $avr, array $request): Builder
+    {
+        if (!empty($request['author_signed_at'])) {
+            $dates      = explode(',', $request['author_signed_at']);
+            $start_at   = Carbon::parse($dates[0]);
+            $end_at     = Carbon::parse($dates[1]);
+
+            return $avr->whereHas('document', function ($d) use ($start_at, $end_at) {
+                return $d->whereHas('signatures', function ($s) use ($start_at, $end_at) {
+                    return $s->whereHas('user', function ($q) {
+                        return $q->whereHas('role', function ($r) {
+                            return $r->whereRoleId(4);
+                        });
+                    })->where(function ($b) use ($start_at, $end_at) {
+                        $b->whereDate('created_at', '>=', $start_at)
+                            ->whereDate('created_at', '<=', $end_at);
+                    });
+                });
+            });
+        }
+
+        return $avr;
+    }
+
+    /**
+     * Поиск по дате подписаний
+     *
+     * @param Builder $avr
+     * @param array $request
+     * @return Builder
+     */
+    public function searchBySignedAt(Builder $avr, array $request): Builder
+    {
+        if (!empty($request['signed_at'])) {
+            $dates      = explode(',', $request['signed_at']);
+            $start_at   = Carbon::parse($dates[0]);
+            $end_at     = Carbon::parse($dates[1]);
+
+            return $avr->whereHas('document', function ($d) use ($start_at, $end_at) {
+                return $d->whereHas('lastSignature', function ($s) use ($start_at, $end_at) {
+                    return $s->where(function ($b) use ($start_at, $end_at) {
+                        $b->whereDate('created_at', '>=', $start_at)
+                            ->whereDate('created_at', '<=', $end_at);
+                    });
+                });
             });
         }
 

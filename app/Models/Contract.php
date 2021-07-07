@@ -384,7 +384,7 @@ class Contract extends Model
         $document = $this->document->with('signatures')->whereHas('signatures', function ($s) {
             return $s->whereHas('user', function ($q) {
                 return $q->whereHas('role', function ($r) {
-                    return $r->whereRoleId(1);
+                    return $r->whereRoleId(4);
                 });
             });
         })->first();

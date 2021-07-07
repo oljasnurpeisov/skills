@@ -3,6 +3,7 @@
 namespace Services\Contracts;
 
 use App\Models\Contract;
+use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -63,6 +64,8 @@ class ContractFilterService
         $contracts = $this->searchByContractName($contracts, $request);
         $contracts = $this->searchByCourseName($contracts, $request);
         $contracts = $this->searchByCompanyName($contracts, $request);
+        $contracts = $this->searchByAuthorSignedAt($contracts, $request);
+        $contracts = $this->searchByCoursePublishAt($contracts, $request);
         $contracts = $this->filterByContractStatus($contracts, $request);
         $contracts = $this->filterByContractType($contracts, $request);
         $contracts = $this->filterByCourseType($contracts, $request);
@@ -210,6 +213,66 @@ class ContractFilterService
             if ($request['contract_quota'] == 2) {
                 $contracts = $contracts->where('type', '!=', 3);
             }
+        }
+
+        return $contracts;
+    }
+
+    /**
+     * Поиск по дате подписания автора
+     *
+     * @param Builder $contracts
+     * @param array $request
+     * @return Builder
+     */
+    public function searchByAuthorSignedAt(Builder $contracts, array $request)
+    {
+        if (!empty($request['author_signed_at'])) {
+            $dates      = explode(',', $request['author_signed_at']);
+            $start_at   = Carbon::parse($dates[0]);
+            $end_at     = Carbon::parse($dates[1]);
+
+            return $contracts->whereHas('document', function ($d) use ($start_at, $end_at) {
+                return $d->whereHas('signatures', function ($s) use ($start_at, $end_at) {
+                    return $s->whereHas('user', function ($q) {
+                        return $q->whereHas('role', function ($r) {
+                            return $r->whereRoleId(4);
+                        });
+                    })->where(function ($b) use ($start_at, $end_at) {
+                        $b->whereDate('created_at', '>=', $start_at)
+                            ->whereDate('created_at', '<=', $end_at);
+                    });
+                });
+            });
+        }
+
+        return $contracts;
+    }
+
+    /**
+     * Поиск по дате публикации курса
+     *
+     * @param Builder $contracts
+     * @param array $request
+     * @return Builder
+     */
+    public function searchByCoursePublishAt(Builder $contracts, array $request)
+    {
+        if (!empty($request['course_publish_at'])) {
+            $dates      = explode(',', $request['course_publish_at']);
+            $start_at   = Carbon::parse($dates[0]);
+            $end_at     = Carbon::parse($dates[1]);
+
+            return $contracts->whereHas('course', function ($q) use ($start_at, $end_at) {
+                return $q->where(function($q) use ($start_at, $end_at) {
+                    $q->where(function ($b) use ($start_at, $end_at) {
+                        $b->whereDate('publish_at', '>=', $start_at)
+                            ->whereDate('publish_at', '<=', $end_at);
+                    });
+
+                    return $q;
+                });
+            });
         }
 
         return $contracts;
