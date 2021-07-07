@@ -17,7 +17,7 @@ class RoleController extends Controller
 {
     public function index(Request $request)
     {
-        $main_roles = ['admin', 'user', 'author', 'student', 'tech_support'];
+        $main_roles = ['admin', 'user', 'author', 'student', 'tech_support', 'rukovoditel', 'buhgalter', 'planirovshchik', 'yurist', 'moderator'];
 
         $term = $request->term ? $request->term : '';
 
