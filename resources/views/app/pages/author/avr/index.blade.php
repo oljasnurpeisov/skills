@@ -17,7 +17,7 @@
                             <th style="min-width: 230px;">Период в АВР</th>
                             <th style="min-width: 110px;">Сумма в АВР</th>
                             <th style="min-width: 130px;">Статус подпсиания</th>
-                            <th style="min-width: 296px;">Договор</th>
+                            <th style="min-width: 296px;">АВР</th>
                         </tr>
                         </thead>
                         <tbody>
