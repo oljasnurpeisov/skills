@@ -33,7 +33,7 @@ class UserController extends Controller
         $term = $request->term ? $request->term : '';
 
         $query = User::orderBy('id', 'desc')->whereHas('roles', function ($q) {
-            $q->whereIn('slug', ['admin', 'moderator', 'tech_support']);
+            $q->whereIn('slug', ['admin', 'moderator', 'tech_support', 'yurist', 'planirovshchik', 'buhgalter', 'rukovoditel']);
         });
         if ($term) {
             $query = $query->where('name', 'like', '%' . $term . '%');
