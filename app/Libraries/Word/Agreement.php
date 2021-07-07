@@ -11,6 +11,7 @@ use App\Models\UserInformation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Libraries\Helpers\GetMonth;
+use Libraries\Helpers\Num2string;
 use PhpOffice\PhpWord\Exception\CopyFileException;
 use PhpOffice\PhpWord\Exception\CreateTemporaryFileException;
 use PhpOffice\PhpWord\Exception\Exception;
@@ -332,7 +333,12 @@ class Agreement extends BaseGenerator
         $this->templateProcessor->setValue('poor_status_ru', $this->getPoorStatus($this->course_attachments, 'ru'));
         $this->templateProcessor->setValue('poor_status_kk', $this->getPoorStatus($this->course_attachments, 'kk'));
 
-        $this->templateProcessor->setValue('sum', CalculateQuotaCost::calculate_quota_cost($this->course));
+        $cost = CalculateQuotaCost::calculate_quota_cost($this->course);
+        $costLet = new Num2string($cost);
+
+        $this->templateProcessor->setValue('sum', $cost);
+        $this->templateProcessor->setValue('quota_cost_ru', $costLet->ru());
+        $this->templateProcessor->setValue('quota_cost_kk', $costLet->kk());
     }
 
     /**
