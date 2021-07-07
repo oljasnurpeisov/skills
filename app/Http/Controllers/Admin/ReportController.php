@@ -10,16 +10,41 @@ use App\Models\StudentCertificate;
 use App\Models\StudentCourse;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
+use Services\AVR\AVRFilterService;
+use Services\Contracts\ContractFilterService;
 use ZipArchive;
 
 class ReportController extends Controller
 {
+    /**
+     * @var ContractFilterService
+     */
+    private $contractFilterService;
+
+    /**
+     * @var AVRFilterService
+     */
+    private $AVRFilterService;
+
+    /**
+     * ReportController constructor.
+     *
+     * @param ContractFilterService $contractFilterService
+     * @param AVRFilterService $AVRFilterService
+     */
+    public function __construct(ContractFilterService $contractFilterService, AVRFilterService $AVRFilterService)
+    {
+        $this->contractFilterService    = $contractFilterService;
+        $this->AVRFilterService         = $AVRFilterService;
+    }
+
     public function authorsReports(Request $request)
     {
         // Сортировка
@@ -829,7 +854,6 @@ class ReportController extends Controller
         $query = Session::get('authors_report_export');
         $export = [[]];
         $lang = app()->getLocale();
-
         foreach ($query as $i) {
             $rates_array = [];
             $author_students = [];
@@ -943,5 +967,35 @@ class ReportController extends Controller
             return back()->with('status', 'При экспорте произошла ошибка. Попробуйте позже');
         }
 
+    }
+
+    /**
+     * Отчеты по договорам
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function contracts(Request $request): View
+    {
+        return view('admin.v2.pages.reports.contracts', [
+            'contracts' => $this->contractFilterService->getOrSearch($request->all(), 'signed'),
+            'request'   => $request->all(),
+            'title'     => 'Отчет по договорам'
+        ]);
+    }
+
+    /**
+     * Отчеты по АВР
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function avr(Request $request): View
+    {
+        return view('admin.v2.pages.reports.avr', [
+            'avr'       => $this->AVRFilterService->getOrSearch($request->all(), 'signed'),
+            'request'   => $request->all(),
+            'title'     => 'Отчет по АВР'
+        ]);
     }
 }

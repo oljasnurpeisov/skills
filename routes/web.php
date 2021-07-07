@@ -227,6 +227,10 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 // Отчеты по сертификатам
                 Route::get('/reports/certificates', 'ReportController@certificatesReports');
                 Route::get("/export-certificates-report", "ReportController@exportCertificates");
+                // Отчеты по договорам
+                Route::get('/reports/contracts', 'ReportController@contracts')->name('admin.report.contracts');
+                // Отчеты по АВР
+                Route::get('/reports/avr', 'ReportController@avr')->name('admin.report.avr');
             });
         });
     });
