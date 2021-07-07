@@ -20,12 +20,12 @@
                     <col span="1" style="width: 5%;">
                     <col span="1" style="width: 20%;">
                     <col span="1" style="width: 7%;">
-                    <col span="1" style="width: 17%;">
+                    <col span="1" style="width: 8%;">
                     <col span="1" style="width: 7%;">
                     <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 12%;">
                 </colgroup>
                 <thead>
                 <tr>
