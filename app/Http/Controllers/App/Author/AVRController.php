@@ -4,11 +4,15 @@ namespace App\Http\Controllers\App\Author;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AVR\UpdateAVR;
+use App\Libraries\Kalkan\Certificate;
 use App\Models\AVR;
+use App\Services\Signing\ValidationService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\AuthorAVRService;
 use Services\Contracts\AVRService;
@@ -32,15 +36,21 @@ class AVRController extends Controller
     private $AVRService;
 
     /**
+     * @var ValidationService
+     */
+    private $validationService;
+
+    /**
      * AVRController constructor.
      *
      * @param AuthorAVRService $authorAVRService
      * @param AVRService $AVRService
      */
-    public function __construct(AuthorAVRService $authorAVRService, AVRService $AVRService)
+    public function __construct(AuthorAVRService $authorAVRService, AVRService $AVRService, ValidationService $validationService)
     {
         $this->authorAVRService = $authorAVRService;
         $this->AVRService       = $AVRService;
+        $this->validationService = $validationService;
     }
 
     /**
@@ -112,17 +122,54 @@ class AVRController extends Controller
     }
 
     /**
-     * Заглушка, пока нет ЭЦП, нет никаких проверок!!!!
-     *
-     * @TODO: REMOVE THIS!!!
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function xml(Request $request): JsonResponse
+    {
+        $xml = $this->authorAVRService->generateXml($request->avr_id);
+
+        return response()->json(['xml' => $xml]);
+    }
+
+    /**
+     * Check and send contract (act)
      *
      * @param Request $request
-     * @return RedirectResponse
+     * @return \Illuminate\Contracts\Foundation\Application|JsonResponse|RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function next(Request $request): RedirectResponse
+    public function next(Request $request)
     {
-        $this->authorAVRService->acceptAvr($request->avr_id);
+        $xml = $request->post('xml');
 
-        return redirect()->route('author.avr.index', ['lang' => $request->lang]);
+        $success = false;
+        $certificate = null;
+
+        if($this->validationService->verifyXml($xml)) {
+
+            $success = true;
+            $x509 = Certificate::getCertificate($xml, true);
+            $message = 'Акт успешно подписан';
+
+            if ($x509) {
+                $certificate = $x509;
+            }
+
+            $this->authorAVRService->acceptAvr($request->avr_id, $xml, $this->validationService->getResponse());
+
+            Session::flash('status', $message);
+
+        } else {
+            $message = $this->validationService->getError();
+        }
+
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+            'certificate' => $certificate,
+            'redirect' => route('author.avr.index', ['lang' => $request->lang]),
+            'response' => $this->validationService->getResponse()
+        ], $success ? 200 : 500);
     }
 }

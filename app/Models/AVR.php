@@ -13,8 +13,20 @@ use Illuminate\Support\Facades\Auth;
  * @package App\Models
  *
  * @property int $id
+ * @property string $number
+ * @property int $contract_id
+ * @property int $course_id
  * @property string $link
+ * @property string $invoice_link
+ * @property int $status
+ * @property int $sum
+ * @property string $start_at
+ * @property string $end_at
+ * @property int $route_id
  * @property int $document_id
+ * @property string $created_at
+ * @property string $signed_at
+ * @property string $updated_at
  *
  * @property Document $document
  */

@@ -3,6 +3,7 @@
 namespace Services\Contracts;
 
 use App\Models\AVR;
+use App\Models\Document;
 use Libraries\Word\AVRGen;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
@@ -82,9 +83,17 @@ class AVRService
 
         $html = $PDFWriter->getContent();
 
-        // @todo replacements
+        $html = str_replace('</body>', '<pagebreak orientation="P"/>{appendix}</body>', $html);
+
+        $html = str_replace('{appendix}', $this->generateAppendix(
+            $act->document,
+            $act->document->number,
+            $act->number
+        ), $html);
 
         // Use A4-L (landscape) format for acts
+
+        $html = str_replace('#auto', '#0000', $html);
 
         $format = 'A4-L';
 
@@ -100,5 +109,26 @@ class AVRService
         $pdf->Output($pdfPath, Destination::FILE);
 
         return $pdfPath;
+    }
+
+    /**
+     * Generate document appendix
+     * @param Document $document
+     * @param string $number
+     * @param string $parent
+     * @return string
+     */
+    private function generateAppendix(Document $document, string $number = '', string $parent = ''): string
+    {
+        if($document->signatures()->count() == 0)
+            return '';
+
+        return view('app.pages.general.documents.appendix', [
+            'link' => route('public.document.verify', ['lang' => 'ru', 'number' => $document->number]),
+            'type' => $document->type->name,
+            'parent' => $parent,
+            'number' => $number,
+            'signatures' => $document->signatures
+        ])->render();
     }
 }

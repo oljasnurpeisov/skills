@@ -1212,7 +1212,7 @@ class CourseController extends Controller
     }
 
     /**
-     * Check and send
+     * Check and send contract (course)
      *
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|JsonResponse|RedirectResponse|\Illuminate\Routing\Redirector

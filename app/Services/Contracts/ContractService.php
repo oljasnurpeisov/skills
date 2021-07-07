@@ -290,79 +290,20 @@ class ContractService
      * Generate document appendix
      * @param Document $document
      * @param string $number
+     * @param string $parent
      * @return string
      */
-    private function generateAppendix(Document $document, string $number = '', string $parent = '')
+    private function generateAppendix(Document $document, string $number = '', string $parent = ''): string
     {
         if($document->signatures()->count() == 0)
             return '';
 
-        $content = <<<HTML
-<p>
-Данный электронный документ подписан с использованием электронной цифровой подписи.
-</p>
-<p>
-Для проверки электронного документа перейдите по ссылке: <br />
-<a href="{link}">{link}</a>
-</p>
-<br />
-<table cellpadding="4" cellspacing="4">
-<tr>
-<td style="width: 25%">Тип документа</td>
-<td>{type}</td>
-</tr>
-<tr>
-<td style="width: 25%">Номер документа</td>
-<td>{parent}</td>
-</tr>
-<tr>
-<td style="width: 25%">Уникальный номер</td>
-<td>{number}</td>
-</tr>
-<tr>
-<td style="width: 25%">Электронные цифровые подписи</td>
-<td>
-{signatures}
-<br />
-<br />
-</td>
-</tr>
-</table>
-<br />
-<br />
-<table style="border: 0">
-<tr>
-<td style="width: 25%;border: 0">
-<barcode type="QR" class="barcode" error="M" code="{link}" size="1.4" border="0"/>
-</td>
-<td style="width: 75%; border: 0">
-Осы құжат «Электронды құжат және электрондық цифрлық қолтаңба туралы» Қазақстан Республикасының 2003 жылғы 7 қаңтардағы Заңы 7 бабының 1 тармағына сәйкес қағаз тасығыштағы құжатпен
-маңызы бірдей. <br />
-Данный документ согласно пункту 1 статьи 7 ЗРК от 7 января 2003 года "Об электронном документе и электронной цифровой подписи" равнозначен документу на бумажном носителе.</td>
-</tr>
-</table>
-HTML;
-
-        $content = str_replace('{link}', route('public.document.verify', ['lang' => 'ru', 'number' => $document->number]), $content);
-        $content = str_replace('{type}', $document->type->name, $content);
-        $content = str_replace('{parent}', $parent, $content);
-        $content = str_replace('{number}', $number, $content);
-
-        $signatures = '';
-
-        foreach ($document->signatures as $signature) {
-
-            $certificate = new Certificate($signature->cert);
-
-            $signatures .= sprintf('%s<br/><br/>Подписано: %s<br />Время подписи: %s<hr />',
-                $certificate->legalName ?: $certificate->personName,
-                $certificate->personName,
-                $signature->created_at
-            );
-        }
-
-        $content = str_replace('{signatures}', trim($signatures, '<hr />'), $content);
-
-        return $content;
+        return view('app.pages.general.documents.appendix', [
+            'link' => route('public.document.verify', ['lang' => 'ru', 'number' => $document->number]),
+            'type' => $document->type->name,
+            'parent' => $parent,
+            'number' => $number,
+            'signatures' => $document->signatures
+        ])->render();
     }
 }

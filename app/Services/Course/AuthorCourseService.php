@@ -75,11 +75,10 @@ class AuthorCourseService
     }
 
     /**
-     * Заглушка, пока нет ЭЦП
-     *
-     * @TODO: REMOVE THIS!!!
-     *
+     * Attache signature info and send to next route
      * @param int $contract_id
+     * @param string|null $message
+     * @param array $validationResponse
      */
     public function acceptContract(int $contract_id, string $message = null, array $validationResponse = [])
     {

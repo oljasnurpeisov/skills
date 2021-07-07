@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Console\Commands\AVR\AVRGenerate;
 use App\Http\Controllers\Controller;
+use App\Libraries\Kalkan\Certificate;
 use App\Models\AVR;
+use App\Services\Signing\ValidationService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Queue;
@@ -32,17 +35,23 @@ class AVRController extends Controller
     private $adminAVRService;
 
     /**
+     * @var ValidationService
+     */
+    private $validationService;
+
+    /**
      * AVRController constructor.
      *
      * @param AVRFilterService $AVRFilterService
      * @param AVRService $AVRService
      * @param AdminAVRService $adminAVRService
      */
-    public function __construct(AVRFilterService $AVRFilterService, AVRService $AVRService, AdminAVRService $adminAVRService)
+    public function __construct(AVRFilterService $AVRFilterService, AVRService $AVRService, AdminAVRService $adminAVRService, ValidationService $validationService)
     {
         $this->AVRFilterService = $AVRFilterService;
         $this->AVRService       = $AVRService;
         $this->adminAVRService  = $adminAVRService;
+        $this->validationService = $validationService;
     }
 
     /**
@@ -119,18 +128,41 @@ class AVRController extends Controller
     }
 
     /**
-     * Заглушка, пока нет ЭЦП, нет никаких проверок!!!!
-     *
-     * @TODO: REMOVE THIS!!!
-     *
+     * Check and send
      * @param Request $request
-     * @return RedirectResponse
+     * @return JsonResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function next(Request $request): RedirectResponse
+    public function next(Request $request): JsonResponse
     {
-        $this->adminAVRService->acceptAvr($request->avr_id);
+        $xml = $request->post('xml');
 
-        return redirect()->route('admin.avr.pending', ['lang' => $request->lang]);
+        $success = false;
+        $certificate = null;
+
+        if($this->validationService->verifyXml($xml)) {
+
+            $success = true;
+            $x509 = Certificate::getCertificate($xml, true);
+            $message = 'Договор успешно подписан';
+
+            if ($x509) {
+                $certificate = $x509;
+            }
+
+            $this->adminAVRService->acceptAvr($request->avr_id, $xml, $this->validationService->getResponse());
+
+        } else {
+            $message = $this->validationService->getError();
+        }
+
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+            'certificate' => $certificate,
+            'redirect' => route('admin.avr.pending', ['lang' => $request->lang]),
+            'response' => $this->validationService->getResponse()
+        ], $success ? 200 : 500);
     }
 
     /**
