@@ -62,4 +62,5 @@ return [
     'contract_rejected' => 'Договор по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> расторгнут, по причине <i>":reject_message"</i>.',
     'avr_signed' => 'Акт выполненных работ по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> принят заказчиком.',
     'avr_signed_by_author' => 'Акт выполненных работ подписан, для отправки вам необходимо прикрепить счет фактуру и отправить акт выполненных работ заказчику.',
+    'contract_rejected_by_admin' => 'Договор по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> отклонен, по причине <i>":reject_message"</i>.'
 ];

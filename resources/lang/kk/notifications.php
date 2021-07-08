@@ -44,13 +44,14 @@ Enbek Skills қысқа мерзімді онлайн курстар платф�
 
     're_calculate_quota_cost_message' => 'Курстың  бағасы:course_name квота бойынша жаңартылды. Квота бойынша курстың ағымдағы құны: :course_quota_cost тг.',
 
-    'contract_ready_for_signed' => 'Договор по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> доступен для подписания.',
-    'avr_ready_for_signed' => 'Акт выполненных работ по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> сформирован и доступен для подписания.',
-    'course_published' => 'Курс <a href="/:lang/my-courses/course/:course_id">:course_name</a> успешно опубликован.',
+    'contract_ready_for_signed' => '<a href="/:lang/my-courses/course/:course_id">:course_name</a> курсы бойынша шарт қол қою үшін қол жетімді.',
+    'avr_ready_for_signed' => '<a href="/:lang/my-courses/course/:course_id">:course_name</a> курсы бойынша орындалған жұмыстардың актісі қалыптастырылды және қол қою үшін қол жетімді.',
+    'course_published' => '<a href="/:lang/my-courses/course/:course_id">:course_name</a> курсы сәтті жарияланды.',
 
-    'contract_signed' => ' Договор по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> подписан заказчиком.',
+    'contract_signed' => '<a href="/:lang/my-courses/course/:course_id">:course_name</a> курсына Тапсырыс беруші қол қойды.',
 //    'contract_signed_and_published' => 'Курс <a href="/:lang/my-courses/course/:course_id">:course_name</a> успешно опубликован.',
-    'contract_rejected' => 'Договор по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> расторгнут, по причине <i>":reject_message"</i>.',
-    'avr_signed' => 'Акт выполненных работ по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> принят заказчиком.',
-    'avr_signed_by_author' => 'Акт выполненных работ подписан, для отправки вам необходимо прикрепить счет фактуру и отправить акт выполненных работ заказчику.',
+    'contract_rejected' => '<a href="/:lang/my-courses/course/:course_id">:course_name</a> курсы бойынша шарт <i>":reject_message"</i> себепке байланысты бұзылды.',
+    'avr_signed' => '<a href="/:lang/my-courses/course/:course_id">:course_name</a> курсы бойынша орындалған жұмыстардың актісін Тапсырыс беруші қабылдады.',
+    'avr_signed_by_author' => 'Орындалған жұмыстардың актісіне қол қойылды, сізге шот-фактураны тіркеп, орындалған жұмыстар актісін Тапсырыс берушіге жіберу қажет.',
+    'contract_rejected_by_admin' => '<a href="/:lang/my-courses/course/:course_id">:course_name</a> курсы бойынша шарт <i>":reject_message"</i> себепке байланысты қабылданбады.'
 ];
