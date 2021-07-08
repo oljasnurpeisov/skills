@@ -144,10 +144,10 @@ class AVRService
     public function searchCertifications(AVR $avr): Collection
     {
         return StudentCertificate::whereCourseId($avr->course_id)
-//            ->where(function ($q) use ($avr) {
-//                return $q->whereDate('created_at', '>=', $avr->start_at)
-//                    ->whereDate('created_at', '<=', $avr->end_at);
-//            })
+            ->where(function ($q) use ($avr) {
+                return $q->whereDate('created_at', '>=', $avr->start_at)
+                    ->whereDate('created_at', '<=', $avr->end_at);
+            })
             ->get();
     }
 }
