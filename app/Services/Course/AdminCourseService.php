@@ -21,6 +21,7 @@ class AdminCourseService
      * @var ContractServiceRouting
      */
     private $contractServiceRouting;
+
     /**
      * @var ContractService
      */
