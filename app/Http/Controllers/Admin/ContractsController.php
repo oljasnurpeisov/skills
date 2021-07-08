@@ -349,7 +349,7 @@ class ContractsController extends Controller
             $this->adminCourseService->rejectCourse($contract->course->id);
         }
 
-        // @TODO Send author notification
+        (new NotificationService('Договор отклонен', 'notifications.contract_rejected_by_admin', $contract->course->id, $contract->course->user->id, 'ru', 3, $request->message))->notify();
 
         return redirect()->back();
     }
