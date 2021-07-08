@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Libraries\Kalkan\Certificate;
 use App\Models\AVR;
 use App\Services\Signing\ValidationService;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -45,13 +46,14 @@ class AVRController extends Controller
      * @param AVRFilterService $AVRFilterService
      * @param AVRService $AVRService
      * @param AdminAVRService $adminAVRService
+     * @param ValidationService $validationService
      */
     public function __construct(AVRFilterService $AVRFilterService, AVRService $AVRService, AdminAVRService $adminAVRService, ValidationService $validationService)
     {
-        $this->AVRFilterService = $AVRFilterService;
-        $this->AVRService       = $AVRService;
-        $this->adminAVRService  = $adminAVRService;
-        $this->validationService = $validationService;
+        $this->AVRFilterService     = $AVRFilterService;
+        $this->AVRService           = $AVRService;
+        $this->adminAVRService      = $adminAVRService;
+        $this->validationService    = $validationService;
     }
 
     /**
@@ -78,7 +80,7 @@ class AVRController extends Controller
     public function pending(Request $request): View
     {
         return view('admin.v2.pages.avr.index', [
-            'avr' => $this->AVRFilterService->getOrSearch($request->all(), 'pending'),
+            'avr'       => $this->AVRFilterService->getOrSearch($request->all(), 'pending'),
             'request'   => $request->all(),
             'title'     => 'Ожидающие подписания АВР'
         ]);
@@ -93,7 +95,7 @@ class AVRController extends Controller
     public function signed(Request $request): View
     {
         return view('admin.v2.pages.avr.index', [
-            'avr' => $this->AVRFilterService->getOrSearch($request->all(), 'signed'),
+            'avr'       => $this->AVRFilterService->getOrSearch($request->all(), 'signed'),
             'request'   => $request->all(),
             'title'     => 'Подписанные АВР'
         ]);
@@ -107,9 +109,12 @@ class AVRController extends Controller
      */
     public function view(Request $request): View
     {
+        $avr = AVR::findOrFail($request->avr_id);
+
         return view('admin.v2.pages.avr.view', [
-            'avr'  => AVR::findOrFail($request->avr_id),
-            'title'     => 'Просмотр АВР'
+            'avr'           => $avr,
+            'certificates'  => $this->AVRService->searchCertifications($avr),
+            'title'         => 'Просмотр АВР'
         ]);
     }
 
@@ -129,9 +134,10 @@ class AVRController extends Controller
 
     /**
      * Check and send
+     *
      * @param Request $request
      * @return JsonResponse
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function next(Request $request): JsonResponse
     {

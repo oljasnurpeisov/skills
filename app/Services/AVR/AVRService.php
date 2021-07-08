@@ -4,6 +4,8 @@ namespace Services\Contracts;
 
 use App\Models\AVR;
 use App\Models\Document;
+use App\Models\StudentCertificate;
+use Illuminate\Database\Eloquent\Collection;
 use Libraries\Word\AVRGen;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
@@ -131,5 +133,21 @@ class AVRService
             'number' => $number,
             'signatures' => $document->signatures
         ])->render();
+    }
+
+    /**
+     * Сертификаты под АВР
+     *
+     * @param AVR $avr
+     * @return Collection
+     */
+    public function searchCertifications(AVR $avr): Collection
+    {
+        return StudentCertificate::whereCourseId($avr->course_id)
+//            ->where(function ($q) use ($avr) {
+//                return $q->whereDate('created_at', '>=', $avr->start_at)
+//                    ->whereDate('created_at', '<=', $avr->end_at);
+//            })
+            ->get();
     }
 }

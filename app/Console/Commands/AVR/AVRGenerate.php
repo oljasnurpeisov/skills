@@ -62,7 +62,7 @@ class AVRGenerate extends Command
             ->whereHas('certificate')
             ->with('certificate', 'user')
             ->where(function ($q) use ($start_at, $end_at) {
-                $q->whereDate('created_at', '>=', $start_at)
+                return $q->whereDate('created_at', '>=', $start_at)
                     ->whereDate('created_at', '<=', $end_at);
             })
             ->get();

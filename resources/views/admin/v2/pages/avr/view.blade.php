@@ -28,20 +28,52 @@
         </div>
 
         <div class="block">
-            @if (pathinfo($avr->link)['extension'] === 'pdf')
-                <object data="{{ asset($avr->link) }}" type="application/pdf" internalinstanceid="3" title="" width="100%" height="600"></object>
-            @else
-                <iframe src="{{ route('admin.avr.get_contract_html', ['lang' => 'ru', 'avr_id' => $avr->id]) }}" frameborder="0" width="100%" height="600"></iframe>
-            @endif
+                <div class="tabs">
+                    <div class="mobile-dropdown">
+                        <div class="mobile-dropdown__desc">
+                            <ul class="tabs-titles">
+                                <li class="active">
+                                    <a href="javascript:;" title="АВР">АВР</a>
+                                </li>
+                                @if(Auth::user()->role->role_id === 1)
+                                    <li>
+                                        <a href="javascript:;" title="Действия">Сертификаты</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;" title="Действия">Счет фактура</a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tabs-contents">
+                        <div class="active">
+                            @if (pathinfo($avr->link)['extension'] === 'pdf')
+                                <object data="{{ asset($avr->link) }}" type="application/pdf" internalinstanceid="3" title="" width="100%" height="600"></object>
+                            @else
+                                <iframe src="{{ route('admin.avr.get_contract_html', ['lang' => 'ru', 'avr_id' => $avr->id]) }}" frameborder="0" width="100%" height="600"></iframe>
+                            @endif
 
-            {{--Управление для администрации по текущему маршруту--}}
-            @if ($avr->isPending() && $avr->isSignator())
-                <button
-                    data-source="{{ route('admin.avr.xml', ['lang' => $lang, 'avr_id' => $avr->id]) }}"
-                    data-target="{{ route('admin.avr.next', ['lang' => $lang, 'avr_id' => $avr->id]) }}"
-                    class="btn" id="signButton" disabled>Подписать</button>
-            @endif
+                            {{--Управление для администрации по текущему маршруту--}}
+                            @if ($avr->isPending() && $avr->isSignator())
+                                <button
+                                    data-source="{{ route('admin.avr.xml', ['lang' => $lang, 'avr_id' => $avr->id]) }}"
+                                    data-target="{{ route('admin.avr.next', ['lang' => $lang, 'avr_id' => $avr->id]) }}"
+                                    class="btn" id="signButton" disabled>Подписать</button>
+                            @endif
+                        </div>
+                        <div>
+                            @foreach ($certificates as $certificate)
+                                <object data="{{ asset($certificate->pdf_ru) }}" type="application/pdf" internalinstanceid="3" title="" width="100%" height="600"></object>
+                            @endforeach
+                        </div>
+                        <div>
+                            <object data="{{ asset($avr->invoice_link) }}" type="application/pdf" internalinstanceid="3" title="" width="100%" height="600"></object>
+                        </div>
+                    </div>
+                </div>
         </div>
+
     </div>
 
     <div id="dialog-confirm-reject" class="modal" style="display: none;">
