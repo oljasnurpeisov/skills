@@ -43,8 +43,8 @@ class AVRGenerate extends Command
     public function __construct(AVRServiceRouting $AVRServiceRouting, Route $route)
     {
         parent::__construct();
-        $this->AVRServiceRouting = $AVRServiceRouting;
-        $this->route = $route;
+        $this->AVRServiceRouting    = $AVRServiceRouting;
+        $this->route                = $route;
     }
 
     /**
@@ -61,7 +61,10 @@ class AVRGenerate extends Command
         $courses = Course::quota()
             ->whereHas('certificate')
             ->with('certificate', 'user')
-//            ->whereDate()
+            ->where(function ($q) use ($start_at, $end_at) {
+                $q->whereDate('created_at', '>=', $start_at)
+                    ->whereDate('created_at', '<=', $end_at);
+            })
             ->get();
 
         foreach($courses as $course) {

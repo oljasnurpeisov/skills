@@ -164,14 +164,4 @@ class AVRController extends Controller
             'response' => $this->validationService->getResponse()
         ], $success ? 200 : 500);
     }
-
-    /**
-     * Запуск генератора АВР
-     *
-     * @TODO REMOVE THIS!!!!
-     */
-    public function generate()
-    {
-        Queue::push(new AVRGenerate());
-    }
 }

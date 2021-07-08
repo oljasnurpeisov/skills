@@ -46,12 +46,13 @@ class AVRController extends Controller
      *
      * @param AuthorAVRService $authorAVRService
      * @param AVRService $AVRService
+     * @param ValidationService $validationService
      */
     public function __construct(AuthorAVRService $authorAVRService, AVRService $AVRService, ValidationService $validationService)
     {
-        $this->authorAVRService = $authorAVRService;
-        $this->AVRService       = $AVRService;
-        $this->validationService = $validationService;
+        $this->authorAVRService     = $authorAVRService;
+        $this->AVRService           = $AVRService;
+        $this->validationService    = $validationService;
     }
 
     /**

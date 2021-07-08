@@ -6,6 +6,7 @@ use App\Models\Contract;
 use App\Services\Signing\DocumentService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\AuthorContractService;
 use Services\Contracts\ContractServiceRouting;
 use Services\Notifications\NotificationService;
@@ -65,6 +66,8 @@ class AuthorCourseService
      * @TODO: REMOVE THIS!!!
      *
      * @param int $contract_id
+     * @return string
+     * @throws Exception
      */
     public function generateXml(int $contract_id)
     {

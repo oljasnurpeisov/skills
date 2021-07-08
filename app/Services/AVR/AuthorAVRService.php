@@ -11,6 +11,7 @@ use DOMDocument;
 use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Libraries\Word\AVRGen;
+use PhpOffice\PhpWord\Exception\Exception;
 use Services\AVR\AVRFilterService;
 use Spatie\ArrayToXml\ArrayToXml;
 
@@ -114,7 +115,7 @@ class AuthorAVRService
      *
      * @param AVR $act
      * @return string
-     * @throws \PhpOffice\PhpWord\Exception\Exception
+     * @throws Exception
      */
     public function generateXml(AVR $act): string
     {

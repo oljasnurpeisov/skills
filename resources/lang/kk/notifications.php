@@ -42,5 +42,15 @@ Enbek Skills қысқа мерзімді онлайн курстар платф�
     'course_student_finished' => 'Курстың аяқталуымен құттықтаймыз <a href="/:lang/course-catalog/course/:course_id">:course_name</a>. Сертификаттар келесі бөлімде қолжетімді <a href="/:lang/student/my-certificates"> Менің сертификаттарым</a>',
     'new_message' => 'Сізде жаңа <a href="/:lang/dialog/opponent-:opponent_id">хабарлама </a> от <i>:user_name</i>',
 
-    're_calculate_quota_cost_message' => 'Курстың  бағасы:course_name квота бойынша жаңартылды. Квота бойынша курстың ағымдағы құны: :course_quota_cost тг.'
+    're_calculate_quota_cost_message' => 'Курстың  бағасы:course_name квота бойынша жаңартылды. Квота бойынша курстың ағымдағы құны: :course_quota_cost тг.',
+
+    'contract_ready_for_signed' => 'Договор по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> доступен для подписания.',
+    'avr_ready_for_signed' => 'Акт выполненных работ по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> сформирован и доступен для подписания.',
+    'course_published' => 'Курс <a href="/:lang/my-courses/course/:course_id">:course_name</a> успешно опубликован.',
+
+    'contract_signed' => ' Договор по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> подписан заказчиком.',
+//    'contract_signed_and_published' => 'Курс <a href="/:lang/my-courses/course/:course_id">:course_name</a> успешно опубликован.',
+    'contract_rejected' => 'Договор по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> расторгнут, по причине <i>":reject_message"</i>.',
+    'avr_signed' => 'Акт выполненных работ по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> принят заказчиком.',
+    'avr_signed_by_author' => 'Акт выполненных работ подписан, для отправки вам необходимо прикрепить счет фактуру и отправить акт выполненных работ заказчику.',
 ];
