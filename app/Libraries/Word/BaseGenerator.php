@@ -37,9 +37,9 @@ abstract class BaseGenerator
      */
     public function TPSaveAs(string $savePath): void
     {
-        $result = file_get_contents($this->templateProcessor->save());
+        $result = $this->templateProcessor->save();
 
-        if(Storage::disk(env('SIGN_STORAGE', 'local'))->put($savePath, $result)) {
+        if(Storage::disk(env('SIGN_STORAGE', 'local'))->put($savePath, file_get_contents($result))) {
             @unlink($result);
         }
     }
