@@ -163,10 +163,6 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
 
                 Route::get('/avr/{avr_id}/view', 'AVRController@view')->name('admin.avr.view');
                 Route::get('/avr/{avr_id}/get-avr-html', 'AVRController@getAVRHtml')->name('admin.avr.get_contract_html');
-//                Route::get('/contracts/{course_id}/{type}/get-contract-html-preview', 'ContractsController@getContractHtmlPreview')->name('admin.contracts.get_contract_html_preview');
-//                Route::get('/contracts/{course_id}/{type}/generate-preview-contract', 'ContractsController@previewContract')->name('admin.contracts.generate_preview_contract');
-
-
                 Route::get("/avr/signing/{avr_id}/xml", "AVRController@xml")->name('admin.avr.xml'); // Формирование XML для подписания
                 Route::post("/avr/signing/{avr_id}/next", "AVRController@next")->name('admin.avr.next'); // Отправка подписанного акта
 
