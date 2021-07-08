@@ -201,7 +201,7 @@
                                             <label class="form-group__label">{{__('default.pages.profile.phone_1')}}</label>
                                             <input type="tel" name="phone_1"
                                                    onfocus="$(this).inputmask('+7 (999) 999 99 99')" placeholder=""
-                                                   class="input-regular" value="{{$item->phone_1}}">
+                                                   class="input-regular" value="{{$item->phone_1}}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
