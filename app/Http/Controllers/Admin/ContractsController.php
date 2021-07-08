@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Libraries\Kalkan\Certificate;
 use App\Models\Contract;
 use App\Models\Course;
+use App\Services\Files\StorageService;
 use App\Services\Signing\ValidationService;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\ContractFilterService;
@@ -204,6 +206,25 @@ class ContractsController extends Controller
     }
 
     /**
+     * Просмотр подписанного договора
+     *
+     * @param Request $request
+     * @return string
+     * @throws Exception
+     */
+    public function getContractPdf(Request $request)
+    {
+        /** @var Contract $contract */
+        $contract = Contract::where('id', $request->contract_id)->firstOrFail();
+
+        if ($contract && $contract->link) {
+            return StorageService::preview($contract->link);
+        }
+
+        abort(404);
+    }
+
+    /**
      * Предпросмотр договора без сохранения
      *
      * @param Request $request
@@ -233,20 +254,22 @@ class ContractsController extends Controller
             $success = false;
             $certificate = null;
 
-            if($this->validationService->verifyXml($xml)) {
+            $x509 = Certificate::getCertificate($xml, true);
+
+            if ($x509) {
+                $certificate = $x509;
+            }
+
+            if($certificate->canSign(env('SIGN_OWNER')) && $this->validationService->verifyXml($xml)) {
 
                 $success = true;
-                $x509 = Certificate::getCertificate($xml, true);
-                $message = 'Договор успешно подписан';
 
-                if ($x509) {
-                    $certificate = $x509;
-                }
+                $message = 'Договор успешно подписан';
 
                 $this->adminCourseService->acceptContract($request->contract_id, $xml, $this->validationService->getResponse());
 
             } else {
-                $message = $this->validationService->getError();
+                $message = $certificate->getError() ?: $this->validationService->getError();
             }
 
             return response()->json([
@@ -355,6 +378,7 @@ class ContractsController extends Controller
     }
 
     /**
+     * Get XML for signing
      * @param Request $request
      * @return JsonResponse
      */
@@ -364,7 +388,7 @@ class ContractsController extends Controller
         $contract = Contract::findOrFail($request->contract_id);
 
         if ($contract && $contract->document) {
-            return response()->json(['xml' => $contract->document->content]);
+            return response()->json(['xml' => $contract->xml()]);
         }
 
         return response()->json(['message' => 'Электронный договор не найден'], 500);

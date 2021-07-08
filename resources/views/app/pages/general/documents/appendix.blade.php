@@ -26,7 +26,7 @@
                 <p>
                     {{ $signature->getCertificate()->legalName ? $signature->getCertificate()->legalName : $signature->getCertificate()->personName }}
                 </p>
-                <p>Подписано: {{ $signature->getCertificate()->personName }}</p>
+                <p>Подписано: {{ $signature->getCertificate()->personName }} / {{ $signature->user->position_ru ?: ($signature->user->role ? $signature->user->role->role->name : '') }} /</p>
                 <p>Дата подписания: {{ $signature->created_at }}</p>
                 <hr />
             @endforeach

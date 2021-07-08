@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Files\StorageService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -181,5 +182,20 @@ class AVR extends Model
         if (empty($document)) return '-';
 
         return $document->signatures->first()->created_at ?? '-';
+    }
+
+    /**
+     * Get act XML
+     * @return string
+     */
+    public function xml(): string
+    {
+        $xml = preg_replace('/docx/', 'xml', $this->link);
+
+        if (file_exists(StorageService::path($xml)))
+            return file_get_contents(StorageService::path($xml));
+
+        if ($this->document->content)
+            return $this->document->content;
     }
 }

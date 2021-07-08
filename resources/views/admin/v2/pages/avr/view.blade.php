@@ -49,7 +49,7 @@
                     <div class="tabs-contents">
                         <div class="active">
                             @if (pathinfo($avr->link)['extension'] === 'pdf')
-                                <object data="{{ asset($avr->link) }}" type="application/pdf" internalinstanceid="3" title="" width="100%" height="600"></object>
+                                <object data="{{ route('admin.avr.get_contract_pdf', ['lang' => 'ru', 'avr_id' => $avr->id]) }}" type="application/pdf" internalinstanceid="3" title="" width="100%" height="600"></object>
                             @else
                                 <iframe src="{{ route('admin.avr.get_contract_html', ['lang' => 'ru', 'avr_id' => $avr->id]) }}" frameborder="0" width="100%" height="600"></iframe>
                             @endif

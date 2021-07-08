@@ -5,10 +5,26 @@ namespace App\Models;
 use App\Permissions\HasPermissionsTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\VerifyEmail;
 
+/**
+ * Class User
+ * @package App\Models
+ *
+ * @property int $id
+ * @property string $email
+ * @property string $name
+ * @property string $iin
+ * @property string $position_ru
+ * @property string $position_kk
+ * @property string $created_at
+ * @property string $updated_at
+ *
+ * @property RoleUser $role
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;

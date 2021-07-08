@@ -3,11 +3,10 @@
 namespace Services\Contracts;
 
 use App\Console\Commands\DocumentGenerator;
-use App\Libraries\Kalkan\Certificate;
 use App\Models\Contract;
 use App\Models\Course;
 use App\Models\Document;
-use App\Models\DocumentSignature;
+use App\Services\Files\StorageService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Libraries\Helpers\GetMonth;
@@ -28,11 +27,16 @@ ini_set('memory_limit', '4G');
 class ContractService
 {
     /**
+     * @var StorageService
+     */
+    private $storageService;
+
+    /**
      * ContractService constructor.
      */
-    public function __construct()
+    public function __construct(StorageService $storageService)
     {
-        //
+        $this->storageService = $storageService;
     }
 
     /**
@@ -88,14 +92,27 @@ class ContractService
    public function contractToHtml(int $contract_id): string
    {
        $contract = Contract::latest()->findOrFail($contract_id);
-       $filePath = public_path($contract->link);
+       $filePath = StorageService::path($contract->link);
 
        if (!file_exists($filePath)) abort(404);
 
        $phpWord = IOFactory::load($filePath, "Word2007");
        $writer = IOFactory::createWriter($phpWord, "HTML");
 
-       return $writer->getContent();
+       $html = $writer->getContent();
+
+       // Replace empty dates
+
+       preg_match_all('/&lt;(.*?)&gt;/', $html, $dateMatches);
+
+       if ($dateMatches && sizeof($dateMatches[0]) === 2) {
+
+           foreach ($dateMatches[0] as $dateMatch) {
+               $html = str_replace($dateMatch, '', $html);
+           }
+       }
+
+       return $html;
    }
 
     /**
@@ -111,8 +128,8 @@ class ContractService
    {
        /** @var Contract $contract */
        $contract = Contract::latest()->findOrFail($contract_id);
+       $filePath = StorageService::path($contract->link);
 
-       $filePath = public_path($contract->link);
        $returnPath = preg_replace('/docx/', 'pdf', $contract->link);
 
        $info = pathinfo(strtolower($filePath));
@@ -136,21 +153,23 @@ class ContractService
            $contract->number
        ), $html);
 
-       $dateKz = sprintf('%d жылғы %s «%s»',
-           Carbon::parse($contract->document->lastSignature->created_at)->year,
-           (new GetMonth())->kk(date('m', strtotime($contract->document->lastSignature->created_at))),
-           Carbon::parse($contract->document->lastSignature->created_at)->day
-       );
-
-       $dateRu = sprintf('«%s» %s %d года',
-           Carbon::parse($contract->document->lastSignature->created_at)->day,
-           Carbon::parse($contract->document->lastSignature->created_at)->getTranslatedMonthName('Do MMMM'),
-           Carbon::parse($contract->document->lastSignature->created_at)->year
-       );
+       // Replace real dates
 
        preg_match_all('/&lt;(.*?)&gt;/', $html, $dateMatches);
 
        if ($dateMatches && sizeof($dateMatches[0]) === 2) {
+
+           $dateKz = sprintf('%d жылғы %s «%s»',
+               Carbon::parse($contract->document->lastSignature->created_at)->year,
+               (new GetMonth())->kk(date('m', strtotime($contract->document->lastSignature->created_at))),
+               Carbon::parse($contract->document->lastSignature->created_at)->day
+           );
+
+           $dateRu = sprintf('«%s» %s %d года',
+               Carbon::parse($contract->document->lastSignature->created_at)->day,
+               Carbon::parse($contract->document->lastSignature->created_at)->getTranslatedMonthName('Do MMMM'),
+               Carbon::parse($contract->document->lastSignature->created_at)->year
+           );
 
            foreach($dateMatches[0] as $dateMatch) {
 
@@ -177,7 +196,9 @@ class ContractService
        $pdf->SetAuthor(env('APP_NAME'));
 
        $pdf->WriteHTML($html);
-       $pdf->Output($pdfPath, Destination::FILE);
+       $result = $pdf->Output($pdfPath, Destination::STRING_RETURN);
+
+       $this->storageService->save($returnPath, $result);
 
        return $returnPath;
    }
@@ -194,8 +215,8 @@ class ContractService
 
        foreach ($contracts as $contract)
        {
-           if (file_exists(public_path($contract->link))) {
-               unlink(public_path($contract->link));
+           if (file_exists(storage_path($contract->link))) {
+               unlink(storage_path($contract->link));
            }
 
            $contract->delete();
@@ -297,7 +318,7 @@ class ContractService
      */
     private function generateAppendix(Document $document, string $number = '', string $parent = ''): string
     {
-        if($document->signatures()->count() == 0)
+        if($document->signatures()->count() === 0)
             return '';
 
         return view('app.pages.general.documents.appendix', [

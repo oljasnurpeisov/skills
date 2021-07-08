@@ -77,7 +77,7 @@ class AVRGen extends BaseGenerator
         $this->setData($start_at, $end_at);
 
         $source     = 'avr/templates/avr.docx';
-        $savePath   = 'avr/files/'.$this->id.'.docx';
+        $savePath   = 'documents/' . date('Y') . '/acts/' . $this->id . '/' . $this->id. '.docx';
 
         $this->readTemplate($source);
 

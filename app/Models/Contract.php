@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Files\StorageService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -370,6 +371,21 @@ class Contract extends Model
     public function document(): BelongsTo
     {
         return $this->belongsTo(Document::class, 'document_id');
+    }
+
+    /**
+     * Get contract XML
+     * @return string
+     */
+    public function xml(): string
+    {
+        $xml = preg_replace('/docx/', 'xml', $this->link);
+
+        if (file_exists(StorageService::path($xml)))
+            return file_get_contents(StorageService::path($xml));
+
+        if ($this->document->content)
+            return $this->document->content;
     }
 
     /**

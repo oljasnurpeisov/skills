@@ -8,10 +8,11 @@ use App\Models\Course;
 use App\Models\CourseAttachments;
 use App\Models\User;
 use App\Models\UserInformation;
+use App\Services\Files\StorageService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Libraries\Helpers\GetMonth;
-use Libraries\Helpers\Num2string;
+use App\Libraries\Helpers\Num2string;
 use PhpOffice\PhpWord\Exception\CopyFileException;
 use PhpOffice\PhpWord\Exception\CreateTemporaryFileException;
 use PhpOffice\PhpWord\Exception\Exception;
@@ -111,7 +112,7 @@ class Agreement extends BaseGenerator
         $this->setData();
 
         $source     = 'contracts/templates/agreements/'. $this->type .'.docx';
-        $savePath   = 'contracts/files/'. $this->type .'_'. $this->number.'.docx';
+        $savePath   = 'documents/'. date('Y') . '/contracts/' . $this->number . '/'. $this->type .'_'. $this->number.'.docx';
 
         $this->readTemplate($source);
 
@@ -121,7 +122,6 @@ class Agreement extends BaseGenerator
             ->setCourseInfo()
             ->setCourseDetail();
 
-
         $this->TPSaveAs($savePath);
 
         if ($this->save) {
@@ -130,7 +130,7 @@ class Agreement extends BaseGenerator
             $phpWord = IOFactory::load($savePath, "Word2007");
             $writer = IOFactory::createWriter($phpWord, "HTML");
 
-            $result =  $writer->getContent();
+            $result = $writer->getContent();
 
             unlink($savePath);
         }
@@ -247,11 +247,8 @@ class Agreement extends BaseGenerator
     private function setGeneral(): self
     {
         $this->templateProcessor->setValue('day', Carbon::now()->day);
-
         $this->templateProcessor->setValue('month_ru', Carbon::now()->getTranslatedMonthName('Do MMMM'));
-
         $this->templateProcessor->setValue('month_kk', (new GetMonth())->kk(date('m')));
-
         $this->templateProcessor->setValue('year', Carbon::now()->year);
         $this->templateProcessor->setValue('number', $this->number);
 
@@ -323,7 +320,8 @@ class Agreement extends BaseGenerator
         $this->templateProcessor->setValue('attachments', $this->allAttachments($this->course_attachments));
         $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));
 
-        //@TODO Check this!!!
+        // @TODO Check this!!!
+
         $this->templateProcessor->setValue('practice_status_ru', $this->getPracticeStatus('ru')); // Количество форматов учебного контента
         $this->templateProcessor->setValue('practice_status_kk', $this->getPracticeStatus('kk')); // Количество форматов учебного контента
 
@@ -416,7 +414,7 @@ class Agreement extends BaseGenerator
             $adaptive = trans('default.pages.calculator.poor_opportunities_not_full_adaptive', [], $lang);
         } elseif ($this->attachmentExist($videos_poor_hearing_link) and $this->attachmentExist($audios_poor_vision)) {
             $adaptive = trans('default.pages.calculator.poor_opportunities_full_adaptive', [], $lang);
-        }  else {
+        } else {
             $adaptive = trans('default.pages.calculator.poor_opportunities_not_adaptive', [], $lang);
         }
 

@@ -6,6 +6,8 @@ use App\Console\Commands\AVR\AVRGenerate;
 use App\Http\Controllers\Controller;
 use App\Libraries\Kalkan\Certificate;
 use App\Models\AVR;
+use App\Models\Contract;
+use App\Services\Files\StorageService;
 use App\Services\Signing\ValidationService;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
@@ -119,7 +121,7 @@ class AVRController extends Controller
     }
 
     /**
-     * Предпросмотр договора
+     * Предпросмотр акта
      *
      * @param Request $request
      * @return string
@@ -130,6 +132,25 @@ class AVRController extends Controller
         return view('app.pages.author.courses.contractDoc', [
             'contract' => $this->AVRService->avrToHtml($request->avr_id)
         ]);
+    }
+
+    /**
+     * Просмотр подписанного акта
+     *
+     * @param Request $request
+     * @return string
+     * @throws Exception
+     */
+    public function getAvrPdf(Request $request): string
+    {
+        /** @var AVR $act */
+        $act = AVR::where('id', $request->avr_id)->firstOrFail();
+
+        if ($act && $act->link) {
+            return StorageService::preview($act->link);
+        }
+
+        abort(404);
     }
 
     /**
@@ -146,20 +167,22 @@ class AVRController extends Controller
         $success = false;
         $certificate = null;
 
-        if($this->validationService->verifyXml($xml)) {
+        $x509 = Certificate::getCertificate($xml, true);
+
+        if ($x509) {
+            $certificate = $x509;
+        }
+
+        if($certificate->canSign(env('SIGN_OWNER')) && $this->validationService->verifyXml($xml)) {
 
             $success = true;
-            $x509 = Certificate::getCertificate($xml, true);
-            $message = 'Договор успешно подписан';
 
-            if ($x509) {
-                $certificate = $x509;
-            }
+            $message = 'Договор успешно подписан';
 
             $this->adminAVRService->acceptAvr($request->avr_id, $xml, $this->validationService->getResponse());
 
         } else {
-            $message = $this->validationService->getError();
+            $message = $certificate->getError() ?: $this->validationService->getError();
         }
 
         return response()->json([
@@ -169,5 +192,22 @@ class AVRController extends Controller
             'redirect' => route('admin.avr.pending', ['lang' => $request->lang]),
             'response' => $this->validationService->getResponse()
         ], $success ? 200 : 500);
+    }
+
+    /**
+     * Get XML for signing
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function xml(Request $request): JsonResponse
+    {
+        /** @var AVR $act */
+        $act = Contract::findOrFail($request->avr_id);
+
+        if ($act && $act->document) {
+            return response()->json(['xml' => $act->xml()]);
+        }
+
+        return response()->json(['message' => 'Электронный акт не найден'], 500);
     }
 }

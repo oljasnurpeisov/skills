@@ -4,12 +4,14 @@ namespace App\Http\Controllers\App\Author;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contract;
+use App\Services\Files\StorageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Services\Contracts\AuthorContractService;
 use Services\Contracts\ContractService;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ContractsController extends Controller
 {
@@ -53,7 +55,7 @@ class ContractsController extends Controller
      * Загрузка договора
      *
      * @param Request $request
-     * @return BinaryFileResponse
+     * @return StreamedResponse
      */
     public function download(Request $request)
     {
@@ -63,6 +65,6 @@ class ContractsController extends Controller
             })
             ->findOrFail($request->contract_id);
 
-        return response()->download(public_path($contract->link))->deleteFileAfterSend(false);
+        return StorageService::download($contract->link, sprintf('Договор №%s.pdf', $contract->number));
     }
 }

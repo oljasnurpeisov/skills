@@ -1227,22 +1227,24 @@ class CourseController extends Controller
             $success = false;
             $certificate = null;
 
-            if($this->validationService->verifyXml($xml)) {
+            $x509 = Certificate::getCertificate($xml, true);
+
+            if ($x509) {
+                $certificate = $x509;
+            }
+
+            if($certificate->canSign(Auth::user()->iin) && $this->validationService->verifyXml($xml)) {
 
                 $success = true;
-                $x509 = Certificate::getCertificate($xml, true);
-                $message = 'Договор успешно подписан';
 
-                if ($x509) {
-                    $certificate = $x509;
-                }
+                $message = 'Договор успешно подписан';
 
                 $this->authorCourseService->acceptContract($request->contract_id, $xml, $this->validationService->getResponse());
 
                 Session::flash('status', $message);
 
             } else {
-                $message = $this->validationService->getError();
+                $message = $certificate->getError() ?: $this->validationService->getError();
             }
 
             return response()->json([

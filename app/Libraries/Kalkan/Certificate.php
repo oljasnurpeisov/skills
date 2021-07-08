@@ -116,6 +116,11 @@ class Certificate
     ];
 
     /**
+     * @var string
+     */
+    private $error = '';
+
+    /**
      * Certificate constructor
      *
      * @param string $certificate
@@ -178,6 +183,47 @@ class Certificate
         Log::debug('Certificate data fetched', ['subject' => $this->subject, 'x509' => $this->x509]);
 
         return $this;
+    }
+
+    /**
+     * Check signing permission
+     * @param string|null $requestedIinBin
+     * @return bool
+     */
+    public function canSign(string $requestedIinBin = null): bool
+    {
+        if ($requestedIinBin) {
+            if((int) $requestedIinBin[4] > 3 && $this->bin !== $requestedIinBin) {
+                $this->error = 'Некорректный БИН для подписания документа';
+                return false;
+            } elseif ($this->iin !== $requestedIinBin) {
+                $this->error = 'Некорректный ИИН для подписания документа';
+                return false;
+            }
+        }
+
+        if (!$this->bin)
+            return true;
+
+        $allowedPolicies = static::$strictSignPolicies;
+
+        foreach ($allowedPolicies as $policy) {
+            if (substr_count($this->x509['extensions']['certificatePolicies'], $policy))
+                return true;
+        }
+
+        $this->error = 'Отсутствует право подписи';
+
+        return false;
+    }
+
+    /**
+     * Get error
+     * @return string|null
+     */
+    public function getError(): string
+    {
+        return $this->error;
     }
 
     /**

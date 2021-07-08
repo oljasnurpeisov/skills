@@ -5,6 +5,7 @@ namespace Services\Contracts;
 
 use App\Models\Contract;
 use App\Models\Document;
+use App\Services\Files\StorageService;
 use DOMDocument;
 use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\App;
@@ -22,16 +23,20 @@ class AuthorContractService
     /** @var ContractService */
     private $contractService;
 
+    /** @var StorageService */
+    private $storageService;
+
     /**
      * AuthorContractService constructor.
      *
      * @param ContractFilterService $contractFilterService
      * @param ContractService $contractService
      */
-    public function __construct(ContractFilterService $contractFilterService, ContractService $contractService)
+    public function __construct(ContractFilterService $contractFilterService, ContractService $contractService, StorageService $storageService)
     {
         $this->contractFilterService = $contractFilterService;
         $this->contractService = $contractService;
+        $this->storageService = $storageService;
     }
 
     /**
@@ -130,7 +135,7 @@ class AuthorContractService
 
         $xml->formatOutput = true;
 
-        $document->content = $xml->saveXML();
+        $content = $xml->saveXML();
 
         $document->user_id = Auth::user()->id;
         $document->type_id = 1;
@@ -145,8 +150,12 @@ class AuthorContractService
             foreach ($document->signatures as $signature) {
                 $signature->delete();
             }
+
+            // Save file in storage
+
+            $this->storageService->save(preg_replace('/docx/', 'xml', $contract->link), $content);
         }
 
-        return $document->content;
+        return $content;
     }
 }

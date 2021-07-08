@@ -2,6 +2,8 @@
 
 namespace Libraries\Word;
 
+use App\Services\Files\StorageService;
+use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpWord\Exception\CopyFileException;
 use PhpOffice\PhpWord\Exception\CreateTemporaryFileException;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -35,6 +37,10 @@ abstract class BaseGenerator
      */
     public function TPSaveAs(string $savePath): void
     {
-        $this->templateProcessor->saveAs(public_path($savePath));
+        $result = file_get_contents($this->templateProcessor->save());
+
+        if(Storage::disk(env('SIGN_STORAGE', 'local'))->put($savePath, $result)) {
+            @unlink($result);
+        }
     }
 }

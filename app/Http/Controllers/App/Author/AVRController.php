@@ -149,15 +149,17 @@ class AVRController extends Controller
         $success = false;
         $certificate = null;
 
-        if($this->validationService->verifyXml($xml)) {
+        $x509 = Certificate::getCertificate($xml, true);
+
+        if ($x509) {
+            $certificate = $x509;
+        }
+
+        if($certificate->canSign(Auth::user()->iin) && $this->validationService->verifyXml($xml)) {
 
             $success = true;
-            $x509 = Certificate::getCertificate($xml, true);
-            $message = 'Акт успешно подписан';
 
-            if ($x509) {
-                $certificate = $x509;
-            }
+            $message = 'Акт успешно подписан';
 
             $this->authorAVRService->acceptAvr($request->avr_id, $xml, $this->validationService->getResponse());
 
@@ -167,7 +169,7 @@ class AVRController extends Controller
             (new NotificationService('АВР подписан', 'avr_signed_by_author', $avr->course->id, $avr->course->user->id, 'ru', 3))->notify();
 
         } else {
-            $message = $this->validationService->getError();
+            $message = $certificate->getError() ?: $this->validationService->getError();
         }
 
         return response()->json([

@@ -31,7 +31,7 @@
             @if (!empty($contract))
 
                 @if (pathinfo($contract->link)['extension'] === 'pdf')
-                    <object data="{{ asset($contract->link) }}" type="application/pdf" internalinstanceid="3" title="" width="100%" height="600"></object>
+                    <object data="{{ route('admin.contracts.get_contract_pdf', ['lang' => 'ru', 'contract_id' => $contract->id]) }}" type="application/pdf" internalinstanceid="3" title="" width="100%" height="600"></object>
                 @else
                     <iframe src="{{ route('admin.contracts.get_contract_html', ['lang' => 'ru', 'contract_id' => $contract->id]) }}" frameborder="0" width="100%" height="600"></iframe>
                 @endif

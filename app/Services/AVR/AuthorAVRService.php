@@ -6,6 +6,7 @@ namespace Services\Contracts;
 use App\Models\AVR;
 use App\Models\Course;
 use App\Models\Document;
+use App\Services\Files\StorageService;
 use App\Services\Signing\DocumentService;
 use DOMDocument;
 use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -43,18 +44,22 @@ class AuthorAVRService
      */
     private $documentService;
 
+    /** @var StorageService */
+    private $storageService;
+
     /**
      * AuthorAVRService constructor.
      *
      * @param AVRFilterService $AVRFilterService
      * @param AVRServiceRouting $AVRServiceRouting
      */
-    public function __construct(AVRFilterService $AVRFilterService, AVRServiceRouting $AVRServiceRouting, AVRService $AVRService, DocumentService $documentService)
+    public function __construct(AVRFilterService $AVRFilterService, AVRServiceRouting $AVRServiceRouting, AVRService $AVRService, DocumentService $documentService, StorageService $storageService)
     {
         $this->AVRFilterService     = $AVRFilterService;
         $this->AVRServiceRouting    = $AVRServiceRouting;
         $this->AVRService           = $AVRService;
         $this->documentService      = $documentService;
+        $this->storageService       = $storageService;
     }
 
     /**
@@ -158,7 +163,7 @@ class AuthorAVRService
 
         $xml->formatOutput = true;
 
-        $document->content = $xml->saveXML();
+        $content = $xml->saveXML();
 
         $document->user_id = Auth::user()->id;
         $document->type_id = 1;
@@ -173,8 +178,12 @@ class AuthorAVRService
             foreach ($document->signatures as $signature) {
                 $signature->delete();
             }
+
+            // Save file in storage
+
+            $this->storageService->save(preg_replace('/docx/', 'xml', $act->link), $content);
         }
 
-        return $document->content;
+        return $content;
     }
 }

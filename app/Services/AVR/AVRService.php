@@ -4,6 +4,7 @@ namespace Services\Contracts;
 
 use App\Models\AVR;
 use App\Models\Document;
+use App\Services\Files\StorageService;
 use App\Models\StudentCertificate;
 use Illuminate\Database\Eloquent\Collection;
 use Libraries\Word\AVRGen;
@@ -21,6 +22,19 @@ use PhpOffice\PhpWord\IOFactory;
 class AVRService
 {
     /**
+     * @var StorageService
+     */
+    private $storageService;
+
+    /**
+     * ContractService constructor.
+     */
+    public function __construct(StorageService $storageService)
+    {
+        $this->storageService = $storageService;
+    }
+
+    /**
      * Предпросмотр АВР
      *
      * @param int $avr_id
@@ -30,7 +44,7 @@ class AVRService
     public function avrToHtml(int $avr_id): string
     {
         $avr        = AVR::findOrFail($avr_id);
-        $filePath   = public_path($avr->link);
+        $filePath   = StorageService::path($avr->link);
 
         if (!file_exists($filePath)) abort(404);
 
@@ -69,8 +83,8 @@ class AVRService
     {
         /** @var AVR $act */
         $act = AVR::latest()->findOrFail($act_id);
+        $filePath = StorageService::path($act->link);
 
-        $filePath = public_path($act->link);
         $returnPath = preg_replace('/docx/', 'pdf', $act->link);
 
         $info = pathinfo(strtolower($filePath));
@@ -109,7 +123,9 @@ class AVRService
         $pdf->SetAuthor(env('APP_NAME'));
 
         $pdf->WriteHTML($html);
-        $pdf->Output($pdfPath, Destination::FILE);
+        $result = $pdf->Output($pdfPath, Destination::STRING_RETURN);
+
+        $this->storageService->save($returnPath, $result);
 
         return $returnPath;
     }
@@ -123,7 +139,7 @@ class AVRService
      */
     private function generateAppendix(Document $document, string $number = '', string $parent = ''): string
     {
-        if($document->signatures()->count() == 0)
+        if($document->signatures()->count() === 0)
             return '';
 
         return view('app.pages.general.documents.appendix', [
