@@ -14,11 +14,11 @@ return [
 заключения договора.',
     'quota_rules_title' => 'Правила публикации курса по квоте',
     'quota_rules_description' => 'Уважаемый «<b>:author_name</b>»
-Платформа краткосрочных онлайн курсов Enbek Skills предлагает Вам рассмотреть возможность предоставления Вашего курса «<b>:course_name</b>» 
+Платформа краткосрочных онлайн курсов Enbek Skills предлагает Вам рассмотреть возможность предоставления Вашего курса «<b>:course_name</b>»
 по специальной квоте для определенных групп населения, утвержденных Министерством труда и социальной защиты населения.
 Базовая стоимость Вашего курса по специальной квоте - <b>:course_quota_cost</b> тг.
 <br><br>
-Стоимость курса по квоте рассчитывается автоматически в зависимости от формата и длительности Вашего курса учётом соответствующих коэффициентов качетсва учебного контента при помощи утвержденного <a href="/:lang/for-authors#calculator" target="_blank">калькулятора</a> стоимости. 
+Стоимость курса по квоте рассчитывается автоматически в зависимости от формата и длительности Вашего курса учётом соответствующих коэффициентов качетсва учебного контента при помощи утвержденного <a href="/:lang/for-authors#calculator" target="_blank">калькулятора</a> стоимости.
 Предоставление Вашего курса по специальной квоте количество охвата потенциальных обучающихся по Вашим курсам.',
 
     'confirm_btn_title' => 'Согласен',
@@ -50,5 +50,16 @@ return [
     'course_student_finished' => 'Поздравляем с завершением курса <a href="/:lang/course-catalog/course/:course_id">:course_name</a>. Сертификаты доступны в разделе <a href="/:lang/student/my-certificates">Мои сертификаты</a>',
     'new_message' => 'У вас новое <a href="/:lang/dialog/opponent-:opponent_id">сообщение </a> от <i>:user_name</i>',
 
-    're_calculate_quota_cost_message' => 'Стоимость курса :course_name по квоте была обновлена. Текущая стоимость курса по квоте: :course_quota_cost тг.'
+    're_calculate_quota_cost_message' => 'Стоимость курса :course_name по квоте была обновлена. Текущая стоимость курса по квоте: :course_quota_cost тг.',
+
+
+    'contract_ready_for_signed' => 'Договор по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> доступен для подписания.',
+    'avr_ready_for_signed' => 'Акт выполненных работ по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> сформирован и доступен для подписания.',
+    'course_published' => 'Курс <a href="/:lang/my-courses/course/:course_id">:course_name</a> успешно опубликован.',
+
+    'contract_signed' => ' Договор по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> подписан заказчиком.',
+//    'contract_signed_and_published' => 'Курс <a href="/:lang/my-courses/course/:course_id">:course_name</a> успешно опубликован.',
+    'contract_rejected' => 'Договор по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> расторгнут, по причине <i>":reject_message"</i>.',
+    'avr_signed' => 'Акт выполненных работ по курсу <a href="/:lang/my-courses/course/:course_id">:course_name</a> принят заказчиком.',
+    'avr_signed_by_author' => 'Акт выполненных работ подписан, для отправки вам необходимо прикрепить счет фактуру и отправить акт выполненных работ заказчику.',
 ];

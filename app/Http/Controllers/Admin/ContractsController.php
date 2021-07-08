@@ -7,6 +7,7 @@ use App\Libraries\Kalkan\Certificate;
 use App\Models\Contract;
 use App\Models\Course;
 use App\Services\Signing\ValidationService;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -16,6 +17,7 @@ use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\ContractFilterService;
 use Services\Contracts\ContractService;
 use Services\Course\AdminCourseService;
+use Services\Notifications\NotificationService;
 
 /**
  * Class ContractsController
@@ -217,9 +219,10 @@ class ContractsController extends Controller
 
     /**
      * Check and send
+     *
      * @param Request $request
      * @return JsonResponse|RedirectResponse
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function next(Request $request)
     {
@@ -283,7 +286,7 @@ class ContractsController extends Controller
         // Отменяем доступ по квоте
         $this->adminCourseService->rejectQuota($contract->course->id);
 
-        // @TODO Send author notification
+        (new NotificationService('Договор расторгнут', 'notifications.contract_rejected', $contract->course->id, $contract->course->user->id, 'ru', 3, $request->message))->notify();
 
         return redirect()->back();
     }

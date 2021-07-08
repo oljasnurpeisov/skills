@@ -6,6 +6,7 @@ use App\Models\Contract;
 use App\Models\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Services\Notifications\NotificationService;
 
 /**
  * Class ContractServiceRouting
@@ -29,6 +30,7 @@ class ContractServiceRouting
      * ContractServiceRouting constructor.
      *
      * @param Route $route
+     * @param ContractService $contractService
      */
     public function __construct(Route $route, ContractService $contractService)
     {
@@ -48,6 +50,9 @@ class ContractServiceRouting
             $contract->update([
                 'route_id' => $this->getFirstRoute($contract->type)->id
             ]);
+
+            $subject = 'Договор доступен для подписания';
+            $name    = 'notifications.contract_ready_for_signed';
         } else {
 
             $nextRoute = $this->getNextRoute($contract->type, $contract->current_route->sort);
@@ -81,11 +86,18 @@ class ContractServiceRouting
 
                     DB::commit();
 
+                    $subject = 'Договор подписан заказчиком';
+                    $name    = 'notifications.contract_signed';
+
                 } catch (\Exception $exception) {
                     DB::rollBack();
                     Log::error($exception);
                 }
             }
+        }
+
+        if (!empty($name) && !empty($subject)) {
+            (new NotificationService($subject, $name, $contract->course->id, $contract->course->user->id, 'ru', 3))->notify();
         }
     }
 

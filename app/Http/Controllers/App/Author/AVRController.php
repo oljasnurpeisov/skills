@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\AuthorAVRService;
 use Services\Contracts\AVRService;
+use Services\Notifications\NotificationService;
 
 /**
  * Class AVRController
@@ -124,6 +125,7 @@ class AVRController extends Controller
     /**
      * @param Request $request
      * @return JsonResponse
+     * @throws Exception
      */
     public function xml(Request $request): JsonResponse
     {
@@ -159,6 +161,9 @@ class AVRController extends Controller
             $this->authorAVRService->acceptAvr($request->avr_id, $xml, $this->validationService->getResponse());
 
             Session::flash('status', $message);
+
+            $avr = AVR::find($request->avr_id);
+            (new NotificationService('АВР подписан', 'avr_signed_by_author', $avr->course->id, $avr->course->user->id, 'ru', 3))->notify();
 
         } else {
             $message = $this->validationService->getError();

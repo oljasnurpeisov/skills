@@ -6,6 +6,7 @@ use App\Models\AVR;
 use App\Models\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Services\Notifications\NotificationService;
 
 /**
  * Class AVRServiceRouting
@@ -50,6 +51,8 @@ class AVRServiceRouting
                 'route_id' => $this->getFirstRoute()->id
             ]);
 
+            $subject = 'АВР доступен для подписания';
+            $name    = 'notifications.avr_ready_for_signed';
         } else {
 
             $nextRoute = $this->getNextRoute($avr->current_route->sort);
@@ -77,11 +80,18 @@ class AVRServiceRouting
                         DB::commit();
                     }
 
+                    $subject = 'АВР принят заказчиком';
+                    $name    = 'notifications.avr_signed';
+
                 } catch (\Exception $exception) {
                     DB::rollBack();
                     Log::error($exception);
                 }
             }
+        }
+
+        if (!empty($name) && !empty($subject)) {
+            (new NotificationService($subject, $name, $avr->course->id, $avr->course->user->id, 'ru', 3))->notify();
         }
     }
 

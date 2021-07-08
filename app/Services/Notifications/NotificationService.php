@@ -43,7 +43,6 @@ class NotificationService
      */
     private $subject;
 
-
     /**
      * NotificationService constructor.
      *
@@ -55,7 +54,7 @@ class NotificationService
      * @param string $lang
      * @param int $type
      */
-    public function __construct(string $subject, string $message, string $name, int $course_id, int $user_id, string $lang, int $type = 0)
+    public function __construct(string $subject, string $name, int $course_id, int $user_id, string $lang, int $type = 0, string $message = null)
     {
         $this->message      = $message;
         $this->name         = $name;
@@ -73,32 +72,38 @@ class NotificationService
      */
     public function notify(): void
     {
-        NotificationsHelper::createNotification($this->name, $this->course_id, $this->user_id, $this->type, ['course_reject_message' => $this->message]);
-
-        $this->sendEmail();
-    }
-
-    /**
-     * Отправка на почту
-     */
-    private function sendEmail()
-    {
-        $data = [
-            'item'          => Course::find($this->course_id),
-            'lang'          => $this->lang,
-            'message_text'  => $$this->message,
-        ];
-
-        $user = User::find($this->user_id);
-
-        try {
-            Mail::send('app.pages.page.emails.course_reject', ['data' => $data], function ($message) use ($user) {
-                $message->from(env("MAIL_USERNAME"), env('APP_NAME'));
-                $message->to($user->email, 'Receiver')->subject($this->subject);
-            });
-
-        } catch (\Exception $e) {
-
+        if (!empty($this->message)) {
+            $message = ['reject_message' => $this->message];
         }
+
+        NotificationsHelper::createNotification($this->name, $this->course_id, $this->user_id, $this->type, $message ?? null);
+
+//        $this->sendEmail();
     }
+
+//    /**
+//     * Отправка на почту
+//     */
+//    private function sendEmail()
+//    {
+//        $data = [
+//            'item'          => Course::find($this->course_id),
+//            'lang'          => $this->lang,
+//            'message_text'  => $this->message,
+//        ];
+//
+//        dd($data);
+//
+//        $user = User::find($this->user_id);
+//
+//        try {
+//            Mail::send('app.pages.page.emails.course_reject', ['data' => $data], function ($message) use ($user) {
+//                $message->from(env("MAIL_USERNAME"), env('APP_NAME'));
+//                $message->to($user->email, 'Receiver')->subject($this->subject);
+//            });
+//
+//        } catch (\Exception $e) {
+//
+//        }
+//    }
 }

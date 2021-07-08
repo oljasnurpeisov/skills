@@ -289,6 +289,7 @@ class ContractService
 
     /**
      * Generate document appendix
+     *
      * @param Document $document
      * @param string $number
      * @param string $parent

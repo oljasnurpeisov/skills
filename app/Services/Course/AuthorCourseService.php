@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Services\Contracts\AuthorContractService;
 use Services\Contracts\ContractServiceRouting;
+use Services\Notifications\NotificationService;
 use Spatie\ArrayToXml\ArrayToXml;
 
 class AuthorCourseService
@@ -94,6 +95,8 @@ class AuthorCourseService
                 'status' => 3,
                 'publish_at' => Carbon::now()
             ]);
+
+            (new NotificationService('Курс опубликован', 'notifications.course_published', $contract->course->id, $contract->course->user->id, 'ru', 3))->notify();
         }
 
         // либо прикрепить информацию о подписании
