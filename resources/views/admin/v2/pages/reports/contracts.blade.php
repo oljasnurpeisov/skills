@@ -74,7 +74,7 @@
                         <td>{{ $contract->course->name }}</td>
                         <td>{{ $contract->course->user->company_name }}</td>
                         <td>{{ $contract->course->getTypeName() }}</td>
-                        <td>-</td>
+                        <td>{{ $contract->author_signed_at ?? '-' }}</td>
                         <td>{{ $contract->course->publish_at ?? '-' }}</td>
                         <td>
                             <div class="action-buttons">

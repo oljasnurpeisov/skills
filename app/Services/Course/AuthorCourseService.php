@@ -91,6 +91,9 @@ class AuthorCourseService
             return $q->whereAuthorId(Auth::user()->id);
         })->findOrFail($contract_id);
 
+        $contract->author_signed_at  = Carbon::now();
+        $contract->save();
+
         // опубликовать курс, если платный или бесплатный
 
         if (!$contract->isQuota()) {

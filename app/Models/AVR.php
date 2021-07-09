@@ -35,9 +35,9 @@ class AVR extends Model
 {
     protected $table = 'avrs';
 
-    protected $fillable = ['contract_id', 'number', 'course_id', 'link', 'status', 'sum', 'start_at', 'end_at', 'route_id', 'invoice_link'];
+    protected $fillable = ['contract_id', 'number', 'course_id', 'link', 'status', 'sum', 'start_at', 'end_at', 'route_id', 'invoice_link', 'author_signed_at'];
 
-    protected $dates = ['start_at', 'end_at'];
+    protected $dates = ['start_at', 'end_at', 'author_signed_at'];
 
     /**
      * Курс

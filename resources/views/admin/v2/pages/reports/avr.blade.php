@@ -77,7 +77,7 @@
                         <td>{{ $item->course->user->company_name }}</td>
                         <td>{{ $item->sum }} ₸</td>
                         <td>{{ $item->start_at->format('d.m.Y') }}-{{ $item->end_at->format('d.m.Y') }}</td>
-                        <td>{{ $item->getAuthorSignedAt() }}</td>
+                        <td>{{ $item->author_signed_at ?? '-' }}</td>
                         <td>{{ $item->getSignedAt() }}</td>
                         <td>
                             <div class="action-buttons">

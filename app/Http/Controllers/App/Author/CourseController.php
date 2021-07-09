@@ -1203,6 +1203,7 @@ class CourseController extends Controller
     /**
      * @param Request $request
      * @return JsonResponse
+     * @throws Exception
      */
     public function xml(Request $request): JsonResponse
     {

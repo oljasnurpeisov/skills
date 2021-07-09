@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Document;
 use App\Services\Files\StorageService;
 use App\Services\Signing\DocumentService;
+use Carbon\Carbon;
 use DOMDocument;
 use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
@@ -75,6 +76,9 @@ class AuthorAVRService
         })->whereHas('current_route', function ($q) {
             return $q->whereRoleId(Auth::user()->role->role_id);
         })->findOrFail($avr_id);
+
+        $avr = $avr->author_signed_at = Carbon::now();
+        $avr->save();
 
         if ($avr->document && $message) {
             $this->documentService->attachSignature($avr->document, $message, $validationResponse);

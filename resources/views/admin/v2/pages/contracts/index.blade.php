@@ -103,7 +103,7 @@
                             <td>{{ $contract->course->user->company_name }}</td>
                             <td>{{ $contract->getStatusName() }}</td>
                             <td>{{ $contract->course->getTypeName() }}</td>
-                            <td>{{ $contract->getAuthorSignedAt() }}</td>
+                            <td>{{ $contract->author_signed_at ?? '-' }}</td>
                             <td>{{ $contract->course->publish_at ?? '-' }}</td>
                             @if (Route::currentRouteName() === 'admin.contracts.distributed' || Route::currentRouteName() === 'admin.contracts.rejected_by_admin')
                                 <td>{{ $contract->reject_comment }}</td>

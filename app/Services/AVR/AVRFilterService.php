@@ -208,17 +208,9 @@ class AVRFilterService
             $start_at   = Carbon::parse($dates[0]);
             $end_at     = Carbon::parse($dates[1]);
 
-            return $avr->whereHas('document', function ($d) use ($start_at, $end_at) {
-                return $d->whereHas('signatures', function ($s) use ($start_at, $end_at) {
-                    return $s->whereHas('user', function ($q) {
-                        return $q->whereHas('role', function ($r) {
-                            return $r->whereRoleId(4);
-                        });
-                    })->where(function ($b) use ($start_at, $end_at) {
-                        $b->whereDate('created_at', '>=', $start_at)
-                            ->whereDate('created_at', '<=', $end_at);
-                    });
-                });
+            return $avr->where(function ($b) use ($start_at, $end_at) {
+                $b->whereDate('author_signed_at', '>=', $start_at)
+                    ->whereDate('author_signed_at', '<=', $end_at);
             });
         }
 
