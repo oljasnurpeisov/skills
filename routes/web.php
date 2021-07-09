@@ -454,12 +454,12 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-courses/signing/{contract_id}/next", "CourseController@next")->name('author.courses.signing.contract.next'); // Отправка обычного договора
 
                     // avr
-                    Route::get("/my-avr/{avr_id}/avr", "AvrController@avr")->name('author.avr.view');
-                    Route::get("/my-avr/{avr_id}/avrDoc", "AvrController@avrDoc")->name('author.avr.signing.avrDoc');
-                    Route::get("/my-avr/signing/{avr_id}/update", "AvrController@update")->name('author.avr.signing.update');
+                    Route::get("/my-avr/{avr_id}/avr", "AVRController@avr")->name('author.avr.view');
+                    Route::get("/my-avr/{avr_id}/avrDoc", "AVRController@avrDoc")->name('author.avr.signing.avrDoc');
+                    Route::get("/my-avr/signing/{avr_id}/update", "AVRController@update")->name('author.avr.signing.update');
 
-                    Route::get("/my-avr/signing/{avr_id}/xml", "AvrController@xml")->name('author.avr.signing.next'); // Формирование XML для подписания
-                    Route::post("/my-avr/signing/{avr_id}/next", "AvrController@next")->name('author.avr.signing.next'); // Отправка подписанного акта
+                    Route::get("/my-avr/signing/{avr_id}/xml", "AVRController@xml")->name('author.avr.signing.next'); // Формирование XML для подписания
+                    Route::post("/my-avr/signing/{avr_id}/next", "AVRController@next")->name('author.avr.signing.next'); // Отправка подписанного акта
                 });
             });
         });
