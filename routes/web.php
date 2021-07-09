@@ -458,7 +458,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-avr/{avr_id}/avrDoc", "AVRController@avrDoc")->name('author.avr.signing.avrDoc');
                     Route::get("/my-avr/signing/{avr_id}/update", "AVRController@update")->name('author.avr.signing.update');
 
-                    Route::get("/my-avr/signing/{avr_id}/xml", "AVRController@xml")->name('author.avr.signing.next'); // Формирование XML для подписания
+                    Route::get("/my-avr/signing/{avr_id}/xml", "AVRController@xml")->name('author.avr.signing.xml'); // Формирование XML для подписания
                     Route::post("/my-avr/signing/{avr_id}/next", "AVRController@next")->name('author.avr.signing.next'); // Отправка подписанного акта
                 });
             });
