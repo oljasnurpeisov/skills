@@ -49,7 +49,7 @@
                             @else
                                 <button
                                     data-source="{{ route('author.avr.signing.xml', ['lang' => $lang, 'avr_id' => $avr->id]) }}"
-                                    data-target="{{ route('author.avr.signing.next', ['lang' => $lang, 'contract_id' => $avr->id]) }}"
+                                    data-target="{{ route('author.avr.signing.next', ['lang' => $lang, 'avr_id' => $avr->id]) }}"
                                     class="btn btn-success" id="signButton" disabled>Подписать
                                 </button>
                             @endif
