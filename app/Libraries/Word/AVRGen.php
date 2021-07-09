@@ -133,15 +133,16 @@ class AVRGen extends BaseGenerator
      */
     public function previewWithoutNumber(AVR $avr): string
     {
-        $this->readTemplate($avr->link);
+        $this->readTemplate(StorageService::path($avr->link));
 
         $this->templateProcessor->setValue('avr_number', 'XXX');
 
-        $savePath   = 'documents/' . date('Y') . '/acts/' . $this->id . '/' . $this->id. '-preview.docx';
+        $savePath  = 'documents/' . date('Y') . '/acts/' . $this->id . '/' . $this->id. '-preview.docx';
 
         $this->TPSaveAs($savePath);
 
         $filePath = StorageService::path($savePath);
+
         $phpWord = IOFactory::load($filePath, "Word2007");
         $writer = IOFactory::createWriter($phpWord, "HTML");
 
