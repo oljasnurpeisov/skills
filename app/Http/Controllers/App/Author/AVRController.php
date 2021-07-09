@@ -130,7 +130,8 @@ class AVRController extends Controller
      */
     public function xml(Request $request): JsonResponse
     {
-        $xml = $this->authorAVRService->generateXml($request->avr_id);
+        $act = AVR::where('id', $request->avr_id)->firstOrFail();
+        $xml = $this->authorAVRService->generateXml($act);
 
         return response()->json(['xml' => $xml]);
     }
