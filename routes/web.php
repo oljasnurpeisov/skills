@@ -140,6 +140,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/contracts/pending', 'ContractsController@pending')->name('admin.contracts.pending');
 
                 Route::get('/contracts/{contract_id}/view', 'ContractsController@view')->name('admin.contracts.view');
+                Route::get('/contracts/{contract_id}/history', 'ContractsController@history')->name('admin.contracts.history');
                 Route::get('/contracts/{contract_id}/get-contract-html', 'ContractsController@getContractHtml')->name('admin.contracts.get_contract_html');
                 Route::get('/contracts/{contract_id}/get-contract-pdf', 'ContractsController@getContractPdf')->name('admin.contracts.get_contract_pdf');
                 Route::get('/contracts/{course_id}/{type}/get-contract-html-preview', 'ContractsController@getContractHtmlPreview')->name('admin.contracts.get_contract_html_preview');

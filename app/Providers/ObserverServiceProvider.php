@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Contract;
 use App\Models\Course;
+use App\Observers\ContractObserver;
 use App\Observers\CourseObserver;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,5 +31,6 @@ class ObserverServiceProvider extends ServiceProvider
          * Observers
          */
         Course::observe(CourseObserver::class);
+        Contract::observe(ContractObserver::class);
     }
 }

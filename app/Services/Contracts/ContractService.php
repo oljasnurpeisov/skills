@@ -211,16 +211,19 @@ class ContractService
      */
    public function removeActiveContracts(int $course_id): void
    {
-       $contracts = Contract::pending()->whereCourseId($course_id)->get();
+       Contract::pending()->whereCourseId($course_id)->update([
+           'status' => 6
+       ]);
+//       $contracts = Contract::pending()->whereCourseId($course_id)->get();
 
-       foreach ($contracts as $contract)
-       {
-           if (file_exists(storage_path($contract->link))) {
-               unlink(storage_path($contract->link));
-           }
-
-           $contract->delete();
-       }
+//       foreach ($contracts as $contract)
+//       {
+//           if (file_exists(storage_path($contract->link))) {
+//               unlink(storage_path($contract->link));
+//           }
+//
+//           $contract->delete();
+//       }
     }
 
     /**

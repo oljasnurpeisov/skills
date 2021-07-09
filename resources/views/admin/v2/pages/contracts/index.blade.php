@@ -113,6 +113,9 @@
                                     @if (!empty($contract->current_route))
                                         <a target="_blank" href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $contract->id]) }}" title="{{ __('admin.labels.view') }}" class="icon-btn icon-btn--yellow icon-eye"></a>
                                     @endif
+                                        <a target="_blank" href="{{ route('admin.contracts.history', ['lang' => $lang, 'contract_id' => $contract->id]) }}" title="{{ __('admin.labels.view') }}" class="icon-btn icon-btn--yellow">
+                                            <img src="{{ asset('assets/img/history.png') }}" alt="" style="height: 14px;">
+                                        </a>
                                 </div>
                             </td>
                         </tr>

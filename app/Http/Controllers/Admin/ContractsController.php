@@ -192,6 +192,20 @@ class ContractsController extends Controller
     }
 
     /**
+     * История договоров по курсу
+     *
+     * @param Request $request
+     * @return view
+     */
+    public function history(Request $request): View
+    {
+        return view('admin.v2.pages.contracts.history', [
+            'history'   => $this->adminCourseService->getHistory($request->contract_id),
+            'title'     => 'Просмотр истории договоров'
+        ]);
+    }
+
+    /**
      * Предпросмотр договора
      *
      * @param Request $request
@@ -210,7 +224,6 @@ class ContractsController extends Controller
      *
      * @param Request $request
      * @return string
-     * @throws Exception
      */
     public function getContractPdf(Request $request)
     {

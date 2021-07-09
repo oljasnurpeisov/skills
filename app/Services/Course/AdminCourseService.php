@@ -5,8 +5,10 @@ namespace Services\Course;
 use App\Models\Contract;
 use App\Models\Course;
 use App\Services\Signing\DocumentService;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Services\Contracts\AuthorContractService;
+use Services\Contracts\ContractLogService;
 use Services\Contracts\ContractService;
 use Services\Contracts\ContractServiceRouting;
 
@@ -31,6 +33,10 @@ class AdminCourseService
      * @var DocumentService
      */
     private $documentService;
+    /**
+     * @var ContractLogService
+     */
+    private $contractLogService;
 
     /**
      * ContractService constructor.
@@ -39,18 +45,21 @@ class AdminCourseService
      * @param ContractServiceRouting $contractServiceRouting
      * @param ContractService $contractService
      * @param DocumentService $documentService
+     * @param ContractLogService $contractLogService
      */
     public function __construct(
         AuthorContractService $authorContractService,
         ContractServiceRouting $contractServiceRouting,
         ContractService $contractService,
-        DocumentService $documentService
+        DocumentService $documentService,
+        ContractLogService $contractLogService
     )
     {
         $this->authorContractService    = $authorContractService;
         $this->contractServiceRouting   = $contractServiceRouting;
         $this->contractService          = $contractService;
         $this->documentService          = $documentService;
+        $this->contractLogService       = $contractLogService;
     }
 
     /**
@@ -114,5 +123,18 @@ class AdminCourseService
         } else {
             $this->rejectQuota($contract->course->id);
         }
+    }
+
+    /**
+     * Получение истории
+     *
+     * @param int $contract_id
+     * @return Collection
+     */
+    public function getHistory(int $contract_id): Collection
+    {
+        $contract = Contract::findOrFail($contract_id);
+
+        return $this->contractLogService->getLogs($contract->type, $contract->course->id);
     }
 }
