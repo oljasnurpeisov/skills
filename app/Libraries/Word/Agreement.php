@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\CourseAttachments;
 use App\Models\User;
 use App\Models\UserInformation;
+use App\Services\Files\StorageService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Libraries\Helpers\GetMonth;
@@ -126,12 +127,14 @@ class Agreement extends BaseGenerator
         if ($this->save) {
             $result = $this->save($savePath);
         } else {
-            $phpWord = IOFactory::load($savePath, "Word2007");
+            $filePath = StorageService::path($savePath);
+
+            $phpWord = IOFactory::load($filePath, "Word2007");
             $writer = IOFactory::createWriter($phpWord, "HTML");
 
             $result = $writer->getContent();
 
-            unlink($savePath);
+            unlink($filePath);
         }
 
         return $result;

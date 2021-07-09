@@ -5,6 +5,7 @@ namespace Libraries\Word;
 use App\Extensions\CalculateQuotaCost;
 use App\Models\AVR;
 use App\Models\Course;
+use App\Services\Files\StorageService;
 use Carbon\Carbon;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
@@ -92,12 +93,14 @@ class AVRGen extends BaseGenerator
             $result = $this->save($savePath);
             return $this->avr;
         } else {
-            $phpWord = IOFactory::load($savePath, "Word2007");
+            $filePath = StorageService::path($savePath);
+
+            $phpWord = IOFactory::load($filePath, "Word2007");
             $writer = IOFactory::createWriter($phpWord, "HTML");
 
             $result =  $writer->getContent();
 
-            unlink($savePath);
+            unlink($filePath);
         }
 
         return $result;
@@ -134,16 +137,17 @@ class AVRGen extends BaseGenerator
 
         $this->templateProcessor->setValue('avr_number', 'XXX');
 
-        $savePath   = 'avr/files/'. $avr->id .'-preview.docx';
+        $savePath   = 'documents/' . date('Y') . '/acts/' . $this->id . '/' . $this->id. '-preview.docx';
 
         $this->TPSaveAs($savePath);
 
-        $phpWord = IOFactory::load($savePath, "Word2007");
+        $filePath = StorageService::path($savePath);
+        $phpWord = IOFactory::load($filePath, "Word2007");
         $writer = IOFactory::createWriter($phpWord, "HTML");
 
         $result =  $writer->getContent();
 
-        unlink($savePath);
+        unlink($filePath);
 
         return $result;
     }
