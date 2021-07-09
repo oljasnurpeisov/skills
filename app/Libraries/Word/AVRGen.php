@@ -115,7 +115,7 @@ class AVRGen extends BaseGenerator
      */
     public function addAVRNumber(AVR $avr, string $avr_number): void
     {
-        $this->readTemplate($avr->link);
+        $this->readTemplate(StorageService::path($avr->link));
 
         $this->templateProcessor->setValue('avr_number', $avr_number);
 
