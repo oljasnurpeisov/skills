@@ -36,14 +36,15 @@ class ContractObserver
      */
     public function updating(Contract $contract)
     {
-        $oldData = Contract::find($contract->id);
 
-        if (empty($oldData) or ($oldData->status !== $contract->status) or ($oldData->route_id !== $contract->route_id)) {
 
-            $comment = $contract->getStatusName();
+//        if ((empty($oldData) or ($oldData->status !== $contract->status) or ($oldData->route_id !== $contract->route_id)) and !empty($contract->status) and !empty($contract->route_id)) {
+        if (!empty($contract->status) and !empty($contract->route_id)) {
+
+            $comment = $contract->getStatusNameForLog();
 
             if (!empty($contract->reject_comment)) {
-                $comment = $comment .'. Причина: '. $contract->reject_comment;
+                $comment = $comment .". <br> Причина: ". $contract->reject_comment;
             }
 
             $this->contractLogService->create($contract->course->id, $contract->id, $contract->status, $comment);

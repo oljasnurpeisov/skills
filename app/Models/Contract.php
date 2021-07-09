@@ -321,6 +321,37 @@ class Contract extends Model
     }
 
     /**
+     * Название статуса для лога
+     *
+     * @return string
+     */
+    public function getStatusNameForLog(): string
+    {
+        switch (true) {
+            case $this->isPending():
+                $role_name = !empty($this->current_route) ? $this->current_route->role->name : 'Маршрут изменен';
+                return "Подписан (". $role_name .")";
+                break;
+            case $this->isSigned():
+                return "Подписан всеми";
+                break;
+            case $this->isDistributed():
+                return "Расторгнут";
+                break;
+            case $this->isRejectedByAuthor():
+                return "Отклонен автором";
+                break;
+            case $this->isRejectedByAdminOrModerator():
+                $role_name = !empty($this->current_route) ? $this->current_route->role->name : 'Маршрут изменен';
+                return "Отклонен администрацией (". $role_name .")";
+                break;
+            default;
+                return "Сгенерирован";
+                break;
+        }
+    }
+
+    /**
      * Название типа
      *
      * @return string

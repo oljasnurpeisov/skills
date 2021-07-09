@@ -46,7 +46,7 @@
                         <tr>
                             <td>{{ $item->created_at }}</td>
                             <td>{{ $item->contract->number }}</td>
-                            <td>{{ $item->comment }}</td>
+                            <td>{!! $item->comment !!}</td>
                         </tr>
                     @endforeach
                 </tbody>
