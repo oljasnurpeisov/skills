@@ -19,7 +19,11 @@ abstract class BaseGenerator
     public function readTemplate(string $filePath): TemplateProcessor
     {
         try {
-            $this->templateProcessor = new TemplateProcessor(public_path($filePath));
+            if (file_exists($filePath)) {
+                $this->templateProcessor = new TemplateProcessor($filePath);
+            } else {
+                $this->templateProcessor = new TemplateProcessor(public_path($filePath));
+            }
         } catch (CopyFileException $e) {
             abort(500);
         } catch (CreateTemporaryFileException $e) {
