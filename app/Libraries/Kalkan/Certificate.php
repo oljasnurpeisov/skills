@@ -208,7 +208,8 @@ class Certificate
         $allowedPolicies = static::$strictSignPolicies;
 
         foreach ($allowedPolicies as $policy) {
-            if (substr_count($this->x509['extensions']['certificatePolicies'], $policy))
+            if (substr_count($this->x509['extensions']['certificatePolicies'], $policy)
+                || substr_count($this->x509['extensions']['extendedKeyUsage'], $policy))
                 return true;
         }
 
