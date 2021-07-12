@@ -156,11 +156,13 @@ class AVR extends Model
     /**
      * Дата принятия работ
      *
+     * @todo may be use signed_at attribute instead?
+     *
      * @return string
      */
     public function getSignedAt(): string
     {
-        return (!empty($this->document->lastSignature) and $this->isSigned()) ? $this->lastSignature->created_at : '-';
+        return (!empty($this->document->lastSignature) and $this->isSigned()) ? $this->document->lastSignature->created_at : '-';
     }
 
     /**
