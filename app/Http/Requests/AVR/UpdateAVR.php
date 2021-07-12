@@ -24,8 +24,8 @@ class UpdateAVR extends FormRequest
     public function rules()
     {
         return [
-            'invoice'     => ['required'],
-            'avr_number'  => ['required'],
+            'invoice'     => 'sometimes|required',
+            'avr_number'  => 'sometimes|required'
         ];
     }
 }

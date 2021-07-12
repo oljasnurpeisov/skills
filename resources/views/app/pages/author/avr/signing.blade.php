@@ -6,6 +6,7 @@
             <div class="container">
                 <div class="row row--multiline column-reverse-sm">
                     <div class="col-md-12">
+
                         <iframe src="{{ route('author.avr.signing.avrDoc', ['lang' => 'ru', 'avr_id' => $avr->id]) }}" frameborder="0" width="100%" height="600"></iframe>
 
                         @if ($avr->isSignator())
@@ -19,13 +20,30 @@
                                 </form>
                             </div>
 
-                            @if (empty($avr->invoice_link))
+                            @if (empty($avr->number))
                                 <form action="{{ route('author.avr.signing.update', ['lang' => 'ru', 'avr_id' => $avr->id]) }}">
                                     <table>
                                         <tr>
                                             <td>Номер АВР:</td>
                                             <td><input type="text" name="avr_number" class="input-regular" placeholder="Номер АВР" required></td>
                                         </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><button class="btn">Сохранить</button></td>
+                                        </tr>
+                                    </table>
+                                </form>
+
+                            @elseif (empty($avr->author_signed_at))
+                                <button
+                                    data-source="{{ route('author.avr.signing.xml', ['lang' => $lang, 'avr_id' => $avr->id]) }}"
+                                    data-target="{{ route('author.avr.signing.next', ['lang' => $lang, 'avr_id' => $avr->id]) }}"
+                                    class="btn btn-success" id="signButton" disabled>Подписать
+                                </button>
+
+                            @else
+                                <form action="{{ route('author.avr.signing.update', ['lang' => 'ru', 'avr_id' => $avr->id]) }}">
+                                    <table>
                                         <tr>
                                             <td>Счет фактуры:</td>
 {{--                                            <td><input type="file" name="invoice" placeholder="Счет фактуры" required></td>--}}
@@ -42,16 +60,10 @@
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td><button class="btn">Сохранить</button></td>
+                                            <td><button class="btn">Отправить</button></td>
                                         </tr>
                                     </table>
                                 </form>
-                            @else
-                                <button
-                                    data-source="{{ route('author.avr.signing.xml', ['lang' => $lang, 'avr_id' => $avr->id]) }}"
-                                    data-target="{{ route('author.avr.signing.next', ['lang' => $lang, 'avr_id' => $avr->id]) }}"
-                                    class="btn btn-success" id="signButton" disabled>Подписать
-                                </button>
                             @endif
                         @endif
                     </div>

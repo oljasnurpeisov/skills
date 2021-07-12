@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Auth;
  * @property int $document_id
  * @property string $created_at
  * @property string $signed_at
+ * @property string $author_signed_at
  * @property string $updated_at
  *
  * @property Document $document
@@ -155,11 +156,13 @@ class AVR extends Model
     /**
      * Дата принятия работ
      *
+     * @todo may be use signed_at attribute instead?
+     *
      * @return string
      */
     public function getSignedAt(): string
     {
-        return (!empty($this->document->lastSignature) and $this->isSigned()) ? $this->lastSignature->created_at : '-';
+        return (!empty($this->document->lastSignature) and $this->isSigned()) ? $this->document->lastSignature->created_at : '-';
     }
 
     /**

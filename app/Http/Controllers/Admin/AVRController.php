@@ -141,7 +141,7 @@ class AVRController extends Controller
      * @return string
      * @throws Exception
      */
-    public function getAvrPdf(Request $request): string
+    public function getAvrPdf(Request $request)
     {
         /** @var AVR $act */
         $act = AVR::where('id', $request->avr_id)->firstOrFail();
@@ -177,7 +177,7 @@ class AVRController extends Controller
 
             $success = true;
 
-            $message = 'Договор успешно подписан';
+            $message = 'Акт успешно подписан';
 
             $this->adminAVRService->acceptAvr($request->avr_id, $xml, $this->validationService->getResponse());
 
@@ -202,7 +202,7 @@ class AVRController extends Controller
     public function xml(Request $request): JsonResponse
     {
         /** @var AVR $act */
-        $act = Contract::findOrFail($request->avr_id);
+        $act = AVR::findOrFail($request->avr_id);
 
         if ($act && $act->document) {
             return response()->json(['xml' => $act->xml()]);
