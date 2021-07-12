@@ -118,7 +118,16 @@ class AVRController extends Controller
      */
     public function update(UpdateAVR $request): RedirectResponse
     {
+        /** @var AVR $act */
+        $act = AVR::where('id', $request->avr_id)->firstOrFail();
+
         $this->authorAVRService->updateAVR($request->avr_id, $request->all());
+
+        $act->refresh();
+
+        if ($act->invoice_link && $act->number && $act->author_signed_at) {
+            $this->authorAVRService->acceptAvr($act->id);
+        }
 
         return redirect()->back();
     }

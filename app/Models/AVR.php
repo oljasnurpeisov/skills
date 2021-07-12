@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Auth;
  * @property int $document_id
  * @property string $created_at
  * @property string $signed_at
+ * @property string $author_signed_at
  * @property string $updated_at
  *
  * @property Document $document

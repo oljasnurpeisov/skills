@@ -65,6 +65,7 @@ class AuthorAVRService
 
     /**
      * Attache signature info and send to next route
+     *
      * @param int $avr_id
      * @param string|null $message
      * @param array $validationResponse
@@ -77,14 +78,18 @@ class AuthorAVRService
             return $q->whereRoleId(Auth::user()->role->role_id);
         })->findOrFail($avr_id);
 
-        $avr = $avr->author_signed_at = Carbon::now();
-        $avr->save();
+        if ($message) {
 
-        if ($avr->document && $message) {
-            $this->documentService->attachSignature($avr->document, $message, $validationResponse);
+            $avr->author_signed_at = Carbon::now();
+            $avr->save();
+
+            if ($avr->document) {
+                $this->documentService->attachSignature($avr->document, $message, $validationResponse);
+            }
+
+        } else {
+            $this->AVRServiceRouting->toNextRoute($avr);
         }
-
-        $this->AVRServiceRouting->toNextRoute($avr);
     }
 
     /**
@@ -96,10 +101,13 @@ class AuthorAVRService
     public function updateAVR(int $avr_id, array $request)
     {
         $avr = AVR::findOrFail($avr_id);
-        $avr->update(['invoice_link' => $request['invoice']]);
 
-        $avrGen = new AVRGen();
-        $avrGen->addAVRNumber($avr, $request['avr_number']);
+        if (isset($request['invoice'])) {
+            $avr->update(['invoice_link' => $request['invoice']]);
+        } elseif(isset($request['avr_number'])) {
+            $avrGen = new AVRGen();
+            $avrGen->addAVRNumber($avr, $request['avr_number']);
+        }
     }
 
     /**
