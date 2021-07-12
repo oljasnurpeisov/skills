@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Permissions\HasPermissionsTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -158,5 +159,25 @@ class User extends Authenticatable implements MustVerifyEmail
     public function base(): HasOne
     {
         return $this->hasOne(Base::class, 'id', 'base_id');
+    }
+
+    /**
+     * Виды деятельности
+     *
+     * @return HasMany
+     */
+    public function oked_activities(): HasMany
+    {
+        return $this->hasMany(OkedActivities::class, 'user_id', 'id');
+    }
+
+    /**
+     * Отрасли
+     *
+     * @return HasMany
+     */
+    public function oked_industries(): HasMany
+    {
+        return $this->hasMany(OkedIndustries::class, 'user_id', 'id');
     }
 }

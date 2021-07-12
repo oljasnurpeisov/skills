@@ -337,6 +337,10 @@ return [
             'surname' => 'Тегі',
             'avatar' => 'Аватар',
             'specialization' => 'Мамандығы',
+            'oked' => 'Ұйымдардың қызметтер түрі',
+
+            'oked_industries' => 'Саланың атауы',
+            'oked_activities' => 'Қызметтер түрі',
             'add_btn_title' => 'Қосу',
             'add_files_btn_title' => 'Файлдар қосу',
             'about_company' => 'Ұйым қызметі туралы жазыңыз',

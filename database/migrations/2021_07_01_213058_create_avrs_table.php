@@ -24,6 +24,7 @@ class CreateAvrsTable extends Migration
             $table->integer('sum')->default(0)->index();
             $table->date('start_at')->index();
             $table->date('end_at')->index();
+            $table->dateTime('signed_at')->nullable()->index();
             $table->dateTime('author_signed_at')->nullable()->index();
             $table->integer('route_id')->default(null)->index();
             $table->timestamps();

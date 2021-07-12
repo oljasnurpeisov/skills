@@ -352,6 +352,9 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::post("/update_author_data_profile", "UserController@update_author_data_profile");
                     Route::get("/profile-requisites", "UserController@profile_requisites");
                     Route::post("/update_profile-requisites", "UserController@update_profile_requisites")->name('update_profile_requisites');
+
+                    Route::get("/getOkedIndustries", "UserController@getOkedIndustries");
+                    Route::get("/getOkedActivities", "UserController@getOkedActivities");
                 });
             });
             //

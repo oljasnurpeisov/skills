@@ -153,40 +153,39 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.profile.specialization')}}
-                                        *</label>
+                                    <label class="form-group__label">{{__('default.pages.profile.oked_industries')}}*</label>
+
                                     <div class="input-addon">
-                                        <input id="specialitiesInputTpl" type="text" name="specialization[]"
-                                               placeholder="" class="input-regular"
-                                               value="{{json_decode($item->specialization)[0] ?? ''}}" required>
+                                        <select name="oked_industries[]" id="okedIndustriesSelect"
+                                                placeholder="{{__('default.pages.profile.oked_industries')}}"
+                                                data-method="getOkedIndustries" data-maxitems="2"
+                                                class="professional-areas-select" multiple required>
+                                            @foreach($okedIndustriesSelected as $industry)
+                                                <option value="{{ $industry->oked_industry->id }}" selected="selected">{{ $industry->oked_industry->getAttribute('name_'.$lang) ?? $industry->oked_industry->getAttribute('name_ru') }}</option>
+                                            @endforeach
+                                        </select>
                                         <div class="addon">
                                             <span class="required">*</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="removable-items">
-                                    <div class="form-group">
-                                        @if(!empty(json_decode($item->specialization)[1]))
-                                            <div class="input-addon">
-                                                @foreach(array_slice(json_decode($item->specialization),1) as $spec)
-                                                    <input type="text" name="specialization[]" placeholder=""
-                                                           class="input-regular"
-                                                           value="{{$spec}}">
 
-                                                    <div class="addon">
-                                                        <div class="btn-icon small icon-close"></div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        @endif
+                                <div class="form-group">
+                                    <label class="form-group__label">{{__('default.pages.profile.oked_activities')}}*</label>
+
+                                    <div class="input-addon">
+                                        <select name="oked_activities[]" id="okedActivitiesSelect"
+                                                placeholder="{{__('default.pages.profile.oked_activities')}}"
+                                                data-method="getOkedActivities" data-maxitems="7"
+                                                class="professional-areas-select" multiple required>
+                                            @foreach($okedActivitiesSelected as $activity)
+                                                <option value="{{ $activity->oked_activity->id }}" selected="selected">{{ $activity->oked_activity->getAttribute('name_'.$lang) ?? $activity->oked_activity->getAttribute('name_ru') }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="addon">
+                                            <span class="required">*</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="text-right pull-up">
-                                    <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"
-                                       data-duplicate="specialitiesInputTpl"
-                                       data-maxcount="4"><span
-                                                class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span><span
-                                                class="btn-icon small icon-plus"> </span></a>
                                 </div>
 
                                 <div class="form-group">
@@ -296,6 +295,58 @@
 @endsection
 
 @section('scripts')
+    <script>
+        const okedIndustriesEl = $('[name="oked_industries[]"]'),
+            okedActivitiesEl = $('[name="oked_activities[]"]');
 
+        let okedIndustriesSelect = new ajaxSelect(okedIndustriesEl, null, true, 2);
+        let okedActivitiesSelect = new ajaxSelect(okedActivitiesEl, null, true, 7);
+
+        let type = null;
+
+        function clearAllFields() {
+            okedIndustriesSelect.clear();
+            okedActivitiesSelect.clear();
+        }
+
+        okedIndustriesEl.change(function () {
+            if (type === null) {
+                type = 1;
+            }
+
+            if (type === 1) {
+                okedActivitiesSelect.update($(this).val() ? {"oked_industries": toArray($(this).val())} : null);
+
+                setTimeout(function () {
+                    okedActivitiesSelect.removeMessage();
+                }, 3000);
+            }
+
+            if (okedIndustriesEl.val() === null && okedActivitiesEl.val() === null) {
+                type = null;
+                clearAllFields();
+            }
+        });
+
+        okedActivitiesEl.change(function () {
+            if (type === null) {
+                type = 2;
+            }
+
+            if (type === 2) {
+                okedIndustriesSelect.update($(this).val() ? {"oked_activities": toArray($(this).val())} : null);
+
+                setTimeout(function () {
+                    okedIndustriesSelect.removeMessage();
+                }, 3000);
+            }
+
+            if (okedIndustriesEl.val() === null && okedActivitiesEl.val() === null) {
+                type = null;
+                clearAllFields();
+            }
+        })
+
+    </script>
 @endsection
 

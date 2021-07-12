@@ -7,12 +7,17 @@ use App\Http\Requests\Author\UpdateRequisites;
 use App\Models\Bank;
 use App\Models\Base;
 use App\Models\Course;
+use App\Models\OkedActivities;
+use App\Models\OkedIndustries;
 use App\Models\PayInformation;
 use App\Models\Skill;
 use App\Models\StudentInformation;
 use App\Models\Type_of_ownership;
 use App\Models\User;
 use App\Models\UserInformation;
+use App\Models\UserOkedActivity;
+use App\Models\UserOkedIndustry;
+use App\Services\Users\UserService;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -37,13 +42,20 @@ class UserController extends Controller
     private $requisitesService;
 
     /**
+     * @var UserService
+     */
+    private $userService;
+
+    /**
      * UserController constructor.
      *
      * @param UpdateRequisitesService $requisitesService
+     * @param UserService $userService
      */
-    public function __construct(UpdateRequisitesService $requisitesService)
+    public function __construct(UpdateRequisitesService $requisitesService, UserService $userService)
     {
-        $this->requisitesService = $requisitesService;
+        $this->requisitesService    = $requisitesService;
+        $this->userService          = $userService;
     }
 
     public function edit_profile()
@@ -244,8 +256,50 @@ class UserController extends Controller
             "rates" => $rates,
             "average_rates" => $average_rates,
             "author_students" => $author_students,
-            "author_students_finished" => $author_students_finished
+            "author_students_finished" => $author_students_finished,
+            "okedIndustriesSelected" => UserOkedIndustry::whereUserId(Auth::user()->id)->with('oked_industry')->get(),
+            "okedActivitiesSelected" => UserOkedActivity::whereUserId(Auth::user()->id)->with('oked_activity')->get()
         ]);
+    }
+
+    /**
+     * Получение отраслей ОКЕД
+     *
+     * @param Request $request
+     * @param $lang
+     * @return mixed
+     */
+    public function getOkedIndustries(Request $request, $lang)
+    {
+        $industries = OkedIndustries::where('name_' . $lang, 'like', '%' . $request->name . '%');
+
+        if (!empty($request->oked_activities)) {
+            $industries = $industries->whereHas('oked_activities', function ($q) use ($request) {
+                return $q->whereIn('id', $request->oked_activities);
+            });
+        }
+
+        return $industries->orderBy('name_' . $lang, 'asc')
+            ->paginate(50, ['*'], 'page', $request->page ?? 1);
+    }
+
+    /**
+     * Получение видов деятельности ОКЕД
+     *
+     * @param Request $request
+     * @param $lang
+     * @return mixed
+     */
+    public function getOkedActivities(Request $request, $lang)
+    {
+        $activities = OkedActivities::where('name_' . $lang, 'like', '%' . $request->name ?? '' . '%');
+
+        if (!empty($request->oked_industries)) {
+            $activities = $activities->whereIn('oked_industries_id', $request->oked_industries);
+        }
+
+        return $activities->orderBy('name_' . $lang, 'asc')
+            ->paginate(50, ['*'], 'page', $request->page ?? 1);
     }
 
     public function update_author_data_profile(Request $request)
@@ -260,7 +314,7 @@ class UserController extends Controller
             'name' => __('default.pages.profile.name'),
             'surname' => __('default.pages.profile.surname'),
             'avatar' => __('default.pages.profile.avatar'),
-            'specialization' => __('default.pages.profile.specialization'),
+//            'specialization' => __('default.pages.profile.specialization'),
             'about' => __('default.pages.profile.about'),
             'phone_1' => __('default.pages.profile.phone_1'),
             'phone_2' => __('default.pages.profile.phone_2'),
@@ -274,7 +328,7 @@ class UserController extends Controller
             'name' => 'max:255',
             'surname' => 'max:255',
             'avatar' => 'max:255',
-            'specialization' => 'max:255',
+//            'specialization' => 'max:255',
             'phone_1' => 'max:255',
             'phone_2' => 'max:255',
             'site_url' => 'max:255',
@@ -294,7 +348,7 @@ class UserController extends Controller
         $item->user_id = Auth::user()->getAuthIdentifier();
         $item->name = $request->name;
         $item->surname = $request->surname;
-        $item->specialization = json_encode($request->specialization, JSON_UNESCAPED_UNICODE);
+//        $item->specialization = json_encode($request->specialization, JSON_UNESCAPED_UNICODE);
         $item->about = $request->about;
         $item->phone_1 = $request->phone_1;
         $item->phone_2 = $request->phone_2;
@@ -318,6 +372,9 @@ class UserController extends Controller
         }
 
         $item->save();
+
+
+        $this->userService->saveOked($request->oked_industries, $request->oked_activities);
 
 
         return redirect("/" . app()->getLocale() . "/profile-author-information")->with('status', __('default.pages.profile.save_success_message'));
