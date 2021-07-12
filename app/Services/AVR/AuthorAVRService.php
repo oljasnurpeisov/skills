@@ -181,7 +181,6 @@ class AuthorAVRService
         $content = $xml->saveXML();
 
         $document->user_id = Auth::user()->id;
-        $document->type_id = 1;
 
         if ($document->save()) {
 
