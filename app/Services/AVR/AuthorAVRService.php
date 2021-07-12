@@ -101,9 +101,9 @@ class AuthorAVRService
      */
     public function updateAVR(int $avr_id, array $request)
     {
-        $avr = AVR::findOrFail($avr_id);
-
         Log::info('Update AVR', ['id' => $avr_id, 'request' => $request]);
+
+        $avr = AVR::findOrFail($avr_id);
 
         if (isset($request['invoice'])) {
             $avr->update(['invoice_link' => $request['invoice']]);
