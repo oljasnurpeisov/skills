@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use DOMDocument;
 use \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Libraries\Word\AVRGen;
 use PhpOffice\PhpWord\Exception\Exception;
 use Services\AVR\AVRFilterService;
@@ -101,6 +102,8 @@ class AuthorAVRService
     public function updateAVR(int $avr_id, array $request)
     {
         $avr = AVR::findOrFail($avr_id);
+
+        Log::info('Update AVR', ['id' => $avr_id, 'request' => $request]);
 
         if (isset($request['invoice'])) {
             $avr->update(['invoice_link' => $request['invoice']]);
