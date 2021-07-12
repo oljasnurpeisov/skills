@@ -141,7 +141,7 @@ class AVRController extends Controller
      * @return string
      * @throws Exception
      */
-    public function getAvrPdf(Request $request): string
+    public function getAvrPdf(Request $request)
     {
         /** @var AVR $act */
         $act = AVR::where('id', $request->avr_id)->firstOrFail();
