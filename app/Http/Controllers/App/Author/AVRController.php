@@ -186,7 +186,7 @@ class AVRController extends Controller
             'success' => $success,
             'message' => $message,
             'certificate' => $certificate,
-            'redirect' => route('author.avr.index', ['lang' => $request->lang]),
+            'redirect' => route('author.avr.view', ['avr_id' => $request->avr_id, 'lang' => $request->lang]),
             'response' => $this->validationService->getResponse()
         ], $success ? 200 : 500);
     }

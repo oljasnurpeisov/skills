@@ -34,7 +34,7 @@
                                     </table>
                                 </form>
 
-                            @elseif (empty($avr->invoice_link))
+                            @elseif (empty($avr->author_signed_at))
                                 <button
                                     data-source="{{ route('author.avr.signing.xml', ['lang' => $lang, 'avr_id' => $avr->id]) }}"
                                     data-target="{{ route('author.avr.signing.next', ['lang' => $lang, 'avr_id' => $avr->id]) }}"
