@@ -202,7 +202,7 @@ class AVRController extends Controller
     public function xml(Request $request): JsonResponse
     {
         /** @var AVR $act */
-        $act = Contract::findOrFail($request->avr_id);
+        $act = AVR::findOrFail($request->avr_id);
 
         if ($act && $act->document) {
             return response()->json(['xml' => $act->xml()]);
