@@ -41,7 +41,7 @@
                                     class="btn btn-success" id="signButton" disabled>Подписать
                                 </button>
 
-                            @elseif
+                            @else
                                 <form action="{{ route('author.avr.signing.update', ['lang' => 'ru', 'avr_id' => $avr->id]) }}">
                                     <table>
                                         <tr>
