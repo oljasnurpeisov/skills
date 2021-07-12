@@ -177,7 +177,7 @@ class AVRController extends Controller
 
             $success = true;
 
-            $message = 'Договор успешно подписан';
+            $message = 'Акт успешно подписан';
 
             $this->adminAVRService->acceptAvr($request->avr_id, $xml, $this->validationService->getResponse());
 

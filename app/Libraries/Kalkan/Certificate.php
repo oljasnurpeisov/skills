@@ -196,7 +196,7 @@ class Certificate
             if((int) $requestedIinBin[4] > 3 && $this->bin !== $requestedIinBin) {
                 $this->error = 'Некорректный БИН для подписания документа';
                 return false;
-            } elseif ($this->iin !== $requestedIinBin) {
+            } elseif ((int) $requestedIinBin[4] <= 3 && $this->iin !== $requestedIinBin) {
                 $this->error = 'Некорректный ИИН для подписания документа';
                 return false;
             }
