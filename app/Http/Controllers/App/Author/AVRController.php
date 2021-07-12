@@ -127,6 +127,7 @@ class AVRController extends Controller
 
         if ($act->invoice_link && $act->number && $act->author_signed_at) {
             $this->authorAVRService->acceptAvr($act->id);
+            return redirect()->route('author.avr.index');
         }
 
         return redirect()->back();
