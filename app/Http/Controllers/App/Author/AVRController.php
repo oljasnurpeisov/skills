@@ -116,7 +116,7 @@ class AVRController extends Controller
      * @param UpdateAVR $request
      * @return RedirectResponse
      */
-    public function update(UpdateAVR $request): RedirectResponse
+    public function update(UpdateAVR $request, Request $allRequest): RedirectResponse
     {
         /** @var AVR $act */
         $act = AVR::where('id', $request->avr_id)->firstOrFail();
@@ -127,7 +127,7 @@ class AVRController extends Controller
 
         if ($act->invoice_link && $act->number && $act->author_signed_at) {
             $this->authorAVRService->acceptAvr($act->id);
-            return redirect()->route('author.avr.index');
+            return redirect()->route('author.avr.index', ['lang' => $allRequest->lang]);
         }
 
         return redirect()->back();
