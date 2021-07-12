@@ -60,7 +60,7 @@
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td><button class="btn">Сохранить</button></td>
+                                            <td><button class="btn">Отправить</button></td>
                                         </tr>
                                     </table>
                                 </form>
