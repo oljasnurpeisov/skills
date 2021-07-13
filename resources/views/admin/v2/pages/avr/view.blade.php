@@ -79,7 +79,7 @@
     <div id="dialog-confirm-reject" class="modal" style="display: none;">
         <h4 class="title-secondary" id="reject-title"></h4>
         <hr>
-        <form  method="POST">
+        <form method="POST">
             @csrf
             <div class="input-group" id="rejectMessageBlock">
                 <textarea required name="message" id="message" placeholder="Сообщение о расторжении договора" class="input-regular"></textarea>

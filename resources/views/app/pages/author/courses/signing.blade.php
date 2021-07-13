@@ -81,7 +81,7 @@
                             frameborder="0" width="100%" height="600"></iframe>
 
                         <a href="{{ route('author.courses.signing.contract.reject', ['lang' => $lang, 'contract_id' => $contract->id]) }}"
-                           class="btn btn-danger" style="margin-right: 15px;">Отклонить</a>
+                           class="btn btn-danger" style="margin-right: 15px;" id="declineButton">Отклонить</a>
                         @if ($contract->isQuota())
                             <button
                                 data-source="{{ route('author.courses.signing.contract.xml', ['lang' => $lang, 'contract_id' => $contract->id]) }}"
@@ -122,6 +122,7 @@
         $('#signButton').click(function() {
 
             $(this).attr('disabled', 'disabled');
+            $('#declineButton').attr('disabled', 'disabled');
 
             source = $(this).data('source');
             target = $(this).data('target');
@@ -211,6 +212,7 @@
                 })
                 .always(function() {
                     $('#signButton').removeAttr('disabled');
+                    $('#declineButton').removeAttr('disabled');
                 });
         }
 
@@ -232,6 +234,7 @@
                     } else {
 
                         $('#signButton').removeAttr('disabled');
+                        $('#declineButton').removeAttr('disabled');
 
                         if (rw.getErrorCode() === "WRONG_PASSWORD") {
                             updateAjaxResult('Указан неверный пароль', 'warning');

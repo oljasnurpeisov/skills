@@ -118,6 +118,7 @@
         $('#signButton').click(function() {
 
             $(this).attr('disabled', 'disabled');
+            $('#rejectBtn').attr('disabled', 'disabled');
 
             source = $(this).data('source');
             target = $(this).data('target');
@@ -207,6 +208,7 @@
                 })
                 .always(function() {
                     $('#signButton').removeAttr('disabled');
+                    $('#rejectBtn').removeAttr('disabled');
                 });
         }
 
@@ -228,6 +230,7 @@
                     } else {
 
                         $('#signButton').removeAttr('disabled');
+                        $('#rejectBtn').removeAttr('disabled');
 
                         if (rw.getErrorCode() === "WRONG_PASSWORD") {
                             updateAjaxResult('Указан неверный пароль', 'warning');
@@ -254,6 +257,7 @@
         }
 
         $("#rejectBtn").click(function (e) {
+
             e.preventDefault();
 
             $('#dialog-confirm-reject form').attr('action', $(this).attr('data-action'));
