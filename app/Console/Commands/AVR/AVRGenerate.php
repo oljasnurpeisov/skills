@@ -61,10 +61,10 @@ class AVRGenerate extends Command
         $courses = Course::quota()
             ->whereHas('certificate')
             ->with('certificate', 'user')
-            ->where(function ($q) use ($start_at, $end_at) {
-                return $q->whereDate('created_at', '>=', $start_at)
-                    ->whereDate('created_at', '<=', $end_at);
-            })
+//            ->where(function ($q) use ($start_at, $end_at) {
+//                return $q->whereDate('created_at', '>=', $start_at)
+//                    ->whereDate('created_at', '<=', $end_at);
+//            })
             ->get();
 
         foreach($courses as $course) {

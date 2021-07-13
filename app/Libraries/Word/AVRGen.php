@@ -89,6 +89,8 @@ class AVRGen extends BaseGenerator
 
         $this->TPSaveAs($savePath);
 
+//        $this->templateProcessor->set
+
         if ($this->save) {
             $result = $this->save($savePath);
             return $this->avr;

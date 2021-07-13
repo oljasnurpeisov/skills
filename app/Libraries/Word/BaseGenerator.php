@@ -18,6 +18,11 @@ abstract class BaseGenerator
      */
     public function readTemplate(string $filePath): TemplateProcessor
     {
+        $word = new \PhpOffice\PhpWord\PhpWord();
+        $document = $word->loadTemplate($filePath);
+
+        dd($document);
+
         try {
             if (file_exists($filePath)) {
                 $this->templateProcessor = new TemplateProcessor($filePath);
