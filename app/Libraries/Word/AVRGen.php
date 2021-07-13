@@ -218,6 +218,7 @@ class AVRGen extends BaseGenerator
         $this->templateProcessor->setValue('company_name', $this->author->company_name ?? '-');
         $this->templateProcessor->setValue('address_ru', $this->author->legal_address_ru ?? '-');
         $this->templateProcessor->setValue('contract_number', $this->course->quota_contract->number ?? '-');
+        $this->templateProcessor->setValue('contract_signed_at', $this->course->quota_contract->signed_at ?? '-');
 
         return $this;
     }
