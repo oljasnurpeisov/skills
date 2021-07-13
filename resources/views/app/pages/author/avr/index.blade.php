@@ -16,7 +16,7 @@
                             <th style="min-width: 150px;">Наименование курса</th>
                             <th style="min-width: 230px;">Период в АВР</th>
                             <th style="min-width: 110px;">Сумма в АВР</th>
-                            <th style="min-width: 130px;">Статус подпсиания</th>
+                            <th style="min-width: 130px;">Статус подписания</th>
                             <th style="min-width: 296px;">АВР</th>
                         </tr>
                         </thead>
@@ -61,7 +61,11 @@
                                 <td>{{ number_format($avr->sum, 2, '.', ' ') }} ₸</td>
                                 <td>{{ $avr->getStatusName() }}</td>
                                 <td>
-                                    <a href="{{ route('author.avr.view', ['lang' => $lang, 'avr_id' => $avr->id]) }}">Просмотр</a>
+                                    @if (pathinfo($avr->link)['extension'] === 'pdf')
+                                        <a href="{{ route('author.avr.download', ['lang' => $lang, 'avr_id' => $avr->id]) }}">Скачать</a>
+                                    @else
+                                        <a href="{{ route('author.avr.view', ['lang' => $lang, 'avr_id' => $avr->id]) }}">Просмотр</a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
