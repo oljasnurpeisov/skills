@@ -53,7 +53,7 @@
                                             <p><b>{{ __('admin.pages.courses.course_quota_title') }}
                                                     :</b> Да</p>
                                             <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
-                                                    :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>
+                                                    :</b> {{ \App\Extensions\CalculateQuotaCost::calculate_quota_cost($item) }} {{__('default.tenge_title')}}</p>
                                         @endif
                                         <p><b>Стоимость курса на платной основе
                                                 :</b> {{$item->cost ?? 0}} {{__('default.tenge_title')}}</p>
@@ -95,7 +95,7 @@
                                         <p><b>{{ __('admin.pages.courses.course_quota_title') }}
                                                 :</b> Да</p>
                                         <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
-                                                :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>
+                                                :</b> {{ \App\Extensions\CalculateQuotaCost::calculate_quota_cost($item) }} {{__('default.tenge_title')}}</p>
                                     @endif
                                     <p><b>Стоимость курса на платной основе
                                             :</b> {{$item->cost ?? 0}} {{__('default.tenge_title')}}</p>
@@ -259,7 +259,7 @@
                                         <p><b>{{ __('admin.pages.courses.course_quota_title') }}
                                                 :</b> Да</p>
                                         <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
-                                                :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>
+                                                :</b> {{ \App\Extensions\CalculateQuotaCost::calculate_quota_cost($item) }} {{__('default.tenge_title')}}</p>
                                     @endif
                                     <p><b>Стоимость курса на платной основе
                                             :</b> {{$item->cost ?? 0}} {{__('default.tenge_title')}}</p>
