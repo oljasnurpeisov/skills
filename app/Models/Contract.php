@@ -325,26 +325,30 @@ class Contract extends Model
     /**
      * Название статуса для лога
      *
+     * @param int $contract_status
+     * @param null|int $current_route
      * @return string
      */
-    public function getStatusNameForLog(): string
+    public function getStatusNameForLog(int $contract_status, int $current_route = null): string
     {
         switch (true) {
-            case $this->isPending():
-                $role_name = !empty($this->current_route) ? $this->current_route->role->name : 'Маршрут изменен';
+            case $contract_status === 1:
+                $route = Route::find($current_route);
+                $role_name = !empty($route) ? $route->role->name : 'Маршрут изменен';
                 return "Подписан (". $role_name .")";
                 break;
-            case $this->isSigned():
+            case $contract_status === 2:
                 return "Подписан всеми";
                 break;
-            case $this->isDistributed():
+            case $contract_status === 3:
                 return "Расторгнут";
                 break;
-            case $this->isRejectedByAuthor():
+            case $contract_status === 4:
                 return "Отклонен автором";
                 break;
-            case $this->isRejectedByAdminOrModerator():
-                $role_name = !empty($this->current_route) ? $this->current_route->role->name : 'Маршрут изменен';
+            case $contract_status === 5 or $contract_status === 6:
+                $route = Route::find($current_route);
+                $role_name = !empty($route) ? $route->role->name : 'Маршрут изменен';
                 return "Отклонен администрацией (". $role_name .")";
                 break;
             default;

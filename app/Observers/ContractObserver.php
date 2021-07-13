@@ -36,12 +36,16 @@ class ContractObserver
      */
     public function updating(Contract $contract)
     {
+        $oldData = Contract::find($contract->id);
 
+//        if () {
+        if (!empty($oldData->route_id) && !empty($contract->route_id) && !empty($contract->status) && !empty($contract->type) and ($oldData->route_id !== $contract->route_id || $contract->status !== $oldData->status)) {
 
-//        if ((empty($oldData) or ($oldData->status !== $contract->status) or ($oldData->route_id !== $contract->route_id)) and !empty($contract->status) and !empty($contract->route_id)) {
-        if (!empty($contract->status) and !empty($contract->route_id)) {
-
-            $comment = $contract->getStatusNameForLog();
+            if ($oldData->status === 1) {
+                $comment = $contract->getStatusNameForLog($oldData->status, $oldData->route_id);
+            } else {
+                $comment = $contract->getStatusNameForLog($contract->status, $oldData->route_id);
+            }
 
             if (!empty($contract->reject_comment)) {
                 $comment = $comment .". <br> Причина: ". $contract->reject_comment;
