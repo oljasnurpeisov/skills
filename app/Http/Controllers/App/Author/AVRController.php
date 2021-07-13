@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AVR\UpdateAVR;
 use App\Libraries\Kalkan\Certificate;
 use App\Models\AVR;
+use App\Services\Files\StorageService;
 use App\Services\Signing\ValidationService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -85,7 +86,7 @@ class AVRController extends Controller
     }
 
     /**
-     * АВР
+     * АВР docx preview
      *
      * @param Request $request
      * @return View
@@ -93,11 +94,9 @@ class AVRController extends Controller
      */
     public function avrDoc(Request $request): View
     {
-        $avr = AVR::
-            whereHas('course', function ($q) {
+        $avr = AVR::whereHas('course', function ($q) {
                 return $q->whereAuthorId(Auth::user()->id);
-            })
-            ->findOrFail($request->avr_id);
+            })->findOrFail($request->avr_id);
 
         if (empty($avr->invoice_link)) {
             $content = $this->AVRService->avrToHtmlWithoutNumber($avr->id);
@@ -108,6 +107,25 @@ class AVRController extends Controller
         return view('app.pages.author.avr.avrDoc', [
             'avr' => $content
         ]);
+    }
+
+    /**
+     * АВР pdf preview
+     *
+     * @param Request $request
+     * @throws Exception
+     */
+    public function avrPdf(Request $request)
+    {
+        $avr = AVR::whereHas('course', function ($q) {
+            return $q->whereAuthorId(Auth::user()->id);
+        })->findOrFail($request->avr_id);
+
+        if ($avr && $avr->link) {
+            return StorageService::preview($avr->link);
+        }
+
+        abort(404);
     }
 
     /**

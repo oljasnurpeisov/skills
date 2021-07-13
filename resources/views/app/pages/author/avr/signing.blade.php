@@ -7,7 +7,11 @@
                 <div class="row row--multiline column-reverse-sm">
                     <div class="col-md-12">
 
-                        <iframe src="{{ route('author.avr.signing.avrDoc', ['lang' => 'ru', 'avr_id' => $avr->id]) }}" frameborder="0" width="100%" height="600"></iframe>
+                        @if (pathinfo($avr->link)['extension'] === 'pdf')
+                            <object data="{{ route('author.avr.signing.avrPdf', ['lang' => 'ru', 'avr_id' => $avr->id]) }}" type="application/pdf" internalinstanceid="3" title="" width="100%" height="600"></object>
+                        @else
+                            <iframe src="{{ route('author.avr.signing.avrDoc', ['lang' => 'ru', 'avr_id' => $avr->id]) }}" frameborder="0" width="100%" height="600"></iframe>
+                        @endif
 
                         @if ($avr->isSignator())
 
