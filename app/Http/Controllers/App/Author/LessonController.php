@@ -855,6 +855,10 @@ class LessonController extends Controller
 
             $item_attachments->videos_poor_hearing = $request->videos_poor_hearing;
         }
+        // Ссылки на видео курса для лиц с нарушениями слуха
+        if ($request->videos_poor_hearing_link) {
+            $item_attachments->videos_poor_hearing_link = json_encode($request->videos_poor_hearing_link);
+        }
         // Аудио с устройства
         if (($request->audios != $item_attachments->audios)) {
             File::delete(public_path($item_attachments->audios));
@@ -913,7 +917,6 @@ class LessonController extends Controller
 
     public function updateFinalTest($lang, Request $request, Course $course)
     {
-
         $this->validate($request, [
             'duration' => 'required|numeric|gt:0'
         ]);
