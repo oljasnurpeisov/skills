@@ -80,7 +80,7 @@ class AVRGen extends BaseGenerator
         $source     = 'avr/templates/avr.docx';
         $savePath   = 'documents/' . date('Y') . '/acts/' . $this->id . '/' . $this->id. '.docx';
 
-        $this->readTemplate($source);
+        $this->readTemplate($source, true);
 
         $this
             ->setGeneral()
@@ -88,8 +88,6 @@ class AVRGen extends BaseGenerator
             ->setInfo();
 
         $this->TPSaveAs($savePath);
-
-//        $this->templateProcessor->set
 
         if ($this->save) {
             $result = $this->save($savePath);
@@ -114,6 +112,7 @@ class AVRGen extends BaseGenerator
      * @param AVR $avr
      * @param string $avr_number
      * @return void
+     * @throws Exception
      */
     public function addAVRNumber(AVR $avr, string $avr_number): void
     {

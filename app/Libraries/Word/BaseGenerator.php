@@ -6,6 +6,7 @@ use App\Services\Files\StorageService;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpWord\Exception\CopyFileException;
 use PhpOffice\PhpWord\Exception\CreateTemporaryFileException;
+use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 abstract class BaseGenerator
@@ -15,19 +16,23 @@ abstract class BaseGenerator
      *
      * @param string $filePath
      * @return TemplateProcessor
+     * @throws Exception
      */
-    public function readTemplate(string $filePath): TemplateProcessor
+    public function readTemplate(string $filePath, $landscape = false): TemplateProcessor
     {
-        $word = new \PhpOffice\PhpWord\PhpWord();
-        $document = $word->loadTemplate($filePath);
-
-        dd($document);
-
         try {
+            $word = new \PhpOffice\PhpWord\PhpWord();
+            if ($landscape) {
+                $sectionStyle = array('orientation' => 'landscape', 'marginTop' => 600,
+                    'colsNum' => 2,
+                );
+                $word->addSection($sectionStyle);
+            }
+
             if (file_exists($filePath)) {
-                $this->templateProcessor = new TemplateProcessor($filePath);
+                $this->templateProcessor = $word->loadTemplate($filePath);
             } else {
-                $this->templateProcessor = new TemplateProcessor(public_path($filePath));
+                $this->templateProcessor = $word->loadTemplate(public_path($filePath));
             }
         } catch (CopyFileException $e) {
             abort(500);
