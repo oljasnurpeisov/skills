@@ -116,7 +116,7 @@ class AVRGen extends BaseGenerator
      */
     public function addAVRNumber(AVR $avr, string $avr_number): void
     {
-        $this->readTemplate(StorageService::path($avr->link));
+        $this->readTemplate(StorageService::path($avr->link), true);
 
         $this->templateProcessor->setValue('avr_number', $avr_number);
 
@@ -134,7 +134,7 @@ class AVRGen extends BaseGenerator
      */
     public function previewWithoutNumber(AVR $avr): string
     {
-        $this->readTemplate(StorageService::path($avr->link));
+        $this->readTemplate(StorageService::path($avr->link), true);
 
         $this->templateProcessor->setValue('avr_number', 'XXX');
 
