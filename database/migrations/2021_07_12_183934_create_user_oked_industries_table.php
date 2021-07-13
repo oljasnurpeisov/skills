@@ -16,7 +16,7 @@ class CreateUserOkedIndustriesTable extends Migration
         Schema::create('user_oked_industries', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->index();
-            $table->integer('oked_industries_id');
+            $table->integer('oked_industries_id')->index();
             $table->timestamps();
         });
     }

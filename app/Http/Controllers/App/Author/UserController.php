@@ -271,7 +271,7 @@ class UserController extends Controller
      */
     public function getOkedIndustries(Request $request, $lang)
     {
-        $industries = OkedIndustries::where('name_' . $lang, 'like', '%' . $request->name . '%');
+        $industries = OkedIndustries::orderBy('name_' . $lang, 'asc');
 
         if (!empty($request->oked_activities)) {
             $industries = $industries->whereHas('oked_activities', function ($q) use ($request) {
@@ -279,8 +279,11 @@ class UserController extends Controller
             });
         }
 
-        return $industries->orderBy('name_' . $lang, 'asc')
-            ->paginate(50, ['*'], 'page', $request->page ?? 1);
+        if (!empty($request->name)) {
+            $industries = $industries->where('name_' . $lang, 'like', '%' . $request->name . '%');
+        }
+
+        return $industries->paginate(50, ['*'], 'page', $request->page ?? 1);
     }
 
     /**
@@ -292,14 +295,17 @@ class UserController extends Controller
      */
     public function getOkedActivities(Request $request, $lang)
     {
-        $activities = OkedActivities::where('name_' . $lang, 'like', '%' . $request->name ?? '' . '%');
+        $activities = OkedActivities::orderBy('name_' . $lang, 'asc');
 
         if (!empty($request->oked_industries)) {
             $activities = $activities->whereIn('oked_industries_id', $request->oked_industries);
         }
 
-        return $activities->orderBy('name_' . $lang, 'asc')
-            ->paginate(50, ['*'], 'page', $request->page ?? 1);
+        if (!empty($request->name)) {
+            $activities = $activities->where('name_' . $lang, 'like', '%' . $request->name ?? '' . '%');
+        }
+
+        return $activities->paginate(50, ['*'], 'page', $request->page ?? 1);
     }
 
     public function update_author_data_profile(Request $request)

@@ -310,6 +310,8 @@
         }
 
         okedIndustriesEl.change(function () {
+            console.log("Change industries");
+            console.log($(this).val());
             if (type === null) {
                 type = 1;
             }
@@ -329,6 +331,8 @@
         });
 
         okedActivitiesEl.change(function () {
+            console.log("Change activities");
+            console.log($(this).val());
             if (type === null) {
                 type = 2;
             }

@@ -16,7 +16,7 @@ class CreateUserOkedActivitiesTable extends Migration
         Schema::create('user_oked_activities', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->index();
-            $table->integer('oked_activities_id');
+            $table->integer('oked_activities_id')->index();
             $table->timestamps();
         });
     }

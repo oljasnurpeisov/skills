@@ -15,9 +15,9 @@ class CreateOkedActivitiesTable extends Migration
     {
         Schema::create('oked_activities', function (Blueprint $table) {
             $table->id();
-            $table->integer('oked_industries_id');
-            $table->string('name_ru');
-            $table->string('name_kk');
+            $table->integer('oked_industries_id')->index();
+            $table->string('name_ru')->index();
+            $table->string('name_kk')->index();
             $table->timestamps();
         });
     }
