@@ -64,6 +64,7 @@ class CourseController extends Controller
         return view('admin.v2.pages.courses.index', [
             'items' => $items,
             'term' => $term,
+            'title' => 'Все курсы'
         ]);
     }
 
@@ -82,6 +83,7 @@ class CourseController extends Controller
         return view('admin.v2.pages.courses.index', [
             'items' => $items,
             'term' => $term,
+            'title' => "Ожидающие проверки курсов"
         ]);
     }
 
@@ -100,6 +102,7 @@ class CourseController extends Controller
         return view('admin.v2.pages.courses.index', [
             'items' => $items,
             'term' => $term,
+            'title' => 'Отклоненные курсы'
         ]);
     }
 
@@ -118,6 +121,7 @@ class CourseController extends Controller
         return view('admin.v2.pages.courses.index', [
             'items' => $items,
             'term' => $term,
+            'title' => 'Опубликованные курсы'
         ]);
     }
 
@@ -136,6 +140,7 @@ class CourseController extends Controller
         return view('admin.v2.pages.courses.index', [
             'items' => $items,
             'term' => $term,
+            'title' => 'Черновики'
         ]);
     }
 
@@ -154,6 +159,7 @@ class CourseController extends Controller
         return view('admin.v2.pages.courses.index', [
             'items' => $items,
             'term' => $term,
+            'title' => 'Удаленные курсы'
         ]);
     }
 
@@ -382,6 +388,7 @@ class CourseController extends Controller
         return view('admin.v2.pages.courses.index', [
             'items' => $this->courseService->waitCheckContracts(),
             'term'  => $request->term,
+            'title' => "Ожидающие проверки договора"
         ]);
     }
 
@@ -396,6 +403,7 @@ class CourseController extends Controller
         return view('admin.v2.pages.courses.index', [
             'items' => $this->courseService->waitSigningAuthor(),
             'term'  => $request->term,
+            'title' => " Ожидающие подписания договора со стороны Автора"
         ]);
     }
 
@@ -410,6 +418,7 @@ class CourseController extends Controller
         return view('admin.v2.pages.courses.index', [
             'items' => $this->courseService->waitSigningAdmin(),
             'term'  => $request->term,
+            'title' => "Ожидающие подписания договора со стороны Администрации"
         ]);
     }
 }
