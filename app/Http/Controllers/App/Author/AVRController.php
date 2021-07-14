@@ -18,6 +18,7 @@ use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\AuthorAVRService;
 use Services\Contracts\AVRService;
 use Services\Notifications\NotificationService;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Class AVRController
@@ -126,6 +127,21 @@ class AVRController extends Controller
         }
 
         abort(404);
+    }
+
+    /**
+     * Загрузка акта
+     *
+     * @param Request $request
+     * @return StreamedResponse
+     */
+    public function download(Request $request)
+    {
+        $avr = AVR::whereHas('course', function ($q) {
+            return $q->whereAuthorId(Auth::user()->id);
+        })->findOrFail($request->avr_id);
+
+        return StorageService::download($avr->link, sprintf('Акт выполненных работ №%s.pdf', $avr->number));
     }
 
     /**

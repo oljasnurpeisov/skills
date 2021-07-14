@@ -458,6 +458,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
 
                     // avr
                     Route::get("/my-avr/{avr_id}/avr", "AVRController@avr")->name('author.avr.view');
+                    Route::get("/my-avr/{avr_id}/download", "AVRController@download")->name('author.avr.download');
                     Route::get("/my-avr/{avr_id}/avrDoc", "AVRController@avrDoc")->name('author.avr.signing.avrDoc');
                     Route::get("/my-avr/{avr_id}/avrPdf", "AVRController@avrPdf")->name('author.avr.signing.avrPdf');
                     Route::get("/my-avr/signing/{avr_id}/update", "AVRController@update")->name('author.avr.signing.update');
