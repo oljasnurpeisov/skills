@@ -163,7 +163,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/avr/pending', 'AVRController@pending')->name('admin.avr.pending');
                 Route::get('/avr/signed', 'AVRController@signed')->name('admin.avr.signed');
 
-                Route::get('/avr/{avr_id}/history', 'AVRController@history')->name('admin.contracts.history');
+                Route::get('/avr/{avr_id}/history', 'AVRController@history')->name('admin.avr.history');
                 Route::get('/avr/{avr_id}/view', 'AVRController@view')->name('admin.avr.view');
                 Route::get('/avr/{avr_id}/get-avr-html', 'AVRController@getAVRHtml')->name('admin.avr.get_contract_html');
                 Route::get('/avr/{avr_id}/get-avr-pdf', 'AVRController@getAVRPdf')->name('admin.avr.get_contract_pdf');
