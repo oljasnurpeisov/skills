@@ -53,7 +53,7 @@ class Num2string
             }
         }
         else return $null;
-        $out[] = $unit[1]; // kzt
+//        $out[] = $unit[1]; // kzt
         return trim(preg_replace('/ {2,}/', ' ', join(' ',$out)));
     }
 
