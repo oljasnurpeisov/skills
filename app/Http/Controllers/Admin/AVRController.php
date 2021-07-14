@@ -50,7 +50,11 @@ class AVRController extends Controller
      * @param AdminAVRService $adminAVRService
      * @param ValidationService $validationService
      */
-    public function __construct(AVRFilterService $AVRFilterService, AVRService $AVRService, AdminAVRService $adminAVRService, ValidationService $validationService)
+    public function __construct(
+        AVRFilterService $AVRFilterService,
+        AVRService $AVRService,
+        AdminAVRService $adminAVRService,
+        ValidationService $validationService)
     {
         $this->AVRFilterService     = $AVRFilterService;
         $this->AVRService           = $AVRService;
@@ -117,6 +121,20 @@ class AVRController extends Controller
             'avr'           => $avr,
             'certificates'  => $this->AVRService->searchCertifications($avr),
             'title'         => 'Просмотр АВР'
+        ]);
+    }
+
+    /**
+     * История АВР по курсу
+     *
+     * @param Request $request
+     * @return view
+     */
+    public function history(Request $request): View
+    {
+        return view('admin.v2.pages.avr.history', [
+            'history'   => $this->adminAVRService->getHistory($request->avr_id),
+            'title'     => 'Просмотр истории договоров'
         ]);
     }
 

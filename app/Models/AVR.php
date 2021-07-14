@@ -114,6 +114,29 @@ class AVR extends Model
     }
 
     /**
+     * Название статуса для лога
+     *
+     * @param null|int $current_route
+     * @return string
+     */
+    public function getStatusNameForLog(int $current_route = null): string
+    {
+        switch (true) {
+            case $this->isPending():
+                $route = Route::find($current_route);
+                $role_name = !empty($route) ? $route->role->name : 'Маршрут изменен';
+                return "Ожидает подписания (". $role_name .")";
+                break;
+            case $this->isSigned():
+                return "Подписан";
+                break;
+            default;
+                return "Сгенерирован";
+                break;
+        }
+    }
+
+    /**
      * Договор
      *
      * @return HasOne

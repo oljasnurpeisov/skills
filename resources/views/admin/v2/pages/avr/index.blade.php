@@ -97,9 +97,15 @@
                             <td>{{ $item->getSignedAt() }}</td>
                             <td>
                                 <div class="action-buttons">
-{{--                                    @if (!empty($item->current_route))--}}
+                                    @if (!empty($item->current_route))
                                         <a target="_blank" href="{{ route('admin.avr.view', ['lang' => $lang, 'avr_id' => $item->id]) }}" title="{{ __('admin.labels.view') }}" class="icon-btn icon-btn--yellow icon-eye"></a>
-{{--                                    @endif--}}
+                                    @else
+                                        <a target="_blank" style="opacity: .3" title="{{ __('admin.labels.view') }}" class="icon-btn icon-btn--yellow icon-eye"></a>
+                                    @endif
+
+                                    <a target="_blank" href="{{ route('admin.avr.history', ['lang' => $lang, 'avr_id' => $item->id]) }}" title="{{ __('admin.labels.view') }}" class="icon-btn icon-btn--yellow">
+                                        <img src="{{ asset('assets/img/history.png') }}" alt="" style="height: 14px;">
+                                    </a>
                                 </div>
                             </td>
                         </tr>
