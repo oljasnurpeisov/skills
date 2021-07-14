@@ -35,7 +35,7 @@
                                 <li class="active">
                                     <a href="javascript:;" title="АВР">АВР</a>
                                 </li>
-                                @if(Auth::user()->role->role_id === 1)
+                                @if(Auth::user()->role->role_id === 1 or Auth::user()->role->role_id === 11)
                                     <li>
                                         <a href="javascript:;" title="Действия">Сертификаты</a>
                                     </li>
