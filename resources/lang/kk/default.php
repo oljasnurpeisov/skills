@@ -27,6 +27,7 @@ return [
             'my_courses_unpublished' => 'Қабылданбаған курстар',
             'my_courses_onCheck' => 'Тексерілуде',
             'my_courses_deleted' => 'Жойылған курстар',
+            'my_courses_signed' => 'Қол қойылуда/мақұлдануда',
             'profit_title' => 'Курстың құрылымы',
             'course_materials' => 'Курстың мазмұны',
             'course_description' => 'Курстың сипаттамасы',
