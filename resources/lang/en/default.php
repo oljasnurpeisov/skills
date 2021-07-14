@@ -13,6 +13,8 @@ return [
     'pages' => [
         'courses' => [
 
+            'accept' => 'Одобрить',
+
             'contract_type_1' => 'Бесплатный',
             'contract_type_2' => 'Платный',
             'contract_type_3' => 'При гос. поддер.',

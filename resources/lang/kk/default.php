@@ -12,6 +12,9 @@ return [
 
     'pages' => [
         'courses' => [
+
+            'accept' => 'Мақұлдау',
+
             'course_title' => 'Курс',
             'drafts' => 'Уақытша',
             'my_courses_title' => 'Менің курстарым',

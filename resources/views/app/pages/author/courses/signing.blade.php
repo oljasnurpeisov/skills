@@ -90,7 +90,7 @@
                             </button>
                         @else
                             <a href="{{ route('author.courses.signing.contract.next', ['lang' => $lang, 'contract_id' => $contract->id]) }}"
-                               class="btn btn-success">Отправить</a>
+                               class="btn btn-success">{{ __('default.pages.courses.accept') }}</a>
                         @endif
                     </div>
                 </div>
