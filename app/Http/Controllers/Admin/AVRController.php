@@ -134,7 +134,7 @@ class AVRController extends Controller
     {
         return view('admin.v2.pages.avr.history', [
             'history'   => $this->adminAVRService->getHistory($request->avr_id),
-            'title'     => 'Просмотр истории договоров'
+            'title'     => 'Просмотр истории АВР'
         ]);
     }
 
