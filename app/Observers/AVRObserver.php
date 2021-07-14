@@ -43,9 +43,9 @@ class AVRObserver
         if (!empty($oldData->route_id) && !empty($avr->route_id) && !empty($avr->status) && ($oldData->route_id !== $avr->route_id || $avr->status !== $oldData->status)) {
 
             if ($oldData->status === 1) {
-                $comment = $avr->getStatusNameForLog($oldData->route_id);
+                $comment = $avr->getStatusNameForLog($oldData->status, $oldData->route_id);
             } else {
-                $comment = $avr->getStatusNameForLog($oldData->route_id);
+                $comment = $avr->getStatusNameForLog($avr->status, $oldData->route_id);
             }
 
             if (!empty($avr->reject_comment)) {
