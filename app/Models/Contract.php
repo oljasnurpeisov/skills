@@ -301,10 +301,19 @@ class Contract extends Model
         switch (true) {
             case $this->isPending():
                 $role_name = !empty($this->current_route) ? $this->current_route->role->name : 'Маршрут изменен';
-                return "Ожидает подписания (". $role_name .")";
+
+                if ($this->isQuota()) {
+                    return "Ожидает подписания (". $role_name .")";
+                } else {
+                    return "Ожидает одобрения (". $role_name .")";
+                }
                 break;
             case $this->isSigned():
-                return "Подписан";
+                if ($this->isQuota()) {
+                    return "Подписан";
+                } else {
+                    return "Одобрен";
+                }
                 break;
             case $this->isDistributed():
                 return "Расторгнут";
