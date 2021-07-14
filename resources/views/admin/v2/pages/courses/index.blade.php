@@ -36,7 +36,7 @@
             @if(count($items) > 0)
                 <table class="table records">
                     <colgroup>
-                        <col span="1" style="width: 5%;">
+{{--                        <col span="1" style="width: 5%;">--}}
                         <col span="1" style="width: 20%;">
                         <col span="1" style="width: 7%;">
                         <col span="1" style="width: 7%;">
@@ -52,7 +52,7 @@
                     </colgroup>
                     <thead>
                     <tr>
-                        <th>#</th>
+{{--                        <th>#</th>--}}
                         {{--                        <th>{{ __('admin.pages.user.surname').' '.__('admin.pages.user.name').' '.__('admin.pages.user.middle_name') }}</th>--}}
                         <th>{{ __('admin.pages.courses.course_name') }}</th>
                         <th>{{ __('admin.pages.courses.author_email') }}</th>
@@ -72,7 +72,7 @@
                         @php($modifier = $item->modifier)
                         @php($remover = $item->remover)
                         <tr>
-                            <td>{{ $item->id }}</td>
+{{--                            <td>{{ $item->id }}</td>--}}
                             {{--                            <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>--}}
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->user()->first()->email }}</td>
