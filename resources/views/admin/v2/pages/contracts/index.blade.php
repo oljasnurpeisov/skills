@@ -42,7 +42,7 @@
                     <th>Название организации</th>
                     <th>Статус договора</th>
                     <th>Тип курса</th>
-                    <th>Дата подписания Автором</th>
+                    <th>Дата подписания/одобрения Автором</th>
                     <th>Дата публикации</th>
                     @if (Route::currentRouteName() === 'admin.contracts.distributed' || Route::currentRouteName() === 'admin.contracts.rejected_by_admin')
                         <th>Причина отклонения</th>
@@ -60,8 +60,8 @@
                                 @if(Route::currentRouteName() === 'admin.contracts.all')
                                     <select id="contract_status" name="contract_status" class="input-regular chosen">
                                         <option value="">Все</option>
-                                        <option value="1">Ожидающие подписания</option>
-                                        <option value="2">Подписаны</option>
+                                        <option value="1">Ожидающие подписания/одобрения</option>
+                                        <option value="2">Подписаны/одобрены</option>
                                         <option value="3">Расторгнуты</option>
                                         <option value="4">Отклонены автором</option>
                                     </select>
