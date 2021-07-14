@@ -50,11 +50,10 @@ class AVRLogService
     /**
      * Получение логов авр курса
      *
-     * @param int $contract_type
      * @param $course_id
      * @return Collection
      */
-    public function getLogs(int $contract_type, $course_id): Collection
+    public function getLogs($course_id): Collection
     {
         return $this->AVRLog
                 ->whereCourseId($course_id)

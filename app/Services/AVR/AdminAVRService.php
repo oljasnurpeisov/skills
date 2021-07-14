@@ -4,6 +4,7 @@ namespace Services\AVR;
 
 use App\Models\AVR;
 use App\Services\Signing\DocumentService;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Services\Contracts\AVRServiceRouting;
 
@@ -20,15 +21,22 @@ class AdminAVRService
     private $documentService;
 
     /**
+     * @var AVRLogService
+     */
+    private $AVRLogService;
+
+    /**
      * AdminAVRService constructor.
      *
      * @param AVRServiceRouting $AVRServiceRouting
      * @param DocumentService $documentService
+     * @param AVRLogService $AVRLogService
      */
-    public function __construct(AVRServiceRouting $AVRServiceRouting, DocumentService $documentService)
+    public function __construct(AVRServiceRouting $AVRServiceRouting, DocumentService $documentService, AVRLogService $AVRLogService)
     {
-        $this->AVRServiceRouting = $AVRServiceRouting;
-        $this->documentService = $documentService;
+        $this->AVRServiceRouting    = $AVRServiceRouting;
+        $this->documentService      = $documentService;
+        $this->AVRLogService        = $AVRLogService;
     }
 
     /**
@@ -50,5 +58,18 @@ class AdminAVRService
         }
 
         $this->AVRServiceRouting->toNextRoute($avr);
+    }
+
+    /**
+     * Получение истории
+     *
+     * @param int $contract_id
+     * @return Collection
+     */
+    public function getHistory(int $contract_id): Collection
+    {
+        $contract = AVR::findOrFail($contract_id);
+
+        return $this->AVRLogService->getLogs($contract->course->id);
     }
 }
