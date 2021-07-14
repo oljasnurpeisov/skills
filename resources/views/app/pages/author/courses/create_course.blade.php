@@ -14,6 +14,20 @@
                     <li><span>{{__('default.pages.courses.creation_course')}}</span></li>
                 </ul>
                 <h1 class="title-primary">{{__('default.pages.courses.creation_course')}}</h1>
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 @if (session('failed'))
                     <div class="alert alert-danger">
                         {!! session('failed') !!}

@@ -91,10 +91,17 @@ class CourseController extends Controller
      *
      * @param Request $request
      * @return RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function storeCourse(Request $request)
     {
         $request->cost = str_replace(' ','', $request->cost);
+
+        if ($request->is_paid) {
+            $this->validate($request, [
+                'cost' => 'integer|min:1'
+            ]);
+        }
 
         if ($request->is_paid and $request->cost > 0) {
             if ((Auth::user()->payment_info->merchant_login != null) and (Auth::user()->payment_info->merchant_password != null)) {
@@ -573,6 +580,12 @@ class CourseController extends Controller
     public function updateCourse($lang, Request $request, Course $item)
     {
         $request->cost = str_replace(' ','', $request->cost);
+
+        if ($request->is_paid) {
+            $this->validate($request, [
+                'cost' => 'integer|min:1'
+            ]);
+        }
 
         $item->name = $request->name;
         $item->lang = $request->lang;
