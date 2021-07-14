@@ -13,6 +13,10 @@
                             <iframe src="{{ route('author.avr.signing.avrDoc', ['lang' => 'ru', 'avr_id' => $avr->id]) }}" frameborder="0" width="100%" height="600"></iframe>
                         @endif
 
+                        @if ($avr->isSigned())
+                                <object data="{{ asset($avr->invoice_link) }}" style="margin-top: 30px" type="application/pdf" internalinstanceid="3" title="" width="100%" height="600"></object>
+                        @endif
+
                         @if ($avr->isSignator())
 
                             <div class="alert alert-info col-sm-12" id="signResult" style="display: none"></div>
