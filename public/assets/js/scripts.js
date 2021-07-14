@@ -877,6 +877,7 @@ function TinyMceInit(selector, textOnly = false) {
         images_upload_url: method,
         files_upload_url: method,
         file_picker_types: 'file image media',
+        invalid_elements: 'table,tr,td',
         relative_urls: false,
         language: lang,
         file_picker_callback: function (callback, value, meta) {
