@@ -96,7 +96,7 @@ class CourseController extends Controller
      */
     public function storeCourse(Request $request)
     {
-        $request->cost = str_replace(' ','', $request->cost);
+        $request->cost = (int) str_replace(' ','', $request->cost);
 
         if ($request->is_paid) {
             $this->validate($request, [
@@ -580,7 +580,7 @@ class CourseController extends Controller
 
     public function updateCourse($lang, Request $request, Course $item)
     {
-        $request->cost = str_replace(' ','', $request->cost);
+        $request->cost = (int) str_replace(' ','', $request->cost);
 
         if ($request->is_paid) {
             $this->validate($request, [
