@@ -314,7 +314,7 @@ class Agreement extends BaseGenerator
         $this->templateProcessor->setValue('description', $this->clearText($this->course->description) ?? '-');
         $this->templateProcessor->setValue('profit_desc', $this->clearText($this->course->profit_desc) ?? '-');
         $this->templateProcessor->setValue('videos_link', $this->course->videos_link ?? '-');
-        $this->templateProcessor->setValue('duration', round((new CalculateQuotaCostService())->courseDurationService($this->course, false) ?? '-'));
+        $this->templateProcessor->setValue('duration', round((new CalculateQuotaCostService())->courseDurationService($this->course) ?? '-'));
 
         $this->templateProcessor->setValue('lang_ru', $this->course->lang === 1 ? 'Нет' : 'Да');
         $this->templateProcessor->setValue('lang_kk', $this->course->lang === 1 ? 'Жоқ' : 'Иә');

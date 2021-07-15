@@ -13,7 +13,7 @@ class CalculateQuotaCostService
      * @param bool $minutes
      * @return float|int
      */
-    public function courseDurationService(Course $course, $minutes = false)
+    public function courseDurationService(Course $course)
     {
         // Длительность курса
         $course_duration = 0;
@@ -24,9 +24,7 @@ class CalculateQuotaCostService
             }
         }
         // Конвертирование минут в часы
-        if ($minutes) {
-            $course_duration = $course_duration / 60;
-        }
+        $course_duration = $course_duration / 60;
 
         return $course_duration;
     }
