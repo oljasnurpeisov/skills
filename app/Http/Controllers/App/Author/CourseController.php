@@ -17,6 +17,7 @@ use App\Models\Skill;
 use App\Models\StudentCourse;
 use App\Models\Theme;
 use App\Models\User;
+use App\Rules\Courses\Cost;
 use App\Services\Signing\ValidationService;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
@@ -99,7 +100,7 @@ class CourseController extends Controller
 
         if ($request->is_paid) {
             $this->validate($request, [
-                'cost' => 'integer|min:1'
+                'cost' => [new Cost($request->cost), 'min:1']
             ]);
         }
 
@@ -583,7 +584,7 @@ class CourseController extends Controller
 
         if ($request->is_paid) {
             $this->validate($request, [
-                'cost' => 'integer|min:1'
+                'cost' => [new Cost($request->cost), 'min:1']
             ]);
         }
 
