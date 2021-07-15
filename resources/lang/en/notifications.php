@@ -23,8 +23,8 @@ return [
     'reject_btn_title' => 'Не согласен',
     'confirm_quota_description' => 'Автор курса :course_name согласен сделать его доступным по гос.поддержке.',
     'reject_quota_description' => 'Автор курса :course_name отказывается сделать его доступным по гос.поддержке.',
-    'course_quota_wait_contract' => 'Для подверждения доступности по по гос.поддержке курса :course_name, с Вами свяжется администрация',
-    'course_quota_access' => 'Курс :course_name теперь доступен по квоте',
+    'course_quota_wait_contract' => 'Для подверждения доступности по гос.поддержке курса :course_name, с Вами свяжется администрация',
+    'course_quota_access' => 'Курс :course_name теперь доступен по гос.поддержке',
     'course_quota_access_denied' => 'Вы отказались от доступности по гос.поддержке курса :course_name',
 
     'publish_course_title' => 'Публикация курса',
