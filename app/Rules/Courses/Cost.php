@@ -41,6 +41,6 @@ class Cost implements Rule
      */
     public function message()
     {
-        return 'Номер уже существует.';
+        return 'Стоимость должна быть целым числом больше 0.';
     }
 }
