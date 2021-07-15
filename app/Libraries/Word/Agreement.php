@@ -314,15 +314,13 @@ class Agreement extends BaseGenerator
         $this->templateProcessor->setValue('description', $this->clearText($this->course->description) ?? '-');
         $this->templateProcessor->setValue('profit_desc', $this->clearText($this->course->profit_desc) ?? '-');
         $this->templateProcessor->setValue('videos_link', $this->course->videos_link ?? '-');
-        $this->templateProcessor->setValue('duration', (new CalculateQuotaCostService())->courseDurationService($this->course, true) ?? '-');
+        $this->templateProcessor->setValue('duration', round((new CalculateQuotaCostService())->courseDurationService($this->course, false) ?? '-'));
 
         $this->templateProcessor->setValue('lang_ru', $this->course->lang === 1 ? 'Нет' : 'Да');
         $this->templateProcessor->setValue('lang_kk', $this->course->lang === 1 ? 'Жоқ' : 'Иә');
 
         $this->templateProcessor->setValue('attachments', $this->allAttachments($this->course_attachments));
         $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));
-
-        // @TODO Check this!!!
 
         $this->templateProcessor->setValue('practice_status_ru', $this->getPracticeStatus('ru')); // Количество форматов учебного контента
         $this->templateProcessor->setValue('practice_status_kk', $this->getPracticeStatus('kk')); // Количество форматов учебного контента
