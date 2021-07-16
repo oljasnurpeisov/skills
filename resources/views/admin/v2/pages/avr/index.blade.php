@@ -104,7 +104,7 @@
                                     @endif
 
                                     @if (!empty($item->link) && pathinfo($item->link)['extension'] === 'pdf')
-                                        <a href="{{ route('admin.avr.download', ['lang' => $lang, 'avr_id' => $avr->id]) }}" class="icon-btn icon-btn--yellow icon-download"></a>
+                                        <a href="{{ route('admin.avr.download', ['lang' => $lang, 'avr_id' => $item->id]) }}" class="icon-btn icon-btn--yellow icon-download"></a>
                                     @endif
 
                                     <a target="_blank" href="{{ route('admin.avr.history', ['lang' => $lang, 'avr_id' => $item->id]) }}" title="{{ __('admin.labels.view') }}" class="icon-btn icon-btn--yellow">
