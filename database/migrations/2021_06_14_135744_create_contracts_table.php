@@ -22,7 +22,6 @@ class CreateContractsTable extends Migration
             $table->integer('route_id')->default(null)->index();
             $table->integer('type')->index();
             $table->text('reject_comment');
-            $table->dateTime('signed_at')->nullable()->index();
             $table->dateTime('author_signed_at')->nullable()->index();
             $table->timestamps();
         });
