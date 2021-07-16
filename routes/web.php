@@ -141,6 +141,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
 
                 Route::get('/contracts/{contract_id}/view', 'ContractsController@view')->name('admin.contracts.view');
                 Route::get('/contracts/{contract_id}/history', 'ContractsController@history')->name('admin.contracts.history');
+                Route::get('/contracts/{contract_id}/download', 'ContractsController@download')->name('admin.contracts.download');
                 Route::get('/contracts/{contract_id}/get-contract-html', 'ContractsController@getContractHtml')->name('admin.contracts.get_contract_html');
                 Route::get('/contracts/{contract_id}/get-contract-pdf', 'ContractsController@getContractPdf')->name('admin.contracts.get_contract_pdf');
                 Route::get('/contracts/{course_id}/{type}/get-contract-html-preview', 'ContractsController@getContractHtmlPreview')->name('admin.contracts.get_contract_html_preview');
@@ -165,6 +166,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
 
                 Route::get('/avr/{avr_id}/history', 'AVRController@history')->name('admin.avr.history');
                 Route::get('/avr/{avr_id}/view', 'AVRController@view')->name('admin.avr.view');
+                Route::get('/avr/{avr_id}/download', 'AVRController@download')->name('admin.avr.download');
                 Route::get('/avr/{avr_id}/get-avr-html', 'AVRController@getAVRHtml')->name('admin.avr.get_contract_html');
                 Route::get('/avr/{avr_id}/get-avr-pdf', 'AVRController@getAVRPdf')->name('admin.avr.get_contract_pdf');
                 Route::get("/avr/signing/{avr_id}/xml", "AVRController@xml")->name('admin.avr.xml'); // Формирование XML для подписания
@@ -391,6 +393,11 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-contracts", "ContractsController@index")->name('author.contracts.index');
                     Route::get("/my-avr", "AVRController@index")->name('author.avr.index');
                     Route::get("/contract/{contract_id}/download", "ContractsController@download")->name('author.contracts.download');
+
+                    Route::get("/contract/{contract_id}/show", "ContractsController@view")->name('author.contracts.view');
+                    Route::get("/contract/{contract_id}/pdf", "ContractsController@getContractPdf")->name('author.contracts.pdf');
+                    Route::get("/contract/{contract_id}/doc", "ContractsController@getContractHtml")->name('author.contracts.doc');
+
                     Route::get("/create-course", "CourseController@createCourse");
                     Route::get("/my-courses/statistics", "CourseController@statisticsCourse");
                     Route::get("/my-courses/reporting", "CourseController@reportingCourse");

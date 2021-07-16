@@ -60,7 +60,11 @@
                                 <td>{{ $contract->getTypeName() }}</td>
                                 <td>{{ $contract->isQuota() ? 'Да' : 'Нет' }}</td>
                                 <td>
-                                    <a href="{{ route('author.contracts.download', ['lang' => $lang, 'contract_id' => $contract->id]) }}">Скачать</a>
+                                    <a href="{{ route('author.contracts.view', ['lang' => $lang, 'contract_id' => $contract->id]) }}">Просмотр</a>
+                                    <br />
+                                    @if (!empty($contract->link) && pathinfo($contract->link)['extension'] === 'pdf')
+                                        <a href="{{ route('author.contracts.download', ['lang' => $lang, 'contract_id' => $contract->id]) }}">Скачать</a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

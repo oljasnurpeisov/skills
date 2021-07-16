@@ -103,6 +103,10 @@
                                         <a target="_blank" style="opacity: .3" title="{{ __('admin.labels.view') }}" class="icon-btn icon-btn--yellow icon-eye"></a>
                                     @endif
 
+                                    @if (!empty($item->link) && pathinfo($item->link)['extension'] === 'pdf')
+                                        <a href="{{ route('admin.avr.download', ['lang' => $lang, 'avr_id' => $item->id]) }}" class="icon-btn icon-btn--yellow icon-download"></a>
+                                    @endif
+
                                     <a target="_blank" href="{{ route('admin.avr.history', ['lang' => $lang, 'avr_id' => $item->id]) }}" title="{{ __('admin.labels.view') }}" class="icon-btn icon-btn--yellow">
                                         <img src="{{ asset('assets/img/history.png') }}" alt="" style="height: 14px;">
                                     </a>

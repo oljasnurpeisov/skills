@@ -13,13 +13,13 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\ContractFilterService;
 use Services\Contracts\ContractService;
 use Services\Course\AdminCourseService;
 use Services\Notifications\NotificationService;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Class ContractsController
@@ -405,5 +405,17 @@ class ContractsController extends Controller
         }
 
         return response()->json(['message' => 'Электронный договор не найден'], 500);
+    }
+
+    /**
+     * @param Request $request
+     * @return StreamedResponse
+     */
+    public function download(Request $request)
+    {
+        /** @var Contract $contract */
+        $contract = Contract::findOrFail($request->contract_id);
+
+        return StorageService::download($contract->link, sprintf('Договор №%s.pdf', $contract->number));
     }
 }
