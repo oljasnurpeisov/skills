@@ -92,8 +92,8 @@
                             </td>
 
                             <td>{{ $item->getTypeName() }}</td>
-                            <td>{{ $item->cost }}</td>
-                            <td>{{ $item->calculateQuotaCost() }}</td>
+                            <td>{{ number_format($item->cost, 0, '', ' ') }}</td>
+                            <td>{{ number_format($item->calculateQuotaCost(), 0, '', ' ') }}</td>
 
                             <td>{{ $item->publish_at ?? '-' }}</td>
                             <td>{!! $item->created_at . ($creator ? '<br>'.($creator->surname.' '.$creator->name.' '.$creator->middle_name) : '') !!}</td>
