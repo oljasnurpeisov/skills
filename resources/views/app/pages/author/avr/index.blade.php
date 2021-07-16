@@ -65,7 +65,7 @@
                                     <br />
                                     @if (!empty($avr->link) && pathinfo($avr->link)['extension'] === 'pdf')
                                         <a href="{{ route('author.avr.download', ['lang' => $lang, 'avr_id' => $avr->id]) }}">Скачать</a>
-                                    @else
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
