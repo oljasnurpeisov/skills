@@ -19,6 +19,7 @@ use PhpOffice\PhpWord\Exception\Exception;
 use Services\AVR\AdminAVRService;
 use Services\AVR\AVRFilterService;
 use Services\Contracts\AVRService;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AVRController extends Controller
 {
@@ -122,6 +123,19 @@ class AVRController extends Controller
             'certificates'  => $this->AVRService->searchCertifications($avr),
             'title'         => 'Просмотр АВР'
         ]);
+    }
+
+    /**
+     * Загрузка акта
+     *
+     * @param Request $request
+     * @return StreamedResponse
+     */
+    public function download(Request $request)
+    {
+        $avr = AVR::findOrFail($request->avr_id);
+
+        return StorageService::download($avr->link, sprintf('Акт выполненных работ №%s.pdf', $avr->number));
     }
 
     /**

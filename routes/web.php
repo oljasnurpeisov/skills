@@ -165,6 +165,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
 
                 Route::get('/avr/{avr_id}/history', 'AVRController@history')->name('admin.avr.history');
                 Route::get('/avr/{avr_id}/view', 'AVRController@view')->name('admin.avr.view');
+                Route::get('/avr/{avr_id}/download', 'AVRController@download')->name('admin.avr.download');
                 Route::get('/avr/{avr_id}/get-avr-html', 'AVRController@getAVRHtml')->name('admin.avr.get_contract_html');
                 Route::get('/avr/{avr_id}/get-avr-pdf', 'AVRController@getAVRPdf')->name('admin.avr.get_contract_pdf');
                 Route::get("/avr/signing/{avr_id}/xml", "AVRController@xml")->name('admin.avr.xml'); // Формирование XML для подписания
