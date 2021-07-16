@@ -1235,6 +1235,8 @@ class CourseController extends Controller
      */
     public function next(Request $request)
     {
+        $contract = Contract::find($request->contract_id);
+
         if(!empty($_POST)) {
 
             $xml = $request->post('xml');
@@ -1252,7 +1254,11 @@ class CourseController extends Controller
 
                 $success = true;
 
-                $message = 'Договор успешно подписан';
+                if ($contract->isQuota()) {
+                    $message = 'Договор успешно подписан';
+                } else {
+                    $message = 'Соглашение успешно подписано';
+                }
 
                 $this->authorCourseService->acceptContract($request->contract_id, $xml, $this->validationService->getResponse());
 
@@ -1272,7 +1278,12 @@ class CourseController extends Controller
 
         } else {
 
-            $message = 'Договор успешно подписан';
+            if ($contract->isQuota()) {
+                $message = 'Договор успешно подписан';
+            } else {
+                $message = 'Соглашение успешно подписано';
+            }
+
             $this->authorCourseService->acceptContract($request->contract_id);
             Session::flash('status', $message);
 
