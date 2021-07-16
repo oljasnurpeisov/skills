@@ -7,6 +7,9 @@
 /public/testing
 /public/users
 /public/zip
+/public/git.php
+/public/logs
+/public/log.php
 
 /public/contracts/files/
 /public/avr/files/
