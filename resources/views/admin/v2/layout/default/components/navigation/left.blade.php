@@ -60,8 +60,8 @@
                 <ul>
                     <li><a href="/{{$lang}}/admin/courses/wait_verification">Ожидающие проверки курсов</a></li>
                     <li><a href="{{ route('admin.courses.wait_check_contracts', ['lang' => $lang]) }}">Ожидающие проверки договора</a></li>
-                    <li><a href="{{ route('admin.courses.wait_signing_author', ['lang' => $lang]) }}">Ожидающие подписания договора со стороны Автора</a></li>
-                    <li><a href="{{ route('admin.courses.wait_signing_admin', ['lang' => $lang]) }}">Ожидающие подписания договора со стороны Администрации</a></li>
+                    <li><a href="{{ route('admin.courses.wait_signing_author', ['lang' => $lang]) }}">Ожидающие подписания/одобрения договора со стороны Автора</a></li>
+                    <li><a href="{{ route('admin.courses.wait_signing_admin', ['lang' => $lang]) }}">Ожидающие подписания/одобрения договора со стороны Администрации</a></li>
                     <li><a href="/{{$lang}}/admin/courses/published">{{ __('admin.pages.courses.publish_list') }}</a></li>
                     <li><a href="/{{$lang}}/admin/courses/unpublished">{{ __('admin.pages.courses.unpublish_list') }}</a></li>
                     <li><a href="/{{$lang}}/admin/courses/deleted">{{ __('admin.pages.courses.deleted_list') }}</a></li>
@@ -77,8 +77,8 @@
                 </a>
                 <ul>
                     <li><a href="{{ route('admin.contracts.all', ['lang' => $lang]) }}">Все договоры</a></li>
-                    <li><a href="{{ route('admin.contracts.pending', ['lang' => $lang]) }}">Ожидающие подписания</a></li>
-                    <li><a href="{{ route('admin.contracts.signed', ['lang' => $lang]) }}">Подписаны</a></li>
+                    <li><a href="{{ route('admin.contracts.pending', ['lang' => $lang]) }}">Ожидающие подписания/одобрения</a></li>
+                    <li><a href="{{ route('admin.contracts.signed', ['lang' => $lang]) }}">Подписаны/одобрены</a></li>
                     <li><a href="{{ route('admin.contracts.distributed', ['lang' => $lang]) }}">Расторгнуты</a></li>
                     <li><a href="{{ route('admin.contracts.rejected_by_author', ['lang' => $lang]) }}">Отклонены автором</a></li>
 
