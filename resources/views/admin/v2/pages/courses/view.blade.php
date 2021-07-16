@@ -53,10 +53,10 @@
                                             <p><b>{{ __('admin.pages.courses.course_quota_title') }}
                                                     :</b> Да</p>
                                             <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
-                                                    :</b> {{ \App\Extensions\CalculateQuotaCost::calculate_quota_cost($item) }} {{__('default.tenge_title')}}</p>
+                                                    :</b> {{ number_format(\App\Extensions\CalculateQuotaCost::calculate_quota_cost($item), 0, '', ' ') }} {{__('default.tenge_title')}}</p>
                                         @endif
                                         <p><b>Стоимость курса на платной основе
-                                                :</b> {{$item->cost ?? 0}} {{__('default.tenge_title')}}</p>
+                                                :</b> {{ number_format($item->cost, 0, '', ' ') }} {{__('default.tenge_title')}}</p>
                                     @endif
 
                                     <br>
@@ -95,10 +95,10 @@
                                         <p><b>{{ __('admin.pages.courses.course_quota_title') }}
                                                 :</b> Да</p>
                                         <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
-                                                :</b> {{ \App\Extensions\CalculateQuotaCost::calculate_quota_cost($item) }} {{__('default.tenge_title')}}</p>
+                                                :</b> {{ number_format(\App\Extensions\CalculateQuotaCost::calculate_quota_cost($item), 0, '', ' ') }} {{__('default.tenge_title')}}</p>
                                     @endif
                                     <p><b>Стоимость курса на платной основе
-                                            :</b> {{$item->cost ?? 0}} {{__('default.tenge_title')}}</p>
+                                            :</b> {{ number_format($item->cost, 0, '', ' ') }} {{__('default.tenge_title')}}</p>
                                 @endif
 
                                 @if ($item->isFree() and !$item->isFreeContractCreated())
@@ -259,10 +259,10 @@
                                         <p><b>{{ __('admin.pages.courses.course_quota_title') }}
                                                 :</b> Да</p>
                                         <p><b>{{ __('admin.pages.courses.course_quota_cost') }}
-                                                :</b> {{ \App\Extensions\CalculateQuotaCost::calculate_quota_cost($item) }} {{__('default.tenge_title')}}</p>
+                                                :</b> {{ number_format(\App\Extensions\CalculateQuotaCost::calculate_quota_cost($item), 0, '', ' ') }} {{__('default.tenge_title')}}</p>
                                     @endif
                                     <p><b>Стоимость курса на платной основе
-                                            :</b> {{$item->cost ?? 0}} {{__('default.tenge_title')}}</p>
+                                            :</b> {{ number_format($item->cost, 0, '', ' ') }} {{__('default.tenge_title')}}</p>
                                 @endif
 
                                 @if ($item->isFree())
