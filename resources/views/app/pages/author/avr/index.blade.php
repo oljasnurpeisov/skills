@@ -61,11 +61,11 @@
                                 <td>{{ number_format($avr->sum, 2, '.', ' ') }} ₸</td>
                                 <td>{{ $avr->getStatusName() }}</td>
                                 <td>
+                                    <a href="{{ route('author.avr.view', ['lang' => $lang, 'avr_id' => $avr->id]) }}">Просмотр</a>
+                                    <br />
                                     @if (!empty($avr->link) && pathinfo($avr->link)['extension'] === 'pdf')
                                         <a href="{{ route('author.avr.download', ['lang' => $lang, 'avr_id' => $avr->id]) }}">Скачать</a>
                                     @else
-                                        <a href="{{ route('author.avr.view', ['lang' => $lang, 'avr_id' => $avr->id]) }}">Просмотр</a>
-                                    @endif
                                 </td>
                             </tr>
                         @endforeach
