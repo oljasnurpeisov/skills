@@ -112,6 +112,15 @@ class ContractsController extends Controller
             })
             ->findOrFail($request->contract_id);
 
-        return StorageService::download($contract->link, sprintf('Договор №%s.pdf', $contract->number));
+        if (!empty($contract->link) && pathinfo($contract->link)['extension'] === 'pdf') {
+            return StorageService::download($contract->link, sprintf('Договор №%s.pdf', $contract->number));
+        } else {
+            //@TODO
+//            $test = $this->contractService->contractToPdf($request->contract_id);
+//
+//            dd($test);
+//            return StorageService::download($contract->link, sprintf('Договор №%s.pdf', $contract->number));
+        }
+
     }
 }
