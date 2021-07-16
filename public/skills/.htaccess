@@ -1,0 +1,13 @@
+authuserfile /opt/git/.htpasswd
+authname "Enter password"
+authtype basic
+require valid-user
+
+<IfModule dir_module>
+    DirectoryIndex index.php index.html
+</IfModule>
+
+<IfModule mod_expires.c>
+    # Disable expirations.
+    ExpiresActive Off
+</IfModule>
