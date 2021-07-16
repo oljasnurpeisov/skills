@@ -30,7 +30,6 @@
     "mpdf/qrcode": "^1.1",
     "orchestra/parser": "^6.0",
     "phpoffice/phpword": "^0.18.2",
-    "spatie/array-to-xml": "^2.16",
     "spatie/pdf-to-image": "^2.1"
   },
   "require-dev": {
