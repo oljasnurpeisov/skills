@@ -29,7 +29,7 @@
                         <div class="article">
                             <div class="article-section">
                                 <h1 class="page-title">{{$item->name}}</h1>
-                                <div class="plain-text">{!! $item->teaser !!}</div>
+                                <div class="plain-text" style="word-wrap: break-word;">{!! $item->teaser !!}</div>
                                 <div class="text-right">
                                     <div class="attributes">
                                         {{--                                        <div class="attributes-item">--}}
@@ -49,7 +49,7 @@
                             </div>
                             <div class="article-section">
                                 <h2 class="title-secondary">{{__('default.pages.courses.profit_title')}}</h2>
-                                <div class="plain-text">
+                                <div class="plain-text" style="word-wrap: break-word;">
                                     {!! $item->profit_desc !!}
                                 </div>
                             </div>
@@ -345,7 +345,7 @@
                             </div>
                             <div class="article-section">
                                 <h2 class="title-secondary">{{__('default.pages.courses.course_description')}}</h2>
-                                <div class="plain-text">{!! $item->description !!}</div>
+                                <div class="plain-text" style="word-wrap: break-word;">{!! $item->description !!}</div>
                             </div>
                             <div class="article-section">
                                 <h2 class="title-secondary">{{__('default.pages.courses.author_title')}}</h2>
@@ -481,7 +481,7 @@
                                         @if (Auth::user()->hasRole('author'))
                                             <div id="rulesQuotaModal" style="display:none; width: 500px" class="modal-form">
                                                 <h4 class="title-primary text-center">{{__('notifications.quota_rules_title')}}</h4>
-                                                <div class="plain-text" style="font-size: 1em">
+                                                <div class="plain-text" style="font-size: 1em;">
                                                     {!! trans(__('notifications.quota_rules_description'), ['course_id' => $item->id,'course_name' => $item->name, 'author_name' => Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname, 'course_quota_cost' => $quota_cost, 'lang' => $lang])!!}
                                                 </div>
                                                 <div class="plain-text" style="font-size: 1em">
