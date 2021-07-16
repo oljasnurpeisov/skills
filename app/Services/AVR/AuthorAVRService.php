@@ -171,7 +171,7 @@ class AuthorAVRService
         $cdata = $matches[1];
 
         $cdata = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $cdata);
-        $cdata = strip_tags($cdata, ['table', 'tr', 'td', 'p']);
+        $cdata = strip_tags($cdata, '<table><tr><td><p>');
 
         $protocol = $root->appendChild($xml->createElement('document'));
         $protocol->appendChild($xml->createCDATASection($cdata));
