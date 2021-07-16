@@ -79,7 +79,10 @@ class AuthorContractService
             ]);
 
             if ($contract->isPaid()) {
-                Contract::whereCourseId($contract->course_id)->quota()->pending()->first()->update([
+//                Contract::whereCourseId($contract->course_id)->quota()->pending()->first()->update([
+//                    'status' => 4
+//                ]);
+                $contract->update([
                     'status' => 4
                 ]);
             }

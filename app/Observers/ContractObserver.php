@@ -41,10 +41,16 @@ class ContractObserver
 //        if () {
         if (!empty($oldData->route_id) && !empty($contract->route_id) && !empty($contract->status) && !empty($contract->type) and ($oldData->route_id !== $contract->route_id || $contract->status !== $oldData->status)) {
 
-            if ($oldData->status === 1) {
-                $comment = $contract->getStatusNameForLog($oldData->status, $oldData->route_id);
-            } else {
+//            if ($oldData->status === 1) {
+//                $comment = $contract->getStatusNameForLog($oldData->status, $oldData->route_id);
+//            } else {
+//                $comment = $contract->getStatusNameForLog($contract->status, $oldData->route_id);
+//            }
+
+            if ($contract->status !== 1) {
                 $comment = $contract->getStatusNameForLog($contract->status, $oldData->route_id);
+            } else {
+                $comment = $contract->getStatusNameForLog($oldData->status, $oldData->route_id);
             }
 
             if (!empty($contract->reject_comment)) {
