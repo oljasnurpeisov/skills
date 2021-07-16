@@ -393,6 +393,11 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-contracts", "ContractsController@index")->name('author.contracts.index');
                     Route::get("/my-avr", "AVRController@index")->name('author.avr.index');
                     Route::get("/contract/{contract_id}/download", "ContractsController@download")->name('author.contracts.download');
+
+                    Route::get("/contract/{contract_id}/show", "ContractsController@view")->name('author.contracts.view');
+                    Route::get("/contract/{contract_id}/pdf", "ContractsController@getContractPdf")->name('author.contracts.pdf');
+                    Route::get("/contract/{contract_id}/doc", "ContractsController@getContractHtml")->name('author.contracts.doc');
+
                     Route::get("/create-course", "CourseController@createCourse");
                     Route::get("/my-courses/statistics", "CourseController@statisticsCourse");
                     Route::get("/my-courses/reporting", "CourseController@reportingCourse");

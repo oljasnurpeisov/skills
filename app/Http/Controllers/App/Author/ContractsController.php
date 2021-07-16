@@ -8,6 +8,7 @@ use App\Services\Files\StorageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\AuthorContractService;
 use Services\Contracts\ContractService;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -48,6 +49,53 @@ class ContractsController extends Controller
             'contracts' => $this->authorContractService->getOrSearchMyContracts($request->all()),
             'request'   => $request->all()
         ]);
+    }
+
+    /**
+     * Просмотр договора
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function view(Request $request)
+    {
+        return view('app.pages.author.contracts.show', [
+            'contract' => Contract::whereHas('course', function ($q) {
+                return $q->whereAuthorId(Auth::user()->id);
+            })->findOrFail($request->contract_id)
+        ]);
+    }
+
+    /**
+     * Предпросмотр договора
+     *
+     * @param Request $request
+     * @return string
+     * @throws Exception
+     */
+    public function getContractHtml(Request $request): string
+    {
+        return view('app.pages.author.courses.contractDoc', [
+            'contract' => $this->contractService->contractToHtml($request->contract_id)
+        ]);
+    }
+
+    /**
+     * Просмотр подписанного договора
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function getContractPdf(Request $request)
+    {
+        /** @var Contract $contract */
+        $contract = Contract::where('id', $request->contract_id)->firstOrFail();
+
+        if ($contract && $contract->link) {
+            return StorageService::preview($contract->link);
+        }
+
+        abort(404);
     }
 
     /**
