@@ -12,6 +12,8 @@ return [
 
     'pages' => [
         'courses' => [
+            'agreement' => 'Соглашение',
+            'contract'  => 'Договор',
 
             'accept' => 'Одобрить',
 

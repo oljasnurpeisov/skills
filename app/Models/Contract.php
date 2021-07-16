@@ -369,19 +369,20 @@ class Contract extends Model
     /**
      * Название типа
      *
+     * @param string $lang
      * @return string
      */
-    public function getTypeName(): string
+    public function getTypeName(string $lang = 'ru'): string
     {
         switch (true) {
             case $this->isFree():
-                return "Бесплатный";
+                return $lang === 'ru' ? "Бесплатный" : "Тегін";
                 break;
             case $this->isPaid():
-                return "Платный";
+                return $lang === 'ru' ? "Платный" : "Ақылы";
                 break;
             case $this->isQuota():
-                return "При гос. поддержке";
+                return $lang === 'ru' ? "При гос. поддержке" : "Мем.қолдау бойынша";
                 break;
             default:
                 return '';

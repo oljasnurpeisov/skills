@@ -80,7 +80,7 @@
                                                     <div style="position: absolute;bottom: 75px; right: 15px; left: 15px;">
                                                         @if (!empty($item->contracts))
                                                             @foreach ($item->contracts as $contract)
-                                                                <a href="{{ route('author.courses.signing.contract', ['lang' => $lang, 'contract_id' => $contract->id]) }}" class="btn" style="padding: 6px;margin: 5px auto 0;display: block;">Договор <i style="font-size: 13px; font-style: normal">({{__("default.pages.courses.contract_type_$contract->type")}})</i></a>
+                                                                <a href="{{ route('author.courses.signing.contract', ['lang' => $lang, 'contract_id' => $contract->id]) }}" class="btn" style="padding: 6px;margin: 5px auto 0;display: block;"> {{ $contract->isQuota() ? __('default.pages.courses.contract') : __('default.pages.courses.agreement') }} <i style="font-size: 13px; font-style: normal">({{ $contract->getTypeName($lang) }})</i></a>
                                                             @endforeach
                                                         @endif
                                                     </div>

@@ -12,6 +12,8 @@ return [
 
     'pages' => [
         'courses' => [
+            'agreement' => 'Келісім',
+            'contract'  => 'Келісім шарт',
 
             'accept' => 'Мақұлдау',
 
