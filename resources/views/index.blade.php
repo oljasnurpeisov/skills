@@ -191,14 +191,14 @@
                             <div class="card__desc">
                                 <div class="card__top">
                                     @if($item->is_paid == true)
-                                        <div
-                                                class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
+                                        <div class="card__price mark mark--blue">{{number_format($item->cost, 0, ',', ' ')}} {{__('default.tenge_title')}}</div>
                                     @else
-                                        <div
-                                                class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
+                                        <div class="card__price mark mark--green">{{__('default.pages.courses.free_title')}}</div>
                                     @endif
                                     <h3 class="card__title">{{$item->name}}</h3>
-                                    <div class="card__author">{{$item->user->company_name}}</div>
+
+                                    <?php $tos = 'name_short_'. $lang; ?>
+                                    <div class="card__author">{{ $item->user->type_ownership->$tos }} "{{$item->user->company_name}}"</div>
                                 </div>
                                 <div class="card__bottom">
                                     <div class="card__attribute">
