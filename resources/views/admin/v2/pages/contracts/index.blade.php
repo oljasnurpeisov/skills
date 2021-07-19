@@ -116,9 +116,10 @@
                                         <a target="_blank" style="opacity: .3" title="{{ __('admin.labels.view') }}" class="icon-btn icon-btn--yellow icon-eye"></a>
                                     @endif
 
-                                    @if (!empty($contract->link) && pathinfo($contract->link)['extension'] === 'pdf')
-                                        <a href="{{ route('admin.contracts.download', ['lang' => $lang, 'contract_id' => $contract->id]) }}" class="icon-btn icon-btn--yellow icon-download"></a>
-                                    @endif
+                                    <a href="{{ route('admin.contracts.download', ['lang' => $lang, 'contract_id' => $contract->id]) }}" class="icon-btn icon-btn--yellow icon-download"></a>
+{{--                                    @if (!empty($contract->link) && pathinfo($contract->link)['extension'] === 'pdf')--}}
+{{--                                        <a href="{{ route('admin.contracts.download', ['lang' => $lang, 'contract_id' => $contract->id]) }}" class="icon-btn icon-btn--yellow icon-download"></a>--}}
+{{--                                    @endif--}}
 
                                     <a target="_blank" href="{{ route('admin.contracts.history', ['lang' => $lang, 'contract_id' => $contract->id]) }}" title="{{ __('admin.labels.view') }}" class="icon-btn icon-btn--yellow">
                                         <img src="{{ asset('assets/img/history.png') }}" alt="" style="height: 14px;">

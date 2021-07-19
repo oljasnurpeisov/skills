@@ -19,6 +19,7 @@ use Services\Contracts\ContractFilterService;
 use Services\Contracts\ContractService;
 use Services\Course\AdminCourseService;
 use Services\Notifications\NotificationService;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
@@ -409,13 +410,20 @@ class ContractsController extends Controller
 
     /**
      * @param Request $request
-     * @return StreamedResponse
+     * @return StreamedResponse|BinaryFileResponse
+     * @throws Exception
      */
     public function download(Request $request)
     {
         /** @var Contract $contract */
         $contract = Contract::findOrFail($request->contract_id);
 
-        return StorageService::download($contract->link, sprintf('Договор №%s.pdf', $contract->number));
+        if (!empty($contract->link) && pathinfo($contract->link)['extension'] === 'pdf') {
+            return StorageService::download($contract->link, sprintf('Договор №%s.pdf', $contract->number));
+        } else {
+            $path = $this->contractService->contractToPdf($request->contract_id, false, true);
+
+            return response()->download(StorageService::path($path))->deleteFileAfterSend(true);
+        }
     }
 }

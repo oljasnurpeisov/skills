@@ -11,6 +11,7 @@ use Illuminate\View\View;
 use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\AuthorContractService;
 use Services\Contracts\ContractService;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ContractsController extends Controller
@@ -102,7 +103,8 @@ class ContractsController extends Controller
      * Загрузка договора
      *
      * @param Request $request
-     * @return StreamedResponse
+     * @return StreamedResponse|BinaryFileResponse
+     * @throws Exception
      */
     public function download(Request $request)
     {
@@ -115,12 +117,9 @@ class ContractsController extends Controller
         if (!empty($contract->link) && pathinfo($contract->link)['extension'] === 'pdf') {
             return StorageService::download($contract->link, sprintf('Договор №%s.pdf', $contract->number));
         } else {
-            //@TODO
-//            $test = $this->contractService->contractToPdf($request->contract_id);
-//
-//            dd($test);
-//            return StorageService::download($contract->link, sprintf('Договор №%s.pdf', $contract->number));
-        }
+            $path = $this->contractService->contractToPdf($request->contract_id, false, true);
 
+            return response()->download(StorageService::path($path))->deleteFileAfterSend(true);
+        }
     }
 }

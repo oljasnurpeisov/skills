@@ -124,7 +124,7 @@ class ContractService
      * @return string
      * @throws Exception
      */
-   public function contractToPdf(int $contract_id, bool $forceRewrite = false): string
+   public function contractToPdf(int $contract_id, bool $forceRewrite = false, bool $saveOnly = false): string
    {
        /** @var Contract $contract */
        $contract = Contract::latest()->findOrFail($contract_id);
@@ -145,40 +145,40 @@ class ContractService
 
        $html = $PDFWriter->getContent();
 
-       $html = str_replace('</body>', '<pagebreak />{appendix}</body>', $html);
+       if (!$saveOnly) {
+           $html = str_replace('</body>', '<pagebreak />{appendix}</body>', $html);
 
-       $html = str_replace('{appendix}', $this->generateAppendix(
-           $contract->document,
-           $contract->document->number,
-           $contract->number
-       ), $html);
+           $html = str_replace('{appendix}', $this->generateAppendix(
+               $contract->document,
+               $contract->document->number,
+               $contract->number
+           ), $html);
 
-       // Replace real dates
+//           Replace real dates
 
-       preg_match_all('/&lt;(.*?)&gt;/', $html, $dateMatches);
+           preg_match_all('/&lt;(.*?)&gt;/', $html, $dateMatches);
 
-       if ($dateMatches && sizeof($dateMatches[0]) === 2) {
+           if ($dateMatches && sizeof($dateMatches[0]) === 2) {
 
-           $dateKz = sprintf('%d жылғы %s «%s»',
-               Carbon::parse($contract->document->lastSignature->created_at)->year,
-               (new GetMonth())->kk(date('m', strtotime($contract->document->lastSignature->created_at))),
-               Carbon::parse($contract->document->lastSignature->created_at)->day
-           );
+               $dateKz = sprintf('%d жылғы %s «%s»',
+                   Carbon::parse($contract->document->lastSignature->created_at)->year,
+                   (new GetMonth())->kk(date('m', strtotime($contract->document->lastSignature->created_at))),
+                   Carbon::parse($contract->document->lastSignature->created_at)->day
+               );
 
-           $dateRu = sprintf('«%s» %s %d года',
-               Carbon::parse($contract->document->lastSignature->created_at)->day,
-               Carbon::parse($contract->document->lastSignature->created_at)->getTranslatedMonthName('Do MMMM'),
-               Carbon::parse($contract->document->lastSignature->created_at)->year
-           );
+               $dateRu = sprintf('«%s» %s %d года',
+                   Carbon::parse($contract->document->lastSignature->created_at)->day,
+                   Carbon::parse($contract->document->lastSignature->created_at)->getTranslatedMonthName('Do MMMM'),
+                   Carbon::parse($contract->document->lastSignature->created_at)->year
+               );
 
-           foreach($dateMatches[0] as $dateMatch) {
+               foreach ($dateMatches[0] as $dateMatch) {
 
-               if(strpos($dateMatch, 'қойылған') !== false) {
-                    $html = str_replace($dateMatch, $dateKz, $html);
-               }
-
-               elseif(strpos($dateMatch, 'подписания') !== false) {
-                   $html = str_replace($dateMatch, $dateRu, $html);
+                   if (strpos($dateMatch, 'қойылған') !== false) {
+                       $html = str_replace($dateMatch, $dateKz, $html);
+                   } elseif (strpos($dateMatch, 'подписания') !== false) {
+                       $html = str_replace($dateMatch, $dateRu, $html);
+                   }
                }
            }
        }
