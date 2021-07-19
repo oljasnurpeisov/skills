@@ -225,6 +225,8 @@ return [
 
             'show_all' => 'Показать все',
             'hide' => 'Скрыть',
+            'reject' => 'Отклонить',
+            'sign' => 'Подписать',
         ],
         'lessons' => [
             'create_request_message' => 'Урок успешно создан',

@@ -80,12 +80,12 @@
                             frameborder="0" width="100%" height="600"></iframe>
 
                         <a href="{{ route('author.courses.signing.contract.reject', ['lang' => $lang, 'contract_id' => $contract->id]) }}"
-                           class="btn btn-danger" style="margin-right: 15px;" id="declineButton">Отклонить</a>
+                           class="btn btn-danger" style="margin-right: 15px;" id="declineButton">{{ __('default.pages.courses.reject') }}</a>
                         @if ($contract->isQuota())
                             <button
                                 data-source="{{ route('author.courses.signing.contract.xml', ['lang' => $lang, 'contract_id' => $contract->id]) }}"
                                 data-target="{{ route('author.courses.signing.contract.next', ['lang' => $lang, 'contract_id' => $contract->id]) }}"
-                                class="btn btn-success" id="signButton" disabled>Подписать
+                                class="btn btn-success" id="signButton" disabled>{{ __('default.pages.courses.sign') }}
                             </button>
                         @else
                             <a href="{{ route('author.courses.signing.contract.next', ['lang' => $lang, 'contract_id' => $contract->id]) }}"
