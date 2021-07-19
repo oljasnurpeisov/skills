@@ -138,6 +138,10 @@
                             </div>
 
                             <div class="form-group">
+                                <a href="{{ asset(Auth::user()->base_file) }}" target="_blank" class="btn">Скачать</a>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.auth.iin')}} *</label>
                                 <input type="text" name="iin" placeholder="" onfocus="$(this).inputmask('999999999999')" class="input-regular" required value="{{ old('iin') ?? Auth::user()->iin }}">
                             </div>
