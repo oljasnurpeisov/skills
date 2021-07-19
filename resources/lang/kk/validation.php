@@ -13,6 +13,7 @@ return [
     |
     */
 
+    'course_cost' => 'Бағасы 0-ден үлкен болатын бүтін сан болу керек.',
     'accepted' => 'Сіз қабылдауыңыз керек: attribute.',
     'active_url' => 'Өріс :attribute жарамсыз URL мекен-жайы бар.',
     'after' => 'Өріс :attribute күні үлкен болу керек :date.',

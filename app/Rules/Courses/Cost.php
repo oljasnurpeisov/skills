@@ -41,6 +41,6 @@ class Cost implements Rule
      */
     public function message()
     {
-        return 'Стоимость должна быть целым числом больше 0.';
+        return __('validation.course_cost');
     }
 }
