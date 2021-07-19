@@ -218,7 +218,7 @@
                             </div>
                             <div class="personal-card__right">
                                 <div class="personal-card__name">{{ $item->user->author_info->name . ' ' . $item->user->author_info->surname  }}</div>
-                                <div class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->author_info->specialization) ?? []) }}</div>
+                                <div class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->oked_activities->pluck('oked_activity.name_ru')) ?? []) }}</div>
                                 <div class="plain-text">
                                     {!! $item->user->author_info->about !!}
                                 </div>

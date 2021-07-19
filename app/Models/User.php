@@ -168,7 +168,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function oked_activities(): HasMany
     {
-        return $this->hasMany(OkedActivities::class, 'user_id', 'id');
+        return $this->hasMany(UserOkedActivity::class, 'user_id', 'id')->with('oked_activity');
     }
 
     /**
@@ -178,6 +178,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function oked_industries(): HasMany
     {
-        return $this->hasMany(OkedIndustries::class, 'user_id', 'id');
+        return $this->hasMany(UserOkedIndustry::class, 'user_id', 'id')->with('oked_industry');
     }
 }
