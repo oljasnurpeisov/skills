@@ -189,15 +189,14 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="form-group__label">{{__('default.pages.profile.about_company')}}
-                                        *</label>
+                                    <label class="form-group__label">{{__('default.pages.profile.about_company')}}*</label>
                                     <textarea name="about" class="input-regular tinymce-text-here"
                                               required>{{$item->about}}</textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="form-group__label">{{__('default.pages.profile.phone_1')}}</label>
+                                            <label class="form-group__label">{{__('default.pages.profile.phone_1')}}*</label>
                                             <input type="tel" name="phone_1"
                                                    onfocus="$(this).inputmask('+7 (999) 999 99 99')" placeholder=""
                                                    class="input-regular" value="{{$item->phone_1}}" required>
