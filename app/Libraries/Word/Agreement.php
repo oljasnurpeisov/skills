@@ -319,9 +319,8 @@ class Agreement extends BaseGenerator
         $this->templateProcessor->setValue('lang_ru', $this->course->lang === 1 ? 'Нет' : 'Да');
         $this->templateProcessor->setValue('lang_kk', $this->course->lang === 1 ? 'Жоқ' : 'Иә');
 
-        dd((string)$this->allAttachments($this->course_attachments));
-
-        $this->templateProcessor->setValue('attachments', $this->allAttachments($this->course_attachments) ?? '');
+//        $this->templateProcessor->setValue('attachments', $this->allAttachments($this->course_attachments) ?? '');
+        $this->templateProcessor->setValue('attachments', "https://www.youtube.com/watch?v=w64owgBDxJ8&ab_channel=JumysBar");
         $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments) ?? '');
 
         $this->templateProcessor->setValue('practice_status_ru', $this->getPracticeStatus('ru')); // Количество форматов учебного контента
