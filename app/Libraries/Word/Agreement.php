@@ -264,23 +264,23 @@ class Agreement extends BaseGenerator
      */
     private function setRequisites(): self
     {
-        $this->templateProcessor->setValue('company_name', $this->author->company_name ?? '-');
-        $this->templateProcessor->setValue('type_of_ownership_ru', $this->author->type_ownership->name_ru ?? '-');
-        $this->templateProcessor->setValue('type_of_ownership_kk', $this->author->type_ownership->name_kk ?? '-');
-        $this->templateProcessor->setValue('fio', $this->author_info->surname .' '. $this->author_info->name .' '. $this->author_info->surname);
-        $this->templateProcessor->setValue('position_ru', $this->author->position_ru ?? '-');
-        $this->templateProcessor->setValue('position_kk', $this->author->position_kk ?? '-');
-        $this->templateProcessor->setValue('fio_director', $this->author->fio_director ?? '-');
-        $this->templateProcessor->setValue('iin', $this->author->iin ?? '-');
-        $this->templateProcessor->setValue('iik', preg_replace('/ /', '', $this->author->iik_kz) ?? '-');
-        $this->templateProcessor->setValue('kbe', $this->author->kbe ?? '-');
-        $this->templateProcessor->setValue('bik', $this->author->bik ?? '-');
-        $this->templateProcessor->setValue('bank_name_ru', $this->author->bank->name_ru ?? '-');
-        $this->templateProcessor->setValue('bank_name_kk', $this->author->bank->name_kk ?? '-');
-        $this->templateProcessor->setValue('legal_address_ru', $this->author->legal_address_ru ?? '-');
-        $this->templateProcessor->setValue('legal_address_kk', $this->author->legal_address_kk ?? '-');
-        $this->templateProcessor->setValue('base_ru', $this->author->base->name_ru ?? '-');
-        $this->templateProcessor->setValue('base_kk', $this->author->base->name_kk ?? '-');
+//        $this->templateProcessor->setValue('company_name', $this->author->company_name ?? '-');
+//        $this->templateProcessor->setValue('type_of_ownership_ru', $this->author->type_ownership->name_ru ?? '-');
+//        $this->templateProcessor->setValue('type_of_ownership_kk', $this->author->type_ownership->name_kk ?? '-');
+//        $this->templateProcessor->setValue('fio', $this->author_info->surname .' '. $this->author_info->name .' '. $this->author_info->surname);
+//        $this->templateProcessor->setValue('position_ru', $this->author->position_ru ?? '-');
+//        $this->templateProcessor->setValue('position_kk', $this->author->position_kk ?? '-');
+//        $this->templateProcessor->setValue('fio_director', $this->author->fio_director ?? '-');
+//        $this->templateProcessor->setValue('iin', $this->author->iin ?? '-');
+//        $this->templateProcessor->setValue('iik', preg_replace('/ /', '', $this->author->iik_kz) ?? '-');
+//        $this->templateProcessor->setValue('kbe', $this->author->kbe ?? '-');
+//        $this->templateProcessor->setValue('bik', $this->author->bik ?? '-');
+//        $this->templateProcessor->setValue('bank_name_ru', $this->author->bank->name_ru ?? '-');
+//        $this->templateProcessor->setValue('bank_name_kk', $this->author->bank->name_kk ?? '-');
+//        $this->templateProcessor->setValue('legal_address_ru', $this->author->legal_address_ru ?? '-');
+//        $this->templateProcessor->setValue('legal_address_kk', $this->author->legal_address_kk ?? '-');
+//        $this->templateProcessor->setValue('base_ru', $this->author->base->name_ru ?? '-');
+//        $this->templateProcessor->setValue('base_kk', $this->author->base->name_kk ?? '-');
 
         return $this;
     }
