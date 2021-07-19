@@ -423,7 +423,7 @@ class ContractsController extends Controller
         } else {
             $path = $this->contractService->contractToPdf($request->contract_id, false, true);
 
-            return response()->download(StorageService::path($path))->deleteFileAfterSend(true);
+            return response()->download(StorageService::path($path), sprintf('Соглашение №%s.pdf', $contract->number))->deleteFileAfterSend(true);
         }
     }
 }
