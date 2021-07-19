@@ -107,7 +107,7 @@
 
                             <div class="form-group">
                                 <div data-url="{{ route('ajaxUploadFile') }}" data-maxfiles="1"
-                                     data-maxsize="1" data-acceptedfiles="image/*, application/pdf"
+                                     data-maxsize="1" data-download="true" data-acceptedfiles="image/*, application/pdf"
                                      class="dropzone-default dropzone-multiple @if (!empty(Auth::user()->base_file)) dz-max-files-reached @endif">
                                     <input type="text" name="base_file" value="{{ Auth::user()->base_file }}" required>
                                     <div class="dropzone-default__info">JPG, PNG, PDF • {{__('default.pages.profile.max_file_title') }}. 1MB</div>

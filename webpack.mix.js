@@ -78,4 +78,9 @@ mix
     .scripts(
         [
             'resources/js/assets/visually-impaired-tools.js',
-        ], 'public/assets/js/visually-impaired-tools.js');
+        ], 'public/assets/js/visually-impaired-tools.js')
+
+    .scripts(
+        [
+            'resources/js/assets/libs/dropzone.js',
+        ], 'public/assets/libs/dropzone/dropzone.min.js');

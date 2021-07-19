@@ -339,7 +339,7 @@ class CourseController extends Controller
                 $page_name = 'default.pages.courses.my_courses_unpublished';
                 break;
             case('on-check'):
-                $query = Auth::user()->courses()->where(function ($q) {return $q->where('status', '=', Course::onCheck)->orWhere('status', '=', 5);})->doesntHave('contracts');
+                $query = Auth::user()->courses()->where(function ($q) {return $q->where('status', '=', Course::onCheck)->orWhere('status', '=', 5)->orWhere('status', '=', 1);});
                 $page_name = 'default.pages.courses.my_courses_onCheck';
                 break;
             case('drafts'):

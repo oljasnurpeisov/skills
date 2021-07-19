@@ -9,7 +9,7 @@
 	"quotmark": "double",
 	"undef": true,
 	"unused": true,
-
+    "esversion": 6,
 	"sub": true,
 
 	// Support: IE < 10, Android < 4.1

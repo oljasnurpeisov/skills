@@ -9,6 +9,7 @@ return [
     'tenge_title' => 'тг',
     'from' => 'от',
     'to' => 'до',
+    'download' => 'Скачать',
 
     'pages' => [
         'courses' => [

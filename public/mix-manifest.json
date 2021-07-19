@@ -11,5 +11,6 @@
     "/assets/js/scripts.js": "/assets/js/scripts.js",
     "/assets/js/service.js": "/assets/js/service.js",
     "/assets/js/test-constructor.js": "/assets/js/test-constructor.js",
-    "/assets/js/visually-impaired-tools.js": "/assets/js/visually-impaired-tools.js"
+    "/assets/js/visually-impaired-tools.js": "/assets/js/visually-impaired-tools.js",
+    "/assets/libs/dropzone/dropzone.min.js": "/assets/libs/dropzone/dropzone.min.js"
 }
