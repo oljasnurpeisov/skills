@@ -264,23 +264,23 @@ class Agreement extends BaseGenerator
      */
     private function setRequisites(): self
     {
-//        $this->templateProcessor->setValue('company_name', $this->author->company_name ?? '-');
-//        $this->templateProcessor->setValue('type_of_ownership_ru', $this->author->type_ownership->name_ru ?? '-');
-//        $this->templateProcessor->setValue('type_of_ownership_kk', $this->author->type_ownership->name_kk ?? '-');
-//        $this->templateProcessor->setValue('fio', $this->author_info->surname .' '. $this->author_info->name .' '. $this->author_info->surname);
-//        $this->templateProcessor->setValue('position_ru', $this->author->position_ru ?? '-');
-//        $this->templateProcessor->setValue('position_kk', $this->author->position_kk ?? '-');
-//        $this->templateProcessor->setValue('fio_director', $this->author->fio_director ?? '-');
-//        $this->templateProcessor->setValue('iin', $this->author->iin ?? '-');
-//        $this->templateProcessor->setValue('iik', preg_replace('/ /', '', $this->author->iik_kz) ?? '-');
-//        $this->templateProcessor->setValue('kbe', $this->author->kbe ?? '-');
-//        $this->templateProcessor->setValue('bik', $this->author->bik ?? '-');
-//        $this->templateProcessor->setValue('bank_name_ru', $this->author->bank->name_ru ?? '-');
-//        $this->templateProcessor->setValue('bank_name_kk', $this->author->bank->name_kk ?? '-');
-//        $this->templateProcessor->setValue('legal_address_ru', $this->author->legal_address_ru ?? '-');
-//        $this->templateProcessor->setValue('legal_address_kk', $this->author->legal_address_kk ?? '-');
-//        $this->templateProcessor->setValue('base_ru', $this->author->base->name_ru ?? '-');
-//        $this->templateProcessor->setValue('base_kk', $this->author->base->name_kk ?? '-');
+        $this->templateProcessor->setValue('company_name', $this->author->company_name ?? '-');
+        $this->templateProcessor->setValue('type_of_ownership_ru', $this->author->type_ownership->name_ru ?? '-');
+        $this->templateProcessor->setValue('type_of_ownership_kk', $this->author->type_ownership->name_kk ?? '-');
+        $this->templateProcessor->setValue('fio', $this->author_info->surname .' '. $this->author_info->name .' '. $this->author_info->surname);
+        $this->templateProcessor->setValue('position_ru', $this->author->position_ru ?? '-');
+        $this->templateProcessor->setValue('position_kk', $this->author->position_kk ?? '-');
+        $this->templateProcessor->setValue('fio_director', $this->author->fio_director ?? '-');
+        $this->templateProcessor->setValue('iin', $this->author->iin ?? '-');
+        $this->templateProcessor->setValue('iik', preg_replace('/ /', '', $this->author->iik_kz) ?? '-');
+        $this->templateProcessor->setValue('kbe', $this->author->kbe ?? '-');
+        $this->templateProcessor->setValue('bik', $this->author->bik ?? '-');
+        $this->templateProcessor->setValue('bank_name_ru', $this->author->bank->name_ru ?? '-');
+        $this->templateProcessor->setValue('bank_name_kk', $this->author->bank->name_kk ?? '-');
+        $this->templateProcessor->setValue('legal_address_ru', $this->author->legal_address_ru ?? '-');
+        $this->templateProcessor->setValue('legal_address_kk', $this->author->legal_address_kk ?? '-');
+        $this->templateProcessor->setValue('base_ru', $this->author->base->name_ru ?? '-');
+        $this->templateProcessor->setValue('base_kk', $this->author->base->name_kk ?? '-');
 
         return $this;
     }
@@ -292,13 +292,13 @@ class Agreement extends BaseGenerator
      */
     private function setCourseInfo(): self
     {
-//        $this->templateProcessor->setValue('course_name', $this->course->name ?? '-');
-//        $this->templateProcessor->setValue('course_professional_areas_ru', $this->course->professional_areas->pluck('name_ru')->unique()->implode(', ') ?? '-');
-//        $this->templateProcessor->setValue('course_professions_ru', $this->course->professions->pluck('name_ru')->unique()->implode(', ') ?? '-');
-//        $this->templateProcessor->setValue('course_skills_ru', $this->course->skills->pluck('name_ru')->unique()->implode(', ') ?? '-');
-//        $this->templateProcessor->setValue('course_professional_areas_kk', $this->course->professional_areas->pluck('name_kk')->unique()->implode(', ') ?? '-');
-//        $this->templateProcessor->setValue('course_professions_kk', $this->course->professions->pluck('name_kk')->unique()->implode(', ') ?? '-');
-//        $this->templateProcessor->setValue('course_skills_kk', $this->course->skills->pluck('name_kk')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_name', $this->course->name ?? '-');
+        $this->templateProcessor->setValue('course_professional_areas_ru', $this->course->professional_areas->pluck('name_ru')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_professions_ru', $this->course->professions->pluck('name_ru')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_skills_ru', $this->course->skills->pluck('name_ru')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_professional_areas_kk', $this->course->professional_areas->pluck('name_kk')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_professions_kk', $this->course->professions->pluck('name_kk')->unique()->implode(', ') ?? '-');
+        $this->templateProcessor->setValue('course_skills_kk', $this->course->skills->pluck('name_kk')->unique()->implode(', ') ?? '-');
 
         return $this;
     }
@@ -315,28 +315,28 @@ class Agreement extends BaseGenerator
 //        $this->templateProcessor->setValue('profit_desc', $this->clearText($this->course->profit_desc) ?? '-');
 //        $this->templateProcessor->setValue('videos_link', $this->course->videos_link ?? '-');
 //        $this->templateProcessor->setValue('duration', round((new CalculateQuotaCostService())->courseDurationService($this->course) ?? '-'));
-//
-//        $this->templateProcessor->setValue('lang_ru', $this->course->lang === 1 ? 'Нет' : 'Да');
-//        $this->templateProcessor->setValue('lang_kk', $this->course->lang === 1 ? 'Жоқ' : 'Иә');
-//
-//        $this->templateProcessor->setValue('attachments', $this->allAttachments($this->course_attachments));
-//        $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));
-//
-//        $this->templateProcessor->setValue('practice_status_ru', $this->getPracticeStatus('ru')); // Количество форматов учебного контента
-//        $this->templateProcessor->setValue('practice_status_kk', $this->getPracticeStatus('kk')); // Количество форматов учебного контента
-//
-//        $this->templateProcessor->setValue('attachments_forms_count_ru', $this->getAttachmentsForm('ru')); // Наличие контрольно-измерительных материалов:
-//        $this->templateProcessor->setValue('attachments_forms_count_kk', $this->getAttachmentsForm('kk')); // Наличие контрольно-измерительных материалов:
-//
-//        $this->templateProcessor->setValue('poor_status_ru', $this->getPoorStatus($this->course_attachments, 'ru'));
-//        $this->templateProcessor->setValue('poor_status_kk', $this->getPoorStatus($this->course_attachments, 'kk'));
-//
-//        $cost = CalculateQuotaCost::calculate_quota_cost($this->course);
-//        $costLet = new Num2string($cost);
-//
-//        $this->templateProcessor->setValue('sum', $cost);
-//        $this->templateProcessor->setValue('quota_cost_ru', $costLet->ru());
-//        $this->templateProcessor->setValue('quota_cost_kk', $costLet->kk());
+
+        $this->templateProcessor->setValue('lang_ru', $this->course->lang === 1 ? 'Нет' : 'Да');
+        $this->templateProcessor->setValue('lang_kk', $this->course->lang === 1 ? 'Жоқ' : 'Иә');
+
+        $this->templateProcessor->setValue('attachments', $this->allAttachments($this->course_attachments));
+        $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));
+
+        $this->templateProcessor->setValue('practice_status_ru', $this->getPracticeStatus('ru')); // Количество форматов учебного контента
+        $this->templateProcessor->setValue('practice_status_kk', $this->getPracticeStatus('kk')); // Количество форматов учебного контента
+
+        $this->templateProcessor->setValue('attachments_forms_count_ru', $this->getAttachmentsForm('ru')); // Наличие контрольно-измерительных материалов:
+        $this->templateProcessor->setValue('attachments_forms_count_kk', $this->getAttachmentsForm('kk')); // Наличие контрольно-измерительных материалов:
+
+        $this->templateProcessor->setValue('poor_status_ru', $this->getPoorStatus($this->course_attachments, 'ru'));
+        $this->templateProcessor->setValue('poor_status_kk', $this->getPoorStatus($this->course_attachments, 'kk'));
+
+        $cost = CalculateQuotaCost::calculate_quota_cost($this->course);
+        $costLet = new Num2string($cost);
+
+        $this->templateProcessor->setValue('sum', $cost);
+        $this->templateProcessor->setValue('quota_cost_ru', $costLet->ru());
+        $this->templateProcessor->setValue('quota_cost_kk', $costLet->kk());
     }
 
     /**
