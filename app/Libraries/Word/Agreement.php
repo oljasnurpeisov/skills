@@ -316,11 +316,12 @@ class Agreement extends BaseGenerator
         $this->templateProcessor->setValue('videos_link', $this->course->videos_link ?? '-');
         $this->templateProcessor->setValue('duration', round((new CalculateQuotaCostService())->courseDurationService($this->course) ?? '-'));
 
-//        $this->templateProcessor->setValue('lang_ru', $this->course->lang === 1 ? 'Нет' : 'Да');
-//        $this->templateProcessor->setValue('lang_kk', $this->course->lang === 1 ? 'Жоқ' : 'Иә');
+        $this->templateProcessor->setValue('lang_ru', $this->course->lang === 1 ? 'Нет' : 'Да');
+        $this->templateProcessor->setValue('lang_kk', $this->course->lang === 1 ? 'Жоқ' : 'Иә');
 
-//        $this->templateProcessor->setValue('attachments', $this->allAttachments($this->course_attachments));
-//        $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));
+        dd($this->allAttachments($this->course_attachments));
+        $this->templateProcessor->setValue('attachments', $this->allAttachments($this->course_attachments));
+        $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));
 
         $this->templateProcessor->setValue('practice_status_ru', $this->getPracticeStatus('ru')); // Количество форматов учебного контента
         $this->templateProcessor->setValue('practice_status_kk', $this->getPracticeStatus('kk')); // Количество форматов учебного контента
