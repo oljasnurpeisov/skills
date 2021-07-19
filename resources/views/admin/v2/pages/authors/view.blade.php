@@ -26,7 +26,8 @@
                                 <li class="active"><a href="javascript:;" title="Данные об авторе">Данные об авторе</a></li>
                                 <li><a href="javascript:;" title="Платежная информация">Платежная информация</a></li>
                                 <li><a href="javascript:;" title="Регистрационные данные">Регистрационные данные</a></li>
-                                </li>
+                                <li><a href="javascript:;" title="Реквизиты">Реквизиты</a></li>
+
                             </ul>
                         </div>
                     </div>
@@ -194,6 +195,76 @@
                                              style="height: 150px">
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="input-group">
+                                <label class="input-group__title">{{__('default.pages.auth.type_of_ownership')}} *</label>
+                                <input disabled type="text" class="input-regular" value="{{ Auth::user()->type_ownership->name_ru ?? '' }}">
+                            </div>
+
+                            <div class="input-group">
+                                <label class="input-group__title">{{__('default.pages.auth.company_name')}} *</label>
+                                <input disabled type="text" name="company_name" placeholder="" class="input-regular" required value="{{ old('company_name') ?? Auth::user()->company_name }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="input-group__title">{{ __('default.pages.profile.address') }} (ru) *</label>
+                                <input disabled type="text" name="legal_address_ru" placeholder="" class="input-regular" required value="{{ old('legal_address_ru') ?? Auth::user()->legal_address_ru }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="input-group__title">{{ __('default.pages.profile.address') }} (kz) *</label>
+                                <input disabled type="text" name="legal_address_kk" placeholder="" class="input-regular" required value="{{ old('legal_address_kk') ?? Auth::user()->legal_address_kk }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="input-group__title">{{__('default.pages.profile.position')}} (ru) *</label>
+                                <input disabled type="text" name="position_ru" placeholder="" class="input-regular" required value="{{ old('position_ru') ?? Auth::user()->position_ru }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="input-group__title">{{__('default.pages.profile.position')}} (kz) *</label>
+                                <input disabled type="text" name="position_kk" placeholder="" class="input-regular" required value="{{ old('position_kk') ?? Auth::user()->position_kk }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="input-group__title">{{__('default.pages.profile.fio_director')}} *</label>
+                                <input disabled type="text" name="fio_director" placeholder="" class="input-regular" required value="{{ old('fio_director') ?? Auth::user()->fio_director }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="input-group__title">{{__('default.pages.profile.base')}} *</label>
+                                <input disabled type="text" class="input-regular" value="{{ Auth::user()->base->name_ru ?? '' }}">
+                            </div>
+
+                            <div class="form-group">
+                                <a href="{{ asset(Auth::user()->base_file) }}" target="_blank" class="btn">{{__('default.download_file') }}</a>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="input-group__title">{{__('default.pages.auth.iin')}} *</label>
+                                <input disabled type="text" name="iin" placeholder="" onfocus="$(this).inputmask('999999999999')" class="input-regular" required value="{{ old('iin') ?? Auth::user()->iin }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="input-group__title">{{__('default.pages.profile.iik_kz')}} *</label>
+                                <input disabled type="text" name="iik_kz" placeholder="" onfocus="$(this).inputmask('KZ 999999999999999999')" class="input-regular" required value="{{ old('iik_kz') ?? Auth::user()->iik_kz }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="input-group__title">{{__('default.pages.profile.kbe')}} *</label>
+                                <input disabled type="text" name="kbe" placeholder="" onfocus="$(this).inputmask('99')" class="input-regular" required value="{{ old('kbe') ?? Auth::user()->kbe }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="input-group__title">{{__('default.pages.profile.bik')}} *</label>
+                                <input disabled type="text" name="bik" placeholder="" onfocus="$(this).inputmask('9|A{1,100}')" class="input-regular" required value="{{ old('bik') ?? Auth::user()->bik }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="input-group__title">{{__('default.pages.profile.bank_name')}} *</label>
+                                <input disabled type="text" class="input-regular" value="{{ Auth::user()->bank->name_ru ?? '' }}">
                             </div>
                         </div>
                     </div>
