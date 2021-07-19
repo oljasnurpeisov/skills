@@ -36,7 +36,7 @@
                 @endif
                 <div class="row row--multiline">
                     <div class="col-md-8">
-                        <form action="/{{$lang}}/my-courses/edit-course/{{$item->id}}" method="POST"
+                        <form id="form" action="/{{$lang}}/my-courses/edit-course/{{$item->id}}" method="POST"
                               enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
@@ -824,6 +824,23 @@
             if (professionalAreaEl.val() === null && specialityEl.val() === null && skillsEl.val() === null) {
                 type = null;
                 clearAllFields();
+            }
+        })
+    </script>
+    <script>
+        $('#form').on('submit', function () {
+            if ($('input[name="is_paid"]:checked').val() === "true") {
+                if (parseInt($('input[name="cost"]').val()) === 0) {
+                    let html = '<div class="alert alert-danger cost-danger"><ul><li>{{ __('validation.course_cost') }}</li></ul></div>';
+
+                    $('h1.title-primary').after(html);
+                    $('html, body').animate({scrollTop: '0px'}, 300);
+
+                } else {
+                    $('.cost-danger').remove();
+                }
+
+                return false
             }
         })
     </script>
