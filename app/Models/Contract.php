@@ -344,10 +344,20 @@ class Contract extends Model
             case $contract_status === 1:
                 $route = Route::find($current_route);
                 $role_name = !empty($route) ? $route->role->name : 'Маршрут изменен';
-                return "Подписан (". $role_name .")";
+
+                if ($this->isQuota()) {
+                    return "Подписан (". $role_name .")";
+                } else {
+                    return "Одобрен (". $role_name .")";
+                }
                 break;
             case $contract_status === 2:
-                return "Подписан всеми";
+
+                if ($this->isQuota()) {
+                    return "Подписан всеми";
+                } else {
+                    return "Одобрен всеми";
+                }
                 break;
             case $contract_status === 3:
                 return "Расторгнут";
