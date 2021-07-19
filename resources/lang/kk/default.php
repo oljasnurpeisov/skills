@@ -10,6 +10,7 @@ return [
     'from' => 'бастап',
     'to' => 'дейін',
     'download' => 'Жүктеу',
+    'download_file' => 'Файлды жүктеу',
 
     'pages' => [
         'courses' => [

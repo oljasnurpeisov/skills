@@ -10,6 +10,7 @@ return [
     'from' => 'от',
     'to' => 'до',
     'download' => 'Скачать',
+    'download_file' => 'Скачать файл',
 
     'pages' => [
         'courses' => [
