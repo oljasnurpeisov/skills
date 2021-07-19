@@ -310,33 +310,33 @@ class Agreement extends BaseGenerator
      */
     private function setCourseDetail(): void
     {
-        $this->templateProcessor->setValue('teaser', $this->clearText($this->course->teaser) ?? '-');
-        $this->templateProcessor->setValue('description', $this->clearText($this->course->description) ?? '-');
-        $this->templateProcessor->setValue('profit_desc', $this->clearText($this->course->profit_desc) ?? '-');
-        $this->templateProcessor->setValue('videos_link', $this->course->videos_link ?? '-');
-        $this->templateProcessor->setValue('duration', round((new CalculateQuotaCostService())->courseDurationService($this->course) ?? '-'));
-
-        $this->templateProcessor->setValue('lang_ru', $this->course->lang === 1 ? 'Нет' : 'Да');
-        $this->templateProcessor->setValue('lang_kk', $this->course->lang === 1 ? 'Жоқ' : 'Иә');
-
-        $this->templateProcessor->setValue('attachments', $this->allAttachments($this->course_attachments));
-        $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));
-
-        $this->templateProcessor->setValue('practice_status_ru', $this->getPracticeStatus('ru')); // Количество форматов учебного контента
-        $this->templateProcessor->setValue('practice_status_kk', $this->getPracticeStatus('kk')); // Количество форматов учебного контента
-
-        $this->templateProcessor->setValue('attachments_forms_count_ru', $this->getAttachmentsForm('ru')); // Наличие контрольно-измерительных материалов:
-        $this->templateProcessor->setValue('attachments_forms_count_kk', $this->getAttachmentsForm('kk')); // Наличие контрольно-измерительных материалов:
-
-        $this->templateProcessor->setValue('poor_status_ru', $this->getPoorStatus($this->course_attachments, 'ru'));
-        $this->templateProcessor->setValue('poor_status_kk', $this->getPoorStatus($this->course_attachments, 'kk'));
-
-        $cost = CalculateQuotaCost::calculate_quota_cost($this->course);
-        $costLet = new Num2string($cost);
-
-        $this->templateProcessor->setValue('sum', $cost);
-        $this->templateProcessor->setValue('quota_cost_ru', $costLet->ru());
-        $this->templateProcessor->setValue('quota_cost_kk', $costLet->kk());
+//        $this->templateProcessor->setValue('teaser', $this->clearText($this->course->teaser) ?? '-');
+//        $this->templateProcessor->setValue('description', $this->clearText($this->course->description) ?? '-');
+//        $this->templateProcessor->setValue('profit_desc', $this->clearText($this->course->profit_desc) ?? '-');
+//        $this->templateProcessor->setValue('videos_link', $this->course->videos_link ?? '-');
+//        $this->templateProcessor->setValue('duration', round((new CalculateQuotaCostService())->courseDurationService($this->course) ?? '-'));
+//
+//        $this->templateProcessor->setValue('lang_ru', $this->course->lang === 1 ? 'Нет' : 'Да');
+//        $this->templateProcessor->setValue('lang_kk', $this->course->lang === 1 ? 'Жоқ' : 'Иә');
+//
+//        $this->templateProcessor->setValue('attachments', $this->allAttachments($this->course_attachments));
+//        $this->templateProcessor->setValue('attachments_poor', $this->allAttachmentsPoor($this->course_attachments));
+//
+//        $this->templateProcessor->setValue('practice_status_ru', $this->getPracticeStatus('ru')); // Количество форматов учебного контента
+//        $this->templateProcessor->setValue('practice_status_kk', $this->getPracticeStatus('kk')); // Количество форматов учебного контента
+//
+//        $this->templateProcessor->setValue('attachments_forms_count_ru', $this->getAttachmentsForm('ru')); // Наличие контрольно-измерительных материалов:
+//        $this->templateProcessor->setValue('attachments_forms_count_kk', $this->getAttachmentsForm('kk')); // Наличие контрольно-измерительных материалов:
+//
+//        $this->templateProcessor->setValue('poor_status_ru', $this->getPoorStatus($this->course_attachments, 'ru'));
+//        $this->templateProcessor->setValue('poor_status_kk', $this->getPoorStatus($this->course_attachments, 'kk'));
+//
+//        $cost = CalculateQuotaCost::calculate_quota_cost($this->course);
+//        $costLet = new Num2string($cost);
+//
+//        $this->templateProcessor->setValue('sum', $cost);
+//        $this->templateProcessor->setValue('quota_cost_ru', $costLet->ru());
+//        $this->templateProcessor->setValue('quota_cost_kk', $costLet->kk());
     }
 
     /**
