@@ -2,7 +2,6 @@
 
 namespace App\Services\Users;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
