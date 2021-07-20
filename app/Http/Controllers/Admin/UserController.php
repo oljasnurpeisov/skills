@@ -7,7 +7,6 @@ use App\Models\PayInformation;
 use App\Models\Role;
 use App\Models\Type_of_ownership;
 use App\Models\User;
-
 use App\Models\UserInformation;
 use App\Services\Users\UserFilterService;
 use Carbon\Carbon;
