@@ -9,6 +9,7 @@ use App\Models\Type_of_ownership;
 use App\Models\User;
 
 use App\Models\UserInformation;
+use App\Services\Users\UserFilterService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -30,6 +31,21 @@ use Illuminate\Support\Facades\File;
  */
 class AuthorController extends Controller
 {
+    /**
+     * @var UserFilterService
+     */
+    private $userFilterService;
+
+    /**
+     * UserController constructor.
+     *
+     * @param UserFilterService $userFilterService
+     */
+    public function __construct(UserFilterService $userFilterService)
+    {
+        $this->userFilterService = $userFilterService;
+    }
+
     public function index(Request $request)
     {
         $term = $request->term ? $request->term : '';
@@ -40,6 +56,8 @@ class AuthorController extends Controller
         if ($term) {
             $query = $query->where('email', 'like', '%' . $term . '%');
         }
+
+        $query = $this->userFilterService->getOrSearch($query, $request->all());
 
         $items = $query->paginate();
 
@@ -54,6 +72,7 @@ class AuthorController extends Controller
         return view('admin.v2.pages.authors.index', [
             'items' => $items,
             'term' => $term,
+            'request' => $request->all()
         ]);
     }
 

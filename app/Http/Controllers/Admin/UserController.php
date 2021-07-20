@@ -9,6 +9,7 @@ use App\Models\Type_of_ownership;
 use App\Models\User;
 
 use App\Models\UserInformation;
+use App\Services\Users\UserFilterService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -28,6 +29,21 @@ use Illuminate\Support\Facades\File;
  */
 class UserController extends Controller
 {
+    /**
+     * @var UserFilterService
+     */
+    private $userFilterService;
+
+    /**
+     * UserController constructor.
+     *
+     * @param UserFilterService $userFilterService
+     */
+    public function __construct(UserFilterService $userFilterService)
+    {
+        $this->userFilterService = $userFilterService;
+    }
+
     public function index(Request $request)
     {
         $term = $request->term ? $request->term : '';
@@ -38,11 +54,15 @@ class UserController extends Controller
         if ($term) {
             $query = $query->where('name', 'like', '%' . $term . '%');
         }
+
+        $query = $this->userFilterService->getOrSearch($query, $request->all());
+
         $items = $query->paginate();
 
         return view('admin.v2.pages.users.index', [
             'items' => $items,
             'term' => $term,
+            'request' => $request->all()
         ]);
     }
 
@@ -55,11 +75,15 @@ class UserController extends Controller
         if ($term) {
             $query = $query->where('name', 'like', '%' . $term . '%');
         }
+
+        $query = $this->userFilterService->getOrSearch($query, $request->all());
+
         $items = $query->paginate();
 
         return view('admin.v2.pages.users.index', [
             'items' => $items,
             'term' => $term,
+            'request' => $request->all()
         ]);
     }
 

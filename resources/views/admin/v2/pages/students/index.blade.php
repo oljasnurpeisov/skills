@@ -33,7 +33,7 @@
         <div class="block">
             <h2 class="title-secondary">{{ $term ? __('admin.labels.search_result') : __('admin.labels.record_list') }}</h2>
 
-            @if(count($items) > 0)
+
                 <table class="table records">
                     <colgroup>
                         <col span="1" style="width: 5%;">
@@ -59,28 +59,44 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($items as $item)
-                        @php($creator = $item->creator)
-                        @php($modifier = $item->modifier)
-                        @php($remover = $item->remover)
+                    <form name="search">
                         <tr>
-                            <td>{{ $item->id }}</td>
-{{--                            <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>--}}
-                            <td><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a></td>
-                            <td>{{ ($item->roles()->first()) ? $item->roles()->first()->name : '-' }}</td>
-                            <td>{!! $item->created_at . ($creator ? '<br>'.($creator->surname.' '.$creator->name.' '.$creator->middle_name) : '') !!}</td>
-                            <td>{!! $item->updated_at . ($modifier ? '<br>'.($modifier->surname.' '.$modifier->name.' '.$modifier->middle_name) : '') !!}</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a href="/{{$lang}}/admin/student/{{$item->id}}" title="{{ __('admin.labels.view') }}"
-                                       class="icon-btn icon-btn--yellow icon-eye"></a>
+                            <th></th>
+                            <th><input name="email" type="text" class="input-regular" value="{{ $request['email'] ?? '' }}"></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>
+                                <div class="buttons btn-group-sm">
+                                    <a href="{{ route(Route::currentRouteName(), ['lang' => $lang]) }}" class="btn" style="color: #fff; background: #e2e2e2; text-decoration:none; height: 30px; margin-top: 2px; margin-right: 5px">Сбросить</a>
+                                    <button class="btn">Поиск</button>
                                 </div>
-                            </td>
+                            </th>
                         </tr>
-                    @endforeach
+                    </form>
+                    @if(count($items) > 0)
+                        @foreach($items as $item)
+                            @php($creator = $item->creator)
+                            @php($modifier = $item->modifier)
+                            @php($remover = $item->remover)
+                            <tr>
+                                <td>{{ $item->id }}</td>
+    {{--                            <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>--}}
+                                <td><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a></td>
+                                <td>{{ ($item->roles()->first()) ? $item->roles()->first()->name : '-' }}</td>
+                                <td>{!! $item->created_at . ($creator ? '<br>'.($creator->surname.' '.$creator->name.' '.$creator->middle_name) : '') !!}</td>
+                                <td>{!! $item->updated_at . ($modifier ? '<br>'.($modifier->surname.' '.$modifier->name.' '.$modifier->middle_name) : '') !!}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="/{{$lang}}/admin/student/{{$item->id}}" title="{{ __('admin.labels.view') }}"
+                                           class="icon-btn icon-btn--yellow icon-eye"></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                     </tbody>
                 </table>
-            @endif
 
             <div class="text-right">
                 {{ $items->appends(['term' => $term])->links('vendor.pagination.bootstrap') }}

@@ -59,8 +59,8 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
             });
             // Пользователи
             Route::group(['middleware' => 'check.permission:admin.users'], static function () {
-                Route::get('/user/index', 'UserController@index');
-                Route::get('/user/index_all', 'UserController@index_all');
+                Route::get('/user/index', 'UserController@index')->name('admin.users.admins');
+                Route::get('/user/index_all', 'UserController@index_all')->name('admin.users.all');
                 Route::get('/user/create', 'UserController@create');
                 Route::post('/user/create', 'UserController@store');
                 Route::get('/user/{item}/passwordUpdate', 'UserController@passwordUpdate');
@@ -70,7 +70,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
             });
             // Авторы
             Route::group(['middleware' => 'check.permission:admin.authors'], static function () {
-                Route::get('/author/index', 'AuthorController@index');
+                Route::get('/author/index', 'AuthorController@index')->name('admin.users.authors');
                 Route::get('/author/create', 'AuthorController@create');
                 Route::post('/author/create', 'AuthorController@store');
                 Route::get('/author/{item}/passwordUpdate', 'AuthorController@passwordUpdate');
@@ -80,7 +80,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
             });
             // Обучающиеся
             Route::group(['middleware' => 'check.permission:admin.users'], static function () {
-                Route::get('/student/index', 'StudentController@index');
+                Route::get('/student/index', 'StudentController@index')->name('admin.users.students');
                 Route::get('/student/{item}', 'StudentController@edit');
             });
             // Маршруты

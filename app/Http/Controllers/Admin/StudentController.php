@@ -6,10 +6,26 @@ use App\Models\Role;
 use App\Models\StudentInformation;
 use App\Models\User;
 
+use App\Services\Users\UserFilterService;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
+    /**
+     * @var UserFilterService
+     */
+    private $userFilterService;
+
+    /**
+     * UserController constructor.
+     *
+     * @param UserFilterService $userFilterService
+     */
+    public function __construct(UserFilterService $userFilterService)
+    {
+        $this->userFilterService = $userFilterService;
+    }
+
     public function index(Request $request)
     {
         $term = $request->term ? $request->term : '';
@@ -21,11 +37,14 @@ class StudentController extends Controller
             $query = $query->where('email', 'like', '%' . $term . '%');
         }
 
+        $query = $this->userFilterService->getOrSearch($query, $request->all());
+
         $items = $query->paginate();
 
         return view('admin.v2.pages.students.index', [
             'items' => $items,
             'term' => $term,
+            'request' => $request->all()
         ]);
     }
 
