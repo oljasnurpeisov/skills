@@ -12,10 +12,6 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class UserFilterService
 {
-    public function __construct()
-    {
-    }
-
     /**
      * Получение Юзеров
      *
