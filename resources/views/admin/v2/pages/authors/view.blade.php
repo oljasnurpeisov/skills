@@ -237,11 +237,11 @@
                                 <label class="input-group__title">{{__('default.pages.profile.base')}} *</label>
                                 <input disabled type="text" class="input-regular" value="{{ Auth::user()->base->name_ru ?? '' }}">
                             </div>
-
+                            <br>
                             <div class="form-group">
                                 <a href="{{ asset(Auth::user()->base_file) }}" target="_blank" class="btn">{{__('default.download_file') }}</a>
                             </div>
-
+                            <br>
                             <div class="form-group">
                                 <label class="input-group__title">{{__('default.pages.auth.iin')}} *</label>
                                 <input disabled type="text" name="iin" placeholder="" onfocus="$(this).inputmask('999999999999')" class="input-regular" required value="{{ old('iin') ?? Auth::user()->iin }}">
