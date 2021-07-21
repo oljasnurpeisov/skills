@@ -35,9 +35,60 @@ class UserFilterService
      */
     public function search(Builder $users, array $request): Builder
     {
-        $users = $this->searchByFIO($users, $request);
+        if (!empty($request['type']) and $request['type'] === 'authors') {
+            $users = $this->searchAuthorsByFIO($users, $request);
+        }
+
+        if (!empty($request['type']) and $request['type'] === 'students') {
+            $users = $this->searchStudentsByFIO($users, $request);
+        }
+
+        if (empty($request['type'])) {
+            $users = $this->searchByFIO($users, $request);
+        }
+
         $users = $this->searchByEmail($users, $request);
         $users = $this->searchByCompanyName($users, $request);
+
+        return $users;
+    }
+
+    /**
+     * Поиск авторов по FIO
+     *
+     * @param Builder $users
+     * @param array $request
+     * @return Builder
+     */
+    private function searchAuthorsByFIO(Builder $users, array $request): Builder
+    {
+        if (!empty($request['fio'])) {
+            $users = $users->whereHas('author_info', function($q) use ($request) {
+                return $q->where('name', 'like', '%'. $request['fio'] .'%')
+                    ->orWhere('surname', 'like', '%'. $request['fio'] .'%')
+                    ->orWhere('patronymic', 'like', '%'. $request['fio'] .'%');
+            });
+        }
+
+        return $users;
+    }
+
+    /**
+     * Поиск обучающихся по FIO
+     *
+     * @param Builder $users
+     * @param array $request
+     * @return Builder
+     */
+    private function searchStudentsByFIO(Builder $users, array $request): Builder
+    {
+        if (!empty($request['fio'])) {
+            $users = $users->whereHas('student_info', function($q) use ($request) {
+                return $q->where('name', 'like', '%'. $request['fio'] .'%')
+                    ->orWhere('surname', 'like', '%'. $request['fio'] .'%')
+                    ->orWhere('patronymic', 'like', '%'. $request['fio'] .'%');
+            });
+        }
 
         return $users;
     }
@@ -52,7 +103,15 @@ class UserFilterService
     private function searchByFIO(Builder $users, array $request): Builder
     {
         if (!empty($request['fio'])) {
-            $users = $users->where(function($q) use ($request) {
+            $users = $users->whereHas('student_info', function($q) use ($request) {
+                return $q->where('name', 'like', '%'. $request['fio'] .'%')
+                    ->orWhere('surname', 'like', '%'. $request['fio'] .'%')
+                    ->orWhere('patronymic', 'like', '%'. $request['fio'] .'%');
+            })->orWhereHas('author_info', function($q) use ($request) {
+                return $q->where('name', 'like', '%'. $request['fio'] .'%')
+                    ->orWhere('surname', 'like', '%'. $request['fio'] .'%')
+                    ->orWhere('patronymic', 'like', '%'. $request['fio'] .'%');
+            })->orWhere(function($q) use ($request) {
                 return $q->where('name', 'like', '%'. $request['fio'] .'%')
                     ->orWhere('surname', 'like', '%'. $request['fio'] .'%')
                     ->orWhere('patronymic', 'like', '%'. $request['fio'] .'%');

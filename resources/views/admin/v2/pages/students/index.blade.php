@@ -38,6 +38,7 @@
                     <colgroup>
                         <col span="1" style="width: 5%;">
                         <col span="1" style="width: 20%;">
+                        <col span="1" style="width: 20%;">
                         <col span="1" style="width: 7%;">
                         <col span="1" style="width: 7%;">
                         <col span="1" style="width: 7%;">
@@ -50,6 +51,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
+                        <th>ФИО</th>
 {{--                        <th>{{ __('admin.pages.user.surname').' '.__('admin.pages.user.name').' '.__('admin.pages.user.middle_name') }}</th>--}}
                         <th>{{ __('admin.pages.user.email') }}</th>
                         <th>{{ __('admin.pages.user.role') }}</th>
@@ -60,8 +62,10 @@
                     </thead>
                     <tbody>
                     <form name="search">
+                        <input type="hidden" name="type" value="students">
                         <tr>
                             <th></th>
+                            <th><input name="fio" type="text" class="input-regular" value="{{ $request['fio'] ?? '' }}"></th>
                             <th><input name="email" type="text" class="input-regular" value="{{ $request['email'] ?? '' }}"></th>
                             <th></th>
                             <th></th>
@@ -81,6 +85,7 @@
                             @php($remover = $item->remover)
                             <tr>
                                 <td>{{ $item->id }}</td>
+                                <th>{{ $item->student_information->name ?? '' }} {{ $item->student_information->surname ?? '' }} {{ $item->student_information->patronymic ?? '' }}</th>
     {{--                            <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>--}}
                                 <td><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a></td>
                                 <td>{{ ($item->roles()->first()) ? $item->roles()->first()->name : '-' }}</td>

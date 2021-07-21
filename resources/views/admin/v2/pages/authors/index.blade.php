@@ -13,19 +13,6 @@
                 <div class="col-md-4">
                     <h1 class="title-primary" style="margin-bottom: 0">{{ __('admin.pages.authors.title')  }}</h1>
                 </div>
-                <div class="col-md-8 text-right-md text-right-lg">
-                    <div class="flex-form">
-                        <div>
-                            <form action="/{{$lang}}/admin/author/index" method="get" class="input-button">
-                                <input type="text" name="term"
-                                       placeholder="{{ __('admin.pages.user.email') }}"
-                                       class="input-regular input-regular--solid" style="width: 282px;"
-                                       value="{{ $term }}">
-                                <button class="btn btn--green">{{ __('admin.labels.search') }}</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -37,6 +24,7 @@
                 <table class="table records">
                     <colgroup>
                         <col span="1" style="width: 5%;">
+                        <col span="1" style="width: 20%;">
                         <col span="1" style="width: 20%;">
                         <col span="1" style="width: 7%;">
                         <col span="1" style="width: 7%;">
@@ -51,6 +39,7 @@
                     <tr>
                         <th>#</th>
 {{--                        <th>{{ __('admin.pages.user.surname').' '.__('admin.pages.user.name').' '.__('admin.pages.user.middle_name') }}</th>--}}
+                        <th>ФИО</th>
                         <th>{{ __('admin.pages.user.email') }}</th>
                         <th>{{ __('admin.pages.user.role') }}</th>
                         <th>Организация</th>
@@ -62,8 +51,10 @@
                     </thead>
                     <tbody>
                     <form name="search">
+                        <input type="hidden" name="type" value="authors">
                         <tr>
                             <th></th>
+                            <th><input name="fio" type="text" class="input-regular" value="{{ $request['fio'] ?? '' }}"></th>
                             <th><input name="email" type="text" class="input-regular" value="{{ $request['email'] ?? '' }}"></th>
                             <th></th>
                             <th><input name="company_name" type="text" class="input-regular" value="{{ $request['company_name'] ?? '' }}"></th>
@@ -85,7 +76,7 @@
                             @php($remover = $item->remover)
                             <tr>
                                 <td>{{ $item->id }}</td>
-    {{--                            <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>--}}
+                                <td>{{ $item->user_information->name ?? '' }} {{ $item->user_information->surname ?? '' }} {{ $item->user_information->patronymic ?? '' }}</td>
                                 <td><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a></td>
                                 <td>{{ ($item->roles()->first()) ? $item->roles()->first()->name : '-' }}</td>
                                 <td>{{ $item->company_name }}</td>

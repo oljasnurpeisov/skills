@@ -13,19 +13,6 @@
                 <div class="col-md-4">
                     <h1 class="title-primary" style="margin-bottom: 0">{{ __('admin.pages.users.title')  }}</h1>
                 </div>
-                <div class="col-md-8 text-right-md text-right-lg">
-                    <div class="flex-form">
-                        <div>
-                            <form action="/{{$lang}}/admin/user/index" method="get" class="input-button">
-                                <input type="text" name="term"
-                                       placeholder="{{ __('admin.pages.user.surname').' / '.__('admin.pages.user.name').' / '.__('admin.pages.user.middle_name') }}"
-                                       class="input-regular input-regular--solid" style="width: 282px;"
-                                       value="{{ $term }}">
-                                <button class="btn btn--green">{{ __('admin.labels.search') }}</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -88,9 +75,9 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 @if($item->hasRole('author'))
-                                    <td>{{ $item->user_information->name ?? '' }}</td>
+                                    <td>{{ $item->user_information->name ?? '' }} {{ $item->user_information->surname ?? '' }} {{ $item->user_information->patronymic ?? '' }}</td>
                                 @elseif($item->hasRole('student'))
-                                    <td>{{ $item->student_information->name ?? '' }}</td>
+                                    <td>{{ $item->student_information->name ?? '' }} {{ $item->student_information->surname ?? '' }} {{ $item->student_information->patronymic ?? '' }}</td>
                                 @else
                                     <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>
                                 @endif
