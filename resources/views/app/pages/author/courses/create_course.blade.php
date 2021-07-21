@@ -583,16 +583,19 @@
         $('#form').on('submit', function () {
             if ($('input[name="is_paid"]:checked').val() === "true") {
                 if (parseInt($('input[name="cost"]').val()) === 0) {
+
+                    console.log(parseInt($('input[name="cost"]').val()));
+
                     let html = '<div class="alert alert-danger cost-danger"><ul><li>{{ __('validation.course_cost') }}</li></ul></div>';
 
                     $('h1.title-primary').after(html);
                     $('html, body').animate({scrollTop: '0px'}, 300);
 
+                    return false
+
                 } else {
                     $('.cost-danger').remove();
                 }
-
-                return false
             }
         })
     </script>

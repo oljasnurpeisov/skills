@@ -836,11 +836,11 @@
                     $('h1.title-primary').after(html);
                     $('html, body').animate({scrollTop: '0px'}, 300);
 
+                    return false
+
                 } else {
                     $('.cost-danger').remove();
                 }
-
-                return false
             }
         })
     </script>
