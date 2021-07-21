@@ -194,6 +194,7 @@ class ContractService
        ]);
 
        $pdf->SetAuthor(env('APP_NAME'));
+       $pdf->shrink_tables_to_fit = 0;
 
        $pdf->WriteHTML($html);
        $result = $pdf->Output($pdfPath, Destination::STRING_RETURN);
