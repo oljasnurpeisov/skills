@@ -114,7 +114,7 @@ class AVRController extends Controller
      * АВР pdf preview
      *
      * @param Request $request
-     * @throws Exception
+     * @return StreamedResponse
      */
     public function avrPdf(Request $request)
     {
@@ -211,7 +211,7 @@ class AVRController extends Controller
             Session::flash('status', $message);
 
             $avr = AVR::find($request->avr_id);
-            (new NotificationService('АВР подписан', 'avr_signed_by_author', $avr->course->id, $avr->course->user->id, 'ru', 3))->notify();
+            (new NotificationService('АВР подписан', 'notifications.avr_signed_by_author', $avr->course->id, $avr->course->user->id, 'ru', 3))->notify();
 
         } else {
             $message = $certificate->getError() ?: $this->validationService->getError();
