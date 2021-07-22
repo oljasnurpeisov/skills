@@ -106,7 +106,7 @@
                                         @csrf
                                         <div class="buttons">
                                             <div>
-                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_free']) }}" target="_blank" class="btn btn--blue">Договор (бесплатный)</a>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_free']) }}" target="_blank" class="btn btn--blue">Предварительный просмотр договора (бесплатный)</a>
                                                 <button type="submit" name="action" class="btn btn--green">Одобрить договор</button>
                                             </div>
                                         </div>
@@ -128,7 +128,7 @@
                                         @csrf
                                         <div class="buttons">
                                             <div>
-                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_paid']) }}" target="_blank" class="btn btn--blue">Договор (платный)</a>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_paid']) }}" target="_blank" class="btn btn--blue">Предварительный просмотр договора (платный)</a>
                                                 <button type="submit" name="action" class="btn btn--green">Одобрить договор</button>
                                             </div>
                                         </div>
@@ -150,7 +150,7 @@
                                         @csrf
                                         <div class="buttons">
                                             <div>
-                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_quota']) }}" target="_blank" class="btn btn--blue">Договор (по квоте)</a>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_quota']) }}" target="_blank" class="btn btn--blue">Предварительный просмотр договора (по квоте)</a>
                                                 <button type="submit" name="action" class="btn btn--green">Одобрить договор</button>
                                             </div>
                                         </div>
@@ -274,7 +274,7 @@
                                 @endif
 
                                 @if ($item->isQuota())
-                                    <p><b>Статус договора (квота):</b> {{ !empty($item->quota_contract->status) ? $item->quota_contract->getStatusName() : 'Проверка договора' }}</p>
+                                    <p><b>Статус договора (гос. поддержка):</b> {{ !empty($item->quota_contract->status) ? $item->quota_contract->getStatusName() : 'Проверка договора' }}</p>
                                 @endif
 
 
@@ -283,7 +283,7 @@
                                         @csrf
                                         <div class="buttons">
                                             <div>
-                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_free']) }}" target="_blank" class="btn btn--blue">Договор (бесплатный)</a>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_free']) }}" target="_blank" class="btn btn--blue">Предварительный просмотр договора (бесплатный)</a>
                                                 <button type="submit" name="action" class="btn btn--green">Одобрить договор</button>
                                             </div>
                                         </div>
@@ -305,7 +305,7 @@
                                         @csrf
                                         <div class="buttons">
                                             <div>
-                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_paid']) }}" target="_blank" class="btn btn--blue">Договор (платный)</a>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_paid']) }}" target="_blank" class="btn btn--blue">Предварительный просмотр договора (платный)</a>
                                                 <button type="submit" name="action" class="btn btn--green">Одобрить договор</button>
                                             </div>
                                         </div>
@@ -327,7 +327,7 @@
                                         @csrf
                                         <div class="buttons">
                                             <div>
-                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_quota']) }}" target="_blank" class="btn btn--blue">Договор (по квоте)</a>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_quota']) }}" target="_blank" class="btn btn--blue">Предварительный просмотр договора (по квоте)</a>
                                                 <button type="submit" name="action" class="btn btn--green">Одобрить договор</button>
                                             </div>
                                         </div>
