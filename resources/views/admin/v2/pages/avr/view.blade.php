@@ -277,7 +277,7 @@
 
     <script>
         $('.tabs-titles').click(function () {
-            $( ".tabs-contents > div" ).listview( "refresh" );
+            $( ".tabs-contents object" ).listview( "refresh" );
         });
     </script>
 @endsection
