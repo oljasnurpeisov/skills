@@ -274,4 +274,10 @@
             }
         });
     </script>
+
+    <script>
+        $('.tabs-titles').click(function () {
+            $( ".tabs-contents > div" ).listview( "refresh" );
+        });
+    </script>
 @endsection
