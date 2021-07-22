@@ -277,8 +277,6 @@
 
     <script>
         $('.tabs-titles').click(function () {
-            $( ".tabs-contents object" ).listview( "refresh" );
-
             let object = $('.tabs-contents .active object');
 
             if (object.length > 0) {
