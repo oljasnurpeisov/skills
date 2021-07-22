@@ -308,7 +308,7 @@ class Course extends Model
     {
         switch (true) {
             case $this->isQuota():
-                return 'Доступен по квоте';
+                return 'Доступен при гос. поддержке';
                 break;
             case $this->isPaid():
                 return 'Платный';
