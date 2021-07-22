@@ -282,7 +282,7 @@
             if (object.length > 0) {
                 var new_url = object.attr('data');
                 object.load(new_url);
-                object.attr('data', new_url);
+                // object.attr('data', new_url);
             }
 
         });
