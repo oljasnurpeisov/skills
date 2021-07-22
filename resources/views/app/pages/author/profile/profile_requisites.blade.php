@@ -148,7 +148,7 @@
 
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.profile.iik_kz')}} *</label>
-                                <input type="text" name="iik_kz" placeholder="" onfocus="$(this).inputmask('KZ 999999999999999999')" class="input-regular" required value="{{ old('iik_kz') ?? Auth::user()->iik_kz }}">
+                                <input type="text" name="iik_kz" placeholder="" onfocus="$(this).inputmask('KZ 9|A{18}')" class="input-regular" required value="{{ old('iik_kz') ?? Auth::user()->iik_kz }}">
                             </div>
 
                             <div class="form-group">
