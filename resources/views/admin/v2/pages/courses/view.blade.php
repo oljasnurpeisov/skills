@@ -150,7 +150,7 @@
                                         @csrf
                                         <div class="buttons">
                                             <div>
-                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_quota']) }}" target="_blank" class="btn btn--blue">Предварительный просмотр договора (по квоте)</a>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_quota']) }}" target="_blank" class="btn btn--blue">Предварительный просмотр договора (при гос.поддержке)</a>
                                                 <button type="submit" name="action" class="btn btn--green">Одобрить договор</button>
                                             </div>
                                         </div>
@@ -160,7 +160,7 @@
                                     @if ($item->isQuotaContractCreated())
                                         <div class="buttons">
                                             <div>
-                                                <a href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $item->quota_contract->id]) }}" target="_blank" class="btn btn--blue">Договор (по квоте)</a>
+                                                <a href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $item->quota_contract->id]) }}" target="_blank" class="btn btn--blue">Договор (при гос.поддержке)</a>
                                                 <button type="submit" name="action" class="btn" style="background: rgb(223, 223, 223);">Одобрить договор</button>
                                             </div>
                                         </div>
@@ -327,7 +327,7 @@
                                         @csrf
                                         <div class="buttons">
                                             <div>
-                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_quota']) }}" target="_blank" class="btn btn--blue">Предварительный просмотр договора (по квоте)</a>
+                                                <a href="{{ route('admin.contracts.generate_preview_contract', ['lang' => $lang, 'course_id' => $item->id, 'type' => 'agreement_quota']) }}" target="_blank" class="btn btn--blue">Предварительный просмотр договора (при гос.поддержке)</a>
                                                 <button type="submit" name="action" class="btn btn--green">Одобрить договор</button>
                                             </div>
                                         </div>
@@ -337,7 +337,7 @@
                                     @if ($item->isQuotaContractCreated())
                                         <div class="buttons">
                                             <div>
-                                                <a href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $item->quota_contract->id]) }}" target="_blank" class="btn btn--blue">Договор (по квоте)</a>
+                                                <a href="{{ route('admin.contracts.view', ['lang' => $lang, 'contract_id' => $item->quota_contract->id]) }}" target="_blank" class="btn btn--blue">Договор (при гос.поддержке)</a>
                                                 <button type="submit" name="action" class="btn" style="background: rgb(223, 223, 223);">Одобрить договор</button>
                                             </div>
                                         </div>
