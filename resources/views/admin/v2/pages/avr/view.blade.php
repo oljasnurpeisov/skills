@@ -278,6 +278,15 @@
     <script>
         $('.tabs-titles').click(function () {
             $( ".tabs-contents object" ).listview( "refresh" );
+
+            let object = $('.tabs-contents .active object');
+
+            if (object.length > 0) {
+                var new_url = object.attr('data');
+                object.attr('data', new_url);
+                object.load(new_url);
+            }
+
         });
     </script>
 @endsection
