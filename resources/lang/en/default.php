@@ -13,6 +13,10 @@ return [
     'download_file' => 'Скачать файл',
 
     'pages' => [
+        'oked_industries' => 'Отрасли',
+        'oked_activities' => 'Виды деятельности',
+        'description' => 'Об организации',
+
         'courses' => [
             'agreement' => 'Соглашение',
             'contract'  => 'Договор',

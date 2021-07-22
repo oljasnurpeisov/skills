@@ -218,10 +218,11 @@
                             </div>
                             <div class="personal-card__right">
                                 <div class="personal-card__name">{{ $item->user->author_info->name . ' ' . $item->user->author_info->surname  }}</div>
-                                <div class="personal-card__gray-text"><strong>Отрасли:</strong></div>
+                                <div class="personal-card__gray-text"><strong>{{ __('default.pages.oked_industries') }}:</strong></div>
                                 <div class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->oked_industries->pluck('oked_industry.name_ru')) ?? []) }}</div>
-                                <div class="personal-card__gray-text"><strong>Виды деятельности:</strong></div>
+                                <div class="personal-card__gray-text"><strong>{{ __('default.pages.oked_activities') }}:</strong></div>
                                 <div class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->oked_activities->pluck('oked_activity.name_ru')) ?? []) }}</div>
+                                <div class="personal-card__gray-text"><strong>{{ __('default.pages.description') }}:</strong></div>
                                 <div class="plain-text">
                                     {!! $item->user->author_info->about !!}
                                 </div>

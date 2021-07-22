@@ -13,6 +13,10 @@ return [
     'download_file' => 'Файлды жүктеу',
 
     'pages' => [
+        'oked_industries' => 'Салалар',
+        'oked_activities' => 'Қызметтер түрі',
+        'description' => 'Ұйым қызметі туралы',
+
         'courses' => [
             'agreement' => 'Келісім',
             'contract'  => 'Келісім шарт',
