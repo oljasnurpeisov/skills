@@ -15,7 +15,7 @@
                             <th style="min-width: 230px;">Наименование курса</th>
                             <th style="min-width: 230px;">Статус договора</th>
                             <th style="min-width: 230px;">Тип договора</th>
-                            <th style="min-width: 33px;">Доступен по квоте</th>
+                            <th style="min-width: 33px;">{{ __('default.pages.courses.quota') }}</th>
                             <th style="min-width: 96px;">Договор</th>
                         </tr>
                         </thead>
