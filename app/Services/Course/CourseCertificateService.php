@@ -29,12 +29,13 @@ class CourseCertificateService
         $certificate->user_id = $user->id;
         $certificate->course_id = $course->id;
         $certificate->save();
+        $duration = $course->lessons->sum('duration') > 60 ? $course->lessons->sum('duration') : 60;
         $data = [
             'author_name' => $course->user->company_name . '/' . $course->user->author_info->name . ' ' . $course->user->author_info->surname,
             'author' => $course->user,
             'company_logo' => file_exists(public_path($course->user->company_logo)) ? $course->user->company_logo : '',
             'student_name' => $user->student_info->name,
-            'duration' => $course->lessons->sum('duration'),
+            'duration' => $duration,
             'course_name' => $course->name,
             'skills' => $course->skills,
             'certificate_id' => sprintf("%012d", $certificate->id) . '-' . date('dmY')
