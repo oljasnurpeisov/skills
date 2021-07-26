@@ -95,17 +95,18 @@ class AVR extends Model
     /**
      * Название статуса
      *
+     * @param string $lang
      * @return string
      */
-    public function getStatusName(): string
+    public function getStatusName(string $lang = 'ru'): string
     {
         switch (true) {
             case $this->isPending():
                 $role_name = !empty($this->current_route) ? $this->current_route->role->name : 'Маршрут изменен';
-                return "Ожидает подписания (". $role_name .")";
+                return trans('default.pages.avr.on_signing', [], $lang) .' ('. $role_name .')';
                 break;
             case $this->isSigned():
-                return "Подписан";
+                return trans('default.pages.avr.signed', [], $lang);
                 break;
             default;
                 return "Сгенерирован";

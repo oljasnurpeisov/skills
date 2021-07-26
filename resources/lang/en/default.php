@@ -17,6 +17,42 @@ return [
         'oked_activities' => 'Виды деятельности',
         'description' => 'Об организации',
 
+        'avr' => [
+            'avr_number' => 'Номер АВР',
+            'avr_period' => 'Период АВР',
+            'avr_sum' => 'Сумма в АВР',
+            'signed_status' => 'Статус подписания',
+            'avr' => 'АВР',
+            'period' => 'Период',
+            'sum' => 'Сумма',
+            'choose_status' => 'Выберите статус',
+            'on_signed' => 'На подписании',
+            'signed' => 'Подписан',
+            'on_signing' => 'На подписании',
+
+        ],
+
+        'contracts' => [
+            'contract_number' => 'Номер договора',
+            'course_name' => 'Наименование курса',
+            'contract_status' => 'Статус договора',
+            'contract_type' => 'Тип договора',
+            'contract'  => 'Договор',
+            'choose_type' => 'Выберите тип',
+            'choose_avail' => 'Выберите доступность',
+            'reset' => 'Сбросить',
+            'search' => 'Поиск',
+            'view' => 'Просмотр',
+            'download' => 'Скачать',
+            'approved' => 'Одобрен',
+            'signed' => 'Подписан',
+            'no' => 'Нет',
+            'yes' => 'Да',
+            'paid' => 'Платный',
+            'free' => 'Бесплатный',
+            'quota' => 'При гос. поддержке'
+        ],
+
         'courses' => [
             'agreement' => 'Соглашение',
             'contract'  => 'Договор',
