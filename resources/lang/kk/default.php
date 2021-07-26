@@ -17,6 +17,20 @@ return [
         'oked_activities' => 'Қызметтер түрі',
         'description' => 'Ұйым қызметі туралы',
 
+        'avr' => [
+            'avr_number' => 'ОЖА номері',
+            'avr_period' => 'ОЖА мерзімі',
+            'avr_sum' => 'ОЖА сомасы',
+            'signed_status' => 'Қол қою статусы',
+            'avr' => 'ОЖА',
+            'period' => 'Мерзімі',
+            'sum' => 'Сома',
+            'choose_status' => 'Статусты таңдаңыз',
+            'on_signed' => 'Қол қойылуда',
+            'signed' => 'Қол қойылды',
+            'on_signing' => 'Қол қоюды күту',
+        ],
+
         'contracts' => [
             'contract_number' => 'Келісім шарттың номері',
             'course_name' => 'Курстың атауы',
