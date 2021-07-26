@@ -17,6 +17,27 @@ return [
         'oked_activities' => 'Қызметтер түрі',
         'description' => 'Ұйым қызметі туралы',
 
+        'contracts' => [
+            'contract_number' => 'Келісім шарттың номері',
+            'course_name' => 'Курстың атауы',
+            'contract_status' => 'Келісім шарттың статусы',
+            'contract_type' => 'Келісім шарттың типі',
+            'contract'  => 'Келісім шарт',
+            'choose_type' => 'Типін таңдаңыз',
+            'choose_avail' => 'Қолжетімділігін таңдаңыз',
+            'reset' => 'Ауыстыру',
+            'search' => 'Іздеу',
+            'view' => 'Көру',
+            'download' => 'Жүктеу',
+            'approved' => 'Мақұлданды',
+            'signed' => 'Қол қойылды',
+            'no' => 'Жоқ',
+            'yes' => 'Ия',
+            'paid' => 'Ақылы',
+            'free' => 'Тегін',
+            'quota' => 'Мемлекеттік қолдау арқылы'
+        ],
+
         'courses' => [
             'agreement' => 'Келісім',
             'contract'  => 'Келісім шарт',
