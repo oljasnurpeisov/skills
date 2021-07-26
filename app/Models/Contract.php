@@ -294,9 +294,10 @@ class Contract extends Model
     /**
      * Название статуса
      *
+     * @param string $lang
      * @return string
      */
-    public function getStatusName(): string
+    public function getStatusName(string $lang = 'ru'): string
     {
         switch (true) {
             case $this->isPending():
@@ -310,9 +311,9 @@ class Contract extends Model
                 break;
             case $this->isSigned():
                 if ($this->isQuota()) {
-                    return "Подписан";
+                    return trans('default.pages.contracts.signed', [], $lang);
                 } else {
-                    return "Одобрен";
+                    return trans('default.pages.contracts.approved', [], $lang);
                 }
                 break;
             case $this->isDistributed():

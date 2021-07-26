@@ -56,9 +56,9 @@
                             <tr>
                                 <td>{{ $contract->number }}</td>
                                 <td>{{ $contract->course->name }}</td>
-                                <td>{{ $contract->getStatusName() }}</td>
-                                <td>{{ $contract->getTypeName() }}</td>
-                                <td>{{ $contract->isQuota() ? 'Да' : 'Нет' }}</td>
+                                <td>{{ $contract->getStatusName($lang) }}</td>
+                                <td>{{ $contract->getTypeName($lang) }}</td>
+                                <td>{{ $contract->isQuota() ? __('default.pages.contracts.yes') : __('default.pages.contracts.no') }}</td>
                                 <td>
                                     <a href="{{ route('author.contracts.view', ['lang' => $lang, 'contract_id' => $contract->id]) }}">{{ __('default.pages.contracts.view') }}</a>
                                     <br />
