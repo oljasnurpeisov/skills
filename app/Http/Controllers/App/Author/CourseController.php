@@ -627,6 +627,7 @@ class CourseController extends Controller
 
             $item->image = $request->image;
         }
+
         $this->courseService->updateSkillsTree($item, $request->all());
 //        $item->skills()->detach();
 //        foreach ($request->skills as $key => $skill) {

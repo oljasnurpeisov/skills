@@ -34,6 +34,10 @@ class CourseService {
     {
         $item->skills()->detach();
 
+        $item->skills()->delete();
+        $item->professions()->delete();
+        $item->professional_areas()->delete();
+
         (new SkillsSaver($item, $request))->save();
     }
 
