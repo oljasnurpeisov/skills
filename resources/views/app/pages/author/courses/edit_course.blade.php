@@ -646,13 +646,13 @@
 {{--                                    </div>--}}
                                     <div class="col-auto">
                                         <div class="image-choice {{ $item->certificate_id ==  '11' ? 'checked' : ''  }} " data-id="11">
-                                            <img src="/assets/img/certificates/cert_new_11.jpg"
+                                            <img src="/assets/img/certificates/cert_new_011.jpg"
                                                  class="image-choice__thumbnail"
                                                  alt="">
                                             <label class="image-choice__overflow">
                                                 <i> </i>
                                                 {{--                                                <a class="check" style="margin-top: -22px;">✓</a>--}}
-                                                <a href="/assets/img/certificates/cert_new_11.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
+                                                <a href="/assets/img/certificates/cert_new_011.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
                                                    class="icon-zoom-in" style="margin-top: 23px"> </a>
                                             </label>
                                         </div>
@@ -660,13 +660,13 @@
 
                                     <div class="col-auto">
                                         <div class="image-choice {{ $item->certificate_id ==  '12' ? 'checked' : ''  }} " data-id="12">
-                                            <img src="/assets/img/certificates/cert_new_12.jpg"
+                                            <img src="/assets/img/certificates/cert_new_012.jpg"
                                                  class="image-choice__thumbnail"
                                                  alt="">
                                             <label class="image-choice__overflow">
                                                 <i> </i>
                                                 {{--                                                <a class="check" style="margin-top: -22px;">✓</a>--}}
-                                                <a href="/assets/img/certificates/cert_new_12.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
+                                                <a href="/assets/img/certificates/cert_new_012.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
                                                    class="icon-zoom-in" style="margin-top: 23px"> </a>
                                             </label>
                                         </div>
@@ -674,13 +674,13 @@
 
                                     <div class="col-auto">
                                         <div class="image-choice {{ $item->certificate_id ==  '13' ? 'checked' : ''  }} " data-id="13">
-                                            <img src="/assets/img/certificates/cert_new_13.jpg"
+                                            <img src="/assets/img/certificates/cert_new_013.jpg"
                                                  class="image-choice__thumbnail"
                                                  alt="">
                                             <label class="image-choice__overflow">
                                                 <i> </i>
                                                 {{--                                                <a class="check" style="margin-top: -22px;">✓</a>--}}
-                                                <a href="/assets/img/certificates/cert_new_13.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
+                                                <a href="/assets/img/certificates/cert_new_013.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
                                                    class="icon-zoom-in" style="margin-top: 23px"> </a>
                                             </label>
                                         </div>
@@ -688,13 +688,13 @@
 
                                     <div class="col-auto">
                                         <div class="image-choice {{ $item->certificate_id ==  '10' ? 'checked' : ''  }} " data-id="10">
-                                            <img src="/assets/img/certificates/cert_new_10.jpg"
+                                            <img src="/assets/img/certificates/cert_new_010.jpg"
                                                  class="image-choice__thumbnail"
                                                  alt="">
                                             <label class="image-choice__overflow">
                                                 <i> </i>
                                                 {{--                                                <a class="check" style="margin-top: -22px;">✓</a>--}}
-                                                <a href="/assets/img/certificates/cert_new_10.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
+                                                <a href="/assets/img/certificates/cert_new_010.jpg" data-fancybox title="{{__('default.pages.courses.zoom_certificate')}}"
                                                    class="icon-zoom-in" style="margin-top: 23px"> </a>
                                             </label>
                                         </div>
