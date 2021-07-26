@@ -392,8 +392,7 @@
     <div class="diploma__inner2 ">
         <div class="diploma__inner ">
             <div class="diploma__title ">
-                Қазақстан республикасы еңбек және халықты әлеуметтік қорғау министрлігі<br> министерство труда и
-                социальной защиты населения республики Казахстан
+                &nbsp; <br>&nbsp;
             </div>
             <div class="diploma__title-2 ">
                 Сертификат
