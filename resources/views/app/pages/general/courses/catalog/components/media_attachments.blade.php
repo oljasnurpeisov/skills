@@ -415,7 +415,7 @@
         <div class="sidebar__buttons">
             @if($item->quota_status == 2)
                 @guest
-                    <a href="#studentAuth" data-fancybox
+                    <a href="https://passport.enbek.kz/{{ $lang }}/user/login?redirect_uri={{ url()->current() }}&redirect=strict"
                        title="{{__('default.pages.courses.get_by_quota')}}"
                        class="sidebar-btn ghost">{{__('default.pages.courses.get_by_quota')}}</a>
                 @endguest
@@ -430,7 +430,7 @@
             @endif
             @if($item->is_paid == 0)
                 @guest
-                    <a href="#studentAuth" data-fancybox
+                    <a href="https://passport.enbek.kz/{{ $lang }}/user/login?redirect_uri={{ url()->current() }}&redirect=strict"
                        title="{{__('default.pages.courses.get_free')}}"
                        class="sidebar-btn ghost">{{__('default.pages.courses.get_free')}}</a>
                 @endguest
@@ -444,7 +444,7 @@
                 @endauth
             @else
                 @guest
-                    <a href="#studentAuth" data-fancybox
+                    <a href="https://passport.enbek.kz/{{ $lang }}/user/login?redirect_uri={{ url()->current() }}&redirect=strict"
                        title="{{__('default.pages.courses.buy_course')}}"
                        class="sidebar-btn">{{__('default.pages.courses.buy_course')}}</a>
                 @endguest
