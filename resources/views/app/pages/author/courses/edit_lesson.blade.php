@@ -175,6 +175,7 @@
                                        class="dropzone-default__link">{{__('default.pages.courses.add_file_btn_title')}}</a>
                                 </div>
                             </div>
+
                             @include('app.pages.author.courses.components.lesson.poor_vision_lesson_edit',['item' => $item])
                             @include('app.pages.author.courses.components.lesson.poor_hearing_lesson_edit',['item' => $item])
                             <div id="optionalFields">
