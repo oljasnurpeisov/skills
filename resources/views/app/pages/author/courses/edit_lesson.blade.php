@@ -271,7 +271,6 @@
 
         let newTextConstructor = new TestConstructor({textAnswerTpl, picAnswerTpl, questionTpl});
     </script>
-    <div style="display: none">testing 2021-07-29 15:33</div>
     <!---->
 @endsection
 
