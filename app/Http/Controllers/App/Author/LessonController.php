@@ -553,7 +553,7 @@ class LessonController extends Controller
 
             $item_attachments->save();
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            dd($e->getMessage(), $e);
         }
 
         return redirect("/" . app()->getLocale() . "/my-courses/course/" . $course->id);
