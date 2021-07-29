@@ -35,12 +35,15 @@
                                         <label class="form-group__label">{{__('default.pages.lessons.lesson_type')}}
                                             *</label>
                                         <select name="type" class="selectize-regular" id="lessonSelect">
-                                            <option value="theory" {{ ($item->type == 1 ? ' selected' : '') }}>{{__('default.pages.lessons.theory_title')}}</option>
-                                            <option value="practice"{{ ($item->type == 2 ? ' selected' : '') }}>{{__('default.pages.lessons.theory_with_practic_title')}}</option>
+                                            <option
+                                                value="theory" {{ ($item->type == 1 ? ' selected' : '') }}>{{__('default.pages.lessons.theory_title')}}</option>
+                                            <option
+                                                value="practice"{{ ($item->type == 2 ? ' selected' : '') }}>{{__('default.pages.lessons.theory_with_practic_title')}}</option>
                                         </select>
                                     </div>
                                     <div class="form-group" id="practiceTypes" style="display: none;">
-                                        <label class="form-group__label">{{__('default.pages.lessons.headline')}}</label>
+                                        <label
+                                            class="form-group__label">{{__('default.pages.lessons.headline')}}</label>
                                         <label class="radio"><input type="radio" name="practiceType"
                                                                     value="test" {{ ($item->end_lesson_type == 0 ? ' checked' : '') }}><span>{{__('default.pages.lessons.test_title')}}</span></label>
                                         <label class="radio"><input type="radio" name="practiceType"
@@ -66,7 +69,8 @@
                                           required>{{ old('theory') ?? $item->theory}}</textarea>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.lessons.lesson_video_link')}}</label>
+                                <label
+                                    class="form-group__label">{{__('default.pages.lessons.lesson_video_link')}}</label>
                                 @if($item->lesson_attachment->videos_link != null)
                                     <input type="url" name="videos_link[]" placeholder=""
                                            class="input-regular"
@@ -97,8 +101,8 @@
                             <div class="text-right pull-up">
                                 <a href="#" title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"
                                    data-duplicate="courseVideo" data-maxcount="4"><span
-                                            class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
-                                            class="btn-icon small icon-plus"> </span></a>
+                                        class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
+                                        class="btn-icon small icon-plus"> </span></a>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_audio')}}</label>
@@ -117,8 +121,9 @@
                                                         <input type="text" name="localAudioStored[]"
                                                                value="{{$audio}}"
                                                                placeholder="">
-                                                        <div class="dz-filename"><span
-                                                                    data-dz-name="">{{substr(basename($audio), 14)}}</span>
+                                                        <div class="dz-filename">
+                                                            <span
+                                                                data-dz-name="">{{substr(basename($audio), 14)}}</span>
                                                         </div>
                                                     </div>
                                                     <a href="javascript:undefined;"
@@ -137,7 +142,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments')}}</label>
+                                <label
+                                    class="form-group__label">{{__('default.pages.lessons.another_lesson_attachments')}}</label>
                                 <div data-url="/ajax_upload_lesson_another_files?_token={{ csrf_token() }}"
                                      data-maxfiles="20"
                                      data-maxsize="20"
@@ -145,7 +151,8 @@
                                      id="documents-dropzone"
                                      class="dropzone-default dropzone-multiple">
                                     <input type="text" name="localDocuments" value="">
-                                    <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX, PPTX, PNG, JPG • {{__('default.pages.courses.max_file_title')}} 20
+                                    <div class="dropzone-default__info">PDF, DOC, XLS, PPT, DOCX, XLSX, PPTX, PNG, JPG
+                                        • {{__('default.pages.courses.max_file_title')}} 20
                                         MB
                                     </div>
                                     <div class="previews-container">
@@ -153,11 +160,11 @@
                                             @foreach(json_decode($item->lesson_attachment->another_files) as $file)
                                                 <div class="dz-preview dz-image-preview dz-stored">
                                                     <div class="dz-details">
-                                                        <input type="text" name="localDocuments1[]"
+                                                        <input type="text" name="localDocumentsStored[]"
                                                                value="{{$file}}"
                                                                placeholder="">
-                                                        <div class="dz-filename"><span
-                                                                    data-dz-name="">{{substr(basename($file), 14)}}</span>
+                                                        <div class="dz-filename">
+                                                            <span data-dz-name="">{{substr(basename($file), 14)}}</span>
                                                         </div>
                                                     </div>
                                                     <a href="javascript:undefined;"
@@ -178,6 +185,7 @@
 
                             @include('app.pages.author.courses.components.lesson.poor_vision_lesson_edit',['item' => $item])
                             @include('app.pages.author.courses.components.lesson.poor_hearing_lesson_edit',['item' => $item])
+
                             <div id="optionalFields">
                                 <div id="homework" @if($item->end_lesson_type == 1) style="display: block"
                                      @else style="display: none" @endif>
@@ -202,7 +210,6 @@
                 </div>
             </div>
         </section>
-
     </main>
 @endsection
 
