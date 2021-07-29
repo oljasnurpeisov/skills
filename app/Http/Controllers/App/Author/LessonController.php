@@ -470,82 +470,71 @@ class LessonController extends Controller
 
             // Видео с устройства
             $videos = array_merge(json_decode($request->localVideo) ?? [], $request->localVideoStored ?? []);
-
             if ($videos != $item_attachments->videos) {
-
                 $item_attachments->videos = $videos;
 
                 $item_attachments->save();
             }
+
             // Аудио с устройства
             $audios = array_merge(json_decode($request->localAudio) ?? [], $request->localAudioStored ?? []);
-
             if ($audios != $item_attachments->audios) {
-
                 $item_attachments->audios = $audios;
 
                 $item_attachments->save();
             }
+
             // Другие файлы с устройства
             $another_files = array_merge(json_decode($request->localDocuments) ?? [], $request->localDocumentsStored ?? []);
-
             if ($another_files != $item_attachments->another_files) {
-
                 $item_attachments->another_files = $another_files;
 
                 $item_attachments->save();
             }
+
             // Видео с устройства (для слабовидящих)
             $videos_poor_vision = array_merge(json_decode($request->localVideo1) ?? [], $request->localVideoStored1 ?? []);
-
             if ($videos_poor_vision != $item_attachments->videos_poor_vision) {
-
                 $item_attachments->videos_poor_vision = $videos_poor_vision;
 
                 $item_attachments->save();
             }
+
             // Аудио с устройства (для слабовидящих)
             $audios_poor_vision = array_merge(json_decode($request->localAudio1) ?? [], $request->localAudioStored1 ?? []);
-
             if ($audios_poor_vision != $item_attachments->audios_poor_vision) {
-
                 $item_attachments->audios_poor_vision = $audios_poor_vision;
 
                 $item_attachments->save();
             }
+
             // Другие файлы с устройства (для слабовидящих)
             $another_files_poor_vision = array_merge(json_decode($request->localDocuments1) ?? [], $request->localDocumentsStored1 ?? []);
-
             if ($another_files_poor_vision != $item_attachments->another_files_poor_vision) {
-
                 $item_attachments->another_files_poor_vision = $another_files_poor_vision;
 
                 $item_attachments->save();
             }
 
-            // Видео с устройства (для слабовидящих)
+            // Видео с устройства (для слабослыщащих)
             $videos_poor_hearing = array_merge(json_decode($request->localVideo2) ?? [], $request->localVideoStored2 ?? []);
-
             if ($videos_poor_hearing != $item_attachments->videos_poor_hearing) {
-
                 $item_attachments->videos_poor_hearing = $videos_poor_hearing;
 
                 $item_attachments->save();
             }
-            // Аудио с устройства (для слабовидящих)
+
+            // Аудио с устройства (для слабослыщащих)
             $audios_poor_hearing = array_merge(json_decode($request->localAudio2) ?? [], $request->localAudioStored2 ?? []);
-
             if ($audios_poor_hearing != $item_attachments->audios_poor_hearing) {
-
                 $item_attachments->audios_poor_hearing = $audios_poor_hearing;
 
                 $item_attachments->save();
             }
-            // Другие файлы с устройства (для слабовидящих)
+
+            // Другие файлы с устройства (для слабослыщащих)
             $another_files_poor_hearing = array_merge(json_decode($request->localDocuments2) ?? [], $request->localDocumentsStored2 ?? []);
-
             if ($another_files_poor_hearing != $item_attachments->another_files_poor_hearing) {
-
                 $item_attachments->another_files_poor_hearing = $another_files_poor_hearing;
 
                 $item_attachments->save();
