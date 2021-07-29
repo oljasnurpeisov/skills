@@ -153,7 +153,7 @@
                                             @foreach(json_decode($item->lesson_attachment->another_files) as $file)
                                                 <div class="dz-preview dz-image-preview dz-stored">
                                                     <div class="dz-details">
-                                                        <input type="text" name="localDocuments1[]"
+                                                        <input type="text" name="localDocumentsStored[]"
                                                                value="{{$file}}"
                                                                placeholder="">
                                                         <div class="dz-filename"><span
