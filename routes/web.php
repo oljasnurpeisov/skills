@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CORS;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\App\PageController;
@@ -29,7 +30,6 @@ Route::group(["namespace" => "Admin"], function () {
     // Тест для Айтана
     Route::post('/ajaxUploadImageTest', 'AjaxUploadController@ajaxUploadPicTest');
     Route::post('/ajaxUploadFilesTest', 'AjaxUploadController@ajaxUploadFilesTest');
-
 });
 
 Route::get("/{lang}/auth_sso", "Auth\EnbekPassportController@login")->name('auth_sso');
@@ -47,6 +47,15 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get("/", "UserController@profile");
                 Route::get("/profile", "UserController@profile");
                 Route::post("/profile", "UserController@profileUpdate");
+
+                Route::get('/clear-cache', function () {
+                    Artisan::call('cache:clear');
+                    return "Cache is cleared";
+                });
+                Route::get('/clear-view', function () {
+                    Artisan::call('view:clear');
+                    return "View is cleared";
+                });
             });
             // Роли
             Route::group(['middleware' => 'check.permission:admin.roles'], static function () {
