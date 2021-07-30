@@ -45,7 +45,7 @@ return [
     'course_buy_status_on_process' => 'Оплата курса <a href="/:lang/course-catalog/course/:course_id">:course_name</a> в обработке',
     'course_buy_status_success' => 'Вы успешно приобрели курс <a href="/:lang/course-catalog/course/:course_id">:course_name</a>',
     'course_buy_status_failed' => 'Произошла ошибка при оплате курса <a href="/:lang/course-catalog/course/:course_id">:course_name</a>',
-    'course_student_finished' => 'Поздравляем с завершением курса <a href="/:lang/course-catalog/course/:course_id">:course_name</a>. Сертификаты доступны в разделе <a href="/:lang/student/my-certificates">Мои сертификаты</a>',
+    'course_student_finished' => 'Поздравляем с завершением курса <a href="/:lang/course-catalog/course/:course_id">:course_name</a>. Сертификат доступен в разделе <a href="/:lang/student/my-certificates">Мои сертификаты</a>',
     'new_message' => 'У вас новое <a href="/:lang/dialog/opponent-:opponent_id">сообщение </a> от <i>:user_name</i>',
 
     're_calculate_quota_cost_message' => 'Стоимость курса :course_name по гос.поддержке была обновлена. Текущая стоимость курса по по гос.поддержке: :course_quota_cost тг.',
