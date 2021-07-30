@@ -35,27 +35,22 @@
                     <div class="mobile-dropdown__desc">
                         <ul class="tabs-links">
                             <li @if(Route::currentRouteName() === 'author.courses.my_courses') class="active" @endif>
-                                <a href="{{ route('author.courses.my_courses', ['lang' => $lang]) }}"
-                                   title="{{__('default.pages.courses.my_courses')}}">{{__('default.pages.courses.my_courses')}}</a>
-                            </li>
-                            <li @if(Route::currentRouteName() === 'author.courses.unpublished') class="active" @endif>
-                                <a href="{{ route('author.courses.unpublished', ['lang' => $lang]) }}"
-                                   title="{{__('default.pages.courses.my_courses_unpublished')}}">{{__('default.pages.courses.my_courses_unpublished')}}</a>
-                            </li>
-                            <li @if(Route::currentRouteName() === 'author.courses.on_check') class="active" @endif>
-                                <a href="{{ route('author.courses.on_check', ['lang' => $lang]) }}"
-                                   title="{{__('default.pages.courses.my_courses_onCheck')}}">{{__('default.pages.courses.my_courses_onCheck')}}</a>
+                                <a href="{{ route('author.courses.my_courses', ['lang' => $lang]) }}" title="{{__('default.pages.courses.my_courses')}}">{{__('default.pages.courses.my_courses')}}</a>
                             </li>
                             <li @if(Route::currentRouteName() === 'author.courses.drafts') class="active" @endif>
-                                <a href="{{ route('author.courses.drafts', ['lang' => $lang]) }}"
-                                   title="{{__('default.pages.courses.drafts')}}">{{__('default.pages.courses.drafts')}}</a>
+                                <a href="{{ route('author.courses.drafts', ['lang' => $lang]) }}" title="{{__('default.pages.courses.drafts')}}">{{__('default.pages.courses.drafts')}}</a>
                             </li>
-                            <li @if(Route::currentRouteName() === 'author.courses.deleted') class="active" @endif>
-                                <a href="{{ route('author.courses.deleted', ['lang' => $lang]) }}"
-                                   title="{{__('default.pages.courses.my_courses_deleted')}}">{{__('default.pages.courses.my_courses_deleted')}}</a>
+                            <li @if(Route::currentRouteName() === 'author.courses.on_check') class="active" @endif>
+                                <a href="{{ route('author.courses.on_check', ['lang' => $lang]) }}" title="{{__('default.pages.courses.my_courses_onCheck')}}">{{__('default.pages.courses.my_courses_onCheck')}}</a>
                             </li>
                             <li @if(Route::currentRouteName() === 'author.courses.signing' || Route::currentRouteName() === 'author.courses.signing.contract') class="active" @endif>
                                 <a href="{{ route('author.courses.signing', ['lang' => $lang]) }}" title="{{ __('default.pages.courses.my_courses_signed') }}">{{ __('default.pages.courses.my_courses_signed') }}</a>
+                            </li>
+                            <li @if(Route::currentRouteName() === 'author.courses.unpublished') class="active" @endif>
+                                <a href="{{ route('author.courses.unpublished', ['lang' => $lang]) }}" title="{{__('default.pages.courses.my_courses_unpublished')}}">{{__('default.pages.courses.my_courses_unpublished')}}</a>
+                            </li>
+                            <li @if(Route::currentRouteName() === 'author.courses.deleted') class="active" @endif>
+                                <a href="{{ route('author.courses.deleted', ['lang' => $lang]) }}" title="{{__('default.pages.courses.my_courses_deleted')}}">{{__('default.pages.courses.my_courses_deleted')}}</a>
                             </li>
                         </ul>
                     </div>
