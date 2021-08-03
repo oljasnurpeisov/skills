@@ -69,7 +69,8 @@ class AuthStudent
                 $studentInformation->quota_count = 3;
             }
 
-            if (($studentResumes != null) && ($studentResumes != [])) {
+//            if (($studentResumes != null) && ($studentResumes != [])) {
+            if (!empty($studentResumes)) {
                 $setFullNameAndIIN = true;
                 $userSkills = array();
                 $userProfessions = array();
