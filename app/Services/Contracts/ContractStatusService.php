@@ -7,7 +7,7 @@ use App\Models\Contract;
 class ContractStatusService
 {
     /**
-     *
+     * Set pending
      */
     public function setPending(int $id)
     {
