@@ -13,7 +13,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use PhpOffice\PhpWord\Exception\Exception;
 use Services\Contracts\ContractFilterService;
 use Services\Contracts\ContractService;
