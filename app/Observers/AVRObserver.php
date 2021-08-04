@@ -39,7 +39,6 @@ class AVRObserver
     {
         $oldData = AVR::find($avr->id);
 
-//        if () {
         if (!empty($oldData->route_id) && !empty($avr->route_id) && !empty($avr->status) && ($oldData->route_id !== $avr->route_id || $avr->status !== $oldData->status)) {
 
             if ($oldData->status === 1) {
