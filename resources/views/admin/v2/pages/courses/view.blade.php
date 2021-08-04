@@ -77,13 +77,6 @@
                                     </div>
                                 </form>
                             @elseif($item->status == 3)
-{{--                                <p><b>{{ __('admin.pages.courses.course_status_title') }}--}}
-{{--                                        :</b> {{ __('admin.pages.courses.'.$item->status) }}</p>--}}
-{{--                                <p><b>{{ __('admin.pages.courses.course_quota_title') }}--}}
-{{--                                        :</b> {{ __('admin.pages.courses.quota_status_'.$item->quota_status) }}</p>--}}
-{{--                                        :</b> Да</p>--}}
-{{--                                <p><b>{{ __('admin.pages.courses.course_quota_cost') }}--}}
-{{--                                        :</b> {{$item->quotaCost->last()->cost ?? 0}} {{__('default.tenge_title')}}</p>--}}
 
                                 <p><b>{{ __('admin.pages.courses.course_status_title') }}
                                         :</b> {{ __('admin.pages.courses.'. $item->status) }}</p>
@@ -167,67 +160,6 @@
                                     @endif
                                 @endif
 
-{{--                                @switch($item->quota_status)--}}
-{{--                                    @case(0)--}}
-{{--                                    @case(3)--}}
-{{--                                    @if(($item->cost > 0) and ($item->is_paid == true))--}}
-{{--                                        <form id="course_form"--}}
-{{--                                              action="/{{$lang}}/admin/course/quota_request/{{ $item->id }}"--}}
-{{--                                              method="post"--}}
-{{--                                              enctype="multipart/form-data">--}}
-{{--                                            {{ csrf_field() }}--}}
-{{--                                            <br>--}}
-{{--                                            <div class="buttons">--}}
-{{--                                                <div>--}}
-{{--                                                    <button type="submit" name="action" value="activate"--}}
-{{--                                                            class="btn btn--yellow">{{ __('admin.pages.courses.quota_request_title') }}</button>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </form>--}}
-{{--                                    @endif--}}
-{{--                                    @break--}}
-{{--                                    @case(2)--}}
-{{--                                    @case(4)--}}
-{{--                                    <form id="quota_number_form" method="POST"--}}
-{{--                                          action="/{{$lang}}/admin/course/quota_contract/{{ $item->id }}">--}}
-{{--                                        {{ csrf_field() }}--}}
-{{--                                        <div class="input-group {{ $errors->has('quota_contract_number') ? ' has-error' : '' }}">--}}
-{{--                                            <label class="input-group__title">Номер договора*</label>--}}
-{{--                                            <input type="text" name="quota_contract_number"--}}
-{{--                                                   value="{{ $item->quota_contract_number ?? '' }}"--}}
-{{--                                                   placeholder=""--}}
-{{--                                                   class="input-regular" required>--}}
-{{--                                            @if ($errors->has('quota_contract_number'))--}}
-{{--                                                <span class="help-block"><strong>{{ $errors->first('quota_contract_number') }}</strong></span>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-{{--                                        <div>--}}
-{{--                                            <button type="submit"--}}
-{{--                                                    class="btn btn--green">{{ __('admin.labels.save') }}</button>--}}
-{{--                                        </div>--}}
-{{--                                    </form>--}}
-{{--                                    @break--}}
-{{--                                    @default--}}
-
-{{--                                @endswitch--}}
-
-
-{{--                                <hr>--}}
-{{--                                <form id="course_form" action="/{{$lang}}/admin/course/unpublish/{{ $item->id }}"--}}
-{{--                                      method="post"--}}
-{{--                                      style="float: right"--}}
-{{--                                      enctype="multipart/form-data">--}}
-{{--                                    {{ csrf_field() }}--}}
-{{--                                    <div class="buttons" style="float: right;">--}}
-{{--                                        <div>--}}
-{{--                                            <a type="submit" name="action"--}}
-{{--                                                    class="btn btn--green">Запросить доступ по квоте</a>--}}
-{{--                                            <button type="submit" name="action"--}}
-{{--                                                    class="btn btn--red">{{ __('admin.pages.courses.unpublish_title') }}</button>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <br>--}}
-{{--                                </form>--}}
                                 @if($item->isPaid() and !$item->isQuota())
                                     <form id="course_form"
                                           action="/{{$lang}}/admin/course/quota_request/{{ $item->id }}"
