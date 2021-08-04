@@ -93,7 +93,6 @@ class AuthEnbekPassport
         if (!empty($this->enbekPassport->user()->email)) {
             $this->authService->loginStudentByEmail($this->enbekPassport->user()->email);
 
-
             // Отправляем запрос в АПИ enbek.kz
             (new AuthStudent($this->enbekPassport->user()->token, $this->enbekPassport->user()->email, $this->enbekPassport->user()->uid))->afterLogin();
         }
