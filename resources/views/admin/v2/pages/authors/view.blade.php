@@ -197,7 +197,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{ dd(Auth::user()) }}
+                        {{ dd($item) }}
                         <div>
                             <div class="input-group">
                                 <label class="input-group__title">{{__('default.pages.auth.type_of_ownership')}} *</label>
