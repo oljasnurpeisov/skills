@@ -73,5 +73,7 @@ class AVRCustomGenerator extends Command
 
             $this->AVRServiceRouting->toNextRoute($newAvr);
         }
+
+        dd('Done for user: '. $user_id);
     }
 }
