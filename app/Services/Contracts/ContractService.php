@@ -212,7 +212,7 @@ class ContractService
      */
    public function removeActiveContracts(int $course_id): void
    {
-       Contract::pending()->whereCourseId($course_id)->update([
+       Contract::whereCourseId($course_id)->update([
            'status' => 6
        ]);
 //       $contracts = Contract::pending()->whereCourseId($course_id)->get();
