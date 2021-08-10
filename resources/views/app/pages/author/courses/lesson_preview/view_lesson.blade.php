@@ -2,6 +2,8 @@
 
 @section('content')
     <main class="main">
+
+
         <section class="plain">
             <div class="container">
                 <ul class="breadcrumbs">
