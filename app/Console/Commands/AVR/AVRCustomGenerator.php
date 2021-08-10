@@ -67,13 +67,15 @@ class AVRCustomGenerator extends Command
             ->whereAuthorId($user_id)
             ->get();
 
+        $i = 0;
         foreach($courses as $course) {
             $avr = new AVRGen($course);
             $newAvr = $avr->generate($start_at, $end_at);
 
             $this->AVRServiceRouting->toNextRoute($newAvr);
+            $i++;
         }
 
-        dd('Done for user: '. $user_id);
+        dd('AVR generated for user: '. $user_id .'. Count: '. $i);
     }
 }
