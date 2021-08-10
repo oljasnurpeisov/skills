@@ -3,7 +3,6 @@
 @section('content')
     <main class="main">
 
-
         <section class="plain">
             <div class="container">
                 <ul class="breadcrumbs">
@@ -62,6 +61,7 @@
                 <div class="plain-text gray text-center green">{{$right_answers}}
                     /{{json_decode($lesson->practice)->passingScore}}
                     . {{__('default.pages.lessons.test_success_passed')}}
+                    . {{ __('default.pages.lessons.test_success_congratulation', ['course' => $lesson->course->name]) }}
                 </div>
             @else
                 <div class="plain-text gray text-center red">{{$right_answers}}

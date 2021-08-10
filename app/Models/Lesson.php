@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\Lesson
@@ -118,5 +119,13 @@ class Lesson extends Model
         $lessonStudent = $this->student_lessons()->where('student_id', '=', $user->id)->first();
 
         return ($lessonStudent != null) ? $lessonStudent->is_finished : false;
+    }
+
+    /**
+     * Course
+     */
+    public function course(): HasOne
+    {
+        return $this->hasOne(Course::class, 'id', 'course_id');
     }
 }

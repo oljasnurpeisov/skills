@@ -357,6 +357,7 @@ return [
             'to_lessons_list' => 'Сабақтар тізіміне өту',
             'result_title' => 'Нәтиже',
             'test_success_passed' => 'Тест сәтті аяқталды!',
+            'test_success_congratulation' => '":course" курсының аяқталуымен құттықтаймыз. Сертификат "Менің сертификаттарым" бөлімінде.',
             'test_failed_passed' => 'Тест өткен жоқ!'
         ],
         'profile' => [
