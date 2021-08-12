@@ -3,7 +3,8 @@
         <div class="title-secondary">{{__('default.pages.lessons.test_title')}}</div>
         <div class="questions" id="questions">
             @if(($item->practice != null) and ($item->end_lesson_type == 0))
-                @foreach(json_decode($item->practice)->questions as $key => $question)
+                @php($questions = json_decode($item->practice)->questions)
+                @foreach($questions as $key => $question)
                     <div class="question form-group">
                         <label class="form-group__label">{{__('default.pages.lessons.question_title')}}</label>
                         <div class="input-addon">
@@ -115,7 +116,11 @@
                                 @endif
                             </div>
                             <div class="addon addon-btn">
-                                <div class="btn-icon small icon-close" data-question-remove=""></div>
+                                @if($key == 0)
+                                    <span class="required">*</span>
+                                @else
+                                    <div class="btn-icon small icon-close" data-question-remove=""></div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -168,7 +173,7 @@
                             </div>
                         </div>
                         <div class="addon addon-btn">
-                            <div class="btn-icon small icon-close" data-question-remove=""></div>
+                            <span class="required">*</span>
                         </div>
                     </div>
                 </div>
