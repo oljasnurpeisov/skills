@@ -41,8 +41,8 @@ class ReportController extends Controller
      */
     public function __construct(ContractFilterService $contractFilterService, AVRFilterService $AVRFilterService)
     {
-        $this->contractFilterService    = $contractFilterService;
-        $this->AVRFilterService         = $AVRFilterService;
+        $this->contractFilterService = $contractFilterService;
+        $this->AVRFilterService = $AVRFilterService;
     }
 
     public function authorsReports(Request $request)
@@ -731,6 +731,11 @@ class ReportController extends Controller
 
     public function exportStudentsReport(Request $request)
     {
+        $c1 = User::role('student')->count();
+        $c2 = User::whereHas('student_info')->role('student')->count();
+        dd($c1, $c2);
+
+
         $query = Session::get('students_report_export');
         $export = [[]];
         $lang = app()->getLocale();
@@ -757,6 +762,10 @@ class ReportController extends Controller
                 'courses_count' => $courses_count, 'certificates' => $certificates];
 
             array_push($export, $newElement);
+        }
+
+        if (isset($_GET['testing'])) {
+            dd($export);
         }
 
         return Excel::download(new StudentReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
@@ -979,8 +988,8 @@ class ReportController extends Controller
     {
         return view('admin.v2.pages.reports.contracts', [
             'contracts' => $this->contractFilterService->getOrSearch($request->all(), 'signed'),
-            'request'   => $request->all(),
-            'title'     => 'Отчет по договорам'
+            'request' => $request->all(),
+            'title' => 'Отчет по договорам'
         ]);
     }
 
@@ -993,9 +1002,9 @@ class ReportController extends Controller
     public function avr(Request $request): View
     {
         return view('admin.v2.pages.reports.avr', [
-            'avr'       => $this->AVRFilterService->getOrSearch($request->all(), 'signed'),
-            'request'   => $request->all(),
-            'title'     => 'Отчет по АВР'
+            'avr' => $this->AVRFilterService->getOrSearch($request->all(), 'signed'),
+            'request' => $request->all(),
+            'title' => 'Отчет по АВР'
         ]);
     }
 }
