@@ -731,8 +731,15 @@ class ReportController extends Controller
 
     public function exportStudentsReport(Request $request)
     {
-        $c1 = User::role('student')->count();
-        $c2 = User::whereHas('student_info')->role('student')->count();
+        $c1 = User::whereHas('roles', function ($q) {
+            $q->whereSlug('student');
+        })
+            ->count();
+        $c2 = User::whereHas('student_info')
+            ->whereHas('roles', function ($q) {
+                $q->whereSlug('student');
+            })
+            ->count();
         dd($c1, $c2);
 
 
