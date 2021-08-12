@@ -731,56 +731,35 @@ class ReportController extends Controller
 
     public function exportStudentsReport(Request $request)
     {
-        $c1 = User::whereHas('roles', function ($q) {
-            $q->whereSlug('student');
-        })
-            ->pluck('id')
-            ->toArray();
-        $c2 = User::whereHas('student_info')
-            ->whereHas('roles', function ($q) {
-                $q->whereSlug('student');
-            })
-            ->pluck('id')
-            ->toArray();
-        $temp = [];
-        foreach ($c1 as $id) {
-            if (!in_array($id, $c2)) {
-                $temp[] = $id;
-            }
-        }
-        dd($temp);
-
-
         $query = Session::get('students_report_export');
         $export = [[]];
         $lang = app()->getLocale();
 
+        /** @var User $i */
         foreach ($query as $i) {
-            // ФИО обучающегося
-            $name = $i->student_info->name;
-            // Статус безработного
-            if ($i->unemployed_status == 0) {
-                $unemployed_status = __('default.yes_title');
-            } else {
-                $unemployed_status = __('default.no_title');
+            if($i->student_info != null && $i->student_course != null){
+                // ФИО обучающегося
+                $name = $i->student_info->name;
+                // Статус безработного
+                if ($i->unemployed_status == 0) {
+                    $unemployed_status = __('default.yes_title');
+                } else {
+                    $unemployed_status = __('default.no_title');
+                }
+                // Кол-во квот
+                $quota_count = $i->student_info->quota_count;
+                // Кол-во курсов
+                $courses_count = $i->student_course->whereIn('paid_status', [1, 2])->count();
+                // Кол-во сертификатов
+                $certificates = $i->student_course->where('is_finished', '=', true)->count();
+                // Кол-во подтвержденных квалификаций
+                $qualifications = $i->qualifications_count;
+
+                $newElement = ['name' => $name, 'unemployed_status' => $unemployed_status, 'quota_count' => $quota_count,
+                    'courses_count' => $courses_count, 'certificates' => $certificates];
+
+                array_push($export, $newElement);
             }
-            // Кол-во квот
-            $quota_count = $i->student_info->quota_count;
-            // Кол-во курсов
-            $courses_count = $i->student_course->whereIn('paid_status', [1, 2])->count();
-            // Кол-во сертификатов
-            $certificates = $i->student_course->where('is_finished', '=', true)->count();
-            // Кол-во подтвержденных квалификаций
-            $qualifications = $i->qualifications_count;
-
-            $newElement = ['name' => $name, 'unemployed_status' => $unemployed_status, 'quota_count' => $quota_count,
-                'courses_count' => $courses_count, 'certificates' => $certificates];
-
-            array_push($export, $newElement);
-        }
-
-        if (isset($_GET['testing'])) {
-            dd($export);
         }
 
         return Excel::download(new StudentReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
