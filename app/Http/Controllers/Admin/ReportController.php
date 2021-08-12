@@ -734,13 +734,21 @@ class ReportController extends Controller
         $c1 = User::whereHas('roles', function ($q) {
             $q->whereSlug('student');
         })
-            ->count();
+            ->pluck('id')
+            ->toArray();
         $c2 = User::whereHas('student_info')
             ->whereHas('roles', function ($q) {
                 $q->whereSlug('student');
             })
-            ->count();
-        dd($c1, $c2);
+            ->pluck('id')
+            ->toArray();
+        $temp = [];
+        foreach ($c1 as $id) {
+            if (!in_array($id, $c2)) {
+                $temp[] = $c2;
+            }
+        }
+        dd($temp);
 
 
         $query = Session::get('students_report_export');
