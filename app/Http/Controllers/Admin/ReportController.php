@@ -745,7 +745,7 @@ class ReportController extends Controller
         $temp = [];
         foreach ($c1 as $id) {
             if (!in_array($id, $c2)) {
-                $temp[] = $c2;
+                $temp[] = $id;
             }
         }
         dd($temp);
