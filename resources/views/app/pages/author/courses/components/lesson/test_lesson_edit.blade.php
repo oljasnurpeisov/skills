@@ -25,22 +25,24 @@
                                             @foreach($question->answers as $answer)
                                                 <div class="form-group">
                                                     <div class="input-addon">
-                                                        <div data-url="/ajax_upload_test_images?_token={{ csrf_token() }}"
-                                                             data-maxfiles="1" data-maxsize="1"
-                                                             data-acceptedfiles="image/*"
-                                                             class="dropzone-default dropzone-multiple dz-max-files-reached">
+                                                        <div
+                                                            data-url="/ajax_upload_test_images?_token={{ csrf_token() }}"
+                                                            data-maxfiles="1" data-maxsize="1"
+                                                            data-acceptedfiles="image/*"
+                                                            class="dropzone-default dropzone-multiple dz-max-files-reached">
                                                             <input type="text" name="answers[{{ $key+1 }}][]"
                                                                    value="{{ $answer }}" required="">
                                                             <div class="dropzone-default__info">JPG, PNG • макс. 1MB
                                                             </div>
                                                             <div class="previews-container">
-                                                                <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
+                                                                <div
+                                                                    class="dz-preview dz-processing dz-image-preview dz-success dz-complete">
                                                                     <div class="dz-details">
                                                                         <img data-dz-thumbnail=""
                                                                              alt=""
                                                                              src="{{ $answer }}">
                                                                         <div class="dz-filename"><span
-                                                                                    data-dz-name="">{{basename($answer)}}</span>
+                                                                                data-dz-name="">{{basename($answer)}}</span>
                                                                         </div>
                                                                         @if(file_exists(public_path($answer)))
                                                                             <div class="dz-size" data-dz-size="">
@@ -71,8 +73,8 @@
 
                                         <div class="text-right">
                                             <div title="Добавить" class="add-btn"><span
-                                                        class="add-btn__title">Добавить</span><span
-                                                        class="btn-icon extra-small icon-plus"> </span></div>
+                                                    class="add-btn__title">Добавить</span><span
+                                                    class="btn-icon extra-small icon-plus"> </span></div>
                                         </div>
                                     </div>
                                 @else
@@ -106,14 +108,14 @@
                                         <div class="text-right">
                                             <div title="{{__('default.pages.profile.add_btn_title')}}"
                                                  class="add-btn"><span
-                                                        class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
-                                                        class="btn-icon extra-small icon-plus"> </span></div>
+                                                    class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
+                                                    class="btn-icon extra-small icon-plus"> </span></div>
                                         </div>
                                     </div>
                                 @endif
                             </div>
                             <div class="addon addon-btn">
-                                <span class="required">*</span>
+                                <div class="btn-icon small icon-close" data-question-remove=""></div>
                             </div>
                         </div>
                     </div>
@@ -160,13 +162,13 @@
 
                                 <div class="text-right">
                                     <div title="{{__('default.pages.profile.add_btn_title')}}" class="add-btn"><span
-                                                class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
-                                                class="btn-icon extra-small icon-plus"> </span></div>
+                                            class="add-btn__title">{{__('default.pages.profile.add_btn_title')}}</span><span
+                                            class="btn-icon extra-small icon-plus"> </span></div>
                                 </div>
                             </div>
                         </div>
                         <div class="addon addon-btn">
-                            <span class="required">*</span>
+                            <div class="btn-icon small icon-close" data-question-remove=""></div>
                         </div>
                     </div>
                 </div>
@@ -178,7 +180,7 @@
             <div class="row row--multiline">
                 <div class="col-auto">
                     <div class="text">{{__('default.pages.lessons.questions_count')}}: <span
-                                id="questionsCount"></span></div>
+                            id="questionsCount"></span></div>
                 </div>
                 <div class="col-auto">
                     <div class="passing-score">
@@ -196,3 +198,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('.question .addon .icon-close').each(function () {
+            $(this).click(function () {
+                $(this).closest('.form-group').remove();
+            })
+        });
+    })
+</script>
