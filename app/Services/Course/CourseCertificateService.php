@@ -67,15 +67,15 @@ class CourseCertificateService
                 $path = public_path('users/user_' . $user->id . '');
                 $pdfPath = $path . '/' . 'course_' . $course->id . '_certificate_' . $language . '.pdf';
                 $pdfToImage = new \Spatie\PdfToImage\Pdf($pdfPath);
-                $pngPath = $path . '/' . 'course_' . $course->id . '_image_' . $language . '.png';
+                $pngPath = $path . '/' . 'course_' . $course->id . '_image_' . $language . '.jpg'; //at the output we get jpg, not png.
                 $pdfToImage->saveImage($pngPath);
             } catch (\InvalidArgumentException $e) {
                 $e->getMessage();
             }
         }
 
-        $certificate->png_ru = $filePath . '/' . 'course_' . $course->id . '_image_ru.png';
-        $certificate->png_kk = $filePath . '/' . 'course_' . $course->id . '_image_kk.png';
+        $certificate->png_ru = $filePath . '/' . 'course_' . $course->id . '_image_ru.jpg';
+        $certificate->png_kk = $filePath . '/' . 'course_' . $course->id . '_image_kk.jpg';
         $certificate->save();
 
         try {
