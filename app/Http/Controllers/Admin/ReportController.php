@@ -741,7 +741,7 @@ class ReportController extends Controller
                 // ФИО обучающегося
                 $name = $i->student_info->name;
                 // Статус безработного
-                if ($i->unemployed_status == 0) {
+                if ($i->student_info->unemployed_status == 0) {
                     $unemployed_status = __('default.yes_title');
                 } else {
                     $unemployed_status = __('default.no_title');
