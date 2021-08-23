@@ -74,8 +74,8 @@
                         <td>{{ $contract->course->name }}</td>
                         <td>{{ $contract->course->user->company_name }}</td>
                         <td>{{ $contract->course->getTypeName() }}</td>
-                        <td>{{ $contract->author_signed_at ?? '-' }}</td>
-                        <td>{{ $contract->course->publish_at ?? '-' }}</td>
+                        <td>{{ !empty($contract->author_signed_at) ? $contract->author_signed_at->format('d.m.Y H:i:s') : '-' }}</td>
+                        <td>{{ !empty($contract->course->publish_at) ? $contract->course->publish_at->format('d.m.Y H:i:s') : '-' }}</td>
                         <td>
                             <div class="action-buttons">
                                 @if (!empty($contract->current_route))

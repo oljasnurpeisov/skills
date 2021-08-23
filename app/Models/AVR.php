@@ -187,7 +187,7 @@ class AVR extends Model
      */
     public function getSignedAt(): string
     {
-        return (!empty($this->document->lastSignature) and $this->isSigned()) ? $this->document->lastSignature->created_at : '-';
+        return (!empty($this->document->lastSignature) and $this->isSigned()) ? $this->document->lastSignature->created_at->format('d.m.Y H:i:s') : '-';
     }
 
     /**
