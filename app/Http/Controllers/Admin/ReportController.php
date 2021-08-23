@@ -762,8 +762,6 @@ class ReportController extends Controller
             }
         }
 
-        dd($export);
-
         return Excel::download(new StudentReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');
     }
 
