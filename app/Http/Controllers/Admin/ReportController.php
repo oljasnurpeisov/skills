@@ -12,6 +12,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -731,6 +732,8 @@ class ReportController extends Controller
 
     public function exportStudentsReport(Request $request)
     {
+        App::setLocale('ru');
+
         $query = Session::get('students_report_export');
         $export = [[]];
         $lang = app()->getLocale();
@@ -767,6 +770,8 @@ class ReportController extends Controller
 
     public function exportCoursesReport(Request $request)
     {
+        App::setLocale('ru');
+
         $query = Session::get('courses_report_export');
         $export = [[]];
         $lang = app()->getLocale();
@@ -854,6 +859,8 @@ class ReportController extends Controller
 
     public function exportAuthorsReport(Request $request)
     {
+        App::setLocale('ru');
+
         $query = Session::get('authors_report_export');
         $export = [[]];
         $lang = app()->getLocale();
@@ -930,6 +937,8 @@ class ReportController extends Controller
 
     public function exportCertificates(Request $request)
     {
+        App::setLocale('ru');
+
         $zip = new ZipArchive;
 
         $fileName = 'Отчет по сертификатам.zip';
