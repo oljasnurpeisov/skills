@@ -210,15 +210,15 @@ class LessonController extends Controller
         ]);
 
         // Получить послений index из тем и уроков без тем
-        $last_theme_index_id = Theme::whereCourseId($course->id)->get();
+        $last_theme_index_id = Theme::whereCourseId($course->id)
+            ->pluck('index_number')
+            ->toArray();
         $last_lesson_index_id = Lesson::whereCourseId($course->id)
             ->whereThemeId(null)
             ->whereNotIn('type', [3, 4])
-            ->get();
-        $last_index = $last_theme_index_id
-            ->merge($last_lesson_index_id)
             ->pluck('index_number')
             ->toArray();
+        $last_index = array_merge($last_theme_index_id, $last_lesson_index_id);
         sort($last_index);
         $last_index = end($last_index);
 
