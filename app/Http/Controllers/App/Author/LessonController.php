@@ -228,7 +228,6 @@ class LessonController extends Controller
         } else {
             $index = 0;
         }
-        dd($last_index, $index);
 
         $item = new Lesson;
         $item->course_id = $course->id;
