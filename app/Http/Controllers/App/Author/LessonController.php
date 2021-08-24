@@ -219,11 +219,12 @@ class LessonController extends Controller
             ->pluck('index_number')
             ->toArray();
 
-        dd($last_theme_index_id, $last_lesson_index_id);
 
         $last_index = array_merge($last_theme_index_id, $last_lesson_index_id);
         sort($last_index);
         $last_index = end($last_index);
+
+        dd($last_index);
 
         if ($last_index) {
             $index = $last_index + 1;
