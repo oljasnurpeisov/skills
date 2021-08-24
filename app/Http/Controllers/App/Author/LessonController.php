@@ -223,13 +223,12 @@ class LessonController extends Controller
         sort($indexes);
         $last_index = end($indexes);
 
-        dd($last_index);
-
-        if ($last_index != null && $last_index !== false) {
+        if ($last_index !== false) {
             $index = $last_index + 1;
         } else {
             $index = 0;
         }
+        dd($last_index, $index);
 
         $item = new Lesson;
         $item->course_id = $course->id;
