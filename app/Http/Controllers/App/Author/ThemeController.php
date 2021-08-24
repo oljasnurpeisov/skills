@@ -18,22 +18,18 @@ class ThemeController extends Controller
 
     public function createTheme(Request $request)
     {
-        $untheme_lessons = Lesson::whereCourseId($request->course_id)
+        $lessonsMaxIndex = Lesson::whereCourseId($request->course_id)
             ->whereThemeId(null)
-            ->whereNotIn('type', [3,4])
-            ->orderBy('index_number', 'asc')
-            ->get();
+            ->whereNotIn('type', [3, 4])
+            ->max('index_number');
 
-        $themes = Theme::whereCourseId($request->course_id)
-            ->orderBy('index_number', 'asc')
-            ->get();
+        $themesMaxIndex = Theme::whereCourseId($request->course_id)
+            ->max('index_number');
 
-        $themes = $themes->merge($untheme_lessons)
-            ->sortBy('index_number')
-            ->last();
+        $maxIndex = max($lessonsMaxIndex, $themesMaxIndex);
 
-        if ($themes) {
-            $index = $themes->index_number + 1;
+        if ($maxIndex !== false) {
+            $index = $maxIndex + 1;
         } else {
             $index = 0;
         }
@@ -70,7 +66,7 @@ class ThemeController extends Controller
             ->get();
         $untheme_lessons = Lesson::whereCourseId($theme->course_id)
             ->whereThemeId(null)
-            ->whereNotIn('type', [3,4])
+            ->whereNotIn('type', [3, 4])
             ->orderBy('index_number', 'asc')
             ->get();
         $themes = $themes->merge($untheme_lessons)->sortBy('index_number')->values();
