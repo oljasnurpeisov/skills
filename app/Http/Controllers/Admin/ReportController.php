@@ -690,6 +690,7 @@ class ReportController extends Controller
         }
 
         $query = StudentCertificate::orderBy('id', 'DESC')
+            ->where('user_id', '!=', 90)
             ->whereBetween('created_at', [$date_from, $date_to->endOfDay()]);
 
         // Поиск по ФИО обучающегося
