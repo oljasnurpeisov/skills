@@ -741,7 +741,7 @@ class ReportController extends Controller
 
         /** @var User $i */
         foreach ($query as $i) {
-            if($i->student_info != null && $i->student_course != null){
+            if ($i->student_info != null && $i->student_course != null) {
                 // ФИО обучающегося
                 $name = $i->student_info->name;
                 // Статус безработного
@@ -939,17 +939,18 @@ class ReportController extends Controller
     public function exportCertificates(Request $request)
     {
         App::setLocale('ru');
+        $user = Auth::user();
 
         $zip = new ZipArchive;
 
         $fileName = 'Отчет по сертификатам.zip';
 
-        File::ensureDirectoryExists(public_path('/users/user_' . Auth::user()->id));
+        File::ensureDirectoryExists(public_path('/users/user_' . $user->id));
 
-        if ($zip->open(public_path('/users/user_' . Auth::user()->id . '/' . $fileName), ZipArchive::CREATE) === TRUE) {
+        if ($zip->open(public_path('/users/user_' . $user->id . '/' . $fileName), ZipArchive::CREATE) === TRUE) {
             $certificates = Session::get('certificates_export');
 
-            dd($certificates);
+            dd($certificates, $user);
 
             $files = [];
 
@@ -976,7 +977,7 @@ class ReportController extends Controller
 
         try {
 
-            return response()->download(public_path('/users/user_' . Auth::user()->id . '/' . $fileName))->deleteFileAfterSend(true);
+            return response()->download(public_path('/users/user_' . $user->id . '/' . $fileName))->deleteFileAfterSend(true);
 
         } catch (\Exception $e) {
 
