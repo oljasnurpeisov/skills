@@ -951,8 +951,6 @@ class ReportController extends Controller
         if ($zip->open(public_path('/users/user_' . $user->id . '/' . $fileName), ZipArchive::CREATE) === TRUE) {
             $certificates = Session::get('certificates_export');
 
-            dd($certificates);
-
             foreach ($certificates as $certificate) {
                 $file_ru = public_path($certificate->pdf_ru);
                 $file_kk = public_path($certificate->pdf_kk);
