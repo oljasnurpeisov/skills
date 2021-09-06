@@ -946,11 +946,10 @@ class ReportController extends Controller
         $fileName = 'Отчет по сертификатам.zip';
 
         File::ensureDirectoryExists(public_path('/users/user_' . $user->id));
+        File::delete(public_path('/users/user_' . $user->id . '/' . $fileName));
 
         if ($zip->open(public_path('/users/user_' . $user->id . '/' . $fileName), ZipArchive::CREATE) === TRUE) {
             $certificates = Session::get('certificates_export');
-
-            $files = [];
 
             foreach ($certificates as $certificate) {
                 $file_ru = public_path($certificate->pdf_ru);
@@ -967,21 +966,16 @@ class ReportController extends Controller
                         $zip->addFile($file_kk, str_replace(' ', '_', $certificate->students->student_info->name) . '-' . date('Y_m_d', strtotime($certificate->created_at)) . '-' . $certificate->course_id . '-kk.pdf');
                     }
                 }
-
             }
 
             $zip->close();
         }
 
         try {
-
             return response()->download(public_path('/users/user_' . $user->id . '/' . $fileName))->deleteFileAfterSend(true);
-
         } catch (\Exception $e) {
-
             return back()->with('status', 'При экспорте произошла ошибка. Попробуйте позже');
         }
-
     }
 
     /**
