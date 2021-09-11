@@ -171,7 +171,7 @@ class ContractService
 
            // Append document extension
 
-           rename($template, $template . '.docx');
+           copy($template, $template . '.docx');
            $template = $template . '.docx';
        }
 
@@ -248,7 +248,8 @@ class ContractService
                \Illuminate\Support\Facades\Log::info('Generate status', [
                    'params' => $params,
                    'status' => $status,
-                   'output' => $output
+                   'output' => $output,
+                   'command' => join(' ', $params)
                ]);
            } catch (\Exception $exception) {
 
