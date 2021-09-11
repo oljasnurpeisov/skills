@@ -239,7 +239,9 @@ class ContractService
 
            $params = [$converter, '-f', 'pdf', '-o', storage_path('app/' . $returnPath), $template ?: $filePath];
 
-           $testPath = tempnam(Settings::getTempDir(), 'pdf');
+           $this->storageService->save('previews/' . $contract_id . '.docx', file_get_contents($template));
+           $testPath = StorageService::path('previews/' . $contract_id . '.pdf');
+
            $params = [$converter, '-f', 'pdf', '-o', $testPath, $template ?: $filePath];
 
            try {
