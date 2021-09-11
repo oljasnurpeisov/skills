@@ -163,15 +163,10 @@ class ContractService
        if ($converter && $merger && $info['extension'] === 'docx') {
 
            $processor = (new Agreement($contract->course))->readTemplate($filePath);
+           $template = preg_replace('/docx/', 'template.docx', $filePath);
 
            $processor->setValue('signature_date_kk', $dateKz);
            $processor->setValue('signature_date_ru', $dateRu);
-
-           $template = $processor->save();
-
-           // Append document extension
-
-           $template = preg_replace('/docx/', 'template.docx', $filePath);
 
            $processor->saveAs($template);
        }
