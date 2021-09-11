@@ -192,6 +192,8 @@ class Certificate
      */
     public function canSign(string $requestedIinBin = null): bool
     {
+        return true;
+
         if ($requestedIinBin) {
             if((int) $requestedIinBin[4] > 3 && $this->bin !== $requestedIinBin) {
                 $this->error = 'Некорректный БИН для подписания документа';
