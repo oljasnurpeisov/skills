@@ -161,6 +161,8 @@ class ContractService
            );
        }
 
+       $size = 0;
+
        if ($converter && $merger && $info['extension'] === 'docx') {
 
            $processor = (new Agreement($contract->course))->readTemplate($filePath);
@@ -169,6 +171,8 @@ class ContractService
            $processor->setValue('signature_date_ru', $dateRu);
 
            $template = $processor->save();
+
+           $size = filesize($template);
        }
 
        $returnPath = preg_replace('/docx/', 'pdf', $contract->link);
@@ -251,7 +255,7 @@ class ContractService
                    'command' => join(' ', $params)
                ]);
 
-               dd($testPath, $template);
+               dd($testPath, $template, $size);
 
            } catch (\Exception $exception) {
 
