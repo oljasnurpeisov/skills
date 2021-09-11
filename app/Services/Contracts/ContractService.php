@@ -259,7 +259,7 @@ class ContractService
                    'command' => join(' ', $params)
                ]);
 
-               dd($testPath, $template, $size);
+               file_put_contents(storage_path('app/' . $returnPath), file_get_contents($testPath));
 
            } catch (\Exception $exception) {
 
