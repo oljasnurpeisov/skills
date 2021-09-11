@@ -168,6 +168,11 @@ class ContractService
            $processor->setValue('signature_date_ru', $dateRu);
 
            $template = $processor->save();
+
+           // Append document extension
+
+           rename($template, $template . '.docx');
+           $template = $template . '.docx';
        }
 
        $returnPath = preg_replace('/docx/', 'pdf', $contract->link);
