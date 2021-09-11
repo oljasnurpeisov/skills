@@ -251,6 +251,8 @@ class ContractService
                    'command' => join(' ', $params)
                ]);
 
+               dd($testPath, $template);
+
            } catch (\Exception $exception) {
 
                \Illuminate\Support\Facades\Log::info('Generate status', [
@@ -259,8 +261,6 @@ class ContractService
 
                return $this->contractToPdf($contract_id, $forceRewrite, $saveOnly, false);
            }
-
-           dd($testPath);
        }
 
        // Executes only after the command finishes
