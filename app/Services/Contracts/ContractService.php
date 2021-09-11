@@ -6,6 +6,7 @@ use App\Console\Commands\DocumentGenerator;
 use App\Models\Contract;
 use App\Models\Course;
 use App\Models\Document;
+use App\Models\Log;
 use App\Services\Files\StorageService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,8 @@ use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 ini_set('memory_limit', '4G');
 
@@ -96,81 +99,120 @@ class ContractService
 
        if (!file_exists($filePath)) abort(404);
 
-       $phpWord = IOFactory::load($filePath, "Word2007");
+       $processor = (new Agreement($contract->course))->readTemplate($filePath);
+
+       $processor->setValue('signature_date_kk', '&lt;қол қойылған күні&gt;');
+       $processor->setValue('signature_date_ru', '&lt;дата подписания&gt;');
+
+       $template = $processor->save();
+
+       $phpWord = IOFactory::load($template, "Word2007");
        $writer = IOFactory::createWriter($phpWord, "HTML");
 
-       $html = $writer->getContent();
-
-       // Replace empty dates
-
-       preg_match_all('/&lt;(.*?)&gt;/', $html, $dateMatches);
-
-       if ($dateMatches && sizeof($dateMatches[0]) === 2) {
-
-           foreach ($dateMatches[0] as $dateMatch) {
-               $html = str_replace($dateMatch, '', $html);
-           }
-       }
-
-       return $html;
+       return $writer->getContent();
    }
 
     /**
      * Договор в PDF
      *
-     * @see DocumentGenerator
-     *
      * @param int $contract_id
+     * @param bool $forceRewrite
+     * @param bool $saveOnly
      * @return string
      * @throws Exception
+     * @throws \Mpdf\MpdfException
+     *
+     * @see DocumentGenerator
      */
-   public function contractToPdf(int $contract_id, bool $forceRewrite = false, bool $saveOnly = false): string
+    public function contractToPdf(int $contract_id, bool $forceRewrite = false, bool $saveOnly = false, bool $strict = null): string
    {
        /** @var Contract $contract */
        $contract = Contract::latest()->findOrFail($contract_id);
        $filePath = StorageService::path($contract->link);
 
-       $returnPath = preg_replace('/docx/', 'pdf', $contract->link);
+       $converter = config('services.pdf.converter');
+       $merger = config('services.pdf.merger');
 
        $info = pathinfo(strtolower($filePath));
+
+       $template = null;
+
+       if ($strict === false) {
+           $converter = null;
+           $merger = null;
+       }
+
+       $dateKz = '&lt;қол қойылған күні&gt;';
+       $dateRu = '&lt;дата подписания&gt;';
+
+       if (!$saveOnly && $contract->document && $contract->document->lastSignature) {
+
+           $dateKz = sprintf('%d жылғы %s «%s»',
+               Carbon::parse($contract->document->lastSignature->created_at)->year,
+               (new GetMonth())->kk(date('m', strtotime($contract->document->lastSignature->created_at))),
+               Carbon::parse($contract->document->lastSignature->created_at)->day
+           );
+
+           $dateRu = sprintf('«%s» %s %d года',
+               Carbon::parse($contract->document->lastSignature->created_at)->day,
+               Carbon::parse($contract->document->lastSignature->created_at)->getTranslatedMonthName('Do MMMM'),
+               Carbon::parse($contract->document->lastSignature->created_at)->year
+           );
+       }
+
+       if ($converter && $merger) {
+
+           $processor = (new Agreement($contract->course))->readTemplate($filePath);
+
+           $processor->setValue('signature_date_kk', $dateKz);
+           $processor->setValue('signature_date_ru', $dateRu);
+
+           $template = $processor->save();
+       }
+
+       $returnPath = preg_replace('/docx/', 'pdf', $contract->link);
 
        if ($info['extension'] === 'pdf' && $forceRewrite) {
            $filePath = preg_replace('/pdf/', 'docx', $filePath);
        }
 
-       $Content = IOFactory::load($filePath);
+       $Content = IOFactory::load($template ?: $filePath);
        $PDFWriter = IOFactory::createWriter($Content,'HTML');
 
        $pdfPath = preg_replace('/docx/', 'pdf', $filePath);
+       $extPath = preg_replace('/docx/', 'ext.pdf', $filePath);
+       $orgPath = preg_replace('/docx/', 'org.pdf', $filePath);
 
        $html = $PDFWriter->getContent();
 
        if (!$saveOnly) {
-           $html = str_replace('</body>', '<pagebreak />{appendix}</body>', $html);
 
-           $html = str_replace('{appendix}', $this->generateAppendix(
-               $contract->document,
-               $contract->document->number,
+           $document = $contract->document;
+
+           $appendix = $this->generateAppendix(
+               $document,
+               $document->number,
                $contract->number
-           ), $html);
+           );
 
-//           Replace real dates
+           $format = 'A4';
+
+           $pdf = new mPDF([
+               'mode' => 'utf-8',
+               'format' => $format,
+               'orientation' => str_contains($format, 'L') ? 'L' : 'P'
+           ]);
+
+           $pdf->SetAuthor(env('APP_NAME'));
+           $pdf->WriteHTML($appendix);
+           $pdf->Output($extPath, Destination::FILE);
+
+           $html = str_replace('</body>', '<pagebreak />{appendix}</body>', $html);
+           $html = str_replace('{appendix}', $appendix , $html);
 
            preg_match_all('/&lt;(.*?)&gt;/', $html, $dateMatches);
 
            if ($dateMatches && sizeof($dateMatches[0]) === 2) {
-
-               $dateKz = sprintf('%d жылғы %s «%s»',
-                   Carbon::parse($contract->document->lastSignature->created_at)->year,
-                   (new GetMonth())->kk(date('m', strtotime($contract->document->lastSignature->created_at))),
-                   Carbon::parse($contract->document->lastSignature->created_at)->day
-               );
-
-               $dateRu = sprintf('«%s» %s %d года',
-                   Carbon::parse($contract->document->lastSignature->created_at)->day,
-                   Carbon::parse($contract->document->lastSignature->created_at)->getTranslatedMonthName('Do MMMM'),
-                   Carbon::parse($contract->document->lastSignature->created_at)->year
-               );
 
                foreach ($dateMatches[0] as $dateMatch) {
 
@@ -185,21 +227,71 @@ class ContractService
 
        $html = str_replace('#auto', '#0000', $html);
 
-       $format = 'A4';
+       $process = null;
+       $status = -1;
 
-       $pdf = new mPDF([
-           'mode' => 'utf-8',
-           'format' => $format,
-           'orientation' => str_contains($format, 'L') ? 'L' : 'P'
-       ]);
+       if ($converter && $merger) {
 
-       $pdf->SetAuthor(env('APP_NAME'));
-       $pdf->shrink_tables_to_fit = 0;
+           $params = [$converter, '-f', 'pdf', '-o', storage_path('app/' . $returnPath), $template ?: $filePath];
 
-       $pdf->WriteHTML($html);
-       $result = $pdf->Output($pdfPath, Destination::STRING_RETURN);
+           try {
 
-       $this->storageService->save($returnPath, $result);
+               $process = new Process($params);
+               $status = $process->run();
+               $output = $process->getErrorOutput() ?: $process->getOutput();
+
+               \Illuminate\Support\Facades\Log::info('Generate status', [
+                   'params' => $params,
+                   'status' => $status,
+                   'output' => $output
+               ]);
+           } catch (\Exception $exception) {
+
+               \Illuminate\Support\Facades\Log::info('Generate status', [
+                   'exception' => $exception->getMessage()
+               ]);
+
+               return $this->contractToPdf($contract_id, $forceRewrite, $saveOnly, false);
+           }
+       }
+
+       // Executes only after the command finishes
+
+       if ($status !== 0 || !$process->isSuccessful()) {
+
+           $format = 'A4';
+
+           $pdf = new mPDF([
+               'mode' => 'utf-8',
+               'format' => $format,
+               'orientation' => str_contains($format, 'L') ? 'L' : 'P'
+           ]);
+
+           $pdf->SetAuthor(env('APP_NAME'));
+           $pdf->shrink_tables_to_fit = 0;
+
+           $pdf->WriteHTML($html);
+           $result = $pdf->Output($pdfPath, Destination::STRING_RETURN);
+
+           $this->storageService->save($returnPath, $result);
+       }
+
+       elseif (file_exists($extPath)) {
+
+           copy($pdfPath, $orgPath);
+
+           $params = [$merger, $orgPath, $extPath, $pdfPath];
+
+           $process = new Process($params);
+           $status = $process->run();
+           $output = $process->getErrorOutput() ?: $process->getOutput();
+
+           \Illuminate\Support\Facades\Log::info('Merge status', [
+               'params' => $params,
+               'status' => $status,
+               'output' => $output
+           ]);
+       }
 
        return $returnPath;
    }

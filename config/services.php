@@ -35,6 +35,11 @@ return [
         'port' => env('NCANODE_PORT', 14579),
         'connect_retries' => env('NCANODE_CONNECTION_TRIES', 5),
         'connect_timeout' => env('NCANODE_CONNECTION_TIMEOUT', 30)
+    ],
+
+    'pdf' => [
+        'converter' => env('PDF_CONVERTER'),
+        'merger' => env('PDF_MERGER'),
     ]
 
 ];

@@ -254,6 +254,11 @@ class Agreement extends BaseGenerator
         $this->templateProcessor->setValue('year', Carbon::now()->year);
         $this->templateProcessor->setValue('number', $this->number);
 
+        if (!$this->save) {
+            $this->templateProcessor->setValue('signature_date_kk', '&lt;қол қойылған күні&gt;');
+            $this->templateProcessor->setValue('signature_date_ru', '&lt;дата подписания&gt;');
+        }
+
         return $this;
     }
 

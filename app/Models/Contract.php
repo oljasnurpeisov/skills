@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $created_at
  *
  * @property Document $document
+ * @property Course $course
  */
 class Contract extends Model
 {
