@@ -16,6 +16,7 @@ use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\Settings;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -163,12 +164,11 @@ class ContractService
        if ($converter && $merger && $info['extension'] === 'docx') {
 
            $processor = (new Agreement($contract->course))->readTemplate($filePath);
-           $template = preg_replace('/docx/', 'template.docx', $filePath);
 
            $processor->setValue('signature_date_kk', $dateKz);
            $processor->setValue('signature_date_ru', $dateRu);
 
-           $processor->saveAs($template);
+           $template = $processor->save();
        }
 
        $returnPath = preg_replace('/docx/', 'pdf', $contract->link);
@@ -235,6 +235,9 @@ class ContractService
 
            $params = [$converter, '-f', 'pdf', '-o', storage_path('app/' . $returnPath), $template ?: $filePath];
 
+           $testPath = tempnam(Settings::getTempDir(), 'pdf');
+           $params = [$converter, '-f', 'pdf', '-o', $testPath, $template ?: $filePath];
+
            try {
 
                $process = new Process($params);
@@ -247,6 +250,7 @@ class ContractService
                    'output' => $output,
                    'command' => join(' ', $params)
                ]);
+
            } catch (\Exception $exception) {
 
                \Illuminate\Support\Facades\Log::info('Generate status', [
@@ -255,6 +259,8 @@ class ContractService
 
                return $this->contractToPdf($contract_id, $forceRewrite, $saveOnly, false);
            }
+
+           dd($testPath);
        }
 
        // Executes only after the command finishes
