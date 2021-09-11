@@ -160,7 +160,7 @@ class ContractService
            );
        }
 
-       if ($converter && $merger) {
+       if ($converter && $merger && $info['extension'] === 'docx') {
 
            $processor = (new Agreement($contract->course))->readTemplate($filePath);
 
@@ -171,8 +171,9 @@ class ContractService
 
            // Append document extension
 
-           copy($template, $template . '.docx');
-           $template = $template . '.docx';
+           $template = preg_replace('/docx/', 'template.docx', $filePath);
+
+           $processor->saveAs($template);
        }
 
        $returnPath = preg_replace('/docx/', 'pdf', $contract->link);
