@@ -52,7 +52,7 @@ class PaymentController extends Controller
                     "callbackUrl" => strval($data["callbackUrl"]),
                     "orderId" => strval($data['orderId']),
                     "description" => strval($data['description']),
-                    "demo" => $data['demo'] === 'false' ? false : true,
+                    "demo" => false,
                     "returnUrl" => strval($data['returnUrl']),
                     "amount" => (int)$data["amount"] * 100,
                     "metadata" => $data["metadata"]
