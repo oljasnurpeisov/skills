@@ -39,8 +39,8 @@ class PaymentController extends Controller
 
                 $data = array("merchantId" => $item->user->payment_info->merchant_login,
                     "callbackUrl" => config('payment.callbackUrl'),
-                    "description" => __('default.pages.courses.pay_for_course').' "'.$item->name.'"',
-                    "returnUrl" => env('APP_URL').'/'.app()->getLocale().'/course-catalog/course/'.$item->id,
+                    "description" => __('default.pages.courses.pay_for_course') . ' "' . $item->name . '"',
+                    "returnUrl" => env('APP_URL') . '/' . app()->getLocale() . '/course-catalog/course/' . $item->id,
                     "amount" => $item->cost,
                     "orderId" => $payment->id,
                     "metadata" => array("course_id" => $item->id,
@@ -147,12 +147,12 @@ class PaymentController extends Controller
                     $student_course->save();
 
                     $notification_name = 'notifications.course_buy_status_success';
-                    NotificationsHelper::createNotification($notification_name, $item->id, Auth::user()->id);
+                    NotificationsHelper::createNotification($notification_name, $json->metadata->course_id, $json->metadata->student_id);
                 }
 
-            }else{
+            } else {
                 $notification_name = 'notifications.course_buy_status_failed';
-                NotificationsHelper::createNotification($notification_name, $item->id, Auth::user()->id);
+                NotificationsHelper::createNotification($notification_name, $json->metadata->course_id, $json->metadata->student_id);
             }
 
             return '{"accepted":' . (($out) ? 'true' : 'false') . '}';
@@ -163,11 +163,12 @@ class PaymentController extends Controller
 
     }
 
-    public function syncUserLessons(Int $course_id){
+    public function syncUserLessons(int $course_id)
+    {
 
         $course = Course::where('id', '=', $course_id)->first();
-        $lessons = Lesson::where('theme_id','!=', null)->orderBy('index_number', 'asc')->where('course_id', '=', $course->id)->get();
-        $lessons_tests = Lesson::whereIn('type', [3,4])->orderBy('index_number', 'asc')->where('course_id', '=', $course->id)->get();
+        $lessons = Lesson::where('theme_id', '!=', null)->orderBy('index_number', 'asc')->where('course_id', '=', $course->id)->get();
+        $lessons_tests = Lesson::whereIn('type', [3, 4])->orderBy('index_number', 'asc')->where('course_id', '=', $course->id)->get();
         $lessons = $lessons->concat($lessons_tests);
 
         $lesson_ids = [];
@@ -180,11 +181,11 @@ class PaymentController extends Controller
                     $lesson_ids[$lesson->id] = ['is_access' => false];
                 }
             } else {
-                if(!in_array($lesson->type, [3,4])) {
+                if (!in_array($lesson->type, [3, 4])) {
                     $lesson_ids[$lesson->id] = ['is_access' => true];
-                }else if(in_array($lesson->type, [3,4]) and $key == 0){
+                } else if (in_array($lesson->type, [3, 4]) and $key == 0) {
                     $lesson_ids[$lesson->id] = ['is_access' => true];
-                }else{
+                } else {
                     $lesson_ids[$lesson->id] = ['is_access' => false];
                 }
 
