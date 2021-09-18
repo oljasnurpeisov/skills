@@ -422,6 +422,8 @@ return [
 
             'email_title' => 'Электронная почта',
             'iin_title' => 'ИИН/БИН',
+            'iin' => 'ИИН',
+            'fio_title' => 'ФИО',
             'type_of_ownership' => 'Форма собственности',
             'company_name' => 'Наименование организации',
 

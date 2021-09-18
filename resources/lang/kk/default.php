@@ -416,6 +416,8 @@ return [
             'different_password' => 'Жаңа пароль ағымдағы парольден өзгеше болуы керек',
             'email_title' => 'Электрондық пошта',
             'iin_title' => 'ЖСН/БСН',
+            'iin' => 'ЖСН',
+            'fio_title' => 'Т.А.Ә',
             'type_of_ownership' => 'Меншік нысаны',
             'company_name' => 'Ұйымның атауы',
 
