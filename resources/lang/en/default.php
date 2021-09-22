@@ -562,6 +562,12 @@ return [
             <a href="https://www.enbek.kz/ru/cabinet/resint/res/add" title="по данной ссылке">по данной ссылке</a>',
             'fio_title' => 'ФИО',
             'iin_resume_title' => 'ИИН',
+            'area_title' => 'Город или район',
+            'locality_title' => 'Населенный пункт',
+            'locality_select_title' => 'Выберите населенный пункт',
+            'select' => 'Выбрать',
+            'load' => 'Загрузка',
+            'region_dict' => 'Справочник регионов',
             'send_resume' => 'Отправить'
 
         ],

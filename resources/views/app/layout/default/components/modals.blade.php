@@ -248,7 +248,7 @@
         </form>
     </div>
 
-    <div id="noCvModal" style="display:none;" class="modal-form">
+    <div id="noCvModal" style="display: none; width: 35em!important;" class="modal-form">
         <h4 class="title-primary text-center">{{__('default.pages.auth.create_resume_title')}}</h4>
         <div class="plain-text text-center">
             {!! __('default.pages.auth.create_resume_description') !!}
@@ -271,6 +271,23 @@
                 {!! $errors->first('resume_iin', '<div class="alert alert-danger">
                     :message
                 </div>') !!}
+            </div>
+            <div class="form-group">
+                <label class="form-group__label">{{__('default.pages.auth.area_title')}}</label>
+                <div class="input-group">
+                    <input name="region_caption" value="" id="region_caption" disabled type="text" class="input-regular">
+                    <span class="input-group-btn">
+                        <button style="height:34px;display:none" id="remove-region" class="btn btn-default" type="button"><i class="glyphicon glyphicon-remove"></i></button>
+                        <button class="btn btn-primary" data-title="{{__('default.pages.auth.select')}}" data-loading="{{__('default.pages.auth.load')}}" id="show-region-modal" type="button">{{__('default.pages.auth.select')}}</button>
+                    </span>
+                </div><!-- /input-group -->
+                <input type="hidden" name="region_id" value="">
+            </div>
+            <div class="form-group" id="locality-group" style="display:none;">
+                <label class="form-group__label">{{__('default.pages.auth.locality_title')}}</label>
+                <select type="text" name="type_of_ownership" id="address">
+                    <option value="">{{__('default.pages.auth.locality_select_title')}}</option>
+                </select>
             </div>
             <div class="form-group">
                 <label class="checkbox small">

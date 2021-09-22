@@ -49,13 +49,73 @@
             touch: false
         });
         @endif
-        @if(Session::get('resume_data') or $errors->has('resume_iin') or $errors->has('resume_name'))
+{{--        @if(Session::get('resume_data') or $errors->has('resume_iin') or $errors->has('resume_name'))--}}
         $.fancybox.open({
             src: '#noCvModal',
             touch: false
         });
         {{Session::forget('resume_data')}}
-        @endif
+        $('#show-region-modal').on('click', function() {
+            var btn = $(this)
+            btn.prop('disabled', true).text(btn.data('loading'))
+
+            if ($('#regionModal').length == 0) {
+                $.ajax({
+                    method: 'GET',
+                    url: '/{{ $lang }}/getRegions',
+                    success: function(html) {
+                        $('body').append(html)
+                        $.fancybox.open({
+                            src: '#regionModal',
+                            touch: false
+                        });
+                        btn.prop('disabled', false).text(btn.data('title'))
+                    }
+                })
+            }
+            else {
+                $.fancybox.open({
+                    src: '#regionModal',
+                    touch: false
+                });
+                btn.prop('disabled', false).text(btn.data('title'))
+            }
+        });
+        function searchLocality(id) {
+            $.ajax({
+                method: 'GET',
+                url: '/{{ $lang }}/getKato/' + id,
+                success: function(result){
+                    console.log(result);
+                    for (var i = result.data.length-1; i >= 0; i--) {
+                        $('#address').append('<option value="'+result['data'][i]['id']+'">'+result['data'][i]['name']+'</option>');
+                    }
+                    var selectize = $("#address")[0].selectize;
+                    selectize.enable();
+                    selectize.clear();
+                    selectize.clearOptions();
+                    selectize.load(function(callback) {
+                        callback(result.data);
+                    });
+                    if (result['data'].length == 1) {
+                        selectize.setValue(result['data'][0].id);
+                    }
+                }
+            })
+        }
+        $('#address').selectize({
+            valueField: 'id',
+            labelField: 'name',
+            searchField: 'name',
+            options: [],
+            create: false,
+            render: {
+                option: function(data, escape) {
+                    return '<div class="option">' + escape(data.name) +'</div>';
+                }
+            }
+        });
+{{--        @endif--}}
         @if(Session::get('agree_data'))
         $.fancybox.open({
             src: '#agreeModal',
