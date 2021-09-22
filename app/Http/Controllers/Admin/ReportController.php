@@ -299,6 +299,9 @@ class ReportController extends Controller
             $item->qualification_students = $author_students_finished_courseWork_count;
         }
 
+        $inputs = $request->except('page');
+        dd($inputs);
+
         return view('admin.v2.pages.reports.authors_report', [
             'items' => $items,
             'request' => $request
@@ -730,6 +733,7 @@ class ReportController extends Controller
             'request' => $request
         ]);
     }
+
 
     public function exportStudentsReport(Request $request)
     {
