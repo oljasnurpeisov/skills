@@ -300,11 +300,11 @@ class ReportController extends Controller
         }
 
         $inputs = $request->except('page');
-        dd($inputs);
 
         return view('admin.v2.pages.reports.authors_report', [
             'items' => $items,
-            'request' => $request
+            'request' => $request,
+            'inputs' => $inputs,
         ]);
     }
 
@@ -513,9 +513,12 @@ class ReportController extends Controller
 
         $items = $query->paginate(10);
 
+        $inputs = $request->except('page');
+
         return view('admin.v2.pages.reports.courses_report', [
             'items' => $items,
             'request' => $request,
+            'inputs' => $inputs,
             'quota_status' => $quota_status,
             'paid_status' => $paid_status
         ]);
@@ -659,9 +662,12 @@ class ReportController extends Controller
             $item->finishedCourseWorkrs = $finishedCourseWorks;
         }
 
+        $inputs = $request->except('page');
+
         return view('admin.v2.pages.reports.students_report', [
             'items' => $items,
             'request' => $request,
+            'inputs' => $inputs,
             'unemployed_status' => $unemployed_status
         ]);
     }
@@ -728,9 +734,12 @@ class ReportController extends Controller
             $certificate->payment_type = $pay_type->paid_status;
         }
 
+        $inputs = $request->except('page');
+
         return view('admin.v2.pages.reports.certificates_report', [
             'items' => $items,
-            'request' => $request
+            'request' => $request,
+            'inputs' => $inputs,
         ]);
     }
 

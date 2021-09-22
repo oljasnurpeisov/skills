@@ -136,7 +136,7 @@
             </table>
 
             <div class="text-right">
-                {{ $items->appends([])->links('vendor.pagination.bootstrap') }}
+                {{ $items->appends($inputs)->links('vendor.pagination.bootstrap') }}
             </div>
         </div>
     </div>
