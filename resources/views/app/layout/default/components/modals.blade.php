@@ -275,9 +275,9 @@
             <div class="form-group">
                 <label class="form-group__label">{{__('default.pages.auth.area_title')}}</label>
                 <div class="input-group">
-                    <input name="region_caption" value="" id="region_caption" disabled type="text" class="input-regular">
+                    <input name="region_caption" value="" id="region_caption" disabled type="text" class="input-regular" style="margin-bottom: 5px">
                     <span class="input-group-btn">
-                        <button style="height:34px;display:none" id="remove-region" class="btn btn-default" type="button"><i class="glyphicon glyphicon-remove"></i></button>
+                        <button style="display:none; background:#f5f5f5; min-width: 4em; color: #000" id="remove-region" class="btn icon-close" type="button"><i class="glyphicon glyphicon-remove"></i></button>
                         <button class="btn btn-primary" data-title="{{__('default.pages.auth.select')}}" data-loading="{{__('default.pages.auth.load')}}" id="show-region-modal" type="button">{{__('default.pages.auth.select')}}</button>
                     </span>
                 </div><!-- /input-group -->
