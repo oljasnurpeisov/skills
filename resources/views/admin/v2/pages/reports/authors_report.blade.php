@@ -215,7 +215,7 @@
             </table>
 
             <div class="text-right">
-                {{ $items->appends(Input::except('page'))->links('vendor.pagination.bootstrap') }}
+                {{ $items->appends([])->links('vendor.pagination.bootstrap') }}
             </div>
         </div>
     </div>
