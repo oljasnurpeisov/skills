@@ -14,6 +14,8 @@ use App\Models\StudentInformation;
 use App\Models\Type_of_ownership;
 use App\Models\User;
 use App\Models\UserInformation;
+use App\Models\RegionTree;
+use \App\Models\Kato;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
@@ -31,11 +33,15 @@ use PDF;
 
 class UserController extends Controller
 {
-    public function student_profile()
+    public function student_profile($lang)
     {
         $item = StudentInformation::where('user_id', '=', Auth::user()->id)->first();
+        $regionCaption = RegionTree::getRegionCaption($lang, $item->region_id) ?? '';
+        $localityCaption = Kato::where('te',  $item->locality)->first()->rus_name ?? '';
         return view("app.pages.student.profile.student_profile", [
-            "item" => $item
+            "item" => $item,
+            "regionCaption" => $regionCaption,
+            "localityCaption" => $localityCaption
         ]);
     }
 
@@ -246,6 +252,8 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'resume_name' => 'required|max:255',
             'resume_iin' => 'required|unique:student_information,iin|numeric|digits:12',
+//            'region_id' => 'required',
+//            'locality' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -257,6 +265,8 @@ class UserController extends Controller
         StudentInformation::whereUserId($user_id)->update([
             'name' => $request->resume_name,
             'iin' => $request->resume_iin,
+            'region_id' => $request->region_id,
+            'locality' => $request->locality,
             'agree' => 1
         ]);
 

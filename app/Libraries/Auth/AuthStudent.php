@@ -98,17 +98,17 @@ class AuthStudent
             $studentInformation->save();
         }
 
-        if ($studentInformation->name == null || $studentInformation->iin == null) {
-            if (($studentResumes != null) && ($studentResumes != [])) {
-                $studentResume = $studentResumes[0];
-                $studentInformation->name = $studentResume["FIO"];
-                $studentInformation->iin = $studentResume["iin"];
-                $studentInformation->save();
-            } else {
+        if ($studentInformation->name == null || $studentInformation->iin == null|| $studentInformation->region_id == null || $studentInformation->locality == null) {
+//            if (($studentResumes != null) && ($studentResumes != [])) {
+//                $studentResume = $studentResumes[0];
+//                $studentInformation->name = $studentResume["FIO"];
+//                $studentInformation->iin = $studentResume["iin"];
+//                $studentInformation->save();
+//            } else {
                 Session::put('resume_data', $user->id);
 
                 Auth::logout();
-            }
+//            }
         } else {
             if ($studentInformation->agree !== 1) {
                 Session::put('agree_data', $user->id);

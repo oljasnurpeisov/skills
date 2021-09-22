@@ -49,7 +49,7 @@
             touch: false
         });
         @endif
-{{--        @if(Session::get('resume_data') or $errors->has('resume_iin') or $errors->has('resume_name'))--}}
+        @if(Session::get('resume_data') or $errors->has('resume_iin') or $errors->has('resume_name'))
         $.fancybox.open({
             src: '#noCvModal',
             touch: false
@@ -115,7 +115,7 @@
                 }
             }
         });
-{{--        @endif--}}
+        @endif
         @if(Session::get('agree_data'))
         $.fancybox.open({
             src: '#agreeModal',

@@ -58,4 +58,22 @@ class RegionTree extends Model
 
         return $rows;
     }
+
+    public static function getRegionCaption($lang, $region_id = null)
+    {
+        $field = $lang == 'ru' ? 'NAME_KR_R' : 'NAME_KAZ';
+        $obl = DB::table('clcz')->where(DB::raw('trim(CODUOZ)'), substr($region_id, 0, 2))->first([
+            DB::raw('trim(CODUOZ) as cod'),
+            DB::raw("trim(REPLACE(" . $field . ", 'г.', '')) as caption"),
+            'te'
+        ]);
+
+        $region = DB::table('clcz')->where(DB::raw('trim(CODUOZ)'), $region_id)->first([
+            DB::raw('trim(CODUOZ) as cod'),
+            DB::raw("trim(REPLACE(" . $field . ", 'г.', '')) as caption"),
+            'te'
+        ]);
+
+        return isset($region->caption) ? $obl->caption . ' / ' . $region->caption : null;
+    }
 }

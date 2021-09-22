@@ -21,12 +21,20 @@
                         <form action="/{{$lang}}/update_student_profile" method="POST">
                             @csrf
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.profile.fio_title')}}</label>
-                                <input disabled name="fio" placeholder="" class="input-regular" value="{{$item->name}}" required>
+                                <label class="form-group__label">{{__('default.pages.auth.fio_title')}}</label>
+                                <input disabled name="fio" placeholder="" class="input-regular" value="{{ $item->name }}" required>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.profile.iin')}}</label>
-                                <input disabled name="iin" placeholder="" class="input-regular" value="{{$item->iin}}" required>
+                                <label class="form-group__label">{{__('default.pages.auth.iin_resume_title')}}</label>
+                                <input disabled name="iin" placeholder="" class="input-regular" value="{{ $item->iin }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.auth.area_title')}}</label>
+                                <input disabled name="iin" placeholder="" class="input-regular" value="{{ $regionCaption }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.auth.locality_title')}}</label>
+                                <input disabled name="iin" placeholder="" class="input-regular" value="{{ $localityCaption }}" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.profile.avatar')}}</label>

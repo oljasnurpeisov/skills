@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App\General;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \App\Models\RegionTree;
+use \App\Models\Kato;
 
 class DictionaryController extends Controller
 {
@@ -18,7 +19,7 @@ class DictionaryController extends Controller
                 $name = 'kaz_name';
                 break;
         }
-        $query = \App\Models\Kato::select('te AS id', "${name} AS name")->where('coduoz', $code);
+        $query = Kato::select('te AS id', "${name} AS name")->where('coduoz', $code);
 
         if (!in_array($code, ['01100', '79100', '10100'])) {
             $query->whereRaw('NOT ((hij = "000") AND (ef <> "10"))');
