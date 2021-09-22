@@ -176,7 +176,6 @@
                 {{ $items->appends(Input::except('page'))->links('vendor.pagination.bootstrap') }}
             </div>
         </div>
-        </form>
     </div>
 
 @endsection
