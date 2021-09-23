@@ -107,7 +107,7 @@ return [
             'email' => 'Email',
             'iin_bin' => 'ИИН/БИН',
             'iin' => 'ИИН',
-            'area_title' => 'Город или район',
+            'area_title' => 'регион/район',
             'locality_title' => 'Населенный пункт',
             'type_of_ownership' => 'Форма собственности',
             'company_logo' => 'Логотип компании',

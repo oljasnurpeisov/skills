@@ -116,6 +116,13 @@
             }
         });
         @endif
+        @if(Session::get('address_data') or $errors->has('resume_region') or $errors->has('resume_locality'))
+        $.fancybox.open({
+            src: '#noAddressModal',
+            touch: false
+        });
+        {{Session::forget('address_data')}}
+        @endif
         @if(Session::get('agree_data'))
         $.fancybox.open({
             src: '#agreeModal',
