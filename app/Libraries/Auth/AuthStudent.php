@@ -105,6 +105,11 @@ class AuthStudent
             $studentInformation->region_id = $studentResume['modresreg_gorod'];
             $studentInformation->locality = $studentResume['codcato'];
             $studentInformation->save();
+            if ($studentInformation->agree !== 1) {
+                Session::put('agree_data', $user->id);
+
+                Auth::logout();
+            }
         } else {
             if ($studentInformation->name == null && $studentInformation->iin == null && $studentInformation->region_id == null && $studentInformation->locality == null) {
                 Session::put('resume_data', $user->id);
@@ -115,11 +120,6 @@ class AuthStudent
 
                 Auth::logout();
             }
-        }
-        if ($studentInformation->agree !== 1) {
-            Session::put('agree_data', $user->id);
-
-            Auth::logout();
         }
 
 //        if ($user->roles()->first()->id != $studentRole->id) {
