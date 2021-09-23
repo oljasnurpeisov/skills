@@ -1,6 +1,6 @@
 @extends('admin.v2.layout.default.template')
 
-@section('title',__('admin.pages.authors.title').' | '.__('admin.site_name'))
+@section('title',__('admin.pages.students.title').' | '.__('admin.site_name'))
 
 @section('head')
 
@@ -37,23 +37,25 @@
                 <table class="table records">
                     <colgroup>
                         <col span="1" style="width: 5%;">
-                        <col span="1" style="width: 20%;">
-                        <col span="1" style="width: 20%;">
-                        <col span="1" style="width: 7%;">
-                        <col span="1" style="width: 7%;">
-                        <col span="1" style="width: 7%;">
                         <col span="1" style="width: 15%;">
+                        <col span="1" style="width: 12%;">
                         <col span="1" style="width: 15%;">
+                        <col span="1" style="width: 10%;">
                         <col span="1" style="width: 8%;">
-                        <col span="1" style="width: 8%;">
+                        <col span="1" style="width: 7%;">
+                        <col span="1" style="width: 10%;">
+                        <col span="1" style="width: 10%;">
                         <col span="1" style="width: 8%;">
                     </colgroup>
                     <thead>
                     <tr>
                         <th>#</th>
                         <th>ФИО</th>
-{{--                        <th>{{ __('admin.pages.user.surname').' '.__('admin.pages.user.name').' '.__('admin.pages.user.middle_name') }}</th>--}}
+                        <th>{{ __('admin.pages.user.iin') }}</th>
+                        {{--                        <th>{{ __('admin.pages.user.surname').' '.__('admin.pages.user.name').' '.__('admin.pages.user.middle_name') }}</th>--}}
                         <th>{{ __('admin.pages.user.email') }}</th>
+                        <th>{{ __('admin.pages.user.area_title') }}</th>
+                        <th>{{ __('admin.pages.user.locality_title') }}</th>
                         <th>{{ __('admin.pages.user.role') }}</th>
                         <th>{{ __('admin.labels.created_at') }}</th>
                         <th>{{ __('admin.labels.updated_at') }}</th>
@@ -66,7 +68,10 @@
                         <tr>
                             <th></th>
                             <th><input name="fio" type="text" class="input-regular" value="{{ $request['fio'] ?? '' }}"></th>
+                            <th><input name="iin" onfocus="$(this).inputmask('999999999999')" type="text" class="input-regular" value="{{ $request['iin'] ?? '' }}"></th>
                             <th><input name="email" type="text" class="input-regular" value="{{ $request['email'] ?? '' }}"></th>
+                            <th></th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -86,8 +91,11 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <th>{{ $item->student_information->name ?? '' }} {{ $item->student_information->surname ?? '' }} {{ $item->student_information->patronymic ?? '' }}</th>
-    {{--                            <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>--}}
+                                <th>{{ $item->student_information->iin ?? '' }}</th>
+                                {{--                            <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>--}}
                                 <td><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a></td>
+                                <th>{{ $item->student_information->region_id ? App\Models\RegionTree::getRegionCaption($lang, $item->student_information->region_id) : '' }}</th>
+                                <th>{{ $item->student_information->locality ? App\Models\Kato::where('te',  $item->student_information->locality)->first()->rus_name ?? '' : '' }}</th>
                                 <td>{{ ($item->roles()->first()) ? $item->roles()->first()->name : '-' }}</td>
                                 <td>{!! $item->created_at . ($creator ? '<br>'.($creator->surname.' '.$creator->name.' '.$creator->middle_name) : '') !!}</td>
                                 <td>{!! $item->updated_at . ($modifier ? '<br>'.($modifier->surname.' '.$modifier->name.' '.$modifier->middle_name) : '') !!}</td>

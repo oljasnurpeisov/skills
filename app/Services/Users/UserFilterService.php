@@ -41,6 +41,7 @@ class UserFilterService
 
         if (!empty($request['type']) and $request['type'] === 'students') {
             $users = $this->searchStudentsByFIO($users, $request);
+            $users = $this->searchStudentsByIIN($users, $request);
         }
 
         if (empty($request['type'])) {
@@ -87,6 +88,24 @@ class UserFilterService
                 return $q->where('name', 'like', '%'. $request['fio'] .'%')
                     ->orWhere('surname', 'like', '%'. $request['fio'] .'%')
                     ->orWhere('patronymic', 'like', '%'. $request['fio'] .'%');
+            });
+        }
+
+        return $users;
+    }
+
+    /**
+     * Поиск обучающихся по ИИН
+     *
+     * @param Builder $users
+     * @param array $request
+     * @return Builder
+     */
+    private function searchStudentsByIIN(Builder $users, array $request): Builder
+    {
+        if (!empty($request['iin'])) {
+            $users = $users->whereHas('student_info', function($q) use ($request) {
+                return $q->where('iin', '=', $request['iin']);
             });
         }
 

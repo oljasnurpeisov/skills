@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Kato;
+use App\Models\RegionTree;
 use App\Models\Role;
 use App\Models\StudentInformation;
 use App\Models\User;
@@ -52,10 +54,14 @@ class StudentController extends Controller
     {
         $roles = Role::orderBy('name', 'asc')->get();
         $user_information = StudentInformation::where('user_id', '=', $item->id)->first();
+        $regionCaption = RegionTree::getRegionCaption($lang, $user_information->region_id) ?? '';
+        $localityCaption = Kato::where('te',  $user_information->locality)->first()->rus_name ?? '';
         return view('admin.v2.pages.students.view', [
             'item' => $item,
             'roles' => $roles,
-            'user_information' => $user_information
+            'user_information' => $user_information,
+            "regionCaption" => $regionCaption,
+            "localityCaption" => $localityCaption
         ]);
     }
 

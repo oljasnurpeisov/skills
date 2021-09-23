@@ -47,6 +47,24 @@
                                     <span class="help-block"><strong>{{ $errors->first('surname') }}</strong></span>
                                 @endif
                             </div>
+                            <div class="input-group">
+                                <label class="input-group__title">ИИН</label>
+                                <input type="email" name="email" value="{{ $user_information->iin ?? '' }}"
+                                       placeholder=""
+                                       class="input-regular" required disabled>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-group__title">{{__('default.pages.auth.area_title')}}</label>
+                                <input type="email" name="email" value="{{ $regionCaption ?? '' }}"
+                                       placeholder=""
+                                       class="input-regular" required disabled>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-group__title">{{__('default.pages.auth.locality_title')}}</label>
+                                <input type="email" name="email" value="{{ $localityCaption ?? '' }}"
+                                       placeholder=""
+                                       class="input-regular" required disabled>
+                            </div>
                         </div>
                     </div>
                 </div>
