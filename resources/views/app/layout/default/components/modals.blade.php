@@ -302,37 +302,37 @@
             </div>
         </form>
     </div>
-    <div id="noAddressModal" style="display: none; width: 35em!important;" class="modal-form">
-        <div class="plain-text text-center">
-            {!! __('default.pages.auth.add_address_description') !!}
+{{--    <div id="noAddressModal" style="display: none; width: 35em!important;" class="modal-form">--}}
+{{--        <div class="plain-text text-center">--}}
+{{--            {!! __('default.pages.auth.add_address_description') !!}--}}
 
-        </div>
-        <form action="/{{$lang}}/save-student-data/{{session('resume_data')}}" method="post">
-            @csrf
-            <div class="form-group">
-                <label class="form-group__label">{{__('default.pages.auth.area_title')}}</label>
-                <div class="input-group">
-                    <input name="region_caption" value="" id="region_caption" disabled type="text" class="input-regular" style="margin-bottom: 5px" required>
-                    <span class="input-group-btn">
-                        <button style="display:none; background:#f5f5f5; min-width: 4em; color: #000" id="remove-region" class="btn icon-close" type="button"><i class="glyphicon glyphicon-remove"></i></button>
-                        <button class="btn btn-primary" data-title="{{__('default.pages.auth.select')}}" data-loading="{{__('default.pages.auth.load')}}" id="show-region-modal" type="button">{{__('default.pages.auth.select')}}</button>
-                    </span>
-                </div><!-- /input-group -->
-                <input type="hidden" name="region_id" value="">
-            </div>
-            <div class="form-group" id="locality-group" style="display:none;">
-                <label class="form-group__label">{{__('default.pages.auth.locality_title')}}</label>
-                <select type="text" name="locality" id="address" required>
-                    <option value="">{{__('default.pages.auth.locality_select_title')}}</option>
-                </select>
-            </div>
-            <div class="text-center">
-                <div class="form-group">
-                    <button type="submit" class="btn">{{__('default.pages.auth.send_resume')}}</button>
-                </div>
-            </div>
-        </form>
-    </div>
+{{--        </div>--}}
+{{--        <form action="/{{$lang}}/save-student-data/{{session('resume_data')}}" method="post">--}}
+{{--            @csrf--}}
+{{--            <div class="form-group">--}}
+{{--                <label class="form-group__label">{{__('default.pages.auth.area_title')}}</label>--}}
+{{--                <div class="input-group">--}}
+{{--                    <input name="region_caption" value="" id="region_caption" disabled type="text" class="input-regular" style="margin-bottom: 5px" required>--}}
+{{--                    <span class="input-group-btn">--}}
+{{--                        <button style="display:none; background:#f5f5f5; min-width: 4em; color: #000" id="remove-region" class="btn icon-close" type="button"><i class="glyphicon glyphicon-remove"></i></button>--}}
+{{--                        <button class="btn btn-primary" data-title="{{__('default.pages.auth.select')}}" data-loading="{{__('default.pages.auth.load')}}" id="show-region-modal" type="button">{{__('default.pages.auth.select')}}</button>--}}
+{{--                    </span>--}}
+{{--                </div><!-- /input-group -->--}}
+{{--                <input type="hidden" name="region_id" value="">--}}
+{{--            </div>--}}
+{{--            <div class="form-group" id="locality-group" style="display:none;">--}}
+{{--                <label class="form-group__label">{{__('default.pages.auth.locality_title')}}</label>--}}
+{{--                <select type="text" name="locality" id="address" required>--}}
+{{--                    <option value="">{{__('default.pages.auth.locality_select_title')}}</option>--}}
+{{--                </select>--}}
+{{--            </div>--}}
+{{--            <div class="text-center">--}}
+{{--                <div class="form-group">--}}
+{{--                    <button type="submit" class="btn">{{__('default.pages.auth.send_resume')}}</button>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </form>--}}
+{{--    </div>--}}
     <div id="agreeModal" style="display:none;" class="modal-form">
         <h2 class="title-primary" style="text-align: center">{{__('default.pages.private_policy.private_policy_title')}}</h2>
         <form action="/{{$lang}}/agree/{{session('agree_data')}}" method="post">
