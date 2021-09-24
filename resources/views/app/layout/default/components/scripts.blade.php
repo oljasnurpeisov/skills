@@ -49,12 +49,13 @@
             touch: false
         });
         @endif
-        @if(Session::get('resume_data') or $errors->has('resume_iin') or $errors->has('resume_name'))
+        @if(Session::get('resume_data') or $errors->has('resume_iin') or $errors->has('resume_name') or Session::get('address_data') or $errors->has('resume_region') or $errors->has('resume_locality'))
         $.fancybox.open({
             src: '#noCvModal',
             touch: false
         });
         {{Session::forget('resume_data')}}
+        {{Session::forget('address_data')}}
         $('#show-region-modal').on('click', function() {
             var btn = $(this)
             btn.prop('disabled', true).text(btn.data('loading'))
@@ -115,13 +116,6 @@
                 }
             }
         });
-        @endif
-        @if(Session::get('address_data') or $errors->has('resume_region') or $errors->has('resume_locality'))
-        $.fancybox.open({
-            src: '#noAddressModal',
-            touch: false
-        });
-        {{Session::forget('address_data')}}
         @endif
         @if(Session::get('agree_data'))
         $.fancybox.open({

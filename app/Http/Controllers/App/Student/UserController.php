@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use PDF;
+use function Complex\csc;
 
 
 class UserController extends Controller
@@ -249,26 +250,48 @@ class UserController extends Controller
 
     public function studentDataSave($lang, $user_id, Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'resume_name' => 'required|max:255',
-            'resume_iin' => 'required|unique:student_information,iin|numeric|digits:12',
-//            'region_id' => 'required',
-//            'locality' => 'required'
-        ]);
+        $session = $request->resume_name ? 'resume_data' : 'address_data';
+        switch ($session) {
+            case 'resume_data':
+                $validator = Validator::make($request->all(), [
+                    'resume_name' => 'required|max:255',
+                    'resume_iin' => 'required|unique:student_information,iin|numeric|digits:12',
+                    'region_id' => 'required',
+                    'locality' => 'required'
+                ]);
+                break;
 
+            case 'address_data':
+                $validator = Validator::make($request->all(), [
+                    'region_id' => 'required',
+                    'locality' => 'required'
+                ]);
+                break;
+        }
         if ($validator->fails()) {
             $messages = $validator->messages();
-            Session::put('resume_data', $user_id);
+            Session::put($session, $user_id);
             return redirect()->back()->withErrors($messages)->withInput($request->all());
         }
 
-        StudentInformation::whereUserId($user_id)->update([
-            'name' => $request->resume_name,
-            'iin' => $request->resume_iin,
-            'region_id' => $request->region_id,
-            'locality' => $request->locality,
-            'agree' => 1
-        ]);
+        switch ($session) {
+            case 'resume_data':
+                StudentInformation::whereUserId($user_id)->update([
+                    'name' => $request->resume_name,
+                    'iin' => $request->resume_iin,
+                    'region_id' => $request->region_id,
+                    'locality' => $request->locality,
+                    'agree' => 1
+                ]);
+                break;
+
+            case 'address_data':
+                StudentInformation::whereUserId($user_id)->update([
+                    'region_id' => $request->region_id,
+                    'locality' => $request->locality,
+                ]);
+                break;
+        }
 
         $user = User::whereId($user_id)->first();
         Auth::login($user);

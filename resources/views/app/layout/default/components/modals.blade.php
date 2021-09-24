@@ -249,29 +249,36 @@
     </div>
 
     <div id="noCvModal" style="display: none; width: 35em!important;" class="modal-form">
-        <h4 class="title-primary text-center">{{__('default.pages.auth.create_resume_title')}}</h4>
+        @if(Session::get('resume_data') or $errors->has('resume_iin') or $errors->has('resume_name'))
+            <h4 class="title-primary text-center">{{__('default.pages.auth.create_resume_title')}}</h4>
+        @endif
         <div class="plain-text text-center">
-            {!! __('default.pages.auth.create_resume_description') !!}
-
+            @if(Session::get('resume_data') or $errors->has('resume_iin') or $errors->has('resume_name'))
+                {!! __('default.pages.auth.create_resume_description') !!}
+            @else
+                {!! __('default.pages.auth.add_address_description') !!}
+            @endif
         </div>
-        <form action="/{{$lang}}/save-student-data/{{session('resume_data')}}" method="post">
+        <form action="/{{$lang}}/save-student-data/{{session('resume_data') ?? session('address_data')}}" method="post">
             @csrf
-            <div class="form-group">
-                <label class="form-group__label">{{__('default.pages.auth.fio_title')}}</label>
-                <input type="text" name="resume_name" placeholder="" value="{{ old('resume_name') }}"
-                       class="input-regular" required>
-                {!! $errors->first('resume_name', '<div class="alert alert-danger">
-                    :message
-                </div>') !!}
-            </div>
-            <div class="form-group">
-                <label class="form-group__label">{{__('default.pages.auth.iin_resume_title')}}</label>
-                <input type="text" name="resume_iin" placeholder="" class="input-regular"
-                       onfocus="$(this).inputmask('999999999999')" value="{{ old('resume_iin') }}" required>
-                {!! $errors->first('resume_iin', '<div class="alert alert-danger">
-                    :message
-                </div>') !!}
-            </div>
+            @if(Session::get('resume_data') or $errors->has('resume_iin') or $errors->has('resume_name'))
+                <div class="form-group">
+                    <label class="form-group__label">{{__('default.pages.auth.fio_title')}}</label>
+                    <input type="text" name="resume_name" placeholder="" value="{{ old('resume_name') }}"
+                           class="input-regular" required>
+                    {!! $errors->first('resume_name', '<div class="alert alert-danger">
+                        :message
+                    </div>') !!}
+                </div>
+                <div class="form-group">
+                    <label class="form-group__label">{{__('default.pages.auth.iin_resume_title')}}</label>
+                    <input type="text" name="resume_iin" placeholder="" class="input-regular"
+                           onfocus="$(this).inputmask('999999999999')" value="{{ old('resume_iin') }}" required>
+                    {!! $errors->first('resume_iin', '<div class="alert alert-danger">
+                        :message
+                    </div>') !!}
+                </div>
+            @endif
             <div class="form-group">
                 <label class="form-group__label">{{__('default.pages.auth.area_title')}}</label>
                 <div class="input-group">
@@ -289,12 +296,14 @@
                     <option value="">{{__('default.pages.auth.locality_select_title')}}</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label class="checkbox small">
-                    <input type="checkbox" name="agree" id="agreeCheckboxCv" data-enable="#noCvModal" value="on" {{old('agree') == 'on' ? 'checked' : ''}} required>
-                    <span style="font-family: sans-serif">{!! __('default.pages.auth.private_policy_agree_title_noCvModal') !!}</span>
-                </label>
-            </div>
+            @if(Session::get('resume_data') or $errors->has('resume_iin') or $errors->has('resume_name'))
+                <div class="form-group">
+                    <label class="checkbox small">
+                        <input type="checkbox" name="agree" id="agreeCheckboxCv" data-enable="#noCvModal" value="on" {{old('agree') == 'on' ? 'checked' : ''}} required>
+                        <span style="font-family: sans-serif">{!! __('default.pages.auth.private_policy_agree_title_noCvModal') !!}</span>
+                    </label>
+                </div>
+            @endif
             <div class="text-center">
                 <div class="form-group">
                     <button type="submit" class="btn">{{__('default.pages.auth.send_resume')}}</button>
@@ -302,37 +311,6 @@
             </div>
         </form>
     </div>
-{{--    <div id="noAddressModal" style="display: none; width: 35em!important;" class="modal-form">--}}
-{{--        <div class="plain-text text-center">--}}
-{{--            {!! __('default.pages.auth.add_address_description') !!}--}}
-
-{{--        </div>--}}
-{{--        <form action="/{{$lang}}/save-student-data/{{session('resume_data')}}" method="post">--}}
-{{--            @csrf--}}
-{{--            <div class="form-group">--}}
-{{--                <label class="form-group__label">{{__('default.pages.auth.area_title')}}</label>--}}
-{{--                <div class="input-group">--}}
-{{--                    <input name="region_caption" value="" id="region_caption" disabled type="text" class="input-regular" style="margin-bottom: 5px" required>--}}
-{{--                    <span class="input-group-btn">--}}
-{{--                        <button style="display:none; background:#f5f5f5; min-width: 4em; color: #000" id="remove-region" class="btn icon-close" type="button"><i class="glyphicon glyphicon-remove"></i></button>--}}
-{{--                        <button class="btn btn-primary" data-title="{{__('default.pages.auth.select')}}" data-loading="{{__('default.pages.auth.load')}}" id="show-region-modal" type="button">{{__('default.pages.auth.select')}}</button>--}}
-{{--                    </span>--}}
-{{--                </div><!-- /input-group -->--}}
-{{--                <input type="hidden" name="region_id" value="">--}}
-{{--            </div>--}}
-{{--            <div class="form-group" id="locality-group" style="display:none;">--}}
-{{--                <label class="form-group__label">{{__('default.pages.auth.locality_title')}}</label>--}}
-{{--                <select type="text" name="locality" id="address" required>--}}
-{{--                    <option value="">{{__('default.pages.auth.locality_select_title')}}</option>--}}
-{{--                </select>--}}
-{{--            </div>--}}
-{{--            <div class="text-center">--}}
-{{--                <div class="form-group">--}}
-{{--                    <button type="submit" class="btn">{{__('default.pages.auth.send_resume')}}</button>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </form>--}}
-{{--    </div>--}}
     <div id="agreeModal" style="display:none;" class="modal-form">
         <h2 class="title-primary" style="text-align: center">{{__('default.pages.private_policy.private_policy_title')}}</h2>
         <form action="/{{$lang}}/agree/{{session('agree_data')}}" method="post">
