@@ -68,7 +68,6 @@ class AuthorController extends Controller
                 $items->forget($key);
             }
         }
-
         return view('admin.v2.pages.authors.index', [
             'items' => $items,
             'term' => $term,

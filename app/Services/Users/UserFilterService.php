@@ -37,6 +37,7 @@ class UserFilterService
     {
         if (!empty($request['type']) and $request['type'] === 'authors') {
             $users = $this->searchAuthorsByFIO($users, $request);
+            $users = $this->searchAuthorsByBIIN($users, $request);
         }
 
         if (!empty($request['type']) and $request['type'] === 'students') {
@@ -68,6 +69,24 @@ class UserFilterService
                 return $q->where('name', 'like', '%'. $request['fio'] .'%')
                     ->orWhere('surname', 'like', '%'. $request['fio'] .'%')
                     ->orWhere('patronymic', 'like', '%'. $request['fio'] .'%');
+            });
+        }
+
+        return $users;
+    }
+
+    /**
+     * Поиск авторов по ИИН/БИН
+     *
+     * @param Builder $users
+     * @param array $request
+     * @return Builder
+     */
+    private function searchAuthorsByBIIN(Builder $users, array $request): Builder
+    {
+        if (!empty($request['iin_bin'])) {
+            $users = $users->whereHas('author_info', function($q) use ($request) {
+                return $q->where('iin', '=', $request['iin_bin']);
             });
         }
 
