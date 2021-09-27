@@ -376,11 +376,16 @@
                                     <div class="personal-card__right">
                                         <div
                                             class="personal-card__name">{{ $item->user->author_info->name . ' ' . $item->user->author_info->surname  }}</div>
-                                        <div class="personal-card__gray-text"><strong>{{ __('default.pages.oked_industries') }}:</strong></div>
-                                        <div class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->oked_industries->pluck('oked_industry.name_ru')) ?? []) }}</div>
-                                        <div class="personal-card__gray-text"><strong>{{ __('default.pages.oked_activities') }}:</strong></div>
-                                        <div class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->oked_activities->pluck('oked_activity.name_ru')) ?? []) }}</div>
-                                        <div class="personal-card__gray-text"><strong>{{ __('default.pages.description') }}:</strong></div>
+                                        <div class="personal-card__gray-text">
+                                            <strong>{{ __('default.pages.oked_industries') }}:</strong></div>
+                                        <div
+                                            class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->oked_industries->pluck('oked_industry.name_ru')) ?? []) }}</div>
+                                        <div class="personal-card__gray-text">
+                                            <strong>{{ __('default.pages.oked_activities') }}:</strong></div>
+                                        <div
+                                            class="personal-card__gray-text">{{ implode(', ', json_decode($item->user->oked_activities->pluck('oked_activity.name_ru')) ?? []) }}</div>
+                                        <div class="personal-card__gray-text">
+                                            <strong>{{ __('default.pages.description') }}:</strong></div>
                                         <div class="plain-text">
                                             {!! $item->user->author_info->about !!}
                                         </div>
@@ -443,7 +448,43 @@
                             @endif
                             <div class="article-section">
                                 <h2 class="title-secondary">{{__('default.pages.courses.feedback_title')}}</h2>
-                                <div class="plain-text">{{__('default.pages.courses.feedback_placeholder')}}</div>
+                                @if($course_rates->count() > 0)
+                                    <div>
+                                        @foreach($course_rates as $rate)
+                                            <div class="review">
+                                                <div class="review__header">
+                                                    <div
+                                                        class="review__name">{{$rate->student->student_info->name ?? __('default.pages.profile.student_title')}}</div>
+                                                    <div class="rating">
+                                                        <div class="rating__stars">
+                                                            <?php
+                                                            for ($x = 1; $x <= $rate->rate; $x++) {
+                                                                echo '<i class="icon-star-full"> </i>';
+                                                            }
+                                                            if (strpos($rate->rate, '.')) {
+                                                                echo '<i class="icon-star-half"> </i>';
+                                                                $x++;
+                                                            }
+                                                            while ($x <= 5) {
+                                                                echo '<i class="icon-star-empty"> </i>';
+                                                                $x++;
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="review__text">
+                                                    {!! $rate->description !!}
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="text-center">
+                                        {{ $course_rates->links('vendor.pagination.default') }}
+                                    </div>
+                                @else
+                                    <div class="plain-text">{{__('default.pages.courses.feedback_placeholder')}}</div>
+                                @endif
                             </div>
                         </div>
 
@@ -482,19 +523,25 @@
                                            class="btn">{{__('default.pages.courses.quota_allow')}}</a>
 
                                         @if (Auth::user()->hasRole('author'))
-                                            <div id="rulesQuotaModal" style="display:none; width: 500px" class="modal-form">
+                                            <div id="rulesQuotaModal" style="display:none; width: 500px"
+                                                 class="modal-form">
                                                 <h4 class="title-primary text-center">{{__('notifications.quota_rules_title')}}</h4>
                                                 <div class="plain-text" style="font-size: 1em;">
                                                     {!! trans(__('notifications.quota_rules_description'), ['course_id' => $item->id,'course_name' => $item->name, 'author_name' => Auth::user()->author_info->name . ' ' . Auth::user()->author_info->surname, 'course_quota_cost' => $quota_cost, 'lang' => $lang])!!}
                                                 </div>
                                                 <div class="plain-text" style="font-size: 1em">
-                                                    <form method="POST" action="/{{$lang}}/my-courses/quota-confirm-course/{{$item->id}}" id="quota_confirm_form">
+                                                    <form method="POST"
+                                                          action="/{{$lang}}/my-courses/quota-confirm-course/{{$item->id}}"
+                                                          id="quota_confirm_form">
                                                         {{ csrf_field() }}
                                                         <div class="buttons">
-                                                            <button name="action" value="confirm" title="{{__('notifications.confirm_btn_title')}}"
+                                                            <button name="action" value="confirm"
+                                                                    title="{{__('notifications.confirm_btn_title')}}"
                                                                     class="btn">{{__('notifications.confirm_btn_title')}}</button>
-                                                            <button name="action" data-fancybox-close title="{{__('notifications.reject_btn_title')}}"
-                                                                    class="ghost-btn" style="background-color: white">{{__('notifications.reject_btn_title')}}</button>
+                                                            <button name="action" data-fancybox-close
+                                                                    title="{{__('notifications.reject_btn_title')}}"
+                                                                    class="ghost-btn"
+                                                                    style="background-color: white">{{__('notifications.reject_btn_title')}}</button>
                                                         </div>
                                                     </form>
                                                 </div>
