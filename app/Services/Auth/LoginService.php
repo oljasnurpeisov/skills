@@ -36,12 +36,10 @@ class LoginService {
      */
     public function redirect(): string
     {
-        if (Auth::user()->hasRole('admin')) {
+        if (Auth::user()->hasRole('admin', 'tech_support', 'moderator', 'yurist', 'planirovshchik', 'buhgalter', 'rukovoditel')) {
             return '/'. app()->getLocale() .'/admin';
         } else if (Auth::user()->hasRole('author')) {
             return '/' . app()->getLocale() . '/profile-author-information';
-        } else if (Auth::user()->hasRole('tech_support')) {
-            return '/' . app()->getLocale() . '/admin';
         } else {
             return '/';
         }
