@@ -9,6 +9,7 @@ use App\Libraries\Kalkan\Certificate;
 use App\Models\Contract;
 use App\Models\Course;
 use App\Models\CourseAttachments;
+use App\Models\CourseRate;
 use App\Models\Lesson;
 use App\Models\Notification;
 use App\Models\ProfessionalArea;
@@ -530,6 +531,8 @@ class CourseController extends Controller
                 $unthemes_lesson->item_type = 'lesson';
             }
 
+            $course_rates = CourseRate::where('course_id', '=', $item->id)->paginate(5);
+
             $course_data_items = $themes->merge($untheme_lessons)->sortBy('index_number')->values();
 
             return view("app.pages.author.courses.course", [
@@ -544,6 +547,7 @@ class CourseController extends Controller
                 "videos_count" => array_sum($videos_count),
                 "audios_count" => array_sum($audios_count),
                 "attachments_count" => array_sum($attachments_count),
+                'course_rates' => $course_rates,
                 'course_data_items' => $course_data_items,
                 'quota_cost' => CalculateQuotaCost::calculate_quota_cost($item)
             ]);
