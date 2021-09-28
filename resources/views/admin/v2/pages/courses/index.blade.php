@@ -92,7 +92,7 @@
                                     </div>
                             </td>
 
-                            <td>{{ json_decode($notification->data)[0]->course_reject_message ?? '' }}</td>
+                            <td>{{ $notification->data ? json_decode($notification->data)[0]->course_reject_message : '' }}</td>
                             <td>{{ $item->getTypeName() }}</td>
                             <td>{{ number_format($item->cost, 0, '', ' ') }}</td>
                             <td>{{ number_format($item->calculateQuotaCost(), 0, '', ' ') }}</td>
