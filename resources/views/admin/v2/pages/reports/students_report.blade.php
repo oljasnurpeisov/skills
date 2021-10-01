@@ -167,7 +167,7 @@
                 @foreach($items as $item)
                     <tr>
                         <td>{{$item->student_info->name}}</td>
-                        <td>{{ $item->student_info->unemployed_status == 0 ? __('default.yes_title') : __('default.no_title') }}</td>
+                        <td>{{ $item->student_info->unemployed_status == 0 ? __('default.no_title') : __('default.yes_title') }}</td>
                         <td>{{$item->student_info->quota_count}}</td>
                         <td>{{$item->student_course->whereIn('paid_status', [1,2,3])->count()}}</td>
                         <td>{{$item->student_course->where('is_finished', '=', true)->count()}}</td>
