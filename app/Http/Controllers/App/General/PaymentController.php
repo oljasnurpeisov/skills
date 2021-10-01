@@ -87,6 +87,7 @@ class PaymentController extends Controller
                 if (!empty($result["url"])) {
                     return redirect($result["url"]);
                 } else {
+//                    dd($result);
                     return redirect()->back()->with('error', __('default.pages.courses.pay_course_error'));
                 }
             }
