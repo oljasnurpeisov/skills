@@ -759,9 +759,9 @@ class ReportController extends Controller
                 $name = $i->student_info->name;
                 // Статус безработного
                 if ($i->student_info->unemployed_status == 0) {
-                    $unemployed_status = __('default.yes_title');
-                } else {
                     $unemployed_status = __('default.no_title');
+                } else {
+                    $unemployed_status = __('default.yes_title');
                 }
                 // Кол-во квот
                 $quota_count = $i->student_info->quota_count;
