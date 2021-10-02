@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Models\UserInformation;
 use App\Models\RegionTree;
 use \App\Models\Kato;
+use App\Services\Users\UnemployedService;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
@@ -273,26 +274,20 @@ class UserController extends Controller
             Session::put($session, $user_id);
             return redirect()->back()->withErrors($messages)->withInput($request->all());
         }
-
-        switch ($session) {
-            case 'resume_data':
-                StudentInformation::whereUserId($user_id)->update([
-                    'name' => $request->resume_name,
-                    'iin' => $request->resume_iin,
-                    'region_id' => $request->region_id,
-                    'locality' => $request->locality,
-                    'agree' => 1
-                ]);
-                break;
-
-            case 'address_data':
-                StudentInformation::whereUserId($user_id)->update([
-                    'region_id' => $request->region_id,
-                    'locality' => $request->locality,
-                ]);
-                break;
+        $studentInformation = StudentInformation::whereUserId($user_id)->first();
+        $studentInformation->region_id = $request->region_id;
+        $studentInformation->locality = $request->locality;
+        if ($session == 'resume_data') {
+            $studentInformation->name = $request->resume_name;
+            $studentInformation->iin = $request->resume_iin;
+            $studentInformation->agree = 1;
         }
-
+        if (!empty($studentInformation->iin)) {
+            $token = Session::get('student_token');
+            $studentUnemployedStatus = UnemployedService::getStatus($studentInformation->iin, $token);
+            $studentInformation->unemployed_status = $studentUnemployedStatus;
+        }
+        $studentInformation->save();
         $user = User::whereId($user_id)->first();
         Auth::login($user);
 

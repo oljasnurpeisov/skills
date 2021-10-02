@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Libraries\Requests\SendRequest;
 use Services\Auth\LoginService;
+use App\Services\Users\UnemployedService;
 
 class AuthStudent
 {
@@ -49,11 +50,11 @@ class AuthStudent
      */
     public function afterLogin()
     {
-        $studentUnemployedStatus = json_decode($this->getUnemployedStatus(), true);
+//        $studentUnemployedStatus = json_decode($this->getUnemployedStatus(), true);
         $studentResumes = json_decode($this->getStudentResume(), true);
 
         $user = User::whereEmail($this->email)->first();
-        $studentRole = Role::whereSlug('student')->first();
+//        $studentRole = Role::whereSlug('student')->first();
 
 
         $studentInformation = StudentInformation::whereUserId($user->id)->first();
@@ -62,12 +63,12 @@ class AuthStudent
             $studentInformation->user_id = $user->id;
             $studentInformation->uid = $this->uid;
 
-            if ($studentUnemployedStatus == null) {
-                $studentInformation->unemployed_status = 0;
-            } else {
-                $studentInformation->unemployed_status = 1;
-                $studentInformation->quota_count = 3;
-            }
+//            if ($studentUnemployedStatus == null) {
+//                $studentInformation->unemployed_status = 0;
+//            } else {
+//                $studentInformation->unemployed_status = 1;
+//                $studentInformation->quota_count = 3;
+//            }
 
 //            if (($studentResumes != null) && ($studentResumes != [])) {
             if (!empty($studentResumes)) {
@@ -97,7 +98,11 @@ class AuthStudent
 
             $studentInformation->save();
         }
-
+        if (!empty($studentInformation->iin)) {
+            $studentUnemployedStatus = UnemployedService::getStatus($studentInformation->iin, $this->token);
+            $studentInformation->unemployed_status = $studentUnemployedStatus;
+            $studentInformation->save();
+        }
         if (($studentResumes != null) && ($studentResumes != [])) {
             $studentResume = $studentResumes[0];
             $studentInformation->name = $studentResume["FIO"];
@@ -136,14 +141,5 @@ class AuthStudent
     private function getStudentResume()
     {
         return (new SendRequest(config('enbek.base_url').'/ru/api/resume-for-obuch', $this->token))->get();
-    }
-
-    /**
-     * @return int|string
-     * @throws GuzzleException
-     */
-    private function getUnemployedStatus()
-    {
-        return (new SendRequest(config('enbek.base_url').'/ru/api/bezrab-for-obuch', $this->token))->get();
     }
 }

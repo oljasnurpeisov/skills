@@ -75,7 +75,7 @@ class SendRequest
         $client = new Client(['verify' => false]);
 
         try {
-            $response = $client->request($this->method, config('enbek.base_url').'/ru/api/resume-for-obuch', [
+            $response = $client->request($this->method, $this->url, [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'token' => $this->token
