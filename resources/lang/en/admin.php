@@ -216,7 +216,8 @@ return [
             'course_members_qualification' => 'Подтвердили квалификацию',
 
             'name_student' => 'ФИО обучающегося',
-            'unemployed' => 'Безработный',
+            'unemployed' => 'Статус на момент записи на курс (безработный (да/нет)',
+            'quota_course' => 'ГП',
             'quotas_count' => 'Количество оставшихся доступов по гос.поддержке',
             'student_courses_count' => 'Записан на курсы',
             'student_certificates_count' => 'Получил сертификатов',

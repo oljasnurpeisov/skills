@@ -94,8 +94,8 @@
                                 <th>{{ $item->student_information->iin ?? '' }}</th>
                                 {{--                            <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>--}}
                                 <td><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a></td>
-                                <th>{{ $item->student_information->region_id ? App\Models\RegionTree::getRegionCaption($lang, $item->student_information->region_id) : '' }}</th>
-                                <th>{{ $item->student_information->locality ? App\Models\Kato::where('te',  $item->student_information->locality)->first()->rus_name ?? '' : '' }}</th>
+                                <td>{{ $item->student_information->region_id ? App\Models\RegionTree::getRegionCaption($lang, $item->student_information->region_id) : '' }}</td>
+                                <td>{{ $item->student_information->locality ? App\Models\Kato::where('te',  $item->student_information->locality)->first()->rus_name ?? '' : '' }}</td>
                                 <td>{{ ($item->roles()->first()) ? $item->roles()->first()->name : '-' }}</td>
                                 <td>{!! $item->created_at . ($creator ? '<br>'.($creator->surname.' '.$creator->name.' '.$creator->middle_name) : '') !!}</td>
                                 <td>{!! $item->updated_at . ($modifier ? '<br>'.($modifier->surname.' '.$modifier->name.' '.$modifier->middle_name) : '') !!}</td>

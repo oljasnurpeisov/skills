@@ -123,6 +123,7 @@ return [
             'reestablish_request_message' => 'Курс был успешно восстановлен',
             'create_request_message' => 'Курс успешно создан',
 
+            'iin_unset_error' => 'В профиле не указан ИИН',
             'course_quota_activate_error' => 'Вы не можете активировать этот курс при гос.поддержке',
             'course_quota_activate_success' => 'Вы успешно активировали курс при гос.поддержке',
             'pay_course_error' => 'Ошибка платежного шлюза, попробуйте позже',

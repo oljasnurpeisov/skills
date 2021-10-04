@@ -119,6 +119,7 @@ return [
             'reestablish_request_message' => 'Курс сәтті қайта қалпына келтірілді',
             'create_request_message' => 'Курс сәтті қалыптастырылды',
 
+            'iin_unset_error' => 'Профильде ЖСН көрсетілмеген',
             'course_quota_activate_error' => 'Сіз бұл курсты мемлекеттік қолдау  бойынша іске қоса алмайсыз',
             'course_quota_activate_success' => 'Сіз курсты мемлекеттік қолдау бойынша іске қостыңыз',
             'pay_course_error' => 'Төлем шлюзінің қатесі, кейінірек қайталап көріңіз',

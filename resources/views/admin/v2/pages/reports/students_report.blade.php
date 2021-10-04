@@ -141,37 +141,66 @@
         <div class="block">
             <h2 class="title-secondary">{{__('admin.pages.reports.students_report')}}</h2>
             <table class="table records">
-                <colgroup>
-                    <col span="1" style="width: 20%;">
-                    <col span="1" style="width: 20%;">
-                    <col span="1" style="width: 20%;">
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 10%;">
-                    <col span="1" style="width: 15%;">
-                </colgroup>
+{{--                <colgroup>--}}
+{{--                    <col span="1" style="width: 20%;">--}}
+{{--                    <col span="1" style="width: 20%;">--}}
+{{--                    <col span="1" style="width: 20%;">--}}
+{{--                    <col span="1" style="width: 15%;">--}}
+{{--                    <col span="1" style="width: 10%;">--}}
+{{--                    <col span="1" style="width: 15%;">--}}
+{{--                </colgroup>--}}
                 <thead>
                 <tr>
+                    <th>#</th>
+                    <th>ИИН</th>
                     <th>
                         <a href="?sortByName={{$request->sortByName == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.name_student')}}</a>
                     </th>
+                    <th>Регион(район)</th>
+                    <th>Населенный пункт</th>
                     <th>{{__('admin.pages.reports.unemployed')}}</th>
-                    <th>
-                        <a href="?sortByQuota={{$request->sortByQuota == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.quotas_count')}}</a>
-                    </th>
-                    <th>{{__('admin.pages.reports.student_courses_count')}}</th>
-                    <th>{{__('admin.pages.reports.student_certificates_count')}}</th>
-                    {{--                    <th>{{__('admin.pages.reports.student_qualifications_count')}}</th>--}}
+                    <th>Наименование курса</th>
+                    <th>Тип курса</th>
+                    <th>Дата записи на курс</th>
+                    <th>Дата начала обучения (дата открытия первого урока)</th>
+                    <th>Дата прохождения 1 итогового тестирования без достижения порогового уровня</th>
+                    <th>Дата прохождения 2 итогового тестирования без достижения порогового уровня</th>
+                    <th>Дата прохождения 3 итогового тестирования без достижения порогового уровня</th>
+                    <th>Дата получения сертификата</th>
+                    <th>Количество оставшихся доступов при гос.поддержке</th>
+{{--                    <th>--}}
+{{--                        <a href="?sortByQuota={{$request->sortByQuota == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.quotas_count')}}</a>--}}
+{{--                    </th>--}}
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($items as $item)
                     <tr>
+                        <td>{{$item->id}}</td>
+                        <td>{{$item->student_info->iin}}</td>
                         <td>{{$item->student_info->name}}</td>
-                        <td>{{ $item->student_info->unemployed_status == 0 ? __('default.no_title') : __('default.yes_title') }}</td>
-                        <td>{{$item->student_info->quota_count}}</td>
-                        <td>{{$item->student_course->whereIn('paid_status', [1,2,3])->count()}}</td>
-                        <td>{{$item->student_course->where('is_finished', '=', true)->count()}}</td>
-                        {{--                        <td>{{$item->qualifications_count}}</td>--}}
+                        <td>{{ $item->student_info->region_id ? App\Models\RegionTree::getRegionCaption($lang, $item->student_info->region_id) : '' }}</td>
+                        <td>{{ $item->student_info->locality ? App\Models\Kato::where('te',  $item->student_info->locality)->first()->rus_name ?? '' : '' }}</td>
+                        <td>
+                            @if(isset($item->unemployed_status))
+                                {{ $item->unemployed_status == 0 ? __('default.no_title') : __('default.yes_title') }}
+                            @endif
+                        </td>
+                        <td>{{$item->course->name}}</td>
+                        <td>
+                            @if ($item->course->quota_status == 2)
+                                {{__('admin.pages.reports.quota_course')}}
+                            @else
+                                {{$item->course->is_paid == true ? __('default.pages.reporting.paid_course') : __('default.pages.reporting.free_course')}}
+                            @endif
+                        </td>
+                        <td>{{ date('d.m.Y', strtotime($item->created_at)) }}</td>
+                        <td>{{ isset($item->student_first_lesson()->created_at) ?  date('d.m.Y', strtotime($item->student_first_lesson()->created_at)) : ''}}</td>
+                        <td>{{ isset($item->attempts()[0]->created_at) ? date('d.m.Y H:i', strtotime($item->attempts()[0]->created_at)) : '' }}</td>
+                        <td>{{ isset($item->attempts()[1]->created_at) ? date('d.m.Y H:i', strtotime($item->attempts()[1]->created_at)) : '' }}</td>
+                        <td>{{ isset($item->attempts()[2]->created_at) ? date('d.m.Y H:i', strtotime($item->attempts()[2]->created_at)) : '' }}</td>
+                        <td>{{ $item->is_finished == 1 ? date('d.m.Y', strtotime($item->certificate()->created_at)) : ''}}</td>
+                        <td></td>
                     </tr>
                 @endforeach
                 </tbody>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Libraries\Kalkan\Certificate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,6 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Course[] $courses
  * @property-read int|null $courses_count
+ * @property int|null $unemployed_status
  * @property int $is_qualificated
  * @method static \Illuminate\Database\Eloquent\Builder|StudentCourse whereIsQualificated($value)
  */
@@ -67,6 +69,36 @@ class StudentCourse extends Model
 
         return $this->hasOne(User::class, 'id', 'student_id');
 
+    }
+
+    public function student_info()
+    {
+        return $this->hasOne(StudentInformation::class, 'user_id', 'student_id');
+    }
+
+    public function certificate()
+    {
+        $certificate = StudentCertificate::where('course_id', '=', $this->course_id)
+            ->where('user_id', '=', $this->student_id)->first();
+
+        return $certificate ?? null;
+    }
+
+    public function student_first_lesson()
+    {
+        $firstLesson = Lesson::where('course_id', '=', $this->course_id)->orderBy('theme_id', 'asc')->orderBy('index_number', 'asc')->first();
+
+        $studentLesson = StudentLesson::where('lesson_id', '=', $firstLesson->id)
+            ->where('student_id', '=', $this->student_id)->first();
+        return $studentLesson ?? null;
+    }
+
+    public function attempts()
+    {
+        $attempts = StudentLessonAnswerAttempt::where('course_id', '=', $this->course_id)
+            ->where('student_id', '=', $this->student_id)->get();
+
+        return $attempts ?? null;
     }
 
 }
