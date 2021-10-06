@@ -152,25 +152,22 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>ИИН</th>
+                    <th>{{__('admin.pages.reports.iin')}}</th>
                     <th>
                         <a href="?sortByName={{$request->sortByName == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.name_student')}}</a>
                     </th>
-                    <th>Регион(район)</th>
-                    <th>Населенный пункт</th>
+                    <th>{{__('admin.pages.reports.region')}}</th>
+                    <th>{{__('admin.pages.reports.locality')}}</th>
                     <th>{{__('admin.pages.reports.unemployed')}}</th>
-                    <th>Наименование курса</th>
-                    <th>Тип курса</th>
-                    <th>Дата записи на курс</th>
-                    <th>Дата начала обучения (дата открытия первого урока)</th>
-                    <th>Дата прохождения 1 итогового тестирования без достижения порогового уровня</th>
-                    <th>Дата прохождения 2 итогового тестирования без достижения порогового уровня</th>
-                    <th>Дата прохождения 3 итогового тестирования без достижения порогового уровня</th>
-                    <th>Дата получения сертификата</th>
-                    <th>Количество оставшихся доступов при гос.поддержке</th>
-{{--                    <th>--}}
-{{--                        <a href="?sortByQuota={{$request->sortByQuota == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.quotas_count')}}</a>--}}
-{{--                    </th>--}}
+                    <th>{{__('admin.pages.reports.course_name')}}</th>
+                    <th>{{__('admin.pages.reports.course_type')}}</th>
+                    <th>{{__('admin.pages.reports.course_date')}}</th>
+                    <th>{{__('admin.pages.reports.first_lesson_date')}}</th>
+                    <th>{{__('admin.pages.reports.first_failed_test_date')}}</th>
+                    <th>{{__('admin.pages.reports.second_failed_test_date')}}</th>
+                    <th>{{__('admin.pages.reports.third_failed_test_date')}}</th>
+                    <th>{{__('admin.pages.reports.certificate_date')}}</th>
+                    <th>{{__('admin.pages.reports.quotas_count')}}</th>
                 </tr>
                 </thead>
                 <tbody>

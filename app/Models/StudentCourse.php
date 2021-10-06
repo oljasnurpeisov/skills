@@ -78,8 +78,8 @@ class StudentCourse extends Model
 
     public function certificate()
     {
-        $certificate = StudentCertificate::where('course_id', '=', $this->course_id)
-            ->where('user_id', '=', $this->student_id)->first();
+        $certificate = StudentCertificate::where('user_id', '=', $this->student_id)
+            ->where('course_id', '=', $this->course_id)->first();
 
         return $certificate ?? null;
     }

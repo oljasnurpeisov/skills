@@ -9,6 +9,8 @@ use App\Models\Course;
 use App\Models\StudentCertificate;
 use App\Models\StudentCourse;
 use App\Models\User;
+use App\Models\RegionTree;
+use App\Models\Kato;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -758,29 +760,57 @@ class ReportController extends Controller
 
         /** @var User $i */
         foreach ($query as $i) {
-            if ($i->student_info != null && $i->student_course != null) {
-                // ФИО обучающегося
-                $name = $i->student_info->name;
-                // Статус безработного
-                if ($i->student_info->unemployed_status == 0) {
-                    $unemployed_status = __('default.no_title');
-                } else {
-                    $unemployed_status = __('default.yes_title');
-                }
-                // Кол-во квот
-                $quota_count = $i->student_info->quota_count;
-                // Кол-во курсов
-                $courses_count = $i->student_course->whereIn('paid_status', [1, 2])->count();
-                // Кол-во сертификатов
-                $certificates = $i->student_course->where('is_finished', '=', true)->count();
-                // Кол-во подтвержденных квалификаций
-                $qualifications = $i->qualifications_count;
-
-                $newElement = ['name' => $name, 'unemployed_status' => $unemployed_status, 'quota_count' => $quota_count,
-                    'courses_count' => $courses_count, 'certificates' => $certificates];
-
-                array_push($export, $newElement);
+            // ИИН обучающегося
+            $iin = $i->student_info->iin;
+            // ФИО обучающегося
+            $name = $i->student_info->name;
+            // Регион/Район
+            $region = $i->student_info->region_id ? RegionTree::getRegionCaption($lang, $i->student_info->region_id) : '';
+            // Населенный пункт
+            $locality = $i->student_info->locality ? Kato::where('te',  $i->student_info->locality)->first()->rus_name ?? '' : '' ;
+            // Статус безработного
+            if(isset($i->unemployed_status)) {
+                $unemployed_status = $i->unemployed_status == 0 ? __('default.no_title') : __('default.yes_title');
+            } else {
+                $unemployed_status = '';
             }
+            // Наименование курса
+            $course_name = $i->course->name;
+            // Тип курса
+            if($i->course->quota_status == 2) {
+                $course_type = __('admin.pages.reports.quota_course');
+            } else {
+                $course_type = $i->course->is_paid == true ? __('default.pages.reporting.paid_course') : __('default.pages.reporting.free_course');
+            }
+            // Дата записи на курс
+            $course_date = date('d.m.Y', strtotime($i->created_at));
+            // Дата начала обучения
+            $first_lesson_date = isset($i->student_first_lesson()->created_at) ?  date('d.m.Y', strtotime($i->student_first_lesson()->created_at)) : '';
+            // Первые 3 неудачные попытки итогового тестирования
+            $first_failed_test_date = isset($i->attempts()[0]->created_at) ? date('d.m.Y H:i', strtotime($i->attempts()[0]->created_at)) : '';
+            $second_failed_test_date = isset($i->attempts()[1]->created_at) ? date('d.m.Y H:i', strtotime($i->attempts()[1]->created_at)) : '';
+            $third_failed_test_date = isset($i->attempts()[2]->created_at) ? date('d.m.Y H:i', strtotime($i->attempts()[2]->created_at)) : '';
+
+            // Дата получения сертификата
+            $certificate_date = $i->is_finished == 1 ? date('d.m.Y', strtotime($i->certificate()->created_at)) : '';
+
+            $newElement = [
+                'iin' => $iin,
+                'name' => $name,
+                'region' => $region,
+                'locality' => $locality,
+                'unemployed_status' => $unemployed_status,
+                'course_name' => $course_name,
+                'course_type' => $course_type,
+                'course_date' => $course_date,
+                'first_lesson_date' => $first_lesson_date,
+                'first_failed_test_date' => $first_failed_test_date,
+                'second_failed_test_date' => $second_failed_test_date,
+                'third_failed_test_date' => $third_failed_test_date,
+                'certificate_date' => $certificate_date,
+//                'quota_count' => $quota_count,
+            ];
+            array_push($export, $newElement);
         }
 
         return Excel::download(new StudentReportExport($export), '' . __('default.pages.courses.report_title') . '.xlsx');

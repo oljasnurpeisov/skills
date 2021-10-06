@@ -41,12 +41,20 @@ class StudentReportExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
     public function headings(): array
     {
         return [
+            __('admin.pages.reports.iin'),
             __('admin.pages.reports.name_student'),
+            __('admin.pages.reports.region'),
+            __('admin.pages.reports.locality'),
             __('admin.pages.reports.unemployed'),
-            __('admin.pages.reports.quotas_count'),
-            __('admin.pages.reports.student_courses_count'),
-            __('admin.pages.reports.student_certificates_count'),
-//            __('admin.pages.reports.student_qualifications_count')
+            __('admin.pages.reports.course_name'),
+            __('admin.pages.reports.course_type'),
+            __('admin.pages.reports.course_date'),
+            __('admin.pages.reports.first_lesson_date'),
+            __('admin.pages.reports.first_failed_test_date'),
+            __('admin.pages.reports.second_failed_test_date'),
+            __('admin.pages.reports.third_failed_test_date'),
+            __('admin.pages.reports.certificate_date'),
+//            __('admin.pages.reports.quotas_count'),
         ];
     }
 
