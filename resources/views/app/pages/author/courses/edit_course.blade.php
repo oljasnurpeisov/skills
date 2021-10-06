@@ -264,7 +264,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.video_link')}}</label>
                                 @if($item->attachments->videos_link != null)
                                     <input type="url" name="videos_link[]" placeholder="" class="input-regular"
@@ -274,8 +274,8 @@
                                            value="" id="courseVideo">
                                 @endif
 
-                            </div>
-                            <div class="removable-items">
+                            </div>-->
+                            <!--<div class="removable-items">
                                 @if($item->attachments->videos_link != null)
                                     @foreach(array_slice(json_decode($item->attachments->videos_link),1) as $video_link)
                                         <div class="form-group">
@@ -289,7 +289,7 @@
                                         </div>
                                     @endforeach
                                 @endif
-                            </div>
+                            </div>-->
                             <div class="text-right pull-up">
                                 <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"
                                    data-duplicate="courseVideo"
