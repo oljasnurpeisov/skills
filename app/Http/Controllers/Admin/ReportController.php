@@ -792,7 +792,7 @@ class ReportController extends Controller
             $third_failed_test_date = isset($i->attempts()[2]->created_at) ? date('d.m.Y H:i', strtotime($i->attempts()[2]->created_at)) : '';
 
             // Дата получения сертификата
-            $certificate_date = $i->is_finished == 1 ? date('d.m.Y', strtotime($i->certificate()->created_at)) : '';
+            $certificate_date = $i->is_finished == 1 && isset($i->certificate()->created_at) ? date('d.m.Y', strtotime($i->certificate()->created_at)) : '';
 
             $newElement = [
                 'iin' => $iin,
