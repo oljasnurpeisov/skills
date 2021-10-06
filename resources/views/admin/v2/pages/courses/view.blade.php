@@ -3,7 +3,7 @@
 @section('title',$item->name.' | '.__('admin.site_name'))
 
 @section('content')
-<?php die;?>
+
     <div class="container container-fluid">
         <ul class="breadcrumbs">
             <li><a href="/{{$lang}}/admin/courses/index">{{ __('admin.pages.courses.title') }}</a></li>
