@@ -38,7 +38,7 @@ Enbek Skills қысқа мерзімді онлайн курстар платф�
     'course_buy_status_on_process' => 'Курстың төлемі <a href="/:lang/course-catalog/course/:course_id">:course_name</a> өңделуде',
     'course_buy_status_success' => 'Сіз курсты сәтті сатып алдыңыз <a href="/:lang/course-catalog/course/:course_id">:course_name</a>',
     'course_buy_status_failed' => 'Курсты төлеу кезінде қателік кетті <a href="/:lang/course-catalog/course/:course_id">:course_name</a>',
-    'course_student_finished' => '<a href="/:lang/course-catalog/course/:course_id">:course_name</a> курсының аяқталуымен құттықтаймыз. Сертификат <a href="/:lang/student/my-certificates">Менің сертификаттарым</a> бөлімінде қолжетімді.',
+    'course_student_finished' => '<a href="/:lang/course-catalog/course/:course_id">:course_name</a> курсының аяқталуымен құттықтаймыз. Сертификат <a href="/:lang/student/my-certificates">"Менің сертификаттарым"</a> бөлімінде қолжетімді.',
     'new_message' => 'Сізде жаңа <a href="/:lang/dialog/opponent-:opponent_id">хабарлама </a> от <i>:user_name</i>',
 
     're_calculate_quota_cost_message' => 'Курстың  бағасы:course_name мемлекеттік қолдау бойынша жаңартылды. Мемлекеттік қолдаубойынша курстың ағымдағы құны: :course_quota_cost тг.',

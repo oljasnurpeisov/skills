@@ -14,7 +14,8 @@
         <form class="block">
             <div class="input-group">
                 <label class="input-group__title">Поиск по ФИО</label>
-                <input type="text" name="student_name" placeholder="" class="input-regular" value="{{$request->student_name}}">
+                <input type="text" name="student_name" placeholder="" class="input-regular"
+                       value="{{$request->student_name}}">
             </div>
             <div class="collapse-block collapsed" style="display: none;" id="collapse1">
                 <div class="row">
@@ -42,14 +43,14 @@
                             <div class="input-group">
                                 <label class="checkbox">
                                     <input type="checkbox" name="unemployed_status[]"
-                                           value="0" {{in_array(0, $unemployed_status) ? 'checked' : ''}}>
+                                           value="1" {{in_array(1, $unemployed_status) ? 'checked' : ''}}>
                                     <span>Безработный</span>
                                 </label>
                             </div>
                             <div class="input-group">
                                 <label class="checkbox">
                                     <input type="checkbox" name="unemployed_status[]"
-                                           value="1" {{in_array(1, $unemployed_status) ? 'checked' : ''}}>
+                                           value="0" {{in_array(0, $unemployed_status) ? 'checked' : ''}}>
                                     <span>Работающий</span>
                                 </label>
                             </div>
@@ -97,26 +98,26 @@
                                 </div>
                             </div>
                         </div>
-{{--                        <div class="row">--}}
-{{--                            <div class="col-sm-6">--}}
-{{--                                <div class="input-group">--}}
-{{--                                    <label class="input-group__title">Количество квалификаций: от</label>--}}
-{{--                                    <label class="">--}}
-{{--                                        <input type="number" name="qualifications_count_from" placeholder=""--}}
-{{--                                               class="input-regular" value="{{$request->qualifications_count_from}}">--}}
-{{--                                    </label>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="col-sm-6">--}}
-{{--                                <div class="input-group">--}}
-{{--                                    <label class="input-group__title">до</label>--}}
-{{--                                    <label class="">--}}
-{{--                                        <input type="number" name="qualifications_count_to" placeholder=""--}}
-{{--                                               class="input-regular" value="{{$request->qualifications_count_to}}">--}}
-{{--                                    </label>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                        {{--                        <div class="row">--}}
+                        {{--                            <div class="col-sm-6">--}}
+                        {{--                                <div class="input-group">--}}
+                        {{--                                    <label class="input-group__title">Количество квалификаций: от</label>--}}
+                        {{--                                    <label class="">--}}
+                        {{--                                        <input type="number" name="qualifications_count_from" placeholder=""--}}
+                        {{--                                               class="input-regular" value="{{$request->qualifications_count_from}}">--}}
+                        {{--                                    </label>--}}
+                        {{--                                </div>--}}
+                        {{--                            </div>--}}
+                        {{--                            <div class="col-sm-6">--}}
+                        {{--                                <div class="input-group">--}}
+                        {{--                                    <label class="input-group__title">до</label>--}}
+                        {{--                                    <label class="">--}}
+                        {{--                                        <input type="number" name="qualifications_count_to" placeholder=""--}}
+                        {{--                                               class="input-regular" value="{{$request->qualifications_count_to}}">--}}
+                        {{--                                    </label>--}}
+                        {{--                                </div>--}}
+                        {{--                            </div>--}}
+                        {{--                        </div>--}}
                     </div>
                 </div>
             </div>
@@ -150,23 +151,27 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <th><a href="?sortByName={{$request->sortByName == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.name_student')}}</a></th>
+                    <th>
+                        <a href="?sortByName={{$request->sortByName == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.name_student')}}</a>
+                    </th>
                     <th>{{__('admin.pages.reports.unemployed')}}</th>
-                    <th><a href="?sortByQuota={{$request->sortByQuota == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.quotas_count')}}</a></th>
+                    <th>
+                        <a href="?sortByQuota={{$request->sortByQuota == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.quotas_count')}}</a>
+                    </th>
                     <th>{{__('admin.pages.reports.student_courses_count')}}</th>
                     <th>{{__('admin.pages.reports.student_certificates_count')}}</th>
-{{--                    <th>{{__('admin.pages.reports.student_qualifications_count')}}</th>--}}
+                    {{--                    <th>{{__('admin.pages.reports.student_qualifications_count')}}</th>--}}
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($items as $item)
                     <tr>
                         <td>{{$item->student_info->name}}</td>
-                        <td>{{ $item->student_info->unemployed_status == 0 ? __('default.yes_title') : __('default.no_title') }}</td>
+                        <td>{{ $item->student_info->unemployed_status == 0 ? __('default.no_title') : __('default.yes_title') }}</td>
                         <td>{{$item->student_info->quota_count}}</td>
                         <td>{{$item->student_course->whereIn('paid_status', [1,2,3])->count()}}</td>
                         <td>{{$item->student_course->where('is_finished', '=', true)->count()}}</td>
-{{--                        <td>{{$item->qualifications_count}}</td>--}}
+                        {{--                        <td>{{$item->qualifications_count}}</td>--}}
                     </tr>
                 @endforeach
                 </tbody>
