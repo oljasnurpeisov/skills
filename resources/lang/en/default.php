@@ -363,7 +363,7 @@ return [
             'to_lessons_list' => 'К списку уроков',
             'result_title' => 'Результат',
             'test_success_passed' => 'Тест успешно пройден!',
-            'test_success_congratulation' => 'Поздравляем с завершением курса ":course". Сертификат доступен в разделе "Мои сертификаты.',
+            'test_success_congratulation' => 'Поздравляем с завершением курса ":course". Сертификат доступен в разделе "Мои сертификаты".',
             'test_failed_passed' => 'Тест не пройден!'
         ],
         'profile' => [
