@@ -337,7 +337,7 @@
                             {{--                                    @endif--}}
                             {{--                                </div>--}}
                             {{--                            </div>--}}
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_audio')}}</label>
                                 <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}" data-maxfiles="5"
                                      data-maxsize="10" data-acceptedfiles=".mp3" id="audio"
@@ -375,7 +375,7 @@
                                         <div class="previews-container"></div>
                                     @endif
                                 </div>
-                            </div>
+                            </div>-->
                             <div id="poorVision" @if($item->is_poor_vision == true) style="display: block"
                                  @else style="display: none" @endif>
                                 <h3 class="title-tertiary">{{__('default.pages.courses.is_vision_version')}}</h3>
