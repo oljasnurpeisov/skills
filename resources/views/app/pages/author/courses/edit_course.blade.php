@@ -290,13 +290,13 @@
                                     @endforeach
                                 @endif
                             </div>-->
-                            <div class="text-right pull-up">
+                            <!--<div class="text-right pull-up">
                                 <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"
                                    data-duplicate="courseVideo"
                                    data-maxcount="4"><span
                                         class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span><span
                                         class="btn-icon small icon-plus"> </span></a>
-                            </div>
+                            </div>-->
                             {{--                            <div class="form-group">--}}
                             {{--                                <label class="form-group__label">{{__('default.pages.courses.video_local')}}</label>--}}
                             {{--                                <div data-url="/ajax_upload_lesson_videos?_token={{ csrf_token() }}"--}}
