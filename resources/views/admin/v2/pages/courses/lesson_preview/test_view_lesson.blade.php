@@ -66,7 +66,7 @@
 
                         </div>
                         <div class="buttons">
-                            <button disabled class="btn">{{__('default.pages.lessons.done_test_btn')}}</button>
+                            <button <!--disabled--> class="btn">{{__('default.pages.lessons.done_test_btn')}}</button>
                             <a href="{{ url()->previous() }}"
                                title="{{__('default.pages.courses.cancel_title')}}"
                                class="ghost-btn">{{__('default.pages.courses.cancel_title')}}</a>
