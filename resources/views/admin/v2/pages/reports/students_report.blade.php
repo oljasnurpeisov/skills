@@ -37,7 +37,7 @@
                             <div class="input-group">
                                 <label class="checkbox">
                                     <input type="checkbox" name="unemployed_status[]"
-                                           value="1" {{in_array(1, $unemployed_status) ? 'checked' : ''}}>
+                                           value="00000$192" {{in_array(1, $unemployed_status) ? 'checked' : ''}}>
                                     <span>Безработный</span>
                                 </label>
                             </div>
