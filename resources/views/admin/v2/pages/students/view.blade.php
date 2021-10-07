@@ -55,13 +55,13 @@
                             </div>
                             <div class="input-group">
                                 <label class="input-group__title">{{__('default.pages.auth.area_title')}}</label>
-                                <input type="email" name="email" value="{{ $regionCaption ?? '' }}"
+                                <input type="email" name="email" value="{{ $coduozCaption ?? '' }}"
                                        placeholder=""
                                        class="input-regular" required disabled>
                             </div>
                             <div class="input-group">
-                                <label class="input-group__title">{{__('default.pages.auth.locality_title')}}</label>
-                                <input type="email" name="email" value="{{ $localityCaption ?? '' }}"
+                                <label class="input-group__title">{{__('default.pages.auth.region_title')}}</label>
+                                <input type="email" name="email" value="{{ $regionCaption ?? '' }}"
                                        placeholder=""
                                        class="input-regular" required disabled>
                             </div>

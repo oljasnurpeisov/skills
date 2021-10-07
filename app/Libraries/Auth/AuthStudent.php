@@ -107,8 +107,8 @@ class AuthStudent
             $studentResume = $studentResumes[0];
             $studentInformation->name = $studentResume["FIO"];
             $studentInformation->iin = $studentResume["iin"];
-            $studentInformation->region_id = $studentResume['modresreg_gorod'];
-            $studentInformation->locality = $studentResume['codcato'];
+            $studentInformation->coduoz = $studentResume['modresreg_gorod'];
+            $studentInformation->region_id = $studentResume['codcato'];
             $studentInformation->save();
             if ($studentInformation->agree !== 1) {
                 Session::put('agree_data', $user->id);
@@ -116,11 +116,11 @@ class AuthStudent
                 Auth::logout();
             }
         } else {
-            if ($studentInformation->name == null && $studentInformation->iin == null && $studentInformation->region_id == null && $studentInformation->locality == null) {
+            if ($studentInformation->name == null && $studentInformation->iin == null && $studentInformation->coduoz == null && $studentInformation->region_id == null) {
                 Session::put('resume_data', $user->id);
 
                 Auth::logout();
-            } elseif ($studentInformation->region_id == null || $studentInformation->locality == null) {
+            } elseif ($studentInformation->coduoz == null || $studentInformation->region_id == null) {
                 Session::put('address_data', $user->id);
 
                 Auth::logout();

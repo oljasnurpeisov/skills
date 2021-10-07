@@ -38,12 +38,12 @@ class UserController extends Controller
     public function student_profile($lang)
     {
         $item = StudentInformation::where('user_id', '=', Auth::user()->id)->first();
-        $regionCaption = RegionTree::getRegionCaption($lang, $item->region_id) ?? '';
-        $localityCaption = Kato::where('te',  $item->locality)->first()->rus_name ?? '';
+        $coduozCaption = RegionTree::getRegionCaption($lang, $item->coduoz) ?? '';
+        $regionCaption = Kato::where('te',  $item->region_id)->first()->rus_name ?? '';
         return view("app.pages.student.profile.student_profile", [
             "item" => $item,
-            "regionCaption" => $regionCaption,
-            "localityCaption" => $localityCaption
+            "coduozCaption" => $coduozCaption,
+            "regionCaption" => $regionCaption
         ]);
     }
 
@@ -275,8 +275,8 @@ class UserController extends Controller
             return redirect()->back()->withErrors($messages)->withInput($request->all());
         }
         $studentInformation = StudentInformation::whereUserId($user_id)->first();
-        $studentInformation->region_id = $request->region_id;
-        $studentInformation->locality = $request->locality;
+        $studentInformation->region_id = $request->locality;
+        $studentInformation->coduoz = $request->region_id;
         if ($session == 'resume_data') {
             $studentInformation->name = $request->resume_name;
             $studentInformation->iin = $request->resume_iin;

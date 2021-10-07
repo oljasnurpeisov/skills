@@ -76,28 +76,43 @@
 {{--                            <label class="input-group__title">Тип курса</label>--}}
 {{--                            <div class="input-group">--}}
 {{--                                <label class="checkbox">--}}
-{{--                                    <input type="checkbox" name="is_finished[]"--}}
+{{--                                    <input type="checkbox" name="is_finished[]" --}}
 {{--                                           value="1" {{in_array(1, $is_finished) ? 'checked' : ''}}>--}}
 {{--                                    <span>ГП</span>--}}
 {{--                                </label>--}}
 {{--                            </div>--}}
 {{--                            <div class="input-group">--}}
 {{--                                <label class="checkbox">--}}
-{{--                                    <input type="checkbox" name="is_finished[]"--}}
+{{--                                    <input type="checkbox" name="is_finished[]" --}}
 {{--                                           value="0" {{in_array(0, $is_finished) ? 'checked' : ''}}>--}}
 {{--                                    <span>Платный</span>--}}
 {{--                                </label>--}}
 {{--                            </div>--}}
 {{--                            <div class="input-group">--}}
 {{--                                <label class="checkbox">--}}
-{{--                                    <input type="checkbox" name="is_finished[]"--}}
+{{--                                    <input type="checkbox" name="is_finished[]" --}}
 {{--                                           value="0" {{in_array(0, $is_finished) ? 'checked' : ''}}>--}}
 {{--                                    <span>Бесплатный</span>--}}
 {{--                                </label>--}}
 {{--                            </div>--}}
 {{--                        </div>--}}
 {{--                    </div>--}}
-
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="input-group__title">Область</label>
+                                    <select type="text" name="area_id" class="selectize-regular">
+                                        @foreach($areas as $area)
+                                            <option value="{{ $area->cod }}" @if($area->cod==$request->area_id) selected='selected' @endif>
+                                                {{ $area->caption }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-sm-6">
@@ -170,8 +185,8 @@
                         {{__('admin.pages.reports.name_student')}}
 {{--                        <a href="?sortByName={{$request->sortByName == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.name_student')}}</a>--}}
                     </th>
+                    <th>{{__('admin.pages.reports.coduoz')}}</th>
                     <th>{{__('admin.pages.reports.region')}}</th>
-                    <th>{{__('admin.pages.reports.locality')}}</th>
                     <th>{{__('admin.pages.reports.unemployed')}}</th>
                     <th>{{__('admin.pages.reports.course_name')}}</th>
                     <th>{{__('admin.pages.reports.course_type')}}</th>
@@ -190,11 +205,11 @@
                         <td>{{$item->id}}</td>
                         <td>{{$item->student_info->iin}}</td>
                         <td>{{$item->student_info->name}}</td>
-                        <td>{{ $item->student_info->region_id ? App\Models\RegionTree::getRegionCaption($lang, $item->student_info->region_id) : '' }}</td>
-                        <td>{{ $item->student_info->locality ? App\Models\Kato::where('te',  $item->student_info->locality)->first()->rus_name ?? '' : '' }}</td>
+                        <td>{{ $item->student_info->coduoz ? App\Models\RegionTree::getRegionCaption($lang, $item->student_info->coduoz) : '' }}</td>
+                        <td>{{ $item->student_info->region_id ? App\Models\Kato::where('te',  $item->student_info->region_id)->first()->rus_name ?? '' : '' }}</td>
                         <td>
                             @if(isset($item->unemployed_status))
-                                {{ $item->unemployed_status == 0 ? __('default.no_title') : __('default.yes_title') }}
+                                {{ $item->unemployed_status == '00000$192' ? __('default.yes_title') : __('default.no_title') }}
                             @endif
                         </td>
                         <td>{{$item->course->name}}</td>

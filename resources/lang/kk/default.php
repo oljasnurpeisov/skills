@@ -556,7 +556,7 @@ return [
             'fio_title' => 'ТАӘ',
             'iin_resume_title' => 'ЖСН',
             'area_title' => 'Облыс/аудан',
-            'locality_title' => 'Елді мекен',
+            'region_title' => 'Елді мекен',
             'locality_select_title' => 'Елді мекенді таңдаңыз',
             'select' => 'Таңдау',
             'load' => 'Жүктеу',

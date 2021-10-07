@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="/assets/admin/libs/fancybox/dist/jquery.fancybox.min.css" type="text/css" media="screen"/>
 <link rel="stylesheet" href="/assets/admin/libs/chosen/chosen.css" type="text/css" media="screen"/>
 <link rel="stylesheet" href="/assets/admin/libs/air-datepicker/dist/css/datepicker.css" type="text/css" media="screen"/>
+<link rel="stylesheet" href="/assets/libs/selectize/selectize.default.css" type="text/css" media="screen"/>
 <link rel="stylesheet" href="/assets/admin/css/style.css" type="text/css" media="screen"/>
 
 <script src="/assets/admin/libs/jquery/dist/jquery.js"></script>

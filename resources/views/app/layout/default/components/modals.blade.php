@@ -291,7 +291,7 @@
                 <input type="hidden" name="region_id" value="">
             </div>
             <div class="form-group" id="locality-group" style="display:none;">
-                <label class="form-group__label">{{__('default.pages.auth.locality_title')}}</label>
+                <label class="form-group__label">{{__('default.pages.auth.region_title')}}</label>
                 <select type="text" name="locality" id="address" required>
                     <option value="">{{__('default.pages.auth.locality_select_title')}}</option>
                 </select>

@@ -54,14 +54,14 @@ class StudentController extends Controller
     {
         $roles = Role::orderBy('name', 'asc')->get();
         $user_information = StudentInformation::where('user_id', '=', $item->id)->first();
-        $regionCaption = RegionTree::getRegionCaption($lang, $user_information->region_id) ?? '';
-        $localityCaption = Kato::where('te',  $user_information->locality)->first()->rus_name ?? '';
+        $coduozCaption = RegionTree::getRegionCaption($lang, $user_information->coduoz) ?? '';
+        $regionCaption = Kato::where('te',  $user_information->region_id)->first()->rus_name ?? '';
         return view('admin.v2.pages.students.view', [
             'item' => $item,
             'roles' => $roles,
             'user_information' => $user_information,
+            "coduozCaption" => $coduozCaption,
             "regionCaption" => $regionCaption,
-            "localityCaption" => $localityCaption
         ]);
     }
 

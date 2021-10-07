@@ -30,11 +30,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.auth.area_title')}}</label>
-                                <input disabled name="iin" placeholder="" class="input-regular" value="{{ $regionCaption }}" required>
+                                <input disabled name="iin" placeholder="" class="input-regular" value="{{ $coduozCaption }}" required>
                             </div>
                             <div class="form-group">
-                                <label class="form-group__label">{{__('default.pages.auth.locality_title')}}</label>
-                                <input disabled name="iin" placeholder="" class="input-regular" value="{{ $localityCaption }}" required>
+                                <label class="form-group__label">{{__('default.pages.auth.region_title')}}</label>
+                                <input disabled name="iin" placeholder="" class="input-regular" value="{{ $regionCaption }}" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.profile.avatar')}}</label>

@@ -30,7 +30,7 @@ class PaymentController extends Controller
                     $student_course->paid_status = 3;
                     $student_course->course_id = $item->id;
                     $student_course->student_id = Auth::user()->id;
-                    $student_course->unemployed_status = $studentUnemployedStatus ?? null;
+                    $student_course->unemployed_status = $studentUnemployedStatus == 1 ? '00000$192' : null;
                     $student_course->save();
 
                     $student_info->unemployed_status = $studentUnemployedStatus;
@@ -108,7 +108,7 @@ class PaymentController extends Controller
                     $student_course->paid_status = 2;
                     $student_course->course_id = $item->id;
                     $student_course->student_id = Auth::user()->id;
-                    $student_course->unemployed_status = $studentUnemployedStatus ?? null;
+                    $student_course->unemployed_status = $studentUnemployedStatus == 1 ? '00000$192' : null;
                     $student_course->save();
 
                     $item_payment = new PaymentHistory;
@@ -164,7 +164,7 @@ class PaymentController extends Controller
                     $student_course->course_id = $json->metadata->course_id;
                     $student_course->payment_id = $item->id;
                     $student_course->student_id = $json->metadata->student_id;
-                    $student_course->unemployed_status = $studentUnemployedStatus ?? null;
+                    $student_course->unemployed_status = $studentUnemployedStatus == 1 ? '00000$192' : null;
                     $student_course->save();
 
                     $student_info->unemployed_status = $studentUnemployedStatus;

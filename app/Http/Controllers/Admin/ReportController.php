@@ -526,7 +526,7 @@ class ReportController extends Controller
         ]);
     }
 
-    public function studentsReports(Request $request)
+    public function studentsReports($lang, Request $request)
     {
         // Фильтрация
         $student_name = $request->student_name ? $request->student_name : '';
@@ -678,13 +678,15 @@ class ReportController extends Controller
 //        }
 
         $inputs = $request->except('page');
+        $areas = RegionTree::getSprUoz($lang);
 
         return view('admin.v2.pages.reports.students_report', [
             'items' => $items,
             'request' => $request,
             'inputs' => $inputs,
             'unemployed_status' => $unemployed_status,
-            'is_finished' => $is_finished
+            'is_finished' => $is_finished,
+            'areas' => $areas
         ]);
     }
 
@@ -775,9 +777,9 @@ class ReportController extends Controller
             // ФИО обучающегося
             $name = $i->student_info->name;
             // Регион/Район
-            $region = $i->student_info->region_id ? RegionTree::getRegionCaption($lang, $i->student_info->region_id) : '';
+            $coduoz = $i->student_info->coduoz ? RegionTree::getRegionCaption($lang, $i->student_info->coduoz) : '';
             // Населенный пункт
-            $locality = $i->student_info->locality ? Kato::where('te',  $i->student_info->locality)->first()->rus_name ?? '' : '' ;
+            $region = $i->student_info->region_id ? Kato::where('te',  $i->student_info->region_id)->first()->rus_name ?? '' : '' ;
             // Статус безработного
             if(isset($i->unemployed_status)) {
                 $unemployed_status = $i->unemployed_status == 0 ? __('default.no_title') : __('default.yes_title');
@@ -807,8 +809,8 @@ class ReportController extends Controller
             $newElement = [
                 'iin' => $iin,
                 'name' => $name,
+                'coduoz' => $coduoz,
                 'region' => $region,
-                'locality' => $locality,
                 'unemployed_status' => $unemployed_status,
                 'course_name' => $course_name,
                 'course_type' => $course_type,

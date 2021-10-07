@@ -563,7 +563,7 @@ return [
             'fio_title' => 'ФИО',
             'iin_resume_title' => 'ИИН',
             'area_title' => 'Регион/район',
-            'locality_title' => 'Населенный пункт',
+            'region_title' => 'Населенный пункт',
             'locality_select_title' => 'Выберите населенный пункт',
             'select' => 'Выбрать',
             'load' => 'Загрузка',
