@@ -26,6 +26,7 @@ class StudentReportExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
 
     public function styles(Worksheet $sheet)
     {
+        $sheet->getStyle('A1')->getAlignment()->setWrapText(true);
         $sheet->getStyle('B2:B999')->getAlignment()->setWrapText(true);
         $sheet->getStyle('C2:C999')->getAlignment()->setWrapText(true);
         $sheet->getStyle('A1:K1')->getFont()->setBold(true);
