@@ -10,9 +10,11 @@ use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class StudentReportExport implements FromArray, WithHeadings, ShouldAutoSize, WithStyles, WithStrictNullComparison
+class StudentReportExport implements FromArray, WithHeadings, ShouldAutoSize, WithStyles, WithStrictNullComparison, WithColumnFormatting
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -32,6 +34,12 @@ class StudentReportExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
         $sheet->getStyle('A1:K1')->getFont()->setBold(true);
     }
 
+    public function columnFormats(): array
+    {
+        return [
+            'A' => NumberFormat::FORMAT_TEXT,
+        ];
+    }
 
     public function array(): array
     {
