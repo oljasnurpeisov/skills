@@ -530,7 +530,9 @@ class ReportController extends Controller
     {
         // Фильтрация
         $student_name = $request->student_name ? $request->student_name : '';
+        $student_iin =  $request->student_iin ? $request->student_iin : '';
         $unemployed_status = $request->unemployed_status ?? [];
+        $is_finished = $request->is_finished ?? [];
         $quota_count_from = $request->quota_count_from;
         $quota_count_to = $request->quota_count_to;
         $courses_count_from = $request->courses_count_from;
@@ -563,18 +565,25 @@ class ReportController extends Controller
 //                ->orderBy('student_information.quota_count', $sortByQuota);
 //        }
 //        // Фильтрация
-//        // Поиск по имени
-//        if ($student_name) {
-//            $query->whereHas('student_info', function ($q) use ($student_name) {
-//                $q->where('name', 'like', '%' . $student_name . '%');
-//            });
-//        }
+        // Поиск по имени
+        if ($student_name) {
+            $query->whereHas('student_info', function ($q) use ($student_name) {
+                $q->where('name', 'like', '%' . $student_name . '%');
+            });
+        }
+        // Поиск по ИИН
+        if ($student_iin) {
+            $query->whereHas('student_info', function ($q) use ($student_iin) {
+                $q->where('iin', '=', $student_iin);
+            });
+        }
 //        // Поиск по статусу
-//        if ($unemployed_status) {
-//            $query->whereHas('student_info', function ($q) use ($unemployed_status) {
-//                $q->whereIn('unemployed_status', $unemployed_status);
-//            });
-//        }
+        if ($unemployed_status) {
+            $query->whereIn('unemployed_status', $unemployed_status);
+        }
+        if ($is_finished) {
+            $query->whereIn('is_finished', $is_finished);
+        }
 //        // Поиск по количеству квот
 //        if ($quota_count_from and empty($quota_count_to)) {
 //            $query->whereHas('student_info', function ($q) use ($quota_count_from) {
@@ -674,7 +683,8 @@ class ReportController extends Controller
             'items' => $items,
             'request' => $request,
             'inputs' => $inputs,
-            'unemployed_status' => $unemployed_status
+            'unemployed_status' => $unemployed_status,
+            'is_finished' => $is_finished
         ]);
     }
 

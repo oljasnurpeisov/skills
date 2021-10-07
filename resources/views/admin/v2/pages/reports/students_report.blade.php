@@ -12,34 +12,28 @@
         @include('admin.v2.partials.components.errors')
 
         <form class="block">
-            <div class="input-group">
-                <label class="input-group__title">Поиск по ФИО</label>
-                <input type="text" name="student_name" placeholder="" class="input-regular"
-                       value="{{$request->student_name}}">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <label class="input-group__title">Поиск по ФИО</label>
+                        <input type="text" name="student_name" placeholder="" class="input-regular"
+                               value="{{$request->student_name}}">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <label class="input-group__title">Поиск по ИИН</label>
+                        <input type="text" name="student_iin" placeholder="" class="input-regular" onfocus="$(this).inputmask('999999999999')"
+                               value="{{$request->student_iin}}">
+                    </div>
+                </div>
             </div>
+
             <div class="collapse-block collapsed" style="display: none;" id="collapse1">
                 <div class="row">
                     <div class="col-md-3">
                         <div class="input-group">
-                            <label class="input-group__title">Количество оставшихся квот: от</label>
-                            <label class="">
-                                <input type="number" name="quota_count_from" placeholder=""
-                                       class="input-regular" value="{{$request->quota_count_from}}">
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="input-group">
-                            <label class="input-group__title">до</label>
-                            <label class="">
-                                <input type="number" name="quota_count_to" placeholder=""
-                                       class="input-regular" value="{{$request->quota_count_to}}">
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <label class="input-group__title">&nbsp;Статус обучающегося</label>
+                            <label class="input-group__title">&nbsp;Статус обучающегося на момент записи на курс</label>
                             <div class="input-group">
                                 <label class="checkbox">
                                     <input type="checkbox" name="unemployed_status[]"
@@ -56,6 +50,53 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <label class="input-group__title">Получил сертификат</label>
+                            <div class="input-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="is_finished[]"
+                                           value="1" {{in_array(1, $is_finished) ? 'checked' : ''}}>
+                                    <span>Да</span>
+                                </label>
+                            </div>
+                            <div class="input-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="is_finished[]"
+                                           value="0" {{in_array(0, $is_finished) ? 'checked' : ''}}>
+                                    <span>Нет</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+{{--                    <div class="col-md-3">--}}
+{{--                        <div class="input-group">--}}
+{{--                            <label class="input-group__title">Тип курса</label>--}}
+{{--                            <div class="input-group">--}}
+{{--                                <label class="checkbox">--}}
+{{--                                    <input type="checkbox" name="is_finished[]"--}}
+{{--                                           value="1" {{in_array(1, $is_finished) ? 'checked' : ''}}>--}}
+{{--                                    <span>ГП</span>--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                            <div class="input-group">--}}
+{{--                                <label class="checkbox">--}}
+{{--                                    <input type="checkbox" name="is_finished[]"--}}
+{{--                                           value="0" {{in_array(0, $is_finished) ? 'checked' : ''}}>--}}
+{{--                                    <span>Платный</span>--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                            <div class="input-group">--}}
+{{--                                <label class="checkbox">--}}
+{{--                                    <input type="checkbox" name="is_finished[]"--}}
+{{--                                           value="0" {{in_array(0, $is_finished) ? 'checked' : ''}}>--}}
+{{--                                    <span>Бесплатный</span>--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     <div class="col-md-12">
                         <div class="row">
@@ -98,26 +139,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{--                        <div class="row">--}}
-                        {{--                            <div class="col-sm-6">--}}
-                        {{--                                <div class="input-group">--}}
-                        {{--                                    <label class="input-group__title">Количество квалификаций: от</label>--}}
-                        {{--                                    <label class="">--}}
-                        {{--                                        <input type="number" name="qualifications_count_from" placeholder=""--}}
-                        {{--                                               class="input-regular" value="{{$request->qualifications_count_from}}">--}}
-                        {{--                                    </label>--}}
-                        {{--                                </div>--}}
-                        {{--                            </div>--}}
-                        {{--                            <div class="col-sm-6">--}}
-                        {{--                                <div class="input-group">--}}
-                        {{--                                    <label class="input-group__title">до</label>--}}
-                        {{--                                    <label class="">--}}
-                        {{--                                        <input type="number" name="qualifications_count_to" placeholder=""--}}
-                        {{--                                               class="input-regular" value="{{$request->qualifications_count_to}}">--}}
-                        {{--                                    </label>--}}
-                        {{--                                </div>--}}
-                        {{--                            </div>--}}
-                        {{--                        </div>--}}
                     </div>
                 </div>
             </div>
@@ -141,20 +162,13 @@
         <div class="block">
             <h2 class="title-secondary">{{__('admin.pages.reports.students_report')}}</h2>
             <table class="table records">
-{{--                <colgroup>--}}
-{{--                    <col span="1" style="width: 20%;">--}}
-{{--                    <col span="1" style="width: 20%;">--}}
-{{--                    <col span="1" style="width: 20%;">--}}
-{{--                    <col span="1" style="width: 15%;">--}}
-{{--                    <col span="1" style="width: 10%;">--}}
-{{--                    <col span="1" style="width: 15%;">--}}
-{{--                </colgroup>--}}
                 <thead>
                 <tr>
                     <th>#</th>
                     <th>{{__('admin.pages.reports.iin')}}</th>
                     <th>
-                        <a href="?sortByName={{$request->sortByName == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.name_student')}}</a>
+                        {{__('admin.pages.reports.name_student')}}
+{{--                        <a href="?sortByName={{$request->sortByName == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.name_student')}}</a>--}}
                     </th>
                     <th>{{__('admin.pages.reports.region')}}</th>
                     <th>{{__('admin.pages.reports.locality')}}</th>
@@ -196,7 +210,7 @@
                         <td>{{ isset($item->attempts()[0]->created_at) ? date('d.m.Y H:i', strtotime($item->attempts()[0]->created_at)) : '' }}</td>
                         <td>{{ isset($item->attempts()[1]->created_at) ? date('d.m.Y H:i', strtotime($item->attempts()[1]->created_at)) : '' }}</td>
                         <td>{{ isset($item->attempts()[2]->created_at) ? date('d.m.Y H:i', strtotime($item->attempts()[2]->created_at)) : '' }}</td>
-                        <td>{{ $item->is_finished == 1 ? date('d.m.Y', strtotime($item->certificate()->created_at)) : ''}}</td>
+                        <td>{{ $item->is_finished == 1 && isset($item->certificate()->created_at) ? date('d.m.Y', strtotime($item->certificate()->created_at)) : ''}}</td>
                         <td></td>
                     </tr>
                 @endforeach
