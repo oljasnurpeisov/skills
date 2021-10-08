@@ -51,6 +51,7 @@ class StudentReportExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
         return [
             __('admin.pages.reports.iin'),
             __('admin.pages.reports.name_student'),
+            __('admin.pages.reports.area'),
             __('admin.pages.reports.coduoz'),
             __('admin.pages.reports.region'),
             __('admin.pages.reports.unemployed'),

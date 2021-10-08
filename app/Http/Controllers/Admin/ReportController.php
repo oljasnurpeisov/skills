@@ -765,13 +765,15 @@ class ReportController extends Controller
             $iin = $i->student_info->iin;
             // ФИО обучающегося
             $name = $i->student_info->name;
+            // ОБласть
+            $area = $i->student_info->area()->NAME_KR_R ?? '';
             // Регион/Район
             $coduoz = $i->student_info->clcz->NAME_KR_R ?? '';
             // Населенный пункт
             $region = $i->student_info->cato->rus_name ?? '' ;
             // Статус безработного
             if(isset($i->unemployed_status)) {
-                $unemployed_status = $i->unemployed_status == 0 ? __('default.no_title') : __('default.yes_title');
+                $unemployed_status = $i->unemployed_status == '00000$192' ? __('default.yes_title') : __('default.no_title');
             } else {
                 $unemployed_status = '';
             }
@@ -799,6 +801,7 @@ class ReportController extends Controller
             $newElement = [
                 'iin' => $iin,
                 'name' => $name,
+                'area' => $area,
                 'coduoz' => $coduoz,
                 'region' => $region,
                 'unemployed_status' => $unemployed_status,

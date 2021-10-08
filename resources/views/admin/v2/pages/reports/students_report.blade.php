@@ -185,6 +185,7 @@
                         {{__('admin.pages.reports.name_student')}}
 {{--                        <a href="?sortByName={{$request->sortByName == 'asc' ? 'desc' : 'asc'}}">{{__('admin.pages.reports.name_student')}}</a>--}}
                     </th>
+                    <th>{{__('admin.pages.reports.area')}}</th>
                     <th>{{__('admin.pages.reports.coduoz')}}</th>
                     <th>{{__('admin.pages.reports.region')}}</th>
                     <th>{{__('admin.pages.reports.unemployed')}}</th>
@@ -205,6 +206,7 @@
                         <td>{{$item->id}}</td>
                         <td>{{$item->student_info->iin}}</td>
                         <td>{{$item->student_info->name}}</td>
+                        <td>{{$item->student_info->area()->NAME_KR_R ?? ''}}</td>
                         <td>{{$item->student_info->clcz->NAME_KR_R ?? ''}}</td>
                         <td>{{$item->student_info->cato->rus_name ?? ''}}</td>
                         <td>
