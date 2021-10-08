@@ -205,8 +205,8 @@
                         <td>{{$item->id}}</td>
                         <td>{{$item->student_info->iin}}</td>
                         <td>{{$item->student_info->name}}</td>
-                        <td>{{ $item->student_info->coduoz ? App\Models\RegionTree::getRegionCaption($lang, $item->student_info->coduoz) : '' }}</td>
-                        <td>{{ $item->student_info->region_id ? App\Models\Kato::where('te',  $item->student_info->region_id)->first()->rus_name ?? '' : '' }}</td>
+                        <td>{{$item->student_info->clcz->NAME_KR_R ?? ''}}</td>
+                        <td>{{$item->student_info->cato->rus_name ?? ''}}</td>
                         <td>
                             @if(isset($item->unemployed_status))
                                 {{ $item->unemployed_status == '00000$192' ? __('default.yes_title') : __('default.no_title') }}
@@ -222,10 +222,11 @@
                         </td>
                         <td>{{ date('d.m.Y', strtotime($item->created_at)) }}</td>
                         <td>{{ isset($item->student_first_lesson()->created_at) ?  date('d.m.Y', strtotime($item->student_first_lesson()->created_at)) : ''}}</td>
-                        <td>{{ isset($item->attempts()[0]->created_at) ? date('d.m.Y H:i', strtotime($item->attempts()[0]->created_at)) : '' }}</td>
-                        <td>{{ isset($item->attempts()[1]->created_at) ? date('d.m.Y H:i', strtotime($item->attempts()[1]->created_at)) : '' }}</td>
-                        <td>{{ isset($item->attempts()[2]->created_at) ? date('d.m.Y H:i', strtotime($item->attempts()[2]->created_at)) : '' }}</td>
-                        <td>{{ $item->is_finished == 1 && isset($item->certificate()->created_at) ? date('d.m.Y', strtotime($item->certificate()->created_at)) : ''}}</td>
+                        @php($attempts = $item->attempts())
+                        <td>{{ isset($attempts[0]->created_at) ? date('d.m.Y H:i', strtotime($attempts[0]->created_at)) : '' }}</td>
+                        <td>{{ isset($attempts[1]->created_at) ? date('d.m.Y H:i', strtotime($attempts[1]->created_at)) : '' }}</td>
+                        <td>{{ isset($attempts[2]->created_at) ? date('d.m.Y H:i', strtotime($attempts[2]->created_at)) : '' }}</td>
+                        <td>{{ $item->is_finished == 1 && isset($item->certificate()->created_at) ? date('d.m.Y', strtotime($item->certificate()->created_at)) : '' }}</td>
                         <td></td>
                     </tr>
                 @endforeach

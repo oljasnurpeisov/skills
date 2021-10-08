@@ -59,4 +59,14 @@ class StudentInformation extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function cato()
+    {
+        return $this->hasOne(Kato::class, 'te', 'region_id');
+    }
+
+    public function clcz()
+    {
+        return $this->hasOne(Clcz::class, 'CODUOZ', 'coduoz');
+    }
 }

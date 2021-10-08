@@ -550,8 +550,11 @@ class ReportController extends Controller
 //        });
         $query = StudentCourse::query()
             ->orderBy('id', 'DESC')
-            ->with('student_info')
-            ->with('course');
+            ->with([
+                'student_info.cato',
+                'student_info.clcz',
+                'course'
+            ]);
         // Сортировка
         // Сортировка по названию курса
 //        if ($sortByName) {
@@ -662,20 +665,6 @@ class ReportController extends Controller
 
         $items = $query->paginate(10);
 //        dd($items);
-//        $i = [];
-//        foreach ($items as $item) {
-//            $finishedCourseWorks = 0;
-//            foreach ($item->student_course->whereIn('paid_status', [1, 2]) as $course) {
-//                if ($course->course->courseWork()) {
-//                    if ($item->student_lesson->where('lesson_id', '=', $course->course->courseWork()->id)) {
-//                        $i[] = $course->course->courseWork();
-//                        $finishedCourseWorks++;
-//                    }
-//                }
-//            }
-//            // Количество законченных курсовых работ
-//            $item->finishedCourseWorkrs = $finishedCourseWorks;
-//        }
 
         $inputs = $request->except('page');
         $areas = RegionTree::getSprUoz($lang);
@@ -777,9 +766,9 @@ class ReportController extends Controller
             // ФИО обучающегося
             $name = $i->student_info->name;
             // Регион/Район
-            $coduoz = $i->student_info->coduoz ? RegionTree::getRegionCaption($lang, $i->student_info->coduoz) : '';
+            $coduoz = $i->student_info->clcz->NAME_KR_R ?? '';
             // Населенный пункт
-            $region = $i->student_info->region_id ? Kato::where('te',  $i->student_info->region_id)->first()->rus_name ?? '' : '' ;
+            $region = $i->student_info->cato->rus_name ?? '' ;
             // Статус безработного
             if(isset($i->unemployed_status)) {
                 $unemployed_status = $i->unemployed_status == 0 ? __('default.no_title') : __('default.yes_title');
@@ -799,9 +788,10 @@ class ReportController extends Controller
             // Дата начала обучения
             $first_lesson_date = isset($i->student_first_lesson()->created_at) ?  date('d.m.Y', strtotime($i->student_first_lesson()->created_at)) : '';
             // Первые 3 неудачные попытки итогового тестирования
-            $first_failed_test_date = isset($i->attempts()[0]->created_at) ? date('d.m.Y H:i', strtotime($i->attempts()[0]->created_at)) : '';
-            $second_failed_test_date = isset($i->attempts()[1]->created_at) ? date('d.m.Y H:i', strtotime($i->attempts()[1]->created_at)) : '';
-            $third_failed_test_date = isset($i->attempts()[2]->created_at) ? date('d.m.Y H:i', strtotime($i->attempts()[2]->created_at)) : '';
+            $attempts = $i->attempts();
+            $first_failed_test_date = isset($attempts[0]->created_at) ? date('d.m.Y H:i', strtotime($attempts[0]->created_at)) : '';
+            $second_failed_test_date = isset($attempts[1]->created_at) ? date('d.m.Y H:i', strtotime($attempts[1]->created_at)) : '';
+            $third_failed_test_date = isset($attempts[2]->created_at) ? date('d.m.Y H:i', strtotime($attempts[2]->created_at)) : '';
 
             // Дата получения сертификата
             $certificate_date = $i->is_finished == 1 && isset($i->certificate()->created_at) ? date('d.m.Y', strtotime($i->certificate()->created_at)) : '';
