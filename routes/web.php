@@ -331,6 +331,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::get("/getSkillsByProfession/{profession_id}", "CourseController@getSkillsByProfession");
             //Справочники Адресов
             Route::get("/getRegions", "DictionaryController@getRegions");
+            Route::get("/getRaions/{area}", "DictionaryController@getRaions");
             Route::get("/getKato/{kato}", "DictionaryController@getKatoChilds");
             //
             Route::post("/markAsReadNotifications", "CourseController@markAsReadNotifications");

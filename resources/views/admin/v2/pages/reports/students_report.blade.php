@@ -37,14 +37,14 @@
                             <div class="input-group">
                                 <label class="checkbox">
                                     <input type="checkbox" name="unemployed_status[]"
-                                           value="00000$192" {{in_array(1, $unemployed_status) ? 'checked' : ''}}>
+                                           value="00000$192" {{in_array('00000$192', $unemployed_status) ? 'checked' : ''}}>
                                     <span>Безработный</span>
                                 </label>
                             </div>
                             <div class="input-group">
                                 <label class="checkbox">
                                     <input type="checkbox" name="unemployed_status[]"
-                                           value="0" {{in_array(0, $unemployed_status) ? 'checked' : ''}}>
+                                           value="0" {{in_array('0', $unemployed_status) ? 'checked' : ''}}>
                                     <span>Работающий</span>
                                 </label>
                             </div>
@@ -71,38 +71,39 @@
                         </div>
                     </div>
 
-{{--                    <div class="col-md-3">--}}
-{{--                        <div class="input-group">--}}
-{{--                            <label class="input-group__title">Тип курса</label>--}}
-{{--                            <div class="input-group">--}}
-{{--                                <label class="checkbox">--}}
-{{--                                    <input type="checkbox" name="is_finished[]" --}}
-{{--                                           value="1" {{in_array(1, $is_finished) ? 'checked' : ''}}>--}}
-{{--                                    <span>ГП</span>--}}
-{{--                                </label>--}}
-{{--                            </div>--}}
-{{--                            <div class="input-group">--}}
-{{--                                <label class="checkbox">--}}
-{{--                                    <input type="checkbox" name="is_finished[]" --}}
-{{--                                           value="0" {{in_array(0, $is_finished) ? 'checked' : ''}}>--}}
-{{--                                    <span>Платный</span>--}}
-{{--                                </label>--}}
-{{--                            </div>--}}
-{{--                            <div class="input-group">--}}
-{{--                                <label class="checkbox">--}}
-{{--                                    <input type="checkbox" name="is_finished[]" --}}
-{{--                                           value="0" {{in_array(0, $is_finished) ? 'checked' : ''}}>--}}
-{{--                                    <span>Бесплатный</span>--}}
-{{--                                </label>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <label class="input-group__title">Тип курса</label>
+                            <div class="input-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="quota_status[]"
+                                           value="2" {{in_array(2, $quota_status) ? 'checked' : ''}}>
+                                    <span>ГП</span>
+                                </label>
+                            </div>
+                            <div class="input-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="is_paid[]"
+                                           value="1" {{in_array(1, $is_paid) ? 'checked' : ''}}>
+                                    <span>Платный</span>
+                                </label>
+                            </div>
+                            <div class="input-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" name="is_paid[]"
+                                           value="0" {{in_array(0, $is_paid) ? 'checked' : ''}}>
+                                    <span>Бесплатный</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-sm-3">
-                                <div class="form-group">
+                                <div class="input-group">
                                     <label class="input-group__title">Область</label>
-                                    <select type="text" name="area_id" class="selectize-regular">
+                                    <select name="area_id" id="area_id" class="input-regular chosen area-select">
+                                        <option value="" selected='selected'>Выберите</option>
                                         @foreach($areas as $area)
                                             <option value="{{ $area->cod }}" @if($area->cod==$request->area_id) selected='selected' @endif>
                                                 {{ $area->caption }}
@@ -111,45 +112,42 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="hidden" name="coduoz_request" value="{{ $request->coduoz_id ?? '' }}">
+                                    <label class="input-group__title">Район</label>
+                                    <select name="coduoz_id" class="input-regular chosen coduoz-select">
+                                        <option value="">Выберите</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="hidden" name="region_request" value="{{ $request->region_id ?? '' }}">
+                                    <label class="input-group__title">Населенный пункт</label>
+                                    <select name="region_id" class="input-regular chosen region-select">
+                                        <option value="">Выберите</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="input-group">
-                                    <label class="input-group__title">Количество курсов: от</label>
-                                    <label class="">
-                                        <input type="number" name="courses_count_from" placeholder=""
-                                               class="input-regular" value="{{$request->courses_count_from}}">
+                                    <label class="input-group__title">Дата записи на курс: от</label>
+                                    <label class="date">
+                                        <input type="text" data-date-format="dd.mm.yyyy" name="date_course_from" value="{{$request->date_course_from}}" placeholder="" class="input-regular custom-datepicker" autocomplete="off">
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <div class="input-group">
                                     <label class="input-group__title">до</label>
-                                    <label class="">
-                                        <input type="number" name="courses_count_to" placeholder=""
-                                               class="input-regular" value="{{$request->courses_count_to}}">
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <label class="input-group__title">Количество сертфикатов: от</label>
-                                    <label class="">
-                                        <input type="number" name="certificates_count_from" placeholder=""
-                                               class="input-regular" value="{{$request->certificates_count_from}}">
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <label class="input-group__title">до</label>
-                                    <label class="">
-                                        <input type="number" name="certificates_count_to" placeholder=""
-                                               class="input-regular" value="{{$request->certificates_count_to}}">
+                                    <label class="date">
+                                        <input type="text" data-date-format="dd.mm.yyyy" name="date_course_to" value="{{$request->date_course_to}}" placeholder="" class="input-regular custom-datepicker" autocomplete="off">
                                     </label>
                                 </div>
                             </div>
@@ -174,7 +172,7 @@
         </form>
 
 
-        <div class="block">
+        <div style="position: unset;" class="block">
             <h2 class="title-secondary">{{__('admin.pages.reports.students_report')}}</h2>
             <table class="table records">
                 <thead>
@@ -244,5 +242,75 @@
 @endsection
 
 @section('scripts')
+    <script type="text/javascript">
+        $( ".area-select" ).change(function() {
+            var area = this.value;
+            if(area) {
+                $.ajax({
+                    method: 'GET',
+                    url: '/{{ $lang }}/getRaions/' + area,
+                    success: function(result) {
+                        $('.coduoz-select').empty()
+                        $('.coduoz-select').append('<option value="">Выберите</option>');
+                        $('.region-select').empty()
+                        $('.region-select').append('<option value="">Выберите</option>');
+                        for (var i = result.length-1; i >= 0; i--) {
+                            $('.coduoz-select').append('<option value="'+result[i]['cod']+'">'+result[i]['caption']+'</option>');
+                        }
+                        var coduoz_request = $("input[name=coduoz_request]").val();
+                        if(coduoz_request) {
+                            $("input[name=coduoz_request]").val("");
+                            $(".coduoz-select").val(coduoz_request);
+                            $(".coduoz-select").change();
+                        }
+                        $('.coduoz-select').trigger("chosen:updated");
+                        $('.region-select').trigger("chosen:updated");
 
+                    }
+                })
+            } else {
+                $('.coduoz-select').empty()
+                $('.coduoz-select').append('<option value="">Выберите</option>');
+                $('.region-select').empty()
+                $('.region-select').append('<option value="">Выберите</option>');
+                $('.coduoz-select').trigger("chosen:updated");
+                $('.region-select').trigger("chosen:updated");
+            }
+
+        });
+        $( ".coduoz-select" ).change(function() {
+            var coduoz = this.value;
+            if (coduoz) {
+                $.ajax({
+                    method: 'GET',
+                    url: '/{{ $lang }}/getKato/' + coduoz,
+                    success: function(result) {
+                        $('.region-select').empty()
+                        $('.region-select').append('<option value="">Выберите</option>');
+                        for (var i = result.data.length-1; i >= 0; i--) {
+                            $('.region-select').append('<option value="'+result['data'][i]['id']+'">'+result['data'][i]['name']+'</option>');
+                        }
+                        var region_request = $("input[name=region_request]").val();
+                        if(region_request) {
+                            $("input[name=region_request]").val("");
+                            $(".region-select").val(region_request);
+                        }
+                        $('.region-select').trigger("chosen:updated");
+
+                    }
+                })
+            } else {
+                $('.region-select').empty()
+                $('.region-select').append('<option value="">Выберите</option>');
+                $('.region-select').trigger("chosen:updated");
+            }
+
+        });
+        $(document).ready(function() {
+            var area_id = document.getElementById("area_id").value;
+            if(area_id) {
+                $('.area-select').change();
+            }
+        });
+    </script>
 @endsection

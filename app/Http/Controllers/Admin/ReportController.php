@@ -533,23 +533,27 @@ class ReportController extends Controller
         $student_iin =  $request->student_iin ? $request->student_iin : '';
         $unemployed_status = $request->unemployed_status ?? [];
         $is_finished = $request->is_finished ?? [];
-        $quota_count_from = $request->quota_count_from;
-        $quota_count_to = $request->quota_count_to;
-        $courses_count_from = $request->courses_count_from;
-        $courses_count_to = $request->courses_count_to;
-        $certificates_count_from = $request->certificates_count_from;
-        $certificates_count_to = $request->certificates_count_to;
-        $qualifications_count_from = $request->qualifications_count_from;
-        $qualifications_count_to = $request->qualifications_count_to;
+        $is_paid = $request->is_paid ?? [];
+        $quota_status = $request->quota_status ?? [];
+        $area = $request->area_id ?? null;
+        $coduoz_id = $request->coduoz_id ?? null;
+        $region_id = $request->region_id ?? null;
         // Сортировка
         $sortByName = $request->sortByName;
         $sortByQuota = $request->sortByQuota;
 
-//        $query = User::whereHas('roles', function ($q) {
-//            $q->whereSlug('student');
-//        });
+        $course_from = $request->date_course_from;
+        $course_to = $request->date_course_to;
+        $date_course_from = Carbon::parse($course_from ?? '01.01.2020')
+            ->startOfDay()
+            ->toDateTimeString();
+        $date_course_to = Carbon::parse($course_to)
+            ->endOfDay()
+            ->toDateTimeString();
+
         $query = StudentCourse::query()
             ->orderBy('id', 'DESC')
+            ->whereBetween('created_at', [$date_course_from, $date_course_to])
             ->with([
                 'student_info.cato',
                 'student_info.clcz',
@@ -561,11 +565,6 @@ class ReportController extends Controller
 //            $query->with('student_info')
 //                ->join('student_information', 'users.id', '=', 'student_information.user_id')
 //                ->orderBy('student_information.name', $sortByName);
-//        }
-//        if ($sortByQuota) {
-//            $query->with('student_info')
-//                ->join('student_information', 'users.id', '=', 'student_information.user_id')
-//                ->orderBy('student_information.quota_count', $sortByQuota);
 //        }
 //        // Фильтрация
         // Поиск по имени
@@ -580,86 +579,34 @@ class ReportController extends Controller
                 $q->where('iin', '=', $student_iin);
             });
         }
-//        // Поиск по статусу
+        // Поиск по статусу
         if ($unemployed_status) {
             $query->whereIn('unemployed_status', $unemployed_status);
         }
         if ($is_finished) {
             $query->whereIn('is_finished', $is_finished);
         }
-//        // Поиск по количеству квот
-//        if ($quota_count_from and empty($quota_count_to)) {
-//            $query->whereHas('student_info', function ($q) use ($quota_count_from) {
-//                $q->where('quota_count', '>=', $quota_count_from);
-//            });
-//        } else if ($quota_count_to and empty($quota_count_from)) {
-//            $query->whereHas('student_info', function ($q) use ($quota_count_to) {
-//                $q->where('quota_count', '>=', $quota_count_to);
-//            });
-//        } else if ($quota_count_to and $quota_count_from) {
-//            $query->whereHas('student_info', function ($q) use ($quota_count_to, $quota_count_from) {
-//                $q->whereBetween('quota_count', [$quota_count_from, $quota_count_to]);
-//            });
-//        }
-//        // Поиск по количеству курсов
-//        if ($courses_count_from and empty($courses_count_to)) {
-//            $query->withCount(['student_course' => function ($q) {
-//                $q->whereIn('paid_status', [1, 2]);
-//            }])->with(['student_course' => function ($q) {
-//                $q->whereIn('paid_status', [1, 2]);
-//            }])->having('student_course_count', '>=', $courses_count_from);
-//        } else if ($courses_count_to and empty($courses_count_from)) {
-//            $query->withCount(['student_course' => function ($q) {
-//                $q->whereIn('paid_status', [1, 2]);
-//            }])->with(['student_course' => function ($q) {
-//                $q->whereIn('paid_status', [1, 2]);
-//            }])->having('student_course_count', '<=', $courses_count_to);
-//        } else if ($courses_count_to and $courses_count_from) {
-//            $query->withCount(['student_course' => function ($q) {
-//                $q->whereIn('paid_status', [1, 2]);
-//            }])->with(['student_course' => function ($q) {
-//                $q->whereIn('paid_status', [1, 2]);
-//            }])->having('student_course_count', '>=', $courses_count_from)
-//                ->having('student_course_count', '<=', $courses_count_to);
-//        }
-//        // Поиск по количеству сертификатов
-//        if ($certificates_count_from and empty($certificates_count_to)) {
-//            $query->withCount(['student_course as student_course_certificates_count' => function ($q) {
-//                $q->where('is_finished', '=', true);
-//            }])->with(['student_course' => function ($q) {
-//                $q->where('is_finished', '=', true);
-//            }])->having('student_course_certificates_count', '>=', $certificates_count_from);
-//        } else if ($certificates_count_to and empty($certificates_count_from)) {
-//            $query->withCount(['student_course as student_course_certificates_count' => function ($q) {
-//                $q->where('is_finished', '=', true);
-//            }])->with(['student_course' => function ($q) {
-//                $q->where('is_finished', '=', true);
-//            }])->having('student_course_certificates_count', '<=', $certificates_count_to);
-//        } else if ($certificates_count_to and $certificates_count_from) {
-//            $query->withCount(['student_course as student_course_certificates_count' => function ($q) {
-//                $q->where('is_finished', '=', true);
-//            }])->with(['student_course' => function ($q) {
-//                $q->where('is_finished', '=', true);
-//            }])->having('student_course_certificates_count', '>=', $certificates_count_from)
-//                ->having('student_course_certificates_count', '<=', $certificates_count_to);
-//        }
-//        $qualifications_count = $query->withCount(['student_course as qualifications_count' => function ($query) {
-//            $query->whereHas('course.lessons', function ($q) {
-//                $q->where('type', '=', 3);
-//            });
-//            $query->whereHas('course.lessons.student_lessons', function ($q) {
-//                $q->where('is_finished', '=', true);
-//            });
-//        }]);
-//        // Поиск по количеству квалификаций
-//        if ($qualifications_count_from) {
-//            $qualifications_count->having('qualifications_count', '>=', $qualifications_count_from);
-//        } else if ($qualifications_count_to and empty($qualifications_count_from)) {
-//            $qualifications_count->having('qualifications_count', '<=', $qualifications_count_to);
-//        } else if ($qualifications_count_to and $qualifications_count_from) {
-//            $qualifications_count->having('qualifications_count', '>=', $qualifications_count_from)
-//                ->having('qualifications_count', '<=', $qualifications_count_to);
-//        }
+        if ($is_paid || $quota_status) {
+            $query->whereHas('course', function ($q) use ($is_paid, $quota_status) {
+                $q->whereIn('is_paid', $is_paid)
+                ->orWhereIn('quota_status', $quota_status);
+            });
+        }
+        // Поиск по адресу
+        if ($coduoz_id) {
+            $query->whereHas('student_info', function ($q) use ($coduoz_id) {
+                $q->where('coduoz', '=', $coduoz_id);
+            });
+        } elseif ($area) {
+            $query->whereHas('student_info', function ($q) use ($area) {
+                $q->where('coduoz', 'LIKE', $area . '%');
+            });
+        }
+        if ($region_id) {
+            $query->whereHas('student_info', function ($q) use ($region_id) {
+                $q->where('region_id', '=', $region_id);
+            });
+        }
 
         Session::put('students_report_export', $query->get());
 
@@ -668,13 +615,14 @@ class ReportController extends Controller
 
         $inputs = $request->except('page');
         $areas = RegionTree::getSprUoz($lang);
-
         return view('admin.v2.pages.reports.students_report', [
             'items' => $items,
             'request' => $request,
             'inputs' => $inputs,
             'unemployed_status' => $unemployed_status,
             'is_finished' => $is_finished,
+            'is_paid' => $is_paid,
+            'quota_status' => $quota_status,
             'areas' => $areas
         ]);
     }

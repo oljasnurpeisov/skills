@@ -42,4 +42,11 @@ class DictionaryController extends Controller
 
         return view('app.layout.default.components.regiontree', compact('regions'));
     }
+
+    public function getRaions($lang, $area)
+    {
+        $regions = RegionTree::getSprUoz($lang, $area);
+
+        return $regions;
+    }
 }

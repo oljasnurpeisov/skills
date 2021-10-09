@@ -87,7 +87,6 @@
                 method: 'GET',
                 url: '/{{ $lang }}/getKato/' + id,
                 success: function(result){
-                    console.log(result);
                     for (var i = result.data.length-1; i >= 0; i--) {
                         $('#address').append('<option value="'+result['data'][i]['id']+'">'+result['data'][i]['name']+'</option>');
                     }
