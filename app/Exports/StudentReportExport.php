@@ -31,6 +31,7 @@ class StudentReportExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
         $sheet->getStyle('B2:B999')->getAlignment()->setWrapText(true);
         $sheet->getStyle('C2:C999')->getAlignment()->setWrapText(true);
         $sheet->getStyle('A1:N1')->getFont()->setBold(true);
+        $sheet->getStyle('A2:A99999')->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_TEXT);
     }
 
     public function columnFormats(): array
