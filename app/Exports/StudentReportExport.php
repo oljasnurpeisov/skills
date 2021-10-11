@@ -33,6 +33,12 @@ class StudentReportExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
         $sheet->getStyle('A1:N1')->getFont()->setBold(true);
         $sheet->getStyle('A2:A99999')->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_TEXT);
     }
+    public function map($invoice): array
+    {
+        return [
+            $invoice->item_iin,
+        ];
+    }
 
     public function columnFormats(): array
     {
