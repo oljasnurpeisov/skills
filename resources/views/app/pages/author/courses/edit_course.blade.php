@@ -264,7 +264,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.video_link')}}</label>
                                 @if($item->attachments->videos_link != null)
                                     <input type="url" name="videos_link[]" placeholder="" class="input-regular"
@@ -274,8 +274,8 @@
                                            value="" id="courseVideo">
                                 @endif
 
-                            </div>
-                            <div class="removable-items">
+                            </div>-->
+                            <!--<div class="removable-items">
                                 @if($item->attachments->videos_link != null)
                                     @foreach(array_slice(json_decode($item->attachments->videos_link),1) as $video_link)
                                         <div class="form-group">
@@ -289,14 +289,14 @@
                                         </div>
                                     @endforeach
                                 @endif
-                            </div>
-                            <div class="text-right pull-up">
+                            </div>-->
+                            <!--<div class="text-right pull-up">
                                 <a href="#" title="{{__('default.pages.courses.add_btn_title')}}" class="add-btn"
                                    data-duplicate="courseVideo"
                                    data-maxcount="4"><span
                                         class="add-btn__title">{{__('default.pages.courses.add_btn_title')}}</span><span
                                         class="btn-icon small icon-plus"> </span></a>
-                            </div>
+                            </div>-->
                             {{--                            <div class="form-group">--}}
                             {{--                                <label class="form-group__label">{{__('default.pages.courses.video_local')}}</label>--}}
                             {{--                                <div data-url="/ajax_upload_lesson_videos?_token={{ csrf_token() }}"--}}
@@ -337,7 +337,7 @@
                             {{--                                    @endif--}}
                             {{--                                </div>--}}
                             {{--                            </div>--}}
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.courses.course_audio')}}</label>
                                 <div data-url="/ajax_upload_course_audios?_token={{ csrf_token() }}" data-maxfiles="5"
                                      data-maxsize="10" data-acceptedfiles=".mp3" id="audio"
@@ -375,7 +375,7 @@
                                         <div class="previews-container"></div>
                                     @endif
                                 </div>
-                            </div>
+                            </div>-->
                             <div id="poorVision" @if($item->is_poor_vision == true) style="display: block"
                                  @else style="display: none" @endif>
                                 <h3 class="title-tertiary">{{__('default.pages.courses.is_vision_version')}}</h3>
