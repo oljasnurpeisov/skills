@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
 class StudentReportExport implements FromArray, WithHeadings, ShouldAutoSize, WithStyles, WithStrictNullComparison, WithColumnFormatting
 {
@@ -36,7 +37,7 @@ class StudentReportExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
     public function map($invoice): array
     {
         return [
-            $invoice->item_iin,
+            (string) $invoice->item_iin,
         ];
     }
 
@@ -45,6 +46,18 @@ class StudentReportExport implements FromArray, WithHeadings, ShouldAutoSize, Wi
         return [
             'A' => NumberFormat::FORMAT_TEXT,
         ];
+    }
+
+    public function bindValue(Cell $cell, $value)
+    {
+        if ($cell->getColumn() == 'A') {
+            $cell->setValueExplicit($value, DataType::TYPE_STRING);
+
+            return true;
+        }
+
+        // else return default behavior
+        return parent::bindValue($cell, $value);
     }
 
     public function array(): array
