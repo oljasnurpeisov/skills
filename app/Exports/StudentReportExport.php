@@ -18,8 +18,6 @@ use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 
-
-
 class StudentReportExport extends DefaultValueBinder implements FromArray, WithHeadings, ShouldAutoSize, WithStyles, WithStrictNullComparison, WithColumnFormatting, WithCustomValueBinder
 {
     /**
