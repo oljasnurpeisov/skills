@@ -329,6 +329,10 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::get("/getProfessionsByProfessionalArea/{professional_area_id}", "CourseController@getProfessionsByProfessionalArea");
             Route::get("/getProfessionsByData", "CourseController@getProfessionsByData");
             Route::get("/getSkillsByProfession/{profession_id}", "CourseController@getSkillsByProfession");
+            //Справочники Адресов
+            Route::get("/getRegions", "DictionaryController@getRegions");
+            Route::get("/getRaions/{area}", "DictionaryController@getRaions");
+            Route::get("/getKato/{kato}", "DictionaryController@getKatoChilds");
             //
             Route::post("/markAsReadNotifications", "CourseController@markAsReadNotifications");
 

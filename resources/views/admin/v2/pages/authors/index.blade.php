@@ -40,6 +40,7 @@
                     <th>#</th>
                     {{--                        <th>{{ __('admin.pages.user.surname').' '.__('admin.pages.user.name').' '.__('admin.pages.user.middle_name') }}</th>--}}
                     <th>ФИО</th>
+                    <th>{{ __('admin.pages.user.iin_bin') }}</th>
                     <th>{{ __('admin.pages.user.email') }}</th>
                     <th>{{ __('admin.pages.user.role') }}</th>
                     <th>Организация</th>
@@ -56,6 +57,7 @@
                         <th></th>
                         <th><input name="fio" type="text" class="input-regular" value="{{ $request['fio'] ?? '' }}">
                         </th>
+                        <th><input name="iin_bin" onfocus="$(this).inputmask('999999999999')" type="text" class="input-regular" value="{{ $request['iin_bin'] ?? '' }}">
                         <th><input name="email" type="text" class="input-regular" value="{{ $request['email'] ?? '' }}">
                         </th>
                         <th></th>
@@ -81,6 +83,7 @@
                         <tr>
                             <td>{{ $item->id }}</td>
                             <td>{{ $item->user_information->name ?? '' }} {{ $item->user_information->surname ?? '' }} {{ $item->user_information->patronymic ?? '' }}</td>
+                            <td>{{ $item->iin }}</td>
                             <td><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a></td>
                             <td>{{ ($item->roles()->first()) ? $item->roles()->first()->name : '-' }}</td>
                             <td>{{ $item->company_name }}</td>

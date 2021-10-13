@@ -14,6 +14,9 @@ use App\Models\StudentInformation;
 use App\Models\Type_of_ownership;
 use App\Models\User;
 use App\Models\UserInformation;
+use App\Models\RegionTree;
+use \App\Models\Kato;
+use App\Services\Users\UnemployedService;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
@@ -27,15 +30,20 @@ use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use PDF;
+use function Complex\csc;
 
 
 class UserController extends Controller
 {
-    public function student_profile()
+    public function student_profile($lang)
     {
         $item = StudentInformation::where('user_id', '=', Auth::user()->id)->first();
+        $coduozCaption = RegionTree::getRegionCaption($lang, $item->coduoz) ?? '';
+        $regionCaption = Kato::where('te',  $item->region_id)->first()->rus_name ?? '';
         return view("app.pages.student.profile.student_profile", [
-            "item" => $item
+            "item" => $item,
+            "coduozCaption" => $coduozCaption,
+            "regionCaption" => $regionCaption
         ]);
     }
 
@@ -243,23 +251,43 @@ class UserController extends Controller
 
     public function studentDataSave($lang, $user_id, Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'resume_name' => 'required|max:255',
-            'resume_iin' => 'required|unique:student_information,iin|numeric|digits:12',
-        ]);
+        $session = $request->resume_name ? 'resume_data' : 'address_data';
+        switch ($session) {
+            case 'resume_data':
+                $validator = Validator::make($request->all(), [
+                    'resume_name' => 'required|max:255',
+                    'resume_iin' => 'required|unique:student_information,iin|numeric|digits:12',
+                    'region_id' => 'required',
+                    'locality' => 'required'
+                ]);
+                break;
 
+            case 'address_data':
+                $validator = Validator::make($request->all(), [
+                    'region_id' => 'required',
+                    'locality' => 'required'
+                ]);
+                break;
+        }
         if ($validator->fails()) {
             $messages = $validator->messages();
-            Session::put('resume_data', $user_id);
+            Session::put($session, $user_id);
             return redirect()->back()->withErrors($messages)->withInput($request->all());
         }
-
-        StudentInformation::whereUserId($user_id)->update([
-            'name' => $request->resume_name,
-            'iin' => $request->resume_iin,
-            'agree' => 1
-        ]);
-
+        $studentInformation = StudentInformation::whereUserId($user_id)->first();
+        $studentInformation->region_id = $request->locality;
+        $studentInformation->coduoz = $request->region_id;
+        if ($session == 'resume_data') {
+            $studentInformation->name = $request->resume_name;
+            $studentInformation->iin = $request->resume_iin;
+            $studentInformation->agree = 1;
+        }
+        if (!empty($studentInformation->iin)) {
+            $token = Session::get('student_token');
+            $studentUnemployedStatus = UnemployedService::getStatus($studentInformation->iin, $token);
+            $studentInformation->unemployed_status = $studentUnemployedStatus;
+        }
+        $studentInformation->save();
         $user = User::whereId($user_id)->first();
         Auth::login($user);
 

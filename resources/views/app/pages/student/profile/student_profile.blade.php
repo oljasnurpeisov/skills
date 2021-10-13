@@ -21,6 +21,22 @@
                         <form action="/{{$lang}}/update_student_profile" method="POST">
                             @csrf
                             <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.auth.fio_title')}}</label>
+                                <input disabled name="fio" placeholder="" class="input-regular" value="{{ $item->name }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.auth.iin_resume_title')}}</label>
+                                <input disabled name="iin" placeholder="" class="input-regular" value="{{ $item->iin }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.auth.area_title')}}</label>
+                                <input disabled name="iin" placeholder="" class="input-regular" value="{{ $coduozCaption }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">{{__('default.pages.auth.region_title')}}</label>
+                                <input disabled name="iin" placeholder="" class="input-regular" value="{{ $regionCaption }}" required>
+                            </div>
+                            <div class="form-group">
                                 <label class="form-group__label">{{__('default.pages.profile.avatar')}}</label>
                                 <div class="avatar logo-picture dropzone-avatar" id="companyLogoModal"
                                      data-url="/ajax_upload_image?_token={{ csrf_token() }}" data-maxsize="1"

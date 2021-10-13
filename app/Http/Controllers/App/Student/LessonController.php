@@ -13,6 +13,7 @@ use App\Models\StudentCertificate;
 use App\Models\StudentCourse;
 use App\Models\StudentLesson;
 use App\Models\StudentLessonAnswer;
+use App\Models\StudentLessonAnswerAttempt;
 use App\Models\Theme;
 use App\Models\User;
 use Carbon\Carbon;
@@ -364,6 +365,20 @@ class LessonController extends Controller
                 $studentLesson->save();
 
                 $this->finishedCourse($course);
+            } else {
+              if ($lesson->type == 4) {
+                  // Сохраняем первые 3 попытки сдачи итогового тестирования.
+                  $answerAttempts = StudentLessonAnswerAttempt::whereCourseId($course->id)
+                      ->whereStudentId($user->id)->get();
+                  if (count($answerAttempts) < 3)
+                  {
+                      $answerAttempt = new StudentLessonAnswerAttempt;
+                      $answerAttempt->student_lesson_id = $studentLesson->id;
+                      $answerAttempt->student_id = $user->id;
+                      $answerAttempt->course_id = $course->id;
+                      $answerAttempt->save();
+                  }
+              }
             }
 
 
