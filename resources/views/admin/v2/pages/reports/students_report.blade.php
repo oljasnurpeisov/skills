@@ -221,7 +221,7 @@
                             @endif
                         </td>
                         <td>{{ date('d.m.Y', strtotime($item->created_at)) }}</td>
-                        <td>{{ isset($item->student_first_lesson()->created_at) ?  date('d.m.Y', strtotime($item->student_first_lesson()->created_at)) : ''}}</td>
+                        <td>{{ isset($item->first_lesson_date) ? date('d.m.Y', strtotime($item->first_lesson_date)) : '' }}</td>
                         @php($attempts = $item->attempts())
                         <td>{{ isset($attempts[0]->created_at) ? date('d.m.Y H:i', strtotime($attempts[0]->created_at)) : '' }}</td>
                         <td>{{ isset($attempts[1]->created_at) ? date('d.m.Y H:i', strtotime($attempts[1]->created_at)) : '' }}</td>

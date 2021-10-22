@@ -527,6 +527,17 @@ class LessonController extends Controller
             $item->student_id = $user->id;
             $item->is_access = true;
             $item->save();
+
+            $course = Lesson::whereId($lesson_id)
+                ->pluck('course_id')
+                ->first();
+            $student_course = StudentCourse::where('student_id', '=', $user->id)
+                ->where('course_id', '=', $course)
+                ->first();
+            if (empty($student_course->first_lesson_date)) {
+                $student_course->first_lesson_date = Carbon::now();
+                $student_course->save();
+            }
         }
     }
 

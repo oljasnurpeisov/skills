@@ -241,6 +241,8 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/reports/contracts', 'ReportController@contracts')->name('admin.report.contracts');
                 // Отчеты по АВР
                 Route::get('/reports/avr', 'ReportController@avr')->name('admin.report.avr');
+                // Сводный отчет
+                Route::get('/reports/consolidated', 'ReportController@consolidated')->name('admin.report.consolidated');
             });
         });
     });

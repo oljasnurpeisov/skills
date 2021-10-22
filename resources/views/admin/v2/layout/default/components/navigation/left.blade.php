@@ -149,6 +149,9 @@
                     <li>
                         <a href="{{ route('admin.report.avr', $lang) }}">Отчеты по АВР</a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.report.consolidated', $lang) }}">Сводный отчет</a>
+                    </li>
                 </ul>
             </li>
             @endhasPermission

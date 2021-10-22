@@ -8,7 +8,9 @@ use App\Exports\StudentReportExport;
 use App\Models\Course;
 use App\Models\StudentCertificate;
 use App\Models\StudentCourse;
+use App\Models\StudentLesson;
 use App\Models\User;
+use App\Models\Lesson;
 use App\Models\RegionTree;
 use App\Models\Kato;
 use Carbon\Carbon;
@@ -576,7 +578,7 @@ class ReportController extends Controller
         // Поиск по ИИН
         if ($student_iin) {
             $query->whereHas('student_info', function ($q) use ($student_iin) {
-                $q->where('iin', '=', $student_iin);
+                $q->where('iin', 'like', $student_iin . '%');
             });
         }
         // Поиск по статусу
@@ -736,7 +738,7 @@ class ReportController extends Controller
             // Дата записи на курс
             $course_date = date('d.m.Y', strtotime($i->created_at));
             // Дата начала обучения
-            $first_lesson_date = isset($i->student_first_lesson()->created_at) ?  date('d.m.Y', strtotime($i->student_first_lesson()->created_at)) : '';
+            $first_lesson_date = isset($i->first_lesson_date) ?  date('d.m.Y', strtotime($i->first_lesson_date)) : '';
             // Первые 3 неудачные попытки итогового тестирования
             $attempts = $i->attempts();
             $first_failed_test_date = isset($attempts[0]->created_at) ? date('d.m.Y H:i', strtotime($attempts[0]->created_at)) : '';
@@ -1005,6 +1007,67 @@ class ReportController extends Controller
             'avr' => $this->AVRFilterService->getOrSearch($request->all(), 'signed'),
             'request' => $request->all(),
             'title' => 'Отчет по АВР'
+        ]);
+    }
+
+    /**
+     * Сводный отчет
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function consolidated(Request $request)
+    {
+        $course_from = $request->date_course_from;
+        $course_to = $request->date_course_to;
+        $date_course_from = Carbon::parse($course_from ?? '01.01.2020')
+            ->startOfDay()
+            ->toDateTimeString();
+        $date_course_to = Carbon::parse($course_to)
+            ->endOfDay()
+            ->toDateTimeString();
+
+        $all = StudentCourse::whereBetween('created_at', [$date_course_from, $date_course_to])->count();
+        $allWithCert = StudentCourse::where('is_finished', '=', 1)->whereBetween('created_at', [$date_course_from, $date_course_to])->count();
+        $firstLesson = StudentCourse::whereNotNull('first_lesson_date')->whereBetween('created_at', [$date_course_from, $date_course_to])->count();
+
+        $unemployed = StudentCourse::whereBetween('created_at', [$date_course_from, $date_course_to])
+            ->where('unemployed_status', '=', '00000$192')
+            ->count();
+        $unemployedWithCert = StudentCourse::whereBetween('created_at', [$date_course_from, $date_course_to])
+            ->where('is_finished', '=', 1)
+            ->where('unemployed_status', '=', '00000$192')
+            ->count();
+        $unemployedFirstLesson = StudentCourse::where('unemployed_status', '=', '00000$192')
+            ->whereNotNull('first_lesson_date')
+            ->whereBetween('created_at', [$date_course_from, $date_course_to])
+            ->count();
+
+
+        $employed = StudentCourse::whereBetween('created_at', [$date_course_from, $date_course_to])
+            ->where('unemployed_status', '=', null)
+            ->count();
+        $employedWithCert = StudentCourse::whereBetween('created_at', [$date_course_from, $date_course_to])
+            ->where('is_finished', '=', 1)
+            ->where('unemployed_status', '=', null)
+            ->count();
+        $employedFirstLesson = StudentCourse::where('unemployed_status', '=', null)
+            ->whereNotNull('first_lesson_date')
+            ->whereBetween('created_at', [$date_course_from, $date_course_to])
+            ->count();
+
+        return view('admin.v2.pages.reports.consolidated', [
+            'all' => $all,
+            'allWithCert' => $allWithCert,
+            'firstLesson' => $firstLesson,
+            'unemployed' => $unemployed,
+            'unemployedWithCert' => $unemployedWithCert,
+            'unemployedFirstLesson' => $unemployedFirstLesson,
+            'employed' => $employed,
+            'employedWithCert' => $employedWithCert,
+            'employedFirstLesson' => $employedFirstLesson,
+            'request' => $request,
+            'title' => 'Сводный отчет'
         ]);
     }
 }

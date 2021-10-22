@@ -79,24 +79,30 @@ class StudentCourse extends Model
     public function certificate()
     {
         $certificate = StudentCertificate::where('user_id', '=', $this->student_id)
-            ->where('course_id', '=', $this->course_id)->first();
+            ->where('course_id', '=', $this->course_id)
+            ->first();
 
         return $certificate ?? null;
     }
 
     public function student_first_lesson()
     {
-        $firstLesson = Lesson::where('course_id', '=', $this->course_id)->orderBy('theme_id', 'asc')->orderBy('index_number', 'asc')->first();
+        $firstLesson = Lesson::where('course_id', '=', $this->course_id)
+            ->orderBy('theme_id', 'asc')
+            ->orderBy('index_number', 'asc')
+            ->first();
 
         $studentLesson = StudentLesson::where('lesson_id', '=', $firstLesson->id)
-            ->where('student_id', '=', $this->student_id)->first();
+            ->where('student_id', '=', $this->student_id)
+            ->first();
         return $studentLesson ?? null;
     }
 
     public function attempts()
     {
         $attempts = StudentLessonAnswerAttempt::where('course_id', '=', $this->course_id)
-            ->where('student_id', '=', $this->student_id)->get();
+            ->where('student_id', '=', $this->student_id)
+            ->get();
 
         return $attempts ?? null;
     }
