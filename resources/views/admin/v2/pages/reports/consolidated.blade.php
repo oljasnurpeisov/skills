@@ -50,6 +50,9 @@
                 <div>
                     <a href="/{{$lang}}/admin/reports/consolidated" class="btn btn--yellow">Сбросить</a>
                 </div>
+                <div>
+                    <a href="/{{$lang}}/admin/export-consolidated-report" class="btn btn--blue">Экспорт</a>
+                </div>
             </div>
         </form>
 
@@ -66,50 +69,24 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <th>1</th>
-                        <th>Всего записано на курс</th>
-                        <th>{{ $all }}</th>
+                        <th>{{ $data['all']['num'] }}</th>
+                        <th>{{ $data['all']['title'] }}</th>
+                        <th>{{ $data['all']['count'] }}</th>
                     </tr>
                     <tr>
-                        <td>2</td>
-                        <td>Количество лиц, начавших обучение</td>
-                        <td>{{ $firstLesson }}</td>
+                        <td>{{ $data['firstLesson']['num'] }}</td>
+                        <td>{{ $data['firstLesson']['title'] }}</td>
+                        <td>{{ $data['firstLesson']['count'] }}</td>
                     </tr>
                     <tr>
-                        <td>3</td>
-                        <td>Количесство лиц, прослушавших курс и не прошедших пороговый уровень итогового тестирования</td>
-                        <td>{{ $didNotPass }}</td>
+                        <td>{{ $data['didNotPass']['num'] }}</td>
+                        <td>{{ $data['didNotPass']['title'] }}</td>
+                        <td>{{ $data['didNotPass']['count'] }}</td>
                     </tr>
                     <tr>
-                        <td>4</td>
-                        <td>Количество лиц, получивших сертификат</td>
-                        <td>{{ $allWithCert }}</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-
-                    <tr>
-                        <th>5</th>
-                        <th>Всего, имеющих статус безработного</th>
-                        <th>{{ $unemployed }}</th>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Количество лиц, начавших обучение</td>
-                        <td>{{ $unemployedFirstLesson }}</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>Количество лиц, прослушавших курс и не прошедших пороговый уровень итогового тестирования</td>
-                        <td>{{ $unemployeddidNotPass }}</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>Количество лиц, получивших сертификаты</td>
-                        <td>{{ $unemployedWithCert }}</td>
+                        <td>{{ $data['allWithCert']['num'] }}</td>
+                        <td>{{ $data['allWithCert']['title'] }}</td>
+                        <td>{{ $data['allWithCert']['count'] }}</td>
                     </tr>
                     <tr>
                         <td></td>
@@ -118,25 +95,50 @@
                     </tr>
 
                     <tr>
-                        <th>9</th>
-                        <th>Всего, не имеющих статус безработного</th>
-                        <th>{{ $employed }}</th>
+                        <th>{{ $data['unemployed']['num'] }}</th>
+                        <th>{{ $data['unemployed']['title'] }}</th>
+                        <th>{{ $data['unemployed']['count'] }}</th>
                     </tr>
                     <tr>
-                        <td>10</td>
-                        <td>Количество лиц, начавших обучение</td>
-                        <td>{{ $employedFirstLesson }}</td>
+                        <td>{{ $data['unemployedFirstLesson']['num'] }}</td>
+                        <td>{{ $data['unemployedFirstLesson']['title'] }}</td>
+                        <td>{{ $data['unemployedFirstLesson']['count'] }}</td>
                     </tr>
                     <tr>
-                        <td>11</td>
-                        <td>Количество лиц, прослушавших курс и не прошедших пороговый уровень итогового тестирования
-                        </td>
-                        <td>{{ $employeddidNotPass }}</td>
+                        <td>{{ $data['unemployedDidNotPass']['num'] }}</td>
+                        <td>{{ $data['unemployedDidNotPass']['title'] }}</td>
+                        <td>{{ $data['unemployedDidNotPass']['count'] }}</td>
                     </tr>
                     <tr>
-                        <td>12</td>
-                        <td>Количество лиц, получивших сертификаты</td>
-                        <td>{{ $employedWithCert }}</td>
+                        <td>{{ $data['unemployedWithCert']['num'] }}</td>
+                        <td>{{ $data['unemployedWithCert']['title'] }}</td>
+                        <td>{{ $data['unemployedWithCert']['count'] }}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <th>{{ $data['employed']['num'] }}</th>
+                        <th>{{ $data['employed']['title'] }}</th>
+                        <th>{{ $data['employed']['count'] }}</th>
+                    </tr>
+                    <tr>
+                        <td>{{ $data['employedFirstLesson']['num'] }}</td>
+                        <td>{{ $data['employedFirstLesson']['title'] }}</td>
+                        <td>{{ $data['employedFirstLesson']['count'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ $data['employedDidNotPass']['num'] }}</td>
+                        <td>{{ $data['employedDidNotPass']['title'] }}</td>
+                        <td>{{ $data['employedDidNotPass']['count'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ $data['employedWithCert']['num'] }}</td>
+                        <td>{{ $data['employedWithCert']['title'] }}</td>
+                        <td>{{ $data['employedWithCert']['count'] }}</td>
                     </tr>
                 </tbody>
             </table>

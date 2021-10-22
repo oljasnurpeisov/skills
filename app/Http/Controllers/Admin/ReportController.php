@@ -5,14 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\AuthorReportExport;
 use App\Exports\CourseReportExport;
 use App\Exports\StudentReportExport;
+use App\Exports\ConsolidatedReportExport;
 use App\Models\Course;
 use App\Models\StudentCertificate;
 use App\Models\StudentCourse;
-use App\Models\StudentLesson;
 use App\Models\User;
-use App\Models\Lesson;
 use App\Models\RegionTree;
-use App\Models\Kato;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -553,15 +551,6 @@ class ReportController extends Controller
             ->endOfDay()
             ->toDateTimeString();
 
-        $first_lesson_from = $request->first_lesson_from;
-        $first_lesson_to = $request->first_lesson_to;
-        $date_first_lesson_from = Carbon::parse($first_lesson_from ?? '01.01.2020')
-            ->startOfDay()
-            ->toDateTimeString();
-        $date_first_lesson_to = Carbon::parse($first_lesson_to)
-            ->endOfDay()
-            ->toDateTimeString();
-
         $query = StudentCourse::query()
             ->orderBy('id', 'DESC')
             ->whereBetween('created_at', [$date_course_from, $date_course_to])
@@ -570,8 +559,17 @@ class ReportController extends Controller
                 'student_info.clcz',
                 'course'
             ]);
+
+        $first_lesson_from = $request->first_lesson_from;
+        $first_lesson_to = $request->first_lesson_to;
         if (!empty($first_lesson_from) || !empty($first_lesson_to))
         {
+            $date_first_lesson_from = Carbon::parse($first_lesson_from ?? '01.01.2020')
+                ->startOfDay()
+                ->toDateTimeString();
+            $date_first_lesson_to = Carbon::parse($first_lesson_to)
+                ->endOfDay()
+                ->toDateTimeString();
             $query->whereBetween('first_lesson_date', [$date_first_lesson_from, $date_first_lesson_to]);
         }
         // Сортировка
@@ -1041,8 +1039,12 @@ class ReportController extends Controller
             ->toDateTimeString();
 
         $all = StudentCourse::whereBetween('created_at', [$date_course_from, $date_course_to])->count();
-        $allWithCert = StudentCourse::where('is_finished', '=', 1)->whereBetween('created_at', [$date_course_from, $date_course_to])->count();
-        $firstLesson = StudentCourse::whereNotNull('first_lesson_date')->whereBetween('created_at', [$date_course_from, $date_course_to])->count();
+        $allWithCert = StudentCourse::where('is_finished', '=', 1)
+            ->whereBetween('created_at', [$date_course_from, $date_course_to])
+            ->count();
+        $firstLesson = StudentCourse::whereNotNull('first_lesson_date')
+            ->whereBetween('created_at', [$date_course_from, $date_course_to])
+            ->count();
         $didNotPass = StudentCourse::whereNotNull('last_attempts_date')
             ->whereBetween('created_at', [$date_course_from, $date_course_to])
             ->where('is_finished', '=', 0)
@@ -1060,7 +1062,7 @@ class ReportController extends Controller
             ->whereNotNull('first_lesson_date')
             ->whereBetween('created_at', [$date_course_from, $date_course_to])
             ->count();
-        $unemployeddidNotPass = StudentCourse::whereNotNull('last_attempts_date')
+        $unemployedDidNotPass = StudentCourse::whereNotNull('last_attempts_date')
             ->where('unemployed_status', '=', '00000$192')
             ->whereBetween('created_at', [$date_course_from, $date_course_to])
             ->where('is_finished', '=', 0)
@@ -1077,27 +1079,91 @@ class ReportController extends Controller
             ->whereNotNull('first_lesson_date')
             ->whereBetween('created_at', [$date_course_from, $date_course_to])
             ->count();
-        $employeddidNotPass = StudentCourse::whereNotNull('last_attempts_date')
+        $employedDidNotPass = StudentCourse::whereNotNull('last_attempts_date')
             ->where('unemployed_status', '=', null)
             ->whereBetween('created_at', [$date_course_from, $date_course_to])
             ->where('is_finished', '=', 0)
             ->count();
+        $data = [
+            'all' => [
+                'num' => 1,
+                'title' => 'Всего записано на курс',
+                'count' => $all
+            ],
+            'firstLesson' => [
+                'num' => 2,
+                'title' => 'Количество лиц, начавших обучение',
+                'count' => $firstLesson
+            ],
+            'didNotPass' => [
+                'num' => 3,
+                'title' => 'Количесство лиц, прослушавших курс и не прошедших пороговый уровень итогового тестирования',
+                'count' => $didNotPass
+            ],
+            'allWithCert' => [
+                'num' => 4,
+                'title' => 'Количество лиц, получивших сертификат',
+                'count' => $allWithCert
+            ],
+
+            'unemployed' => [
+                'num' => 5,
+                'title' => 'Всего, имеющих статус безработного',
+                'count' => $unemployed
+            ],
+            'unemployedFirstLesson' => [
+                'num' => 6,
+                'title' => 'Количество лиц, начавших обучение',
+                'count' => $unemployedFirstLesson
+            ],
+            'unemployedDidNotPass' => [
+                'num' => 7,
+                'title' => 'Количество лиц, прослушавших курс и не прошедших пороговый уровень итогового тестирования',
+                'count' => $unemployedDidNotPass
+            ],
+            'unemployedWithCert' => [
+                'num' => 8,
+                'title' => 'Количество лиц, получивших сертификаты',
+                'count' => $unemployedWithCert
+            ],
+
+            'employed' => [
+                'num' => 9,
+                'title' => 'Всего, не имеющих статус безработного',
+                'count' => $employed
+            ],
+            'employedFirstLesson' => [
+                'num' => 10,
+                'title' => 'Количество лиц, начавших обучение',
+                'count' => $employedFirstLesson
+            ],
+            'employedDidNotPass' => [
+                'num' => 11,
+                'title' => 'Количество лиц, прослушавших курс и не прошедших пороговый уровень итогового тестирования',
+                'count' => $employedDidNotPass
+            ],
+            'employedWithCert' => [
+                'num' => 12,
+                'title' => 'Количество лиц, получивших сертификаты',
+                'count' => $employedWithCert
+            ],
+        ];
+        Session::put('consolidated_report_export', $data);
 
         return view('admin.v2.pages.reports.consolidated', [
-            'all' => $all,
-            'allWithCert' => $allWithCert,
-            'firstLesson' => $firstLesson,
-            'didNotPass' => $didNotPass,
-            'unemployed' => $unemployed,
-            'unemployedWithCert' => $unemployedWithCert,
-            'unemployedFirstLesson' => $unemployedFirstLesson,
-            'unemployeddidNotPass' => $unemployeddidNotPass,
-            'employed' => $employed,
-            'employedWithCert' => $employedWithCert,
-            'employedFirstLesson' => $employedFirstLesson,
-            'employeddidNotPass' => $employeddidNotPass,
+            'data' => $data,
             'request' => $request,
             'title' => 'Сводный отчет'
         ]);
     }
+
+    public function exportConsolidatedReport(Request $request)
+    {
+        App::setLocale('ru');
+
+        $data = Session::get('consolidated_report_export');
+
+        return Excel::download(new ConsolidatedReportExport($data), '' . __('default.pages.courses.consolidated_report_title') . '.xlsx');
+    }
+
 }

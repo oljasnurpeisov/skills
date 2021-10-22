@@ -243,6 +243,7 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/reports/avr', 'ReportController@avr')->name('admin.report.avr');
                 // Сводный отчет
                 Route::get('/reports/consolidated', 'ReportController@consolidated')->name('admin.report.consolidated');
+                Route::get("/export-consolidated-report", "ReportController@exportConsolidatedReport");
             });
         });
     });

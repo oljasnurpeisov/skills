@@ -134,6 +134,7 @@ return [
             'send_rate_button_title' => 'Отправить',
             'success_rate_message' => 'Ваш отзыв был успешно отправлен автору курса!',
             'report_title' => 'Отчет',
+            'consolidated_report_title' => 'Сводный Отчет',
             'free_title' => 'Бесплатно',
             'paid_title' => 'Платно',
             'quota_title' => 'Доступен при гос. поддержке',

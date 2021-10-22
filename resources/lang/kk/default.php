@@ -130,6 +130,7 @@ return [
             'send_rate_button_title' => 'Жіберу',
             'success_rate_message' => 'Сіздің пікіріңіз курстың авторына сәтті жіберілді!',
             'report_title' => 'Есеп',
+            'consolidated_report_title' => 'Шоғырландырылған есеп',
             'free_title' => 'Тегін',
             'paid_title' => 'Ақылы',
             'quota_title' => 'Мемлекеттік қолдау кезінде қол жетімді',
