@@ -378,6 +378,11 @@ class LessonController extends Controller
                       $answerAttempt->course_id = $course->id;
                       $answerAttempt->save();
                   }
+                  $student_course = StudentCourse::where('student_id', '=', $user->id)
+                      ->where('course_id', '=', $course->id)
+                      ->first();
+                  $student_course->last_attempts_date = Carbon::now();
+                  $student_course->save();
               }
             }
 

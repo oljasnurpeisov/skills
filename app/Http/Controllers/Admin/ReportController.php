@@ -1030,6 +1030,11 @@ class ReportController extends Controller
         $all = StudentCourse::whereBetween('created_at', [$date_course_from, $date_course_to])->count();
         $allWithCert = StudentCourse::where('is_finished', '=', 1)->whereBetween('created_at', [$date_course_from, $date_course_to])->count();
         $firstLesson = StudentCourse::whereNotNull('first_lesson_date')->whereBetween('created_at', [$date_course_from, $date_course_to])->count();
+        $didNotPass = StudentCourse::whereNotNull('last_attempts_date')
+            ->whereBetween('created_at', [$date_course_from, $date_course_to])
+            ->where('is_finished', '=', 0)
+            ->count();
+
 
         $unemployed = StudentCourse::whereBetween('created_at', [$date_course_from, $date_course_to])
             ->where('unemployed_status', '=', '00000$192')
@@ -1042,7 +1047,11 @@ class ReportController extends Controller
             ->whereNotNull('first_lesson_date')
             ->whereBetween('created_at', [$date_course_from, $date_course_to])
             ->count();
-
+        $unemployeddidNotPass = StudentCourse::whereNotNull('last_attempts_date')
+            ->where('unemployed_status', '=', '00000$192')
+            ->whereBetween('created_at', [$date_course_from, $date_course_to])
+            ->where('is_finished', '=', 0)
+            ->count();
 
         $employed = StudentCourse::whereBetween('created_at', [$date_course_from, $date_course_to])
             ->where('unemployed_status', '=', null)
@@ -1055,17 +1064,25 @@ class ReportController extends Controller
             ->whereNotNull('first_lesson_date')
             ->whereBetween('created_at', [$date_course_from, $date_course_to])
             ->count();
+        $employeddidNotPass = StudentCourse::whereNotNull('last_attempts_date')
+            ->where('unemployed_status', '=', null)
+            ->whereBetween('created_at', [$date_course_from, $date_course_to])
+            ->where('is_finished', '=', 0)
+            ->count();
 
         return view('admin.v2.pages.reports.consolidated', [
             'all' => $all,
             'allWithCert' => $allWithCert,
             'firstLesson' => $firstLesson,
+            'didNotPass' => $didNotPass,
             'unemployed' => $unemployed,
             'unemployedWithCert' => $unemployedWithCert,
             'unemployedFirstLesson' => $unemployedFirstLesson,
+            'unemployeddidNotPass' => $unemployeddidNotPass,
             'employed' => $employed,
             'employedWithCert' => $employedWithCert,
             'employedFirstLesson' => $employedFirstLesson,
+            'employeddidNotPass' => $employeddidNotPass,
             'request' => $request,
             'title' => 'Сводный отчет'
         ]);
