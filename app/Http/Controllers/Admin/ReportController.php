@@ -553,6 +553,15 @@ class ReportController extends Controller
             ->endOfDay()
             ->toDateTimeString();
 
+        $first_lesson_from = $request->first_lesson_from;
+        $first_lesson_to = $request->first_lesson_to;
+        $date_first_lesson_from = Carbon::parse($first_lesson_from ?? '01.01.2020')
+            ->startOfDay()
+            ->toDateTimeString();
+        $date_first_lesson_to = Carbon::parse($first_lesson_to)
+            ->endOfDay()
+            ->toDateTimeString();
+
         $query = StudentCourse::query()
             ->orderBy('id', 'DESC')
             ->whereBetween('created_at', [$date_course_from, $date_course_to])
@@ -561,6 +570,10 @@ class ReportController extends Controller
                 'student_info.clcz',
                 'course'
             ]);
+        if (!empty($first_lesson_from) || !empty($first_lesson_to))
+        {
+            $query->whereBetween('first_lesson_date', [$date_first_lesson_from, $date_first_lesson_to]);
+        }
         // Сортировка
         // Сортировка по названию курса
 //        if ($sortByName) {

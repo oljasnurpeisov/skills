@@ -152,6 +152,39 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <label class="input-group__title">Дата начала обучения: от</label>
+                                    <label class="date">
+                                        <input
+                                            type="text"
+                                            data-date-format="dd.mm.yyyy"
+                                            name="first_lesson_from"
+                                            value="{{$request->first_lesson_from}}"
+                                            placeholder=""
+                                            class="input-regular custom-datepicker"
+                                            autocomplete="off">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <label class="input-group__title">до</label>
+                                    <label class="date">
+                                        <input
+                                            type="text"
+                                            data-date-format="dd.mm.yyyy"
+                                            name="first_lesson_to"
+                                            value="{{$request->first_lesson_to}}"
+                                            placeholder=""
+                                            class="input-regular custom-datepicker"
+                                            autocomplete="off">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
