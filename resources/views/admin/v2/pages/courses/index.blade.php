@@ -31,8 +31,10 @@
 
         @include('admin.v2.partials.components.warning')
         <div class="block">
-            <h2 class="title-secondary">{{ $term ? __('admin.labels.search_result') : __('admin.labels.record_list') }}</h2>
-
+            <div class="row" style="margin-left: 0; margin-right: 0">
+                <h2 class="title-secondary col-sm-10">{{ $term ? __('admin.labels.search_result') : __('admin.labels.record_list') }}</h2>
+                <span class="col-sm-2 input-group__title" style="text-align: right">{{ __('admin.pages.courses.course_count') }} - {{ $count ?? '' }}</span>
+            </div>
             @if(count($items) > 0)
                 <table class="table records">
                     <colgroup>

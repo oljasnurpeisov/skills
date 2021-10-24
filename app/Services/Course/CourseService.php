@@ -5,6 +5,8 @@ namespace Services\Course;
 use App\Models\Course;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Libraries\Courses\SkillsSaver;
+use phpDocumentor\Reflection\Types\Integer;
+use PhpParser\Node\Expr\Cast\Int_;
 
 /**
  * Class CourseService
@@ -65,6 +67,23 @@ class CourseService {
 
         return Course::whereIn('id', $free->merge($paid)->merge($quota))->whereNotIn('status', [0, 1, 2, 4])->latest()->paginate(10);
     }
+    public function waitCheckContractsCount(): int
+    {
+        $free = Course::free()->whereDoesntHave('free_contract', function ($q) {
+            return $q->whereIn('status', [2, 1]);
+        })->pluck('id');
+
+        $paid = Course::paid()->whereDoesntHave('paid_contract', function ($q) {
+            return $q->whereIn('status', [2, 1]);
+        })->pluck('id');
+
+        $quota = Course::quota()->whereDoesntHave('quota_contract', function ($q) {
+            return $q->whereIn('status', [2, 1]);
+        })->pluck('id');
+
+
+        return Course::whereIn('id', $free->merge($paid)->merge($quota))->whereNotIn('status', [0, 1, 2, 4])->count();
+    }
 
     /**
      * Ожидающие подписания договора со стороны Автора
@@ -75,6 +94,10 @@ class CourseService {
     {
         return Course::signingAuthor()->latest()->paginate(10);
     }
+    public function waitSigningAuthorCount(): int
+    {
+        return Course::signingAuthor()->count();
+    }
 
     /**
      * Ожидающие подписания договора со стороны Администрации
@@ -84,5 +107,9 @@ class CourseService {
     public function waitSigningAdmin(): LengthAwarePaginator
     {
         return Course::signingAdmin()->latest()->paginate(10);
+    }
+    public function waitSigningAdminCount(): int
+    {
+        return Course::signingAdmin()->count();
     }
 }

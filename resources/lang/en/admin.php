@@ -68,6 +68,7 @@ return [
             'drafts_list' => 'Черновики',
             'deleted_list' => 'Удаленные курсы',
             'course_name' => 'Название курса',
+            'course_count' => 'Количество курсов',
             'author_email' => 'Email автора',
             'preview' => 'Предварительный просмотр',
             'info_about_course' => 'Информация о курсе',

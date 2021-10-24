@@ -59,11 +59,13 @@ class CourseController extends Controller
         }
 
         $query = $query->where('name', 'like', '%' . $term . '%');
+        $count = $query->count();
         $items = $query->paginate();
 
         return view('admin.v2.pages.courses.index', [
             'items' => $items,
             'term' => $term,
+            'count' => $count,
             'title' => 'Все курсы'
         ]);
     }
@@ -78,11 +80,13 @@ class CourseController extends Controller
         }
 
         $query = $query->where('name', 'like', '%' . $term . '%');
+        $count = $query->count();
         $items = $query->paginate();
 
         return view('admin.v2.pages.courses.index', [
             'items' => $items,
             'term' => $term,
+            'count' => $count,
             'title' => "Ожидающие проверки курсов"
         ]);
     }
@@ -97,10 +101,12 @@ class CourseController extends Controller
         }
 
         $query = $query->where('name', 'like', '%' . $term . '%');
+        $count = $query->count();
         $items = $query->paginate();
 
         return view('admin.v2.pages.courses.index', [
             'items' => $items,
+            'count' => $count,
             'term' => $term,
             'title' => 'Отклоненные курсы'
         ]);
@@ -116,11 +122,13 @@ class CourseController extends Controller
         }
 
         $query = $query->where('name', 'like', '%' . $term . '%');
+        $count = $query->count();
         $items = $query->paginate();
 
         return view('admin.v2.pages.courses.index', [
             'items' => $items,
             'term' => $term,
+            'count' => $count,
             'title' => 'Опубликованные курсы'
         ]);
     }
@@ -135,10 +143,12 @@ class CourseController extends Controller
         }
 
         $query = $query->where('name', 'like', '%' . $term . '%');
+        $count = $query->count();
         $items = $query->paginate();
 
         return view('admin.v2.pages.courses.index', [
             'items' => $items,
+            'count' => $count,
             'term' => $term,
             'title' => 'Черновики'
         ]);
@@ -154,10 +164,12 @@ class CourseController extends Controller
         }
 
         $query = $query->where('name', 'like', '%' . $term . '%');
+        $count = $query->count();
         $items = $query->paginate();
 
         return view('admin.v2.pages.courses.index', [
             'items' => $items,
+            'count' => $count,
             'term' => $term,
             'title' => 'Удаленные курсы'
         ]);
@@ -387,6 +399,7 @@ class CourseController extends Controller
     {
         return view('admin.v2.pages.courses.index', [
             'items' => $this->courseService->waitCheckContracts(),
+            'count' => $this->courseService->waitCheckContractsCount(),
             'term'  => $request->term,
             'title' => "Ожидающие проверки договора"
         ]);
@@ -402,6 +415,7 @@ class CourseController extends Controller
     {
         return view('admin.v2.pages.courses.index', [
             'items' => $this->courseService->waitSigningAuthor(),
+            'count' => $this->courseService->waitSigningAuthorCount(),
             'term'  => $request->term,
             'title' => " Ожидающие подписания договора со стороны Автора"
         ]);
@@ -417,8 +431,10 @@ class CourseController extends Controller
     {
         return view('admin.v2.pages.courses.index', [
             'items' => $this->courseService->waitSigningAdmin(),
+            'count' => $this->courseService->waitSigningAdminCount(),
             'term'  => $request->term,
             'title' => "Ожидающие подписания договора со стороны Администрации"
         ]);
     }
+
 }
