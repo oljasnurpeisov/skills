@@ -6,8 +6,17 @@
             <div class="col-md-8">
                 <div class="article">
                     <div class="article-section">
-                        <h1 class="page-title">{{$item->name}}</h1>
-                        <div class="plain-text" style="word-wrap: break-word;">{!! $item->teaser !!}</div>
+                        <div class="row row--multiline">
+                            <div class="col-md-4">
+                                <div class="card__image">
+                                    <img src="{{$item->getAvatar()}}" alt="">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <h1 class="page-title">{{$item->name}}</h1>
+                                <div class="plain-text" style="word-wrap: break-word;">{!! $item->teaser !!}</div>
+                            </div>
+                        </div>
                         <div class="text-right">
                             <div class="attributes">
                                 <div class="attributes-item">
