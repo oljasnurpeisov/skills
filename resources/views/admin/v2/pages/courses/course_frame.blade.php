@@ -7,12 +7,12 @@
                 <div class="article">
                     <div class="article-section">
                         <div class="row row--multiline">
-                            <div class="col-md-4">
+                            <div class="col-sm-4">
                                 <div class="card__image">
                                     <img src="{{$item->getAvatar()}}" alt="">
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-sm-8">
                                 <h1 class="page-title">{{$item->name}}</h1>
                                 <div class="plain-text" style="word-wrap: break-word;">{!! $item->teaser !!}</div>
                             </div>
