@@ -107,12 +107,27 @@ class PreviewCourseController extends Controller
 
         // Получить все файлы урока
         $lesson_attachments = LessonAttachments::whereId($lesson->id)->first();
+        $themes = $item->themes()->orderBy('index_number', 'asc')->get();
+        $untheme_lessons = Lesson::whereCourseId($item->id)
+            ->whereThemeId(null)
+            ->whereNotIn('type', [3, 4])
+            ->orderBy('index_number', 'asc')
+            ->get();
+        foreach ($themes as $theme) {
+            $theme->item_type = 'theme';
+        }
+
+        foreach ($untheme_lessons as $unthemes_lesson) {
+            $unthemes_lesson->item_type = 'lesson';
+        }
+        $course_data_items = $themes->merge($untheme_lessons)->sortBy('index_number')->values();
 
         return view("admin.v2.pages.courses.lesson_preview.view_lesson", [
             "item" => $item,
             "lesson" => $lesson,
             "time" => $time,
-            "lesson_attachments" => $lesson_attachments
+            "lesson_attachments" => $lesson_attachments,
+            'course_data_items' => $course_data_items
         ]);
 
     }
