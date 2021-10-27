@@ -97,7 +97,8 @@ return [
             'course_unpublished' => 'Курс :course_name был успешно снят с публикации.',
             'course_quote_request' => 'Уведомление о публикации курса по гос.поддержке был отправлен автору курса',
             'quote_contract_saved' => 'Номер договора успешно сохранен',
-            'back_title' => 'Назад'
+            'back_title' => 'Назад',
+            'next_lesson_title' => 'Следующий урок',
 
         ],
         'user' => [

@@ -132,8 +132,13 @@
                                     </div>
                                     <div class="col-sm-6" id="quota_status" style="display:none;">
                                         <label class="checkbox">
-                                            <input type="checkbox" name="quota_status" value="true"><span>{{ __('default.pages.courses.quota_title') }}</span>
+                                            <input type="checkbox" name="quota_status" data-toggle="top_profession" value="true"><span>{{ __('default.pages.courses.quota_title') }}</span>
                                         </label>
+                                        <div class="text-right" id="top_profession" style="display:none;">
+                                            <a href="/assets/data/top100.pdf" target="_blank" title="{{__('default.top_100_title')}}" class="add-btn">
+                                                <span class="add-btn__title">{{__('default.top_100_title')}}</span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -576,6 +581,7 @@
 
         paidEl.change(function () {
             quotaEl.prop('checked', false);
+            document.querySelector("[id='top_profession']").style.display = "none";
         });
     </script>
 

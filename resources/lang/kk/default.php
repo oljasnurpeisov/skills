@@ -4,6 +4,7 @@ return [
 
     'site_name' => 'Enbek',
     'main_title' => 'Басты бет',
+    'top_100_title' => 'Үздік 100 мамандық',
     'yes_title' => 'Ия',
     'no_title' => 'Жоқ',
     'tenge_title' => 'тг',

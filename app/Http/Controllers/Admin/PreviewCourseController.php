@@ -6,6 +6,7 @@ use App\Extensions\FormatDate;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\LessonAttachments;
+use App\Models\Theme;
 use App\Models\User;
 
 use Illuminate\Http\Request;
@@ -107,29 +108,98 @@ class PreviewCourseController extends Controller
 
         // Получить все файлы урока
         $lesson_attachments = LessonAttachments::whereId($lesson->id)->first();
-        $themes = $item->themes()->orderBy('index_number', 'asc')->get();
-        $untheme_lessons = Lesson::whereCourseId($item->id)
-            ->whereThemeId(null)
-            ->whereNotIn('type', [3, 4])
-            ->orderBy('index_number', 'asc')
-            ->get();
-        foreach ($themes as $theme) {
-            $theme->item_type = 'theme';
-        }
+//        $themes = $item->themes()->orderBy('index_number', 'asc')->get();
+//        $untheme_lessons = Lesson::whereCourseId($item->id)
+//            ->whereThemeId(null)
+//            ->whereNotIn('type', [3, 4])
+//            ->orderBy('index_number', 'asc')
+//            ->get();
+//        foreach ($themes as $theme) {
+//            $theme->item_type = 'theme';
+//        }
+//
+//        foreach ($untheme_lessons as $unthemes_lesson) {
+//            $unthemes_lesson->item_type = 'lesson';
+//        }
+//        $course_data_items = $themes->merge($untheme_lessons)->sortBy('index_number')->values();
 
-        foreach ($untheme_lessons as $unthemes_lesson) {
-            $unthemes_lesson->item_type = 'lesson';
-        }
-        $course_data_items = $themes->merge($untheme_lessons)->sortBy('index_number')->values();
-
+        $nextLesson = $this->getNextLesson($lang, $item, $lesson);
+//        dd($nextLesson);
         return view("admin.v2.pages.courses.lesson_preview.view_lesson", [
             "item" => $item,
             "lesson" => $lesson,
             "time" => $time,
             "lesson_attachments" => $lesson_attachments,
-            'course_data_items' => $course_data_items
+            "nextLesson" => $nextLesson,
+//            'course_data_items' => $course_data_items
         ]);
 
+    }
+
+    private function getNextLesson($lang, Course $course, Lesson $lesson)
+    {
+        $currentTheme = $lesson->themes;
+        if ($currentTheme != null) {
+            $nextLesson = Lesson::where('index_number', '>', $lesson->index_number)
+                ->where('theme_id', '=', $currentTheme->id)
+                ->orderBy('index_number', 'asc')
+                ->first();
+
+            if ($nextLesson == null) {
+                $nextTheme = Theme::where('course_id', '=', $course->id)
+                    ->where('index_number', '>', $currentTheme->index_number)
+                    ->orderBy('index_number', 'asc')
+                    ->first();
+                $nextUnthemeLesson = Lesson::where('index_number', '>', $lesson->index_number)
+                    ->whereCourseId($course->id)
+                    ->whereThemeId(null)
+                    ->whereNotIn('type', [3, 4])
+                    ->orderBy('index_number', 'asc')
+                    ->first();
+                if ($nextTheme != null && $nextUnthemeLesson != null) {
+                    if ($nextTheme->index_number < $nextUnthemeLesson->index_number) {
+                        $nextLesson = Lesson::where('theme_id', '=', $nextTheme->id)
+                            ->orderBy('index_number', 'desc')
+                            ->first();
+                    } else {
+                        $nextLesson = $nextUnthemeLesson;
+                    }
+                } else if ($nextTheme != null && $nextUnthemeLesson == null) {
+                    $nextLesson = Lesson::where('theme_id', '=', $nextTheme->id)
+                        ->orderBy('index_number', 'asc')
+                        ->first();
+                } else {
+                    $nextLesson = $nextUnthemeLesson;
+                }
+            }
+        } else {
+            $nextTheme = Theme::where('course_id', '=', $course->id)
+                ->where('index_number', '>', $lesson->index_number)
+                ->orderBy('index_number', 'asc')
+                ->first();
+            $nextUnthemeLesson = Lesson::where('index_number', '>', $lesson->index_number)
+                ->whereCourseId($course->id)
+                ->whereThemeId(null)
+                ->whereNotIn('type', [3, 4])
+                ->orderBy('index_number', 'asc')
+                ->first();
+            if ($nextTheme != null && $nextUnthemeLesson != null) {
+                if ($nextTheme->index_number < $nextUnthemeLesson->index_number) {
+                    $nextLesson = Lesson::where('theme_id', '=', $nextTheme->id)
+                        ->orderBy('index_number', 'desc')
+                        ->first();
+                } else {
+                    $nextLesson = $nextUnthemeLesson;
+                }
+            } else if ($nextTheme != null && $nextUnthemeLesson == null) {
+                $nextLesson = Lesson::where('theme_id', '=', $nextTheme->id)
+                    ->orderBy('index_number', 'desc')
+                    ->first();
+            } else {
+                $nextLesson = $nextUnthemeLesson;
+            }
+        }
+        return $nextLesson;
     }
 
     public function homeWorkView($lang, Request $request, Course $course, Lesson $lesson)

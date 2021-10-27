@@ -141,8 +141,13 @@
                                     </div>
                                     <div class="col-sm-6" id="quota_status" @if ($item->is_paid === 0) style="display:none;" @endif>
                                         <label class="checkbox">
-                                            <input type="checkbox" name="quota_status" value="true" {{ ($item->quota_status === 2 ? ' checked' : '') }}><span>{{ __('default.pages.courses.quota_title') }}</span>
+                                            <input type="checkbox" name="quota_status" data-toggle="top_profession" value="true" {{ ($item->quota_status === 2 ? ' checked' : '') }}><span>{{ __('default.pages.courses.quota_title') }}</span>
                                         </label>
+                                        <div class="text-right" id="top_profession" style="display:none;">
+                                            <a href="/assets/data/top100.pdf" target="_blank" title="{{__('default.top_100_title')}}" class="add-btn">
+                                                <span class="add-btn__title">{{__('default.top_100_title')}}</span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
