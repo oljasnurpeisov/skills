@@ -108,20 +108,6 @@ class PreviewCourseController extends Controller
 
         // Получить все файлы урока
         $lesson_attachments = LessonAttachments::whereId($lesson->id)->first();
-//        $themes = $item->themes()->orderBy('index_number', 'asc')->get();
-//        $untheme_lessons = Lesson::whereCourseId($item->id)
-//            ->whereThemeId(null)
-//            ->whereNotIn('type', [3, 4])
-//            ->orderBy('index_number', 'asc')
-//            ->get();
-//        foreach ($themes as $theme) {
-//            $theme->item_type = 'theme';
-//        }
-//
-//        foreach ($untheme_lessons as $unthemes_lesson) {
-//            $unthemes_lesson->item_type = 'lesson';
-//        }
-//        $course_data_items = $themes->merge($untheme_lessons)->sortBy('index_number')->values();
 
         $nextLesson = $this->getNextLesson($lang, $item, $lesson);
 //        dd($nextLesson);
@@ -131,7 +117,6 @@ class PreviewCourseController extends Controller
             "time" => $time,
             "lesson_attachments" => $lesson_attachments,
             "nextLesson" => $nextLesson,
-//            'course_data_items' => $course_data_items
         ]);
 
     }
@@ -153,7 +138,7 @@ class PreviewCourseController extends Controller
                 $nextUnthemeLesson = Lesson::where('index_number', '>', $lesson->index_number)
                     ->whereCourseId($course->id)
                     ->whereThemeId(null)
-                    ->whereNotIn('type', [3, 4])
+                    ->whereNotIn('type', [3])
                     ->orderBy('index_number', 'asc')
                     ->first();
                 if ($nextTheme != null && $nextUnthemeLesson != null) {
@@ -180,7 +165,7 @@ class PreviewCourseController extends Controller
             $nextUnthemeLesson = Lesson::where('index_number', '>', $lesson->index_number)
                 ->whereCourseId($course->id)
                 ->whereThemeId(null)
-                ->whereNotIn('type', [3, 4])
+                ->whereNotIn('type', [3])
                 ->orderBy('index_number', 'asc')
                 ->first();
             if ($nextTheme != null && $nextUnthemeLesson != null) {

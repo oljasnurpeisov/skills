@@ -2,12 +2,14 @@
 
 @section('content')
     <div class="container">
-        <div><a href="javascript:history.back();" title="{{__('admin.pages.courses.back_title')}}"
-                class="link">{{__('admin.pages.courses.back_title')}}</a></div>
-        @if($nextLesson)
-        <div><a href="/{{$lang}}/admin/moderator-course-iframe-{{$lesson->course_id}}/lesson-{{$nextLesson->id}}" title="{{__('admin.pages.courses.next_lesson_title')}}"
-                class="link">{{__('admin.pages.courses.next_lesson_title')}}</a></div>
-        @endif
+        <div class="row">
+            <div class="col-sm-6"><a href="javascript:history.back();" title="{{__('admin.pages.courses.back_title')}}"
+                    class="link">{{__('admin.pages.courses.back_title')}}</a></div>
+            @if($nextLesson)
+            <div class="text-right col-sm-6"><a href="/{{$lang}}/admin/moderator-course-iframe-{{$lesson->course_id}}/lesson-{{$nextLesson->id}}" title="{{__('admin.pages.courses.next_lesson_title')}}"
+                    class="link">{{__('admin.pages.courses.next_lesson_title')}}</a></div>
+            @endif
+        </div>
         <br/>
         <div class="row row--multiline">
             <div class="col-md-8">
