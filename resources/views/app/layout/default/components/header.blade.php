@@ -28,13 +28,13 @@
                     </li>
                 @endif
             </ul>
-            <div class="top100" style="width: 98px; height: 42px; position: relative; margin-left: 4rem;">
-                <a href="/assets/data/top100.pdf" target="_blank" title="{{__('default.top_100_title')}}" class="logo" style="position: absolute; bottom: -3px; width: 100%;">
-                    <picture>
-                        <img src="{{ asset('/assets/img/top100.png') }}" alt="" />
-                    </picture>
-                </a>
-            </div>
+{{--            <div class="top100" style="width: 98px; height: 42px; position: relative; margin-left: 4rem;">--}}
+{{--                <a href="/assets/data/top100.pdf" target="_blank" title="{{__('default.top_100_title')}}" class="logo" style="position: absolute; bottom: -3px; width: 100%;">--}}
+{{--                    <picture>--}}
+{{--                        <img src="{{ asset('/assets/img/top100.png') }}" alt="" />--}}
+{{--                    </picture>--}}
+{{--                </a>--}}
+{{--            </div>--}}
             <div class="buttons-group">
                 <form class="input-search" action="/{{$lang}}/course-catalog?search=">
                     <i class="icon-search"> </i>
@@ -336,13 +336,13 @@
                     <img src="{{ asset('/assets/img/logo_new.png') }}" alt="" />
                 </picture>
             </a>
-            <div class="top100" style="width: 98px; height: 42px; position: relative; margin-left: 6rem;">
-                <a href="/assets/data/top100.pdf" target="_blank" title="{{__('default.top_100_title')}}" class="logo" style="position: absolute; bottom: -6px; width: 100%;">
-                    <picture>
-                        <img src="{{ asset('/assets/img/top100.png') }}" alt="" />
-                    </picture>
-                </a>
-            </div>
+{{--            <div class="top100" style="width: 98px; height: 42px; position: relative; margin-left: 6rem;">--}}
+{{--                <a href="/assets/data/top100.pdf" target="_blank" title="{{__('default.top_100_title')}}" class="logo" style="position: absolute; bottom: -6px; width: 100%;">--}}
+{{--                    <picture>--}}
+{{--                        <img src="{{ asset('/assets/img/top100.png') }}" alt="" />--}}
+{{--                    </picture>--}}
+{{--                </a>--}}
+{{--            </div>--}}
             <div class="buttons-group">
                 <form class="input-search" action="/{{$lang}}/course-catalog?search=">
                     <i class="icon-search"> </i>
