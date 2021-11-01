@@ -95,7 +95,7 @@
                                 {{--                            <td>{{ $item->surname.' '.$item->name.' '.$item->middle_name }}</td>--}}
                                 <td><a href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a></td>
                                 <td>{{ isset($item->student_information->coduoz) ? App\Models\RegionTree::getRegionCaption($lang, $item->student_information->coduoz) : '' }}</td>
-                                <td>{{ $item->student_information->region_id ? App\Models\Kato::where('te',  $item->student_information->region_id)->first()->rus_name ?? '' : '' }}</td>
+                                <td>{{ isset($item->student_information->region_id) ? App\Models\Kato::where('te',  $item->student_information->region_id)->first()->rus_name ?? '' : '' }}</td>
                                 <td>{{ ($item->roles()->first()) ? $item->roles()->first()->name : '-' }}</td>
                                 <td>{!! $item->created_at . ($creator ? '<br>'.($creator->surname.' '.$creator->name.' '.$creator->middle_name) : '') !!}</td>
                                 <td>{!! $item->updated_at . ($modifier ? '<br>'.($modifier->surname.' '.$modifier->name.' '.$modifier->middle_name) : '') !!}</td>
