@@ -99,8 +99,16 @@ class AuthStudent
             $studentInformation->save();
         }
         if (!empty($studentInformation->iin)) {
-            $studentUnemployedStatus = UnemployedService::getStatus($studentInformation->iin, $this->token);
-            $studentInformation->unemployed_status = $studentUnemployedStatus;
+            $studentUnemployed = UnemployedService::getStatus($studentInformation->iin, $this->token);
+            $studentUnemployedStatus = isset($studentUnemployed['status']) ? 1 : 0;
+            $studentUnemployedDate = isset($studentUnemployed['date']) ? Carbon::parse($studentUnemployed['date'])->format('Y-m-d H:i:s') : null;
+            if (isset($studentUnemployedStatus) && !empty($studentUnemployedStatus)) {
+                $studentInformation->unemployed_status = $studentUnemployedStatus;
+                if (isset($studentUnemployedDate) && $studentUnemployedDate > $studentInformation->unemployed_date) {
+                    $studentInformation->quota_count = 3;
+                }
+                $studentInformation->unemployed_date = $studentUnemployedDate;
+            }
             $studentInformation->save();
         }
         if (($studentResumes != null) && ($studentResumes != [])) {

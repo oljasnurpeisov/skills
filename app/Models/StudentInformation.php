@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|StudentInformation whereName($value)
  * @property-read \App\Models\User $user
  * @property string|null $iin
+ * @property \Illuminate\Support\Carbon|null $unemployed_date
  * @method static \Illuminate\Database\Eloquent\Builder|StudentInformation whereIin($value)
  */
 class StudentInformation extends Model

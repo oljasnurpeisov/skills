@@ -16,13 +16,13 @@ class UnemployedService
      * Получение Статуса безработного
      *
      * @param string $iin
-     * @return int
+     * @return array
      */
-    public static function getStatus(string $iin, string $token) :int
+    public static function getStatus(string $iin, string $token) :array
     {
         $request = (new SendRequest(config('enbek.base_url') . '/ru/api/bezrab-by-iin/' . $iin, $token))->get();
-        $result = json_decode($request, true)['response'];
-        return $result ? 1 : 0;
+        $result = json_decode($request, true);
+        return $result['response'] ?? [];
     }
 
 }

@@ -284,8 +284,16 @@ class UserController extends Controller
         }
         if (!empty($studentInformation->iin)) {
             $token = Session::get('student_token');
-            $studentUnemployedStatus = UnemployedService::getStatus($studentInformation->iin, $token);
-            $studentInformation->unemployed_status = $studentUnemployedStatus;
+            $studentUnemployed = UnemployedService::getStatus($studentInformation->iin, $token);
+            $studentUnemployedStatus = isset($studentUnemployed['status']) ? 1 : 0;
+            $studentUnemployedDate = isset($studentUnemployed['date']) ? Carbon::parse($studentUnemployed['date'])->format('Y-m-d H:i:s') : null;
+            if (isset($studentUnemployedStatus) && !empty($studentUnemployedStatus)) {
+                $studentInformation->unemployed_status = $studentUnemployedStatus;
+                if (isset($studentUnemployedDate) && $studentUnemployedDate > $studentInformation->unemployed_date) {
+                    $studentInformation->quota_count = 3;
+                }
+                $studentInformation->unemployed_date = $studentUnemployedDate;
+            }
         }
         $studentInformation->save();
         $user = User::whereId($user_id)->first();

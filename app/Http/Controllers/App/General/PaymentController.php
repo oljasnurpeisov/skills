@@ -10,6 +10,7 @@ use App\Models\PaymentHistory;
 use App\Models\StudentCourse;
 use App\Models\StudentInformation;
 use App\Services\Users\UnemployedService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -22,7 +23,10 @@ class PaymentController extends Controller
         $student_info = Auth::user()->student_info()->first();
         if (!empty($student_info->iin)) {
             $token = Session::get('student_token');
-            $studentUnemployedStatus = UnemployedService::getStatus($student_info->iin, $token);
+            $studentUnemployed = UnemployedService::getStatus($student_info->iin, $token);
+            $studentUnemployedStatus = isset($studentUnemployed['status']) ? 1 : 0;
+            $studentUnemployedDate = isset($studentUnemployed['date']) ? Carbon::parse($studentUnemployed['date'])->format('Y-m-d H:i:s') : null;
+
             if ($request->input('action') != 'by_qouta') {
 
                 if ($item->is_paid == 0) {
@@ -31,6 +35,7 @@ class PaymentController extends Controller
                     $student_course->course_id = $item->id;
                     $student_course->student_id = Auth::user()->id;
                     $student_course->unemployed_status = $studentUnemployedStatus == 1 ? '00000$192' : null;
+                    $student_course->unemployed_date = $studentUnemployedDate;
                     $student_course->save();
 
                     $student_info->unemployed_status = $studentUnemployedStatus;
@@ -157,7 +162,9 @@ class PaymentController extends Controller
                 if (empty($student_course_model)) {
                     $student_info = StudentInformation::whereUserId($json->metadata->student_id);
                     $token = Session::get('student_token');
-                    $studentUnemployedStatus = UnemployedService::getStatus($student_info->iin, $token);
+                    $studentUnemployed = UnemployedService::getStatus($student_info->iin, $token);
+                    $studentUnemployedStatus = isset($studentUnemployed['status']) ? 1 : 0;
+                    $studentUnemployedDate = isset($studentUnemployed['date']) ? Carbon::parse($studentUnemployed['date'])->format('Y-m-d H:i:s') : null;
 
                     $student_course = new StudentCourse;
                     $student_course->paid_status = 1;
@@ -165,6 +172,7 @@ class PaymentController extends Controller
                     $student_course->payment_id = $item->id;
                     $student_course->student_id = $json->metadata->student_id;
                     $student_course->unemployed_status = $studentUnemployedStatus == 1 ? '00000$192' : null;
+                    $student_course->unemployed_date = $studentUnemployedDate;
                     $student_course->save();
 
                     $student_info->unemployed_status = $studentUnemployedStatus;
