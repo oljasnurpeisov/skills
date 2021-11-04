@@ -34,7 +34,7 @@ class StudentReportExport extends DefaultValueBinder implements FromArray, WithH
     {
         $sheet->getStyle('B2:B999')->getAlignment()->setWrapText(true);
         $sheet->getStyle('C2:C999')->getAlignment()->setWrapText(true);
-        $sheet->getStyle('A1:N1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:O1')->getFont()->setBold(true);
         $sheet->getStyle('A2:A99999')->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_TEXT);
     }
     public function map($invoice): array
@@ -86,7 +86,7 @@ class StudentReportExport extends DefaultValueBinder implements FromArray, WithH
             __('admin.pages.reports.second_failed_test_date'),
             __('admin.pages.reports.third_failed_test_date'),
             __('admin.pages.reports.certificate_date'),
-//            __('admin.pages.reports.quotas_count'),
+            __('admin.pages.reports.quotas_count'),
         ];
     }
 

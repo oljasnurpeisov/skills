@@ -738,6 +738,8 @@ class ReportController extends Controller
             } else {
                 $unemployed_status = '';
             }
+            // Количество оставшихся доступов по гос.поддержке
+            $quota_count = $i->quota_count;
             // Наименование курса
             $course_name = $i->course->name;
             // Тип курса
@@ -774,7 +776,7 @@ class ReportController extends Controller
                 'second_failed_test_date' => $second_failed_test_date,
                 'third_failed_test_date' => $third_failed_test_date,
                 'certificate_date' => $certificate_date,
-//                'quota_count' => $quota_count,
+                'quota_count' => $quota_count,
             ];
             array_push($export, $newElement);
         }

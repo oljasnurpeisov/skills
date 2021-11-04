@@ -39,6 +39,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $unemployed_status
  * @property \Illuminate\Support\Carbon|null $unemployed_date
  * @property int $is_qualificated
+ * @property int $quota_count
  * @method static \Illuminate\Database\Eloquent\Builder|StudentCourse whereIsQualificated($value)
  */
 class StudentCourse extends Model

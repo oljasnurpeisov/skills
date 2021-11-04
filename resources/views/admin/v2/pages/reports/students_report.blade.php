@@ -260,7 +260,7 @@
                         <td>{{ isset($attempts[1]->created_at) ? date('d.m.Y H:i', strtotime($attempts[1]->created_at)) : '' }}</td>
                         <td>{{ isset($attempts[2]->created_at) ? date('d.m.Y H:i', strtotime($attempts[2]->created_at)) : '' }}</td>
                         <td>{{ $item->is_finished == 1 && isset($item->certificate()->created_at) ? date('d.m.Y', strtotime($item->certificate()->created_at)) : '' }}</td>
-                        <td></td>
+                        <td>{{ $item->quota_count }}</td>
                     </tr>
                 @endforeach
                 </tbody>

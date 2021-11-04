@@ -36,6 +36,7 @@ class PaymentController extends Controller
                     $student_course->student_id = Auth::user()->id;
                     $student_course->unemployed_status = $studentUnemployedStatus == 1 ? '00000$192' : null;
                     $student_course->unemployed_date = $studentUnemployedDate;
+                    $student_course->quota_count = $student_info->quota_count;
                     $student_course->save();
 
                     $student_info->unemployed_status = $studentUnemployedStatus;
@@ -109,11 +110,17 @@ class PaymentController extends Controller
                 }
             } else {
                 if ($student_info->quota_count > 0) {
+                    $student_info->quota_count = $student_info->quota_count - 1;
+                    $student_info->unemployed_status = $studentUnemployedStatus;
+                    $student_info->save();
+
                     $student_course = new StudentCourse;
                     $student_course->paid_status = 2;
                     $student_course->course_id = $item->id;
                     $student_course->student_id = Auth::user()->id;
                     $student_course->unemployed_status = $studentUnemployedStatus == 1 ? '00000$192' : null;
+                    $student_course->unemployed_date = $studentUnemployedDate;
+                    $student_course->quota_count = $student_info->quota_count;
                     $student_course->save();
 
                     $item_payment = new PaymentHistory;
@@ -123,10 +130,6 @@ class PaymentController extends Controller
 
                     $notification_name = 'notifications.course_buy_status_success';
                     NotificationsHelper::createNotification($notification_name, $item->id, Auth::user()->id);
-
-                    $student_info->quota_count = $student_info->quota_count - 1;
-                    $student_info->unemployed_status = $studentUnemployedStatus;
-                    $student_info->save();
 
                     return redirect()->back()->with('status', __('default.pages.courses.course_quota_activate_success'));
                 } else {
@@ -173,6 +176,7 @@ class PaymentController extends Controller
                     $student_course->student_id = $json->metadata->student_id;
                     $student_course->unemployed_status = $studentUnemployedStatus == 1 ? '00000$192' : null;
                     $student_course->unemployed_date = $studentUnemployedDate;
+                    $student_course->quota_count = $student_info->quota_count;
                     $student_course->save();
 
                     $student_info->unemployed_status = $studentUnemployedStatus;
