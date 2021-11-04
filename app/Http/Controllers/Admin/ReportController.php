@@ -733,11 +733,11 @@ class ReportController extends Controller
             // Населенный пункт
             $region = $i->student_info->cato->rus_name ?? '' ;
             // Статус безработного
-            if(isset($i->unemployed_status)) {
+//            if(isset($i->unemployed_status)) {
                 $unemployed_status = $i->unemployed_status == '00000$192' ? __('default.yes_title') : __('default.no_title');
-            } else {
-                $unemployed_status = '';
-            }
+//            } else {
+//                $unemployed_status = '';
+//            }
             // Количество оставшихся доступов по гос.поддержке
             $quota_count = $i->quota_count;
             // Наименование курса

@@ -241,9 +241,9 @@
                         <td>{{$item->student_info->clcz->NAME_KR_R ?? ''}}</td>
                         <td>{{$item->student_info->cato->rus_name ?? ''}}</td>
                         <td>
-                            @if(isset($item->unemployed_status))
+{{--                            @if(isset($item->unemployed_status))--}}
                                 {{ $item->unemployed_status == '00000$192' ? __('default.yes_title') : __('default.no_title') }}
-                            @endif
+{{--                            @endif--}}
                         </td>
                         <td>{{$item->course->name}}</td>
                         <td>
