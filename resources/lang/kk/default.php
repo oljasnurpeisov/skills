@@ -638,6 +638,11 @@ return [
             'questions_answers' => 'Сұрақтар және жауаптар'
         ],
 
+        'students' => [
+            'students_title' => 'Білім алушылар',
+            'top_skills' => 'Топ-30 дағды',
+        ],
+
         'faq' => [
             'tech_support_title' => 'Өтініш беру'
         ],

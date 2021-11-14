@@ -317,6 +317,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             // Курсы
             Route::get("/course-catalog", "CourseController@courseCatalog");
             Route::get("/course-catalog/course/{item}", "CourseController@courseView");
+            // Обучающиеся
+            Route::get("/students", "StudentsController@studentsInfo");
             // Фильтр
             Route::post("/course-catalog-filter", "CourseController@courseCatalogFilter");
 
