@@ -97,8 +97,7 @@
                             <td>{{ isset($notification->data) ? json_decode($notification->data)[0]->course_reject_message : '' }}</td>
                             <td>{{ $item->getTypeName() }}</td>
                             <td>{{ number_format($item->cost, 0, '', ' ') }}</td>
-                            <td>{{ number_format($item->calculateQuotaCost(), 0, '', ' ') }}</td>
-
+                            <td>{{ $item->calculateQuotaCost() != null ? number_format($item->calculateQuotaCost(), 0, '', ' ') : 0 }}</td>
                             <td>{{ $item->publish_at ?? '-' }}</td>
                             <td>{!! $item->created_at . ($creator ? '<br>'.($creator->surname.' '.$creator->name.' '.$creator->middle_name) : '') !!}</td>
                             <td>{!! $item->updated_at . ($modifier ? '<br>'.($modifier->surname.' '.$modifier->name.' '.$modifier->middle_name) : '') !!}</td>
