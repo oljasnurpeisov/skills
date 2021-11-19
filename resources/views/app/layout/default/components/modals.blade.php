@@ -360,16 +360,16 @@
             <input style="display: none" type="text" id="errorOnPageUrl"  value="{{ url()->current() }}" name="url" placeholder="" class="input-regular" required>
         </div>
         <div class="form-group">
-            <label class="form-group__label" for="errorOnPagePhone">Контактные данные</label>
+            <label class="form-group__label" for="errorOnPagePhone">{{ __('default.phone') }}</label>
             <input type="text" id="errorOnPagePhone" name="phone" placeholder="" class="input-regular">
         </div>
         <div class="form-group">
-            <label class="form-group__label" for="errorOnPageText">Ошибка</label>
+            <label class="form-group__label" for="errorOnPageText">{{ __('default.error') }}</label>
             <textarea type="text" id="errorOnPageText" required name="text" placeholder="" class="input-regular">
             </textarea>
         </div>
         <div class="form-group">
-            <label class="form-group__label" for="errorOnPageComment">Комментарий</label>
+            <label class="form-group__label" for="errorOnPageComment">{{ __('default.comment') }}</label>
             <input type="text" id="errorOnPageComment" name="comment" placeholder="" class="input-regular">
         </div>
             <div class="text-center">
