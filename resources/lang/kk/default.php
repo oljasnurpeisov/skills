@@ -642,6 +642,10 @@ return [
             'students_title' => 'Білім алушылар',
             'top_skills' => 'Топ-30 дағды',
         ],
+        'authors' => [
+            'catalog_title' => 'Авторлар',
+            'search_placeholder' => 'Авторлық ұйымның аты бойынша іздеу ...',
+        ],
 
         'faq' => [
             'tech_support_title' => 'Өтініш беру'

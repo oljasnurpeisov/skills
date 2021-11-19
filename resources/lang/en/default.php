@@ -651,6 +651,10 @@ return [
             'students_title' => 'Обучающиеся',
             'top_skills' => 'Топ-30 навыков',
         ],
+        'authors' => [
+            'catalog_title' => 'Авторы',
+            'search_placeholder' => 'Поиск по названию организации автора...'
+        ],
 
         'faq' => [
             'tech_support_title' => 'Подать обращение'
