@@ -94,24 +94,31 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
             });
             // Маршруты
             Route::group(['middleware' => 'check.permission:admin.routes'], static function () {
-                Route::get('/routes/contract-free', 'RoutesController@contractFree')->name('admin.routes.contract_free');
-                Route::get('/routes/contract-quota', 'RoutesController@contractQuota')->name('admin.routes.contract_quota');
-                Route::get('/routes/contract-paid', 'RoutesController@contractPaid')->name('admin.routes.contract_paid');
+                Route::get('/routes/contract-free',
+                    'RoutesController@contractFree')->name('admin.routes.contract_free');
+                Route::get('/routes/contract-quota',
+                    'RoutesController@contractQuota')->name('admin.routes.contract_quota');
+                Route::get('/routes/contract-paid',
+                    'RoutesController@contractPaid')->name('admin.routes.contract_paid');
                 Route::get('/routes/avr', 'RoutesController@avr')->name('admin.routes.avr');
 
                 Route::get('/routes/{type}/create', 'RoutesController@create')->name('admin.routes.create');
                 Route::post('/routes/{type}/store', 'RoutesController@store')->name('admin.routes.store');
                 Route::get('/routes/{type}/{route_id}/edit', 'RoutesController@edit')->name('admin.routes.role.edit');
-                Route::post('/routes/{type}/{route_id}/update', 'RoutesController@update')->name('admin.routes.role.update');
+                Route::post('/routes/{type}/{route_id}/update',
+                    'RoutesController@update')->name('admin.routes.role.update');
                 Route::delete('/routes/{route_id}/destroy', 'RoutesController@destroy')->name('admin.routes.destroy');
             });
             // Курсы
             Route::group(['middleware' => 'check.permission:admin.courses'], static function () {
                 Route::get('/courses/index', 'CourseController@index');
 
-                Route::get('/courses/wait-check-contracts', 'CourseController@waitCheckContracts')->name('admin.courses.wait_check_contracts');
-                Route::get('/courses/wait-signing-author', 'CourseController@waitSigningAuthor')->name('admin.courses.wait_signing_author');
-                Route::get('/courses/wait-signing-admin', 'CourseController@waitSigningAdmin')->name('admin.courses.wait_signing_admin');
+                Route::get('/courses/wait-check-contracts',
+                    'CourseController@waitCheckContracts')->name('admin.courses.wait_check_contracts');
+                Route::get('/courses/wait-signing-author',
+                    'CourseController@waitSigningAuthor')->name('admin.courses.wait_signing_author');
+                Route::get('/courses/wait-signing-admin',
+                    'CourseController@waitSigningAdmin')->name('admin.courses.wait_signing_admin');
 
                 Route::get('/courses/wait_verification', 'CourseController@wait_verification');
                 Route::get('/courses/unpublished', 'CourseController@unpublished_index');
@@ -126,45 +133,67 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::post('/course/quota_request/{item}', 'CourseController@quota_request');
                 Route::post('/course/quota_contract/{item}', 'CourseController@quota_contract');
                 // Предосмотр курса
-                Route::post("/course_{course}/admin_lesson_finished_{lesson}", "PreviewCourseController@lessonFinished");
+                Route::post("/course_{course}/admin_lesson_finished_{lesson}",
+                    "PreviewCourseController@lessonFinished");
                 Route::get('/moderator-course-iframe-{item}', 'PreviewCourseController@viewCourse');
                 Route::get('/moderator-course-iframe-{item}/lesson-{lesson}', 'PreviewCourseController@viewLesson');
-                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-homework", "PreviewCourseController@homeWorkView");
-                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-coursework", "PreviewCourseController@homeWorkView");
-                Route::post("/course-{course}/lesson-{lesson}/admin-homework-submit", "PreviewCourseController@submitHomeWork");
-                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-test", "PreviewCourseController@testView");
+                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-homework",
+                    "PreviewCourseController@homeWorkView");
+                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-coursework",
+                    "PreviewCourseController@homeWorkView");
+                Route::post("/course-{course}/lesson-{lesson}/admin-homework-submit",
+                    "PreviewCourseController@submitHomeWork");
+                Route::get("/course-catalog/course/{course}/lesson-{lesson}/admin-test",
+                    "PreviewCourseController@testView");
                 Route::post("/course-{course}/lesson-{lesson}/admin-test-submit", "PreviewCourseController@submitTest");
             });
             // Маршрутизация договоров в курсах
             Route::group(['middleware' => 'check.permission:admin.courses'], static function () {
-                Route::post('/contracts/{course_id}/{type}/start', "CourseRoutingController@start")->name('admin.contracts.routing.start');
+                Route::post('/contracts/{course_id}/{type}/start',
+                    "CourseRoutingController@start")->name('admin.contracts.routing.start');
             });
             // Договоры
             Route::group(['middleware' => 'check.permission:admin.contracts'], static function () {
                 Route::get('/contracts/all', 'ContractsController@all')->name('admin.contracts.all');
                 Route::get('/contracts/signed', 'ContractsController@signed')->name('admin.contracts.signed');
-                Route::get('/contracts/distributed', 'ContractsController@distributed')->name('admin.contracts.distributed');
-                Route::get('/contracts/rejected-by-author', 'ContractsController@rejectedByAuthor')->name('admin.contracts.rejected_by_author');
-                Route::get('/contracts/rejected-by-admin', 'ContractsController@rejectedByAdmin')->name('admin.contracts.rejected_by_admin');
+                Route::get('/contracts/distributed',
+                    'ContractsController@distributed')->name('admin.contracts.distributed');
+                Route::get('/contracts/rejected-by-author',
+                    'ContractsController@rejectedByAuthor')->name('admin.contracts.rejected_by_author');
+                Route::get('/contracts/rejected-by-admin',
+                    'ContractsController@rejectedByAdmin')->name('admin.contracts.rejected_by_admin');
                 Route::get('/contracts/pending', 'ContractsController@pending')->name('admin.contracts.pending');
 
                 Route::get('/contracts/{contract_id}/view', 'ContractsController@view')->name('admin.contracts.view');
-                Route::get('/contracts/{contract_id}/history', 'ContractsController@history')->name('admin.contracts.history');
-                Route::get('/contracts/{contract_id}/download', 'ContractsController@download')->name('admin.contracts.download');
-                Route::get('/contracts/{contract_id}/get-contract-html', 'ContractsController@getContractHtml')->name('admin.contracts.get_contract_html');
-                Route::get('/contracts/{contract_id}/get-contract-pdf', 'ContractsController@getContractPdf')->name('admin.contracts.get_contract_pdf');
-                Route::get('/contracts/{course_id}/{type}/get-contract-html-preview', 'ContractsController@getContractHtmlPreview')->name('admin.contracts.get_contract_html_preview');
-                Route::get('/contracts/{course_id}/{type}/generate-preview-contract', 'ContractsController@previewContract')->name('admin.contracts.generate_preview_contract');
+                Route::get('/contracts/{contract_id}/history',
+                    'ContractsController@history')->name('admin.contracts.history');
+                Route::get('/contracts/{contract_id}/download',
+                    'ContractsController@download')->name('admin.contracts.download');
+                Route::get('/contracts/{contract_id}/get-contract-html',
+                    'ContractsController@getContractHtml')->name('admin.contracts.get_contract_html');
+                Route::get('/contracts/{contract_id}/get-contract-pdf',
+                    'ContractsController@getContractPdf')->name('admin.contracts.get_contract_pdf');
+                Route::get('/contracts/{course_id}/{type}/get-contract-html-preview',
+                    'ContractsController@getContractHtmlPreview')->name('admin.contracts.get_contract_html_preview');
+                Route::get('/contracts/{course_id}/{type}/generate-preview-contract',
+                    'ContractsController@previewContract')->name('admin.contracts.generate_preview_contract');
 
-                Route::post('/contracts/{contract_id}/reject-contract', 'ContractsController@rejectContract')->name('admin.contracts.reject_contract');
+                Route::post('/contracts/{contract_id}/reject-contract',
+                    'ContractsController@rejectContract')->name('admin.contracts.reject_contract');
 
-                Route::get("/contracts/signing/{contract_id}/xml", "ContractsController@xml")->name('admin.contracts.contract.xml'); // Формирование XML для подписания
-                Route::post("/contracts/signing/{contract_id}/next", "ContractsController@next")->name('admin.contracts.contract.next'); // Отправка подписанного договора
-                Route::get("/contracts/signing/{contract_id}/next", "ContractsController@next")->name('admin.contracts.contract.next'); // Отправка обычного договора
+                Route::get("/contracts/signing/{contract_id}/xml",
+                    "ContractsController@xml")->name('admin.contracts.contract.xml'); // Формирование XML для подписания
+                Route::post("/contracts/signing/{contract_id}/next",
+                    "ContractsController@next")->name('admin.contracts.contract.next'); // Отправка подписанного договора
+                Route::get("/contracts/signing/{contract_id}/next",
+                    "ContractsController@next")->name('admin.contracts.contract.next'); // Отправка обычного договора
 
-                Route::post("/contracts/rejecting/{contract_id}/admin", "ContractsController@rejectContractByAdmin")->name('admin.contracts.contract.reject_by_admin');
-                Route::post("/contracts/rejecting/{contract_id}/moderator", "ContractsController@rejectContractByModerator")->name('admin.contracts.contract.reject_by_moderator');
-                Route::get("/contracts/rejecting/{contract_id}/cancel", "ContractsController@rejectContractByAdminCancel")->name('admin.contracts.contract.reject_by_admin_cancel');
+                Route::post("/contracts/rejecting/{contract_id}/admin",
+                    "ContractsController@rejectContractByAdmin")->name('admin.contracts.contract.reject_by_admin');
+                Route::post("/contracts/rejecting/{contract_id}/moderator",
+                    "ContractsController@rejectContractByModerator")->name('admin.contracts.contract.reject_by_moderator');
+                Route::get("/contracts/rejecting/{contract_id}/cancel",
+                    "ContractsController@rejectContractByAdminCancel")->name('admin.contracts.contract.reject_by_admin_cancel');
             });
 
             // АВР
@@ -176,10 +205,13 @@ Route::group(["middleware" => ["web"], "namespace" => "Admin"], function () {
                 Route::get('/avr/{avr_id}/history', 'AVRController@history')->name('admin.avr.history');
                 Route::get('/avr/{avr_id}/view', 'AVRController@view')->name('admin.avr.view');
                 Route::get('/avr/{avr_id}/download', 'AVRController@download')->name('admin.avr.download');
-                Route::get('/avr/{avr_id}/get-avr-html', 'AVRController@getAVRHtml')->name('admin.avr.get_contract_html');
+                Route::get('/avr/{avr_id}/get-avr-html',
+                    'AVRController@getAVRHtml')->name('admin.avr.get_contract_html');
                 Route::get('/avr/{avr_id}/get-avr-pdf', 'AVRController@getAVRPdf')->name('admin.avr.get_contract_pdf');
-                Route::get("/avr/signing/{avr_id}/xml", "AVRController@xml")->name('admin.avr.xml'); // Формирование XML для подписания
-                Route::post("/avr/signing/{avr_id}/next", "AVRController@next")->name('admin.avr.next'); // Отправка подписанного акта
+                Route::get("/avr/signing/{avr_id}/xml",
+                    "AVRController@xml")->name('admin.avr.xml'); // Формирование XML для подписания
+                Route::post("/avr/signing/{avr_id}/next",
+                    "AVRController@next")->name('admin.avr.next'); // Отправка подписанного акта
 
             });
             // Страницы
@@ -329,7 +361,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             //
             Route::get("/getSkills", "CourseController@getCourseSkills");
             Route::get("/getProfessionsBySkills/{skill_id}", "CourseController@getProfessionsBySkills");
-            Route::get("/getProfessionsByProfessionalArea/{professional_area_id}", "CourseController@getProfessionsByProfessionalArea");
+            Route::get("/getProfessionsByProfessionalArea/{professional_area_id}",
+                "CourseController@getProfessionsByProfessionalArea");
             Route::get("/getProfessionsByData", "CourseController@getProfessionsByData");
             Route::get("/getSkillsByProfession/{profession_id}", "CourseController@getSkillsByProfession");
             //Справочники Адресов
@@ -370,7 +403,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/profile-author-information", "UserController@author_data_show");
                     Route::post("/update_author_data_profile", "UserController@update_author_data_profile");
                     Route::get("/profile-requisites", "UserController@profile_requisites");
-                    Route::post("/update_profile-requisites", "UserController@update_profile_requisites")->name('update_profile_requisites');
+                    Route::post("/update_profile-requisites",
+                        "UserController@update_profile_requisites")->name('update_profile_requisites');
 
                     Route::get("/getOkedIndustries", "UserController@getOkedIndustries");
                     Route::get("/getOkedActivities", "UserController@getOkedActivities");
@@ -391,9 +425,11 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/course-catalog/course/{course}/lesson-{lesson}", "LessonController@lessonView");
                     Route::post("/course_{course}/student_lesson_finished_{lesson}", "LessonController@lessonFinished");
                     // Задания
-                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/homework", "LessonController@homeworkView");
+                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/homework",
+                        "LessonController@homeworkView");
                     Route::get("/course-catalog/course/{course}/lesson-{lesson}/test", "LessonController@testView");
-                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/test-result", "LessonController@testResultView");
+                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/test-result",
+                        "LessonController@testResultView");
 
                     Route::post("/course-{course}/lesson-{lesson}/answerSend", "LessonController@answerSend");
 
@@ -408,11 +444,15 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-courses", "CourseController@myCourses")->name('author.courses.my_courses');
                     Route::get("/my-contracts", "ContractsController@index")->name('author.contracts.index');
                     Route::get("/my-avr", "AVRController@index")->name('author.avr.index');
-                    Route::get("/contract/{contract_id}/download", "ContractsController@download")->name('author.contracts.download');
+                    Route::get("/contract/{contract_id}/download",
+                        "ContractsController@download")->name('author.contracts.download');
 
-                    Route::get("/contract/{contract_id}/show", "ContractsController@view")->name('author.contracts.view');
-                    Route::get("/contract/{contract_id}/pdf", "ContractsController@getContractPdf")->name('author.contracts.pdf');
-                    Route::get("/contract/{contract_id}/doc", "ContractsController@getContractHtml")->name('author.contracts.doc');
+                    Route::get("/contract/{contract_id}/show",
+                        "ContractsController@view")->name('author.contracts.view');
+                    Route::get("/contract/{contract_id}/pdf",
+                        "ContractsController@getContractPdf")->name('author.contracts.pdf');
+                    Route::get("/contract/{contract_id}/doc",
+                        "ContractsController@getContractHtml")->name('author.contracts.doc');
 
                     Route::get("/create-course", "CourseController@createCourse");
                     Route::get("/my-courses/statistics", "CourseController@statisticsCourse");
@@ -431,24 +471,33 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::post("/my-courses/reestablish-course/{item}", "CourseController@reestablishCourse");
                     Route::post("/my-courses/quota-confirm-course/{item}", "CourseController@quotaConfirm");
                     // Урок
-                    Route::get("/my-courses/course/{item}/theme-{theme}/create-lesson", "LessonController@createLesson");
+                    Route::get("/my-courses/course/{item}/theme-{theme}/create-lesson",
+                        "LessonController@createLesson");
                     Route::get("/my-courses/course/{item}/create-lesson", "LessonController@createUnthemeLesson");
                     Route::get("/my-courses/course/{course}/edit-lesson-{lesson}", "LessonController@editLesson");
-                    Route::get("/my-courses/course/{course}/edit-untheme-lesson-{lesson}", "LessonController@editUnthemeLesson");
+                    Route::get("/my-courses/course/{course}/edit-untheme-lesson-{lesson}",
+                        "LessonController@editUnthemeLesson");
                     Route::post("/create-lesson/{course}", "LessonController@storeUnthemeLesson");
                     Route::post("/create-lesson/{course}/{theme}", "LessonController@storeLesson");
                     Route::post("/course-{course}/edit-lesson-{item}", "LessonController@updateLesson");
-                    Route::delete("/course-{course}/theme-{theme}/lesson-{lesson}/delete-lesson-form", "LessonController@deleteLessonForm");
-                    Route::delete("/course-{course}/lesson-{lesson}/delete-lesson-form", "LessonController@deleteLessonForm");
+                    Route::delete("/course-{course}/theme-{theme}/lesson-{lesson}/delete-lesson-form",
+                        "LessonController@deleteLessonForm");
+                    Route::delete("/course-{course}/lesson-{lesson}/delete-lesson-form",
+                        "LessonController@deleteLessonForm");
                     Route::delete("/course-{course}/lesson-{lesson}/deleteTest", "LessonController@deleteTest");
                     // Домашняя, Курсовая работа и Тест для Автора
                     Route::get("/my-courses/course/{course}/view-lesson-{lesson}", "LessonController@viewLesson");
-                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/author-test", "LessonController@testView");
-                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/author-homework", "LessonController@homeWorkView");
-                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/author-coursework", "LessonController@homeWorkView");
-                    Route::post("/course-{course}/theme-{theme}/lesson-{lesson}/textwork", "LessonController@answerSend");
+                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/author-test",
+                        "LessonController@testView");
+                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/author-homework",
+                        "LessonController@homeWorkView");
+                    Route::get("/course-catalog/course/{course}/lesson-{lesson}/author-coursework",
+                        "LessonController@homeWorkView");
+                    Route::post("/course-{course}/theme-{theme}/lesson-{lesson}/textwork",
+                        "LessonController@answerSend");
                     Route::post("/course-{course}/lesson-{lesson}/author-test-submit", "LessonController@submitTest");
-                    Route::post("/course-{course}/lesson-{lesson}/author-homework-submit", "LessonController@submitHomeWork");
+                    Route::post("/course-{course}/lesson-{lesson}/author-homework-submit",
+                        "LessonController@submitHomeWork");
                     Route::post("/course_{course}/author_lesson_finished_{lesson}", "LessonController@lessonFinished");
                     // Курсовая работа
                     Route::get("/my-courses/course/{item}/create-coursework", "LessonController@createCoursework");
@@ -463,7 +512,8 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     // Черновики
                     Route::get("/my-courses/drafts", "CourseController@myCourses")->name('author.courses.drafts');
                     // Неопубликованные курсы
-                    Route::get("/my-courses/unpublished", "CourseController@myCourses")->name('author.courses.unpublished');
+                    Route::get("/my-courses/unpublished",
+                        "CourseController@myCourses")->name('author.courses.unpublished');
                     // На проверке
                     Route::get("/my-courses/on-check", "CourseController@myCourses")->name('author.courses.on_check');
                     // Удаленные курсы
@@ -472,23 +522,32 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
                     Route::get("/my-courses/course/{item}", "CourseController@courseShow");
                     // На подписании
                     Route::get("/my-courses/signing", "CourseController@myCourses")->name('author.courses.signing');
-                    Route::get("/my-courses/signing/{contract_id}/contract", "CourseController@contract")->name('author.courses.signing.contract');
-                    Route::get("/my-courses/signing/{contract_id}/contract/doc", "CourseController@contractDoc")->name('author.courses.signing.contractDoc');
-                    Route::get("/my-courses/signing/{contract_id}/contract-reject", "CourseController@contractReject")->name('author.courses.signing.contract.reject');
+                    Route::get("/my-courses/signing/{contract_id}/contract",
+                        "CourseController@contract")->name('author.courses.signing.contract');
+                    Route::get("/my-courses/signing/{contract_id}/contract/doc",
+                        "CourseController@contractDoc")->name('author.courses.signing.contractDoc');
+                    Route::get("/my-courses/signing/{contract_id}/contract-reject",
+                        "CourseController@contractReject")->name('author.courses.signing.contract.reject');
 
-                    Route::get("/my-courses/signing/{contract_id}/xml", "CourseController@xml")->name('author.courses.signing.contract.xml'); // Формирование XML для подписания
-                    Route::post("/my-courses/signing/{contract_id}/next", "CourseController@next")->name('author.courses.signing.contract.next'); // Отправка подписанного договора
-                    Route::get("/my-courses/signing/{contract_id}/next", "CourseController@next")->name('author.courses.signing.contract.next'); // Отправка обычного договора
+                    Route::get("/my-courses/signing/{contract_id}/xml",
+                        "CourseController@xml")->name('author.courses.signing.contract.xml'); // Формирование XML для подписания
+                    Route::post("/my-courses/signing/{contract_id}/next",
+                        "CourseController@next")->name('author.courses.signing.contract.next'); // Отправка подписанного договора
+                    Route::get("/my-courses/signing/{contract_id}/next",
+                        "CourseController@next")->name('author.courses.signing.contract.next'); // Отправка обычного договора
 
                     // avr
                     Route::get("/my-avr/{avr_id}/avr", "AVRController@avr")->name('author.avr.view');
                     Route::get("/my-avr/{avr_id}/download", "AVRController@download")->name('author.avr.download');
                     Route::get("/my-avr/{avr_id}/avrDoc", "AVRController@avrDoc")->name('author.avr.signing.avrDoc');
                     Route::get("/my-avr/{avr_id}/avrPdf", "AVRController@avrPdf")->name('author.avr.signing.avrPdf');
-                    Route::get("/my-avr/signing/{avr_id}/update", "AVRController@update")->name('author.avr.signing.update');
+                    Route::get("/my-avr/signing/{avr_id}/update",
+                        "AVRController@update")->name('author.avr.signing.update');
 
-                    Route::get("/my-avr/signing/{avr_id}/xml", "AVRController@xml")->name('author.avr.signing.xml'); // Формирование XML для подписания
-                    Route::post("/my-avr/signing/{avr_id}/next", "AVRController@next")->name('author.avr.signing.next'); // Отправка подписанного акта
+                    Route::get("/my-avr/signing/{avr_id}/xml",
+                        "AVRController@xml")->name('author.avr.signing.xml'); // Формирование XML для подписания
+                    Route::post("/my-avr/signing/{avr_id}/next",
+                        "AVRController@next")->name('author.avr.signing.next'); // Отправка подписанного акта
                 });
             });
         });
@@ -515,5 +574,8 @@ Route::group(['prefix' => '{lang}'], function () {
 
 Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
 Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
-
+Route::post('error-on-page', [
+    \App\Http\Controllers\ErrorController::class,
+    'store'
+])->name('error_on_page');
 

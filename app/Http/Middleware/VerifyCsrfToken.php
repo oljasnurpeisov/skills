@@ -38,6 +38,8 @@ class VerifyCsrfToken extends Middleware
         '/create-theme',
 
         '/move-lesson',
-        '/delete-lesson'
+        '/delete-lesson',
+
+        '/error-on-page'
     ];
 }
