@@ -581,6 +581,7 @@ return [
             'our_statistic' => 'Біздің</span><br/> көрсеткіштер',
             'students_count' => 'Білім алушылар',
             'authors_count' => 'Авторлар',
+            'users_count' => 'Пайдаланушы',
             'courses_count' => 'Курстар',
             'advantages' => 'Жоба Артықшылықтары</span><br/> Өзіңіздің потенциалыңызды дамытыңыз',
         ],

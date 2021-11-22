@@ -123,7 +123,7 @@
                                 <img src="/assets/img/students.svg" alt="" class="stat__image">
                                 <div>
                                     <div class="stat__number">{{$students_count}}</div>
-                                    <div class="stat__label">{{ __('default.pages.index.students_count') }}</div>
+                                    <div class="stat__label">{{ __('default.pages.index.users_count') }}</div>
                                 </div>
                             </div>
                         </a>
