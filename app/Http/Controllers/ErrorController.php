@@ -10,7 +10,7 @@ class ErrorController extends Controller
 {
     public function store(ErrorOnPageRequest $request)
     {
-        Mail::to(config('info@enbek.kz'))
+        Mail::to('info@enbek.kz')
             ->queue(new ErrorOnPageMail(
                 $request->input('url', ''),
                 $request->input('phone', ''),
