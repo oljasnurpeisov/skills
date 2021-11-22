@@ -129,22 +129,26 @@
                         </a>
                     </div>
                     <div class="col-sm-4">
-                        <div class="stat">
-                            <img src="/assets/img/authors.svg" alt="" class="stat__image">
-                            <div>
-                                <div class="stat__number">{{$authors_count}}</div>
-                                <div class="stat__label">{{ __('default.pages.index.authors_count') }}</div>
+                        <a href="/{{$lang}}/authors">
+                            <div class="stat">
+                                <img src="/assets/img/authors.svg" alt="" class="stat__image">
+                                <div>
+                                    <div class="stat__number">{{$authors_count}}</div>
+                                    <div class="stat__label">{{ __('default.pages.index.authors_count') }}</div>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="col-sm-4">
-                        <div class="stat">
-                            <img src="/assets/img/courses.svg" alt="" class="stat__image">
-                            <div>
-                                <div class="stat__number">{{$courses_count}}</div>
-                                <div class="stat__label">{{ __('default.pages.index.courses_count') }}</div>
+                        <a href="/{{$lang}}/course-catalog">
+                            <div class="stat">
+                                <img src="/assets/img/courses.svg" alt="" class="stat__image">
+                                <div>
+                                    <div class="stat__number">{{$courses_count}}</div>
+                                    <div class="stat__label">{{ __('default.pages.index.courses_count') }}</div>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
