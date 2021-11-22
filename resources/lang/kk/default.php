@@ -649,6 +649,7 @@ return [
         'authors' => [
             'catalog_title' => 'Авторлар',
             'search_placeholder' => 'Авторлық ұйымның аты бойынша іздеу ...',
+            'author_courses' => 'Автор курстары',
         ],
 
         'faq' => [

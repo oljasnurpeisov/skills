@@ -656,7 +656,8 @@ return [
         ],
         'authors' => [
             'catalog_title' => 'Авторы',
-            'search_placeholder' => 'Поиск по названию организации автора...'
+            'search_placeholder' => 'Поиск по названию организации автора...',
+            'author_courses' => 'Курсы автора',
         ],
         'faq' => [
             'tech_support_title' => 'Подать обращение'
