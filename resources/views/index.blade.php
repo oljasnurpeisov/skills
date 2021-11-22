@@ -19,7 +19,13 @@
                             <div class="row row--multiline">
                                 <div class="col-md-4">
                                     <label class="form-group__label">{{__('default.pages.courses.choose_professional_area')}}</label>
-                                    <select name="professional_areas[]" placeholder="{{__('default.pages.courses.choose_professional_area')}}" data-method="getProfessionalAreaByName" data-default="{{__('default.pages.courses.sort_by_default')}}" class="white" data-noresults="{{__('default.pages.index.nothing_to_show')}}"> </select>
+                                    <select
+                                        name="professional_areas[]"
+                                        placeholder="{{__('default.pages.courses.choose_professional_area')}}"
+                                        data-method="getProfessionalAreaByName"
+                                        data-default="{{__('default.pages.courses.sort_by_default')}}"
+                                        class="white"
+                                        data-noresults="{{__('default.pages.index.nothing_to_show')}}"> </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-group__label">{{__('default.pages.courses.choose_profession')}}</label>
@@ -112,31 +118,37 @@
                 <h2 class="title-primary decorated"><span>{!! __('default.pages.index.our_statistic') !!}</h2>
                 <div class="row row--multiline">
                     <div class="col-sm-4">
-                        <div class="stat">
-                            <img src="/assets/img/students.svg" alt="" class="stat__image">
-                            <div>
-                                <div class="stat__number">{{$students_count}}</div>
-                                <div class="stat__label">{{ __('default.pages.index.students_count') }}</div>
+                        <a href="/{{$lang}}/students">
+                            <div class="stat">
+                                <img src="/assets/img/students.svg" alt="" class="stat__image">
+                                <div>
+                                    <div class="stat__number">{{$students_count}}</div>
+                                    <div class="stat__label">{{ __('default.pages.index.users_count') }}</div>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="col-sm-4">
-                        <div class="stat">
-                            <img src="/assets/img/authors.svg" alt="" class="stat__image">
-                            <div>
-                                <div class="stat__number">{{$authors_count}}</div>
-                                <div class="stat__label">{{ __('default.pages.index.authors_count') }}</div>
+                        <a href="/{{$lang}}/authors">
+                            <div class="stat">
+                                <img src="/assets/img/authors.svg" alt="" class="stat__image">
+                                <div>
+                                    <div class="stat__number">{{$authors_count}}</div>
+                                    <div class="stat__label">{{ __('default.pages.index.authors_count') }}</div>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="col-sm-4">
-                        <div class="stat">
-                            <img src="/assets/img/courses.svg" alt="" class="stat__image">
-                            <div>
-                                <div class="stat__number">{{$courses_count}}</div>
-                                <div class="stat__label">{{ __('default.pages.index.courses_count') }}</div>
+                        <a href="/{{$lang}}/course-catalog">
+                            <div class="stat">
+                                <img src="/assets/img/courses.svg" alt="" class="stat__image">
+                                <div>
+                                    <div class="stat__number">{{$courses_count}}</div>
+                                    <div class="stat__label">{{ __('default.pages.index.courses_count') }}</div>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@ height: 30vh;
 @stop
 @section('content')
 <main class="main">
-	
+
 	<section class="plain">
 		<div class="container">
 			<ul class="breadcrumbs">
@@ -32,258 +32,51 @@ height: 30vh;
 					</div>
 				</div>
 			</form>
-			
+
 			<div class="row row--multiline column-reverse-sm">
 				<div class="col-md-12 px-0">
 					<div class="row row--multiline authors">
-						<div class="col-md-3 col-sm-6">
-							<a href="#" class="card authors-item">
-								<div class="card__image card__author-image">
-									<img src="/users/user_2376/profile/images/1629282340.jpg" alt="">
-								</div>
-								<div class="card__desc">
-									<div class="card__top">
-										<h3 class="card__title">ГУ "Министерство труда и социальной защиты населения Республики Казахстан"</h3>
-										<div class="card__stats">
-											<span>351</span> {{__('default.pages.profile.rates_count_title')}}
-											<br/>
-											<span>2950</span> {{__('default.pages.profile.course_members_count')}}
-											<br/>
-											<span>26</span> {{__('default.pages.profile.course_count')}}
-										</div>
-									</div>
-									<div class="card__bottom">
-										<div class="rating">
-											<div class="rating__number">4.8</div>
-											<div class="rating__stars">
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-											</div>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-3 col-sm-6">
-							<a href="#" class="card authors-item">
-								<div class="card__image card__author-image">
-									<img src="/users/user_2376/profile/images/1629282340.jpg" alt="">
-								</div>
-								<div class="card__desc">
-									<div class="card__top">
-										<h3 class="card__title">ГУ "Министерство труда и социальной защиты населения Республики Казахстан"</h3>
-										<div class="card__stats">
-											<span>351</span> {{__('default.pages.profile.rates_count_title')}}
-											<br/>
-											<span>2950</span> {{__('default.pages.profile.course_members_count')}}
-											<br/>
-											<span>26</span> {{__('default.pages.profile.course_count')}}
-										</div>
-									</div>
-									<div class="card__bottom">
-										<div class="rating">
-											<div class="rating__number">4.8</div>
-											<div class="rating__stars">
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-											</div>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-3 col-sm-6">
-							<a href="#" class="card authors-item">
-								<div class="card__image card__author-image">
-									<img src="/users/user_2376/profile/images/1629282340.jpg" alt="">
-								</div>
-								<div class="card__desc">
-									<div class="card__top">
-										<h3 class="card__title">ГУ "Министерство труда и социальной защиты населения Республики Казахстан"</h3>
-										<div class="card__stats">
-											<span>351</span> {{__('default.pages.profile.rates_count_title')}}
-											<br/>
-											<span>2950</span> {{__('default.pages.profile.course_members_count')}}
-											<br/>
-											<span>26</span> {{__('default.pages.profile.course_count')}}
-										</div>
-									</div>
-									<div class="card__bottom">
-										<div class="rating">
-											<div class="rating__number">4.8</div>
-											<div class="rating__stars">
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-											</div>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-3 col-sm-6">
-							<a href="#" class="card authors-item">
-								<div class="card__image card__author-image">
-									<img src="/users/user_2376/profile/images/1629282340.jpg" alt="">
-								</div>
-								<div class="card__desc">
-									<div class="card__top">
-										<h3 class="card__title">ГУ "Министерство труда и социальной защиты населения Республики Казахстан"</h3>
-										<div class="card__stats">
-											<span>351</span> {{__('default.pages.profile.rates_count_title')}}
-											<br/>
-											<span>2950</span> {{__('default.pages.profile.course_members_count')}}
-											<br/>
-											<span>26</span> {{__('default.pages.profile.course_count')}}
-										</div>
-									</div>
-									<div class="card__bottom">
-										<div class="rating">
-											<div class="rating__number">4.8</div>
-											<div class="rating__stars">
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-											</div>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-3 col-sm-6">
-							<a href="#" class="card authors-item">
-								<div class="card__image card__author-image">
-									<img src="/users/user_2376/profile/images/1629282340.jpg" alt="">
-								</div>
-								<div class="card__desc">
-									<div class="card__top">
-										<h3 class="card__title">ГУ "Министерство труда и социальной защиты населения Республики Казахстан"</h3>
-										<div class="card__stats">
-											<span>351</span> {{__('default.pages.profile.rates_count_title')}}
-											<br/>
-											<span>2950</span> {{__('default.pages.profile.course_members_count')}}
-											<br/>
-											<span>26</span> {{__('default.pages.profile.course_count')}}
-										</div>
-									</div>
-									<div class="card__bottom">
-										<div class="rating">
-											<div class="rating__number">4.8</div>
-											<div class="rating__stars">
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-											</div>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-3 col-sm-6">
-							<a href="#" class="card authors-item">
-								<div class="card__image card__author-image">
-									<img src="/users/user_2376/profile/images/1629282340.jpg" alt="">
-								</div>
-								<div class="card__desc">
-									<div class="card__top">
-										<h3 class="card__title">ГУ "Министерство труда и социальной защиты населения Республики Казахстан"</h3>
-										<div class="card__stats">
-											<span>351</span> {{__('default.pages.profile.rates_count_title')}}
-											<br/>
-											<span>2950</span> {{__('default.pages.profile.course_members_count')}}
-											<br/>
-											<span>26</span> {{__('default.pages.profile.course_count')}}
-										</div>
-									</div>
-									<div class="card__bottom">
-										<div class="rating">
-											<div class="rating__number">4.8</div>
-											<div class="rating__stars">
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-											</div>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-3 col-sm-6">
-							<a href="#" class="card authors-item">
-								<div class="card__image card__author-image">
-									<img src="/users/user_2376/profile/images/1629282340.jpg" alt="">
-								</div>
-								<div class="card__desc">
-									<div class="card__top">
-										<h3 class="card__title">ГУ "Министерство труда и социальной защиты населения Республики Казахстан"</h3>
-										<div class="card__stats">
-											<span>351</span> {{__('default.pages.profile.rates_count_title')}}
-											<br/>
-											<span>2950</span> {{__('default.pages.profile.course_members_count')}}
-											<br/>
-											<span>26</span> {{__('default.pages.profile.course_count')}}
-										</div>
-									</div>
-									<div class="card__bottom">
-										<div class="rating">
-											<div class="rating__number">4.8</div>
-											<div class="rating__stars">
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-											</div>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="col-md-3 col-sm-6">
-							<a href="#" class="card authors-item">
-								<div class="card__image card__author-image">
-									<img src="/users/user_2376/profile/images/1629282340.jpg" alt="">
-								</div>
-								<div class="card__desc">
-									<div class="card__top">
-										<h3 class="card__title">ГУ "Министерство труда и социальной защиты населения Республики Казахстан"</h3>
-										<div class="card__stats">
-											<span>351</span> {{__('default.pages.profile.rates_count_title')}}
-											<br/>
-											<span>2950</span> {{__('default.pages.profile.course_members_count')}}
-											<br/>
-											<span>26</span> {{__('default.pages.profile.course_count')}}
-										</div>
-									</div>
-									<div class="card__bottom">
-										<div class="rating">
-											<div class="rating__number">4.8</div>
-											<div class="rating__stars">
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-												<i class="icon-star-full"> </i>
-											</div>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
+                        @foreach ($items as $item)
+                            <div class="col-md-3 col-sm-6">
+                                <a href="/{{ $lang }}/authors/{{ $item->id }}" class="card authors-item">
+                                    <div class="card__image card__author-image">
+                                        <img src="{{ $item->company_logo }}" alt="">
+                                    </div>
+                                    <div class="card__desc">
+                                        <div class="card__top">
+                                            <h3 class="card__title">{{ $item->company_name }}</h3>
+                                            <div class="card__stats">
+                                                <span>{{ count($item->rates) }}</span> {{__('default.pages.profile.rates_count_title')}}
+                                                <br/>
+                                                <span>{{count($item->author_students)}}</span> {{__('default.pages.profile.course_members_count')}}
+                                                <br/>
+                                                <span>{{count($item->courses->where('status', '=', 3))}}</span> {{__('default.pages.profile.course_count')}}
+                                            </div>
+                                        </div>
+                                        <div class="card__bottom">
+                                            <div class="rating">
+                                                <div class="rating__number">{{round($item->average_rates, 1)}}</div>
+                                                <div class="rating__stars">
+                                                    <?php
+                                                    for ($x = 1; $x <= $item->average_rates; $x++) {
+                                                        echo '<i class="icon-star-full"> </i>';
+                                                    }
+                                                    if (strpos($item->average_rates, '.')) {
+                                                        echo '<i class="icon-star-half"> </i>';
+                                                        $x++;
+                                                    }
+                                                    while ($x <= 5) {
+                                                        echo '<i class="icon-star-empty"> </i>';
+                                                        $x++;
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
 					</div>
 					<div class="text-center">
 						{{ $items->appends(request()->input())->links('vendor.pagination.default') }}
@@ -291,7 +84,7 @@ height: 30vh;
 				</div>
 			</div>
 		</div>
-		
+
 	</section>
 </main>
 @endsection

@@ -581,6 +581,7 @@ return [
             'our_statistic' => 'Біздің</span><br/> көрсеткіштер',
             'students_count' => 'Білім алушылар',
             'authors_count' => 'Авторлар',
+            'users_count' => 'Пайдаланушы',
             'courses_count' => 'Курстар',
             'advantages' => 'Жоба Артықшылықтары</span><br/> Өзіңіздің потенциалыңызды дамытыңыз',
         ],
@@ -640,11 +641,15 @@ return [
 
         'students' => [
             'students_title' => 'Білім алушылар',
+            'with_certs_title' => 'Сертификат алғандар',
             'top_skills' => 'Топ-30 дағды',
+            'dateFrom' => 'Выберите месяц с',
+            'dateTo' => 'Выберите месяц по',
         ],
         'authors' => [
             'catalog_title' => 'Авторлар',
             'search_placeholder' => 'Авторлық ұйымның аты бойынша іздеу ...',
+            'author_courses' => 'Автор курстары',
         ],
 
         'faq' => [
