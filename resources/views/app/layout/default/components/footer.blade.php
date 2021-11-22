@@ -31,6 +31,9 @@
                                title="{{__('default.pages.footer.feedback')}}">{{__('default.pages.footer.feedback')}}</a>
                         </li>
                     @endif
+                    <li><a href="#errorOnPage" data-fancybox
+                           title="{{__('default.error_on_page')}}">{{__('default.error_on_page')}}</a>
+                    </li>
                 </ul>
             </div>
             <div class="col-md-4">
