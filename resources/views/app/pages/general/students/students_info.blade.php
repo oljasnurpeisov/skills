@@ -16,541 +16,159 @@ height: 30vh;
 				</li>
 				<li><span>{{__('default.pages.students.students_title')}}</span></li>
 			</ul>
+
 			<div class="title-with-border-block">
-				<h1 class="page-title">Обучающиеся <span class="blue-text">9 900</span></h1>
+				<h1 class="page-title">{{__('default.pages.students.students_title')}} <span class="blue-text">{{ $studentCount }}</span></h1>
 			</div>
-			<div class="row row--multiline students_filter align-items-center">
-				<div class="col-md-3 col-sm-4">
-					<div class="form-group">
-						<label class="form-group__label">{{__('default.pages.courses.choose_professional_area_title')}}</label>
-						<div class="input-addon">
-							<select  name="professional_areas[]"
-							placeholder="{{__('default.pages.courses.choose_professional_area_title')}}"
-							data-method="getProfessionalAreaByName"
-							class="professional-areas-select"
-							{{--                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" required>--}}
-								data-noresults="{{__('default.pages.index.nothing_to_show')}}" multiple required>>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-4">
-					<div class="form-group">
-						<label class="form-group__label">Выберите месяц с</label>
-						<div class="input-group">
-							<input type="text" name="dateFrom"
-							placeholder=""
-							class="input-regular custom-datepicker">
-							<i class="icon-calendar"></i>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-4">
-					<div class="form-group">
-						<label class="form-group__label">Выберите месяц по</label>
-						<div class="input-group">
-							<input type="text" name="dateTo" placeholder=""
-							class="input-regular custom-datepicker">
-							<i class="icon-calendar"></i>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-2">
-					<button type="submit" class="btn">{{__('default.pages.courses.apply_title')}}</button>
-				</div>
-			</div>
-			<div class="students_users-count d-flex align-items-center">
-			 <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">300</span>
+            <form class="opening-form" action="/{{$lang}}/students">
+                <div class="row row--multiline students_filter align-items-center">
+                    <div class="col-md-3 col-sm-4">
+                        <div class="form-group">
+                            <label class="form-group__label">{{__('default.pages.courses.choose_professional_area_title')}}</label>
+                            <div class="input-addon">
+                                <select  name="professional_areas"
+                                placeholder="{{__('default.pages.courses.choose_professional_area_title')}}"
+                                class="input-regular professional-areas-select">
+                                    <option value="" selected='selected'>{{__('default.pages.courses.choose_professional_area')}}</option>
+                                    @foreach($professionalAreas as $area)
+                                        <option value="{{ $area->id }}" @if($area->id==$request->professional_areas) selected='selected' @endif>
+                                            {{ $area->{'name_'.$lang} }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <div class="form-group">
+                            <label class="form-group__label">{{__('default.pages.students.dateFrom')}}</label>
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    data-date-format="dd.mm.yyyy"
+                                    name="dateFrom"
+                                    value="{{$request->dateFrom}}"
+                                    placeholder=""
+                                    class="input-regular custom-datepicker"
+                                    autocomplete="off">
+                                <i class="icon-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <div class="form-group">
+                            <label class="form-group__label">{{__('default.pages.students.dateTo')}}</label>
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    data-date-format="dd.mm.yyyy"
+                                    name="dateTo"
+                                    value="{{$request->dateTo}}"
+                                    placeholder=""
+                                    class="input-regular custom-datepicker"
+                                    autocomplete="off">
+                                <i class="icon-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn">{{__('default.pages.courses.apply_title')}}</button>
+                    </div>
+                </div>
+            </form>
+            <div class="students_users-count d-flex align-items-center">
+			 <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">{{ $studentProfessionCount }}</span>
 			</div>
 			<div class="row students_list">
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
+                @foreach ($professions as $profession)
+                    <div class="col-md-3 col-sm-6 students_list-item">
+                        <div>{{ $profession->name }}</div>
+                        <div class="students_users-count d-flex align-items-center">
+                            <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">{{ $profession->total }}</span>
+                        </div>
+                    </div>
+                @endforeach
 			</div>
+
 			<div class="title-with-border-block">
-				<h2 class="page-title">Получившие сертификат <span class="blue-text">9 900</span></h2>
+				<h2 class="page-title">{{__('default.pages.students.with_certs_title')}} <span class="blue-text">{{ $withCertCount }}</span></h2>
 			</div>
-			<div class="row row--multiline students_filter align-items-center">
-				<div class="col-md-3 col-sm-4">
-					<div class="form-group">
-						<label class="form-group__label">{{__('default.pages.courses.choose_professional_area_title')}}</label>
-						<div class="input-addon">
-							<select  name="professional_areas[]"
-							placeholder="{{__('default.pages.courses.choose_professional_area_title')}}"
-							data-method="getProfessionalAreaByName"
-							class="professional-areas-select"
-							{{--                                            data-noresults="{{__('default.pages.index.nothing_to_show')}}" required>--}}
-								data-noresults="{{__('default.pages.index.nothing_to_show')}}" multiple required>>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-4">
-					<div class="form-group">
-						<label class="form-group__label">Выберите месяц с</label>
-						<div class="input-group">
-							<input type="text" name="dateFrom"
-							placeholder=""
-							class="input-regular custom-datepicker">
-							<i class="icon-calendar"></i>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-4">
-					<div class="form-group">
-						<label class="form-group__label">Выберите месяц по</label>
-						<div class="input-group">
-							<input type="text" name="dateTo" placeholder=""
-							class="input-regular custom-datepicker">
-							<i class="icon-calendar"></i>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-2">
-					<button type="submit" class="btn">{{__('default.pages.courses.apply_title')}}</button>
-				</div>
-			</div>
+            <form class="opening-form" action="/{{$lang}}/students">
+                <div class="row row--multiline students_filter align-items-center">
+                    <div class="col-md-3 col-sm-4">
+                        <div class="form-group">
+                            <label class="form-group__label">{{__('default.pages.courses.choose_professional_area_title')}}</label>
+                            <div class="input-addon">
+                                <select  name="professional_areas"
+                                         placeholder="{{__('default.pages.courses.choose_professional_area_title')}}"
+                                         class="input-regular professional-areas-select">
+                                    <option value="" selected='selected'>{{__('default.pages.courses.choose_professional_area')}}</option>
+                                    @foreach($professionalAreas as $area)
+                                        <option value="{{ $area->id }}" @if($area->id==$request->professional_areas) selected='selected' @endif>
+                                            {{ $area->{'name_'.$lang} }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <div class="form-group">
+                            <label class="form-group__label">{{__('default.pages.students.dateFrom')}}</label>
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    data-date-format="dd.mm.yyyy"
+                                    name="dateFrom"
+                                    value="{{$request->dateFrom}}"
+                                    placeholder=""
+                                    class="input-regular custom-datepicker"
+                                    autocomplete="off">
+                                <i class="icon-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <div class="form-group">
+                            <label class="form-group__label">{{__('default.pages.students.dateTo')}}</label>
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    data-date-format="dd.mm.yyyy"
+                                    name="dateTo"
+                                    value="{{$request->dateTo}}"
+                                    placeholder=""
+                                    class="input-regular custom-datepicker"
+                                    autocomplete="off">
+                                <i class="icon-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn">{{__('default.pages.courses.apply_title')}}</button>
+                    </div>
+                </div>
+            </form>
 			<div class="students_users-count d-flex align-items-center">
-			 <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">300</span>
+			 <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">{{ $studentProfessionWithCertCount }}</span>
 			</div>
 			<div class="row students_list">
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Web-разработчик</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">30</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный диспетчер</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">591</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
-			 <div class="col-md-3 col-sm-6 students_list-item">
-			  <div>Авиационный техник по приборам - метролог</div>
-			  <div class="students_users-count d-flex align-items-center">
-			   <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">330</span>
-			  </div>
-			 </div>
+                @foreach ($certs as $cert)
+                    <div class="col-md-3 col-sm-6 students_list-item">
+                        <div>{{ $cert->name }}</div>
+                        <div class="students_users-count d-flex align-items-center">
+                            <img src="{{ asset('/assets/img/user-blue-ico.svg') }}" alt="" /><span class="blue-text">{{ $cert->total }}</span>
+                        </div>
+                    </div>
+                @endforeach
 			</div>
-			<h2 class="page-title">{{__('default.pages.students.top_skills')}}</h2>
-			
+
+            <h2 class="page-title">{{__('default.pages.students.top_skills')}}</h2>
 		</div>
 		<div class="chart-container container " style="position: relative; width:100%">
 			<div style="border:1px solid #e0e0e0; padding:1rem"><canvas id="myChart"></canvas></div>
 		</div>
-		
+
 	</section>
 </main>
 @endsection
@@ -652,10 +270,6 @@ height: 30vh;
 		}
 	});
 </script>
-<script>
-	const professionalAreaEl = $('[name="professional_areas[]"]');
-	
-	let professionAreaSelect = new ajaxSelect(professionalAreaEl, null, true, 2);
-</script>
+
 <!---->
 @endsection

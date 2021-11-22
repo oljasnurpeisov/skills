@@ -640,7 +640,10 @@ return [
 
         'students' => [
             'students_title' => 'Білім алушылар',
+            'with_certs_title' => 'Сертификат алғандар',
             'top_skills' => 'Топ-30 дағды',
+            'dateFrom' => 'Выберите месяц с',
+            'dateTo' => 'Выберите месяц по',
         ],
         'authors' => [
             'catalog_title' => 'Авторлар',

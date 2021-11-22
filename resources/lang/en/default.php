@@ -649,7 +649,10 @@ return [
 
         'students' => [
             'students_title' => 'Обучающиеся',
+            'with_certs_title' => 'Получившие сертификат',
             'top_skills' => 'Топ-30 навыков',
+            'dateFrom' => 'Выберите месяц с',
+            'dateTo' => 'Выберите месяц по',
         ],
         'authors' => [
             'catalog_title' => 'Авторы',

@@ -93,7 +93,7 @@
 }
 .personal-card__characteristics .blue {
     font-weight: 500;
-} 
+}
 .author-page .article-section{
     padding-bottom: 1.5rem;
 	padding-top: 1.5rem;
@@ -114,7 +114,7 @@
 	}
 	.students_list-item:nth-child(2n){
 	border-right: none;
-}	
+}
 }
 @media screen and (max-width:992px){
 	.card__author-image {
@@ -131,4 +131,7 @@
 	.students_list {
 		max-height: 500px;
 	}
+}
+.professional-areas-select {
+    background-color: #fff;
 }
