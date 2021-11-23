@@ -49,6 +49,11 @@
                                 href="tel:{{__('default.pages.footer.phone')}}"
                                 title="{{__('default.pages.footer.phone')}}">{{__('default.pages.footer.phone')}}</a>
                     </p>
+                    <p>
+                        <span>
+                            {!! __('default.error_send') !!}
+                        </span>
+                    </p>
                 </div>
             </div>
             <div class="col-md-3">
