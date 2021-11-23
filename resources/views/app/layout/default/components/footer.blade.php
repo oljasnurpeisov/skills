@@ -51,7 +51,12 @@
                     </p>
                     <p>
                         <span>
-                            {!! __('default.error_send') !!}
+                            {!! __('default.error_send_title') !!}
+                        </span>
+                    </p>
+                    <p>
+                        <span>
+                            {!! __('default.error_send_value') !!}
                         </span>
                     </p>
                 </div>

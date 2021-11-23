@@ -817,7 +817,8 @@ return [
     'error'            => 'Қателік',
     'comment'          => 'Пікір',
     'error_on_page'    => 'Қате туралы хабарлау',
-    'error_send' => '<u>Қателік байқадыңыз ба?</u> <br> Белгілеп, үстінен басыңыз Ctrl+Enter'
+    'error_send_title' => '<a href="#errorOnPage"  data-fancybox title="Қателік байқадыңыз ба?">Қателік байқадыңыз ба?</a>',
+    'error_send_value' => 'Белгілеп, үстінен басыңыз Ctrl+Enter'
 
 
 ];
