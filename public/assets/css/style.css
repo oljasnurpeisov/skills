@@ -72,9 +72,11 @@
     -o-transition: .3s;
     transition: .3s;
 	padding-bottom: 1.85em;
+	border-radius: 4px;
 }
 .stat:hover {
     border-color: #2AB5F6;
+	box-shadow: 0px 0px 8.24px rgba(138, 142, 164, 0.25);
 }
 .authors {
     margin-top: 10px;
