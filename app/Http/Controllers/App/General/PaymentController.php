@@ -9,6 +9,8 @@ use App\Models\Lesson;
 use App\Models\PaymentHistory;
 use App\Models\StudentCourse;
 use App\Models\StudentInformation;
+use App\Models\StudentProfessions;
+use App\Models\ProfessionalAreaProfession;
 use App\Services\Users\UnemployedService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -41,6 +43,8 @@ class PaymentController extends Controller
 
                     $student_info->unemployed_status = $studentUnemployedStatus;
                     $student_info->save();
+
+                    $this->setStudentProfession($item);
 
                     $notification_name = 'notifications.course_buy_status_success';
                     NotificationsHelper::createNotification($notification_name, $item->id, Auth::user()->id);
@@ -123,6 +127,8 @@ class PaymentController extends Controller
                     $student_course->quota_count = $student_info->quota_count;
                     $student_course->save();
 
+                    $this->setStudentProfession($item);
+
                     $item_payment = new PaymentHistory;
                     $item_payment->amount = $item->quotaCost->last()->cost ?? 0;
                     $item_payment->status = 1;
@@ -182,6 +188,9 @@ class PaymentController extends Controller
                     $student_info->unemployed_status = $studentUnemployedStatus;
                     $student_info->save();
 
+                    $course = Course::where('id', '=', $json->metadata->course_id)->first();
+                    $this->setStudentProfession($course);
+
                     $notification_name = 'notifications.course_buy_status_success';
                     NotificationsHelper::createNotification($notification_name, $json->metadata->course_id, $json->metadata->student_id);
                 }
@@ -229,6 +238,20 @@ class PaymentController extends Controller
         }
 
         Auth::user()->student_lesson()->sync($lesson_ids, false);
+    }
+
+    protected function setStudentProfession (Course $course)
+    {
+        $professions = $course->professions()->get();
+        foreach ($professions as $profession) {
+            $studentProfession = new StudentProfessions;
+            $studentProfession->user_id = Auth::user()->id;
+            $studentProfession->profession_id = $profession->id;
+            $studentProfession->professional_area_id = ProfessionalAreaProfession::where('profession_id', '=', $profession->id)->first()->professional_area_id;
+            $studentProfession->course_id = $course->id;
+            $studentProfession->is_finished = 0;
+            $studentProfession->save();
+        }
     }
 
 }
