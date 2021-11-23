@@ -9,12 +9,14 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Log;
 use App\Models\PaymentHistory;
+use App\Models\ProfessionalAreaProfession;
 use App\Models\StudentCertificate;
 use App\Models\StudentCourse;
 use App\Models\StudentLesson;
 use App\Models\StudentLessonAnswer;
 use App\Models\StudentLessonAnswerAttempt;
 use App\Models\Theme;
+use App\Models\StudentProfessions;
 use App\Models\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -569,6 +571,14 @@ class LessonController extends Controller
             if ($studentCourse->is_finished == false) {
                 $studentCourse->is_finished = true;
                 $studentCourse->save();
+
+                $professions = StudentProfessions::where('course_id', '=', $course->id)
+                    ->where('user_id', '=', Auth::user()->id)
+                    ->get();
+                foreach ($professions as $profession) {
+                    $profession->is_finished = 1;
+                    $profession->save();
+                }
 
                 // Проверить наличие сертификата и если нет, то создать
                 $userCertificate = StudentCertificate::whereUserId($user->id)
