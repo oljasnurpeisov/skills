@@ -351,10 +351,11 @@
                onclick="document.querySelector($(this).attr('data-checkbox')).checked = true;document.querySelector($(this).attr('data-checkbox')).dispatchEvent(new Event('change'));">{{__('default.pages.private_policy.agree_title')}}</a>
         </div>
     </div>
-    <a style="display: none" id="openErrorOnPage" href="#errorOnPage" data-fancybox></a>
-    <div id="errorOnPage" style="display: none;">
-        <form action="{{ route('error_on_page') }}" method="POST">
-            <div class="form-group">
+@endguest
+<a style="display: none" id="openErrorOnPage" href="#errorOnPage" data-fancybox></a>
+<div id="errorOnPage" style="display: none;">
+    <form action="{{ route('error_on_page') }}" method="POST">
+        <div class="form-group">
             <label class="form-group__label" for="errorOnPageUrl">URL</label>
             <input type="text" id="errorOnPageUrl" disabled value="{{ url()->current() }}" placeholder="" class="input-regular" required>
             <input style="display: none" type="text" id="errorOnPageUrl"  value="{{ url()->current() }}" name="url" placeholder="" class="input-regular" required>
@@ -372,12 +373,10 @@
             <label class="form-group__label" for="errorOnPageComment">{{ __('default.comment') }}</label>
             <input type="text" id="errorOnPageComment" name="comment" placeholder="" class="input-regular">
         </div>
-            <div class="text-center">
-                <div class="form-group">
-                    <button type="submit" class="btn">{{__('default.pages.auth.send_button_title')}}</button>
-                </div>
+        <div class="text-center">
+            <div class="form-group">
+                <button type="submit" class="btn">{{__('default.pages.auth.send_button_title')}}</button>
             </div>
-        </form>
-    </div>
-
-@endguest
+        </div>
+    </form>
+</div>
