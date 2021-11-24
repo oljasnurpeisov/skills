@@ -575,12 +575,13 @@ Route::group(['prefix' => '{lang}'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get("/statisticForChartDemo", "App\Author\CourseController@statisticForChartDemo");
+
+    Route::post('error-on-page', [
+        \App\Http\Controllers\ErrorController::class,
+        'store'
+    ])->name('error_on_page');
 });
 
 Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
 Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
-Route::post('error-on-page', [
-    \App\Http\Controllers\ErrorController::class,
-    'store'
-])->name('error_on_page');
 

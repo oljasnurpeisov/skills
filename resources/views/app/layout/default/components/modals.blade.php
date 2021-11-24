@@ -354,7 +354,7 @@
 @endguest
 <a style="display: none" id="openErrorOnPage" href="#errorOnPage" data-fancybox></a>
 <div id="errorOnPage" style="display: none;">
-    <form action="{{ route('error_on_page') }}" method="POST">
+    <form action="{{ route('error_on_page', ['lang' => $lang]) }}" method="POST">
         <div class="form-group">
             <label class="form-group__label" for="errorOnPageUrl">URL</label>
             <input type="text" id="errorOnPageUrl" disabled value="{{ url()->current() }}" placeholder="" class="input-regular" required>

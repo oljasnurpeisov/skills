@@ -40,6 +40,7 @@ class VerifyCsrfToken extends Middleware
         '/move-lesson',
         '/delete-lesson',
 
-        '/error-on-page'
+        '/ru/error-on-page',
+        '/kk/error-on-page',
     ];
 }
