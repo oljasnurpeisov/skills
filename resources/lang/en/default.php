@@ -830,6 +830,6 @@ return [
     'error'            => 'Ошибка',
     'comment'          => 'Комментарии',
     'error_on_page'    => 'Сообщить об ошибки',
-    'error_send_title' => '<a href="#errorOnPage"  data-fancybox title="Нашли ошибку?">Нашли ошибку?</a>',
+    'error_send_title' => '<a href="#errorOnPage"  data-fancybox title="Нашли ошибку?"><u>Нашли ошибку?</u></a>',
     'error_send_value' => 'Выделите её и нажмите Ctrl+Enter ',
 ];
