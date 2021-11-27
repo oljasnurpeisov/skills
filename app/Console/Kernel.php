@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\AVR\AVRGenerate;
+use App\Console\Commands\MonthlyNewsletterCommand;
 use App\Console\Commands\ProfessionalAreaProfessionRelation;
 use App\Console\Commands\ProfessionalAreasUpdate;
 use App\Console\Commands\ProfessionSkillRelation;
@@ -30,13 +31,14 @@ class Kernel extends ConsoleKernel
         ProfessionsParentUpdate::class,
         ProfessionalAreasUpdate::class,
         ProfessionalAreaProfessionRelation::class,
-        AVRGenerate::class
+        AVRGenerate::class,
+        MonthlyNewsletterCommand::class
     ];
 
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
@@ -67,6 +69,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('update:course_quota_cost')
             ->daily()->withoutOverlapping();
 
+        $schedule->command('newsletter-monthly')->monthlyOn(1, '10:00');
+
     }
 
     /**
@@ -76,7 +80,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

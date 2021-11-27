@@ -348,7 +348,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::get("/verify", "DocumentController@verify")->name('public.document.verify');
             // Курсы
             Route::get("/course-catalog", "CourseController@courseCatalog");
-            Route::get("/course-catalog/course/{item}", "CourseController@courseView");
+            Route::get("/course-catalog/course/{item}", "CourseController@courseView")->name('courseView');
             // Фильтр
             Route::post("/course-catalog-filter", "CourseController@courseCatalogFilter");
 
