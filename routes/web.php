@@ -348,7 +348,7 @@ Route::group(["middleware" => ["web"], "namespace" => "App"], function () {
             Route::get("/verify", "DocumentController@verify")->name('public.document.verify');
             // Курсы
             Route::get("/course-catalog", "CourseController@courseCatalog");
-            Route::get("/course-catalog/course/{item}", "CourseController@courseView");
+            Route::get("/course-catalog/course/{item}", "CourseController@courseView")->name('courseView');
             // Обучающиеся
             Route::get("/students", "StudentsController@studentsInfo");
             // Авторы
@@ -575,13 +575,12 @@ Route::group(['prefix' => '{lang}'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get("/statisticForChartDemo", "App\Author\CourseController@statisticForChartDemo");
-
-    Route::post('error-on-page', [
-        \App\Http\Controllers\ErrorController::class,
-        'store'
-    ])->name('error_on_page');
 });
 
 Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
 Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
+Route::post('error-on-page', [
+    \App\Http\Controllers\ErrorController::class,
+    'store'
+])->name('error_on_page');
 
