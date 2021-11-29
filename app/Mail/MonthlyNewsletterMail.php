@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class MonthlyNewsletterMail extends Mailable implements ShouldQueue
 {
@@ -24,6 +25,7 @@ class MonthlyNewsletterMail extends Mailable implements ShouldQueue
 
     public function build()
     {
+        Log::info('Отправка сообщения на почту(ежемесячная рассылка на email)');
         return $this->view('emails.monthly-newsletter', [
             'courses' => $this->courses,
             'count'   => $this->courses->count(),
