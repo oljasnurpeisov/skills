@@ -11,17 +11,25 @@ use Swift_RfcComplianceException;
 
 class MonthlyNewsletterCommand extends Command
 {
-    protected $signature = 'newsletter-monthly';
+    protected $signature = 'newsletter-monthly {email?}';
 
     protected $description = 'newsletter-monthly on email';
 
     public function handle()
     {
-        $users = User::whereNotNull('email')->get();
+
         $carbon = now()->subMonth();
         $courses = Course::whereMonth('publish_at', $carbon->month)
             ->whereYear('publish_at', $carbon->year)
             ->get();
+
+        if ($this->argument('email')) {
+            Mail::to($this->argument('email'))
+                ->queue(new MonthlyNewsletterMail($courses));
+            return;
+        }
+
+        $users = User::whereNotNull('email')->get();
 
         foreach ($users as $user) {
             try {
