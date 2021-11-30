@@ -356,7 +356,6 @@
 <div id="errorOnPage" style="display: none;">
     <form action="{{ route('error_on_page', ['lang' => $lang]) }}" method="POST">
         <div class="form-group">
-            @csrf
             <label class="form-group__label" for="errorOnPageUrl">URL</label>
             <input type="text" id="errorOnPageUrl" disabled value="{{ url()->current() }}" placeholder="" class="input-regular" required>
             <input style="display: none" type="text" id="errorOnPageUrl"  value="{{ url()->current() }}" name="url" placeholder="" class="input-regular" required>
