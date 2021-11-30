@@ -61,7 +61,10 @@ class PageController extends Controller
             $q->where('slug', '=', 'author');
         })->whereHas('author_info', function ($q) {
             $q->where('name', '!=', null);
-        })->where('email_verified_at', '!=', null)->with('courses')->get();
+        })->where('email_verified_at', '!=', null)
+            ->with('courses.course_members')
+            ->with('courses.rate')
+            ->get();
 
         // Получить количество записавшихся на курсы
         foreach ($popular_authors as $author) {
